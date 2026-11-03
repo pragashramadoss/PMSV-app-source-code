@@ -18,10 +18,11 @@
     }
   ],
   "current_effective_notes": [
-    "Current Version V includes the 2025 amendment provisions effective from 1 January 2026 and FSSAI direction-linked compliance dates where printed in the compendium.",
-    "Alcoholic ready-to-drink beverages are currently defined as beverages with more than 0.5% and below 15.0% alcohol by volume, subject to the current Table-4 requirements.",
+    "Version V includes final June 2025 provisions effective 1 January 2026. The 27 November 2025 direction extends labelling provisions to 1 July 2026; it is not treated here as a blanket composition extension.",
+    "RTD definition says more than 0.5% and up to 15%, while amended Table 4 says below 15%. Exactly 15% is blocked for source reconciliation, not approved through the definition alone.",
     "Alcohol-free beer is defined at 0.0% abv and otherwise follows the regular-beer parameters.",
-    "Craft beer and flavoured beer provisions are included; current craft-beer Table-3 notes cover CO2/N2 mixtures and microbiological treatment."
+    "Craft beer and flavoured beer provisions are included; current craft-beer Table-3 notes cover CO2/N2 mixtures and microbiological treatment.",
+    "The final November 2025 Table 2 fruit-wine ester amendment is effective 1 June 2026. The January 2026 corrigendum changes the place of notification only."
   ],
   "general_requirements": {
     "scope": "Distilled and un-distilled alcoholic beverages regulated under the Alcoholic Beverages Regulations.",
@@ -44,6 +45,9 @@
       "current_label_notes": [
         "For fruit brandy other than grape, prefix the fruit name to 'Brandy'.",
         "Indian Brandy carries the prescribed source-spirit statement and name-format requirements."
+      ],
+      "source_questions_r11": [
+        "Indian brandy is defined but has no separately labelled Table 1 column; do not select grape/blended limits by name alone."
       ]
     },
     "2.2": {
@@ -95,7 +99,10 @@
     "2.9": {
       "name": "Pot-still distilled spirit",
       "table_basis": "Table 1",
-      "definition_summary": "Alcoholic beverage obtained by pot-still distillation from permitted fermented agricultural carbohydrate sources; colouring is restricted to caramel/natural ageing-derived colour under the standard."
+      "definition_summary": "Alcoholic beverage obtained by pot-still distillation from permitted fermented agricultural carbohydrate sources; colouring is restricted to caramel/natural ageing-derived colour under the standard.",
+      "source_questions_r11": [
+        "Catalogue groups pot and column distillation, but clause 2.9/Table 1 identifies pot-distilled spirit. Column-only mapping remains unresolved."
+      ]
     },
     "3.1.1": {
       "name": "Table wine",
@@ -169,7 +176,25 @@
     "3.1.4": {
       "name": "Wine from fruits other than grapes",
       "table_basis": "Table 2",
-      "definition_summary": "Wine produced by normal alcoholic fermentation of fruit other than grapes; fruit name is prefixed to wine."
+      "definition_summary": "Wine produced by normal alcoholic fermentation of fruit other than grapes; fruit name is prefixed to wine.",
+      "ester_limit_r11": {
+        "parameter": "Esters as ethyl acetate",
+        "operator": "<=",
+        "value": 3.0,
+        "unit": "g/L of absolute alcohol",
+        "effective_from": "2026-06-01",
+        "previous_value": 0.2,
+        "table": 2,
+        "row": 7,
+        "column": 7,
+        "includes_honey_wine": true,
+        "excludes_other_columns": true,
+        "source_url": "https://www.fssai.gov.in/upload/notifications/2025/11/692846cca9b19Final%20Notification%20of%20alcoholic%20beverages.pdf",
+        "source_pages": [
+          2
+        ],
+        "current_law_complete": false
+      }
     },
     "3.1.4.1": {
       "name": "Cider",
@@ -206,7 +231,8 @@
           "unit": "% v/v"
         }
       ],
-      "current_effective_note": "Current compendium carries the direction-linked compliance date of 1 July 2026 for this inserted provision."
+      "current_effective_note": "Mead composition insertion is in the final first amendment effective 1 January 2026. The 27 November 2025 direction specifically extends labelling compliance to 1 July 2026; source-scope distinction retained.",
+      "ester_limit_reference_r11": "The Table 2 fruit-wine column including honey wine: 3.0 g/L absolute alcohol from 1 June 2026; do not transfer to cider, perry or other-plant-wine columns."
     },
     "3.1.5.1": {
       "name": "Palm wine/Toddy",
@@ -220,9 +246,28 @@
     },
     "3.1.6": {
       "name": "Wine Based Beverages",
-      "table_basis": "Table 2 table-wine standards according to ethyl alcohol content",
-      "definition_summary": "Beverage obtained from at least 50% by volume of wine and permitted treatments/additions under the current regulation.",
-      "current_note": "May or may not be carbonated under the current Version V amendment."
+      "table_basis": "Table 2 table-wine requirements except ethyl alcohol content, as amended. Actual base-wine category must be established.",
+      "definition_summary": "Wine-based beverage with the printed at least 50 by volume wine wording, permitted treatments and additions. The missing percentage symbol/denominator is retained as a source question, not silently repaired.",
+      "current_note": "May or may not be carbonated under the current Version V amendment.",
+      "composition_core": [
+        {
+          "parameter": "Ethyl alcohol",
+          "operator": "range",
+          "min": 3.5,
+          "max": 14.5,
+          "min_inclusive": true,
+          "max_inclusive": false,
+          "unit": "% v/v",
+          "basis": "finished beverage at 20 C",
+          "source_pages": [
+            8,
+            9
+          ]
+        }
+      ],
+      "source_questions_r11": [
+        "Printed wine-fraction wording needs original-source unit reconciliation. Do not automatically invoke the wine-specific expiry exemption for a wine-based beverage without establishing scope."
+      ]
     },
     "4.1": {
       "name": "Beer",
@@ -258,6 +303,25 @@
         "Clear except wheat beer, with characteristic colour/taste/bouquet.",
         "Bottled/canned beer is pasteurized or filter sterilized; draught beer may or may not be.",
         "Free from coliforms and other pathogenic microorganisms."
+      ],
+      "microbiology_scope_r11": {
+        "total_plate_count_excludes_brewers_yeast": true,
+        "beer_regular_strong_operator": "<",
+        "beer_regular_strong_value": 10,
+        "draught_craft_operator": "<",
+        "draught_craft_value": 100,
+        "unit": "cfu/ml",
+        "source_pages": [
+          20,
+          21
+        ],
+        "n_c_m_M_plan_invented": false,
+        "absence_is_not_numeric_zero": true,
+        "method_and_report_scope_required": true,
+        "automatic_lot_release": false
+      },
+      "source_questions_r11": [
+        "Table 3 carbonation heading says Min while cells print 1.8-3.6. Source interpretation is required before automatic range acceptance. CO2/N2 mixture permission is craft-specific."
       ]
     },
     "4.2": {
@@ -276,12 +340,31 @@
         "Craft beer may be aromatized with suitable food ingredients and may or may not be filtered/pasteurized.",
         "Flavoured beer uses flavours permitted under the Food Products Standards and Food Additives Regulations and must meet the other beer requirements.",
         "Nitro Craft Beer uses a mixture of CO2 and N2 gas under the current provision."
+      ],
+      "microbiology_scope_r11": {
+        "total_plate_count_excludes_brewers_yeast": true,
+        "beer_regular_strong_operator": "<",
+        "beer_regular_strong_value": 10,
+        "draught_craft_operator": "<",
+        "draught_craft_value": 100,
+        "unit": "cfu/ml",
+        "source_pages": [
+          20,
+          21
+        ],
+        "n_c_m_M_plan_invented": false,
+        "absence_is_not_numeric_zero": true,
+        "method_and_report_scope_required": true,
+        "automatic_lot_release": false
+      },
+      "source_questions_r11": [
+        "Table 3 carbonation heading says Min while cells print 1.8-3.6. Source interpretation is required before automatic range acceptance. CO2/N2 mixture permission is craft-specific."
       ]
     },
     "1.2.4a/1.3.9": {
       "name": "Alcoholic Ready-to-Drink Beverages",
       "table_basis": "Table 4",
-      "definition_summary": "Flavoured beverage made from spirit/mixture of spirit or other alcoholic beverage base with permitted flavours/additives and optional fruit/vegetable juice, herbs, spices, sugar/caloric sweeteners, salt and carbonation.",
+      "definition_summary": "Flavoured beverage made from spirit/mixture of spirit or other alcoholic beverage base with permitted flavours/additives and optional fruit/vegetable juice, herbs, spices, sugar/caloric sweeteners, salt and carbonation. The amended definition uses up to 15%, unlike the strict upper bound in Table 4.",
       "composition": [
         {
           "parameter": "Ethyl alcohol at 20°C",
@@ -347,7 +430,24 @@
           "unit": "mg/L"
         }
       ],
-      "carbonation_rule": "Carbonated RTD beverages use carbon dioxide with minimum one volume and must conform to Table 4."
+      "carbonation_rule": "Carbonated RTD beverages use carbon dioxide with minimum one volume and must conform to Table 4.",
+      "source_questions_r11": [
+        {
+          "field": "ethyl_alcohol_abv",
+          "conflict_at": 15,
+          "automatic_acceptance_blocked": true,
+          "source_pages": [
+            1,
+            3,
+            22
+          ],
+          "original_amendment_url": "https://fssai.gov.in/upload/uploadfiles/files/Food%20Safety%20and%20Standards_Alcoholic%20Beverages_First%20Amendment%20Regulations%202025.pdf",
+          "original_pages": [
+            8,
+            10
+          ]
+        }
+      ]
     }
   },
   "shared_wine_rules": [
@@ -357,10 +457,10 @@
     "Wine may be ameliorated using dry sugar or jaggery, separately or in combination, not more than 20%, as specified."
   ],
   "table_matrix_status": {
-    "table_1": "current_v5_matrix_identified; exact per-product row/column normalization pending",
-    "table_2": "core category limits and common safety rows identified; exact full column matrix normalization pending",
-    "table_3": "core beer matrix and microbiology identified; exact full current matrix normalization pending",
-    "table_4": "current RTD requirements structured"
+    "table_1": "current_v5_matrix_identified; exact per-product row/column normalization pending; R11 complete source table transcribed in offline registry, not yet integrated into live comparisons",
+    "table_2": "core category limits and common safety rows identified; exact full column matrix normalization pending; R11 complete source table transcribed in offline registry, not yet integrated into live comparisons",
+    "table_3": "core beer matrix and microbiology identified; exact full current matrix normalization pending; R11 complete source table transcribed in offline registry, not yet integrated into live comparisons",
+    "table_4": "current RTD requirements structured; R11 complete source table transcribed in offline registry, not yet integrated into live comparisons"
   },
   "alcohol_specific_labelling": [
     "Declare alcohol content as % abv or proof.",
@@ -369,5 +469,44 @@
     "Apply the current statutory warning required by the Alcoholic Beverages Regulations; size requirements depend on pack size.",
     "Additional product-specific naming and declarations apply where stated in the individual standard."
   ],
-  "final_compliance_lock": "Do not issue a full alcoholic-product formulation verdict until the exact applicable Table 1/2/3 matrix row and all linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated."
+  "final_compliance_lock": "Do not issue a full alcoholic-product formulation verdict until the exact applicable Table 1/2/3 matrix row and all linked Appendix A, contaminants, microbiology, processing aids and current labelling rules are machine-validated.",
+  "label_controls_r11": {
+    "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Alcoholic_Beverages_V_04_12_2025.pdf",
+    "source_pages": [
+      11,
+      12
+    ],
+    "warning_font": {
+      "pack_up_to_including_200_ml_min_mm": 1.5,
+      "pack_above_200_ml_min_mm": 3
+    },
+    "nonwine_expiry": {
+      "abv_operator": "<",
+      "abv": 10,
+      "wine_based_beverage_exemption_scope_pending": true
+    },
+    "wine_sulphur_dioxide_declaration": {
+      "operator": ">",
+      "value": 10,
+      "unit": "mg/L"
+    },
+    "standard_drink_declaration": "optional_in_inspected_final_text",
+    "draft_30_oct_2025_not_applied": true,
+    "label_extension_direction_url": "https://fssai.gov.in/upload/notifications/2025/11/692845eaf1ef1Labelling%20direction%20for%20FSS%20alcoholic%20beverages%20amendment%20Regulations%202025.pdf",
+    "label_extension_date": "2026-07-01",
+    "artwork_approved": false
+  },
+  "source_review_r11": {
+    "date": "2026-11-03",
+    "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Alcoholic_Beverages_V_04_12_2025.pdf",
+    "source_sha256": "84b1bd45f79ede347412345db348d95f9307db38759ef5b48b2a3bfbe70c4800",
+    "reviewed_catalogue_records": 27,
+    "full_offline_requirement_records": 455,
+    "source_table_cells": 396,
+    "direct_microbiology_cells": 24,
+    "scope": "Selected core source findings only. The full variant/row registry and comparator are offline companions and not wired into the live engine.",
+    "complete_current_law": false,
+    "product_approval": false,
+    "lot_release": false
+  }
 }
