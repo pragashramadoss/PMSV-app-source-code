@@ -2406,7 +2406,17 @@
         "For regulatory sampling, three sets each containing n samples are drawn and tested in three different accredited laboratories; the final decision is based on the three laboratory results.",
         "There is no provision for retesting or resampling for microbiological testing.",
         "FBOs determine necessary sampling/testing frequency subject to the minimum prescribed under FSSR Licensing and Registration requirements."
-      ]
+      ],
+      "source_content_review_r7": {
+        "date": "2026-11-03",
+        "numeric_plans_checked": 28,
+        "numeric_plans_changed": 0,
+        "changed_category_routes": [
+          "12-12-2-dried-laurel-or-dried-bay-leaf",
+          "12-12-2-dried-mint"
+        ],
+        "full_regulatory_verification": false
+      }
     },
     "fruits": {
       "table_4a_title": "Microbiological Standards for Fruits and Vegetables and their Products - Process Hygiene Criteria",
@@ -5655,18 +5665,6 @@
           "note": "Appendix B defines Extracted products to include oleoresins."
         },
         {
-          "catalog_id": "12-12-2-dried-laurel-or-dried-bay-leaf",
-          "profile_key": "spice-02",
-          "status": "mapped_exact_appendix_b_v2",
-          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
-        },
-        {
-          "catalog_id": "12-12-2-dried-mint",
-          "profile_key": "spice-02",
-          "status": "mapped_exact_appendix_b_v2",
-          "note": "Product identity fixes a dried/dehydrated non-ground herb form."
-        },
-        {
           "catalog_id": "12-12-2-dried-rosemary",
           "profile_key": "spice-02",
           "status": "mapped_exact_appendix_b_v2",
@@ -6270,6 +6268,44 @@
               "profile_key": "spice-05"
             }
           ]
+        },
+        {
+          "catalog_id": "12-12-2-dried-laurel-or-dried-bay-leaf",
+          "status": "variant_required",
+          "reason": "The product definition includes ground/powdered or crushed forms. Select the actual form under Appendix B definitions, not the word dried alone.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated non-ground and non-crushed form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, powdered or crushed form",
+              "profile_key": "spice-03"
+            }
+          ],
+          "source_pages": [
+            26
+          ],
+          "reviewed_on": "2026-11-03"
+        },
+        {
+          "catalog_id": "12-12-2-dried-mint",
+          "status": "variant_required",
+          "reason": "The product definition includes ground/powdered or crushed forms. Select the actual form under Appendix B definitions, not the word dried alone.",
+          "options": [
+            {
+              "condition": "Dried/dehydrated non-ground and non-crushed form",
+              "profile_key": "spice-02"
+            },
+            {
+              "condition": "Ground, powdered or crushed form",
+              "profile_key": "spice-03"
+            }
+          ],
+          "source_pages": [
+            26
+          ],
+          "reviewed_on": "2026-11-03"
         }
       ],
       "no_direct_table_mapping": [
