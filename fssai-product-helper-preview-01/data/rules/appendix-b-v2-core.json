@@ -3296,7 +3296,17 @@
         "For fermentation involving yeast/mould, the respective Yeast and Mold Count criterion does not apply.",
         "Carbonated fruit beverages and pasteurized fruit juices can be excluded from Listeria testing where pH is below 4.4.",
         "Retort processed foods shall be tested after incubation at 37°C for 10 days and 55°C for 7 days."
-      ]
+      ],
+      "source_content_review_r9": {
+        "date": "2026-11-03",
+        "primary_plans_checked": 63,
+        "liquid_derived_variants_checked": 31,
+        "numerical_plans_changed": 0,
+        "incorrect_exclusions_removed": 1,
+        "new_conditional_routes": 24,
+        "full_regulatory_verification": false,
+        "commercial_release_authorized": false
+      }
     },
     "meat": {
       "table_5a_title": "Microbiological Standards for Meat and Meat Products - Process Hygiene Criteria",
@@ -6573,12 +6583,9 @@
               "profile_key": "fruit-04a"
             },
             {
-              "condition": "Pasteurized juice · pH below 4.4",
+              "condition": "Pasteurized vegetable juice, including pH below 4.4; fruit-juice exclusion not established",
               "profile_key": "fruit-04a",
-              "exclude_criteria": [
-                "listeria_monocytogenes"
-              ],
-              "message": "Appendix B footnote 4 allows Listeria testing to be excluded where pH is below 4.4."
+              "message": "Appendix B footnote 4 names pasteurized fruit juices, not vegetable juices. Retain the Listeria criterion unless another exact applicable provision is established."
             },
             {
               "condition": "Thermally processed (non-retort)",
@@ -6955,6 +6962,674 @@
               "profile_key": "fruit-03"
             }
           ]
+        },
+        {
+          "catalog_id": "tomato-juice",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Pasteurized Juices; actual source-definition match required",
+              "profile_key": "fruit-04a"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "concentrated-fruit-pulp-puree",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "concentrated-vegetable-pulp-puree",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "ginger-cocktail",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "barley-water",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-mango-chutney",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-murabba",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-candied-crystallised-and-glazed-fruit-vegetable-rhizome-fruit-peel",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Dehydrated or dried; actual source-definition match required",
+              "profile_key": "fruit-06"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-thermally-processed-mango-pulp-puree-and-sweetened-mango-pulp-puree",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-thermally-processed-fruit-pulp-puree-and-sweetened-fruit-pulp-puree-other-than-man",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-tamarind-pulp-puree-and-concentrate",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-1-fruit-bar-toffee",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Dehydrated or dried; actual source-definition match required",
+              "profile_key": "fruit-06"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-2-canned-tomatoes",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-2-thermally-processed-tomato-puree-and-paste",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "04-04-2-ginger-paste",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "06-06-3-fruit-vegetable-cereal-flakes",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Dehydrated or dried; actual source-definition match required",
+              "profile_key": "fruit-06"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-5-thermally-processed-vegetable-soups",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-5-soup-powders",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Dehydrated or dried; actual source-definition match required",
+              "profile_key": "fruit-06"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-6-tomato-ketchup-and-tomato-sauce",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-6-chilli-sauce",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-6-fruits-vegetable-sauces",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-6-culinary-sauce",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-6-culinary-pastes",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives; actual source-definition match required",
+              "profile_key": "fruit-03"
+            },
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C); actual source-definition match required",
+              "profile_key": "fruit-07"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed; actual source-definition match required",
+              "profile_key": "fruit-08"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
+        },
+        {
+          "catalog_id": "12-12-9-soybean-sauce",
+          "status": "variant_required",
+          "reason": "Conditional category candidates only. Establish actual fruit/vegetable matrix, preservation process, intended use and liquid/non-liquid presentation. An unlisted or composite presentation requires manual category review; no default category is assigned.",
+          "options": [
+            {
+              "condition": "Fermented or pickled or acidified or with preservatives — liquid form; actual source-definition match required",
+              "profile_key": "fruit-03-liquid"
+            },
+            {
+              "condition": "Thermally processed (other than pasteurization at less than 100°C) — liquid form; actual source-definition match required",
+              "profile_key": "fruit-07-liquid"
+            },
+            {
+              "condition": "Retort processed — liquid form; actual source-definition match required",
+              "profile_key": "fruit-08-liquid"
+            }
+          ],
+          "source_pages": [
+            34,
+            35
+          ],
+          "reviewed_on": "2026-11-03",
+          "automatic_category_assignment": false
         }
       ],
       "no_direct_table_mapping": [
