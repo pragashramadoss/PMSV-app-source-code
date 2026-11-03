@@ -33,7 +33,7 @@ alt.update(condition='Printed 3A wording: below 10% but at least 5%; 2.5% in cas
 for row in s['2.3.31']['composition']:
  if row['parameter'].startswith('Total soluble solids'):
   row['condition']='Ordinary product, not the specifically designated reduced/low-sugar variant.'
-s['2.3.31']['reduced_sugar_variant_r9']={'parameter':'Total soluble solids','operator':'<=','value':45,'unit':'% by weight','source_pages':[38],'applies_when':'Specifically designated reduced or low-sugar jam/jelly/marmalade','does_not_waive_other_requirements':True}
+s['2.3.31']['reduced_sugar_variant_r9']={'parameter':'Total soluble solids','operator':'<=','value':45,'unit':'% by weight','source_pages':[37],'applies_when':'Specifically designated reduced or low-sugar jam/jelly/marmalade','does_not_waive_other_requirements':True}
 s['2.3.31']['scope_exclusion_r9']='The current substituted text excludes products clearly intended and marked for special dietary use; do not restore broader exclusions from a superseded notification.'
 s['2.3.26']['reducing_sugar_denominator_r9']='Minimum 25% of total sugar, not 25% of whole-product mass. A ratio calculation must use mutually consistent analytical bases.'
 s['2.3.41']['industrial_bulk_pack_exception_r9']={'source_pages':[55],'scope':'Only the stated container-fill requirement is waived for bulk industrial packs under this clause; composition requirements and the separate mango-chutney clause are not waived.'}
@@ -79,7 +79,7 @@ for group in micro['product_mappings']:
 for key in micro['tables']:
  if key!='fruits':ck(micro['tables'][key]==before['rules/appendix-b-v2-core.json']['tables'][key])
 out=B/'fruit-vegetable-r9-core-applied';out.mkdir(exist_ok=True);files=[]
-EXPECTED_OUTPUTS={'rules/chapter-2-3-fruit-vegetable-v1.json':'00e02f9acb49f37e7b8ac5941028b85beaa36cbd3f1aca12305413378944f5d9','rules/appendix-b-v2-core.json':'e797945c0996cd54091e663b0377da6808420e9f514ea5b924190e6ebc9da3e7','product-master-v1.json':'84f24ec89ae9265473caf1f1ee11ecdb8aa6dd8fd051d6e4064792f266d634f8'}
+EXPECTED_OUTPUTS={'rules/chapter-2-3-fruit-vegetable-v1.json':'03b90ee40a818064ea50946342ded18934ed0bc8c610b98412a5c64861adbd06','rules/appendix-b-v2-core.json':'e797945c0996cd54091e663b0377da6808420e9f514ea5b924190e6ebc9da3e7','product-master-v1.json':'84f24ec89ae9265473caf1f1ee11ecdb8aa6dd8fd051d6e4064792f266d634f8'}
 for rel,value in obj.items():
  content=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode();sha=hashlib.sha256(content).hexdigest()
  ck(sha==EXPECTED_OUTPUTS[rel],'Generated file differs from locally tested output')
