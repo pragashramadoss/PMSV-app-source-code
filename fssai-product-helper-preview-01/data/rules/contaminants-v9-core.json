@@ -12788,7 +12788,7 @@
       }
     ],
     "batches_loaded": 5,
-    "next_serial": 170,
+    "next_serial": 214,
     "completeness": "complete_current_version_ix_section_2_3_1",
     "end_note": "Current Version IX Section 2.3.1 ends at serial 213 (Sulfoxaflor). The source then states that 0.01 mg/kg applies where an MRL has not been fixed; PMSV retains this as a source note and does not auto-apply a generic fallback until exact applicability logic is completed."
   },
@@ -12796,7 +12796,7 @@
     "source_basis": "Section 2.3.2 · Antibiotic and other pharmacologically active substances",
     "source_version": "Version IX (03.02.2026)",
     "source_policy": "Official FSSAI source only",
-    "stage": "parts_1_to_3_complete_veterinary_tolerance_table_pending",
+    "stage": "complete_current_version_ix_section_2_3_2",
     "seafood_antibiotic_limits": {
       "scope": "Sea foods including shrimps, prawns and any other variety of fish and fishery products",
       "unit": "mg/kg",
@@ -32220,5 +32220,55 @@
     "production_engine_wired": false,
     "december_2026_amendment_not_in_effect_as_of_review": true,
     "other_product_defaults_auto_apply": false
+  },
+  "r24_residue_regulatory_guards_2026_11_03": {
+    "review_date": "2026-11-03",
+    "source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "edition": "Version IX (03.02.2026)",
+    "pesticide_serial_count": 213,
+    "pesticide_article_rows": 1098,
+    "veterinary_serial_count": 49,
+    "veterinary_article_rows": 358,
+    "prohibited_veterinary_classes": 14,
+    "honey_mrpl_rows": 12,
+    "pesticide_unfixed_mrl_tolerance": {
+      "limit": 0.01,
+      "unit": "mg/kg",
+      "requires_no_specific_mrl_fixed_for_pesticide": true,
+      "food_article_and_residue_definition_required": true,
+      "auto_apply": false
+    },
+    "veterinary_prohibited_use": {
+      "scope": "meat, meat products, milk, milk products, poultry, eggs, aquaculture and their products",
+      "default_emrl_mgkg": 0.001,
+      "chloramphenicol_emrl_mgkg": 0.0003,
+      "emrl_is_not_permission_for_use": true,
+      "requires_actual_drug_and_metabolite_identity": true,
+      "auto_apply": false
+    },
+    "honey_antibiotics": {
+      "use_not_permitted_during_production": true,
+      "mrpl_unit": "ug/kg",
+      "mrpl_is_detection_threshold_not_use_authorisation": true,
+      "sample_and_method_required": true,
+      "auto_apply": false
+    },
+    "malathion": {
+      "source_serial": 114,
+      "residue_definition": "sum of malathion and malaoxon",
+      "wheat_grain_mgkg": 10,
+      "maize_grain_mgkg": 0.05,
+      "other_food_grains_mgkg": 4,
+      "milled_food_grains_mgkg": 1,
+      "finished_processing_form_required": true,
+      "auto_apply": false
+    },
+    "next_deferred_amendment_effective": "2026-12-01",
+    "deferred_rules_not_activated_as_of_review": true,
+    "current_numeric_limits_modified": false,
+    "full_current_law_complete": false,
+    "full_product_approvals": 0,
+    "commercial_release_authorized": false,
+    "production_engine_wired": false
   }
 }
