@@ -1354,16 +1354,30 @@
       "status": "structured_core",
       "composition": [
         {
-          "parameter": "Moisture — all dehydrated vegetables",
+          "parameter": "Moisture — non-powder dehydrated vegetables",
           "operator": "<=",
           "value": 8,
-          "unit": "%"
+          "unit": "%",
+          "applies_to": "Non-powder forms",
+          "automatic_comparison_requires_variant": true,
+          "source_pages": [
+            40
+          ],
+          "analytical_basis": "finished product mass",
+          "analytical_matrix": "finished product"
         },
         {
           "parameter": "Moisture — powders of vegetables",
           "operator": "<=",
           "value": 5,
-          "unit": "%"
+          "unit": "%",
+          "applies_to": "Vegetable powder",
+          "automatic_comparison_requires_variant": true,
+          "source_pages": [
+            40
+          ],
+          "analytical_basis": "finished product mass",
+          "analytical_matrix": "finished product"
         },
         {
           "parameter": "Acid insoluble ash",
@@ -1551,7 +1565,12 @@
           "parameter": "Total acidity of extracted oil as lauric acid",
           "operator": "<=",
           "value": 0.3,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "source_pages": [
+            63
+          ],
+          "analytical_basis": "extracted oil mass",
+          "analytical_matrix": "extracted oil"
         },
         {
           "parameter": "Oil content — without oil extraction",
@@ -1582,7 +1601,12 @@
           "parameter": "Foreign matter",
           "operator": "absent",
           "value": "Absent",
-          "unit": ""
+          "unit": "",
+          "test_portion_g": 100,
+          "not_a_numeric_zero": true,
+          "source_pages": [
+            63
+          ]
         }
       ],
       "label_rules": [
@@ -1615,7 +1639,32 @@
           "parameter": "Vanillin content — pods/cut/powder",
           "operator": ">=",
           "value": 2,
-          "unit": "% wet basis"
+          "unit": "% wet basis",
+          "source_pages": [
+            76
+          ],
+          "analytical_basis": "wet product mass",
+          "analytical_matrix": "finished product"
+        },
+        {
+          "parameter": "Total ash — pods/cut/powder",
+          "operator": "<=",
+          "value": 5,
+          "unit": "% dry basis",
+          "analytical_basis": "dry matter mass",
+          "source_pages": [
+            76
+          ]
+        },
+        {
+          "parameter": "Acid-insoluble ash — pods/cut/powder",
+          "operator": "<=",
+          "value": 1,
+          "unit": "% dry basis",
+          "analytical_basis": "dry matter mass",
+          "source_pages": [
+            76
+          ]
         }
       ],
       "prohibited_or_absent": [
@@ -1652,7 +1701,30 @@
           "value": 10,
           "unit": "°Brix"
         }
-      ]
+      ],
+      "container_requirements_r10": {
+        "source_pages": [
+          95,
+          96
+        ],
+        "reference_temperature_C": 20,
+        "fill_min_pct_water_capacity_after_necessary_GMP_headspace": 90,
+        "headspace_must_be_established_not_assumed_zero": true,
+        "drained_weight_applies_to": "Product packed in liquid packing medium",
+        "drained_weight_denominator": "Mass of distilled water at 20 C filling the sealed container",
+        "drained_weight_variants": [
+          {
+            "water_capacity_ml_less_than": 300,
+            "minimum_average_pct": 55
+          },
+          {
+            "water_capacity_ml_at_least": 300,
+            "minimum_average_pct": 60
+          }
+        ],
+        "average_must_meet_limit_without_unreasonable_shortage_in_individual_containers": true,
+        "no_automatic_whole_product_approval": true
+      }
     },
     {
       "key": "2.3.57",
@@ -2863,6 +2935,26 @@
         "reviewed_on": "2026-10-09",
         "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
         "compliance_assessment_enabled": false
+      },
+      "defect_group_r10": {
+        "source_pages": [
+          68
+        ],
+        "combined_max_pct_m_m": 10,
+        "source_rows": [
+          "ii",
+          "iii",
+          "iv",
+          "v",
+          "vi",
+          "vii"
+        ],
+        "individual_caps_still_apply": true,
+        "source_defined_disjoint_accounting_required": true,
+        "excluded_from_this_sum": [
+          "viii chipped/scratched",
+          "ix doubles/twins"
+        ]
       }
     },
     {
@@ -2979,6 +3071,23 @@
         "reviewed_on": "2026-10-09",
         "review_status": "source_baseline_transcribed_current_amendments_not_reconciled",
         "compliance_assessment_enabled": false
+      },
+      "defect_group_r10": {
+        "source_pages": [
+          71
+        ],
+        "combined_max_pct_by_mass": 5,
+        "components": [
+          "Superficial damage",
+          "Immature or shrivelled kernels",
+          "Speckled or spotted kernels",
+          "Presence of testa",
+          "Insect damage",
+          "Foreign matter",
+          "Extraneous vegetable matter"
+        ],
+        "individual_caps_still_apply": true,
+        "source_defined_disjoint_accounting_required": true
       }
     },
     {
@@ -4077,13 +4186,23 @@
           "parameter": "Fat on dry basis",
           "operator": ">=",
           "value": 60,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "source_pages": [
+            105
+          ],
+          "analytical_basis": "dry matter mass",
+          "analytical_matrix": "finished product"
         },
         {
           "parameter": "Free fatty acids of extracted fat as lauric acid",
           "operator": "<=",
           "value": 0.2,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "source_pages": [
+            105
+          ],
+          "analytical_basis": "extracted fat mass",
+          "analytical_matrix": "extracted fat"
         },
         {
           "parameter": "Bulk density",
@@ -5188,7 +5307,12 @@
               "parameter": "Saltless extract",
               "operator": ">=",
               "value": 7,
-              "unit": "% m/m"
+              "unit": "% m/m",
+              "automatic_comparison_blocked": true,
+              "source_question": "The definition says concentrated to the printed percentage, not an explicit minimum. Reconcile original notification/method before using the historical >= operator.",
+              "source_pages": [
+                102
+              ]
             },
             {
               "parameter": "Salt (sodium chloride)",
@@ -5212,7 +5336,12 @@
               "parameter": "Saltless extract",
               "operator": ">=",
               "value": 24,
-              "unit": "% m/m"
+              "unit": "% m/m",
+              "automatic_comparison_blocked": true,
+              "source_question": "The definition says concentrated to the printed percentage, not an explicit minimum. Reconcile original notification/method before using the historical >= operator.",
+              "source_pages": [
+                102
+              ]
             },
             {
               "parameter": "Salt (sodium chloride)",
@@ -5629,5 +5758,24 @@
     "scope": "Selected core corrections only. Full 404-row review, comparative guards and combined viewer are separate offline companions. Existing source statuses and approval restrictions remain unchanged.",
     "current_law_complete": false,
     "commercial_release_authorized": false
+  },
+  "source_review_r10_core": {
+    "date": "2026-11-03",
+    "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf",
+    "source_sha256": "1e82574ab21d28aab9ea6a1ce083113e0a0fb0c9f775e0ce5d4506d98a8cc6cd",
+    "changed_standard_keys": [
+      "2.3.36",
+      "2.3.45",
+      "2.3.47(6)",
+      "2.3.47(7)",
+      "2.3.50",
+      "2.3.61",
+      "2.3.62",
+      "2.3.63"
+    ],
+    "full_offline_registry_sha256": "c166919ecaab92d2e832873022f58adf45d7621c5a901d665d1091e35bdd37cd",
+    "full_regulatory_approval": false,
+    "commercial_release_authorized": false,
+    "live_engine_integration_complete": false
   }
 }
