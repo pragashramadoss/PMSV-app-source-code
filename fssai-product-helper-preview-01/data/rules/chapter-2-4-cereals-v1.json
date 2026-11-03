@@ -11820,7 +11820,263 @@
         "Declare allergens.",
         "Provide preparation/use instructions and the prescribed feeding/discard guidance."
       ],
-      "source_verified_on": "2026-10-04"
+      "source_verified_on": "2026-10-04",
+      "essential_requirements_r13": [
+        {
+          "parameter": "Energy density",
+          "operator": ">=",
+          "value": 4,
+          "unit": "kcal/g",
+          "basis": "dry basis"
+        },
+        {
+          "parameter": "Protein:Energy ratio",
+          "operator": "source_text",
+          "value": "not more than 5–7.5%",
+          "automatic_comparison_allowed": false,
+          "source_question": "Printed wording requires interpretation before automatic comparison."
+        },
+        {
+          "parameter": "PDCAAS",
+          "operator": ">=",
+          "value": 90,
+          "unit": "%"
+        },
+        {
+          "parameter": "Moisture",
+          "operator": "<=",
+          "value": 8,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Fat",
+          "operator": ">=",
+          "value": 7.5,
+          "unit": "% by weight"
+        },
+        {
+          "parameter": "Total ash",
+          "operator": "<=",
+          "value": 7.5,
+          "unit": "% by weight"
+        }
+      ],
+      "nutrient_table_r13": [
+        {
+          "parameter": "Vitamin A (as retinol)",
+          "operator": "range",
+          "min": 120,
+          "max": 400,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Vitamin D",
+          "operator": "range",
+          "min": 3,
+          "max": 10,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Vitamin C",
+          "operator": "range",
+          "min": 12,
+          "max": 40,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Thiamine",
+          "operator": "range",
+          "min": 150,
+          "max": 500,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Riboflavin",
+          "operator": "range",
+          "min": 180,
+          "max": 600,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Niacin",
+          "operator": "range",
+          "min": 2.5,
+          "max": 8,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Pyridoxine",
+          "operator": "range",
+          "min": 270,
+          "max": 900,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Folic Acid",
+          "operator": "range",
+          "min": 14.5,
+          "max": 48,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Pantothenic acid",
+          "operator": "range",
+          "min": 0.6,
+          "max": 2,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Vitamin B12",
+          "operator": "range",
+          "min": 0.15,
+          "max": 0.5,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Choline",
+          "operator": ">=",
+          "value": 32,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Vitamin K",
+          "operator": "range",
+          "min": 4.5,
+          "max": 15,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Biotin",
+          "operator": "range",
+          "min": 2.5,
+          "max": 8,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Vitamin E (alpha-tocopherols)",
+          "operator": "range",
+          "min": 1.5,
+          "max": 5,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Sodium",
+          "operator": "range",
+          "min": 90,
+          "max": 300,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Potassium",
+          "operator": "range",
+          "min": 270,
+          "max": 900,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Chloride",
+          "operator": "range",
+          "min": 240,
+          "max": 800,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Calcium",
+          "operator": "range",
+          "min": 180,
+          "max": 600,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Phosphorus",
+          "operator": "range",
+          "min": 135,
+          "max": 450,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Magnesium",
+          "operator": "range",
+          "min": 15,
+          "max": 50,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Iron",
+          "operator": "range",
+          "min": 2.5,
+          "max": 9,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Iodine",
+          "operator": "range",
+          "min": 27,
+          "max": 90,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Copper",
+          "operator": "range",
+          "min": 102,
+          "max": 340,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Zinc",
+          "operator": "range",
+          "min": 1.5,
+          "max": 5,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Manganese",
+          "operator": "range",
+          "min": 0.3,
+          "max": 1.2,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Selenium",
+          "operator": "range",
+          "min": 5,
+          "max": 17,
+          "unit": "µg/100 g"
+        },
+        {
+          "parameter": "Inositol",
+          "operator": "<=",
+          "value": 0.4,
+          "unit": "g/L when prepared"
+        },
+        {
+          "parameter": "Taurine",
+          "operator": "<=",
+          "value": 60,
+          "unit": "mg/100 g"
+        },
+        {
+          "parameter": "Essential amino acids",
+          "operator": ">=",
+          "value": 9,
+          "unit": "mg/L when prepared"
+        }
+      ],
+      "microbiology_r13": {
+        "profile_key": "milk-08b",
+        "source": "Appendix B Follow Up Formula",
+        "note": "Chapter 2.4 expressly requires the microbiological requirements of Follow up formula."
+      },
+      "source_content_review_r13": {
+        "date": "2026-11-03",
+        "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf",
+        "scope": "Essential requirements, 29-row micronutrient table and explicit microbiology route. Not full current law, additive/method/label or commercial release approval.",
+        "source_questions": [
+          "Protein:Energy ratio wording 'not more than 5–7.5%' requires interpretation."
+        ],
+        "current_law_complete": false,
+        "commercial_release_authorized": false
+      }
     },
     {
       "key": "2.4.5(2)",
