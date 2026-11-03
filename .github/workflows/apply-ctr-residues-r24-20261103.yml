@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Apply preimage/output-hash checked metadata
         run: python3 scripts/apply_ctr_residue_guards_r24_20261103.py
-      - name: Regression: source rows, dates, prohibited-use and no approval
+      - name: 'Regression: source rows, dates, prohibited-use and no approval'
         run: python3 scripts/check_ctr_residue_guards_r24_20261103.py
       - name: Commit only the verified contaminant module to audit branch
         shell: bash
