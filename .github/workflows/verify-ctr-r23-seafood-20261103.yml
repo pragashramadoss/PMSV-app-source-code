@@ -1,0 +1,21 @@
+name: Verify R23 seafood CTR source transition
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-r23-seafood-20261103.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 533 identities, clause migration and no approval
+        run: python3 scripts/check_ctr_r23_seafood_migration_20261103.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ctr-r23-verified-migration-20261103
+          path: r23-ci-output/
+          retention-days: 3
+          if-no-files-found: error
