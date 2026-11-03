@@ -96,7 +96,7 @@
     {
       "id": "seafood_veterinary_drug_residues",
       "section": "2.3.2",
-      "change": "Adds seafood entries for Trimethoprim 0.05 and Oxolinic acid 0.3 in the Gazette table. The governing table unit, analyte/residue definition and legal sample basis must be checked before use.",
+      "change": "Effective 1 December 2026: omit pre-existing clause 2.3.2(1) (seafood Tetracycline 0.1, Oxytetracycline 0.1, Trimethoprim 0.05 and Oxolinic acid 0.3 mg/kg). Insert the SAME previously operative Trimethoprim 0.05 and Oxolinic acid 0.3 mg/kg seafood limits into 2.3.2(4). Separate 0.2 mg/kg fish/named giant-prawn muscle source articles already exist within 2.3.2(4); adjudicate actual species, tissue and overlap, do not silently relax or transfer.",
       "review_scope": "Seafood including shrimps, prawns, fish and fishery products. Do not classify fish processing-waste gelatin or unrelated food automatically.",
       "catalog_ids": [
         "09-09-1-live-and-raw-bivalve-molluscs",
@@ -123,6 +123,8 @@
         "12-12-6-fish-sauce"
       ],
       "contaminants_to_revalidate": [
+        "Tetracycline",
+        "Oxytetracycline",
         "Trimethoprim",
         "Oxolinic acid"
       ],
@@ -130,16 +132,65 @@
         {
           "parameter": "Trimethoprim",
           "limit": 0.05,
-          "unit": "unit requires source-table reconciliation",
+          "unit": "mg/kg",
           "auto_apply": false
         },
         {
           "parameter": "Oxolinic acid",
           "limit": 0.3,
-          "unit": "unit requires source-table reconciliation",
+          "unit": "mg/kg",
           "auto_apply": false
         }
-      ]
+      ],
+      "previous_clause_2_3_2_1_values_mgkg": {
+        "Tetracycline": 0.1,
+        "Oxytetracycline": 0.1,
+        "Trimethoprim": 0.05,
+        "Oxolinic acid": 0.3
+      },
+      "preexisting_number_not_first_introduced_december": [
+        "Trimethoprim",
+        "Oxolinic acid"
+      ],
+      "r23_source_note": "Official current Version IX PDF p.40 has four seafood limits in clause (1). Original Gazette English p.6 omits the whole clause and adds only Trimethoprim/Oxolinic entries to clause (4); the two 0.1 mg/kg broad entries are not carried forward by this amendment. Existing Version IX p.42 0.2 mg/kg fish/giant-prawn tissue entries require separate legal article and species verification."
     }
-  ]
+  ],
+  "r23_seafood_source_transition": {
+    "review_date": "2026-11-03",
+    "baseline_compendium": "Version IX (03.02.2026)",
+    "baseline_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+    "baseline_pdf_sha256": "8300ea34f1e88680ae4bbef52e0ec49331dbbfd1d5d6aa2612852bcb8779b26d",
+    "baseline_pdfs_1based": [
+      40,
+      42,
+      50
+    ],
+    "original_gazette_url": "https://www.fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+    "original_gazette_page_1based": 6,
+    "source_checked_as": "official PDF source text and rendered page images, no local Gazette PDF capture/hash",
+    "effective_from": "2026-12-01",
+    "old_seafood_clause_2_3_2_1_omitted": true,
+    "old_clause_existing_limits_mgkg": {
+      "Tetracycline": 0.1,
+      "Oxytetracycline": 0.1,
+      "Trimethoprim": 0.05,
+      "Oxolinic acid": 0.3
+    },
+    "after_commencement_seafood_clause_2_3_2_4_entries_mgkg": {
+      "Trimethoprim": 0.05,
+      "Oxolinic acid": 0.3
+    },
+    "existing_named_tissue_entries_mgkg": {
+      "Oxytetracycline fish": 0.2,
+      "Tetracycline/Oxytetracycline/Chlortetracycline giant prawn muscle": 0.2
+    },
+    "source_printed_prawn_identity": "Paeneusmonodon [as printed in Version IX; exact species/source text requires further confirmation]",
+    "overlap_0_1_vs_0_2_before_december": "HOLD_FOR_LEGAL_ARTICLE_RECONCILIATION",
+    "future_unknown_species_or_tissue": "NO_AUTOMATIC_LIMIT_INFERENCE",
+    "numeric_current_limit_changes_auto_applied": 0,
+    "existing_core_current_limits_untouched": true,
+    "complete_current_law_verified": false,
+    "commercial_release_authorized": false,
+    "original_31_watch_ids_unchanged": true
+  }
 }
