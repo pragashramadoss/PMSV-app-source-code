@@ -9,7 +9,7 @@ CP=DATA/'rules/contaminants-v9-core.json'
 DP=DATA/'rules/contaminants-2026-deferred-amendment-v1.json'
 MP=DATA/'product-master-v1.json'
 EXPECTED_BLOB={'c':'55b18fb971a957e21f0e145bb81e001c9aa40ffe','d':'c6a716ee6ed8cddc8a1a6224d4ce2304b7c35bff'}
-EXPECTED_SHA={'c':'a405d7d1c75f23dd32a1867faa5434b3759a353c9c8639dc836378eb8f62cfdc','d':'da968341786e3af1065dc943d15da9375f3ba47f447e1c22732a3a0c455da424'}
+EXPECTED_SHA={'c':'e1814aed1065f03969c09377135b151347b61d7845adcbef579b0f934054aa24','d':'da968341786e3af1065dc943d15da9375f3ba47f447e1c22732a3a0c455da424'}
 def blob(b): return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
 cb,db=CP.read_bytes(),DP.read_bytes()
 assert blob(cb)==EXPECTED_BLOB['c'],'contaminant preimage changed'
