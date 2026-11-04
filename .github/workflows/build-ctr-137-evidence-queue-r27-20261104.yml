@@ -1,0 +1,29 @@
+name: R27 build reproducible 137-product CTR evidence queue
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/build-ctr-137-evidence-queue-r27-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate the original 137 product-specific evidence queue and assertions
+        run: python3 scripts/build_ctr_137_evidence_queue_r27_20261104.py
+      - name: Commit only offline audit queue and summary
+        shell: bash
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          test -s fssai-helper/ctr-137-evidence-queue-r27-2026-11-04.json
+          test -s fssai-helper/ctr-137-review-r27-2026-11-04.md
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/ctr-137-evidence-queue-r27-2026-11-04.json fssai-helper/ctr-137-review-r27-2026-11-04.md
+          git diff --cached --check
+          git commit -m 'R27: reconcile all 137 exact CTR gaps as evidence holds; 82 conditional, 55 unanchored'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
