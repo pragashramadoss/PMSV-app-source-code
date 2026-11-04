@@ -1,0 +1,25 @@
+name: PMSV R50 137-case evidence-readiness and no-legal-pass regression
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-137-evidence-readiness-r50-2026-11-04.json'
+      - 'fssai-helper/ctr-137-evidence-review-gate-r50-20261104.mjs'
+      - 'scripts/test_ctr_137_evidence_readiness_r50_20261104.mjs'
+      - '.github/workflows/verify-ctr-evidence-readiness-r50-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-137-evidence-readiness-r50-2026-11-04.json'
+      - 'fssai-helper/ctr-137-evidence-review-gate-r50-20261104.mjs'
+      - 'scripts/test_ctr_137_evidence_readiness_r50_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-all-137-and-held-status:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test 137 per-case records, evidence priorities, and no auto legal approvals
+        run: node scripts/test_ctr_137_evidence_readiness_r50_20261104.mjs
