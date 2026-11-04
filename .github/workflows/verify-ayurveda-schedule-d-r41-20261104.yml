@@ -1,0 +1,25 @@
+name: PMSV R41 Ayurveda Schedule D source audit test
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ayurveda-schedule-d-finished-product-source-r41-2026-11-04.json'
+      - 'fssai-helper/ayurveda-schedule-d-evidence-gate-r41-20261104.mjs'
+      - 'scripts/test_ayurveda_schedule_d_r41_20261104.mjs'
+      - '.github/workflows/verify-ayurveda-schedule-d-r41-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ayurveda-schedule-d-finished-product-source-r41-2026-11-04.json'
+      - 'fssai-helper/ayurveda-schedule-d-evidence-gate-r41-20261104.mjs'
+      - 'scripts/test_ayurveda_schedule_d_r41_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-source-layer-without-product-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 2022 Schedule D source-layer and source-only evidence gate
+        run: node scripts/test_ayurveda_schedule_d_r41_20261104.mjs
