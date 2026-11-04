@@ -25,7 +25,18 @@ export function reviewAyurvedaMicroSampling(recipeNumber,evidence={}){
  if(evidence.purpose!=="REGULATOR")return result("PURPOSE_HOLD","Regulator versus FBO in-house purpose not specified");
  const missing=["currentGazetteAndAmendmentsReviewed","actualLotIdentityAndTraceabilityVerified",
  "approvedReferenceMethodAndSampleHandlingVerified","allThreeAccreditedLaboratoriesVerified",
- "allThreeLabFoodSafetyResultsReviewed","allApplicableMicroCriteriaSatisfied"].filter(k=>evidence[k]!==true);
+ "allApplicableMicroCriteriaSatisfied"].filter(k=>evidence[k]!==true);
+ // Schedule D Table 1B is NA for unprocessed/not-direct consumption; do NOT demand pathogen results.
+ if(evidence.productClass!=="UNPROCESSED_NOT_DIRECT_CONSUMPTION" && evidence.allThreeLabFoodSafetyResultsReviewed!==true){
+  missing.push("allThreeLabFoodSafetyResultsReviewed");
+ }
+ // Schedule D Table 1A is NA for fermented products; do NOT invent a conventional APC/YM/EB criterion.
+ if(evidence.productClass!=="FERMENTED" && evidence.processHygieneEvidenceReviewed!==true){
+  missing.push("processHygieneEvidenceReviewed");
+ }
+ if(evidence.productClass==="FERMENTED" && evidence.claimedMicroorganismLabelRequirementReviewed!==true){
+  missing.push("claimedMicroorganismLabelRequirementReviewed");
+ }
  if(evidence.exceptionProposed===true){
    if(evidence.priorFSSAISpecificExceptionApprovalVerified!==true)missing.push("priorFSSAISpecificExceptionApprovalVerified");
    return result("CASE_SPECIFIC_EXCEPTION_INDEPENDENT_REVIEW_HOLD",
