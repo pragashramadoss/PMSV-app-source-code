@@ -51,7 +51,8 @@ assert len(old_commodity)==58,('old commodity',len(old_commodity))
 assert not(old_conditional&old_commodity or old_conditional&explicit or old_commodity&explicit)
 assert old_conditional|old_commodity|explicit==pending
 
-r16=set(c['r16_product_specific_article_review_2026_11_03']['existing_product_specific_conditional_article_ids'])
+r16meta=c['r16_product_specific_article_review_2026_11_03']
+r16=set(r16meta['existing_product_specific_conditional_article_ids'])|set(r16meta['fungus_article_conditional_ids'])
 r18={x['catalog_id'] for x in c['r18_unanchored_article_review_2026_11_03']['source_conditional_rows']}
 r20={x['catalog_id'] for x in q20['new_candidate_manifest']}
 r21=set(c['r21_fpc18_directive_2026_11_03']['covered_catalogue_ids'])
