@@ -16,7 +16,7 @@ export function reviewChildSupplementSource(r,catalogueID,claims={}){
   r.original_R29_R50_product_CTR_article_holds!==137||
   r.original_R51_FSSR_blank_rows!==33||
   r.new_identifiable_FSSR_clause_source_count!==1||
-  r.original_R51_source_unchanged!==true||
+  r.original_historical_blank_source_field_not_overwritten!==true||
   r.named_source_fssr_clause!=="2.4.11(4)"||
   r.whole_product_legal_PASS!==false||
   r.operative_numeric_rules_modified!==false||
@@ -37,7 +37,7 @@ export function reviewChildSupplementSource(r,catalogueID,claims={}){
   r.nutrient_variation?.automatic_pass_for_nutrient_results!==false||
   r.evidence_sources?.length<5||
   r.selected_2024_source_parameter_examples?.some(x=>x.comparison_authorized!==false)||
-  r.numeric_limits_auto_applied!==false||r.batch_release_authorized!==false)
+  r.source_standard_numeric_limits_auto_applied!==false||r.batch_release_authorized!==false)
   return hold("SOURCE_REGISTER_INTEGRITY_HOLD","Modified or unqualified product evidence source");
  const c=claims&&typeof claims==="object"&&!Array.isArray(claims)?claims:{};
  if(c.release||c.productPASS||c.legalFSSR||c.legalCTR||c.autoUse2018Protein||
