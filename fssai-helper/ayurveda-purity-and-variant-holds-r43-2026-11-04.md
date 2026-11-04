@@ -72,6 +72,6 @@ No legitimate new raw CTR numbers were verified for these 14; reducing the gap c
 - No numeric rules added, no new source article automatically assigned, no product approvals, no release, no production deployment.
 - Source recipe 14.6/14.7 hold continues.
 
-**Source**: [2022 Ayurveda Aahara regulation](https://www.fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf), Reg 3(5), and [25 July 2025 Category A official recipe order](https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf), printed pp.60–62.
+**Source**: [2022 Ayurveda Aahara regulation](https://fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf), Reg 3(5), and [25 July 2025 Category A official recipe order](https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf), printed pp.60–62.
 
 Structured data: `fssai-helper/ayurveda-purity-and-variant-holds-r43-2026-11-04.json`; deterministic guard: `fssai-helper/ayurveda-purity-variant-gate-r43-20261104.mjs`.
