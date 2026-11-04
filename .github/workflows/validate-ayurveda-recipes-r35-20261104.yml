@@ -1,0 +1,52 @@
+name: R35 validate nine Ayurveda recipe source-ingredient evidence
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/validate-ayurveda-recipes-r35-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test source guard syntax, exact recipe IDs and no-PASS outcomes
+        shell: bash
+        run: |
+          node --check fssai-helper/ayurveda-recipe-evidence-gate-r35-20261104.mjs
+          node --check scripts/test_ayurveda_source_recipes_r35_20261104.mjs
+          node scripts/test_ayurveda_source_recipes_r35_20261104.mjs
+      - name: Independently test original 533 catalogue, 137 open article decisions and 46 ingredient rows
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          a=json.loads(Path('fssai-helper/ayurveda-category-a-recipe-evidence-r35-2026-11-04.json').read_text())
+          p=json.loads(Path('fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json').read_text())
+          m=json.loads(Path('fssai-product-helper-preview-01/data/product-master-v1.json').read_text())
+          assert len(m['catalog_products'])==len({x['id'] for x in m['catalog_products']})==533
+          assert len(p['records'])==137 and p['exact_CTR_product_article_applicability_still_open']==137
+          old={x['catalog_id']:x for x in p['records'] if x['r29_source_screening_route']=='AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED'}
+          assert len(old)==len(a['records'])==9
+          assert {x['catalogue_id'] for x in a['records']}==set(old)
+          assert sum(len(x['ingredients']) for x in a['records'])==46
+          counts={'12.1':6,'13.1':8,'14.1':1,'14.3':2,'14.4':3,'14.5':5,'14.6':13,'14.7':4,'15.1':4}
+          assert {x['recipe_number']:len(x['ingredients']) for x in a['records']}==counts
+          assert sorted(x['recipe_number'] for x in a['records'] if 'SOURCE_TITLE_METHOD_ALIGNMENT_REVIEW_REQUIRED' in x['source_reconciliation_flags'])==['14.6','14.7']
+          assert all(x['pdf_page_image_visual_validation']=='UNAVAILABLE_SCREENSHOT_TOOL_TIMEOUT' for x in a['records'])
+          assert all(not x['ctr_finished_food_article_applicability_adjudicated'] and not x['commercial_lot_release_authorized'] and not x['full_product_regulatory_compliance_approved'] for x in a['records'])
+          assert a['full_product_approvals']==a['current_CTR_panels_verified']==0
+          assert a['deployment_changed'] is False and a['numeric_CTR_rules_changed'] is False
+          print('R35 PASS: original nine identities, 46 ingredient rows, two source holds, zero legal product approvals')
+          PY
+      - name: Ensure unchanged production files and committed R35 documentation
+        shell: bash
+        run: |
+          test -s fssai-helper/ayurveda-category-a-recipe-evidence-r35-2026-11-04.json
+          test -s fssai-helper/ayurveda-category-a-recipe-review-r35-2026-11-04.md
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json
+          test -z "$(git status --porcelain)"
