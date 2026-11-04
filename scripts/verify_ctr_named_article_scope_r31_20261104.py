@@ -86,7 +86,7 @@ for k in (('04-04-1-fruit-cheese','Tin'),('04-04-1-murabba','Tin')):
  assert 'canned' not in observed[k][0].lower()
  r=next(x for x in r31['records'] if x['catalogue_id']==k[0])
  candidate=next(x for x in r['ctr_named_source_row_candidates'] if x['analyte']=='Tin')
- assert 'NOT' in candidate['qualifier'] or 'not' in candidate['qualifier']
+ assert ('not' in candidate['qualifier'].lower() or 'no can-only' in candidate['qualifier'].lower())
 assert r31['source_not_canned_specific_note'].startswith('Tin source article')
 
 # User-level product controls remain unchanged in both prior audit ledgers.
