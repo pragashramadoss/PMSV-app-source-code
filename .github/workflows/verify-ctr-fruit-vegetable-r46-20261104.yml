@@ -1,0 +1,25 @@
+name: PMSV R46 fruit cheese, murabba and frozen vegetable source checks
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-fruit-cheese-murabba-frozen-vegetables-r46-2026-11-04.json'
+      - 'fssai-helper/ctr-fruit-vegetable-article-gate-r46-20261104.mjs'
+      - 'scripts/test_ctr_fruit_vegetable_r46_20261104.mjs'
+      - '.github/workflows/verify-ctr-fruit-vegetable-r46-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-fruit-cheese-murabba-frozen-vegetables-r46-2026-11-04.json'
+      - 'fssai-helper/ctr-fruit-vegetable-article-gate-r46-20261104.mjs'
+      - 'scripts/test_ctr_fruit_vegetable_r46_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-article-scopes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure three food identities, 13 conditional metal sources and zero compliance PASS
+        run: node scripts/test_ctr_fruit_vegetable_r46_20261104.mjs
