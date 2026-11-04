@@ -37,11 +37,26 @@ export function sha256Utf8(input){
  }
  return [...h].map(n=>n.toString(16).padStart(8,'0')).join('');
 }
+function isPlainJSONTree(x,seen){
+ const t=typeof x;
+ if(x===null||t==='string'||t==='boolean')return true;
+ if(t==='number')return Number.isFinite(x);
+ if(t!=='object'||seen.has(x))return false;
+ const proto=Object.getPrototypeOf(x);
+ if(Array.isArray(x)?proto!==Array.prototype:proto!==Object.prototype)return false;
+ seen.add(x);
+ for(const key of Reflect.ownKeys(x)){
+  if(typeof key!=='string'||key==='toJSON')return false;
+  const descriptor=Object.getOwnPropertyDescriptor(x,key);
+  if(!descriptor||!('value' in descriptor)||!isPlainJSONTree(descriptor.value,seen))return false;
+ }
+ seen.delete(x);return true;
+}
 export function isPinnedCTRCore(core){
  if(!core||typeof core!=='object'||Array.isArray(core))return false;
  try{
   // A JSON-parsed regulatory source has no custom serializer.
-  if('toJSON' in core||Object.getPrototypeOf(core)!==Object.prototype)return false;
+  if(!isPlainJSONTree(core,new WeakSet()))return false;
   const s=JSON.stringify(core);
   if(typeof s!=='string'||s.length<800000||s.length>1100000)return false;
   return sha256Utf8(s)===PINNED_CTR_R25_JSON_SHA256;
