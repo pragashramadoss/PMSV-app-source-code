@@ -29,7 +29,7 @@ for(const c of r42.sample_scheme_by_actual_product_class){
  assert.equal(c.packaged.laboratory_count,3);
  assert.equal(c.pdf_page_image_visually_verified??c.screenshot_page_1_visually_verified,true);
 }
-const passBase={actualSKUAndRecipeValidated:true,actualProductClassVerified:true,productClass:"DIRECT_CONSUMPTION",purpose:"REGULATOR",currentGazetteAndAmendmentsReviewed:true,actualLotIdentityAndTraceabilityVerified:true,approvedReferenceMethodAndSampleHandlingVerified:true,allThreeAccreditedLaboratoriesVerified:true,allThreeLabFoodSafetyResultsReviewed:true,allApplicableMicroCriteriaSatisfied:true,
+const passBase={actualSKUAndRecipeValidated:true,actualProductClassVerified:true,productClass:"DIRECT_CONSUMPTION",purpose:"REGULATOR",currentGazetteAndAmendmentsReviewed:true,actualLotIdentityAndTraceabilityVerified:true,approvedReferenceMethodAndSampleHandlingVerified:true,allThreeAccreditedLaboratoriesVerified:true,allThreeLabFoodSafetyResultsReviewed:true,allApplicableMicroCriteriaSatisfied:true,processHygieneEvidenceReviewed:true,claimedMicroorganismLabelRequirementReviewed:true,
 labSets:[{labId:"LabA",accredited:true,sampleUnitCount:5,allApplicableCriteriaMet:true},{labId:"LabB",accredited:true,sampleUnitCount:5,allApplicableCriteriaMet:true},{labId:"LabC",accredited:true,sampleUnitCount:5,allApplicableCriteriaMet:true}]};
 assert.equal(REGULATOR_SOURCE_PLAN.bulk.sampleUnits,5);
 assert.equal(REGULATOR_SOURCE_PLAN.packaged.sampleUnits,15);
@@ -45,6 +45,19 @@ for(const id of RECIPE_IDS.filter(x=>!RECIPE_SOURCE_HOLDS.includes(x))){
   assert.equal(out.legalPASS,false);
   assert.equal(out.commercialRelease,false);
  }
+ // Test class-specific scope: don't demand pathogens where Gazette says NA.
+ const unprocessed={...pack,productClass:"UNPROCESSED_NOT_DIRECT_CONSUMPTION"};
+ delete unprocessed.allThreeLabFoodSafetyResultsReviewed;
+ assert.equal(reviewAyurvedaMicroSampling(id,unprocessed).status,"REGULATOR_SAMPLING_SOURCE_REVIEW_READY");
+ assert.equal(reviewAyurvedaMicroSampling(id,{...unprocessed,processHygieneEvidenceReviewed:false}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
+ // Fermented class has no standard APC/YM/Enterobacteriaceae process-hygiene row,
+ // but requires fermented microbe label/identity evidence in addition to food-safety criteria.
+ const fermented={...pack,productClass:"FERMENTED"};
+ delete fermented.processHygieneEvidenceReviewed;
+ assert.equal(reviewAyurvedaMicroSampling(id,fermented).status,"REGULATOR_SAMPLING_SOURCE_REVIEW_READY");
+ assert.equal(reviewAyurvedaMicroSampling(id,{...fermented,claimedMicroorganismLabelRequirementReviewed:false}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
+ assert.equal(reviewAyurvedaMicroSampling(id,{...fermented,allThreeLabFoodSafetyResultsReviewed:false}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
+ assert.equal(reviewAyurvedaMicroSampling(id,{...pack,allThreeLabFoodSafetyResultsReviewed:false}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
  assert.equal(reviewAyurvedaMicroSampling(id,{...pack,sampleUnitWeightsG:Array(5).fill(175)}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
  assert.equal(reviewAyurvedaMicroSampling(id,{...pack,labSets:pack.labSets.slice(0,1)}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
  assert.equal(reviewAyurvedaMicroSampling(id,{...pack,labSets:[pack.labSets[0],pack.labSets[0],pack.labSets[2]]}).status,"REGULATOR_SAMPLING_EVIDENCE_HOLD");
