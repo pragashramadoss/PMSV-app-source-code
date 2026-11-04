@@ -21,7 +21,7 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.18'),{scope:appUrl('/'),updateViaCache:'none'});
+ const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.23'),{scope:appUrl('/'),updateViaCache:'none'});
  await navigator.serviceWorker.ready;
  return reg;
 }
@@ -45,11 +45,27 @@ async function prepareGrantedSubscription(){
  const response=await fetch(appUrl('/api/push'),{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(12000)});
  const config=await response.json().catch(()=>({})) as {publicKey?:string;error?:string};
  if(!response.ok||!config.publicKey)throw Error(config.error||'Could not prepare notifications.');
+ const key=pushKey(config.publicKey);
  let sub=await reg.pushManager.getSubscription();
  let token=localStorage.getItem('pmsv-push-token');
- if(sub&&!token){await sub.unsubscribe();sub=null}
+ // An old browser subscription cannot receive a push signed with a new VAPID key.
+ // The endpoint may still exist and pass POST registration, but the push provider rejects delivery.
+ const oldKey=sub?.options.applicationServerKey;
+ const keyMismatch=Boolean(sub&&(!oldKey||oldKey.byteLength!==key.byteLength||
+  !new Uint8Array(oldKey).every((byte,i)=>byte===key[i])));
+ if(sub&&(!token||keyMismatch)){
+  if(keyMismatch&&token){
+   try{await fetch(appUrl('/api/push'),{
+    method:'DELETE',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({endpoint:sub.endpoint,token}),signal:AbortSignal.timeout(8000)
+   })}catch{/* The old endpoint is unusable; the server expires it on delivery. */}
+  }
+  if(!await sub.unsubscribe())throw Error('Notification subscription could not be refreshed. Turn notifications off and on.');
+  sub=null;
+  if(keyMismatch){token=null;localStorage.removeItem('pmsv-push-token')}
+ }
  if(!token){token=crypto.randomUUID()+crypto.randomUUID();localStorage.setItem('pmsv-push-token',token)}
- if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKey(config.publicKey)});
+ if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
  try{await postSubscription(sub,token)}
  catch(e){
   if((e as Error&{status?:number}).status!==409)throw e;
@@ -190,7 +206,7 @@ export default function AppNotifications(){
    });
    const data=await result.json().catch(()=>({})) as {error?:string};
    if(!result.ok)throw Error(data.error||'Test notification could not be sent.');
-   setMessage('Test notification sent. It may take a few seconds to appear.');
+   setMessage('Push provider accepted the test. Check whether it arrives on your phone.');
   }catch(e){setMessage(e instanceof Error?e.message:'Test notification could not be sent.')}
   finally{setBusy(false)}
  }
