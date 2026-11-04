@@ -1,0 +1,22 @@
+name: R28 verify 55 source-identity evidence holds
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-55-source-identity-r28-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test exact 55-case register, 137/533 preservation and no-PASS rules
+        run: python3 scripts/verify_ctr_55_source_identity_r28_20261104.py
+      - name: Assert this checkpoint does not edit production rules or existing catalogue
+        shell: bash
+        run: |
+          test -s fssai-helper/ctr-55-source-identity-r28-2026-11-04.json
+          test -s fssai-helper/ctr-55-source-identity-r28-2026-11-04.md
+          git status --short
+          test -z "$(git status --porcelain)"
