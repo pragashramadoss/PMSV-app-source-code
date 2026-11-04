@@ -1,3 +1,4 @@
+import {isPinnedCTRCore} from './ctr-source-integrity-r27-2026-11-04.mjs';
 /** R25 FSSAI Version IX source-anchored comparisons. NEVER full product or lot approval. */
 const URL='https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf';
 const out=(kind,status,reason,extra={})=>({kind,status,reason,sourceUrl:URL,
@@ -8,6 +9,7 @@ const num=n=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
 const date=s=>{if(typeof s!=='string'|| !/^\d{4}-\d{2}-\d{2}$/.test(s))return false;
  const d=new Date(s+'T00:00:00.000Z');return Number.isFinite(d.valueOf())&&d.toISOString().slice(0,10)===s;};
 const prelim=(kind,core,ctx)=>{
+ if(!isPinnedCTRCore(core))return hold(kind,'Source-data integrity or pinned Version IX digest mismatch; no comparison');
  if(core?.source_version!=='Version IX (03.02.2026)' ||
     core.residue_mrls?.pesticides?.length!==213 ||
     core.antibiotic_and_pharmacological_substances?.veterinary_tolerance_limits?.rows?.length!==49)
