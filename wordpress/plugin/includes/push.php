@@ -122,6 +122,22 @@ function pmsv_wp_daily_digest($news, $now=null) {
         'ttl'=>max(1,$now->modify('tomorrow')->setTime(0,0)->getTimestamp()-$now->getTimestamp())];
 }
 
+function pmsv_wp_retryable_push_status($code) {
+    return $code===0 || $code===429 || ($code>=500 && $code<=599);
+}
+
+/** Schedule a bounded follow-up only for transient provider errors. WP-Cron requires site traffic. */
+function pmsv_wp_schedule_push_retry() {
+    $day=(new DateTimeImmutable('now',new DateTimeZone('Asia/Kolkata')))->format('Y-m-d');
+    $state=get_option('pmsv_wp_push_retry_state',[]);
+    $attempts=is_array($state)&&($state['day']??'')===$day?(int)($state['attempts']??0):0;
+    if($attempts>=2)return false;
+    if(wp_next_scheduled('pmsv_wp_retry_push'))return true;
+    $scheduled=wp_schedule_single_event(time()+660,'pmsv_wp_retry_push');
+    if($scheduled)update_option('pmsv_wp_push_retry_state',['day'=>$day,'attempts'=>$attempts+1],false);
+    return (bool)$scheduled;
+}
+
 function pmsv_wp_dispatch() {
     global $wpdb;$t=pmsv_wp_table('devices');
     $digest=pmsv_wp_daily_digest(pmsv_wp_archive());
@@ -129,21 +145,44 @@ function pmsv_wp_dispatch() {
     $cutoff=$digest['cutoff'];$now=(int)floor(microtime(true)*1000);
     $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d LIMIT 20",$cutoff,$now),ARRAY_A);
     if($wpdb->last_error)throw new RuntimeException('Push read failed');
-    $accepted=0;$failed=0;$keys=$rows?pmsv_wp_keys():null;
+    $accepted=0;$failed=0;$expired=0;$retryable=0;$failureCodes=[];$keys=$rows?pmsv_wp_keys():null;
     foreach($rows as $row){
-        $claim=$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d,retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d",$cutoff,$now+3600000,$row['id'],$row['seen_at'],$now));if(!$claim)continue;
+        // Atomic claim prevents the main updater and a WordPress retry from sending twice.
+        // An unsuccessful claim is eligible again after ten minutes, not immediately.
+        $claim=$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d,retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d",$cutoff,$now+600000,$row['id'],$row['seen_at'],$now));
+        if(!$claim)continue;
+        $reason='internal';$canRetry=false;
         try{
-            if(!pmsv_wp_endpoint($row['endpoint']))throw new RuntimeException('Invalid endpoint');
-            $r=wp_safe_remote_post($row['endpoint'],['timeout'=>10,'redirection'=>0,'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),'TTL'=>(string)$digest['ttl'],'Urgency'=>'normal','Content-Length'=>'0'],'body'=>'']);
-            $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
-            if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);continue;}
-            if($code<200||$code>=300)throw new RuntimeException('Provider declined');
+            if(!pmsv_wp_endpoint($row['endpoint'])){$reason='invalid_endpoint';throw new RuntimeException('Invalid endpoint');}
+            $r=wp_safe_remote_post($row['endpoint'],[
+                'timeout'=>10,'redirection'=>0,
+                'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),
+                    'TTL'=>(string)$digest['ttl'],'Urgency'=>'normal','Content-Length'=>'0'],
+                'body'=>''
+            ]);
+            $code=is_wp_error($r)?0:(int)wp_remote_retrieve_response_code($r);
+            if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);$expired++;continue;}
+            if($code<200||$code>=300){
+                $reason=$code?'http_'.$code:'transport_error';
+                $canRetry=pmsv_wp_retryable_push_status($code);
+                throw new RuntimeException('Provider declined');
+            }
             $wpdb->query($wpdb->prepare("UPDATE $t SET retry_at=0 WHERE id=%s AND seen_at=%d",$row['id'],$cutoff));
             $accepted++;
-        }catch(Throwable $e){$failed++;$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));}
+        }catch(Throwable $e){
+            $failed++;
+            $failureCodes[$reason]=($failureCodes[$reason]??0)+1;
+            if($canRetry)$retryable++;
+            // Restore only the unsent cursor; the retry clock stays in place.
+            $wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));
+        }
     }
-    $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,(int)floor(microtime(true)*1000)));
-    return compact('accepted','failed','remaining');
+    $checkedAt=(int)floor(microtime(true)*1000);
+    $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,$checkedAt));
+    $pendingRetries=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at>%d",$cutoff,$checkedAt));
+    $retryScheduled=$retryable>0?pmsv_wp_schedule_push_retry():false;
+    // Aggregate codes only: never return endpoints, device IDs, tokens or signing keys.
+    return compact('accepted','failed','remaining','expired','pendingRetries','failureCodes','retryScheduled');
 }
 
 /**
