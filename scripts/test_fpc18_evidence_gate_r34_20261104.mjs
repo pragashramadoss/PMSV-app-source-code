@@ -92,5 +92,5 @@ for(const mutation of [
  const bad=structuredClone(register);mutation(bad);
  safe('tampered source register blocked',assessFpc18SourceRoute(bad,input),'SOURCE_INTEGRITY_HOLD');
 }
-assert.equal(count,12*(9+REQUIRED_EVIDENCE_FIELDS.length)+3+8);
+assert.equal(count,12*(10+REQUIRED_EVIDENCE_FIELDS.length)+3+8);
 console.log('R34 PASS: '+count+' evidence-routing and no-PASS scenarios; all 533 IDs and 12 Annexure II category routes preserved');
