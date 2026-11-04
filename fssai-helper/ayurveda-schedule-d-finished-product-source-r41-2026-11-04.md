@@ -75,7 +75,7 @@ Schedule C includes a maximum of **0.5% Kewda/Kewra oil (from Ketaki)** as a par
 - No changes to live PMSV, raw numeric CTR rules, product master or draft-PR merge state.
 
 ### Primary official text
-- [FSSAI Ayurveda Aahara Gazette (5 May 2022 notification; 6 May 2022 Gazette)](https://www.fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf), Regulation 5, Schedules C and D, Gazette printed pp.22–25.
+- [FSSAI Ayurveda Aahara Gazette (5 May 2022 notification; 6 May 2022 Gazette)](https://fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf), Regulation 5, Schedules C and D, Gazette printed pp.22–25.
 - [FSSAI FoSCoS standard Category A product list](https://fcstraining.fssai.gov.in/standard-product).
 
 Structured source register: `fssai-helper/ayurveda-schedule-d-finished-product-source-r41-2026-11-04.json`. Evidence-only guard: `fssai-helper/ayurveda-schedule-d-evidence-gate-r41-20261104.mjs`.
