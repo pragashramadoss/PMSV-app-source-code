@@ -29,7 +29,7 @@ assert.equal(r.original_R51_FSSR_blank_rows,33);
 assert.equal(r.original_R51_FCS_blank_rows,9);
 assert.equal(r.original_R51_unique_gap_ids,34);
 assert.equal(r.new_identifiable_FSSR_clause_source_count,1);
-assert.equal(r.other_original_blank_FSSR_records_not_reviewed_in_R57,32);
+assert.equal(r.other_R51_FSSR_blank_records_outside_R57,32);
 assert.equal(r.original_R29_R50_product_CTR_article_holds,137);
 assert.equal(r.protein_condition.original_2018_PDCAAS_min,70);
 assert.equal(r.protein_condition.amended_2023_PDCAAS_min,90);
