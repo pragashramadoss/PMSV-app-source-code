@@ -195,7 +195,7 @@ lines=[
  '|---|---|---|---:|'
 ]
 for x in rules:
-  val=('no antibiotic use permitted' if x['source_limit'] is None else str(x['source_limit'])+' '+x['unit'])
+  val=('no antibiotic use permitted' if x['limit'] is None else str(x['limit'])+' '+x['unit'])
   lines.append('| '+x['source_id']+' | '+x['article']+' | '+val+' | '+str(x['pdf_page_one_based'])+' |')
 lines += ['','## Recipe and source counts','','| Recipe | Ingredient rows | Source references | Status |','|---|---:|---:|---|']
 for x in summaries:
