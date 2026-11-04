@@ -81,7 +81,33 @@ export function veterinaryBySource(core,ctx={}){
  const rows=e.rows.filter(x=>x.article===ctx.foodArticle);
  if(rows.length!==1)return hold(kind,'No single exact veterinary food article');
  const row=rows[0],lim=decimal(String(row.limit));
- if(lim===null||row.unit!=='mg/kg')return hold(kind,'Source limit not safely numeric');
+ // FSSAI Version IX pp. 41-42 has two stranded "Muscle" entries without
+ // a determinable species heading. The core records them as source-locked.
+ if(row.locked_source_alignment===true)
+   return hold(kind,'Veterinary source row has unresolved species/tissue alignment; do not compare',
+     {veterinarySerial:e.serial,sourceArticle:row.article});
+ // Before 1 Dec 2026, seafood tetracycline/oxytetracycline 0.1 mg/kg
+ // under 2.3.2(1) overlaps the named fish/prawn 0.2 mg/kg row of 2.3.2(4).
+ // A caller's chosen article cannot resolve the competing source provisions.
+ if(e.serial===7 && (row.article==='Giant prawn (Paeneusmonodon) — muscle' ||
+                     row.article==='Oxytetracycline — Fish'))
+   return hold(kind,'Overlapping seafood tetracycline articles (0.1 versus 0.2 mg/kg) require legal reconciliation',
+     {veterinarySerial:e.serial,sourceArticle:row.article,
+      conflictingSourceLimitsMgKg:[0.1,0.2]});
+ if(lim===null)return hold(kind,'Source limit not safely numeric');
+ if(row.unit==='mg/l'){
+   // Ceftiofur, Gentamicin and Spectinomycin each have a cattle-milk
+   // source entry expressly reported per litre, not per kilogram.
+   if(![8,21,35].includes(e.serial)||row.article!=='Cattle — Milk' ||
+      ctx.sampleBasis!=='liquid-cattle-milk'||ctx.unit!=='mg/L' || !num(ctx.measured))
+     return hold(kind,'Cattle milk requires verified liquid-cattle-milk matrix and nonnegative mg/L result; no density conversion');
+   return out(kind,ctx.measured<=lim?'SOURCE_ROW_WITHIN':'SOURCE_ROW_EXCEEDS',
+     'Cattle-milk source row only; not whole-product compliance or release',
+     {measured:ctx.measured,sourceLimit:lim,unit:'mg/L',sourcePrintedUnit:'mg/l',
+      veterinarySerial:e.serial,drugName:e.name,sourceArticle:row.article,
+      legalArticleStillConditional:true});
+ }
+ if(row.unit!=='mg/kg')return hold(kind,'Source unit not supported; no automatic conversion');
  return compare(kind,ctx,lim,{veterinarySerial:e.serial,drugName:e.name,
    sourceArticle:row.article,legalArticleStillConditional:true});
 }
