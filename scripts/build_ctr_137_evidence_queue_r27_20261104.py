@@ -44,7 +44,8 @@ assert len(explicit)==56 and explicit<=pending
 conditional_keys={key for key in c if any(w in key for w in ('conditional','locked','variant','package')) and not re.match(r'r(?:1[5-9]|2\d)_',key)}
 for key in conditional_keys:walk(c[key],key)
 old_conditional={pid for pid in pending if ref[pid]&conditional_keys}
-old_commodity={pid for pid in pending if ref[pid]&reviews}
+# R15 evaluates conditional matches first; overlapping commodity refs are secondary.
+old_commodity={pid for pid in pending if (ref[pid]&reviews) and pid not in old_conditional}
 assert len(old_conditional)==23,('old conditional',len(old_conditional))
 assert len(old_commodity)==58,('old commodity',len(old_commodity))
 assert not(old_conditional&old_commodity or old_conditional&explicit or old_commodity&explicit)
