@@ -13,6 +13,8 @@ function pmsv_wp_base() { return ''; }
 require_once PMSV_WP_DIR . 'includes/security.php';
 require_once PMSV_WP_DIR . 'includes/storage.php';
 require_once PMSV_WP_DIR . 'includes/push.php';
+// Attempt transient failed news pushes at most twice more; WordPress cron fires on site traffic.
+add_action('pmsv_wp_retry_push','pmsv_wp_dispatch');
 require_once PMSV_WP_DIR . 'includes/audit-email.php';
 require_once PMSV_WP_DIR . 'includes/discussions-admin.php';
 register_activation_hook(__FILE__, 'pmsv_wp_install');
