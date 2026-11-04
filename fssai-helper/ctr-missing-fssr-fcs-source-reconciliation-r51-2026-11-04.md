@@ -26,7 +26,7 @@ All nine R29 Ayurveda Category A source records have blank FCS. The official **1
 
 The **20 July 2021 Indian Sweets/Snacks Direction** defines 18.1/18.2 categories for licensing and restricts FPC 18 applicability for already standardized products in mapped FPC 01–14. Paragraph 4(b) and **Annexure II Tables 1/2** map **additive provisions** to particular food categories; they do **not** turn those mapped numbers into a single blanket standardized finished-product FSSR clause. Clauses 4(f)–4(i) also require actual category and base-food contaminant, process microbiology, aflatoxin/DON and pesticide checks. R34's category-specific mapping is linked for each of the 12 cases.
 
-### The other 12 blank FSSR records
+### The other 13 blank FSSR records
 
 These are **two interim dried seed routes**, **three mouth-freshener classes**, **seven category-99 ingredient/additive/mixture routes**, and **one formulated children's supplement**. They need actual ingredient identity, source/grade, intended use, legally operative classification and specific regulatory provisions; no invented generic FSSR clause was inserted.
 
