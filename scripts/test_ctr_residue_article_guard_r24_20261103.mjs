@@ -1,25 +1,41 @@
 import assert from 'node:assert/strict';
 import {reviewPesticide,reviewProhibitedVeterinary,reviewHoneyAntibiotic} from '../fssai-helper/ctr-residue-article-guard-r24-2026-11-03.mjs';
-const lock=r=>{assert.equal(r.productApproved,false);assert.equal(r.fullCurrentLawComplete,false);assert.equal(r.commercialReleaseAuthorized,false);assert.equal(r.sourceComparatorOnly,true);assert.notEqual(r.status,'PASS')};
-const p={assessmentDate:'2026-11-03',pesticideIdentified:true,commodityArticleVerified:true,residueDefinitionVerified:true,methodAndMatrixVerified:true,unit:'mg/kg',measured:0.009};
-let x=reviewPesticide({...p});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewPesticide({...p,specificMRLFixed:false});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewPesticide({...p,specificMRLFixed:false,noMRLFixedVerifiedFromCurrentSource:true});lock(x);assert.equal(x.status,'SOURCE_ROW_WITHIN');assert.equal(x.limit,0.01);
-x=reviewPesticide({...p,specificMRLFixed:true,specificMRL:0.005});lock(x);assert.equal(x.status,'SOURCE_ROW_EXCEEDS');
-x=reviewPesticide({...p,specificMRLFixed:true});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewPesticide({...p,specificMRLFixed:true,specificMRL:0.05,unit:'ug/kg'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewPesticide({...p,specificMRLFixed:true,specificMRL:0.01,assessmentDate:'2026-12-01'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewPesticide({...p,specificMRLFixed:true,specificMRL:0.01,assessmentDate:'2026-12-01',december2026CTRReconciled:true});lock(x);assert.equal(x.status,'SOURCE_ROW_WITHIN');
-x=reviewPesticide({...p,specificMRLFixed:true,specificMRL:0.01,assessmentDate:'2026-02-30'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-const v={assessmentDate:'2026-11-03',productOriginScopeVerified:true,substanceOnProhibitedListVerified:true,analyteAndMetabolitesVerified:true,methodAndMatrixVerified:true,unit:'mg/kg',measured:0.0002};
-x=reviewProhibitedVeterinary({...v,substance:'Chloramphenicol'});lock(x);assert.equal(x.limit,0.0003);assert.equal(x.veterinaryUsePermitted,false);
-x=reviewProhibitedVeterinary({...v,substance:'Colistin',measured:0.002});lock(x);assert.equal(x.limit,0.001);assert.equal(x.status,'SOURCE_ROW_EXCEEDS');
-x=reviewProhibitedVeterinary({...v,substance:'Chloramphenicol',unit:'ug/kg'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewProhibitedVeterinary({...v,substance:'Chloramphenicol',productOriginScopeVerified:false});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewProhibitedVeterinary({...v,substance:'Colistin',assessmentDate:'2026-12-15'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-const h={assessmentDate:'2026-11-03',isActualHoney:true,analyteAndMarkerVerified:true,methodPerformanceVerified:true,sourceMRPL:0.3,unit:'ug/kg',measured:0.2};
-x=reviewHoneyAntibiotic(h);lock(x);assert.equal(x.status,'MISUSE_TEST_INTERPRETATION_ONLY');assert.equal(x.antibioticUsePermitted,false);
-x=reviewHoneyAntibiotic({...h,unit:'mg/kg'});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewHoneyAntibiotic({...h,methodPerformanceVerified:false});lock(x);assert.equal(x.status,'EVIDENCE_HOLD');
-x=reviewHoneyAntibiotic({...h,sourceMRPL:10,measured:12});lock(x);assert.equal(x.status,'MISUSE_TEST_INTERPRETATION_ONLY');
-console.log('R24 residue source comparator: 18 scenarios passed; all no-PASS invariants retained');
+let n=0;
+function reject(fn,kind){
+ const r=fn();assert.equal(r.kind,kind);assert.equal(r.status,'EVIDENCE_HOLD');
+ assert.equal(r.legacyComparatorDisabled,true);assert.equal(r.sourceComparatorOnly,true);
+ assert.equal(r.productApproved,false);assert.equal(r.fullCurrentLawComplete,false);
+ assert.equal(r.commercialReleaseAuthorized,false);n++;return r;
+}
+const p={assessmentDate:'2026-11-04',pesticideIdentified:true,commodityArticleVerified:true,
+ residueDefinitionVerified:true,methodAndMatrixVerified:true,unit:'mg/kg',measured:0.009};
+for (const override of [{},{specificMRLFixed:false},
+ {specificMRLFixed:false,noMRLFixedVerifiedFromCurrentSource:true},
+ {specificMRLFixed:true,specificMRL:0.005},
+ {specificMRLFixed:true},{specificMRLFixed:true,specificMRL:999999999},
+ {specificMRLFixed:true,specificMRL:0.01,unit:'ug/kg'},
+ {specificMRLFixed:true,specificMRL:0.01,assessmentDate:'2026-12-01',december2026CTRReconciled:true},
+ {specificMRLFixed:true,specificMRL:0.01,assessmentDate:'2026-02-30'}]){
+ reject(()=>reviewPesticide({...p,...override}),'pesticide');
+}
+const v={assessmentDate:'2026-11-04',productOriginScopeVerified:true,
+ substanceOnProhibitedListVerified:true,analyteAndMetabolitesVerified:true,
+ methodAndMatrixVerified:true,unit:'mg/kg',measured:0.0002};
+for(const override of [{substance:'Chloramphenicol'},
+ {substance:'Colistin',measured:0.002},
+ {substance:'Unknown',substanceOnProhibitedListVerified:true},
+ {substance:'Chloramphenicol',unit:'ug/kg'},
+ {substance:'Colistin',assessmentDate:'2026-12-15'}]){
+ const r=reject(()=>reviewProhibitedVeterinary({...v,...override}),'prohibited-veterinary');
+ assert.equal(r.veterinaryUsePermitted,false);
+}
+const h={assessmentDate:'2026-11-04',isActualHoney:true,
+ analyteAndMarkerVerified:true,methodPerformanceVerified:true,
+ sourceMRPL:0.3,unit:'ug/kg',measured:0.2};
+for(const override of [{},{sourceMRPL:10000000,measured:12},
+ {unit:'mg/kg'},{methodPerformanceVerified:false}]){
+ const r=reject(()=>reviewHoneyAntibiotic({...h,...override}),'honey-antibiotic');
+ assert.equal(r.antibioticUsePermitted,false);
+}
+assert.equal(n,18);
+console.log('R27 legacy R24 migration PASS: 18 former caller-supplied threshold cases now fail closed');
