@@ -1,0 +1,56 @@
+name: R34 validate FPC18 12-route regulatory evidence gate
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/validate-fpc18-r34-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify code syntax and all fail-closed FPC18 audit cases
+        run: |
+          node --check fssai-helper/fpc18-evidence-gate-r34-20261104.mjs
+          node --check scripts/test_fpc18_evidence_gate_r34_20261104.mjs
+          node scripts/test_fpc18_evidence_gate_r34_20261104.mjs
+      - name: Independently assert source references, 533 catalogue, 12 FPC18 and 137 unchanged holds
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('fssai-helper/ctr-fpc18-full-route-evidence-r34-2026-11-04.json').read_text())
+          m=json.loads(Path('fssai-product-helper-preview-01/data/product-master-v1.json').read_text())
+          d=json.loads(Path('fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json').read_text())
+          actual={r['catalog_id']:r for r in d['records'] if r['r29_source_screening_route']=='CONDITIONAL_FPC18_DIRECTION'}
+          assert len(m['catalog_products'])==len({r['id'] for r in m['catalog_products']})==533
+          assert len(d['records'])==137 and d['exact_CTR_product_article_applicability_still_open']==137
+          assert len(x['products'])==len(actual)==12
+          assert {r['catalog_id'] for r in x['products']}==set(actual)
+          expected={'Lead':2.5,'Copper':30.0,'Arsenic':1.1,'Tin':250.0,'Cadmium':1.5,'Mercury':1.0}
+          assert {r['analyte']:r['limit'] for r in x['directed_contaminant_article_rows']}==expected
+          assert x['directed_source_article_occurrences']==72
+          assert x['full_product_approvals']==x['full_CTR_panels_verified']==0
+          assert x['original_product_master_and_live_engine_modified'] is False
+          for p in x['products']:
+            assert p['catalog_id'] in actual
+            assert p['fpc_code']==actual[p['catalog_id']]['fcs']
+            assert p['fpc18_eligibility_adjudicated'] is False
+            assert p['auto_apply_numeric_limits'] is False
+            assert p['product_fully_legally_verified'] is False
+            assert p['additive_mapping_is_not_blanket_additive_permission'] is True
+            assert p['commercial_lot_release_authorized'] is False
+            assert len(p['source_limits_for_eligible_fpc18_only'])==6
+          print('R34 independent 533/137/12 and source-table identity checks PASS')
+          PY
+      - name: Check all source manifests are committed and production unchanged
+        shell: bash
+        run: |
+          test -s fssai-helper/ctr-fpc18-full-route-evidence-r34-2026-11-04.json
+          test -s fssai-helper/ctr-fpc18-full-route-review-r34-2026-11-04.md
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          test -z "$(git status --porcelain)"
