@@ -1,0 +1,39 @@
+name: R27 verify authentic source and retire unsafe residue comparison
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-r27-source-integrity-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify pinned full source SHA256 and tamper holds
+        run: node scripts/test_ctr_source_integrity_r27_20261104.mjs
+      - name: Verify retired R24 caller supplied limits cannot pass
+        run: node scripts/test_ctr_residue_article_guard_r24_20261103.mjs
+      - name: Verify R25 pesticide veterinary honey source row regressions
+        run: node scripts/test_ctr_residue_source_r25_20261104.mjs
+      - name: Verify R26 milk and seafood source row regressions
+        run: node scripts/test_ctr_veterinary_matrix_r26_20261104.mjs
+      - name: Preserve original catalogue and all numeric residue tables
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          p=Path("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json")
+          c=json.loads(p.read_text())
+          assert hashlib.sha256(p.read_bytes()).hexdigest()=="acc284f0e99407cc133983b551a6dff533fccd731b559ecf4340ce4f6de2e2f8"
+          assert len(c["residue_mrls"]["pesticides"])==213
+          assert sum(len(x["rows"]) for x in c["residue_mrls"]["pesticides"])==1098
+          v=c["antibiotic_and_pharmacological_substances"]["veterinary_tolerance_limits"]["rows"]
+          assert len(v)==49 and sum(len(x["rows"]) for x in v)==358
+          m=json.loads(Path("fssai-product-helper-preview-01/data/product-master-v1.json").read_text())
+          assert len(m["catalog_products"])==len({x["id"] for x in m["catalog_products"]})==533
+          assert c["r25_pesticide_source_symbol_conflict_gates_2026_11_04"]["full_product_approvals"]==0
+          print("R27 original numeric source and 533-catalogue preservation PASS")
+          PY
