@@ -1,0 +1,17 @@
+name: Verify R24 residue fail-closed guard
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-r24-guards.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check pesticide, veterinary and honey source comparisons
+        run: node scripts/test_ctr_residue_article_guard_r24_20261103.mjs
+      - name: Check existing tables, amendments and no-PASS metadata
+        run: python3 scripts/check_ctr_residue_guards_r24_20261103.py

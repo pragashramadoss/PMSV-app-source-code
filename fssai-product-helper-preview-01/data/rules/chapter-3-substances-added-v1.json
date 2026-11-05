@@ -350,10 +350,12 @@
       "requirements": [
         {
           "parameter": "Purity as d-sorbitol C6H14O6",
-          "operator": ">=",
-          "value": "91 or 99",
+          "operator": "unresolved",
           "unit": "% by mass",
-          "condition": "Depending on the method of test used for analysis."
+          "condition": "Depending on the method of test used for analysis.",
+          "value_as_printed": "91 or 99",
+          "source_question_r12": "91 or 99 depends on method; source-to-method mapping must be verified, not selected for a favourable outcome.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Moisture",
@@ -418,7 +420,9 @@
           "unit": "mg/kg"
         }
       ],
-      "engine_note": "This is the identity/purity standard for Sorbitol. Permission to use Sorbitol in a finished food remains governed separately by the applicable product standard and/or Appendix A."
+      "engine_note": "This is the identity/purity standard for Sorbitol. Permission to use Sorbitol in a finished food remains governed separately by the applicable product standard and/or Appendix A.",
+      "machine_requirements_complete": false,
+      "review_scope_r12": "Specific source question blocks automatic acceptance; resolved rows do not grant full approval."
     },
     {
       "key": "3.2.1(12)",
@@ -3008,7 +3012,9 @@
           "parameter": "Loss on drying at 105°C for 3 hours over source-specified P3O4",
           "operator": "<=",
           "value": 0.5,
-          "unit": "% by mass"
+          "unit": "% by mass",
+          "source_question_r12": "Printed P3O4 desiccant requires original-method reconciliation; no silent reagent substitution.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Sulphated ash",
@@ -3023,9 +3029,16 @@
         },
         {
           "parameter": "Sulphate",
-          "operator": "<=",
-          "value": 0.05,
-          "unit": "% by mass"
+          "operator": "unresolved",
+          "unit": "not printed",
+          "previous_interpretation_r12": {
+            "operator": "<=",
+            "value": 0.05,
+            "unit": "% by mass"
+          },
+          "value_as_printed": "0.05",
+          "source_question_r12": "Source row prints 0.05 without an explicit unit/operator; do not infer a percent maximum.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Arsenic",
@@ -3041,8 +3054,10 @@
         }
       ],
       "source_note": "Drying reagent text is retained as extracted from the official source; PMSV does not normalize ambiguous source typography.",
-      "machine_requirements_complete": true,
-      "permission_note": "This is an identity/purity specification. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A."
+      "machine_requirements_complete": false,
+      "permission_note": "This is an identity/purity specification. Permission and maximum use level in a finished food remain governed separately by the applicable product standard and/or Appendix A.",
+      "identity_scope_r12": "Named L(+)-tartaric acid only. Catalogue L(+/-) is not proof that a racemate qualifies.",
+      "review_scope_r12": "Specific source question blocks automatic acceptance; resolved rows do not grant full approval."
     },
     {
       "key": "3.2.10(5)",
@@ -3691,12 +3706,16 @@
         {
           "parameter": "Salmonella",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Escherichia coli",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Arsenic",
@@ -3757,7 +3776,9 @@
           "parameter": "Viscosity of 1% solution",
           "operator": ">=",
           "value": 250,
-          "unit": "source viscosity units"
+          "unit": "not printed",
+          "source_question_r12": "The minimum 250 for a 1% solution lacks a specified viscosity unit.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Karaya gum test",
@@ -3767,12 +3788,16 @@
         {
           "parameter": "Salmonella",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Escherichia coli",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Lead",
@@ -3787,8 +3812,9 @@
           "unit": "mg/kg"
         }
       ],
-      "machine_requirements_complete": true,
-      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+      "machine_requirements_complete": false,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A.",
+      "review_scope_r12": "Specific source question blocks automatic acceptance; resolved rows do not grant full approval."
     },
     {
       "key": "3.2.11(7)",
@@ -3843,12 +3869,16 @@
         {
           "parameter": "Salmonella",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Escherichia coli",
           "operator": "negative",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Lead",
@@ -3900,11 +3930,19 @@
         },
         {
           "parameter": "Ash",
-          "operator": "range",
-          "min": 18,
-          "max": 27,
+          "operator": "unresolved",
           "unit": "% by mass",
-          "source_note": "Table prints 'Max' while giving 18–27; stored as numeric range."
+          "source_note": "Table prints 'Max' while giving 18–27; stored as numeric range.",
+          "previous_interpretation_r12": {
+            "operator": "range",
+            "min": 18,
+            "max": 27,
+            "unit": "% by mass"
+          },
+          "value_as_printed": "18-27",
+          "heading_as_printed": "Max",
+          "source_question_r12": "Source maximum heading conflicts with printed 18-27; do not infer an unqualified range.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Total plate count",
@@ -3931,8 +3969,9 @@
           "unit": "mg/kg"
         }
       ],
-      "machine_requirements_complete": true,
-      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+      "machine_requirements_complete": false,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A.",
+      "review_scope_r12": "Specific source question blocks automatic acceptance; resolved rows do not grant full approval."
     },
     {
       "key": "3.2.11(9)",
@@ -3981,12 +4020,16 @@
         {
           "parameter": "Escherichia coli",
           "operator": "absent",
-          "basis": "in 1 g"
+          "basis": "in 1 g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Salmonella",
           "operator": "absent",
-          "basis": "in 10 g"
+          "basis": "in 10 g",
+          "test_portion_g_r12": 10,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Arsenic",
@@ -4037,7 +4080,8 @@
           "parameter": "Protein (N × 5.7)",
           "operator": "<=",
           "value": 6,
-          "unit": "% by mass"
+          "unit": "% by mass",
+          "nitrogen_factor_r12": 5.7
         },
         {
           "parameter": "Starch",
@@ -4059,12 +4103,16 @@
         {
           "parameter": "Escherichia coli",
           "operator": "absent",
-          "basis": "per g"
+          "basis": "per g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Salmonella",
           "operator": "absent",
-          "basis": "in 10 g"
+          "basis": "in 10 g",
+          "test_portion_g_r12": 10,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Total plate count",
@@ -4171,12 +4219,14 @@
         {
           "parameter": "Salmonella",
           "operator": "negative",
-          "basis": "on 1 g"
+          "basis": "on 1 g",
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "E. coli",
           "operator": "negative",
-          "basis": "on 1 g"
+          "basis": "on 1 g",
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Arsenic",
@@ -4465,7 +4515,18 @@
         }
       ],
       "machine_requirements_complete": true,
-      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A.",
+      "aggregate_control_r12": {
+        "components": [
+          "methanol",
+          "ethanol",
+          "2-propanol"
+        ],
+        "component_max_percent": 1,
+        "combined_max_percent": 1,
+        "all_component_results_required": true,
+        "matrix": "pectin ingredient"
+      }
     },
     {
       "key": "3.2.11(16)",
@@ -4535,12 +4596,18 @@
         },
         {
           "parameter": "Salmonella spp.",
-          "operator": "negative"
+          "operator": "negative",
+          "basis": "negative per test; portion not stated",
+          "source_question_r12": "No test portion is printed. Do not invent 25 g or inherit another gum portion.",
+          "automatic_comparison_blocked": true,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Escherichia coli",
           "operator": "negative",
-          "basis": "in 1 g"
+          "basis": "in 1 g",
+          "test_portion_g_r12": 1,
+          "sampling_plan_r12": "Direct ingredient criterion only; no n/c/m/M lot plan prescribed here."
         },
         {
           "parameter": "Cadmium",
@@ -4567,8 +4634,20 @@
           "unit": "mg/kg"
         }
       ],
-      "machine_requirements_complete": true,
-      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A."
+      "machine_requirements_complete": false,
+      "permission_note": "This is an identity/purity specification. Finished-food permission and maximum level remain governed separately by the applicable product standard and/or Appendix A.",
+      "review_scope_r12": "Specific source question blocks automatic acceptance; resolved rows do not grant full approval.",
+      "aggregate_control_r12": {
+        "components": [
+          "ethanol",
+          "isopropanol",
+          "methanol"
+        ],
+        "component_max_percent": 0.1,
+        "combined_max_percent": 0.1,
+        "all_component_results_required": true,
+        "matrix": "carrageenan ingredient"
+      }
     },
     {
       "key": "3.2.12(1)",
@@ -5009,5 +5088,12 @@
       "Aluminium Lake of Sunset Yellow FCF highlighted legacy provision"
     ],
     "fail_closed_rule": "Where the exact scope of an omission marker is not machine-resolved, do not recreate the superseded requirement from older text."
+  },
+  "source_review_r12": {
+    "date": "2026-11-03",
+    "scope": "Selected ingredient/product applicability and source-question controls only; full 252-row offline registry and 19 direct microbial criteria are separate companions. Not integrated into live decisions.",
+    "current_law_complete": false,
+    "commercial_release_authorized": false,
+    "finished_food_use_authorized": false
   }
 }

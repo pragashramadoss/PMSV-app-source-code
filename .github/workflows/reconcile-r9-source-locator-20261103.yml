@@ -1,0 +1,61 @@
+name: Reconcile R9 source locator
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/reconcile-r9-source-locator-20261103.yml']
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct only the page locator and replay script
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,hashlib,copy,shutil
+          p=Path('fssai-product-helper-preview-01/data/rules/chapter-2-3-fruit-vegetable-v1.json')
+          before_sha='00e02f9acb49f37e7b8ac5941028b85beaa36cbd3f1aca12305413378944f5d9'
+          after_sha='03b90ee40a818064ea50946342ded18934ed0bc8c610b98412a5c64861adbd06'
+          assert hashlib.sha256(p.read_bytes()).hexdigest()==before_sha
+          d=json.loads(p.read_text());old=copy.deepcopy(d)
+          s=next(x for x in d['standards'] if x['key']=='2.3.31')
+          assert s['reduced_sugar_variant_r9']['source_pages']==[38]
+          s['reduced_sugar_variant_r9']['source_pages']=[37]
+          b=(json.dumps(d,ensure_ascii=False,indent=2)+'\n').encode()
+          assert hashlib.sha256(b).hexdigest()==after_sha
+          p.write_bytes(b)
+          q=Path('scripts/apply_fruit_vegetable_r9_core_20261103.py');t=q.read_text()
+          a="'source_pages':[38],'applies_when':'Specifically designated reduced or low-sugar jam/jelly/marmalade'"
+          assert t.count(a)==1 and before_sha in t
+          t=t.replace(a,a.replace('[38]','[37]')).replace(before_sha,after_sha);q.write_text(t)
+          for a,z in zip(old['standards'],d['standards']):
+              if a['key']!='2.3.31': assert a==z
+          assert s['reduced_sugar_variant_r9']['value']==45
+          assert d['source_review_r9']['current_law_complete'] is False
+          out=Path('fruit-vegetable-r9-final');out.mkdir()
+          paths=[p,Path('fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json'),Path('fssai-product-helper-preview-01/data/product-master-v1.json')]
+          manifest=[]
+          for f in paths:
+              shutil.copy2(f,out/f.name);manifest.append({'file':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
+          (out/'final-manifest.json').write_text(json.dumps({'scope':'Page locator corrected from 38 to 37; numerical value and all other data preserved. Original R9 application passed 3243 checks. No production deployment.','files':manifest},indent=2))
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Commit corrected locator on draft audit branch
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-3-fruit-vegetable-v1.json scripts/apply_fruit_vegetable_r9_core_20261103.py
+          git diff --cached --check
+          git commit -m 'Correct R9 reduced-sugar source page without changing numerical requirement'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fruit-vegetable-r9-final-20261103
+          path: fruit-vegetable-r9-final/
+          retention-days: 3
+          if-no-files-found: error

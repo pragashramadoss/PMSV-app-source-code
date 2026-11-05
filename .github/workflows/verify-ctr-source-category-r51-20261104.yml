@@ -1,0 +1,25 @@
+name: PMSV R51 source FSSR-FCS gap reconciliation and non-inheritance guards
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-missing-fssr-fcs-source-reconciliation-r51-2026-11-04.json'
+      - 'fssai-helper/ctr-source-category-evidence-gate-r51-20261104.mjs'
+      - 'scripts/test_ctr_source_category_r51_20261104.mjs'
+      - '.github/workflows/verify-ctr-source-category-r51-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-missing-fssr-fcs-source-reconciliation-r51-2026-11-04.json'
+      - 'fssai-helper/ctr-source-category-evidence-gate-r51-20261104.mjs'
+      - 'scripts/test_ctr_source_category_r51_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-source-provenance-and-no-exemption:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify all 34 source gap records, 102.1 and FPC18 noninheritance
+        run: node scripts/test_ctr_source_category_r51_20261104.mjs

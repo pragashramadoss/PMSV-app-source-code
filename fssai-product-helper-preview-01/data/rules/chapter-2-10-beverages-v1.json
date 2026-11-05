@@ -70,44 +70,51 @@
           "operator": "range",
           "min": 4,
           "max": 8,
-          "unit": "% m/m dry basis"
+          "unit": "% m/m dry basis",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Water-soluble ash",
           "operator": ">=",
           "value": 45,
-          "unit": "% of total ash"
+          "unit": "% of total ash",
+          "analytical_basis": "of total ash"
         },
         {
           "parameter": "Alkalinity of water-soluble ash as KOH",
           "operator": "range",
           "min": 1,
           "max": 3,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Acid-insoluble ash",
           "operator": "<=",
           "value": 1,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Water extract",
           "operator": ">=",
           "value": 32,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Crude fibre",
           "operator": "<=",
           "value": 16.5,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Iron filings",
           "operator": "<=",
           "value": 125,
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         }
       ],
       "process_aids": [
@@ -155,10 +162,13 @@
         },
         {
           "parameter": "Alkalinity of soluble ash as K2O",
-          "operator": ">=",
-          "value": 1,
+          "operator": "range",
           "unit": "% dry basis",
-          "max": 2.2
+          "max": 2.2,
+          "min": 1,
+          "source_pages": [
+            2
+          ]
         },
         {
           "parameter": "Crude fibre",
@@ -171,6 +181,17 @@
           "operator": "<=",
           "value": 125,
           "unit": "mg/kg"
+        },
+        {
+          "parameter": "Extract in printed reflux test",
+          "operator": ">=",
+          "value": 1.2,
+          "unit": "%",
+          "source_pages": [
+            2
+          ],
+          "source_question": "Printed drying at 180 C, 100 parts distilled water, one-hour reflux and minimum 1.2%. Resolve original notification/method before automatic comparison.",
+          "automatic_comparison_blocked": true
         }
       ],
       "process_aids": [
@@ -195,45 +216,54 @@
           "operator": "range",
           "min": 4,
           "max": 8,
-          "unit": "% m/m dry basis"
+          "unit": "% m/m dry basis",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Water-soluble ash",
           "operator": ">=",
           "value": 45,
-          "unit": "% of total ash"
+          "unit": "% of total ash",
+          "analytical_basis": "of total ash"
         },
         {
           "parameter": "Alkalinity of water-soluble ash as KOH",
           "operator": "range",
           "min": 1,
           "max": 3,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C",
+          "source_question": "Printed minimum uses total ash while preamble uses oven-dried material. Reconcile denominator; do not assume ordinary-tea basis.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Acid-insoluble ash",
           "operator": "<=",
           "value": 1,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Water extract",
           "operator": ">=",
           "value": 32,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Crude fibre",
           "operator": "<=",
           "value": 16.5,
-          "unit": "% m/m"
+          "unit": "% m/m",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         },
         {
           "parameter": "Total catechins",
           "operator": "range",
           "min": 9,
           "max": 19,
-          "unit": "% m/m dry basis"
+          "unit": "% m/m dry basis",
+          "analytical_basis": "material oven-dried at 103 +/- 2 C"
         }
       ],
       "prohibited_or_absent": [
@@ -252,7 +282,9 @@
           "parameter": "Moisture",
           "operator": "<=",
           "value": 6,
-          "unit": "% by mass"
+          "unit": "% by mass",
+          "source_question": "Moisture is by mass under a preamble expressing all figures on oven-dried material. Reconcile before automatic comparison.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Total ash — hot soluble product",
@@ -362,7 +394,19 @@
           "parameter": "Water-soluble ash",
           "operator": ">=",
           "value": 65,
-          "unit": "%"
+          "unit": "%",
+          "source_question": "The decaffeinated table says 65 percent by mass under a dry-weight preamble, unlike ordinary coffee explicitly saying of total ash. Reconcile denominator.",
+          "automatic_comparison_blocked": true
+        },
+        {
+          "parameter": "Alkalinity of soluble ash",
+          "operator": "range",
+          "min": 3.5,
+          "max": 5,
+          "unit": "ml 0.1 N HCl/g dry material",
+          "source_pages": [
+            6
+          ]
         },
         {
           "parameter": "Aqueous extract",
@@ -426,6 +470,16 @@
           "operator": "<=",
           "value": 0.3,
           "unit": "% dry basis"
+        },
+        {
+          "parameter": "Boiling-water solubility",
+          "operator": "qualitative",
+          "value": "Dissolves readily in 30 seconds with moderate stirring"
+        },
+        {
+          "parameter": "Cold-water solubility at 16±2°C",
+          "operator": "qualitative",
+          "value": "Soluble with moderate stirring in 3 minutes"
         }
       ],
       "prohibited_or_absent": [
@@ -491,7 +545,27 @@
           "parameter": "Coffee content",
           "operator": ">=",
           "value": 51,
-          "unit": "% by mass"
+          "unit": "% by mass",
+          "applies_to": [
+            "regular_roasted_ground",
+            "decaffeinated_roasted_ground"
+          ],
+          "automatic_comparison_requires_variant": true
+        },
+        {
+          "parameter": "Coffee content - instant variants",
+          "operator": ">=",
+          "value": 51,
+          "unit": "% by mass on dry basis",
+          "applies_to": [
+            "instant",
+            "decaffeinated_instant"
+          ],
+          "automatic_comparison_requires_variant": true,
+          "source_pages": [
+            8,
+            9
+          ]
         }
       ],
       "regular_roasted_ground": [
@@ -550,6 +624,16 @@
           "operator": ">=",
           "value": 1.4,
           "unit": "% dry basis"
+        },
+        {
+          "parameter": "Boiling-water solubility",
+          "operator": "qualitative",
+          "value": "Dissolves readily in 30 seconds with moderate stirring"
+        },
+        {
+          "parameter": "Cold-water solubility at 16±2°C",
+          "operator": "qualitative",
+          "value": "Soluble with moderate stirring in 3 minutes"
         }
       ],
       "decaffeinated_roasted_ground": [
@@ -608,11 +692,31 @@
           "operator": "<=",
           "value": 0.3,
           "unit": "% dry basis"
+        },
+        {
+          "parameter": "Boiling-water solubility",
+          "operator": "qualitative",
+          "value": "Dissolves readily in 30 seconds with moderate stirring"
+        },
+        {
+          "parameter": "Cold-water solubility at 16±2°C",
+          "operator": "qualitative",
+          "value": "Soluble with moderate stirring in 3 minutes"
         }
       ],
       "label_rules": [
         "Declare percentage of coffee and chicory used."
-      ]
+      ],
+      "label_direction_r8": {
+        "url": "https://www.fssai.gov.in/upload/advisories/2026/07/6a604e4037173Direction_Coffee%20Chicory.pdf",
+        "document_date": "2026-07-21",
+        "revised_declaration_effective_from": "2027-07-01",
+        "earlier_notification_in_abeyance": true,
+        "minimum_font_mm": 1,
+        "minimum_font_mm_when_PDP_exceeds_100_cm2": 2,
+        "other_label_requirements_still_apply": true,
+        "artwork_approved": false
+      }
     },
     {
       "key": "2.10.6(1)",
@@ -695,40 +799,53 @@
           "operator": "range",
           "min": 88,
           "max": 96,
-          "unit": "°C"
+          "unit": "°C",
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         },
         {
           "parameter": "Arsenic",
           "operator": "<=",
           "value": 3,
-          "unit": "ppm"
+          "unit": "ppm",
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         },
         {
           "parameter": "Lead",
           "operator": "<=",
           "value": 10,
-          "unit": "ppm"
+          "unit": "ppm",
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         },
         {
           "parameter": "Heavy metals as lead",
           "operator": "<=",
           "value": 40,
-          "unit": "ppm"
+          "unit": "ppm",
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         },
         {
           "parameter": "Acid value",
           "operator": "range",
           "min": 3,
-          "max": 9
+          "max": 9,
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         },
         {
           "parameter": "Hydroxyl number",
           "operator": "range",
           "min": 15,
-          "max": 45
+          "max": 45,
+          "matrix": "ester gum ingredient",
+          "not_a_finished_beverage_contaminant_limit": true
         }
       ],
-      "additives": "Other ingredients/additives only as permitted by this standard and Appendix A."
+      "additives": "Other ingredients/additives only as permitted by this standard and Appendix A.",
+      "ester_gum_identity_note_r8": "The sulphur test detection capability of 50 mg/kg is not a permitted sulphur maximum. Identity/solubility and absence-of-tall-oil tests remain required."
     },
     {
       "key": "2.10.6(2)",
@@ -779,7 +896,8 @@
         "Display caution that product is not recommended for children, pregnant or lactating women, or persons sensitive to caffeine.",
         "Where optional substances determine a daily quantity, label must state the appropriate per-day consumption limit; the chapter includes a 500 ml/day declaration framework."
       ],
-      "inheritance": "Ingredients, flavours, sweeteners, additives, contaminants and microbiological requirements follow the carbonated-water standard."
+      "inheritance": "Ingredients, flavours, sweeteners, additives, contaminants and microbiological requirements follow the carbonated-water standard.",
+      "scope_note_r8": "Caffeine is total from all sources, 145-300 mg/L. Optional ingredient maxima are mg/day, not mg/L. Carbonated-water microbiology is inherited; its ordinary 145 ppm caffeine maximum is not."
     },
     {
       "key": "2.10.6(3)",
@@ -920,7 +1038,9 @@
           "operator": "range",
           "min": 150,
           "max": 700,
-          "unit": "mg/L"
+          "unit": "mg/L",
+          "excludes_variant": "Natural Spring Water",
+          "automatic_comparison_requires_variant": true
         },
         {
           "parameter": "pH",
@@ -957,6 +1077,197 @@
           "operator": "<=",
           "value": 0.05,
           "unit": "mg/L"
+        },
+        {
+          "parameter": "Sulphide as H2S",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Manganese",
+          "operator": "<=",
+          "value": 2,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Copper",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Zinc",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Barium",
+          "operator": "<=",
+          "value": 1,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Antimony",
+          "operator": "<=",
+          "value": 0.005,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Nickel",
+          "operator": "<=",
+          "value": 0.02,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Borates as B",
+          "operator": "<=",
+          "value": 5,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            18
+          ]
+        },
+        {
+          "parameter": "Silver",
+          "operator": "<=",
+          "value": 0.01,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Chloride",
+          "operator": "<=",
+          "value": 200,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Sulphate",
+          "operator": "<=",
+          "value": 200,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Magnesium",
+          "operator": "<=",
+          "value": 50,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Calcium",
+          "operator": "<=",
+          "value": 100,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Sodium",
+          "operator": "<=",
+          "value": 150,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Cadmium",
+          "operator": "<=",
+          "value": 0.003,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Chromium",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Mercury",
+          "operator": "<=",
+          "value": 0.001,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Selenium",
+          "operator": "<=",
+          "value": 0.05,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Alkalinity as HCO3",
+          "operator": "range",
+          "min": 75,
+          "max": 400,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
         }
       ],
       "spring_water_special": [
@@ -964,7 +1275,9 @@
           "parameter": "TDS — Natural Spring Water",
           "operator": "<=",
           "value": 750,
-          "unit": "mg/L"
+          "unit": "mg/L",
+          "applies_to": "Natural Spring Water",
+          "replaces_ordinary_TDS_range": true
         }
       ],
       "pesticide": [
@@ -985,14 +1298,163 @@
         "Yeast and mould absent",
         "Salmonella and Shigella absent",
         "E. coli/thermotolerant coliforms absent in 250 ml",
-        "Total coliforms absent in 250 ml",
+        "Total coliforms: printed A x 250 ml; sample count unresolved, no automatic acceptance",
         "Pseudomonas aeruginosa absent in 250 ml",
         "Vibrio cholera and V. parahaemolyticus absent"
       ],
       "process_rules": [
         "Natural mineral water source and composition must be protected; bulk transport before packaging is prohibited.",
         "Only treatments permitted by the standard may be used."
-      ]
+      ],
+      "radioactivity_r8": [
+        {
+          "parameter": "Alpha activity",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "Bq/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        },
+        {
+          "parameter": "Beta activity",
+          "operator": "<=",
+          "value": 1,
+          "unit": "Bq/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            19
+          ]
+        }
+      ],
+      "qualitative_requirements_r8": [
+        {
+          "parameter": "Odour",
+          "requirement": "Agreeable",
+          "source_pages": [
+            18
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Taste",
+          "requirement": "Agreeable",
+          "source_pages": [
+            18
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Mineral oil",
+          "requirement": "Absent",
+          "source_pages": [
+            18
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Phenolic compounds",
+          "requirement": "Absent",
+          "source_pages": [
+            18
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Surface-active agents",
+          "requirement": "Not detectable",
+          "source_pages": [
+            19
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Cyanide",
+          "requirement": "Absent",
+          "source_pages": [
+            19
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Polynuclear aromatic hydrocarbons",
+          "requirement": "Not detectable",
+          "source_pages": [
+            19
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Polychlorinated biphenyls",
+          "requirement": "Not detectable",
+          "source_pages": [
+            19
+          ],
+          "not_a_zero_numeric_limit": true
+        },
+        {
+          "parameter": "Pesticide row 37",
+          "requirement": "Below detectable limits; later numerical pesticide table also applies",
+          "source_pages": [
+            19
+          ],
+          "not_a_zero_numeric_limit": true
+        }
+      ],
+      "microbiology_source_questions_r8": [
+        "Yeast/mould and Salmonella/Shigella rows lack a stated portion. Do not infer a portion.",
+        "Total coliform row prints A x 250 ml; sample count requires original-source reconciliation."
+      ],
+      "direct_microbiology_r8": [
+        {
+          "organism": "E. coli or thermotolerant coliforms",
+          "operator": "absent",
+          "portion_ml": 250,
+          "source_units": 1,
+          "logic": "one_alternative"
+        },
+        {
+          "organism": "Faecal streptococci and Staphylococcus aureus",
+          "operator": "absent",
+          "portion_ml": 250,
+          "source_units": 1,
+          "logic": "both"
+        },
+        {
+          "organism": "Pseudomonas aeruginosa",
+          "operator": "absent",
+          "portion_ml": 250,
+          "source_units": 1
+        },
+        {
+          "organism": "Sulphite-reducing anaerobes",
+          "operator": "absent",
+          "portion_ml": 50,
+          "source_units": 1
+        },
+        {
+          "organism": "Vibrio cholerae",
+          "operator": "absent",
+          "portion_ml": 250,
+          "source_units": 1
+        },
+        {
+          "organism": "Vibrio parahaemolyticus",
+          "operator": "absent",
+          "portion_ml": 250,
+          "source_units": 1
+        }
+      ],
+      "water_scheme_r8": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Scheme%20of%20Testing%20PDW%20MW.pdf",
+        "effective_from": "2026-01-01",
+        "micro_failure_restart_consecutive_batches": 5,
+        "micro_failure_records_minimum_years": 5,
+        "corrective_actions_and_stock_recheck_required": true,
+        "no_automatic_restart_or_release": true,
+        "full_scheme_reconciliation": false
+      }
     },
     {
       "key": "2.10.8",
@@ -1116,7 +1578,9 @@
           "min": 10,
           "max": 75,
           "unit": "mg/L",
-          "effective_from": "2026-02-01"
+          "effective_from": "2026-02-01",
+          "minimum_exception_only_for_referenced_food_ingredient_water": true,
+          "retail_PDW_minimum_remains": true
         },
         {
           "parameter": "Magnesium",
@@ -1124,7 +1588,9 @@
           "min": 5,
           "max": 30,
           "unit": "mg/L",
-          "effective_from": "2026-02-01"
+          "effective_from": "2026-02-01",
+          "minimum_exception_only_for_referenced_food_ingredient_water": true,
+          "retail_PDW_minimum_remains": true
         },
         {
           "parameter": "Sodium",
@@ -1136,7 +1602,9 @@
           "parameter": "Residual free chloride",
           "operator": "<=",
           "value": 0.2,
-          "unit": "mg/L"
+          "unit": "mg/L",
+          "source_question": "Printed residual free chloride requires exact analyte/method reconciliation. Do not silently rename it chlorine or use ordinary chloride results.",
+          "automatic_comparison_blocked": true
         },
         {
           "parameter": "Sulphide as H2S",
@@ -1161,6 +1629,16 @@
           "operator": "<=",
           "value": 0.01,
           "unit": "mg/L"
+        },
+        {
+          "parameter": "Anionic surface-active agents as MBAS",
+          "operator": "<=",
+          "value": 0.2,
+          "unit": "mg/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            23
+          ]
         }
       ],
       "toxic_substances": [
@@ -1238,13 +1716,23 @@
           "parameter": "Aerobic microbial count at 20–22°C/72h",
           "operator": "<=",
           "value": 100,
-          "unit": "cfu/ml"
+          "unit": "cfu/ml",
+          "incubation_r8": {
+            "temperature_min_C": 20,
+            "temperature_max_C": 22,
+            "hours": 72
+          }
         },
         {
           "parameter": "Aerobic microbial count at 37±1°C/24h",
           "operator": "<=",
           "value": 20,
-          "unit": "cfu/ml"
+          "unit": "cfu/ml",
+          "incubation_r8": {
+            "temperature_min_C": 36,
+            "temperature_max_C": 38,
+            "hours": 24
+          }
         },
         {
           "parameter": "Yeast and mould",
@@ -1281,7 +1769,55 @@
         "Permitted treatment includes specified filtration, demineralisation/remineralisation, reverse osmosis and disinfection methods.",
         "Where remineralisation is used, ingredients shall be food-grade/pharma-grade.",
         "Nitrogen may be used for packaging according to GMP."
-      ]
+      ],
+      "radioactivity_r8": [
+        {
+          "parameter": "Alpha activity",
+          "operator": "<=",
+          "value": 0.1,
+          "unit": "Bq/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            24
+          ]
+        },
+        {
+          "parameter": "Beta activity",
+          "operator": "<=",
+          "value": 1,
+          "unit": "Bq/L",
+          "analytical_basis": "finished water",
+          "source_pages": [
+            24
+          ]
+        }
+      ],
+      "qualitative_requirements_r8": [
+        {
+          "parameter": "Phenolic compounds as C6H5OH",
+          "requirement": "Absent",
+          "source_pages": [
+            23
+          ]
+        },
+        {
+          "parameter": "Mineral oil",
+          "requirement": "Absent",
+          "source_pages": [
+            23
+          ]
+        }
+      ],
+      "water_scheme_r8": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Scheme%20of%20Testing%20PDW%20MW.pdf",
+        "effective_from": "2026-01-01",
+        "micro_failure_restart_consecutive_batches": 5,
+        "micro_failure_records_minimum_years": 5,
+        "corrective_actions_and_stock_recheck_required": true,
+        "no_automatic_restart_or_release": true,
+        "full_scheme_reconciliation": false,
+        "six_month_report_noncompliance_monthly_testing_until_consecutive_compliant_batches": 3
+      }
     },
     {
       "key": "2.10.9",
@@ -1292,7 +1828,16 @@
         "Clear and free from sediments, suspended particles and extraneous matter.",
         "Must comply with Indian Standard IS:10500."
       ],
-      "scope_note": "Water vending machine means a decentralised purification system that purifies and dispenses water; captive-use installations are excluded."
+      "scope_note": "Water vending machine means a decentralised purification system that purifies and dispenses water; captive-use installations are excluded.",
+      "route_scope_r8": "IS 10500 reference only in this review. Its complete applicable edition/amendments and numeric requirements are not verified here; no packaged-water table inheritance."
     }
-  ]
+  ],
+  "source_review_r8": {
+    "date": "2026-11-03",
+    "source_url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf",
+    "source_sha256": "0515862e5bd26de895dcc188d16115fbd4e816d87305bf011c8e280a1aae380f",
+    "scope": "Core source-edition corrections only. Full 223-row variant/matrix register and 21 direct microbial criteria are in the offline companion. Not wired into the live decision engine.",
+    "current_law_complete": false,
+    "commercial_release_authorized": false
+  }
 }

@@ -1,0 +1,25 @@
+name: PMSV R47 coconut identity, milk-allergen and source-style evidence
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-coconut-milk-cream-powder-r47-2026-11-04.json'
+      - 'fssai-helper/ctr-coconut-identity-allergen-gate-r47-20261104.mjs'
+      - 'scripts/test_ctr_coconut_r47_20261104.mjs'
+      - '.github/workflows/verify-ctr-coconut-r47-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-coconut-milk-cream-powder-r47-2026-11-04.json'
+      - 'fssai-helper/ctr-coconut-identity-allergen-gate-r47-20261104.mjs'
+      - 'scripts/test_ctr_coconut_r47_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  inspect-coconut-standards-and-claims:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test five style ranges, milk allergen and vegan claim holds without product legal approval
+        run: node scripts/test_ctr_coconut_r47_20261104.mjs

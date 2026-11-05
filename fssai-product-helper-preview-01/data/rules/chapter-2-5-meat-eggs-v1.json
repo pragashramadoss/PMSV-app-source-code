@@ -101,25 +101,37 @@
           "operator": "<=",
           "value": 20,
           "unit": "% of meat portion",
-          "note": "No usage limit is specified here for MRM derived from poultry."
+          "note": "No usage limit is specified here for MRM derived from poultry.",
+          "when": {
+            "mrm_origin": "non_poultry"
+          }
         },
         {
           "parameter": "Fat — pork products",
           "operator": "<=",
           "value": 30,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "fat_group": "pork"
+          }
         },
         {
           "parameter": "Fat — other food animals",
           "operator": "<=",
           "value": 25,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "fat_group": "other_food_animal"
+          }
         },
         {
           "parameter": "Fat — birds and rabbits",
           "operator": "<=",
           "value": 15,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "fat_group": "bird_or_rabbit"
+          }
         },
         {
           "parameter": "Combined added water and fat",
@@ -131,13 +143,19 @@
           "parameter": "Low-fat claim/product fat",
           "operator": "<=",
           "value": 10,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "low_fat_claim": true
+          }
         },
         {
           "parameter": "Extra-lean product fat",
           "operator": "<",
           "value": 5,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "extra_lean_claim": true
+          }
         }
       ],
       "calculated_rules": [
@@ -169,7 +187,10 @@
         }
       ],
       "additives": "Appendix A",
-      "microbiology": "Appendix B"
+      "microbiology": "Appendix B",
+      "prohibited_ingredients": [
+        "Artificial sweeteners (within the source ingredient provision for this standard)."
+      ]
     },
     {
       "key": "2.5.2(2A)",
@@ -227,7 +248,7 @@
       ],
       "additives": "Appendix A",
       "microbiology": "Appendix B",
-      "enforcement_note": "The standard was notified with compliance from 1 February 2026. FSSAI direction dated 28 April 2026 further extended the compliance period for the Meat Sausage standards for six months from 1 May 2026. PMSV should display this status and confirm the operative enforcement position before using the sausage clause as a hard-fail compliance gate."
+      "enforcement_note": "The standard was notified with compliance from 1 February 2026. FSSAI direction dated 28 April 2026 further extended the compliance period for the Meat Sausage standards for six months from 1 May 2026. PMSV should display this status and confirm the operative enforcement position before using the sausage clause as a hard-fail compliance gate. On 2 November 2026 that specified six-month period has elapsed. No later direction was located in the searched official index/results; absence of a search result is not proof that no later direction exists. Do not infer indefinite extension or unqualified current enforcement."
     },
     {
       "key": "2.5.2(3)",
@@ -258,14 +279,21 @@
           "state": "chilled",
           "operator": "<=",
           "value": 4,
-          "unit": "°C"
+          "unit": "°C",
+          "when": {
+            "pickled_meat": false
+          },
+          "note": "Exception applies to this storage provision, not evidence of a validated ambient shelf life."
         },
         {
           "state": "frozen",
           "operator": "<=",
           "value": -18,
           "unit": "°C",
-          "note": "Frozen storage requirement excludes pickled meat products."
+          "note": "Exception applies to this storage provision, not evidence of a validated ambient shelf life.",
+          "when": {
+            "pickled_meat": false
+          }
         }
       ],
       "additives": "Appendix A",
@@ -301,14 +329,21 @@
           "state": "chilled",
           "operator": "<=",
           "value": 4,
-          "unit": "°C"
+          "unit": "°C",
+          "when": {
+            "low_moisture": false
+          },
+          "note": "Exception applies to this storage provision, not evidence of a validated ambient shelf life."
         },
         {
           "state": "frozen",
           "operator": "<=",
           "value": -18,
           "unit": "°C",
-          "note": "Storage rule excludes low-moisture meat products."
+          "note": "Exception applies to this storage provision, not evidence of a validated ambient shelf life.",
+          "when": {
+            "low_moisture": false
+          }
         }
       ],
       "additives": "Appendix A",
@@ -324,7 +359,10 @@
           "parameter": "Cooked meat minimum thermal core temperature",
           "operator": ">=",
           "value": 75,
-          "unit": "°C"
+          "unit": "°C",
+          "when": {
+            "heat_state": "cooked"
+          }
         }
       ],
       "permitted_ingredient_groups": [
@@ -398,11 +436,10 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
@@ -411,7 +448,22 @@
           "unit": "months"
         }
       ],
-      "microbiology": "Appendix B"
+      "microbiology": "Appendix B",
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 7,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
+        }
+      ]
     },
     {
       "key": "2.5.2(7)",
@@ -423,21 +475,30 @@
           "operator": "range",
           "min": 70,
           "max": 72,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat protein",
           "operator": "range",
           "min": 20,
           "max": 22,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat fat",
           "operator": "range",
           "min": 5,
           "max": 6,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         }
       ],
       "storage_rules": [
@@ -454,17 +515,31 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
           "operator": "<=",
           "value": 10,
           "unit": "months"
+        }
+      ],
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
         }
       ]
     },
@@ -478,35 +553,53 @@
           "operator": "range",
           "min": 68,
           "max": 77,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat protein",
           "operator": "range",
           "min": 17.5,
           "max": 23.5,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless beef fat",
           "operator": "range",
           "min": 8,
           "max": 12,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true,
+            "bovine_subtype": "other_bovine"
+          }
         },
         {
           "parameter": "Buffalo meat fat",
           "operator": "range",
           "min": 1,
           "max": 3,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true,
+            "bovine_subtype": "buffalo"
+          }
         },
         {
           "parameter": "Mithun meat fat",
           "operator": "range",
           "min": 0.7,
           "max": 1.5,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true,
+            "bovine_subtype": "mithun"
+          }
         }
       ],
       "storage_rules": [
@@ -523,17 +616,31 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
           "operator": "<=",
           "value": 12,
           "unit": "months"
+        }
+      ],
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
         }
       ]
     },
@@ -547,21 +654,30 @@
           "operator": "range",
           "min": 74,
           "max": 76,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat protein",
           "operator": "range",
           "min": 20,
           "max": 22,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat fat",
           "operator": "range",
           "min": 2,
           "max": 4,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         }
       ],
       "storage_rules": [
@@ -578,17 +694,31 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
           "operator": "<=",
           "value": 12,
           "unit": "months"
+        }
+      ],
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
         }
       ]
     },
@@ -602,21 +732,30 @@
           "operator": "range",
           "min": 68,
           "max": 72,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat protein",
           "operator": "range",
           "min": 20,
           "max": 22,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat fat",
           "operator": "range",
           "min": 4,
           "max": 10,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         }
       ],
       "storage_rules": [
@@ -633,17 +772,31 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
           "operator": "<=",
           "value": 12,
           "unit": "months"
+        }
+      ],
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
         }
       ]
     },
@@ -657,21 +810,30 @@
           "operator": "range",
           "min": 60,
           "max": 74.86,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat protein",
           "operator": "range",
           "min": 19.5,
           "max": 23.2,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         },
         {
           "parameter": "Boneless meat fat",
           "operator": "range",
           "min": 3.5,
           "max": 18,
-          "unit": "%"
+          "unit": "%",
+          "when": {
+            "boneless": true
+          }
         }
       ],
       "storage_rules": [
@@ -688,17 +850,31 @@
         },
         {
           "state": "chilled consumption",
-          "range": [
-            2,
-            4
-          ],
-          "unit": "days"
+          "unit": "days",
+          "text": "Consume within 2 to 4 days under normal refrigeration conditions.",
+          "automatic_comparison_allowed": false,
+          "note": "This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment."
         },
         {
           "state": "frozen consumption",
           "operator": "<=",
           "value": 12,
           "unit": "months"
+        }
+      ],
+      "definition_temperature_rules": [
+        {
+          "state": "chilled",
+          "operator": "range",
+          "min": 0,
+          "max": 4,
+          "unit": "°C"
+        },
+        {
+          "state": "frozen",
+          "operator": "<=",
+          "value": -18,
+          "unit": "°C"
         }
       ]
     },
@@ -744,7 +920,9 @@
           "operator": "range",
           "min": 4.5,
           "max": 5.5,
-          "unit": "pH"
+          "unit": "pH",
+          "scope": "Source process description; standalone automatic product acceptance disabled",
+          "automatic_comparison_allowed": false
         }
       ],
       "permitted_ingredient_groups": [
@@ -808,7 +986,7 @@
       "key": "2.5.3(1)",
       "name": "Fresh Eggs",
       "status": "structured_core",
-      "definition": "Eggs in shell, other than broken, incubated or cooked eggs, from poultry species or birds for direct human consumption or preparation of egg products.",
+      "definition": "Eggs in shell, other than broken, incubated or cooked eggs, from poultry species or birds for direct human consumption or preparation of egg products. Fresh eggs have not been washed or dry-cleaned; source collection and grading time provisions also apply.",
       "quality_rules": [
         "Shells shall be clean and sound and free from cracks, leaks and faecal contamination."
       ],
@@ -965,6 +1143,10 @@
           "consume_within": 5,
           "unit": "weeks from laying"
         }
+      ],
+      "process_rules": [
+        "Collect at least once a week.",
+        "Grade and pack no later than the first working day after arrival at the packing station."
       ]
     },
     {
@@ -1084,7 +1266,7 @@
       "status": "structured_core",
       "process_rules": [
         "Shell eggs shall be washed, sanitized and candled before breaking and processing.",
-        "Processed liquid egg shall be maintained at 4°C or below for up to 7 days."
+        "After pasteurisation, egg whites may be kept in liquid form at 4°C or below for up to 7 days. This sentence does not grant a seven-day shelf life to liquid yolk or whole egg."
       ],
       "permitted_whipping_agents": [
         "triethyl citrate",
@@ -1143,7 +1325,8 @@
         }
       ],
       "additives": "Appendix A",
-      "microbiology": "Appendix B"
+      "microbiology": "Appendix B",
+      "definition": "Egg products obtained from hens’ eggs; the source definition refers to pasteurisation, while processing text also mentions preservation. Actual pasteurisation must be established before selecting Appendix B Table 8 row 2."
     },
     {
       "key": "2.5.3(5)",
@@ -1217,5 +1400,11 @@
       "additives": "Appendix A",
       "microbiology": "Appendix B"
     }
-  ]
+  ],
+  "review_continuation_r4": {
+    "batch_id": "MEAT_EGGS_R4_2026_11_02",
+    "review_date": "2026-11-02",
+    "scope": "20 standards; listed source-edition requirements only",
+    "current_law_complete": false
+  }
 }

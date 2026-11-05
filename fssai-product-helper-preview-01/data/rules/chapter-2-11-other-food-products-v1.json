@@ -144,7 +144,9 @@
       "quality_rules": [
         "White free-flowing powder",
         "Free from off-odour"
-      ]
+      ],
+      "source_question_r12": "Printed monocalcium phosphate names carry INS 341(iii); exact chemical/code reconciliation is needed. No automatic replacement of the printed code.",
+      "automatic_comparison_blocked": true
     },
     {
       "key": "2.11.2",
@@ -180,13 +182,18 @@
           "parameter": "Ash insoluble in HCl on dry basis",
           "operator": "<=",
           "value": 0.5,
-          "unit": "%"
+          "unit": "%",
+          "applies_to_r12": "ordinary catechu, excluding Bhatti Katha",
+          "requires_actual_subtype": true
         },
         {
           "parameter": "Ash insoluble in dilute HCl — Bhatti Katha",
           "operator": "<=",
           "value": 1.5,
-          "unit": "% dry basis"
+          "unit": "% dry basis",
+          "applies_to_r12": "Bhatti Katha only",
+          "replaces_general_acid_insoluble_ash_limit": true,
+          "requires_actual_subtype": true
         }
       ],
       "identity_test": "1% aqueous solution with 0.1% ferric ammonium sulphate gives dark green; addition of sodium hydroxide changes it to purple.",
@@ -367,7 +374,31 @@
           "claim": "high source of dietary fibre",
           "text_as_printed": "not less than 3 g/100 g or 1.5 g/100 kcal and not more than 6 g/100 g or 3 g/100 kcal"
         }
-      ]
+      ],
+      "claim_reconciliation_r12": {
+        "claims_source": "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Advertising_Claims_Regulations_14_12_2022.pdf",
+        "source_page": 9,
+        "source_minimums": {
+          "g_per_100g_solids": 3,
+          "g_per_100ml_liquids": 1.5,
+          "g_per_100kcal": 1.5
+        },
+        "high_or_rich_minimums": {
+          "g_per_100g_solids": 6,
+          "g_per_100ml_liquids": 3,
+          "g_per_100kcal": 3
+        },
+        "legacy_high_range_not_activated": true,
+        "label_approved": false,
+        "scope": "Targeted conflict recorded; complete original-notification and label reconciliation remains open."
+      }
     }
-  ]
+  ],
+  "source_review_r12": {
+    "date": "2026-11-03",
+    "scope": "Selected ingredient/product applicability and source-question controls only; full 252-row offline registry and 19 direct microbial criteria are separate companions. Not integrated into live decisions.",
+    "current_law_complete": false,
+    "commercial_release_authorized": false,
+    "finished_food_use_authorized": false
+  }
 }

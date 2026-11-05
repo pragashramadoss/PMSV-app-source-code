@@ -1,0 +1,25 @@
+name: PMSV R42 Ayurveda microbiological sampling evidence guard
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ayurveda-microbiological-sampling-r42-2026-11-04.json'
+      - 'fssai-helper/ayurveda-micro-sampling-source-gate-r42-20261104.mjs'
+      - 'scripts/test_ayurveda_micro_sampling_r42_20261104.mjs'
+      - '.github/workflows/verify-ayurveda-micro-sampling-r42-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ayurveda-microbiological-sampling-r42-2026-11-04.json'
+      - 'fssai-helper/ayurveda-micro-sampling-source-gate-r42-20261104.mjs'
+      - 'scripts/test_ayurveda_micro_sampling_r42_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-regulator-versus-internal-sampling:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check three-lab regulator collections and FBO internal scope guards
+        run: node scripts/test_ayurveda_micro_sampling_r42_20261104.mjs

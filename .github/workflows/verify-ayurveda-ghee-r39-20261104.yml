@@ -1,0 +1,23 @@
+name: PMSV R39 ghee dairy-CTR fat-basis guard
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ayurveda-ghee-dairy-ctr-fat-basis-r39-2026-11-04.json'
+      - 'scripts/test_ayurveda_ghee_r39_20261104.py'
+      - '.github/workflows/verify-ayurveda-ghee-r39-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ayurveda-ghee-dairy-ctr-fat-basis-r39-2026-11-04.json'
+      - 'scripts/test_ayurveda_ghee_r39_20261104.py'
+  workflow_dispatch:
+jobs:
+  verify-ghee-source-and-no-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify R39 source guards, fat-basis and held-product invariants
+        run: python scripts/test_ayurveda_ghee_r39_20261104.py

@@ -1,0 +1,34 @@
+name: Apply and verify R24 residue source progress
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-ctr-residues-r24-20261103.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply preimage/output-hash checked metadata
+        run: python3 scripts/apply_ctr_residue_guards_r24_20261103.py
+      - name: 'Regression: source rows, dates, prohibited-use and no approval'
+        run: python3 scripts/check_ctr_residue_guards_r24_20261103.py
+      - name: Commit only the verified contaminant module to audit branch
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          git diff --cached --check
+          git commit -m 'Correct residue table progress and add fail-closed veterinary safeguards'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ctr-r24-residue-core-verified
+          path: r24-residue-core-applied/
+          retention-days: 2
+          if-no-files-found: error

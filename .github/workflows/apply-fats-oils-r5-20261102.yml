@@ -1,0 +1,53 @@
+name: Apply fats oils R5 source review
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-fats-oils-r5-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply preimage-checked readable source correction script
+        run: python3 scripts/apply-fats-oils-r5-20261102.py
+      - name: Check actual registry bounds and locks
+        run: |
+          node <<'JS'
+          const fs=require('fs'),reg=JSON.parse(fs.readFileSync('fssai-helper/fats-oils-review-r5-20261102.json')),g=require('./fssai-helper/fats-oils-source-guard-r5.js').create(reg);let n=0;
+          function ok(v,msg){n++;if(!v)throw Error(msg);}
+          function context(p,r){let c={...p.fixed_context,...r.when};if(p.context_choices.safflower_variant&&r.standard_key==='2.2.7')c.safflower_variant=r.when.fatty_acid_profile==='safflower_high_oleic'?'high_oleic':'ordinary_domestic';for(const[k,v]of Object.entries(r.requires||{})){if(typeof v==='boolean')c[k]=true;else if(typeof v==='object')c[k]=v.gt!==undefined?v.gt+5:v.min!==undefined?v.min:0;else c[k]=.20+.05*((c.rice_bran_percent-20)/5);}return c;}
+          function result(r,v){return{value:v,unit:r.unit,basis:r.analytical_basis};}
+          for(const r of reg.rules){const p=reg.products.find(p=>p.rule_ids.includes(r.id));if(!p)continue;let c=context(p,r),v=r.min??r.value??0;if(r.kind==='formula')v=.20+.05*((c.rice_bran_percent-20)/5);let a=g.evaluate(p.id,r.id,result(r,v),c);ok(!a.product_approved&&!a.current_law_verified&&!a.commercial_release_authorized,r.id+' locks');
+          if(r.kind==='qualitative'){ok(a.status==='QUALITATIVE_OR_METHOD_REVIEW_REQUIRED',r.id+' qualitative');continue;}
+          if(r.kind==='not_specified'){ok(a.status==='NO_NUMERIC_LIMIT_IN_THIS_CELL',r.id+' dash');continue;}
+          ok(a.status==='WITHIN_SELECTED_SOURCE_LIMIT',r.id+' inclusive limit '+JSON.stringify(a));const step=Math.max(Math.abs(v)*1e-4,1e-6);
+          if(r.operator==='range'){ok(g.evaluate(p.id,r.id,result(r,r.max),c).status==='WITHIN_SELECTED_SOURCE_LIMIT',r.id+' upper');ok(g.evaluate(p.id,r.id,result(r,r.max+step),c).status==='OUTSIDE_SELECTED_SOURCE_LIMIT',r.id+' above');ok(g.evaluate(p.id,r.id,result(r,r.min-step),c).status==='OUTSIDE_SELECTED_SOURCE_LIMIT',r.id+' below');}
+          else if(r.operator==='<=')ok(g.evaluate(p.id,r.id,result(r,v+step),c).status==='OUTSIDE_SELECTED_SOURCE_LIMIT',r.id+' over');else ok(g.evaluate(p.id,r.id,result(r,v-step),c).status==='OUTSIDE_SELECTED_SOURCE_LIMIT',r.id+' under');
+          ok(g.evaluate(p.id,r.id,{...result(r,v),unit:'wrong'},c).status==='UNIT_OR_BASIS_MISMATCH',r.id+' unit');ok(g.evaluate(p.id,r.id,{...result(r,v),basis:'wrong'},c).status==='UNIT_OR_BASIS_MISMATCH',r.id+' basis');ok(g.evaluate(p.id,r.id,result(r,NaN),c).status==='INVALID_RESULT',r.id+' finite');
+          for(const k of Object.keys(r.when||{})){if(k in p.fixed_context||k==='fatty_acid_profile')continue;const z={...c};delete z[k];ok(g.evaluate(p.id,r.id,result(r,v),z).status==='CONTEXT_REQUIRED',r.id+' context');}
+          if(r.effective_from)ok(g.evaluate(p.id,r.id,result(r,v),c,'2021-12-31').status==='NOT_EFFECTIVE_ON_DATE',r.id+' date');}
+          const report={passed:n,failed:0,scope:'Repository source-row bounds and lock tests; not full regulatory verification.'};fs.writeFileSync('fssai-helper/fats-oils-r5-ci-tests.json',JSON.stringify(report,null,2)+'\n');console.log(report);
+          JS
+      - name: Commit data on audit branch only
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-2-fats-oils-v1.json fssai-helper/fats-oils-review-r5-20261102.json fssai-helper/fats-oils-r5-application-result.json fssai-helper/fats-oils-r5-ci-tests.json
+          git diff --cached --check
+          git commit -m 'Reconcile fats oils R5: 18 routes, 377 source rows, subtype and basis controls'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fats-oils-r5-applied-20261102
+          path: |
+            fssai-product-helper-preview-01/data/rules/chapter-2-2-fats-oils-v1.json
+            fssai-helper/fats-oils-review-r5-20261102.json
+            fssai-helper/fats-oils-r5-application-result.json
+            fssai-helper/fats-oils-r5-ci-tests.json
+          retention-days: 3
+          if-no-files-found: error

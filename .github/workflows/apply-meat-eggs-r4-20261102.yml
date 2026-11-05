@@ -1,0 +1,116 @@
+name: Apply meat and egg source review R4
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-meat-eggs-r4-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply transparent source-scope corrections
+        run: |
+          python3 - <<'PY'
+          import json,pathlib,hashlib,subprocess,copy
+          root=pathlib.Path('fssai-product-helper-preview-01/data')
+          cp=root/'rules/chapter-2-5-meat-eggs-v1.json'
+          bp=root/'rules/appendix-b-v2-core.json'
+          for p,expected in [(cp,'b075a663b597b475182df34dd00a9ecd8da148b8'),(bp,'dda20f7881e7272ff2abfed64389a07d36643d42')]:
+              assert subprocess.check_output(['git','hash-object',str(p)],text=True).strip()==expected,'Changed preimage; reconcile before writing'
+          c=json.loads(cp.read_text());b=json.loads(bp.read_text());original=copy.deepcopy(b)
+          s={x['key']:x for x in c['standards']}
+          for key,exception in [('2.5.2(3)','pickled_meat'),('2.5.2(4)','low_moisture')]:
+              for rule in s[key]['storage_rules']:
+                  rule['when']={exception:False}
+                  rule['note']='Exception applies to this storage provision, not evidence of a validated ambient shelf life.'
+          for rule in s['2.5.2(2)']['formulation_rules']:
+              p=rule['parameter']
+              if 'pork' in p:rule['when']={'fat_group':'pork'}
+              elif 'other food' in p:rule['when']={'fat_group':'other_food_animal'}
+              elif 'birds and rabbits' in p:rule['when']={'fat_group':'bird_or_rabbit'}
+              elif 'MRM' in p:rule['when']={'mrm_origin':'non_poultry'}
+              elif 'Low-fat' in p:rule['when']={'low_fat_claim':True}
+              elif 'Extra-lean' in p:rule['when']={'extra_lean_claim':True}
+          s['2.5.2(2)']['prohibited_ingredients']=['Artificial sweeteners (within the source ingredient provision for this standard).']
+          s['2.5.2(5)']['process_rules'][0]['when']={'heat_state':'cooked'}
+          for i in range(6,12):
+              key=f'2.5.2({i})'
+              for rule in s[key]['storage_rules']:
+                  if rule['state']=='chilled consumption':
+                      rule.pop('range',None)
+                      rule['text']='Consume within 2 to 4 days under normal refrigeration conditions.'
+                      rule['automatic_comparison_allowed']=False
+                      rule['note']='This wording does not prescribe a minimum product age of 2 days. Exact shelf life requires contextual assessment.'
+              for rule in s[key]['composition']:
+                  if i!=6:rule['when']={'boneless':True}
+                  if i==8 and 'fat' in rule['parameter'].lower():
+                      rule['when']['bovine_subtype']='buffalo' if 'Buffalo' in rule['parameter'] else 'mithun' if 'Mithun' in rule['parameter'] else 'other_bovine'
+              s[key]['definition_temperature_rules']=[{'state':'chilled','operator':'range','min':0,'max':7 if i==6 else 4,'unit':'°C'},{'state':'frozen','operator':'<=','value':-18,'unit':'°C'}]
+          s['2.5.3(1)']['definition']+=' Fresh eggs have not been washed or dry-cleaned; source collection and grading time provisions also apply.'
+          s['2.5.3(1)']['process_rules']=['Collect at least once a week.','Grade and pack no later than the first working day after arrival at the packing station.']
+          s['2.5.3(4)']['process_rules'][1]='After pasteurisation, egg whites may be kept in liquid form at 4°C or below for up to 7 days. This sentence does not grant a seven-day shelf life to liquid yolk or whole egg.'
+          s['2.5.3(4)']['definition']='Egg products obtained from hens’ eggs; the source definition refers to pasteurisation, while processing text also mentions preservation. Actual pasteurisation must be established before selecting Appendix B Table 8 row 2.'
+          s['2.5.2(2A)']['enforcement_note']+=' On 2 November 2026 that specified six-month period has elapsed. No later direction was located in the searched official index/results; absence of a search result is not proof that no later direction exists. Do not infer indefinite extension or unqualified current enforcement.'
+          s['2.5.2(13)']['process_rules'][0]['scope']='Source process description; standalone automatic product acceptance disabled'
+          s['2.5.2(13)']['process_rules'][0]['automatic_comparison_allowed']=False
+          c['review_continuation_r4']={'batch_id':'MEAT_EGGS_R4_2026_11_02','review_date':'2026-11-02','scope':'20 standards; listed source-edition requirements only','current_law_complete':False}
+          table=b['tables']['meat']
+          table['sampling_cautions']=['Use actual final heat treatment and consumption state; smoking alone does not establish semi-cooked.','The 0–7°C chilled definition in Table 5 does not override a stricter product-specific Chapter 2.5 definition.','No poultry-only Campylobacter exception is inferred; the printed criteria remain on rows 4, 8 and 9.','Latest applicable method editions must be established independently; ISO-TS 17919 has a specifically described botulinum neurotoxin-producing clostridia target.']
+          table['method_scope_notes']={'yeast_and_mold_count':'ISO 21527-1 vs -2 is selected by the method water-activity scope; not an arbitrary interchange.','clostridium_botulinum':'Detailed method list prints ISO-TS 17919 (botulinum type A, B, E & F neurotoxin-producing clostridia); Table 5B short identifier is not a full validation.'}
+          maps=b['product_mappings']['meat']
+          smoked='08-08-3-meat-sausages-smoked';whole='08-08-2-fermented-meat-products-whole-pieces-or-cuts'
+          assert sum(x['catalog_id'] in [smoked,whole] for x in maps['exact'])==2
+          maps['exact']=[x for x in maps['exact'] if x['catalog_id'] not in [smoked,whole]]
+          maps['conditional'] += [
+              {'catalog_id':smoked,'status':'variant_required','reason':'Smoking does not establish the final heat-treatment state. Table 5 row 4 requires further heat treatment; row 8 is fully cooked.','options':[{'condition':'Partially heat-treated/smoked and requires further cooking','profile_key':'meat-04'},{'condition':'Fully cooked; minimum core 75°C established','profile_key':'meat-08'},{'condition':'Actual final heat treatment or intended consumption unresolved','profile_key':'','message':'No automatic Table 5 choice'}]},
+              {'catalog_id':whole,'status':'source_scope_review_required','reason':'Table 5 definition for fermented meat says chopped/ground. Whole pieces/cuts in this catalogue identity must not be called an exact source match.','options':[{'condition':'Documented competent assessment establishes applicable category despite identity-scope difference','profile_key':'meat-06','automatic_selection_allowed':False},{'condition':'Whole-cut scope not resolved','profile_key':'','message':'Exact microbiology applicability not established'}]}
+          ]
+          for m in maps['conditional']:
+              if 'cured-or-pickled' in m['catalog_id']:
+                  m['reason']+=' Chapter ready-to-eat pickle wording and Table 5 categories 1–5 cooking footnote need reconciliation; do not choose row 5 for an RTE pickle solely by name.'
+                  for opt in m['options']:
+                      if opt['profile_key']=='meat-05':opt['condition']='Cured/pickled product requiring cooking before consumption; ready-to-eat pickle not automatically assigned'
+                  m['options'].append({'condition':'Ready-to-eat pickled product with unresolved Chapter/Table-5 scope','profile_key':'','message':'Specific source-scope assessment required'})
+          for cat in b['tables']['eggs']['categories']:
+              if cat['id']=='egg-01':cat['source_scope_note']='N/A in these tables only. No assertion that food-safety obligations are inapplicable.'
+          # Validate preservation of all numeric microbial plans and unrelated tables.
+          for group in original['tables']:
+              if group not in ['meat','eggs']:assert original['tables'][group]==b['tables'][group]
+              else:
+                  for before,after in zip(original['tables'][group]['categories'],b['tables'][group]['categories']):
+                      for stage in ['hygiene','safety']:assert before[stage]==after[stage]
+          for group in original['product_mappings']:
+              if group!='meat':assert original['product_mappings'][group]==b['product_mappings'][group]
+          master=json.loads((root/'product-master-v1.json').read_text())
+          assert len(master['catalog_products'])==533 and len({p['id'] for p in master['catalog_products']})==533
+          assert len(c['standards'])==20 and c['review_continuation_r4']['current_law_complete'] is False
+          for ident in [smoked,whole]:
+              assert not any(p['catalog_id']==ident for p in maps['exact'])
+              assert any(p['catalog_id']==ident for p in maps['conditional'])
+          out=pathlib.Path('r4-application-results');out.mkdir();manifest=[]
+          for path,data in [(cp,c),(bp,b)]:
+              content=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()
+              path.write_bytes(content);(out/path.name).write_bytes(content)
+              manifest.append({'path':str(path),'sha256':hashlib.sha256(content).hexdigest()})
+          (out/'application-manifest.json').write_text(json.dumps({'scope':'Source-edition corrections only; no legal/product approvals. Full 209-row transcript, 67 criteria and local comparison tests are in the R4 continuation package.','modules':manifest,'catalogue':533,'standards':20},indent=2))
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Commit on audit branch only
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-5-meat-eggs-v1.json fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json
+          git diff --cached --check
+          git commit -m 'Review meat and eggs: scope storage clauses and make smoked/whole-cut micro routes conditional'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meat-egg-review-r4-applied-20261102
+          path: r4-application-results/
+          retention-days: 3
+          if-no-files-found: error
