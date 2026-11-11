@@ -24,7 +24,7 @@ x.actual_test_results_and_methods_verified!==false||
 x.current_Gazette_and_all_amendments_legally_reconciled!==false||
 x.exact_finished_CTR_article_legally_decided!==false||
 x.legal_product_PASS!==false||x.batch_release_authorized!==false||
-x.numeric_rule_auto_applied!==false||s.rigid_container_fill_min_pct_of_water_capacity!==90)
+x.numeric_rule_auto_applied!==false||(x.style==="vegetables"?s.rigid_container_fill_min_pct_water_capacity:s.rigid_container_fill_min_pct_of_water_capacity)!==90)
 return hold("INTEGRITY_HOLD");
 if(x.style==="fruits"&&(s.liquid_pack_drained_weight_min_pct_of_net_contents!==50||
 s.solid_pack_drained_weight_min_pct_of_net_contents!==70))return hold("INTEGRITY_HOLD");
