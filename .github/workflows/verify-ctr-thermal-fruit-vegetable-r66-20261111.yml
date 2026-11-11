@@ -1,0 +1,23 @@
+name: PMSV R66 thermal fruit vegetable source-only guard
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.json'
+      - 'fssai-helper/ctr-thermal-fruit-vegetable-source-gate-r66-20261111.mjs'
+      - 'scripts/test_ctr_thermal_fruit_vegetable_r66_20261111.mjs'
+      - '.github/workflows/verify-ctr-thermal-fruit-vegetable-r66-20261111.yml'
+  pull_request:
+    branches: [gh-pages]
+  workflow_dispatch:
+jobs:
+  source-only-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/test_ctr_thermal_fruit_vegetable_r66_20261111.mjs
