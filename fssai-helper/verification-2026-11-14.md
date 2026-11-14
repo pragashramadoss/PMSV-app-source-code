@@ -56,6 +56,8 @@ The scanned Ayurveda pages are now available and visually checked. Recipe 14.6 h
 
 ## Official-source currency
 
+The subsequent [R70 original-Gazette reconciliation](ctr-original-gazette-concordance-r70-2026-11-14.md) matches all **382 stored metal entries and 27 crop-contaminant entries** to original notifications, including the two 2024 replacements operative from April 2025. It preserves source qualifiers, records nine future December 2026 changes separately, and adds that evidence to the Helper's review page and export. The expanded local current audit passes **48/48 checks**. The earlier integration totals above identify their tested revision; this follow-up does not change that legacy core or its numeric rules.
+
 - [May 2026 CTR Gazette](https://fssai.gov.in/upload/uploadfiles/files/272840.pdf): commencement is **1 December 2026**, still future on the review date. Product-specific amended articles require their own scope checks.
 - [Original 6 November 2026 milk-logo notification](https://www.fssai.gov.in/docs/food-law/notice-comment/FSS%28Labelling%20and%20Display%29%20-%20Milk%20logo.pdf): English clause 1(2) specifies **1 July 2028**. The graphic table was checked, with literal intermediate range wording retained. No dimensions were activated. This does not adjudicate the earlier milk-logo direction chain.
 - FPC18 paragraph 3 eligibility, Annexure II additive mapping and base-food microbiology/toxin conditions remain explicit. It is not a general contaminant fallback for other foods.

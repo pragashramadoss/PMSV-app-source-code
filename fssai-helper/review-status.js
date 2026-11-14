@@ -29,6 +29,21 @@
    if(row.reports.length)focused++;
   }
   if(focused!==data.focusedCount||data.remainingFocusedCount!==137-focused)return denied('Review counts do not reconcile.');
+  const gazette=data.originalGazetteReview;
+  if(!gazette||gazette.round!==70||gazette.metalRows!==382||gazette.cropRows!==27||
+    gazette.checkedOn!==data.checkpointDate||gazette.fullCurrentLawComplete!==false||
+    gazette.numericRulesChanged!==false||gazette.productApprovals!==0||
+    gazette.report!=='ctr-original-gazette-concordance-r70-2026-11-14.md'||
+    typeof gazette.summary!=='string'||!gazette.summary.trim()||
+    !Array.isArray(gazette.futureChanges)||gazette.futureChanges.length!==9)return denied('Original Gazette evidence is incomplete.');
+  const changes=new Set();
+  for(const change of gazette.futureChanges){
+   if(!change||typeof change.id!=='string'||!change.id.trim()||changes.has(change.id)||
+     typeof change.title!=='string'||!change.title.trim()||typeof change.scopeNote!=='string'||!change.scopeNote.trim()||
+     change.effectiveFrom!=='2026-12-01'||change.autoApply!==false||change.operativeOnReviewDate!==false)
+    return denied('Future amendment scope is inconsistent.');
+   changes.add(change.id);
+  }
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}

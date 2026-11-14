@@ -42,6 +42,15 @@ let browser;
  assert.match(await page.locator('#productDetail').textContent(),/R69/);
  assert.match(await page.locator('#productDetail').textContent(),/discrepancy is confirmed visually, not resolved/);
  assert.match(await page.locator('#currencyWatch').textContent(),/2028-07-01/);
+ assert.match(await page.locator('#gazetteReviewSummary').textContent(),/382 metal entries and 27 crop-contaminant entries/);
+ assert.equal(data.originalGazetteReview.futureChanges.length,9,'Full export must include all future source changes.');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#gazetteReviewSummary summary').click();
+ assert.equal(await page.locator('#gazetteReviewSummary li').count(),9);
+ assert.match(await page.locator('#gazetteReviewSummary').textContent(),/not been activated/);
+ const sourceReport=await page.request.get(base+data.originalGazetteReview.report);
+ assert.equal(sourceReport.status(),200);
+ assert.match(await sourceReport.text(),/382 metal-table entries and 27 crop-contaminant entries/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -74,7 +83,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

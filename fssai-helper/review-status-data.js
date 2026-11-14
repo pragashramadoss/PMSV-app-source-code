@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-14",
-  "latestRound": 69,
+  "latestRound": 70,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -33,7 +33,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-soy-paste-vegetable-protein-r63-2026-11-05.json",
     "ctr-sweeteners-six-source-review-r60-2026-11-05.json",
     "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.json",
-    "ctr-vanilla-three-source-review-r64-2026-11-11.json"
+    "ctr-vanilla-three-source-review-r64-2026-11-11.json",
+    "ctr-original-gazette-concordance-r70-2026-11-14.json"
   ],
   "records": [
     {
@@ -2503,13 +2504,99 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "originalGazetteReview": {
+    "round": 70,
+    "report": "ctr-original-gazette-concordance-r70-2026-11-14.md",
+    "checkedOn": "2026-11-14",
+    "metalRows": 382,
+    "cropRows": 27,
+    "fullCurrentLawComplete": false,
+    "numericRulesChanged": false,
+    "productApprovals": 0,
+    "summary": "382 metal entries and 27 crop-contaminant entries match the original notifications, including the changes effective from April 2025. Packaging, analytical basis, unusual source literals and overlapping article descriptions remain explicit. Exact product applicability still requires review.",
+    "futureChanges": [
+      {
+        "id": "lead-pulse-flours",
+        "title": "Lead: pulse flours",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "The article text expands; keep the existing lead number and actual pulse/flour identity separate. The amendment is not a blanket pulse-based composite-food rule.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "arsenic-fish-oils",
+        "title": "Inorganic arsenic in fish oils",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "Below-ML total arsenic needs no further test under the stated note; above-ML total arsenic requires inorganic arsenic testing. The source does not expressly describe total arsenic exactly equal to ML; do not invent that screening shortcut.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "cadmium-pulse-flours",
+        "title": "Cadmium: pulse flours",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "Retain the dry-soybean exclusion; this does not assign a raw pulse/flour article to every processed soy product.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "total-aflatoxins-oil-heading",
+        "title": "Total aflatoxins: oil and oilseed wording",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "This is an article-wording substitution, not a new numerical threshold. The PDF repeats a ready-to-eat-oilseeds bullet; preserve provenance without making a third numerical row.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "aflatoxin-b1-oil-heading",
+        "title": "Aflatoxin B1: oil and oilseed wording",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "Keep oil, further-processing seed and ready-to-eat seed identity explicit; the stated numerical limits are not replaced by this instruction.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "saffrole-scope",
+        "title": "Saffrole: amended food scope",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "The whole serial-number-4 entry is substituted. Do not keep the former broad beverage/soup/meat rows as universally current after commencement.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "seafood-clause-one",
+        "title": "Seafood antibiotic clause (1) omission",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "The omission does not authorize prohibited veterinary substances or remove surviving clauses (2)–(4).",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "trimethoprim-seafood",
+        "title": "Trimethoprim: seafood row",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "Added after the existing entries; retain the drug, matrix and residue-method requirements.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      },
+      {
+        "id": "oxolinic-acid-seafood",
+        "title": "Oxolinic acid: new seafood row",
+        "effectiveFrom": "2026-12-01",
+        "scopeNote": "Do not insert a future row into the current 49-drug source table before commencement.",
+        "autoApply": false,
+        "operativeOnReviewDate": false
+      }
+    ]
+  },
   "currencyWatch": [
     {
       "title": "May 2026 contaminants amendment",
       "source": "https://fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+      "sourceSha256": "f625a2629d2eb28a6dcc9e1035920228f4592be5589232cdcbd2bab22bc573ea",
       "checked": "2026-11-14",
       "effectiveFrom": "2026-12-01",
-      "status": "Commencement confirmed; product-specific application still requires review."
+      "status": "Nine changes checked against the original notification: pulse flours, fish-oil arsenic, oil/oilseed aflatoxin wording, saffrole scope and seafood drug provisions. Future on this review date; no changes activated."
     },
     {
       "title": "Milk-logo graphic specifications notification",
@@ -2519,6 +2606,21 @@ window.PMSV_REVIEW_REGISTER = {
       "listed": "2026-11-06",
       "effectiveFrom": "2028-07-01",
       "status": "Original Gazette clause 1(2) and graphic table checked. The new specifications commence on 1 July 2028; no dimensions activated. Earlier milk-logo obligations require their own direction-chain review."
+    },
+    {
+      "title": "Original metal and crop-contaminant tables",
+      "source": "https://fssai.gov.in/docs/whatsnew/gazette/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
+      "sourceSha256": "5d376f55999049e7272b84294b3b5e5bfc228c3ef772754bfbd328045212c3dd",
+      "checked": "2026-11-14",
+      "status": "All 382 metal entries reconciled with the original 2020 replacement table. Crop entries were checked with the later operative replacements. A source match does not resolve competing article scopes or approve a product."
+    },
+    {
+      "title": "Operative 2024 crop-contaminant replacements",
+      "source": "https://fssai.gov.in/upload/uploadfiles/files/2_Notification%20dt%2017_10_2024.pdf",
+      "sourceSha256": "7f677539c1bd4adbe524e998b7e81d81f712e2d3dd6568282aae21b14ec49dd6",
+      "checked": "2026-11-14",
+      "effectiveFrom": "2025-04-01",
+      "status": "The original Ochratoxin A and Deoxynivalenol replacements match the stored source rows. The listed commodities and µg/kg units are retained; no automatic assignment to processed or composite foods."
     }
   ]
 };

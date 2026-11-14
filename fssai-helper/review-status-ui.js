@@ -29,6 +29,10 @@
  evidenceLink.href='verification-2026-11-14.md';evidenceLink.textContent='Read the software verification report';
  evidenceLink.className='source-ref';evidenceLink.target='_blank';evidenceLink.rel='noopener noreferrer';
  $('verificationSoftware').append(document.createTextNode(' '),evidenceLink);
+ const gazette=data.originalGazetteReview,sourcePanel=document.createElement('section');
+ sourcePanel.id='gazetteReviewSummary';sourcePanel.className='panel compact';
+ sourcePanel.innerHTML=`<h3>Original Gazette checks</h3><p>${esc(gazette.summary)}</p><a class="source-ref" href="${esc(gazette.report)}" target="_blank" rel="noopener noreferrer">Read the original-source comparison ↗</a><details><summary>9 changes scheduled for 1 December 2026</summary><p>Future on the review date. These entries have not been activated in the current rules.</p><ul>${gazette.futureChanges.map(change=>`<li><b>${esc(change.title)}:</b> ${esc(change.scopeNote)}</li>`).join('')}</ul></details>`;
+ $('verificationSoftware').insertAdjacentElement('afterend',sourcePanel);
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');
