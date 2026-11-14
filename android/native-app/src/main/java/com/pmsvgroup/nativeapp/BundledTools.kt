@@ -21,6 +21,8 @@ internal class BundledTools(private val assets: AssetManager, private val shellC
             val input = if (mime == "text/html") {
                 // Render the app layout from the first frame, with no duplicate chrome.
                 val html = assets.open(path).bufferedReader().use { it.readText() }
+                    .replace("Assessment data stays locally in this browser.", "Assessment data stays privately in this app on this phone.")
+                    .replace("Saved only in this browser/device for the preview.", "Saved privately in this app on this phone.")
                     .replaceFirst("<html", "<html data-pmsv-native=\"${ToolPages.section(url)}\"")
                     .replace("</head>", "<style id=\"pmsv-native-shell\">$shellCss</style></head>")
                 ByteArrayInputStream(html.toByteArray(Charsets.UTF_8))
