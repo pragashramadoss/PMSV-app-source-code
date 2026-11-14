@@ -29,11 +29,27 @@ function pmsv_wp_change_push($remove) {
     if($wpdb->last_error)throw new RuntimeException('Rate limit unavailable');
     if((int)$wpdb->get_var($wpdb->prepare("SELECT attempts FROM $limits WHERE id=%s",$rate))>30)return pmsv_wp_reply(['error'=>'Please try again later.'],429);
     $id=pmsv_wp_digest($d['endpoint']);$token=pmsv_wp_digest($d['token']);
-    $old=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM $t WHERE id=%s",$id));
-    if($old&&!hash_equals($old,$token))return pmsv_wp_reply(['error'=>'Please reset notifications in your browser and try again.'],409);
+    $old=$wpdb->get_row($wpdb->prepare("SELECT token_hash,refresh_required FROM $t WHERE id=%s",$id),ARRAY_A);
+    if($old&&!hash_equals($old['token_hash'],$token))return pmsv_wp_reply(['error'=>'Please reset notifications in your browser and try again.'],409);
+    $previous=null;
+    if(!$remove&&isset($d['previous'])){
+        $p=$d['previous'];
+        if(!is_array($p)||!pmsv_wp_endpoint($p['endpoint']??null)||!is_string($p['token']??null)||strlen($p['token'])<32||strlen($p['token'])>150)return pmsv_wp_reply(['error'=>'Invalid previous subscription'],400);
+        $previous=pmsv_wp_digest($p['endpoint']);
+        if($previous===$id)return pmsv_wp_reply(['error'=>'Replacement subscription must be new'],409);
+        $owner=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM $t WHERE id=%s",$previous));
+        if($owner&&!hash_equals($owner,pmsv_wp_digest($p['token'])))return pmsv_wp_reply(['error'=>'Previous subscription could not be verified'],409);
+        if(!$owner)$previous=null;
+    }
     if($remove)$result=$wpdb->query($wpdb->prepare("DELETE FROM $t WHERE id=%s AND token_hash=%s",$id,$token));
     else $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,endpoint,token_hash,seen_at,retry_at) VALUES (%s,%s,%s,%d,0)",$id,$d['endpoint'],$token,$now));
     if($result===false)throw new RuntimeException('Subscription write failed');
+    // INSERT IGNORE can race another registration: recheck ownership before transfer.
+    if(!$remove){
+        $stored=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM $t WHERE id=%s",$id));
+        if(!is_string($stored)||!hash_equals($stored,$token))return pmsv_wp_reply(['error'=>'Notification subscription needs to be refreshed.'],409);
+    }
+    if($previous)pmsv_wp_transfer_push_device($previous,$id);
     // Same-origin, HttpOnly cookie lets the service worker retrieve only this browser's
     // private queued answer alerts. The push itself remains payload-free.
     if($remove){
@@ -41,7 +57,45 @@ function pmsv_wp_change_push($remove) {
         $wpdb->delete(pmsv_wp_table('push_alerts'),['device_id'=>$id],['%s']);
         pmsv_wp_push_device_cookie('',0);
     }else pmsv_wp_push_device_cookie($id.'.'.pmsv_wp_device_signature($id,$token),time()+90*DAY_IN_SECONDS);
-    return pmsv_wp_reply(['enabled'=>!$remove]);
+    $refreshRequired=!$remove&&!empty($old['refresh_required']);
+    return pmsv_wp_reply(['enabled'=>!$remove&&!$refreshRequired,'refreshRequired'=>$refreshRequired]);
+}
+
+/** Called only after both old and replacement device ownership have been verified. */
+function pmsv_wp_transfer_push_device($previous,$id) {
+    global $wpdb;
+    $watch=pmsv_wp_table('question_watchers');$alerts=pmsv_wp_table('push_alerts');$devices=pmsv_wp_table('devices');
+    $wpdb->query('START TRANSACTION');
+    try {
+        $queries=[
+            $wpdb->prepare("INSERT IGNORE INTO $watch (question_id,device_id,created_at) SELECT question_id,%s,created_at FROM $watch WHERE device_id=%s",$id,$previous),
+            $wpdb->prepare("UPDATE $alerts SET device_id=%s WHERE device_id=%s",$id,$previous),
+            $wpdb->prepare("DELETE FROM $watch WHERE device_id=%s",$previous),
+            $wpdb->prepare("DELETE FROM $devices WHERE id=%s",$previous)
+        ];
+        foreach($queries as $query)if($wpdb->query($query)===false)throw new RuntimeException('Subscription transfer failed');
+        $wpdb->query('COMMIT');
+    } catch(Throwable $e) {$wpdb->query('ROLLBACK');throw $e;}
+}
+
+/** Return an allowlisted reason only, never the provider's raw response or endpoint. */
+function pmsv_wp_push_failure_reason($response,$code) {
+    if(is_wp_error($response))return 'transport_error';
+    $body=strtolower(substr((string)wp_remote_retrieve_body($response),0,16384));
+    if(str_contains($body,'vapid')&&(str_contains($body,'mismatch')||str_contains($body,'do not correspond')||str_contains($body,'does not match')))return 'vapid_key_mismatch';
+    if(str_contains($body,'expired')&&(str_contains($body,'jwt')||str_contains($body,'token')))return 'vapid_expired';
+    if(str_contains($body,'signature')&&(str_contains($body,'invalid')||str_contains($body,'verify')))return 'vapid_signature_rejected';
+    if(in_array($code,[401,403],true)||str_contains($body,'unauthorizedregistration'))return 'authorization_rejected';
+    return $code?'http_'.$code:'transport_error';
+}
+
+function pmsv_wp_push_requires_refresh($code,$reason) {
+    return in_array($code,[401,403],true)||$reason==='vapid_key_mismatch';
+}
+
+function pmsv_wp_mark_push_refresh($id) {
+    global $wpdb;
+    if($wpdb->update(pmsv_wp_table('devices'),['refresh_required'=>1],['id'=>$id],['%d'],['%s'])===false)throw new RuntimeException('Subscription state unavailable');
 }
 function pmsv_wp_vapid($endpoint,$keys) {
     $u=wp_parse_url($endpoint);$head=pmsv_wp_b64(wp_json_encode(['typ'=>'JWT','alg'=>'ES256']));
@@ -93,7 +147,14 @@ function pmsv_wp_test_push() {
         $wpdb->delete($devices,['id'=>$id]);
         return pmsv_wp_reply(['error'=>'This device subscription expired. Open Notifications and turn it on again.'],410);
     }
-    if($code<200||$code>=300)return pmsv_wp_reply(['error'=>'Push provider did not accept the test notification.'],502);
+    if($code<200||$code>=300){
+        $reason=pmsv_wp_push_failure_reason($r,$code);
+        if(pmsv_wp_push_requires_refresh($code,$reason)){
+            pmsv_wp_mark_push_refresh($id);
+            return pmsv_wp_reply(['error'=>'The push provider rejected this registration. Refresh notifications and test again.','code'=>'subscription_refresh_required','reason'=>$reason],409);
+        }
+        return pmsv_wp_reply(['error'=>'Push provider did not accept the test notification.','reason'=>$reason],502);
+    }
     return pmsv_wp_reply(['accepted'=>true]);
 }
 function pmsv_wp_daily_digest($news, $now=null) {
@@ -143,15 +204,15 @@ function pmsv_wp_dispatch() {
     $digest=pmsv_wp_daily_digest(pmsv_wp_archive());
     if(!$digest['count'])return ['accepted'=>0,'failed'=>0,'remaining'=>0,'reason'=>'No headlines published today'];
     $cutoff=$digest['cutoff'];$now=(int)floor(microtime(true)*1000);
-    $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d LIMIT 20",$cutoff,$now),ARRAY_A);
+    $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d AND refresh_required=0 LIMIT 20",$cutoff,$now),ARRAY_A);
     if($wpdb->last_error)throw new RuntimeException('Push read failed');
-    $accepted=0;$failed=0;$expired=0;$retryable=0;$failureCodes=[];$keys=$rows?pmsv_wp_keys():null;
+    $accepted=0;$failed=0;$expired=0;$retryable=0;$failureCodes=[];$failureReasons=[];$keys=$rows?pmsv_wp_keys():null;
     foreach($rows as $row){
         // Atomic claim prevents the main updater and a WordPress retry from sending twice.
         // An unsuccessful claim is eligible again after ten minutes, not immediately.
         $claim=$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d,retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d",$cutoff,$now+600000,$row['id'],$row['seen_at'],$now));
         if(!$claim)continue;
-        $reason='internal';$canRetry=false;
+        $reason='internal';$detail='internal';$canRetry=false;
         try{
             if(!pmsv_wp_endpoint($row['endpoint'])){$reason='invalid_endpoint';throw new RuntimeException('Invalid endpoint');}
             $r=wp_safe_remote_post($row['endpoint'],[
@@ -164,6 +225,8 @@ function pmsv_wp_dispatch() {
             if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);$expired++;continue;}
             if($code<200||$code>=300){
                 $reason=$code?'http_'.$code:'transport_error';
+                $detail=pmsv_wp_push_failure_reason($r,$code);
+                if(pmsv_wp_push_requires_refresh($code,$detail))pmsv_wp_mark_push_refresh($row['id']);
                 $canRetry=pmsv_wp_retryable_push_status($code);
                 throw new RuntimeException('Provider declined');
             }
@@ -172,17 +235,19 @@ function pmsv_wp_dispatch() {
         }catch(Throwable $e){
             $failed++;
             $failureCodes[$reason]=($failureCodes[$reason]??0)+1;
+            $failureReasons[$detail]=($failureReasons[$detail]??0)+1;
             if($canRetry)$retryable++;
             // Restore only the unsent cursor; the retry clock stays in place.
             $wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));
         }
     }
     $checkedAt=(int)floor(microtime(true)*1000);
-    $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d",$cutoff,$checkedAt));
-    $pendingRetries=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at>%d",$cutoff,$checkedAt));
+    $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d AND refresh_required=0",$cutoff,$checkedAt));
+    $pendingRetries=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at>%d AND refresh_required=0",$cutoff,$checkedAt));
+    $refreshRequired=(int)$wpdb->get_var("SELECT COUNT(*) FROM $t WHERE refresh_required=1");
     $retryScheduled=$retryable>0?pmsv_wp_schedule_push_retry():false;
     // Aggregate codes only: never return endpoints, device IDs, tokens or signing keys.
-    return compact('accepted','failed','remaining','expired','pendingRetries','failureCodes','retryScheduled');
+    return compact('accepted','failed','remaining','expired','pendingRetries','failureCodes','failureReasons','refreshRequired','retryScheduled');
 }
 
 /**
@@ -241,7 +306,7 @@ function pmsv_wp_forum_push_answer($question_id,$answer_id) {
     $watch=pmsv_wp_table('question_watchers');$devices=pmsv_wp_table('devices');
     $alerts=pmsv_wp_table('push_alerts');
     $rows=$wpdb->get_results($wpdb->prepare(
-        "SELECT d.id,d.endpoint FROM $watch w INNER JOIN $devices d ON w.device_id=d.id WHERE w.question_id=%d LIMIT 5",$question_id
+        "SELECT d.id,d.endpoint FROM $watch w INNER JOIN $devices d ON w.device_id=d.id WHERE w.question_id=%d AND d.refresh_required=0 LIMIT 5",$question_id
     ),ARRAY_A);
     if(!$rows||$wpdb->last_error)return;
     $keys=pmsv_wp_keys();
@@ -259,6 +324,7 @@ function pmsv_wp_forum_push_answer($question_id,$answer_id) {
             'body'=>''
         ]);
         $code=is_wp_error($r)?0:wp_remote_retrieve_response_code($r);
+        if(pmsv_wp_push_requires_refresh($code,pmsv_wp_push_failure_reason($r,$code)))pmsv_wp_mark_push_refresh($row['id']);
         if(in_array($code,[404,410],true)){
             $wpdb->delete($devices,['id'=>$row['id']],['%s']);
             $wpdb->delete($watch,['device_id'=>$row['id']],['%s']);

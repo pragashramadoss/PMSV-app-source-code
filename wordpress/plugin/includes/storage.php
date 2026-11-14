@@ -11,7 +11,7 @@ function pmsv_wp_install() {
         $wpdb->query("ALTER TABLE $news DROP INDEX url_hash");
         $wpdb->query("CREATE INDEX url_hash ON $news (url_hash)");
     }
-    dbDelta("CREATE TABLE $devices (id varchar(64) NOT NULL, endpoint text NOT NULL, token_hash varchar(64) NOT NULL, seen_at bigint NOT NULL, retry_at bigint NOT NULL DEFAULT 0, PRIMARY KEY (id), KEY seen_at (seen_at)) $charset;");
+    dbDelta("CREATE TABLE $devices (id varchar(64) NOT NULL, endpoint text NOT NULL, token_hash varchar(64) NOT NULL, seen_at bigint NOT NULL, retry_at bigint NOT NULL DEFAULT 0, refresh_required tinyint NOT NULL DEFAULT 0, PRIMARY KEY (id), KEY seen_at (seen_at)) $charset;");
     dbDelta("CREATE TABLE $limits (id varchar(64) NOT NULL, attempts int NOT NULL, expires_at bigint NOT NULL, PRIMARY KEY (id)) $charset;");
     dbDelta("CREATE TABLE $questions (id bigint unsigned NOT NULL AUTO_INCREMENT, author varchar(80) NOT NULL, title varchar(190) NOT NULL, body text NOT NULL, category varchar(32) NOT NULL, created_at bigint NOT NULL, last_activity bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY status_activity (status,last_activity), KEY category (category)) $charset;");
     dbDelta("CREATE TABLE $answers (id bigint unsigned NOT NULL AUTO_INCREMENT, question_id bigint unsigned NOT NULL, author varchar(80) NOT NULL, body text NOT NULL, created_at bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY question_status (question_id,status), KEY created_at (created_at)) $charset;");
@@ -23,7 +23,7 @@ function pmsv_wp_install() {
     // Seed is a read-only export of real news, never sample data. Re-activation cannot overwrite newer records.
     $rows=json_decode(file_get_contents(PMSV_WP_DIR.'archive-seed.json'),true,512,JSON_THROW_ON_ERROR);
     foreach($rows as $n)pmsv_wp_insert($n);
-    update_option('pmsv_wp_schema',4,false);
+    update_option('pmsv_wp_schema',5,false);
 }
 // Editorial exclusions: user-confirmed off-topic reports (12–13 October 2026).
 // Keep the stored row for recovery, but never expose or reinsert this story.
