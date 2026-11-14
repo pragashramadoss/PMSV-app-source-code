@@ -15,38 +15,67 @@ class NativeScreensTest {
     @get:Rule val compose = createComposeRule()
     private val milk = NewsItem("milk", "Milk logo amendment", "Graphic specifications for milk packs.", "2026-11-06", "FSSAI", "Gazette notification", "fssai", "india", "https://www.fssai.gov.in/milk.pdf")
     private val news = milk.copy(id = "news", title = "Food safety update", source = "Food Safety News", tab = "general", published = "2026-11-14")
+    private val blog = milk.copy(id = "blog", title = "Practical food safety lessons", tab = "blogs", source = "PMSV", category = "Food safety")
+    private val us = milk.copy(id = "us", title = "US regulatory notice", region = "us", source = "US FDA")
+    private var openedTool: Pair<String, String>? = null
     private fun launch() {
         compose.setContent {
             var saved by remember { mutableStateOf(emptyList<NewsItem>()) }
-            PmsvTheme { PmsvApp(PmsvState(listOf(news, milk), saved, false, updatedAt = 1794650000000L), "home" to 1L,
+            PmsvTheme { PmsvApp(PmsvState(listOf(news, milk, blog, us), saved, false, updatedAt = 1794650000000L), "home" to 1L,
                 {}, { item -> saved = if (saved.any { it.id == item.id }) saved.filterNot { it.id == item.id } else saved + item },
-                { _, _ -> }, {}, {}, false, true, {}, { true }, {}) }
+                { title, url -> openedTool = title to url }, {}, {}, false, true, {}, { true }, {}) }
         }
     }
     @Test fun nativeSearchAndBookmarkJourney() {
         launch()
-        compose.onNodeWithText("Explore FSSAI updates").performClick()
-        compose.onNodeWithText("Updates & insights").assertIsDisplayed()
-        compose.onNodeWithText("Search updates").performTextInput("milk")
+        compose.onNodeWithText("Welcome to the Forum").assertIsDisplayed()
+        compose.onNodeWithContentDescription("Search news updates").performTextInput("milk")
+        compose.onNode(hasScrollToIndexAction()).performScrollToNode(hasText("Milk logo amendment"))
         compose.onNodeWithText("Milk logo amendment").assertIsDisplayed().performClick()
         compose.onNodeWithText("Graphic specifications for milk packs.").assertIsDisplayed()
         compose.onNodeWithText("Save update").performScrollTo().performClick()
         compose.onNodeWithContentDescription("Back to updates").performClick()
-        compose.onNodeWithText("Saved", useUnmergedTree = true).performClick()
-        compose.onNodeWithText("Your saved updates").assertIsDisplayed()
+        compose.onNodeWithContentDescription("More options").performClick()
+        compose.onNodeWithText("Saved updates").performClick()
+        compose.onNodeWithText("On this device").assertIsDisplayed()
         compose.onNodeWithText("Milk logo amendment").assertIsDisplayed()
-        compose.onNodeWithContentDescription("Unsave Milk logo amendment").performClick()
+        compose.onNodeWithContentDescription("Unsave Milk logo amendment").performScrollTo().performClick()
         compose.onNodeWithText("Nothing saved here yet").assertIsDisplayed()
     }
     @Test fun captureNativeHomeAndSettings() {
         launch()
         compose.waitForIdle()
         capture("native-home.png")
-        compose.onNodeWithText("Settings", useUnmergedTree = true).performClick()
+        compose.onNodeWithContentDescription("App notifications").performClick()
         compose.onNodeWithText("Daily update alerts").assertIsDisplayed()
-        compose.onNodeWithText("Send native test notification").performClick()
+        compose.onNodeWithText("Send test notification").performClick()
         compose.onNodeWithText("Test posted. Check your notification shade and tap it to open Updates.").assertExists()
+        capture("native-notifications.png")
+        compose.onNodeWithContentDescription("Close notifications").performClick()
+        compose.onNodeWithContentDescription("More options").performClick()
+        compose.onNodeWithText("Settings").performClick()
         capture("native-settings.png")
+    }
+    @Test fun websiteNavigationOpensMatchingToolsAndNativeBlogs() {
+        launch()
+        listOf("Audits" to "https://pmsvgroup.com/audits/index.html", "FSSAI Licence" to "https://pmsvgroup.com/fssai-license", "Discussions" to "https://pmsvgroup.com/discussions").forEach { (title, url) ->
+            compose.onNodeWithContentDescription("Navigate to $title").performClick()
+            org.junit.Assert.assertEquals(title to url, openedTool)
+        }
+        compose.onNodeWithContentDescription("Navigate to Blogs").performClick()
+        compose.onNodeWithText("Practical food safety lessons").assertIsDisplayed()
+        compose.onNodeWithText("Food safety update").assertDoesNotExist()
+        capture("native-blogs.png")
+    }
+    @Test fun websiteRegulatoryJourneyScopesIndiaFeed() {
+        launch()
+        compose.onNodeWithContentDescription("Navigate to Updates/News").performClick()
+        compose.onNodeWithText("Regulatory").performClick()
+        compose.onNodeWithText("India · FSSAI").performClick()
+        compose.onNode(hasScrollToIndexAction()).performScrollToNode(hasText("Milk logo amendment"))
+        compose.onNodeWithText("Milk logo amendment").assertIsDisplayed()
+        compose.onNodeWithText("US regulatory notice").assertDoesNotExist()
+        capture("native-fssai.png")
     }
     private fun capture(name: String) {
         val instrumentation = InstrumentationRegistry.getInstrumentation()

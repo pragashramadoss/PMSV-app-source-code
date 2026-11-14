@@ -5,8 +5,22 @@ feeds, search, update details, bookmarks, sharing, settings and notification
 navigation are native Android screens. They do not launch a TWA or depend on
 Chrome's desktop-site preference.
 
-The preview installs as `com.pmsvgroup.foodsafety.nativepreview`, alongside the
-existing Play app. It is debug signed for testing, not a production Play update.
+The preview now mirrors the website: the PMSV header, Welcome to the Forum,
+global search, compact shortcut cards, Latest updates and the five website tabs.
+Updates/News includes regulatory country desks and professional topics. Blogs,
+saved updates, details and the notification dialog retain the same visual style.
+The light theme is intentional, matching the website regardless of Chrome settings.
+
+The distributed preview installs as `com.pmsvgroup.foodsafety.preview`, labelled
+PMSV Preview. CI debug builds have a `.debug` suffix. The first 2.0.0 preview used
+an ephemeral CI debug signing key, which was not retained; Android cannot update
+that package with a different key. This new identity preserves all existing apps
+and their local records. Keep the old apps for existing saved audits/bookmarks.
+CI outputs an UNSIGNED release APK, not an installer. Distribution must sign it
+with the persistent private PMSV preview key backed up separately in the owner's
+private files. Never publish that key, password or a debug-signed distributable.
+Future updates must keep both this package ID and signing key and increase the
+version code. This is a preview, not a production Play update.
 The existing `:app` module and live WordPress plugin are unchanged.
 
 ## Content and GitHub

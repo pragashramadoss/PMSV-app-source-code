@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertTrue
@@ -23,11 +24,12 @@ class NotificationNavigationTest {
         val manager = context.getSystemService(NotificationManager::class.java)
         try {
             repeat(2) {
-                compose.onNodeWithText("Settings", useUnmergedTree = true).performClick()
+                compose.onNodeWithContentDescription("More options").performClick()
+                compose.onNodeWithText("Settings").performClick()
                 assertTrue(Alerts.post(context, "Native notification test", "Open Updates", 101))
                 compose.waitUntil(5000) { manager.activeNotifications.any { it.id == 101 } }
                 manager.activeNotifications.first { it.id == 101 }.notification.contentIntent.send()
-                compose.onNodeWithText("Updates & insights").assertIsDisplayed()
+                compose.onNodeWithText("Regulatory, food safety, quality, process excellence, certification and blog updates in one place.").assertIsDisplayed()
             }
         } finally {
             manager.cancel(101)
@@ -37,9 +39,10 @@ class NotificationNavigationTest {
         }
     }
     @Test fun currentScreenSurvivesActivityRecreation() {
-        compose.onNodeWithText("Settings", useUnmergedTree = true).performClick()
-        compose.onNodeWithText("Make PMSV yours").assertIsDisplayed()
+        compose.onNodeWithContentDescription("More options").performClick()
+        compose.onNodeWithText("Settings").performClick()
+        compose.onNodeWithText("Daily update alerts").assertIsDisplayed()
         compose.activityRule.scenario.recreate()
-        compose.onNodeWithText("Make PMSV yours").assertIsDisplayed()
+        compose.onNodeWithText("Daily update alerts").assertIsDisplayed()
     }
 }
