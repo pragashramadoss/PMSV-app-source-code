@@ -66,9 +66,9 @@ let browser;
   }
   await page.evaluate(()=>PMSV_HELPER_TEST.setView('verification'));
   await page.screenshot({path:path.join(artifacts,'review-'+width+'.png'),fullPage:false});
-  // A sticky page header can overlay the middle of a tall element-only capture.
-  // Keep normal viewport screenshots above; hide it only for this evidence crop.
-  if(width===390||width===1440)await page.locator('#gazetteReviewSummary').screenshot({path:path.join(artifacts,'original-gazette-'+width+'.png'),style:'header { visibility: hidden !important; }'});
+  // Sticky page navigation can overlay the middle of a tall element-only capture.
+  // Keep normal viewport screenshots above; hide navigation only for this crop.
+  if(width===390||width===1440)await page.locator('#gazetteReviewSummary').screenshot({path:path.join(artifacts,'original-gazette-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
  }
  await page.goto(base+'#%E0%A4%A',{waitUntil:'networkidle'});
  await page.locator('#overview').waitFor({state:'visible'});
