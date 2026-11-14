@@ -66,6 +66,7 @@ let browser;
   }
   await page.evaluate(()=>PMSV_HELPER_TEST.setView('verification'));
   await page.screenshot({path:path.join(artifacts,'review-'+width+'.png'),fullPage:false});
+  if(width===390||width===1440)await page.locator('#gazetteReviewSummary').screenshot({path:path.join(artifacts,'original-gazette-'+width+'.png')});
  }
  await page.goto(base+'#%E0%A4%A',{waitUntil:'networkidle'});
  await page.locator('#overview').waitFor({state:'visible'});
