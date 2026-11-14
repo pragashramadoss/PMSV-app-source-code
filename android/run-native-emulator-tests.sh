@@ -8,13 +8,16 @@ if [ "$test_status" -eq 0 ]; then
   # Smoke-test the release variant's install, update and launch with a disposable
   # CI signature. Only the unsigned release leaves CI; distribution uses the
   # backed-up private preview key, never this runner's debug key.
-  "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-pass pass:android --key-pass pass:android --out /tmp/pmsv-release-test.apk android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk &&
+  keytool -genkeypair -keystore /tmp/pmsv-ci-release.p12 -storetype PKCS12 -alias ci-test -keyalg RSA -keysize 2048 -validity 7 -dname 'CN=Disposable CI test' -storepass android -keypass android &&
+  "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks /tmp/pmsv-ci-release.p12 --ks-pass pass:android --key-pass pass:android --out /tmp/pmsv-release-test.apk android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk &&
   adb install /tmp/pmsv-release-test.apk &&
   adb install -r /tmp/pmsv-release-test.apk &&
   adb shell am start -W -n com.pmsvgroup.foodsafety.preview/com.pmsvgroup.nativeapp.MainActivity &&
   adb shell uiautomator dump /sdcard/pmsv-release.xml &&
   adb pull /sdcard/pmsv-release.xml native-qa/release-launch.xml &&
-  grep -q 'Welcome to the Forum' native-qa/release-launch.xml
+  grep -q 'Welcome to the Forum' native-qa/release-launch.xml &&
+  adb shell screencap -p /sdcard/pmsv-release.png &&
+  adb pull /sdcard/pmsv-release.png native-qa/release-home.png
   test_status=$?
 fi
 if [ "$test_status" -ne 0 ]; then

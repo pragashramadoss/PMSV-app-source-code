@@ -54,6 +54,7 @@ class NativeScreensTest {
         compose.onNodeWithContentDescription("Close notifications").performClick()
         compose.onNodeWithContentDescription("More options").performClick()
         compose.onNodeWithText("Settings").performClick()
+        compose.onNodeWithText("Daily update alerts").assertIsDisplayed()
         capture("native-settings.png")
     }
     @Test fun websiteNavigationOpensMatchingToolsAndNativeBlogs() {
@@ -78,6 +79,7 @@ class NativeScreensTest {
         capture("native-fssai.png")
     }
     private fun capture(name: String) {
+        compose.waitForIdle()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val bitmap = instrumentation.uiAutomation.takeScreenshot()
         val folder = File(instrumentation.targetContext.getExternalFilesDir(null), "qa").apply { mkdirs() }

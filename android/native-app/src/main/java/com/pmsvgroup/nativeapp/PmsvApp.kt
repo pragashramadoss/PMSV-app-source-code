@@ -225,7 +225,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                             Text(if (query.isNotBlank()) "Search results" else if (recent) "Latest updates" else if (saved) "On this device" else "Latest stories",
                                 fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
                             if (recent) Text("All sections".takeIf { home || screen == "updates" } ?: "Regulatory", fontSize = 11.sp, color = Muted)
-                            else Text("${visible.size} items", fontSize = 12.sp, color = Muted)
+                            else Text("${visible.size} ${if (visible.size == 1) "item" else "items"}", fontSize = 12.sp, color = Muted)
                         }
                     }
                     if (visible.isEmpty() && !state.loading) item {
