@@ -55,8 +55,11 @@ object Links {
 fun filteredNews(items: List<NewsItem>, category: String, query: String): List<NewsItem> {
     val words = query.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
     return items.filter { item ->
+        val text = "${item.title} ${item.summary} ${item.source} ${item.category} ${item.region} ${item.published} ${displayDate(item.published)}"
         (category == "all" || item.tab == category) && words.all { word ->
-            "${item.title} ${item.summary} ${item.source} ${item.category} ${item.region} ${item.published} ${displayDate(item.published)}".contains(word, ignoreCase = true)
+            // A search for day 6 must not match the 6 inside the year 2026.
+            if (word.all { it.isDigit() }) Regex("(?<!\\d)${Regex.escape(word)}(?!\\d)").containsMatchIn(text)
+            else text.contains(word, ignoreCase = true)
         }
     }
 }
