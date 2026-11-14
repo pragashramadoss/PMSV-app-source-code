@@ -2,6 +2,7 @@ package com.pmsvgroup.nativeapp
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.core.content.ContextCompat
 
 class MainActivity : ComponentActivity() {
     private val model: PmsvViewModel by viewModels()
@@ -42,7 +44,8 @@ class MainActivity : ComponentActivity() {
                     toggleAlerts = { value ->
                         if (!value) { Alerts.setEnabled(this, false); alertEnabled = false }
                         else if (Alerts.allowed(this)) { Alerts.setEnabled(this, true); alertEnabled = true }
-                        else if (Build.VERSION.SDK_INT >= 33) permission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        else if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+                            permission.launch(Manifest.permission.POST_NOTIFICATIONS)
                         else openSettings()
                     },
                     testAlert = { Alerts.post(this, "PMSV native notification", "This notification opens your native PMSV Updates screen.", 101) },
