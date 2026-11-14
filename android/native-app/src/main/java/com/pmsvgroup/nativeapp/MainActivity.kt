@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
     }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); acceptIntent(intent) }
     private fun acceptIntent(intent: Intent) {
-        val screen = intent.getStringExtra("screen").takeIf { it in listOf("home", "updates", "blogs") } ?: "home"
+        val screen = intent.getStringExtra("screen").takeIf { it in listOf("home", "updates", "blogs", "saved", "settings") } ?: "home"
         navigation = screen to System.nanoTime()
     }
     private fun openSettings() { startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)) }

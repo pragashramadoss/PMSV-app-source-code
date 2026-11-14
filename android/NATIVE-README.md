@@ -11,6 +11,12 @@ Updates/News includes regulatory country desks and professional topics. Blogs,
 saved updates, details and the notification dialog retain the same visual style.
 The light theme is intentional, matching the website regardless of Chrome settings.
 
+Version 2.0.2 keeps that SAME native masthead, notification dialog and five-tab
+footer around Audits, FSSAI Licence and Discussions. Tool subpages update the
+selected native tab. App-scoped presentation CSS removes duplicate web navigation
+and normalizes the helper header; the website and form calculations are unchanged.
+Tapping the current section or opening notifications preserves the active form.
+
 The distributed preview installs as `com.pmsvgroup.foodsafety.preview`, labelled
 PMSV Preview. CI debug builds have a `.debug` suffix. The first 2.0.0 preview used
 an ephemeral CI debug signing key, which was not retained; Android cannot update
@@ -41,7 +47,8 @@ interpretations are added by this app.
 ## Preview boundaries
 
 - Audits, licence and discussions currently open the existing PMSV forms in an
-  in-app WebView. These are explicitly labelled web tools, not claimed as native.
+  in-app WebView inside the shared native header and footer. Form content is still
+  web-based; it has not been rewritten as native form widgets.
   Save Draft stores new checklists in this preview app's private WebView storage;
   reopen them from the audit tool's Saved Audits. Saved articles use separate
   native app storage. Neither is uploaded to GitHub. Account backup is not
@@ -72,4 +79,6 @@ gradle :native-app:connectedDebugAndroidTest
 
 CI runs unit tests, lint, APK package checks and Android 16 instrumentation tests
 for search, bookmarking/persistence and repeated notification navigation. UI
-screenshots use explicit test fixtures; real feeds are fetched at runtime.
+screenshots cover native fixture screens and live Audits/FSSAI tool pages.
+Tool tests check shared header/footer geometry, hidden duplicate web navigation,
+helper subtabs, form continuity, back navigation and WebView storage persistence.

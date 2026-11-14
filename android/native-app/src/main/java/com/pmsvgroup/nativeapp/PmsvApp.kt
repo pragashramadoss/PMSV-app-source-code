@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -79,13 +80,12 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     var region by rememberSaveable { mutableStateOf("all") }
     var query by rememberSaveable { mutableStateOf("") }
     var notifications by rememberSaveable { mutableStateOf(false) }
-    var menu by remember { mutableStateOf(false) }
     var alertMessage by rememberSaveable { mutableStateOf("") }
     var handledNavigation by rememberSaveable { mutableLongStateOf(Long.MIN_VALUE) }
     LaunchedEffect(navigation) {
         if (handledNavigation != navigation.second) {
             screen = navigation.first; articleId = null; filter = "all"; region = "all"; query = ""
-            notifications = false; menu = false; handledNavigation = navigation.second
+            notifications = false; handledNavigation = navigation.second
         }
     }
     val article = (state.news + state.saved).find { it.id == articleId }
@@ -105,34 +105,10 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     }
     BackHandler(enabled = articleId != null || screen != "home", onBack = back)
     Scaffold(containerColor = Page, topBar = {
-        Surface(color = Color.White) {
-            Column(Modifier.statusBarsPadding()) {
-                Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    Row(Modifier.weight(1f).clickable { go("home") }.semantics { contentDescription = "PMSV home" },
-                        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Image(painterResource(R.drawable.pmsv_logo), null, Modifier.size(46.dp))
-                        Column {
-                            Text("PMSV", fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
-                            Text("Food Safety & Quality Forum", fontSize = 11.sp, lineHeight = 15.sp, fontWeight = FontWeight.SemiBold)
-                        }
-                    }
-                    OutlinedIconButton(onClick = { notifications = true }, modifier = Modifier.size(42.dp), shape = RoundedCornerShape(12.dp), border = BorderStroke(1.dp, Line),
-                        colors = IconButtonDefaults.outlinedIconButtonColors(containerColor = Color(0xFFF1F5FF), contentColor = Blue)) {
-                        Icon(if (alertsEnabled && alertsAllowed) Icons.Outlined.NotificationsActive else Icons.Outlined.NotificationsNone, "App notifications")
-                    }
-                    Box {
-                        IconButton(onClick = { menu = true }, modifier = Modifier.width(36.dp)) { Icon(Icons.Outlined.MoreVert, "More options", tint = Muted) }
-                        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = Color.White) {
-                            DropdownMenuItem(text = { Text("Saved updates") }, leadingIcon = { Icon(Icons.Outlined.BookmarkBorder, null) }, onClick = { menu = false; go("saved") })
-                            DropdownMenuItem(text = { Text("Refresh updates") }, leadingIcon = { Icon(Icons.Outlined.Refresh, null) }, onClick = { menu = false; refresh() }, enabled = !state.loading)
-                            DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Outlined.Settings, null) }, onClick = { menu = false; go("settings") })
-                        }
-                    }
-                }
-                HorizontalDivider(color = Line)
-            }
-        }
-    }, bottomBar = { WebsiteNavigation(screen, go) }) { padding ->
+        PmsvHeader(alertsEnabled, alertsAllowed, onHome = { go("home") },
+            onNotifications = { notifications = true }, onSaved = { go("saved") },
+            onSettings = { go("settings") }, onRefresh = refresh, refreshEnabled = !state.loading)
+    }, bottomBar = { PmsvNavigation(screen, go) }) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
             if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth(), color = Blue)
             if (article != null) {
@@ -248,19 +224,64 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
             }
         }
     }
-    if (notifications) AlertDialog(onDismissRequest = { notifications = false }, containerColor = Color.White, shape = RoundedCornerShape(14.dp),
+    if (notifications) PmsvNotificationDialog(alertsEnabled, alertsAllowed, toggleAlerts, testAlert,
+        openNotificationSettings, onDismiss = { notifications = false })
+}
+
+/** One masthead and tab bar for both native screens and embedded tools. */
+@Composable internal fun PmsvHeader(
+    alertsEnabled: Boolean, alertsAllowed: Boolean, onHome: () -> Unit,
+    onNotifications: () -> Unit, onSaved: () -> Unit, onSettings: () -> Unit,
+    onRefresh: () -> Unit, refreshEnabled: Boolean = true, refreshLabel: String = "Refresh updates"
+) {
+    var menu by remember { mutableStateOf(false) }
+    Surface(color = Color.White) {
+        Column(Modifier.testTag("pmsv-header").statusBarsPadding()) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(Modifier.weight(1f).clickable(onClick = onHome).semantics { contentDescription = "PMSV home" },
+                    verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Image(painterResource(R.drawable.pmsv_logo), null, Modifier.size(46.dp))
+                    Column {
+                        Text("PMSV", fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
+                        Text("Food Safety & Quality Forum", fontSize = 11.sp, lineHeight = 15.sp, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+                OutlinedIconButton(onClick = onNotifications, modifier = Modifier.size(42.dp), shape = RoundedCornerShape(12.dp), border = BorderStroke(1.dp, Line),
+                    colors = IconButtonDefaults.outlinedIconButtonColors(containerColor = Color(0xFFF1F5FF), contentColor = Blue)) {
+                    Icon(if (alertsEnabled && alertsAllowed) Icons.Outlined.NotificationsActive else Icons.Outlined.NotificationsNone, "App notifications")
+                }
+                Box {
+                    IconButton(onClick = { menu = true }, modifier = Modifier.width(36.dp)) { Icon(Icons.Outlined.MoreVert, "More options", tint = Muted) }
+                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, containerColor = Color.White) {
+                        DropdownMenuItem(text = { Text("Saved updates") }, leadingIcon = { Icon(Icons.Outlined.BookmarkBorder, null) }, onClick = { menu = false; onSaved() })
+                        DropdownMenuItem(text = { Text(refreshLabel) }, leadingIcon = { Icon(Icons.Outlined.Refresh, null) }, onClick = { menu = false; onRefresh() }, enabled = refreshEnabled)
+                        DropdownMenuItem(text = { Text("Settings") }, leadingIcon = { Icon(Icons.Outlined.Settings, null) }, onClick = { menu = false; onSettings() })
+                    }
+                }
+            }
+            HorizontalDivider(color = Line)
+        }
+    }
+}
+
+@Composable internal fun PmsvNotificationDialog(
+    enabled: Boolean, allowed: Boolean, toggle: (Boolean) -> Unit, test: () -> Boolean,
+    settings: () -> Unit, onDismiss: () -> Unit
+) {
+    var message by rememberSaveable { mutableStateOf("") }
+    AlertDialog(onDismissRequest = onDismiss, containerColor = Color.White, shape = RoundedCornerShape(14.dp),
         title = { Row(verticalAlignment = Alignment.CenterVertically) {
             Text("App notifications", fontWeight = FontWeight.Bold, fontSize = 22.sp, modifier = Modifier.weight(1f))
-            IconButton(onClick = { notifications = false }) { Icon(Icons.Outlined.Close, "Close notifications") }
+            IconButton(onClick = onDismiss) { Icon(Icons.Outlined.Close, "Close notifications") }
         } }, text = { Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Text("Turn on alerts for new PMSV updates.", color = Muted)
-            NotificationControls(alertsEnabled, alertsAllowed, toggleAlerts, testAlert, openNotificationSettings, alertMessage, { alertMessage = it })
+            NotificationControls(enabled, allowed, toggle, test, settings, message, { message = it })
         } }, confirmButton = {})
 }
 
-@Composable private fun WebsiteNavigation(screen: String, go: (String) -> Unit) {
+@Composable internal fun PmsvNavigation(screen: String, go: (String) -> Unit) {
     Surface(color = Color.White) {
-        Column(Modifier.navigationBarsPadding()) {
+        Column(Modifier.testTag("pmsv-navigation").navigationBarsPadding()) {
             HorizontalDivider(color = Line)
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 7.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                 destinations.forEach { destination ->
