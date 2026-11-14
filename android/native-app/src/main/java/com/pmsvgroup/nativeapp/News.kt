@@ -41,13 +41,22 @@ object Links {
         u.scheme == "https" && !u.host.isNullOrBlank() && u.userInfo == null && u.port == -1
     }.getOrDefault(false)
     fun isPmsv(raw: String): Boolean = isHttps(raw) && URI(raw).host == "pmsvgroup.com"
+    fun nativeDestination(raw: String): String? {
+        if (!isPmsv(raw)) return null
+        return when (URI(raw).path.orEmpty().trimEnd('/')) {
+            "" -> "home"
+            "/updates" -> "updates"
+            "/blogs" -> "blogs"
+            else -> null
+        }
+    }
 }
 
 fun filteredNews(items: List<NewsItem>, category: String, query: String): List<NewsItem> {
     val words = query.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
     return items.filter { item ->
         (category == "all" || item.tab == category) && words.all { word ->
-            "${item.title} ${item.summary} ${item.source} ${item.category} ${item.region}".contains(word, ignoreCase = true)
+            "${item.title} ${item.summary} ${item.source} ${item.category} ${item.region} ${item.published} ${displayDate(item.published)}".contains(word, ignoreCase = true)
         }
     }
 }

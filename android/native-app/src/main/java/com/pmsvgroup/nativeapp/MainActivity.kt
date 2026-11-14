@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,7 +28,9 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT))
         if (savedInstanceState == null) acceptIntent(intent)
         else navigation = (savedInstanceState.getString("navigationScreen") ?: "home") to savedInstanceState.getLong("navigationToken")
         setContent {
@@ -66,7 +69,7 @@ class MainActivity : ComponentActivity() {
     }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); acceptIntent(intent) }
     private fun acceptIntent(intent: Intent) {
-        val screen = if (intent.getStringExtra("screen") == "updates") "updates" else "home"
+        val screen = intent.getStringExtra("screen").takeIf { it in listOf("home", "updates", "blogs") } ?: "home"
         navigation = screen to System.nanoTime()
     }
     private fun openSettings() { startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)) }

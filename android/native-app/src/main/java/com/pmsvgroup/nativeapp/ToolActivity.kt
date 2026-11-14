@@ -45,6 +45,14 @@ class ToolActivity : ComponentActivity() {
         web.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val target = request.url.toString()
+                val destination = if (request.isForMainFrame) Links.nativeDestination(target) else null
+                if (destination != null) {
+                    startActivity(Intent(this@ToolActivity, MainActivity::class.java)
+                        .putExtra("screen", destination)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                    finish()
+                    return true
+                }
                 if (Links.isPmsv(target)) return false
                 if (request.isForMainFrame && Links.isHttps(target)) runCatching { startActivity(Intent(Intent.ACTION_VIEW, request.url)) }
                 return true

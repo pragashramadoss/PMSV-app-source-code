@@ -20,6 +20,18 @@ class NewsTest {
         json.getJSONArray("news").getJSONObject(0).put("published", "bad")
         assertEquals(listOf(news), NewsCodec.parse(json.toString()))
     }
+    @Test fun searchAcceptsDisplayedAndIsoPublicationDates() {
+        assertEquals(listOf(milk), filteredNews(listOf(news, milk), "all", "6 Nov 2026"))
+        assertEquals(listOf(milk), filteredNews(listOf(news, milk), "all", "2026-11-06"))
+    }
+    @Test fun toolNavigationReturnsOnlyKnownPmsvRoutesToNativeScreens() {
+        assertEquals("home", Links.nativeDestination("https://pmsvgroup.com/"))
+        assertEquals("updates", Links.nativeDestination("https://pmsvgroup.com/updates/?source=audits"))
+        assertEquals("blogs", Links.nativeDestination("https://pmsvgroup.com/blogs"))
+        assertNull(Links.nativeDestination("https://pmsvgroup.com/blogs/my-article"))
+        assertNull(Links.nativeDestination("https://pmsvgroup.com/audits/index.html"))
+        assertNull(Links.nativeDestination("https://pmsvgroup.com.evil.example/updates"))
+    }
     @Test fun publicLinksRejectExecutableSchemesAndSpoofedPmsvOrigins() {
         for (url in listOf("javascript:alert(1)", "file:///etc/passwd", "http://pmsvgroup.com", "https://attacker@pmsvgroup.com/", "https://pmsvgroup.com:444/")) assertFalse(url, Links.isHttps(url))
         assertFalse(Links.isPmsv("https://pmsvgroup.com.evil.example/"))
