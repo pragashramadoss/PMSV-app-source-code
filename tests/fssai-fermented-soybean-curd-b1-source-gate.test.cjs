@@ -34,7 +34,7 @@ test("Fermented curd source and two FoSCoS identities exactly match FSSAI Chapte
   assert.equal(p.rule_key,"2.4.39");
   const v=evidence.exact_variants.find(x=>x.catalog_id===id);
   assert.equal(v.catalogue_name,name);assert.equal(v.catalogue_fssr,fssr);
-  assert.ok(record.variants.some(x=>x.name===v.standard_variant));
+  assert.ok(record.composition.some(x=>x.when?.fermented_soy_type===(fssr==="2.4.39(1)"?"fermented_curd":"named_cultures")));
  }
 });
 test("Both current official source categories agree on B1 10 µg/kg, and no other contaminant is inferred",()=>{

@@ -3596,10 +3596,20 @@
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "milk-12",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Do not assume a plain-buttermilk name establishes a fermented-milk identity. Confirm process, composition and actual product route.",
+      "microbiology_candidates": [
+        {
+          "when": "Confirmed fermented-milk product/drink meeting Chapter 2.1.13 identity",
+          "profile_key": "milk-12"
+        },
+        {
+          "when": "Butter-churning residual liquid or identity not established",
+          "requires_source_scope_review": true
+        }
+      ]
     },
     {
       "id": "01-01-1-flavoured-milk",
@@ -4031,10 +4041,13 @@
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.21(4), PDF page 75, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-3-khoa",
@@ -4458,10 +4471,13 @@
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.24(4), PDF page 81, explicitly refers this product to Appendix B requirements for milk powders. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-5-analogue-in-the-dairy-context",
@@ -5879,10 +5895,13 @@
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.22(4), PDF page 76, explicitly refers this product to Appendix B requirements for whey-based powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-8-whey-powder",
@@ -14173,10 +14192,27 @@
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_profile_key": "meat-04",
-      "microbiology_note": "Exact smoked meat-sausage identity requiring the semi-cooked/smoked meat route.",
-      "microbiology_table_group": "meat"
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Smoking does not establish the final heat-treatment state. Table 5 row 4 requires further heat treatment; row 8 is fully cooked.",
+      "microbiology_table_group": "meat",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_candidates": [
+        {
+          "condition": "Partially heat-treated/smoked and requires further cooking",
+          "profile_key": "meat-04"
+        },
+        {
+          "condition": "Fully cooked; minimum core 75°C established",
+          "profile_key": "meat-08"
+        },
+        {
+          "condition": "Actual final heat treatment or intended consumption unresolved",
+          "profile_key": "",
+          "message": "No automatic Table 5 choice"
+        }
+      ]
     },
     {
       "id": "08-08-3-meat-sausages-dry-or-fermented",
@@ -14451,10 +14487,24 @@
       "chapter_rule_link_status": "file_and_key_verified",
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_profile_key": "meat-06",
-      "microbiology_note": "Exact fermented meat-product identity.",
-      "microbiology_table_group": "meat"
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Table 5 definition for fermented meat says chopped/ground. Whole pieces/cuts in this catalogue identity must not be called an exact source match.",
+      "microbiology_table_group": "meat",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_candidates": [
+        {
+          "condition": "Documented competent assessment establishes applicable category despite identity-scope difference",
+          "profile_key": "meat-06",
+          "automatic_selection_allowed": false
+        },
+        {
+          "condition": "Whole-cut scope not resolved",
+          "profile_key": "",
+          "message": "Exact microbiology applicability not established"
+        }
+      ]
     },
     {
       "id": "09-09-1-live-and-raw-bivalve-molluscs",
@@ -21972,10 +22022,13 @@
       "chapter_rule_file_verified_on": "2026-10-03",
       "chapter_rule_key_verified_on": "2026-10-03",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.23(4), PDF page 78, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "100-100-royal-jelly",
@@ -25133,10 +25186,20 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "milk-12",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "FSSAI Chapter 2.1.13 product falls under Appendix B Table 2 Fermented Milk Products."
+      "microbiology_profile_key": "",
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Do not assume a plain-buttermilk name establishes a fermented-milk identity. Confirm process, composition and actual product route.",
+      "microbiology_candidates": [
+        {
+          "when": "Confirmed fermented-milk product/drink meeting Chapter 2.1.13 identity",
+          "profile_key": "milk-12"
+        },
+        {
+          "when": "Butter-churning residual liquid or identity not established",
+          "requires_source_scope_review": true
+        }
+      ]
     },
     {
       "id": "01-01-1-flavoured-milk",
@@ -25408,10 +25471,13 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 row 7 does not expressly list Milk Protein Concentrate."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.21(4), PDF page 75, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-3-khoa",
@@ -25675,10 +25741,13 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 does not expressly list Dairy/Milk/Whey Permeate Powders."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.24(4), PDF page 81, explicitly refers this product to Appendix B requirements for milk powders. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-5-analogue-in-the-dairy-context",
@@ -26520,10 +26589,13 @@
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 lists 'Whey based Powder' but does not expressly identify Whey Protein Concentrate. PMSV does not treat the wording as equivalent without a direct FSSAI crosswalk."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.22(4), PDF page 76, explicitly refers this product to Appendix B requirements for whey-based powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "01-01-8-whey-powder",
@@ -31716,10 +31788,27 @@
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_profile_key": "meat-04",
-      "microbiology_note": "Exact smoked meat-sausage identity requiring the semi-cooked/smoked meat route.",
-      "microbiology_table_group": "meat"
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Smoking does not establish the final heat-treatment state. Table 5 row 4 requires further heat treatment; row 8 is fully cooked.",
+      "microbiology_table_group": "meat",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_candidates": [
+        {
+          "condition": "Partially heat-treated/smoked and requires further cooking",
+          "profile_key": "meat-04"
+        },
+        {
+          "condition": "Fully cooked; minimum core 75°C established",
+          "profile_key": "meat-08"
+        },
+        {
+          "condition": "Actual final heat treatment or intended consumption unresolved",
+          "profile_key": "",
+          "message": "No automatic Table 5 choice"
+        }
+      ]
     },
     {
       "id": "08-08-3-meat-sausages-dry-or-fermented",
@@ -31882,10 +31971,24 @@
       "appendix_fcs_note": "",
       "appendix_fcs_verified_on": "2026-10-03",
       "chapter_rule_link_status": "file_and_key_verified",
-      "microbiology_status": "mapped_appendix_b_v2",
-      "microbiology_profile_key": "meat-06",
-      "microbiology_note": "Exact fermented meat-product identity.",
-      "microbiology_table_group": "meat"
+      "microbiology_status": "conditional_appendix_b_variant_required",
+      "microbiology_profile_key": "",
+      "microbiology_note": "Table 5 definition for fermented meat says chopped/ground. Whole pieces/cuts in this catalogue identity must not be called an exact source match.",
+      "microbiology_table_group": "meat",
+      "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_candidates": [
+        {
+          "condition": "Documented competent assessment establishes applicable category despite identity-scope difference",
+          "profile_key": "meat-06",
+          "automatic_selection_allowed": false
+        },
+        {
+          "condition": "Whole-cut scope not resolved",
+          "profile_key": "",
+          "message": "Exact microbiology applicability not established"
+        }
+      ]
     },
     {
       "id": "09-09-1-live-and-raw-bivalve-molluscs",
@@ -36729,10 +36832,13 @@
       "foscos_listing_code": "100",
       "chapter_rule_link_status": "file_and_key_verified",
       "microbiology_rule_file": "./data/rules/appendix-b-v2-core.json",
-      "microbiology_profile_key": "",
-      "microbiology_status": "appendix_b_no_direct_table_mapping",
-      "microbiology_verified_on": "2026-10-04",
-      "microbiology_note": "Appendix B Table 2 does not expressly provide a Cow/Buffalo Colostrum product row."
+      "microbiology_profile_key": "milk-07",
+      "microbiology_status": "mapped_appendix_b_v2",
+      "microbiology_verified_on": "2026-11-14",
+      "microbiology_note": "Chapter 2.1.23(4), PDF page 78, explicitly refers this product to Appendix B requirements for milk powder. This is a regulatory cross-reference, not an inferred ingredient equivalence. Footnote 3 yeast/mould applies only to casein powder and is excluded.",
+      "microbiology_exclude_criteria": [
+        "yeast_and_mold_count"
+      ]
     },
     {
       "id": "100-100-royal-jelly",

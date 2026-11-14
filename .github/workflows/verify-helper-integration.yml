@@ -1,0 +1,55 @@
+name: PMSV Helper integration verification
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-product-helper-preview-01/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - '.github/workflows/verify-helper-integration.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/prepare-helper-integration.cjs
+      - run: node scripts/run-helper-integration.cjs data > helper-data-tests.tap 2>&1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: helper-data-verification
+          path: helper-data-tests.tap
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/prepare-helper-integration.cjs
+      - name: Install isolated browser runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pmsv-browser" --no-save playwright@1.62.1
+          "$RUNNER_TEMP/pmsv-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify legacy browser integrations
+        run: NODE_PATH="$RUNNER_TEMP/pmsv-browser/node_modules" node scripts/run-helper-integration.cjs browser ${{ matrix.shard }} 4 > helper-browser-tests.tap 2>&1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: helper-browser-verification-${{ matrix.shard }}
+          path: |
+            helper-browser-tests.tap
+            audit-output/
+            test-artifacts/

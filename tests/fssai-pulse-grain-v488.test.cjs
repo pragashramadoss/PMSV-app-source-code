@@ -16,10 +16,8 @@ const alias=input=>call('pmsvStandardLookupAlias',input);
 test('FSSAI 2.4.6(22) is a distinct official Chapter 2.4 pulse standard',()=>{
  const st=chapter.standards.find(x=>x.key==='2.4.6(22)');
  assert.ok(st,'FSSAI Pulses standard not structured');
- assert.equal(st.variants.length,2);
- assert.equal(st.variant_requirements[0].values['Pulses with seed coat'],14);
- assert.equal(st.variant_requirements[0].values['Pulses without seed coat'],12);
- assert.ok(st.general_limits.some(r=>r.parameter==='Uric acid'&&r.value===100));
+ assert.deepEqual(st.composition.filter(x=>x.parameter==='Moisture').map(x=>[x.when.pulse_form,x.value]),[['whole',14],['without_seed_coat',12]]);
+ assert.ok(st.composition.some(r=>r.parameter==='Uric acid'&&r.value===100));
  assert.match(st.source_url,/fssai\.gov\.in/);
 });
 test('whole, split and dehusked pulses select whole Pulses, not flour',()=>{
