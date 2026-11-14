@@ -2,6 +2,7 @@
 import {useEffect,useState} from 'react';
 import {Bell,BellRing,Download} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+import {installedNotificationContext,readNotificationStatus,requestNotificationPermission,type NotificationCheck} from '@/lib/notification-status';
 
 type InstallEvent=Event&{prompt:()=>Promise<void>;userChoice:Promise<{outcome:string}>};
 type PMSVWindow=Window&{PMSV?:{base?:string;publicBase?:string;installPrompt?:InstallEvent|null}};
@@ -21,7 +22,7 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.24'),{scope:appUrl('/'),updateViaCache:'none'});
+ const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.25'),{scope:appUrl('/'),updateViaCache:'none'});
  await navigator.serviceWorker.ready;
  return reg;
 }
@@ -103,7 +104,7 @@ async function prepareGrantedSubscriptionUnlocked(forceRefresh=false){
 export async function subscribeToDiscussionAnswers():Promise<{endpoint:string;token:string}>{
  if(!window.isSecureContext||!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))
   throw Error('This browser does not support answer notifications.');
- const permission=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+ const permission=await requestNotificationPermission();
  if(permission!=='granted')throw Error('Allow PMSV notifications, or untick the answer-alert checkbox to post without them.');
  localStorage.removeItem('pmsv-push-preference');
  const subscription=await prepareGrantedSubscription();
@@ -113,10 +114,10 @@ export async function subscribeToDiscussionAnswers():Promise<{endpoint:string;to
 
 export default function AppNotifications(){
  const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false),[installed,setInstalled]=useState(false),[install,setInstall]=useState<InstallEvent|null>(null);
+ const [checks,setChecks]=useState<NotificationCheck[]>([]),[checking,setChecking]=useState(false);
 
  useEffect(()=>{
-  const standalone=matchMedia('(display-mode: standalone)').matches||(navigator as Navigator&{standalone?:boolean}).standalone===true;
-  setInstalled(standalone);
+  setInstalled(installedNotificationContext());
   setSupported(window.isSecureContext&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
 
   const cached=(window as PMSVWindow).PMSV?.installPrompt||null;
@@ -160,8 +161,17 @@ export default function AppNotifications(){
   void syncExisting(true);
   const onVisible=()=>{if(document.visibilityState==='visible')void syncExisting(false)};
   const onOnline=()=>{void syncExisting(false)};
+  const onFocus=()=>{void syncExisting(true)};
+  let permissionStatus:PermissionStatus|undefined;
+  const onPermissionChange=()=>{if(Notification.permission==='granted')setMessage('');void syncExisting(true)};
+  if(navigator.permissions)void navigator.permissions.query({name:'notifications'}).then(status=>{
+   if(cancelled)return;
+   permissionStatus=status;
+   status.addEventListener('change',onPermissionChange);
+  }).catch(()=>{});
   document.addEventListener('visibilitychange',onVisible);
   window.addEventListener('online',onOnline);
+  window.addEventListener('focus',onFocus);
 
   return()=>{
    cancelled=true;
@@ -170,6 +180,8 @@ export default function AppNotifications(){
    window.removeEventListener('appinstalled',onInstalled);
    document.removeEventListener('visibilitychange',onVisible);
    window.removeEventListener('online',onOnline);
+   window.removeEventListener('focus',onFocus);
+   permissionStatus?.removeEventListener('change',onPermissionChange);
   };
  },[]);
 
@@ -190,25 +202,35 @@ export default function AppNotifications(){
  }
 
  async function enable(){
-  setBusy(true);setMessage('');let created:PushSubscription|null=null;
+  setBusy(true);setMessage('');setChecks([]);
   try{
    if(!window.isSecureContext)throw Error('Notifications require HTTPS.');
    if(!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window))throw Error('Notifications are not supported by this browser.');
 
-   const permission=await Notification.requestPermission();
-   if(permission!=='granted')throw Error(permission==='denied'?'Notifications are blocked by the browser.':'Notification permission was not granted.');
+   const permission=await requestNotificationPermission();
+   if(permission!=='granted'){
+    void checkNotificationStatus(permission);
+    throw Error(permission==='denied'?'This session reports notification permission as denied. If Android notifications are already allowed, the app and browser connection needs checking. See the status below.':'Notification permission was not granted.');
+   }
 
    localStorage.removeItem('pmsv-push-preference');
    const synced=await prepareGrantedSubscription();
    if(!synced)throw Error('Could not prepare notifications.');
-   created=null;
    setEnabled(true);
    setMessage('Notifications are on.');
   }catch(e){
-   if(created)await created.unsubscribe().catch(()=>{});
    setEnabled(false);
    setMessage(e instanceof Error?e.message:'Could not turn on notifications.');
   }finally{setBusy(false)}
+ }
+
+ async function checkNotificationStatus(requestResult?:NotificationPermission){
+  setChecking(true);
+  try{
+   const status=await readNotificationStatus(basePath());
+   setChecks(requestResult?[{label:'Permission request result',value:requestResult},...status]:status);
+  }catch{setChecks([{label:'Status check',value:'Could not complete. Reopen PMSV and try again.'}])}
+  finally{setChecking(false)}
  }
 
  async function testNotification(repair=false){
@@ -262,5 +284,5 @@ export default function AppNotifications(){
   }catch{setMessage('Could not turn off notifications.')}finally{setBusy(false)}
  }
 
- return <><div className="app-notification-actions">{!installed&&install&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader>{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">Notifications are not supported by this browser.</p>}<p role="status" className="push-status">{message}</p></DialogContent></Dialog></>;
+ return <><div className="app-notification-actions">{!installed&&install&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader>{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">Notifications are not supported by this browser.</p>}<p role="status" className="push-status">{message}</p><button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>{checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl><p>Installed Android app version: see Android App info. Website version above is separate.</p></div>}</DialogContent></Dialog></>;
 }
