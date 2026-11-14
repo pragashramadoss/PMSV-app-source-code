@@ -19,8 +19,8 @@ export function checkR67(r,claims={}){
  p.source_specific_drained_weight_minimum_printed_in_2_3_4!==null||
  p.source_specific_pH_threshold_printed_in_2_3_4!==null||
  p.applicable_appendix_B_microbiology_required!==true||
- !p.source_optional_ingredients.includes("milk fat")||
- !p.permitted_additives_must_be_checked_under_regulations_and_appendices||
+ !Array.isArray(p.source_optional_ingredients)||!p.source_optional_ingredients.includes("milk fat")||
+ p.permitted_additives_must_be_checked_under_regulations_and_appendices!==true||
  p.actual_SKU_recipe_thermal_validation_pack_and_lab_reports_received!==false||
  p.effective_Gazette_and_current_CTR_article_legally_reconciled!==false||
  p.complete_additives_micro_contaminants_allergens_labelling_packaging_reviewed!==false||

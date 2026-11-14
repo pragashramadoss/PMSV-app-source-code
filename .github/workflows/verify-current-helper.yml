@@ -1,0 +1,44 @@
+name: PMSV current Helper verification
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/**'
+      - 'scripts/**'
+      - '.github/workflows/verify-current-helper.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/**'
+      - 'scripts/**'
+      - '.github/workflows/verify-current-helper.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  current-helper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify current source-review scripts
+        run: node scripts/verify-helper.cjs
+        env:
+          PMSV_TEST_REPORT: current-helper-results.json
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pmsv-browser" --no-save playwright@1.62.1
+          "$RUNNER_TEMP/pmsv-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Check all 533 products, exports and responsive views
+        run: NODE_PATH="$RUNNER_TEMP/pmsv-browser/node_modules" node scripts/test-helper-browser.cjs
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-helper-verification
+          path: |
+            current-helper-results.json
+            test-artifacts/helper-20261114/

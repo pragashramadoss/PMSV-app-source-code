@@ -24,6 +24,7 @@ const verdict=(status,missing=[],nextAction=null)=>({
  batchReleaseAuthorized:false,liveNumericSourceAutoApply:false
 });
 export function reviewR50Evidence(record,evidence={}){
+ evidence=evidence&&typeof evidence==="object"&&!Array.isArray(evidence)?evidence:{};
  if(!record || typeof record.id!=="string" || !R50_TYPES.includes(record.route) ||
     record.currentExactArticleDecision!=="EVIDENCE_HOLD")return verdict("UNKNOWN_OR_NON_HOLD_RECORD");
  // The underlying source screening is a reference, not product-level approval.

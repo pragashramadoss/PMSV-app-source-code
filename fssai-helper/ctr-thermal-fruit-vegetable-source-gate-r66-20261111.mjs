@@ -13,9 +13,9 @@ r.live_helper_modified!==false||r.numeric_engine_modified!==false||r.PR_2_draft_
 r.official_source?.source_page_images_checked!==false||
 r.official_source?.original_Gazette_currentness_reconciled!==false)
 return hold("INTEGRITY_HOLD");
-if(!Object.hasOwn(expected,id))return hold("OUT_OF_SCOPE");
+if(typeof id!=="string"||!Object.hasOwn(expected,id))return hold("OUT_OF_SCOPE");
 const p=r.product_records;
-if(!Array.isArray(p)||p.length!==3||new Set(p.map(x=>x.id)).size!==3)return hold("INTEGRITY_HOLD");
+if(!Array.isArray(p)||p.length!==3||p.some(x=>!x||typeof x!=="object"||Array.isArray(x))||new Set(p.map(x=>x.id)).size!==3)return hold("INTEGRITY_HOLD");
 for(const x of p){
 const e=expected[x.id],s=x.source_requirements;
 if(!e||x.fssr!==e[0]||x.fpc!==e[1]||x.style!==e[2]||!s||

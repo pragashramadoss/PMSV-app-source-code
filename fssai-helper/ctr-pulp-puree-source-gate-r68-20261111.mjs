@@ -17,6 +17,7 @@ JSON.stringify(r.source?.pdf_pages_zero_based_visually_checked)!=="[23,24,25,26]
 return deny("SOURCE_INTEGRITY_HOLD");
 if(typeof id!=="string"||!Object.hasOwn(spec,id))return deny("OUT_OF_SCOPE");
 if(!Array.isArray(r.products)||r.products.length!==3||
+ r.products.some(x=>!x||typeof x!=="object"||Array.isArray(x))||
 new Set(r.products.map(x=>x.id)).size!==3)return deny("SOURCE_INTEGRITY_HOLD");
 for(const p of r.products){
 const e=spec[p.id];
