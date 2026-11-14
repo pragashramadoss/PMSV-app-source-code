@@ -137,7 +137,7 @@ private val filters = listOf("all" to "All", "fssai" to "FSSAI", "general" to "N
                     item { ToolCard("FSSAI Licence", "Licence guidance and application checklists", Icons.Outlined.Description) { openTool("FSSAI Licence", "https://pmsvgroup.com/fssai-license") } }
                     item { ToolCard("Discussions", "Ask questions and learn from the community", Icons.Outlined.Forum) { openTool("PMSV discussions", "https://pmsvgroup.com/discussions") } }
                     item { ToolCard("Blogs", "Food safety and quality perspectives", Icons.Outlined.MenuBook) { chooseFilter("blogs") } }
-                    item { Card { Text("Audit, licence and discussion forms use the existing PMSV web tools during this preview. Audits saved in your current app remain there. Continue using that app for existing audit records and report exports.", Modifier.padding(16.dp), style = MaterialTheme.typography.bodySmall) } }
+                    item { Card { Text("Audit, licence and discussion forms use the existing PMSV web tools during this preview. Save Draft keeps new audits on this device; reopen them from Saved Audits inside the audit tool. Cloud backup is not connected. Audits saved in your current app remain there. Continue using that app for existing audit records and report exports.", Modifier.padding(16.dp), style = MaterialTheme.typography.bodySmall) } }
                 }
                 "settings" -> LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     item { Text("Make PMSV yours", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold) }

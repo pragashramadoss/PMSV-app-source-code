@@ -40,6 +40,8 @@ class ToolActivity : ComponentActivity() {
             setSupportMultipleWindows(false)
         }
         CookieManager.getInstance().setAcceptThirdPartyCookies(web, false)
+        // Existing Save / Reset / Finish forms use standard JavaScript dialogs.
+        web.webChromeClient = WebChromeClient()
         web.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 val target = request.url.toString()

@@ -28,6 +28,10 @@ interpretations are added by this app.
 
 - Audits, licence and discussions currently open the existing PMSV forms in an
   in-app WebView. These are explicitly labelled web tools, not claimed as native.
+  Save Draft stores new checklists in this preview app's private WebView storage;
+  reopen them from the audit tool's Saved Audits. Saved articles use separate
+  native app storage. Neither is uploaded to GitHub. Account backup is not
+  connected, so clearing app data or uninstalling can remove these local records.
 - TWA/Chrome storage cannot be automatically read by this app. Existing audit
   records stay in the old app. Do not uninstall it. Continue using it for report
   export/email and existing records until explicit export/import is implemented.
