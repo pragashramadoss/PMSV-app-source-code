@@ -6,7 +6,7 @@ import org.junit.Test
 
 class NewsTest {
     private val milk = NewsItem("milk", "Milk logo amendment", "Graphic specifications", "2026-11-06", "FSSAI", "Gazette notification", "fssai", "india", "https://www.fssai.gov.in/milk.pdf")
-    private val news = milk.copy(id = "news", title = "Food safety news", tab = "general", published = "2026-11-14", url = "https://example.com/news")
+    private val news = milk.copy(id = "news", title = "Food safety news", tab = "general", category = "Food safety news", region = "world", published = "2026-11-14", url = "https://example.com/news")
     @Test fun roundTripPreservesSavedSummariesAndOfficialLinks() {
         assertEquals(listOf(news, milk), NewsCodec.parse(NewsCodec.encode(listOf(milk, news))))
     }

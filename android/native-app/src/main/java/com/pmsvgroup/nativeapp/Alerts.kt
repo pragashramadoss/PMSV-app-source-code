@@ -19,9 +19,13 @@ object Alerts {
     private const val WORK = "pmsv-native-daily-updates"
     private fun prefs(context: Context) = context.getSharedPreferences("pmsv-native-alerts", Context.MODE_PRIVATE)
     fun enabled(context: Context) = prefs(context).getBoolean("enabled", false)
-    fun allowed(context: Context): Boolean = (Build.VERSION.SDK_INT < 33 ||
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-        NotificationManagerCompat.from(context).areNotificationsEnabled()
+    fun allowed(context: Context): Boolean {
+        val permissionGranted = Build.VERSION.SDK_INT < 33 ||
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        val channel = context.getSystemService(NotificationManager::class.java).getNotificationChannel(CHANNEL)
+        return permissionGranted && NotificationManagerCompat.from(context).areNotificationsEnabled() &&
+            channel?.importance != NotificationManager.IMPORTANCE_NONE
+    }
     fun createChannel(context: Context) {
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(NotificationChannel(CHANNEL, "PMSV daily updates", NotificationManager.IMPORTANCE_DEFAULT).apply {

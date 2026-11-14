@@ -26,7 +26,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        acceptIntent(intent)
+        if (savedInstanceState == null) acceptIntent(intent)
+        else navigation = (savedInstanceState.getString("navigationScreen") ?: "home") to savedInstanceState.getLong("navigationToken")
         setContent {
             val state by model.state.collectAsStateWithLifecycle()
             PmsvTheme {
@@ -53,6 +54,11 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         alertEnabled = Alerts.enabled(this)
         alertAllowed = Alerts.allowed(this)
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("navigationScreen", navigation.first)
+        outState.putLong("navigationToken", navigation.second)
+        super.onSaveInstanceState(outState)
     }
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); acceptIntent(intent) }
     private fun acceptIntent(intent: Intent) {

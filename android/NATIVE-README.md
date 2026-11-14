@@ -13,8 +13,11 @@ The existing `:app` module and live WordPress plugin are unchanged.
 
 The existing GitHub updater gathers official/regulatory/news material and
 publishes it to PMSV. The native app reads `https://pmsvgroup.com/api/news`.
-Content updates therefore need no new Android release. App-code updates still
-use the Android build / Google Play release process.
+Content updates therefore need no new Android release. GitHub Actions builds
+and tests changes to the Android code. Production app updates can be distributed
+through Google Play, or as signed APKs on GitHub Releases for direct installation.
+Direct installation requires Android's user approval and consistent package/signing
+identity. This preview does not contain an automatic APK downloader or installer.
 
 Cached headlines and summaries remain available offline. Saved items retain
 their content even if a later feed omits them. Original articles/documents need

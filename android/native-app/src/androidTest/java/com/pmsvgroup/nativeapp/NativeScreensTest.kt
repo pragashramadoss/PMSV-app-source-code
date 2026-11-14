@@ -29,7 +29,7 @@ class NativeScreensTest {
         compose.onNodeWithText("Search updates").performTextInput("milk")
         compose.onNodeWithText("Milk logo amendment").assertIsDisplayed().performClick()
         compose.onNodeWithText("Graphic specifications for milk packs.").assertIsDisplayed()
-        compose.onNodeWithText("Save update").performClick()
+        compose.onNodeWithText("Save update").performScrollTo().performClick()
         compose.onNodeWithContentDescription("Back to updates").performClick()
         compose.onNodeWithText("Saved", useUnmergedTree = true).performClick()
         compose.onNodeWithText("Your saved updates").assertIsDisplayed()

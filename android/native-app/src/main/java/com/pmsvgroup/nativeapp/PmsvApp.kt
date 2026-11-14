@@ -56,7 +56,12 @@ private val filters = listOf("all" to "All", "fssai" to "FSSAI", "general" to "N
     var filter by rememberSaveable { mutableStateOf("all") }
     var query by rememberSaveable { mutableStateOf("") }
     var alertMessage by rememberSaveable { mutableStateOf("") }
-    LaunchedEffect(navigation) { screen = navigation.first; articleId = null }
+    var handledNavigation by rememberSaveable { mutableLongStateOf(Long.MIN_VALUE) }
+    LaunchedEffect(navigation) {
+        if (handledNavigation != navigation.second) {
+            screen = navigation.first; articleId = null; handledNavigation = navigation.second
+        }
+    }
     val article = (state.news + state.saved).find { it.id == articleId }
     val savedIds = remember(state.saved) { state.saved.map { it.id }.toSet() }
     val chooseFilter: (String) -> Unit = { filter = it; query = ""; screen = "updates" }
