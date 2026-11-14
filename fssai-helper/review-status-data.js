@@ -12,7 +12,7 @@ window.PMSV_REVIEW_REGISTER = {
   "batchReleases": 0,
   "scope": "Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.",
   "sourceVerificationRequiresLotReport": false,
-  "softwareVerification": "The 1,171-test data integration suite and current audit checks passed. Wider browser integrations are being verified separately. Complete current-law verification remains open.",
+  "softwareVerification": "Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.",
   "sourceFiles": [
     "ctr-asafoetida-seasoning-oleoresins-r61-2026-11-05.json",
     "ctr-bakery-pasta-five-source-review-r59-2026-11-04.json",

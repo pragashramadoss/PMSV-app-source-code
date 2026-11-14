@@ -2,47 +2,69 @@
 
 ## Result
 
-Overall verification is **incomplete**. The current audit-script suite passes, but the wider historical preview suite contains unresolved failures and complete current-law reconciliation has not been established for all catalogue products. This update must stay on draft PR #2; it does not authorize a production deployment or any change to a product limit.
+Automated software verification passed: the data integration suite, all older browser groups, current Helper checks and numerical comparison guards. **Full regulatory verification remains incomplete:** linked source reviews do not establish every current-law requirement or a product approval.
 
-## Implemented fixes
+Work is saved on draft PR #2. Production `gh-pages`, WordPress and live rules have not been deployed or changed by this work.
 
-- The Helper now exposes the existing R45–R68 focused source reviews in its product detail and a searchable review-progress view. Counts are generated from canonical IDs, not incremented by hand: **533** catalogue identities, **137** open CTR article decisions, **67** identities covered by the selected focused rounds and **70** outside those rounds. Earlier broader reviews remain available; “outside selected rounds” does not mean never researched.
-- An unavailable or duplicated full catalogue now stops product lookup/export. The cached 123-row subset is no longer presented as a usable replacement for the 533-product catalogue.
-- R50, R66, R67 and R68 now handle malformed input without throwing or accepting a truthy non-boolean evidence flag. No legal interpretation, numerical threshold, source master or release decision was changed by these fixes.
-- Malformed URL fragments no longer abort startup. Review status exports preserve all 137 cases even under an active display filter.
-- Source-text verification and commercial lot assessment are explicitly separated. **A laboratory report is not required to verify the wording of a regulation.** Actual SKU/formulation/lot evidence remains necessary where a product-specific application or release decision requires it.
+## Implemented corrections
+
+- Migrated the older readiness generator and consumers to the reviewed cereal/soy conditional schema. Restored the ordered preparation pipeline so downstream audits receive their required fixtures.
+- Regenerated the search index from the 533-product master, updating 152 index records (including the seven reconciled microbiology routes). Seven microbiology routes now agree with the reviewed Appendix B module. A check detects future index drift.
+- Preserved subtype conditions, analytical bases, strict boundaries and source questions in displayed quality rows. Corrected the lactose sulphated-ash unit and the cereal-flakes source citation. The instant-noodle child rule now carries its existing qualified quality reference.
+- Reconciled old quality-reference snapshots with their canonical source rows. Numerical thresholds were preserved. Source fingerprints were updated only after checking what changed; test assertions were not disabled.
+- Fixed the benchmark that still expected the pre-optimization digest function. It now compares the current content-checked WeakMap with an isolated LRU candidate; tampered source objects must still be rejected.
+- Updated seven active Ayurveda source references to the retrieved original PDF at its current official location; historical audit reports retain their original URLs.
+- The current Helper refuses missing/duplicated catalogue data, handles malformed records and URL fragments, preserves all 137 cases in exports under a display filter, and exposes source-review findings beside each affected product.
 
 ## Verification evidence
 
+Data and older-browser tested revision: `cf74577d918cd77d5f94a5e00d3e066dc55d0d4a`.
+
 | Check | Observed result |
 |---|---|
-| Existing remote checks at `ad13bc4a47c084df280e25ad7594c13aa710ad5d` | 33 workflow runs succeeded, including R66–R68 |
-| Current audit scripts before fixes | 44/44 passed locally |
-| Current consolidated checks after fixes | 46/46 passed locally (44 existing, one new integrity suite, one generated-register check) |
-| Historical `tests/*.test.cjs` suite before fixes | 1,237 reported tests: 1,110 passed, 127 failed |
-| Historical failure classification | 76 failed entries in browser test files; 51 other failures. These are not declared resolved or all environmental. |
-| Current browser verification | Passed in [GitHub Actions run 43558841256](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/43558841256), commit `4970de20f9c6d7674b5e2822d20e09309121332c`: all 533 product views, 137-case export, 67/70 filters, six views at 320/390/1440 px, missing/duplicate catalogue rejection and malformed URL fragments; zero page errors. |
+| Data integration, 264 test files | **1,171 tests passed; 0 failed** |
+| Current audit scripts and generated review register | **47 checks passed; 0 failed** |
+| Older browser integrations, 79 files | **94 tests passed; 0 failed** after repairing the outdated benchmark fixture |
+| Cereal numerical comparison guards | **3,966 assertions passed; 0 failed**, covering strict/inclusive boundaries, subtype context, unit/basis mismatches and refusal of ambiguous rows |
+| Current Helper browser | **Passed:** all 533 product detail views, all 137 review cases, filtered/full export, six views at 320/390/1440 px, missing/duplicated catalogue rejection and malformed fragments; no page errors |
 
-Local Chromium could not start in this execution environment; an isolated GitHub Actions browser job was added instead. It exercises all 533 product detail views, the 137-case queue, filtered/full exports, malformed fragments, missing/duplicate catalogue rejection and six views at 320/390/1440 px. This successful browser job is not a native Android/PWA push-notification test. The first browser run identified that fragment changes within an already-open page were not handled; a hash-change listener was added and the entire browser suite passed on the corrected revision.
+- [Current Helper CI and screenshots](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/43564018582)
+- [Complete data/browser integration run](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/43564018545)
 
-Run current checks with `node scripts/verify-helper.cjs`. The separate historical test suite is not silently included in that passing count. The 51 non-browser failing entries are indexed in `historical-regression-failures-2026-11-14.json`; the other 76 failed entries belong to browser test files. Do not remove failed assertions or refresh source fingerprints merely to obtain a green overall result; reconcile their intended source version and meaning first.
+The final status-link, report and official-URL display changes are covered by the current Helper checks; the older integration component is unchanged from the tested revision.
 
-## Official-source currency check
+The earlier 1,237-test / 127-failure baseline is retained in `historical-regression-failures-2026-11-14.json`. Its counts are not directly comparable with the repaired split suites: failing files and missing fixtures previously prevented some contained tests from running. Browser tests now run in isolated CI Chromium workers; local Chromium could not launch in this execution environment. No native Android installation or push-delivery test is implied.
 
-- [May 2026 CTR Gazette](https://fssai.gov.in/upload/uploadfiles/files/272840.pdf): clause 1(2) states commencement on **1 December 2026**. Rechecked on 14 November; it is still a future commencement on that review date. This does not determine each product’s amended article.
-- [FSSAI notifications](https://www.fssai.gov.in/food-law/notifications): the official listing includes a **6 November 2026** Labelling and Display Second Amendment concerning milk-logo graphics. The original notification text and commencement were not successfully retrieved in this check. No dimensions or effective date were inferred from the earlier draft or an older FAQ.
-- [FPSFA amendment index](https://fssai.gov.in/food-law/regulations/amendments/food-products-standards) and [CTR amendment index](https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins) were searched. Index retrieval is not a full original-Gazette reconciliation.
+Reproduce the data checks with:
 
-## Work still required for full verification
+```sh
+node scripts/prepare-helper-integration.cjs
+node scripts/run-helper-integration.cjs data
+node scripts/verify-helper.cjs
+node fssai-helper/cereal-review-r3/test_cereal_guard.js fssai-helper/cereal-review-r3/cereal-review-r3.json /tmp/pmsv-cereal-guard-results.json
+```
 
-1. Resolve the historical source/integrity and numeric-baseline failures against the applicable editions, preserving real regression checks.
-2. Finish semantic review for the 70 cases outside the selected focused rounds, then reconcile all 137 exact CTR article decisions; those 137 are not the entire all-533 legal-completeness workload.
-3. Complete original-Gazette/amendment, method, microbiology, additives, packaging, labelling and claim reconciliation as applicable across the catalogue. The 14 Ayurveda raw-ingredient source gaps remain open.
-4. Retrieve and assess the new milk-logo notification. Do not treat absence from an amendment index as proof that a listed notification does not apply.
-5. Perform native Android/PWA and production integration checks before any release. Production WordPress plugin v1.0.23 was observed active, but no production files, numerical rules or approvals were changed in this session.
+The browser workflow supplies Playwright/Chromium and runs four isolated shards. See `.github/workflows/verify-helper-integration.yml` and `.github/workflows/verify-current-helper.yml`.
 
-### Historical pipeline diagnosis
+## Source review completed in this pass
 
-The required setup command `node scripts/audit-fssai-product-readiness.cjs` was also attempted. It fails at line 680 because it reads the old `rawPulsesStandard.general_limits` field, which no longer exists after the November cereal schema revision. This prevents generation of readiness and downstream research-queue artifacts; missing-artifact errors therefore contribute to the 127 broad-suite failures. The existing `cereal-review-r3/README.md` already warns that the new conditional schema has not been integrated into the older consumer. Other mismatches include outdated source paths/fingerprints and master-versus-search-index fields. These need a reviewed consumer migration, rather than restoring obsolete numeric data or deleting checks.
+[R69](ctr-remaining-source-scope-r69-2026-11-14.md) adds a fresh source-wording and scope check for the **70** identities outside the selected earlier focused rounds. The review register now links **137/137** queue identities to a focused review: 67 from the earlier rounds and 70 from R69. The 533 original catalogue identities are retained.
 
-No new product was declared legally verified and no batch was released.
+Twelve official-source files have recorded URLs and SHA-256 fingerprints. The checks cover dairy analogues/frozen products, fruit/vegetable forms, cereal/soy variants, ingredient classes, FPC18 and all nine Ayurveda recipes. These are source findings and conditional routes, not 137 newly approved products.
+
+The scanned Ayurveda pages are now available and visually checked. Recipe 14.6 has a 13-ingredient table followed by the four-preparation method, including two method-only names. Recipe 14.7 has the flower-infusion method. **The discrepancy is confirmed, not corrected by inference.** This resolves the earlier image-access limitation, but the authority-clarification issue and 14 ingredient CTR source gaps remain.
+
+## Official-source currency
+
+- [May 2026 CTR Gazette](https://fssai.gov.in/upload/uploadfiles/files/272840.pdf): commencement is **1 December 2026**, still future on the review date. Product-specific amended articles require their own scope checks.
+- [Original 6 November 2026 milk-logo notification](https://www.fssai.gov.in/docs/food-law/notice-comment/FSS%28Labelling%20and%20Display%29%20-%20Milk%20logo.pdf): English clause 1(2) specifies **1 July 2028**. The graphic table was checked, with literal intermediate range wording retained. No dimensions were activated. This does not adjudicate the earlier milk-logo direction chain.
+- FPC18 paragraph 3 eligibility, Annexure II additive mapping and base-food microbiology/toxin conditions remain explicit. It is not a general contaminant fallback for other foods.
+- Compendium retrieval and source hashes are not an exhaustive original-Gazette amendment reconciliation. Draft notifications were not promoted into final rules.
+
+## Remaining regulatory and release boundaries
+
+**137 exact CTR application decisions remain OPEN.** Some need the actual food identity, formulation, processing or packaging; others retain source interpretation or amendment questions. A laboratory report is not required to check statutory wording. Actual lot results and authorized QA assessment belong to the separate product/lot decision.
+
+The 14 Ayurveda ingredient CTR source gaps, recipe 14.6/14.7 clarification, recorded numerical-source ambiguities, current IS 10500 reconciliation, legacy dextrin claim wording and any outstanding original-Gazette/cross-regulatory checks remain visible. No full all-533 legal certification, product PASS or commercial lot release is claimed.
+
+Native Android/PWA push delivery and production integration remain untested in this pass. PR #2 stays draft and unmerged.

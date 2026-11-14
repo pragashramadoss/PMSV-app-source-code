@@ -63,3 +63,8 @@ The conditional schema and helper are not wired into the production decision eng
 - Standalone full-catalogue HTML: `d7f26f38a77f21570de9cba1f75dd8b6088ab8df719d7fe11bda9cda6ab0488c`
 - Full evidence JSON: `3e2cfd75a7a9de5137a19b8638fdc8e2aad3ba21ee3c888b51a5cd60255c9c53`
 - Cereal rule registry: `31d1f5aa5187da95f5ce8025995f3635745cf080f79d51388b00965a24d8f6f0`
+
+
+## Consumer integration follow-up — 14 November 2026
+
+The audit-branch readiness generator, search index and older quality consumers have now been migrated to the reviewed conditional schema. Displayed rows retain subtype conditions, analytical bases and source questions. The data integration suite passes 1,171 tests, and the unchanged cereal comparison registry passes all 3,966 boundary/refusal assertions. See [the current verification report](../verification-2026-11-14.md) for browser evidence and remaining regulatory boundaries. These changes are on draft PR #2; the production deployment boundary above still applies.

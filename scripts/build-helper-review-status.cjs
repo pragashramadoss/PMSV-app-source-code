@@ -45,7 +45,7 @@ const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
- softwareVerification:'The 1,171-test data integration suite and current audit checks passed. Wider browser integrations are being verified separately. Complete current-law verification remains open.',
+ softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
  sourceFiles,records,
  currencyWatch:[
   {title:'May 2026 contaminants amendment',source:'https://fssai.gov.in/upload/uploadfiles/files/272840.pdf',checked:'2026-11-14',effectiveFrom:'2026-12-01',status:'Commencement confirmed; product-specific application still requires review.'},

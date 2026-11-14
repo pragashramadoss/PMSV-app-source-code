@@ -46,6 +46,11 @@ assert.equal(milk.operative_on_review_date,false);assert.equal(milk.numeric_rule
 assert.equal(milk.automatic_boundary_interpretation,false);
 assert.deepEqual(milk.graphic_rows.map(x=>x.square_mm),[6,8,12,16]);
 assert.deepEqual(milk.graphic_rows.map(x=>x.drop_height_mm),[4.56,6.08,9.12,12.16]);
+// Active links use the retrieved original at its current official location.
+for(const name of ['index.html','full-catalogue-533.js']){
+ assert(!read(name).includes('https://fssai.gov.in/upload/notifications/2022/05/62789a20b54bd'));
+ assert(read(name).includes(r.sources.ayurveda_reg.url));
+}
 const ctx={window:{}};vm.createContext(ctx);vm.runInContext(read('review-status-data.js'),ctx);
 const register=JSON.parse(JSON.stringify(ctx.window.PMSV_REVIEW_REGISTER));
 assert.equal(register.focusedCount,137);assert.equal(register.remainingFocusedCount,0);

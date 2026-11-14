@@ -25,6 +25,10 @@
  $('verificationStatus').textContent=`Checked ${data.checkpointDate} · ${data.queueCount} open CTR article decisions · ${data.focusedCount} focused source reviews · ${data.remainingFocusedCount} outside the selected rounds`;
  $('verificationScope').textContent=data.scope;
  $('verificationSoftware').textContent=data.softwareVerification;
+ const evidenceLink=document.createElement('a');
+ evidenceLink.href='verification-2026-11-14.md';evidenceLink.textContent='Read the software verification report';
+ evidenceLink.className='source-ref';evidenceLink.target='_blank';evidenceLink.rel='noopener noreferrer';
+ $('verificationSoftware').append(document.createTextNode(' '),evidenceLink);
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');
