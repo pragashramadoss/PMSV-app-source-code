@@ -247,7 +247,8 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  }
  $('methodCode').addEventListener('change',methodResult);$('methodManual').addEventListener('change',methodResult);
  filterList();methodResult();
- let requested='';try{requested=decodeURIComponent(location.hash.slice(1));}catch(e){requested='overview';}if(['overview','finder','verification','cases','methods','sources'].includes(requested))view(requested);
+ function routeFromHash(){let requested='';try{requested=decodeURIComponent(location.hash.slice(1));}catch(e){requested='overview';}view(['overview','finder','verification','cases','methods','sources'].includes(requested)?requested:'overview');}
+ window.addEventListener('hashchange',routeFromHash);routeFromHash();
  window.PMSV_HELPER_TEST={getCatalogue:()=>all.map(c=>({id:c.id,priority:c.priority,reviewStatus:c.reviewStatus,sourceStatus:c.sourceStatus,sourceCheck:!!c.sourceCheck?.analyte})),setView:view,getProduct:()=>selected,selectProduct:id=>{if(!all.some(c=>c.id===id))return false;selected=id;filterList();view('finder');return true;}};
 })();
 

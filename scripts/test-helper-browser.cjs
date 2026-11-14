@@ -55,6 +55,7 @@ let browser;
   await page.screenshot({path:path.join(artifacts,'review-'+width+'.png'),fullPage:false});
  }
  await page.goto(base+'#%E0%A4%A',{waitUntil:'networkidle'});
+ await page.locator('#overview').waitFor({state:'visible'});
  assert.equal(await page.locator('#overview').isVisible(),true,'Malformed hash must not break startup');
  assert.equal(await page.evaluate(()=>PMSV_HELPER_TEST.getCatalogue().length),533);
  for(const fixture of ['missing','duplicate']){
