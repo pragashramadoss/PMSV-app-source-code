@@ -240,13 +240,14 @@
           "source_json_path": "composition.0.value"
         },
         {
-          "parameter": "Chocolate powder: cocoa powder wet basis",
+          "parameter": "Chocolate powder: cocoa powder w/w",
           "operator": ">=",
           "value": 32,
           "unit": "%",
           "variant": "Chocolate powder only",
-          "condition": "",
-          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_wet_basis"
+          "condition": "Source gives 32% w/w with parenthetical 29% on dry matter; relationship requires clarification. No conversion or automatic comparison.",
+          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_w_w",
+          "automatic_comparison_allowed": false
         },
         {
           "parameter": "Chocolate powder: cocoa powder dry matter",
@@ -255,7 +256,8 @@
           "unit": "%",
           "variant": "Chocolate powder only",
           "condition": "",
-          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_dry_matter_basis"
+          "source_json_path": "chocolate_powder_rule.cocoa_powder_min_pct_dry_matter_basis",
+          "automatic_comparison_allowed": false
         }
       ],
       "conditional_subtypes": {
@@ -609,7 +611,7 @@
           "parameter": "sulphated ash max pct",
           "operator": "<=",
           "value": 0.3,
-          "unit": "pH",
+          "unit": "% by mass",
           "variant": "Edible Lactose",
           "condition": "",
           "source_json_path": "composition.0.sulphated_ash_max_pct"

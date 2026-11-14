@@ -19,7 +19,7 @@
       "fssr": "2.1.20",
       "fcs": "11.1.4",
       "standard_key": "2.1.20",
-      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf",
+      "official_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
       "additional_effective_amendment_source": null,
       "first_exact_contaminant_evidence_added": false,
       "complete_compliance_pass": false,
@@ -88,7 +88,7 @@
       "fssr": "2.1.23",
       "fcs": "100",
       "standard_key": "2.1.23",
-      "official_source": "https://fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf",
+      "official_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
       "additional_effective_amendment_source": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf",
       "first_exact_contaminant_evidence_added": false,
       "complete_compliance_pass": false,
@@ -234,20 +234,56 @@
             {
               "parameter": "Moisture",
               "operator": "<=",
+              "unit": "%",
+              "analytical_basis": "as-sold mass",
+              "when": {},
+              "automatic_comparison_allowed": true,
               "value": 12.5,
-              "unit": "%"
+              "id": "2.4.9:composition:1",
+              "source_pdf_pages": [
+                32,
+                33
+              ],
+              "source_clause": "2.4.9",
+              "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+              "current_law_verified": false,
+              "product_approved": false
             },
             {
               "parameter": "Total ash excluding added common salt",
               "operator": "<=",
+              "unit": "%",
+              "analytical_basis": "dry mass",
+              "when": {},
+              "automatic_comparison_allowed": true,
               "value": 0.5,
-              "unit": "% on dry basis"
+              "id": "2.4.9:composition:2",
+              "source_pdf_pages": [
+                32,
+                33
+              ],
+              "source_clause": "2.4.9",
+              "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+              "current_law_verified": false,
+              "product_approved": false
             },
             {
-              "parameter": "Acid insoluble ash",
+              "parameter": "Ash insoluble in dilute HCl",
               "operator": "<=",
+              "unit": "%",
+              "analytical_basis": "dry mass",
+              "when": {},
+              "automatic_comparison_allowed": true,
               "value": 0.1,
-              "unit": "% on dry basis"
+              "id": "2.4.9:composition:3",
+              "source_pdf_pages": [
+                32,
+                33
+              ],
+              "source_clause": "2.4.9",
+              "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+              "current_law_verified": false,
+              "product_approved": false
             }
           ],
           "criteria": [
@@ -258,7 +294,10 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 0
+              "source_index": 0,
+              "analytical_basis": "as-sold mass",
+              "when": {},
+              "automatic_comparison_allowed": true
             },
             {
               "parameter": "Total ash excluding added common salt",
@@ -266,17 +305,23 @@
               "value": 0.5,
               "min": null,
               "max": null,
-              "unit": "% on dry basis",
-              "source_index": 1
+              "unit": "%",
+              "source_index": 1,
+              "analytical_basis": "dry mass",
+              "when": {},
+              "automatic_comparison_allowed": true
             },
             {
-              "parameter": "Acid insoluble ash",
+              "parameter": "Ash insoluble in dilute HCl",
               "operator": "<=",
               "value": 0.1,
               "min": null,
               "max": null,
-              "unit": "% on dry basis",
-              "source_index": 2
+              "unit": "%",
+              "source_index": 2,
+              "analytical_basis": "dry mass",
+              "when": {},
+              "automatic_comparison_allowed": true
             }
           ],
           "product_variant_verified": false,
@@ -467,7 +512,8 @@
               "parameter": "Moisture",
               "operator": "<=",
               "value": 1.5,
-              "unit": "% by weight"
+              "unit": "% by weight",
+              "method_note": "105±1°C for 3 h"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
@@ -486,13 +532,18 @@
               "operator": "range",
               "min": 100,
               "max": 300,
-              "unit": "10^-6 mho/cm²"
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "legacy_unit_unverified": "10^-6 mho/cm²",
+              "source_role": "distinguishing characteristic in NOTE",
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+              "automatic_comparison_allowed": false
             },
             {
               "parameter": "Calcium oxide",
               "operator": "<=",
               "value": 100,
-              "unit": "mg/100 g"
+              "unit": "mg/100 g",
+              "source_role": "distinguishing characteristic in NOTE"
             }
           ],
           "criteria": [
@@ -538,8 +589,10 @@
               "value": null,
               "min": 100,
               "max": 300,
-              "unit": "10^-6 mho/cm²",
-              "source_index": 4
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "source_index": 4,
+              "automatic_comparison_allowed": false,
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION"
             },
             {
               "parameter": "Calcium oxide",
@@ -573,7 +626,8 @@
               "parameter": "Moisture",
               "operator": "<=",
               "value": 1.5,
-              "unit": "% by weight"
+              "unit": "% by weight",
+              "method_note": "105±1°C for 3 h"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
@@ -591,13 +645,18 @@
               "parameter": "Conductivity in 5% solution at 30°C",
               "operator": "<=",
               "value": 100,
-              "unit": "10^-6 mho/cm²"
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "legacy_unit_unverified": "10^-6 mho/cm²",
+              "source_role": "distinguishing characteristic in NOTE",
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+              "automatic_comparison_allowed": false
             },
             {
               "parameter": "Calcium oxide",
               "operator": "<=",
               "value": 50,
-              "unit": "mg/100 g"
+              "unit": "mg/100 g",
+              "source_role": "distinguishing characteristic in NOTE"
             }
           ],
           "criteria": [
@@ -643,8 +702,10 @@
               "value": 100,
               "min": null,
               "max": null,
-              "unit": "10^-6 mho/cm²",
-              "source_index": 4
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "source_index": 4,
+              "automatic_comparison_allowed": false,
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION"
             },
             {
               "parameter": "Calcium oxide",
@@ -683,37 +744,45 @@
               "parameter": "Total sugars as invert sugar, dry basis",
               "operator": ">=",
               "value": 90,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Sucrose, dry basis",
               "operator": ">=",
               "value": 60,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Extraneous matter insoluble in water",
               "operator": "<=",
               "value": 2,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Total ash",
               "operator": "<=",
               "value": 6,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Ash insoluble in HCl",
               "operator": "<=",
               "value": 0.5,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Moisture — other than liquid/semi-liquid variety",
               "operator": "<=",
               "value": 10,
-              "unit": "%"
+              "unit": "%",
+              "when": {
+                "liquid_or_semi_liquid": false
+              }
             }
           ],
           "criteria": [
@@ -724,7 +793,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 0
+              "source_index": 0,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Sucrose, dry basis",
@@ -733,7 +803,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 1
+              "source_index": 1,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Extraneous matter insoluble in water",
@@ -742,7 +813,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 2
+              "source_index": 2,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Total ash",
@@ -751,7 +823,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 3
+              "source_index": 3,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Ash insoluble in HCl",
@@ -760,7 +833,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 4
+              "source_index": 4,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Moisture — other than liquid/semi-liquid variety",
@@ -769,7 +843,10 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 5
+              "source_index": 5,
+              "when": {
+                "liquid_or_semi_liquid": false
+              }
             }
           ],
           "product_variant_verified": false,
@@ -799,49 +876,59 @@
               "parameter": "Moisture",
               "operator": "<=",
               "value": 7,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "source_heading": "shall conform to the following analytical standards on dry weight basis",
+              "interpretation_status": "SOURCE_BASIS_REQUIRES_CLARIFICATION",
+              "automatic_comparison_allowed": false
             },
             {
               "parameter": "Sucrose",
               "operator": ">=",
               "value": 70,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Total sugars",
               "operator": ">=",
               "value": 90,
-              "unit": "%"
+              "unit": "%",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Reducing sugars",
               "operator": "<=",
               "value": 20,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Sulphate ash",
               "operator": "<=",
               "value": 4,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
               "operator": "<=",
               "value": 0.5,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Extraneous matter and water-insoluble matter",
               "operator": "<=",
               "value": 2,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Reducing sugars",
               "operator": ">=",
               "value": 5.5,
-              "unit": "% by mass"
+              "unit": "% by mass",
+              "analytical_basis": "dry weight"
             }
           ],
           "criteria": [
@@ -852,7 +939,9 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 0
+              "source_index": 0,
+              "automatic_comparison_allowed": false,
+              "interpretation_status": "SOURCE_BASIS_REQUIRES_CLARIFICATION"
             },
             {
               "parameter": "Sucrose",
@@ -861,7 +950,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 1
+              "source_index": 1,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Total sugars",
@@ -870,7 +960,8 @@
               "min": null,
               "max": null,
               "unit": "%",
-              "source_index": 2
+              "source_index": 2,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Reducing sugars",
@@ -879,7 +970,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 3
+              "source_index": 3,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Sulphate ash",
@@ -888,7 +980,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 4
+              "source_index": 4,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
@@ -897,7 +990,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 5
+              "source_index": 5,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Extraneous matter and water-insoluble matter",
@@ -906,7 +1000,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 6
+              "source_index": 6,
+              "analytical_basis": "dry weight"
             },
             {
               "parameter": "Reducing sugars",
@@ -915,7 +1010,8 @@
               "min": null,
               "max": null,
               "unit": "% by mass",
-              "source_index": 7
+              "source_index": 7,
+              "analytical_basis": "dry weight"
             }
           ],
           "product_variant_verified": false,

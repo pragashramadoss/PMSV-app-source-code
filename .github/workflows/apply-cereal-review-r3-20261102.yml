@@ -1,0 +1,88 @@
+name: Apply cereal source review R3
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-cereal-review-r3-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore exact locally tested readable implementation
+        run: |
+          python3 - <<'PY'
+          import base64,gzip,hashlib,json,pathlib
+          root=pathlib.Path('fssai-helper/cereal-review-r3');out=pathlib.Path('cereal-review-results');out.mkdir()
+          parts=[(root/('payload.part%d.b64'%n)).read_text().strip() for n in [1,2]]
+          (out/'transport-received.json').write_text(json.dumps(parts))
+          # Correct two identified transfer-only insertions, then require exact
+          # independent precomputed part and decompressed-content hashes.
+          parts[0]=parts[0].replace('eve08a6zx8cOMn','eve08a6z8cOMn').replace('ZQq8gr5+O85MUM','ZQq8gr5+85MUM')
+          expected=['71c4bace694c0a9c46b95de2d56c2b9e563606bc84cba8ae635bb0c8f7e79499','d848c88257b152ab8511f8936c1a52ed6c432b347e732a5d28a93ad5ecc38c65']
+          (out/'transport-normalized.json').write_text(json.dumps(parts))
+          for n,(part,want) in enumerate(zip(parts,expected),1):
+              actual=hashlib.sha256(part.encode()).hexdigest();print('part',n,len(part),actual)
+              assert actual==want,'Transport differs from locally tested part '+str(n)
+          raw=gzip.decompress(base64.b64decode(''.join(parts),validate=True))
+          assert hashlib.sha256(raw).hexdigest()=='d628d76ba5be0a358387d6fa72c1b8f4bc67b91400f6e7c815511a16cdef6e9c'
+          files=json.loads(raw)
+          assert set(files)=={'cereal_review.py','cereal_guard.js','test_cereal_guard.js'}
+          for name,text in files.items():
+              assert isinstance(text,str)
+              (root/name).write_text(text)
+          PY
+      - name: Reproduce reviewed modules and run rule guards
+        run: |
+          python3 fssai-helper/cereal-review-r3/cereal_review.py --repo . --out cereal-review-results
+          node fssai-helper/cereal-review-r3/test_cereal_guard.js cereal-review-results/cereal-review-r3.json cereal-review-results/guard-test-report.json
+      - name: Validate exact content and preservation before applying
+        run: |
+          python3 - <<'PY'
+          import json,pathlib,hashlib,shutil
+          root=pathlib.Path('fssai-helper/cereal-review-r3');out=pathlib.Path('cereal-review-results')
+          targets={
+            'chapter-2-4-cereals-v1.json':('fssai-product-helper-preview-01/data/rules/chapter-2-4-cereals-v1.json','d4d23930de6da32140a3edf7aa45d73ab79af073612f91ba1b32598dc5266035'),
+            'product-master-v1.json':('fssai-product-helper-preview-01/data/product-master-v1.json','1b5759b3dae49f565b404c95b4c3e93a276c3479a29459ea24aa423340a7991f')}
+          for name,(path,want) in targets.items():
+              assert hashlib.sha256((out/name).read_bytes()).hexdigest()==want,'Output differs from locally tested content'
+          old=json.loads(pathlib.Path(targets['product-master-v1.json'][0]).read_text());new=json.loads((out/'product-master-v1.json').read_text())
+          reg=json.loads((out/'cereal-review-r3.json').read_text());changed={p['id'] for p in reg['products']}
+          assert len(changed)==76 and len(new['catalog_products'])==533 and len({p['id'] for p in new['catalog_products']})==533
+          permitted={'rule_key','source_content_review_batch','source_content_review_date','rule_resolution_context','rule_context_choices'}
+          for a,b in zip(old['catalog_products'],new['catalog_products']):
+              assert a['id']==b['id']
+              assert {k:v for k,v in a.items() if k not in permitted}=={k:v for k,v in b.items() if k not in permitted}
+              if a['id'] not in changed:assert a==b
+          oldmod=json.loads(pathlib.Path(targets['chapter-2-4-cereals-v1.json'][0]).read_text());mod=json.loads((out/'chapter-2-4-cereals-v1.json').read_text())
+          assert next(s for s in oldmod['standards'] if s['key']=='2.4.11(4)')==next(s for s in mod['standards'] if s['key']=='2.4.11(4)')
+          assert reg['summary']['standards_reviewed']==67 and reg['summary']['numeric_records']==676 and reg['summary']['table_rule_records']==705
+          assert reg['summary']['exact_product_routes_corrected']==15 and reg['summary']['fully_regulatory_verified_new']==0
+          assert all(s['current_law_complete'] is False and s['commercial_release_authorized'] is False for s in reg['standards'])
+          tests=json.loads((out/'guard-test-report.json').read_text());assert tests['passed']==3966 and tests['failed']==0
+          for name,(path,want) in targets.items():shutil.copy2(out/name,path)
+          for name in ['cereal-review-r3.json','guard-test-report.json']:shutil.copy2(out/name,root/name)
+          manifest={'scope':'Source-edition correction only; conditional schema not connected to production engine. No full legal or commercial approval.','summary':reg['summary'],'guard_tests':{'passed':3966,'failed':0},'sha256':{k:v[1] for k,v in targets.items()},'source_sha256':reg['source']['sha256']}
+          (root/'application-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');(out/'application-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          for p in root.glob('payload.part*.b64'):p.unlink()
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Commit audit branch only
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/cereal-review-r3 fssai-product-helper-preview-01/data/rules/chapter-2-4-cereals-v1.json fssai-product-helper-preview-01/data/product-master-v1.json
+          git diff --cached --check
+          git commit -m 'Reconcile 67 cereal standards and 15 exact product routes; preserve approval locks'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cereal-review-r3-results-20261102
+          path: cereal-review-results/
+          retention-days: 3
+          if-no-files-found: error

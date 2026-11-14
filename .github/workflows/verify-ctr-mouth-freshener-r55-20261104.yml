@@ -1,0 +1,30 @@
+name: PMSV R55 signed mouth freshener FPC source and no-PASS checks
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-mouth-freshener-2021-direction-r55-2026-11-04.json'
+      - 'fssai-helper/ctr-mouth-freshener-source-gate-r55-20261104.mjs'
+      - 'scripts/test_ctr_mouth_freshener_r55_20261104.mjs'
+      - '.github/workflows/verify-ctr-mouth-freshener-r55-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-mouth-freshener-2021-direction-r55-2026-11-04.json'
+      - 'fssai-helper/ctr-mouth-freshener-source-gate-r55-20261104.mjs'
+      - 'scripts/test_ctr_mouth_freshener_r55_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  signed-direction-source-no-pass-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Crosscheck 3 FPC 5.2.4 cases and original 137 legal holds
+        run: node scripts/test_ctr_mouth_freshener_r55_20261104.mjs

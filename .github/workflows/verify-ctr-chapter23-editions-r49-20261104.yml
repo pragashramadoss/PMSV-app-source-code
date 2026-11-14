@@ -1,0 +1,25 @@
+name: PMSV R49 Chapter 2.3 2025 edition source reconciliation
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-chapter23-2025-edition-reconciliation-r49-2026-11-04.json'
+      - 'fssai-helper/ctr-chapter23-edition-source-guard-r49-20261104.mjs'
+      - 'scripts/test_ctr_chapter23_editions_r49_20261104.mjs'
+      - '.github/workflows/verify-ctr-chapter23-editions-r49-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-chapter23-2025-edition-reconciliation-r49-2026-11-04.json'
+      - 'fssai-helper/ctr-chapter23-edition-source-guard-r49-20261104.mjs'
+      - 'scripts/test_ctr_chapter23_editions_r49_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  verify-source-edition-and-no-product-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Regression check six Chapter 2.3 source standards and 137 held legal articles
+        run: node scripts/test_ctr_chapter23_editions_r49_20261104.mjs

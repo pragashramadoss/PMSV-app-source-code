@@ -1,0 +1,30 @@
+name: PMSV R54 Category 99 source-only and no-PASS gates
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-category-99-seven-blank-fssr-r54-2026-11-04.json'
+      - 'fssai-helper/ctr-category-99-source-gate-r54-20261104.mjs'
+      - 'scripts/test_ctr_category99_source_r54_20261104.mjs'
+      - '.github/workflows/verify-ctr-category99-source-r54-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-category-99-seven-blank-fssr-r54-2026-11-04.json'
+      - 'fssai-helper/ctr-category-99-source-gate-r54-20261104.mjs'
+      - 'scripts/test_ctr_category99_source_r54_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  validate-seven-category99-source-holds:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assert seven licensing-only source routes and 137 legal article holds
+        run: node scripts/test_ctr_category99_source_r54_20261104.mjs

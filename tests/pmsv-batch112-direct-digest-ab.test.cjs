@@ -6,9 +6,16 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs"),{spawn}=require("node:child_process"),{chromium}=require("playwright");
 const root="fssai-product-helper-preview-01",port=18983;
 const source=fs.readFileSync(root+"/fssai-source-proof-panels.js","utf8");
-const digestBlock="function pmsvReviewSnapshotDigest(x){\n const s=JSON.stringify(x);\n return typeof s==='string'?pmsvReviewSnapshotHashSerialized(s):'';\n}";
+// Batch115 replaced the old uncached baseline with a content-checked WeakMap.
+// Compare the actual current implementation with the isolated LRU candidate.
+const digestStart=source.indexOf("function pmsvReviewSnapshotDigest(x){");
+const digestEnd=source.indexOf("function pmsvReviewSnapshotIntact(",digestStart);
+assert(digestStart>=0&&digestEnd>digestStart,"Current digest boundaries must exist");
+const digestBlock=source.slice(digestStart,digestEnd).trimEnd();
+assert(digestBlock.includes("const s=JSON.stringify(x);"),"Baseline must serialize current content");
+assert(digestBlock.includes("previous.serialized===s"),"WeakMap must check current serialized content");
 const candidateDigestBlock="/* Batch112 candidate only: exact serialized JSON key, capped LRU.\n * Never bypasses serialization or changes canonical fingerprints. */\nconst pmsvGeneralDigestCache=new Map();\nlet pmsvGeneralDigestCachedChars=0;\nconst pmsvGeneralDigestCapacity=24,pmsvGeneralDigestMaxChars=8000000;\nfunction pmsvReviewSnapshotDigest(x){\n const s=JSON.stringify(x);\n if(typeof s!=='string')return '';\n const candidate=pmsvGeneralDigestCache.get(s);\n if(candidate!==undefined){\n  pmsvGeneralDigestCache.delete(s);pmsvGeneralDigestCache.set(s,candidate);\n  return candidate;\n }\n const digest=pmsvReviewSnapshotHashSerialized(s);\n if(s.length<=1000000){\n  pmsvGeneralDigestCache.set(s,digest);pmsvGeneralDigestCachedChars+=s.length;\n  while(pmsvGeneralDigestCache.size>pmsvGeneralDigestCapacity||\n        pmsvGeneralDigestCachedChars>pmsvGeneralDigestMaxChars){\n   const oldest=pmsvGeneralDigestCache.keys().next().value;\n   pmsvGeneralDigestCache.delete(oldest);\n   pmsvGeneralDigestCachedChars-=oldest.length;\n  }\n }\n return digest;\n}";
-assert(source.includes(digestBlock),"Known source digest block must match exactly");
+assert.equal(source.split(digestBlock).length,2,"Replace exactly one current digest function");
 const candidateSource=source.replace(digestBlock,candidateDigestBlock);
 const server=spawn("python3",["-m","http.server",String(port),"--directory",root,"--bind","127.0.0.1"],{stdio:"ignore"});
 const nap=ms=>new Promise(resolve=>setTimeout(resolve,ms));

@@ -1,0 +1,25 @@
+name: PMSV R43 Ayurveda ingredient purity and variant source guard
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ayurveda-purity-and-variant-holds-r43-2026-11-04.json'
+      - 'fssai-helper/ayurveda-purity-variant-gate-r43-20261104.mjs'
+      - 'scripts/test_ayurveda_purity_variant_r43_20261104.mjs'
+      - '.github/workflows/verify-ayurveda-purity-variant-r43-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ayurveda-purity-and-variant-holds-r43-2026-11-04.json'
+      - 'fssai-helper/ayurveda-purity-variant-gate-r43-20261104.mjs'
+      - 'scripts/test_ayurveda_purity_variant_r43_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  test-purity-variant-guards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify all 14 source gaps, 4 recipe variants and no product approvals
+        run: node scripts/test_ayurveda_purity_variant_r43_20261104.mjs

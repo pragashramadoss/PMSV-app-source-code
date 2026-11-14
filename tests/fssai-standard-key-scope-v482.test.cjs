@@ -16,10 +16,10 @@ const sourcePinned=section('function sourcePinnedStandardSupplementHtml(st,selec
 const rendering=section('function standardLookupRegulatoryCompositionHtml(){','function renderStandardLookupNutritionReference(){');
 const norm=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 const products={
- wheat:{id:'06-06-1-wheat',name:'Wheat',fssr:'2.4.6',rule_key:'2.4.6'},
+ wheat:{id:'06-06-1-wheat',name:'Wheat',fssr:'2.4.6',rule_key:'2.4.6(2)'},
  rice:{id:'06-06-1-rice',name:'Rice',fssr:'2.4.6',rule_key:'2.4.6(24)'},
  durum:{id:'06-06-1-durum-wheat',name:'Durum Wheat',fssr:'2.4.6',rule_key:'2.4.6(19)'},
- basmati:{id:'06-06-1-basmati-rice',name:'Basmati Rice',fssr:'2.4.6',rule_key:'2.4.6'},
+ basmati:{id:'06-06-1-basmati-rice',name:'Basmati Rice',fssr:'2.4.6',rule_key:'2.4.6(26)'},
  frk:{id:'06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk',name:'Rice Flour for preparation of Fortified Rice Kernel (FRK)',fssr:'2.4.6-24(a)',rule_key:'2.4.6-24(a)'},
  atta:{id:'06-06-2-wheat-flour-atta-and-resultant-wheat-flour-resultant-atta',name:'Wheat Flour (Atta) and Resultant Wheat Flour (Resultant Atta)',fssr:'2.4.1',rule_key:'2.4.1'},
  proteinAtta:{id:'06-06-2-protein-rich-wheat-flour-protein-prachur-atta',name:'Protein rich wheat flour (Protein prachur atta)',fssr:'2.4.1(3)',rule_key:'2.4.1(3)'},
@@ -51,9 +51,9 @@ test('FSSAI keys are atomic: FRK does not generate general 2.4.6',()=>{
  assert.deepEqual(h.tokens('2.4.1(3)'),['2.4.1(3)']);
  assert.deepEqual(h.tokens('2.4.6'),['2.4.6']);
 });
-test('Wheat shows only its general Food Grains chapter, not rice or FRK',()=>{
+test('Wheat shows its exact wheat clause, not rice or FRK',()=>{
  const h=make(products.wheat);
- assert.deepEqual(h.codes(),['2.4.6']);
+ assert.deepEqual(h.codes(),['2.4.6','2.4.6(2)']);
  const view=h.render();
  assert.match(view,/Uric acid/);
  assert.doesNotMatch(view,/Rice Flour for Preparation of Fortified Rice Kernel/);
@@ -74,21 +74,21 @@ test('Rice retains Food Grains and its exact named rice overlay, not FRK',()=>{
  const h=make(products.rice);
  assert.deepEqual(h.codes(),['2.4.6','2.4.6(24)']);
  const view=h.render();
- assert.match(view,/Food Grains/);
+ assert.match(view,/rice type: brown/);
  assert.match(view,/2\.4\.6\(24\)/);
  assert.doesNotMatch(view,/Rice Flour for Preparation of Fortified Rice Kernel/);
  assert.doesNotMatch(view,/Particle size/);
 });
 test('Basmati Rice does not inherit Rice-specific or FRK clauses by loose name',()=>{
  const h=make(products.basmati);
- assert.deepEqual(h.codes(),['2.4.6']);
+ assert.deepEqual(h.codes(),['2.4.6','2.4.6(26)']);
  assert.doesNotMatch(h.render(),/Rice Flour/);
 });
 test('FRK rice flour receives its own specified standard but does not imply generic food grains',()=>{
  const h=make(products.frk);
  assert.deepEqual(h.codes(),['2.4.6-24(a)']);
  const view=h.render();
- assert.match(view,/Particle size/);
+ assert.match(view,/Material passing 250 micron/);
  assert.match(view,/Alcoholic acidity/);
  assert.match(view,/2\.4\.6-24\(a\)/);
  assert.doesNotMatch(view,/Total foreign matter/);

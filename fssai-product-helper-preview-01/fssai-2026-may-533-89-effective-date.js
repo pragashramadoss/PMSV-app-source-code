@@ -3,7 +3,7 @@
  All 533 catalogued entries and all 89 pending finished-article decisions, no
  numeric activation and no substitute for legally verified current amendments. */
 var pmsvMay2026Scope=null,pmsv89FinalProof=null,pmsvMay2026Register=null;
-const pmsvMay2026ScopeHashes=Object.freeze({"watch":"bc10cfc31752bf46","docket":"a59d0b0ec4dcc767","register":"af3bb37ca8c89adb"});
+const pmsvMay2026ScopeHashes=Object.freeze({"watch":"bc10cfc31752bf46","docket":"a59d0b0ec4dcc767","register":"4610040a5872a177"});
 function pmsvMay2026SourceValid(){
  if(typeof pmsv444Valid!=="function"||!pmsv444Valid()||
     typeof pmsvReviewSnapshotDigest!=="function")return false;

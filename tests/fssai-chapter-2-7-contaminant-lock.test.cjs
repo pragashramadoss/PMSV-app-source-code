@@ -72,7 +72,7 @@ test("exact Cocoa Powder and Hard Candy records remain available",()=>{
 });
 test("official data retains time-based 2026 amendment lock; no future limits auto applied",()=>{
  assert.match(db.source_version,/Version IX.*03\.02\.2026/);
- assert.equal(db.current_effective_basis.as_of,"2026-10-03");
+ assert.equal(db.current_effective_basis.as_of,"2026-11-03");
  assert.match(db.current_effective_basis.note,/1 December 2026/);
  assert.equal(db.coverage.chapter_2_7_locked_routes,6);
  for(const x of locks)assert.doesNotMatch(x.reason,/is exempt|no contaminant limit required/i);

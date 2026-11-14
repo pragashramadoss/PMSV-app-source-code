@@ -6870,7 +6870,14 @@ function chapterRuleDisplayRows(standard){
        }else if(rule.range)requirement=String(rule.range)+(rule.unit?' '+String(rule.unit):'');
        else if(rule.formula)requirement=(rule.operator?String(rule.operator)+' ':'')+String(rule.formula)+(rule.unit?' '+String(rule.unit):'');
        else requirement=rule.text||rule.requirement||rule.condition||rule.per_100g||rule.per_100kcal||JSON.stringify(rule);
-       rows.push({section:label,parameter,requirement,condition:rule.condition||'',rule});
+       const qualifiers=[rule.condition];
+       if(rule.when && typeof rule.when==='object' && !Array.isArray(rule.when))
+         for(const [key,value] of Object.entries(rule.when))qualifiers.push(key.replace(/_/g,' ')+': '+String(value).replace(/_/g,' '));
+       if(rule.analytical_basis)qualifiers.push('Basis: '+rule.analytical_basis);
+       if(rule.source_question)qualifiers.push('Source clarification required: '+rule.source_question);
+       else if(rule.automatic_comparison_allowed===false)qualifiers.push('Manual review required');
+       if(rule.operator==='open_range')requirement='> '+rule.min+' and < '+rule.max+(rule.unit?' '+rule.unit:'');
+       rows.push({section:label,parameter,requirement,condition:qualifiers.filter(Boolean).join(' · '),rule});
      }else if(typeof rule==='string'){
        rows.push({section:label,parameter:label,requirement:rule,condition:'',rule:null});
      }
@@ -10320,7 +10327,7 @@ function verifiedEightCerealQualityScope(p){
  }
  if(x.full_compliance_approved!==false||x.apply_quality_limits_without_process_and_sample!==false)return null;
  const found=chapterRuleDbs.filter(db=>(db.official_sources||[]).some(s=>s.url===src.source_standard))
-  .flatMap(db=>(db.standards||[]).filter(st=>st.key===p.fssr
+  .flatMap(db=>(db.standards||[]).filter(st=>st.key===(x.resolved_rule_key||p.fssr)
     &&st.name===x.chapter_standard_name));
  if(found.length!==1||x.official_source!==src.source_standard)return null;
  const official=found[0].official_2025_qualified_quality;
@@ -10598,7 +10605,7 @@ function sourcePinnedSixPendingChapterQualityHtml(p){
  if(!row)return '<div class="notice"><b>FSSR quality references WITHHELD:</b> official source parameter, amended colostrum IgG, subtype, product identity, or source manifest failed verification. No contaminant MRL or numerical PASS applied.</div>';
  const table=row.quality_criteria.map(c=>{
   const val=c.operator==='range'?c.value[0]+' to '+c.value[1]:String(c.value);
-  return '<tr><td>'+esc(c.subtype)+'</td><td>'+esc(c.parameter)+'</td><td>'+esc(c.operator==='range'?'range':c.operator)+' '+esc(val)+' '+esc(c.unit)+'</td></tr>';
+  return '<tr><td>'+esc(c.subtype)+'</td><td>'+esc(c.parameter)+'</td><td>'+esc(c.operator==='range'?'range':c.operator)+' '+esc(val)+' '+esc(c.unit)+(c.analytical_basis?'<br><small>Basis: '+esc(c.analytical_basis)+'</small>':'')+(c.automatic_comparison_allowed===false?'<br><small>Source clarification or manual review required</small>':'')+'</td></tr>';
  }).join('');
  return '<details style="margin:10px 0"><summary><b>Official FSSR product quality — '+esc(row.product_name)+' (NOT contaminant MRLs)</b> · '+row.quality_criteria.length+' source criteria</summary>'
   +'<p>Separate the exact finished variant and test basis before interpreting these identity/quality requirements. This product still awaits its first exact CTR source match. <b>No source promotion, contaminant compliance decision, pesticide clearance, or laboratory PASS.</b></p>'
@@ -10871,7 +10878,7 @@ function sourcePinnedSevenOfficialProductQualityHtml(p){
   const value=c.operator==='range'
     ?esc(c.min)+' to '+esc(c.max)+' '+esc(c.unit||'')
     :esc(c.operator)+' '+esc(c.value)+' '+esc(c.unit||'');
-  const note=c.applies_to||c.source_note||'Exact FSSAI product-standard scope and analytical sample basis must be confirmed.';
+  const note=[c.applies_to_r12||c.applies_to,c.source_note,c.analytical_basis,c.when?JSON.stringify(c.when):'',c.automatic_comparison_allowed===false?'Source interpretation unresolved; no automatic comparison':''].filter(Boolean).join(' · ')||'Exact FSSAI product-standard scope and analytical sample basis must be confirmed.';
   return '<tr><td>'+esc(c.parameter)+'</td><td><b>'+value+'</b></td><td>'+esc(note)+'</td></tr>';
  }).join('');
  return '<details style="margin:10px 0"><summary><b>Exact FSSAI '+esc(row.standard_key)

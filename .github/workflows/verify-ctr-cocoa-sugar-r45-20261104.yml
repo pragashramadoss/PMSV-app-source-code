@@ -1,0 +1,25 @@
+name: PMSV R45 cocoa and sugar contaminant source guard
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-cocoa-sugar-article-evidence-r45-2026-11-04.json'
+      - 'fssai-helper/ctr-cocoa-sugar-source-gate-r45-20261104.mjs'
+      - 'scripts/test_ctr_cocoa_sugar_r45_20261104.mjs'
+      - '.github/workflows/verify-ctr-cocoa-sugar-r45-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-cocoa-sugar-article-evidence-r45-2026-11-04.json'
+      - 'fssai-helper/ctr-cocoa-sugar-source-gate-r45-20261104.mjs'
+      - 'scripts/test_ctr_cocoa_sugar_r45_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  source-scope-no-legal-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify cocoa vs carob, sugar ash boundaries, and held-product invariants
+        run: node scripts/test_ctr_cocoa_sugar_r45_20261104.mjs
