@@ -27,6 +27,9 @@ class PmsvViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
     fun refresh() { if (!mutable.value.loading) viewModelScope.launch { refreshNow() } }
+    fun refreshIfStale() {
+        if (System.currentTimeMillis() - mutable.value.updatedAt > 15 * 60_000L) refresh()
+    }
     private suspend fun refreshNow() {
         mutable.update { it.copy(loading = true, error = null) }
         try {

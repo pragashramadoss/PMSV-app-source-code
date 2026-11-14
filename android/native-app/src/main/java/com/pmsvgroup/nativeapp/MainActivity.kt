@@ -54,6 +54,7 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         alertEnabled = Alerts.enabled(this)
         alertAllowed = Alerts.allowed(this)
+        model.refreshIfStale()
     }
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("navigationScreen", navigation.first)
