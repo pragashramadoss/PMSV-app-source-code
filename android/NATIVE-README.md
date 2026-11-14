@@ -44,11 +44,27 @@ their content even if a later feed omits them. Original articles/documents need
 connectivity. Source dates and category labels are preserved; no regulatory
 interpretations are added by this app.
 
+## Installed tools
+
+The APK includes the audit checklists, helper, scripts, styles and logo under
+`assets/tools`. These are the existing tool definitions from source commit
+`dcf9bfa7da127df293cb90350c62215dd0f1b3c2`; no eligibility or scoring rules change.
+`BundledTools` serves those installed files to the embedded renderer. Network
+loads are blocked for these tools; missing files return a local error instead of
+falling back to the website. Presentation CSS is present before the first paint.
+The secure PMSV origin is retained solely to preserve existing private saved
+records on upgrade. No website connection is needed to open, fill or save them.
+
+The form renderer is still Android WebView (a hybrid form UI), not a completed
+Kotlin rewrite of every audit/licence widget. The surrounding app is Compose.
+External official documents, FoSCoS applications, discussions and fresh news
+still require connectivity. Tool definitions update with a signed app release.
+
 ## Preview boundaries
 
-- Audits, licence and discussions currently open the existing PMSV forms in an
-  in-app WebView inside the shared native header and footer. Form content is still
-  web-based; it has not been rewritten as native form widgets.
+- Audits and licence tools load their installed app files inside the shared
+  native header and footer. Discussions connects to PMSV online. Form content
+  uses the embedded renderer; it has not been rewritten as native form widgets.
   Save Draft stores new checklists in this preview app's private WebView storage;
   reopen them from the audit tool's Saved Audits. Saved articles use separate
   native app storage. Neither is uploaded to GitHub. Account backup is not
@@ -79,6 +95,7 @@ gradle :native-app:connectedDebugAndroidTest
 
 CI runs unit tests, lint, APK package checks and Android 16 instrumentation tests
 for search, bookmarking/persistence and repeated notification navigation. UI
-screenshots cover native fixture screens and live Audits/FSSAI tool pages.
+screenshots cover native fixture screens and offline installed Audits/FSSAI tool pages.
 Tool tests check shared header/footer geometry, hidden duplicate web navigation,
-helper subtabs, form continuity, back navigation and WebView storage persistence.
+helper subtabs, form continuity, back navigation, an actual offline saved audit
+and private storage persistence. Tool device tests disable internet access.

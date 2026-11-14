@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.Toast
@@ -26,6 +25,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -53,12 +53,14 @@ class ToolActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.light(android.graphics.Color.TRANSPARENT, android.graphics.Color.TRANSPARENT))
         val shellCss = assets.open("native-tool-shell.css").bufferedReader().use { it.readText() }
+        val bundledTools = BundledTools(assets, shellCss)
         section = ToolPages.section(initialUrl)
         web = WebView(this).apply {
-            visibility = View.INVISIBLE
             setBackgroundColor(android.graphics.Color.rgb(245, 247, 250))
             settings.apply {
                 javaScriptEnabled = true; domStorageEnabled = true
+                blockNetworkLoads = BundledToolPaths.isLocal(initialUrl)
+                cacheMode = WebSettings.LOAD_NO_CACHE
                 allowFileAccess = false; allowContentAccess = false
                 mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
                 javaScriptCanOpenWindowsAutomatically = false
@@ -68,11 +70,15 @@ class ToolActivity : ComponentActivity() {
             // Save / Reset / Finish forms keep their standard JavaScript dialogs.
             webChromeClient = WebChromeClient()
             webViewClient = object : WebViewClient() {
+                override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? = bundledTools.response(request.url.toString())
                 override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                     val target = request.url.toString()
                     val destination = if (request.isForMainFrame) Links.nativeDestination(target) else null
                     if (destination != null) { openNative(destination); return true }
-                    if (Links.isPmsv(target)) return false
+                    if (Links.isPmsv(target)) {
+                        if (request.isForMainFrame) view.settings.blockNetworkLoads = BundledToolPaths.isLocal(target)
+                        return false
+                    }
                     if (request.isForMainFrame && Links.isHttps(target))
                         runCatching { startActivity(Intent(Intent.ACTION_VIEW, request.url)) }
                     return true
@@ -81,7 +87,7 @@ class ToolActivity : ComponentActivity() {
                     pageGeneration++
                     section = ToolPages.section(url)
                     loading = true; failed = false
-                    view.visibility = View.INVISIBLE
+                    view.settings.blockNetworkLoads = BundledToolPaths.isLocal(url)
                 }
                 override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                     if (request.isForMainFrame) showFailure()
@@ -99,8 +105,7 @@ class ToolActivity : ComponentActivity() {
                         view.postVisualStateCallback(generation, object : WebView.VisualStateCallback() {
                             override fun onComplete(requestId: Long) {
                                 if (generation == pageGeneration && !failed && !isDestroyed) {
-                                    view.visibility = View.VISIBLE
-                                    loading = false
+                                    view.postOnAnimation { if (generation == pageGeneration) loading = false }
                                 }
                             }
                         })
@@ -115,19 +120,21 @@ class ToolActivity : ComponentActivity() {
         setContent {
             var notifications by rememberSaveable { mutableStateOf(false) }
             PmsvTheme {
-                BackHandler { if (web.canGoBack()) web.goBack() else finish() }
+                BackHandler { goBack() }
                 Scaffold(containerColor = MaterialTheme.colorScheme.background,
                     topBar = { PmsvHeader(alertEnabled, alertAllowed,
                         onHome = { openNative("home") }, onNotifications = { notifications = true },
                         onSaved = { openNative("saved") }, onSettings = { openNative("settings") },
-                        onRefresh = { web.reload() }, refreshEnabled = !loading, refreshLabel = "Refresh page") },
+                        onRefresh = { web.reload() }, refreshEnabled = !loading, refreshLabel = if (section in listOf("audits", "licence")) "Reload tool" else "Refresh page") },
                     bottomBar = { PmsvNavigation(section, ::navigate) }) { padding ->
                     Box(Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding).imePadding()) {
                         AndroidView(factory = { web }, modifier = Modifier.fillMaxSize())
-                        if (loading) LinearProgressIndicator(Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.secondary)
+                        if (loading) Surface(Modifier.fillMaxSize().testTag("tool-loading"), color = MaterialTheme.colorScheme.background) {
+                            Box { LinearProgressIndicator(Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.secondary) }
+                        }
                         if (failed) Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                             Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("This tool could not load. Check your connection and try again.")
+                                Text(if (section in listOf("audits", "licence")) "This tool could not open. Please try again." else "This tool could not load. Check your connection and try again.")
                                 Spacer(Modifier.height(12.dp))
                                 Button(onClick = { web.reload() }) { Text("Retry") }
                             }
@@ -143,12 +150,18 @@ class ToolActivity : ComponentActivity() {
         else section = ToolPages.section(web.url ?: initialUrl)
     }
 
+    private fun goBack() {
+        if (!web.canGoBack()) { finish(); return }
+        val history = web.copyBackForwardList()
+        web.settings.blockNetworkLoads = BundledToolPaths.isLocal(history.getItemAtIndex(history.currentIndex - 1).url)
+        web.goBack()
+    }
     private fun showFailure() { failed = true; loading = false }
     private fun navigate(target: String) {
         val url = ToolPages.url(target)
         if (url != null) {
             // Re-tapping a section must not reset an in-progress form.
-            if (section != target) web.loadUrl(url)
+            if (section != target) { web.settings.blockNetworkLoads = BundledToolPaths.isLocal(url); web.loadUrl(url) }
         } else openNative(target)
     }
     private fun openNative(target: String) {

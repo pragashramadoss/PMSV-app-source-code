@@ -122,6 +122,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     item { WhiteCard {
                         Text("Available offline", fontWeight = FontWeight.Bold)
                         Text("${state.news.size} cached updates · ${state.saved.size} saved summaries")
+                        Text("Audit checklists and the licence helper are included in the app and work offline.")
                         Freshness(state.updatedAt)
                         OutlinedButton(onClick = refresh, enabled = !state.loading, shape = ButtonShape) { Text("Refresh content") }
                     } }
