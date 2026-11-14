@@ -21,11 +21,11 @@ Overall verification is **incomplete**. The current audit-script suite passes, b
 | Current consolidated checks after fixes | 46/46 passed locally (44 existing, one new integrity suite, one generated-register check) |
 | Historical `tests/*.test.cjs` suite before fixes | 1,237 reported tests: 1,110 passed, 127 failed |
 | Historical failure classification | 76 failed entries in browser test files; 51 other failures. These are not declared resolved or all environmental. |
-| Current browser verification | Pending the new CI workflow at the time of this checkpoint; update after observing its result. |
+| Current browser verification | Passed in [GitHub Actions run 43558841256](https://github.com/pragashramadoss/PMSV-app-source-code/actions/runs/43558841256), commit `4970de20f9c6d7674b5e2822d20e09309121332c`: all 533 product views, 137-case export, 67/70 filters, six views at 320/390/1440 px, missing/duplicate catalogue rejection and malformed URL fragments; zero page errors. |
 
-Local Chromium could not start in this execution environment; an isolated GitHub Actions browser job was added instead. It exercises all 533 product detail views, the 137-case queue, filtered/full exports, malformed fragments, missing/duplicate catalogue rejection and six views at 320/390/1440 px. A successful browser job will not constitute a native Android/PWA push-notification test.
+Local Chromium could not start in this execution environment; an isolated GitHub Actions browser job was added instead. It exercises all 533 product detail views, the 137-case queue, filtered/full exports, malformed fragments, missing/duplicate catalogue rejection and six views at 320/390/1440 px. This successful browser job is not a native Android/PWA push-notification test. The first browser run identified that fragment changes within an already-open page were not handled; a hash-change listener was added and the entire browser suite passed on the corrected revision.
 
-Run current checks with `node scripts/verify-helper.cjs`. The separate historical test suite is not silently included in that passing count. Do not remove failed assertions or refresh source fingerprints merely to obtain a green overall result; reconcile their intended source version and meaning first.
+Run current checks with `node scripts/verify-helper.cjs`. The separate historical test suite is not silently included in that passing count. The 51 non-browser failing entries are indexed in `historical-regression-failures-2026-11-14.json`; the other 76 failed entries belong to browser test files. Do not remove failed assertions or refresh source fingerprints merely to obtain a green overall result; reconcile their intended source version and meaning first.
 
 ## Official-source currency check
 
@@ -40,5 +40,9 @@ Run current checks with `node scripts/verify-helper.cjs`. The separate historica
 3. Complete original-Gazette/amendment, method, microbiology, additives, packaging, labelling and claim reconciliation as applicable across the catalogue. The 14 Ayurveda raw-ingredient source gaps remain open.
 4. Retrieve and assess the new milk-logo notification. Do not treat absence from an amendment index as proof that a listed notification does not apply.
 5. Perform native Android/PWA and production integration checks before any release. Production WordPress plugin v1.0.23 was observed active, but no production files, numerical rules or approvals were changed in this session.
+
+### Historical pipeline diagnosis
+
+The required setup command `node scripts/audit-fssai-product-readiness.cjs` was also attempted. It fails at line 680 because it reads the old `rawPulsesStandard.general_limits` field, which no longer exists after the November cereal schema revision. This prevents generation of readiness and downstream research-queue artifacts; missing-artifact errors therefore contribute to the 127 broad-suite failures. The existing `cereal-review-r3/README.md` already warns that the new conditional schema has not been integrated into the older consumer. Other mismatches include outdated source paths/fingerprints and master-versus-search-index fields. These need a reviewed consumer migration, rather than restoring obsolete numeric data or deleting checks.
 
 No new product was declared legally verified and no batch was released.

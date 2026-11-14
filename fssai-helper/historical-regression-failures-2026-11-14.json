@@ -1,0 +1,268 @@
+{
+  "observed_date": "2026-11-14",
+  "baseline_commit": "ad13bc4a47c084df280e25ad7594c13aa710ad5d",
+  "command": "node --test --test-concurrency=4 tests/*.test.cjs",
+  "reported_tests": 1237,
+  "passed": 1110,
+  "failed": 127,
+  "scope": "Historical fssai-product-helper-preview-01 tests; separate from current fssai-helper audit scripts.",
+  "non_browser_failures": [
+    {
+      "test_location": "tests/fssai-11-chapter-2-3-source-quality-ui-2026-10-11.test.cjs:27:1",
+      "browser_test_file": false,
+      "summary": "\u2716 No source flags, preservation methods or generic metal names create a contaminant PASS (7.51465ms)"
+    },
+    {
+      "test_location": "tests/fssai-2-3-20-cereal-flakes-exact-b1-2026-10-11.test.cjs:74:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Source-conservation audit promotes exactly one previous gap and never issues compliance PASS (0.616124ms)"
+    },
+    {
+      "test_location": "tests/fssai-20-pending-chapter-quality-source-2026-10-11.test.cjs:21:1",
+      "browser_test_file": false,
+      "summary": "\u2716 20 unique exact FSSR product quality references = 75 rows; never counted as CTR source evidence (6.401735ms)"
+    },
+    {
+      "test_location": "tests/fssai-20-pending-chapter-quality-source-2026-10-11.test.cjs:84:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Generated readiness audit keeps 412/121 ledger; 20 quality reviews with one separate B1 partial (3.527695ms)"
+    },
+    {
+      "test_location": "tests/fssai-2026-may-533-89-effective-date-2026-10-12.test.cjs:21:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Actual official FSSAI Gazette 272840 dated May 2026 is FUTURE until 1 December 2026 (29.140947ms)"
+    },
+    {
+      "test_location": "tests/fssai-2026-may-533-89-effective-date-2026-10-12.test.cjs:92:1",
+      "browser_test_file": false,
+      "summary": "\u2716 New 446/87 named-source promotions do not retain stale archived 89 pending panel (11.637878ms)"
+    },
+    {
+      "test_location": "tests/fssai-ayurveda-nine-recipe-b1-source-gates-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-ayurveda-nine-recipe-b1-source-gates-2026-10-11.test.cjs (185.247627ms)"
+    },
+    {
+      "test_location": "tests/fssai-ayurveda-nine-recipe-ui-2026-10-11.test.cjs:42:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Research worksheet holds all nine recipe qualifications, but zero product MRL applications (0.832688ms)"
+    },
+    {
+      "test_location": "tests/fssai-batch40-exact-official-identity-source-gates.test.cjs:90:1",
+      "browser_test_file": false,
+      "summary": "\u2716 The 533-product audit counts all 10 source matches as partial, not contaminant or finished-food PASS (0.864528ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-commodity-residue-review.test.cjs:246:1",
+      "browser_test_file": false,
+      "summary": "\u2716 unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality limits without processed pulse inheritance (4.272531ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-numeric-baselines.test.cjs:11:1",
+      "browser_test_file": false,
+      "summary": "\u2716 all nine numerical baselines are source-pinned and remain fail-closed (17.965252ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-numeric-baselines.test.cjs:28:1",
+      "browser_test_file": false,
+      "summary": "\u2716 solvent extracted oilseed flour compositions are distinct; microbiology and hexane retained (0.601956ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-numeric-baselines.test.cjs:50:1",
+      "browser_test_file": false,
+      "summary": "\u2716 groundnut expeller pressed is not classified as solvent extracted (0.346078ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-numeric-baselines.test.cjs:81:1",
+      "browser_test_file": false,
+      "summary": "\u2716 six Chapter 2.4 grain identities resolve to exact source-verified subclauses without changing FoSCoS FSSR (7.9723ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-4-numeric-baselines.test.cjs:118:1",
+      "browser_test_file": false,
+      "summary": "\u2716 residual Any other foodgrains uses exact 2.4.6(15) source limits without covering named grains or unrelated seeds (4.173315ms)"
+    },
+    {
+      "test_location": "tests/fssai-chapter-2-7-contaminant-lock.test.cjs:73:1",
+      "browser_test_file": false,
+      "summary": "\u2716 official data retains time-based 2026 amendment lock; no future limits auto applied (1.350445ms)"
+    },
+    {
+      "test_location": "tests/fssai-cross-chapter-exact-name-standard-guard-2026-10-11.test.cjs:36:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Rule-key consistency: all 533 search-index products retain the same direct clause as source master (2.362148ms)"
+    },
+    {
+      "test_location": "tests/fssai-current-fifteen-quality-2026-10-12.test.cjs:17:1",
+      "browser_test_file": false,
+      "summary": "\u2716 All 76 official FSSR source values trace to exact standard and subtype paths (9.669048ms)"
+    },
+    {
+      "test_location": "tests/fssai-eight-chapter-2-4-quality-exclusions-source-2026-10-11.test.cjs:83:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Generated readiness audit does not confuse 8 quality/exclusion reviews with exact contaminants (0.701343ms)"
+    },
+    {
+      "test_location": "tests/fssai-eight-pending-chapter-quality-subtypes-2026-10-11.test.cjs:22:1",
+      "browser_test_file": false,
+      "summary": "\u2716 The 8 previously pending product identities remain separate from chemical contaminant clearance (12.188512ms)"
+    },
+    {
+      "test_location": "tests/fssai-eight-pending-chapter-quality-subtypes-2026-10-11.test.cjs:49:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Two new jaggery panels render while six existing verified product panels are not duplicated (2.80545ms)"
+    },
+    {
+      "test_location": "tests/fssai-fermented-soybean-curd-b1-source-gate.test.cjs:24:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Fermented curd source and two FoSCoS identities exactly match FSSAI Chapter 2.4.39 (1.434716ms)"
+    },
+    {
+      "test_location": "tests/fssai-five-exact-composite-soup-coconut-source-regression.test.cjs:92:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Generated product readiness audit identifies five partial exact source rows without issuing a finished food compliance PASS (0.718174ms)"
+    },
+    {
+      "test_location": "tests/fssai-fruit-vegetable-cereal-flakes-official-2-3-20-route.test.cjs:29:1",
+      "browser_test_file": false,
+      "summary": "\u2716 All 533 fast routes agree with their full master catalogue record (2.573426ms)"
+    },
+    {
+      "test_location": "tests/fssai-full136-next10-source-evidence-regression.test.cjs:106:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Generated 533-product audit includes exact ten partial source records and zero inferred legal approvals (0.443009ms)"
+    },
+    {
+      "test_location": "tests/fssai-harmonized-cereal-b1-identity-gate.test.cjs:26:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Chapter 2.4 identity definitions guarantee cereal ingredients for both narrowly mapped products (1.623147ms)"
+    },
+    {
+      "test_location": "tests/fssai-large-batch-81-scope-3-exact-residues.test.cjs:91:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Audited official partial status agrees for all three promoted catalog identities (2.823352ms)"
+    },
+    {
+      "test_location": "tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-next-123-actionable-worklist-2026-10-11.test.cjs (96.751828ms)"
+    },
+    {
+      "test_location": "tests/fssai-nine-sugar-refined-chromium-scope-2026-10-11.test.cjs:72:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Audit keeps 412 partial/121 unresolved with all nine sugar Chromium references unpromoted (0.651459ms)"
+    },
+    {
+      "test_location": "tests/fssai-nine-sugar-refined-chromium-scope-2026-10-11.test.cjs:126:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Dried glucose Lead threshold review is an exclusion, not a contaminant clearance (0.430917ms)"
+    },
+    {
+      "test_location": "tests/fssai-pulse-grain-v488.test.cjs:16:1",
+      "browser_test_file": false,
+      "summary": "\u2716 FSSAI 2.4.6(22) is a distinct official Chapter 2.4 pulse standard (1.892773ms)"
+    },
+    {
+      "test_location": "tests/fssai-ragi-grain-v483.test.cjs:37:1",
+      "browser_test_file": false,
+      "summary": "\u2716 official millet standard explicitly names Ragi and has full grain limits (1.905016ms)"
+    },
+    {
+      "test_location": "tests/fssai-ragi-grain-v483.test.cjs:61:1",
+      "browser_test_file": false,
+      "summary": "\u2716 millet grain FSSR applies both general grain rule and exact 2.4.6(23), but no flour (5.014274ms)"
+    },
+    {
+      "test_location": "tests/fssai-seven-official-product-quality-and-ctr-no-inheritance-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-seven-official-product-quality-and-ctr-no-inheritance-2026-10-11.test.cjs (106.309402ms)"
+    },
+    {
+      "test_location": "tests/fssai-six-pending-chapter-quality-source-2026-10-11.test.cjs:38:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Each of 49 FSSR benchmarks matches its exact chapter-standard row and subtype (10.38233ms)"
+    },
+    {
+      "test_location": "tests/fssai-six-pending-chapter-quality-source-2026-10-11.test.cjs:56:1",
+      "browser_test_file": false,
+      "summary": "\u2716 FSSAI 1 May 2025 colostrum amendment explicitly requires IgG 1.8% and powder 8.5% (16.051381ms)"
+    },
+    {
+      "test_location": "tests/fssai-six-pending-chapter-quality-source-2026-10-11.test.cjs:89:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Two separate Khandsari variants and cocoa mass/cake matrix bases remain visible (6.431246ms)"
+    },
+    {
+      "test_location": "tests/fssai-standard-key-scope-v482.test.cjs:54:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Wheat shows only its general Food Grains chapter, not rice or FRK (5.356915ms)"
+    },
+    {
+      "test_location": "tests/fssai-standard-key-scope-v482.test.cjs:73:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Rice retains Food Grains and its exact named rice overlay, not FRK (2.770114ms)"
+    },
+    {
+      "test_location": "tests/fssai-standard-key-scope-v482.test.cjs:87:1",
+      "browser_test_file": false,
+      "summary": "\u2716 FRK rice flour receives its own specified standard but does not imply generic food grains (2.549632ms)"
+    },
+    {
+      "test_location": "tests/fssai-ten-edible-fungi-live-quality-ui-2026-10-11.test.cjs:47:1",
+      "browser_test_file": false,
+      "summary": "\u2716 121 research worksheets include 55 fungi quality records and do not mark fungi CTR verified (0.579124ms)"
+    },
+    {
+      "test_location": "tests/fssai-ten-edible-fungi-quality-source-2026-10-11.test.cjs:55:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Audit artefact contains all named quality without converting it to contaminant evidence (0.555108ms)"
+    },
+    {
+      "test_location": "tests/fssai-two-subtype-metal-ui-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-two-subtype-metal-ui-2026-10-11.test.cjs (124.632538ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-31-cross-form-metal-source-nontransfer-2026-10-11.test.cjs (120.400302ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-61-metal-testing-basis-integrity-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-61-metal-testing-basis-integrity-2026-10-11.test.cjs (137.910034ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-cross-metal-matrix-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-cross-metal-matrix-2026-10-11.test.cjs (137.478567ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-expanded-identity-nontransfer-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-expanded-identity-nontransfer-2026-10-11.test.cjs (120.1799ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-metal-fallback-precedence-533-123-2026-10-11.test.cjs (119.479213ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-metal-priority-helper-123-2026-10-11.test.cjs:64:1",
+      "browser_test_file": false,
+      "summary": "\u2716 Every one of 121 research worksheets has all seven rows but zero approved numeric rules (0.790069ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-processed-food-exact-subtype-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-processed-food-exact-subtype-2026-10-11.test.cjs (133.856034ms)"
+    },
+    {
+      "test_location": "tests/fssai-v9-tin-conditional-123-source-matrix-2026-10-11.test.cjs:1:1",
+      "browser_test_file": false,
+      "summary": "\u2716 tests/fssai-v9-tin-conditional-123-source-matrix-2026-10-11.test.cjs (149.049123ms)"
+    }
+  ],
+  "browser_test_failures_count": 76,
+  "status": "UNRESOLVED; not all failures are attributed to the browser environment."
+}
