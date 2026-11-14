@@ -9,4 +9,5 @@ if(!files.length)throw Error('No tests selected');
 console.log(JSON.stringify({mode,shard,shards,files:files.length}));
 // Browser fixtures use fixed local ports. Keep each shard sequential in its own runner.
 const r=spawnSync(process.execPath,['--test','--test-reporter=tap','--test-concurrency='+ (mode==='browser'?1:4),...files],{stdio:'inherit'});
-process.exit(r.status||0);
+// spawnSync returns null after a signal/startup failure; that must never pass CI.
+process.exit(r.status===0?0:(r.status||1));

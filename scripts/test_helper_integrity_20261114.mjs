@@ -15,14 +15,14 @@ vm.runInContext(read('review-status-data.js'),context);
 const rows=JSON.parse(JSON.stringify(context.window.PMSV_CATALOGUE));
 const data=JSON.parse(JSON.stringify(context.window.PMSV_REVIEW_REGISTER));
 assert.equal(api.catalogueStatus(rows).ok,true);
-assert.deepEqual(api.validateReview(data,rows),{ok:true,catalogueCount:533,queueCount:137,focusedCount:67,remainingFocusedCount:70,legalProductApproval:false,batchRelease:false});
+assert.deepEqual(api.validateReview(data,rows),{ok:true,catalogueCount:533,queueCount:137,focusedCount:137,remainingFocusedCount:0,legalProductApproval:false,batchRelease:false});
 for(const invalid of [null,{},[],rows.slice(0,123),[...rows.slice(1),rows[1]],rows.map((x,i)=>i===10?null:x)]){
  assert.equal(api.catalogueStatus(invalid).ok,false);
  assert.equal(api.validateReview(data,invalid).ok,false);
 }
 for(const mutate of [d=>d.records.pop(),d=>d.records[0].id='missing',d=>d.records[1].id=d.records[0].id,
  d=>d.focusedCount++,d=>d.remainingFocusedCount--,d=>d.legalProductApprovals=1,
- d=>d.records[0].legalArticleDecision='APPROVED',d=>d.sourceVerificationRequiresLotReport=true,
+ d=>d.records[0].sourceReviewResult=null,d=>d.records[0].legalArticleDecision='APPROVED',d=>d.sourceVerificationRequiresLotReport=true,
  d=>d.records[0].reports=[{round:68,file:'../index.html'}],d=>d.currencyWatch[0].source='javascript:alert(1)',
  d=>d.currencyWatch[0].source='https://fssai.gov.in.example.com/']){
  const changed=structuredClone(data);mutate(changed);assert.equal(api.validateReview(changed,rows).ok,false);

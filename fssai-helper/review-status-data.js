@@ -2,17 +2,17 @@
 window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
-  "latestSourceReviewDate": "2026-11-11",
-  "latestRound": 68,
+  "latestSourceReviewDate": "2026-11-14",
+  "latestRound": 69,
   "catalogueCount": 533,
   "queueCount": 137,
-  "focusedCount": 67,
-  "remainingFocusedCount": 70,
+  "focusedCount": 137,
+  "remainingFocusedCount": 0,
   "legalProductApprovals": 0,
   "batchReleases": 0,
-  "scope": "Focused R45–R48 and R54–R68 reviews within the 137-case CTR queue. Source coverage is not complete regulatory verification of the 533 products.",
+  "scope": "Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.",
   "sourceVerificationRequiresLotReport": false,
-  "softwareVerification": "Current audit scripts passed; broader historical regression failures remain under review. Overall verification is incomplete.",
+  "softwareVerification": "The 1,171-test data integration suite and current audit checks passed. Wider browser integrations are being verified separately. Complete current-law verification remains open.",
   "sourceFiles": [
     "ctr-asafoetida-seasoning-oleoresins-r61-2026-11-05.json",
     "ctr-bakery-pasta-five-source-review-r59-2026-11-04.json",
@@ -27,6 +27,7 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-mouth-freshener-2021-direction-r55-2026-11-04.json",
     "ctr-pan-masala-product-label-packaging-r58-2026-11-04.json",
     "ctr-pulp-puree-industrial-concentrates-r68-2026-11-11.json",
+    "ctr-remaining-source-scope-r69-2026-11-14.json",
     "ctr-rte-curried-vegetables-r67-2026-11-11.json",
     "ctr-salt-substitute-original-gazette-r62-2026-11-05.json",
     "ctr-soy-paste-vegetable-protein-r63-2026-11-05.json",
@@ -42,9 +43,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.3.2.2",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -54,9 +61,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.4.4",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -66,9 +79,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.5.2",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -78,9 +97,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.6.5",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -90,9 +115,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.7",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -102,9 +133,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.7",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Frozen dessert includes a pasteurised mix using vegetable fat/protein and can contain milk; dried mix is a separate presentation. Total fat, rather than milk fat, governs the subtype table.",
+      "sourceReviewNextAction": "CTR names ice-cream, iced lollies and similar frozen confections: Lead 1.0 ppm and Arsenic 0.5 ppm are source candidates. Establish whether the finished or reconstituted form meets that article; do not silently inherit a milk article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -114,9 +151,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "01.7",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The standard distinguishes ice cream, milk ice/lolly and dried ice-cream mix. The dried mix is assessed after prescribed reconstitution for its product description.",
+      "sourceReviewNextAction": "CTR names ice-cream, iced lollies and similar frozen confections, with Lead 1.0 ppm and Arsenic 0.5 ppm. Preserve the finished-form question for dried mixes and the exact analytical matrix.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -126,9 +169,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "02.2.2",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -138,9 +187,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "02.3",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -150,9 +205,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "02.4",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Analogue means replacement of milk constituents, partly or wholly, with non-milk constituents. A composite milk product instead retains milk constituents as an essential part without replacement.",
+      "sourceReviewNextAction": "An analogue classification does not select the milk or secondary-milk CTR article. Establish the actual finished matrix and any specifically named article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -162,9 +223,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "02.4",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Frozen dessert includes a pasteurised mix using vegetable fat/protein and can contain milk; dried mix is a separate presentation. Total fat, rather than milk fat, governs the subtype table.",
+      "sourceReviewNextAction": "CTR names ice-cream, iced lollies and similar frozen confections: Lead 1.0 ppm and Arsenic 0.5 ppm are source candidates. Establish whether the finished or reconstituted form meets that article; do not silently inherit a milk article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -174,9 +241,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.1.2.7",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Candied, crystallised and glazed forms are described separately; total sugar minimum 70% w/w and reducing sugar minimum 25% of total sugar are different bases.",
+      "sourceReviewNextAction": "Determine fruit, rhizome or vegetable identity and processing for the CTR article. A sugar coating does not by itself make the food a hard-boiled sugar confectionery.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -186,9 +259,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.1.2.2",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Catechu is dried aqueous extract from Acacia catechu heartwood. Bhatti Katha has a separate acid-insoluble-ash provision.",
+      "sourceReviewNextAction": "Do not assign pan-masala limits just because catechu can be an ingredient. Confirm edible-extract identity and the specific CTR provision.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -205,6 +284,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -222,6 +302,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -239,6 +320,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -256,6 +338,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -273,6 +356,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -290,6 +374,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -307,6 +392,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -317,9 +403,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.1.2.6",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Fruit chutney has a different soluble-solids minimum from vegetable and hot/sour chutney. The rigid-container fill rule has a bulk industrial-pack exception.",
+      "sourceReviewNextAction": "Lead 1 mg/kg and Tin 250 mg/kg name Mango Chutney in CTR. They are not automatically the limit for every fruit or vegetable chutney.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -336,6 +428,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -346,9 +439,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.1.2.3",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "The standard distinguishes citrus/brine, oil, vinegar and no-medium pickles. It includes edible plant material and mushrooms; composition and medium must both be recorded.",
+      "sourceReviewNextAction": "CTR separately names pickled cucumber and food containing mushrooms. Apply neither simply from the word pickle; confirm cucumber/mushroom identity and applicable article, including the 100 ppm agaric-acid mushroom source.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -365,6 +464,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -382,6 +482,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -399,6 +500,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -416,6 +518,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -433,6 +536,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -450,6 +554,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Do not substitute the cocoa-powder article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -467,6 +572,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -484,6 +590,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -501,6 +608,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -518,6 +626,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -535,6 +644,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -545,9 +655,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.2.2.8",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "The frozen curried/ready-to-eat vegetable description includes cereals, pulses and other permitted ingredients; freezing completion is tied to minus 18 C at the thermal centre after the described thermal step.",
+      "sourceReviewNextAction": "Frozen is not canned. Do not assign a canned-food Tin article without the required packaging identity. Named commodity and composite-food toxin routes need the actual recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -564,6 +680,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -581,6 +698,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -598,6 +716,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -615,6 +734,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -632,6 +752,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -642,9 +763,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.2.2.3",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The standard distinguishes citrus/brine, oil, vinegar and no-medium pickles. It includes edible plant material and mushrooms; composition and medium must both be recorded.",
+      "sourceReviewNextAction": "CTR separately names pickled cucumber and food containing mushrooms. Apply neither simply from the word pickle; confirm cucumber/mushroom identity and applicable article, including the 100 ppm agaric-acid mushroom source.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -654,9 +781,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.2.2.3",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The standard distinguishes citrus/brine, oil, vinegar and no-medium pickles. It includes edible plant material and mushrooms; composition and medium must both be recorded.",
+      "sourceReviewNextAction": "CTR separately names pickled cucumber and food containing mushrooms. Apply neither simply from the word pickle; confirm cucumber/mushroom identity and applicable article, including the 100 ppm agaric-acid mushroom source.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -673,6 +806,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -690,6 +824,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -707,6 +842,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -724,6 +860,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -741,6 +878,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -758,6 +896,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -775,6 +914,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -785,9 +925,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "04.2.2.2",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Yellow pea powder is ground dehusked Pisum sativum without added colour or foreign ingredient. The source requires 22% minimum protein on dry basis.",
+      "sourceReviewNextAction": "Distinguish ground/dehusked powder from whole raw pulses and from pea protein isolate. CTR article and processing basis require reconciliation.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -804,6 +950,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -821,6 +968,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -838,6 +986,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -848,9 +997,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The residual food-grain standard has its own criteria, including moisture method conditions and a combined defect limit.",
+      "sourceReviewNextAction": "The CTR cereal-grain Lead/Cadmium entries exclude buckwheat, canihua and quinoa. Identify the actual grain and do not treat the residual catalogue name as proof of scope.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -860,9 +1015,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Chia is specifically Salvia hispanica, with its own standard. It must not remain under a generic parent-grain table.",
+      "sourceReviewNextAction": "Chia botanical identity and intended processing determine the oilseed candidate. Do not infer a cereal-grain article from the parent chapter number.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -872,9 +1033,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.2",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Arrowroot is the separated purified starch of Maranta arundinacea or Curcuma augustifolia. The following numerical table is explicitly for Tapioca/Palm Sago.",
+      "sourceReviewNextAction": "Do not assign the adjacent sago table to arrowroot. Species and purified-starch form need an independently supported CTR route.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -891,6 +1058,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Do not substitute the cocoa-powder article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -901,9 +1069,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Custard powder can use maize, sago/tapioca and other named starches with optional milk/albuminous material. The ash criterion excludes added common salt and is on dry basis.",
+      "sourceReviewNextAction": "Cereal-product and food-containing-named-commodity aflatoxin articles can compete. Source totals are 15 versus 20 microgram/kg, with B1 10; choose from the legal definition and actual composition, not the larger limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -913,9 +1087,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Expeller groundnut flour is obtained by pressing selected kernels; it is distinct from solvent-extracted flour. The source prints the extracted-fat acid value with a percent expression.",
+      "sourceReviewNextAction": "Keep the printed acid-value unit issue explicit rather than silently converting it. CTR oilseed/processed/composite scope and actual processing must be reconciled.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -925,9 +1105,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Protein-rich maida allows specific protein additions up to a combined 15%, with soy flour at most 10% and whey protein powder at most 5%. Protein and gluten use dry basis.",
+      "sourceReviewNextAction": "A fortified composite flour is not automatically the raw-wheat or generic milled-grain residue article. Preserve recipe and residue-definition qualifiers, including combined residues where specified.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -937,9 +1123,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Solvent-extracted coconut flour has its own moisture, protein, fibre and fat table and a 10 ppm food-grade hexane criterion. It is not coconut milk powder.",
+      "sourceReviewNextAction": "Preserve the coconut commodity and solvent-extracted form. Raw coconut, coconut oil and finished flour articles must not be silently substituted.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -949,9 +1141,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Cottonseed flour has separate free gossypol 0.06% and total gossypol 1.2% maxima on dry basis, plus a 10 ppm hexane criterion.",
+      "sourceReviewNextAction": "Free and total gossypol are different measurements; these identity-standard criteria do not close the separate CTR panel or establish a raw cottonseed article for processed flour.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -961,9 +1159,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Solvent-extracted sesame flour uses its own dry-basis composition and 10 ppm food-grade hexane requirement; it is distinct from oil and from an expeller-only flour.",
+      "sourceReviewNextAction": "Verify oilseed/processed/food-containing-commodity scope and analytical basis. Do not assign the source aflatoxin class solely from the catalogue category.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -973,9 +1177,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.2.1",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Water chestnut flour is from specified Trapa species and belongs to Chapter 2.3. The source gives separate dry-basis alcoholic-acidity/protein parameters and a 100 mg/kg uric-acid entry.",
+      "sourceReviewNextAction": "FoSCoS placement in a flour group does not turn Trapa into a cereal. Verify the botanical commodity and processed-food scope for CTR.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -992,6 +1202,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1009,6 +1220,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1019,9 +1231,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.7",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Malt food may include cereal/legume material, milk and other named ingredients. Its composition and directly printed microbiology criteria differ from malted milk food and malt extract.",
+      "sourceReviewNextAction": "Confirm cereal-product versus composite-food CTR class and whether any dairy ingredients change the applicable named article. Ingredient permission is not a contaminant exemption.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1031,9 +1249,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.7",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Malt extract has diastatic, non-diastatic and brewery grades; brewery total-solids minimum is 55%, versus 77% for the other two grades. The protein criteria also differ.",
+      "sourceReviewNextAction": "Determine grade, commodity and final physical form before selecting a cereal-product or other CTR article. Do not collapse all three grades into one composition row.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1043,9 +1267,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.7",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Papad is a blended product with its own 15% moisture maximum and dry-basis ash/acidity criteria. The same standard underlies both catalogue category placements.",
+      "sourceReviewNextAction": "The duplicated FoSCoS placements do not create two legal standards. A recipe made with cereal, pulse, soy or vegetables needs the correct toxin article and cannot inherit FPC18 solely by being a snack.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1055,9 +1285,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8.4",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Compressed curd and dehydrated curd film are distinct non-fermented soybean forms. Their moisture maxima are 75 and 20 g/100g; protein minima are 13 and 30 g/100g respectively.",
+      "sourceReviewNextAction": "These are not tofu and not fermented soybean curd. Keep the specific product form and avoid borrowing a raw-pulse CTR entry whose wording excludes dry soybean.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1067,9 +1303,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8.2",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Compressed curd and dehydrated curd film are distinct non-fermented soybean forms. Their moisture maxima are 75 and 20 g/100g; protein minima are 13 and 30 g/100g respectively.",
+      "sourceReviewNextAction": "These are not tofu and not fermented soybean curd. Keep the specific product form and avoid borrowing a raw-pulse CTR entry whose wording excludes dry soybean.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1079,9 +1321,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8.7",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The named-culture fermented soy curd uses the separate acidity limit strictly below 1.7% and pH range 4.0–5.0. Added milk may not exceed 25% of the final product.",
+      "sourceReviewNextAction": "Preserve culture and milk conditions. Fermentation and possible dairy addition do not establish automatic equivalence to yoghurt or to plain soybean commodity CTR limits.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1098,6 +1346,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1108,9 +1357,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Soy flour, concentrate and isolate use strict protein class boundaries: above 50/below 65, above 65/below 90, and above 90% on the specified dry basis. Exact boundary values are not assigned by this wording.",
+      "sourceReviewNextAction": "Keep boundary ambiguity and exclusions from the protein basis explicit. Identify the product form before using a raw oilseed or food-containing-commodity CTR candidate.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1120,9 +1375,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8.6",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Tempe is solid-state Rhizopus fermentation of dehulled boiled soybeans with specified inoculum carriers. It has its own moisture, dry-basis protein/fat/fibre and urease criteria.",
+      "sourceReviewNextAction": "Do not classify this mould-fermented cake as named-culture soybean curd or unprocessed soybean. Confirm the processed-product CTR route.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1132,9 +1393,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "06.8.8",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Textured soy protein is extruded defatted soy flour/grits. The table separately states 10 ppm hexane and a urease index of 0.05–0.2 pH-unit rise.",
+      "sourceReviewNextAction": "Protein-source origin alone does not identify a CTR finished-food article. Keep extrusion, defatting and composite formulation scope explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1151,6 +1418,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1168,6 +1436,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1185,6 +1454,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1195,9 +1465,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "100",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Colostrum is a separately defined early secretion. The compendium shows IgG minimum 1.8% for colostrum and 8.5% for powder from 1 May 2025. The powder hygiene cross-reference is milk powder in Appendix B.",
+      "sourceReviewNextAction": "Do not transplant ordinary milk or dehydrated-milk CTR limits solely from dairy origin. The explicit Appendix B cross-reference concerns microbiology, not an automatic CTR article assignment.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1214,6 +1490,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1224,9 +1501,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "100",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Royal jelly is raw natural secretion without additives. Type 1/2 depend on bee feeding; several sugar limits are marked not applicable to Type 2, while isotope ranges differ.",
+      "sourceReviewNextAction": "Do not borrow honey limits or translate a Type-2 NA into zero. Verify secretion identity, feeding type and the exact CTR article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1236,9 +1519,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "100",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Silver leaf has foil mass up to 2.8 g per square metre, minimum fineness 999/1000 and an express prohibition on animal material in manufacture.",
+      "sourceReviewNextAction": "Fineness is not a full contaminant panel. Determine any applicable CTR articles and keep the animal-material prohibition separate from analytical purity.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1248,9 +1537,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "The parched-rice drink contains specifically identified juniper fruit, sandal heartwood and khas root; the method reduces water to one-eighth.",
+      "sourceReviewNextAction": "Species, plant part and reduction matter for ingredient-purity and concentration questions. A beverage name is not a raw cereal CTR article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1260,9 +1555,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "The cooked dish uses lentils and rice, spices, rock salt and ghee, with distinct proportions; the method includes soaking, dry roasting and cooking.",
+      "sourceReviewNextAction": "Resolve the actual lentil species and recipe. Rice or pulse raw-commodity limits are not a finished khichdi panel.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1272,9 +1573,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "The recipe uses cow milk and seven heating/cooling cycles to form a thick firm product, without added sugar.",
+      "sourceReviewNextAction": "The title alone does not establish the canned/evaporated-milk article or a concentration conversion factor.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1284,9 +1591,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "Cow milk and coconut endosperm are cooked to a thick mixture, cooled and cut. This is not coconut milk.",
+      "sourceReviewNextAction": "Resolve the actual finished matrix and concentration. Do not swap the recipe with a coconut-milk or dairy-analogue route.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1296,9 +1609,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "Barley flour is cooked in cow milk and ghee is added; the recipe is categorised as drinkable.",
+      "sourceReviewNextAction": "Barley, milk and ghee require their own ingredient-purity references; the recipe title does not choose a finished CTR article.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1308,9 +1627,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "The source includes rice, milk, ghee, sugar and botanical camphor; its method makes, fills and fries chhena dumplings before syrup infusion.",
+      "sourceReviewNextAction": "The finished recipe is not plain chhena. Ingredient identity/food-grade purity, including Karpura, needs a defensible source; no unrestricted camphor use is inferred.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1320,9 +1645,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P0",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Resolve the published recipe title/method discrepancy.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method.",
+      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1332,9 +1663,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P0",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Resolve the published recipe title/method discrepancy.",
+      "sourceReviewResult": "The four-ingredient Ksheerapaka table is followed by a flower-water infusion method; flowers are removed, buffalo milk is added and water evaporated. Ketaki/Jati/etc. are footnote examples.",
+      "sourceReviewNextAction": "The source does not place the four-stage method here. Preserve the published mapping pending clarification; flower removal does not prove zero transfer or permit any flower species.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1344,9 +1681,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": null,
       "priority": "P3",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Reconcile the source recipe, Schedule D and ingredient-purity requirements.",
+      "sourceReviewResult": "Barley discs are steamed with rock salt and mustard oil. The method explicitly allows Mudga or Masha instead of barley.",
+      "sourceReviewNextAction": "Confirm which cereal/pulse variant is used; the variant changes raw-ingredient references and cannot be flattened into one raw-grain CTR assignment.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1363,6 +1706,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1380,6 +1724,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1397,6 +1742,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1414,6 +1760,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1431,6 +1778,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1448,6 +1796,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1465,6 +1814,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1482,6 +1832,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1499,6 +1850,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1516,6 +1868,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1533,6 +1886,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1543,9 +1897,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "11.6",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "This is a broad class, not one chemical or one permission. Additive use depends on food category, specified restrictions, minimum technically necessary use and the complete identity/purity specification.",
+      "sourceReviewNextAction": "Identify every additive/INS, proportion, use category and final-food level. Premix or polyol category membership alone cannot select a substance-specific CTR article, a blanket GMP permission, or a zero contaminant limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1562,6 +1922,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1579,6 +1940,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1596,6 +1958,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1613,6 +1976,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1630,6 +1994,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1640,9 +2005,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "15.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Papad is a blended product with its own 15% moisture maximum and dry-basis ash/acidity criteria. The same standard underlies both catalogue category placements.",
+      "sourceReviewNextAction": "The duplicated FoSCoS placements do not create two legal standards. A recipe made with cereal, pulse, soy or vegetables needs the correct toxin article and cannot inherit FPC18 solely by being a snack.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1652,9 +2023,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.2.1",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.2.1 and Annexure II additive mapping 6.5 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1664,9 +2041,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.1.2",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.1.2 and Annexure II additive mapping 1.7 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1676,9 +2059,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.3",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.3 and Annexure II additive mapping 15.2 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1688,9 +2077,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.1.3",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.1.3 and Annexure II additive mapping 1.7 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1700,9 +2095,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.5",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.5 and Annexure II additive mapping 4.1.2.9, 4.2.2.6 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1712,9 +2113,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.4",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.4 and Annexure II additive mapping 5.2.3, 15.1 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1724,9 +2131,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.1.1",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.1.1 and Annexure II additive mapping 1.7 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1736,9 +2149,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.1.4",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.1.4 and Annexure II additive mapping 1.7 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1748,9 +2167,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.2.2",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.2.2 and Annexure II additive mapping 6.5 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1760,9 +2185,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.1.2.3",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.1.2.3 and Annexure II additive mapping 6.5 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required. Starch sweets are listed in the category tree/Annexure II; Annexure I does not give them a separate titled descriptor.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1772,9 +2203,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.2.1",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.2.1 and Annexure II additive mapping 15.1, 6.3, 6.7 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1784,9 +2221,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "18.2.2",
       "priority": "P1",
       "route": "CONDITIONAL_FPC18_DIRECTION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Check eligibility and the direction’s applicable base-food references.",
+      "sourceReviewResult": "Category 18.2.2 and Annexure II additive mapping 15.1 are source-confirmed. Paragraph 3 excludes already-standardised products mapped under categories 01–14; base-food microbiology and toxins remain required.",
+      "sourceReviewNextAction": "Determine eligibility before the directed foods-not-specified metal route. Its six source values are Lead 2.5, Copper 30, Arsenic 1.1, Tin 250, Cadmium 1.5 and Mercury 1 ppm; this is not a blanket fallback for other foods. Identify actual base foods for Appendix B and toxin/residue provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1803,6 +2246,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1813,9 +2257,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "99.1",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "This is a broad class, not one chemical or one permission. Additive use depends on food category, specified restrictions, minimum technically necessary use and the complete identity/purity specification.",
+      "sourceReviewNextAction": "Identify every additive/INS, proportion, use category and final-food level. Premix or polyol category membership alone cannot select a substance-specific CTR article, a blanket GMP permission, or a zero contaminant limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1832,6 +2282,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1842,9 +2293,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "99.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Colouring foods use aqueous, non-selective extraction and retain characteristics of fruit, vegetable, spice or herb sources. The standard has distinct liquid and powder solids/pigment minima.",
+      "sourceReviewNextAction": "Determine whether the material meets the CTR food-colouring article and its dry-colouring-matter basis. A colouring food, isolated pigment and synthetic colour premix are not interchangeable.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1854,9 +2311,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "99.1",
       "priority": "P2",
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "This is a broad class, not one chemical or one permission. Additive use depends on food category, specified restrictions, minimum technically necessary use and the complete identity/purity specification.",
+      "sourceReviewNextAction": "Identify every additive/INS, proportion, use category and final-food level. Premix or polyol category membership alone cannot select a substance-specific CTR article, a blanket GMP permission, or a zero contaminant limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1873,6 +2336,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1883,9 +2347,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "99.1",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Trehalose use is subject to GMP, excludes infant food and may not alter product standards. Loss on drying and ash have separate maxima; the provision requires labelling and disallows health claims.",
+      "sourceReviewNextAction": "GMP is not unlimited addition or a complete CTR conclusion. Confirm substance specifications, food use, current labelling and applicable contaminant provisions.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1902,6 +2372,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1919,6 +2390,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1929,9 +2401,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "99.7",
       "priority": "P3",
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
+      "sourceReviewResult": "Soluble dextrin has defined origin, polymer/linkage description, non-GM source and listed food uses. This older chapter also prints legacy fibre-claim wording.",
+      "sourceReviewNextAction": "Reconcile legacy claims with the current claims regulations before enabling a claim. GMP ingredient use and fibre content do not establish a contaminant exemption.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1948,6 +2426,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1965,6 +2444,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1982,6 +2462,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -1999,6 +2480,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
+      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
       "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. FoSCoS classification alone does not establish a numeric limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -2009,9 +2491,15 @@ window.PMSV_REVIEW_REGISTER = {
       "fcs": "14.1.1",
       "priority": "P3",
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
-      "reports": [],
+      "reports": [
+        {
+          "round": 69,
+          "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
+        }
+      ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Purified vending water is expressly separate from packaged drinking water and natural mineral water; the clause incorporates IS 10500 and excludes captive-consumption installations.",
+      "sourceReviewNextAction": "The adjacent packaged-water tables cannot be transferred to vending water. Verify the applicable IS 10500 edition/amendments and the actual vending installation.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
@@ -2025,11 +2513,12 @@ window.PMSV_REVIEW_REGISTER = {
     },
     {
       "title": "Milk-logo graphic specifications notification",
-      "source": "https://www.fssai.gov.in/food-law/notifications",
+      "source": "https://www.fssai.gov.in/docs/food-law/notice-comment/FSS%28Labelling%20and%20Display%29%20-%20Milk%20logo.pdf",
+      "sourceSha256": "a2148db8da75e68f66065510bcbd7d17e48a82256f8d58689ecec6a35d2c737b",
       "checked": "2026-11-14",
       "listed": "2026-11-06",
-      "effectiveFrom": null,
-      "status": "Official notification listing located. Original notification text and commencement still require verification; no dimensions or limits activated."
+      "effectiveFrom": "2028-07-01",
+      "status": "Original Gazette clause 1(2) and graphic table checked. The new specifications commence on 1 July 2028; no dimensions activated. Earlier milk-logo obligations require their own direction-chain review."
     }
   ]
 };

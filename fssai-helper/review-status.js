@@ -19,7 +19,8 @@
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
-    row.legalArticleDecision!=='OPEN'||typeof row.sourceReviewNextAction!=='string')return denied('Review identities or decisions are inconsistent.');
+    row.legalArticleDecision!=='OPEN'||typeof row.sourceReviewNextAction!=='string'||
+    typeof row.sourceReviewResult!=='string'||!row.sourceReviewResult.trim())return denied('Review identities or decisions are inconsistent.');
    seen.add(row.id);
    for(const report of row.reports){
     if(!report||!/^ctr-[a-z0-9-]+-r\d+-\d{4}-\d{2}-\d{2}\.md$/.test(report.file)||
