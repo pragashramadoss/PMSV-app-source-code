@@ -55,11 +55,6 @@ jobs:
           profile: pixel_6
           disable-animations: true
           script: bash android/run-native-emulator-tests.sh
-      - name: Collect screenshots
-        if: always()
-        run: |
-          mkdir -p native-qa
-          adb pull /sdcard/Android/data/com.pmsvgroup.foodsafety.nativepreview/files/qa native-qa/ || true
       - name: Package native preview
         if: success()
         run: |

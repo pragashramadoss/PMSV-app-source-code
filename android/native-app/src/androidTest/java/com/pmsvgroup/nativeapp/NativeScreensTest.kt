@@ -2,6 +2,7 @@ package com.pmsvgroup.nativeapp
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.ParcelFileDescriptor
 import androidx.compose.runtime.*
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -51,7 +52,15 @@ class NativeScreensTest {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val bitmap = instrumentation.uiAutomation.takeScreenshot()
         val folder = File(instrumentation.targetContext.getExternalFilesDir(null), "qa").apply { mkdirs() }
-        File(folder, name).outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        val file = File(folder, name)
+        file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        // Gradle uninstalls the test app before returning. Keep only these fixture
+        // screenshots outside its data directory so CI can retrieve them.
+        fun shell(command: String) {
+            ParcelFileDescriptor.AutoCloseInputStream(instrumentation.uiAutomation.executeShellCommand(command)).use { it.readBytes() }
+        }
+        shell("mkdir -p /sdcard/Download/pmsv-native-qa")
+        shell("cp ${file.absolutePath} /sdcard/Download/pmsv-native-qa/$name")
     }
     @Test fun savedContentSurvivesRepositoryRecreation() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
