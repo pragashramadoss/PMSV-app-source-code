@@ -27,6 +27,13 @@ const compare=(kind,ctx,limit,meta={})=>{
  {measured:ctx.measured,sourceLimit:limit,unit:'mg/kg',...meta});
 };
 const dup=new Set(['22:Maize','23:Rice']);
+// R71 original 2018 Gazette pp. 31, 34–36, 45: these labels differ from
+// the pinned compendium-derived names. Do not invent chemical aliases.
+const originalNameDifferences=new Map([
+ [7,'Ametroctradin'],
+ [37,'Chlothianidin (Chlothianidin and its metabolites Thiazolymethylguanidine (TMG), Thiazolymethylurea (TZMU), Methylnitroguanidine (MNG) TMG)'],
+ [46,'Cyantranilipole'],[55,'Diclosulam'],[142,'Penoxuslum']
+]);
 /** Select pesticide serial + EXACT printed food article; never use caller-supplied MRL. */
 export function pesticideBySource(core,ctx={}){
  const kind='pesticide-source',p=prelim(kind,core,ctx);if(p)return p;
@@ -37,8 +44,13 @@ export function pesticideBySource(core,ctx={}){
  const matches=e.rows.filter(x=>x.food===ctx.foodArticle);
  if(!matches.length)return hold(kind,'Exact pesticide/food article not present: no generic MRL inference');
  if(dup.has(e.serial+':'+ctx.foodArticle))
-   return hold(kind,'Duplicate conflicting limits printed: original-notification reconciliation required',
+   return hold(kind,'Duplicate article entries confirmed in the original Gazette; legal scope/LOQ reconciliation remains required',
      {competingPrintedLimits:matches.map(x=>x.mrl)});
+ if(originalNameDifferences.has(e.serial))
+   return hold(kind,'Original Gazette and stored chemical names differ; source identity reconciliation required',
+    {originalGazetteName:originalNameDifferences.get(e.serial),storedName:e.name});
+ if(e.serial===36&&ctx.foodArticle==='Other food grains')
+   return hold(kind,'Original Gazette says Food grains, not Other food grains; scope reconciliation required');
  let rows=matches;
  if(e.serial===64){
    if(ctx.subgroupIdentityVerified!==true||ctx.measuredResidueExpression!=='mg CS2/kg')
@@ -48,6 +60,9 @@ export function pesticideBySource(core,ctx={}){
  if(rows.length!==1)return hold(kind,'Ambiguous source article/subgroup; cannot choose favourable row',
     {candidateRowCount:matches.length});
  const row=rows[0];
+ if(e.serial===50&&row.condition==='Sub-entry (a) Alpha Cypermethrin'&&
+    (ctx.subentryIdentityVerified!==true||ctx.exactSourceSubentry!=='(a) Alpha Cypermethrin'))
+   return hold(kind,'The 0.05 cottonseed-oil row is Alpha Cypermethrin; exact sub-entry identity required');
  if(row.mrl==='$')return hold(kind,'Dollar token refers to copper METAL contaminants §2.1, not a numeric pesticide MRL or 0.01 fallback',
     {sourceToken:'$',sourceMetalSection:'2.1',copperArticleMustBeMatched:true});
  const text=String(row.mrl),loq=text.endsWith('*');
@@ -69,7 +84,9 @@ export function pesticideBySource(core,ctx={}){
       {sourceLimit:limit,sourceFootnote:'*'});
  return compare(kind,ctx,limit,{pesticideSerial:e.serial,pesticideName:e.name,
     sourceArticle:row.food,sourcePrintedLimit:text,sourceLOQFlag:loq,
-    sourceSubgroup:row.subgroup||null,legalArticleStillConditional:true});
+    sourceSubgroup:row.subgroup||null,
+    sourceSubentry:e.serial===50&&row.condition==='Sub-entry (a) Alpha Cypermethrin'?'(a) Alpha Cypermethrin':null,
+    legalArticleStillConditional:true});
 }
 /** Exact veterinary-drug serial and exact printed article, no numeric input from caller. */
 export function veterinaryBySource(core,ctx={}){
@@ -83,8 +100,8 @@ export function veterinaryBySource(core,ctx={}){
  const rows=e.rows.filter(x=>x.article===ctx.foodArticle);
  if(rows.length!==1)return hold(kind,'No single exact veterinary food article');
  const row=rows[0],lim=decimal(String(row.limit));
- // FSSAI Version IX pp. 41-42 has two stranded "Muscle" entries without
- // a determinable species heading. The core records them as source-locked.
+ // R71 confirms these repeated "Muscle" entries in original Gazette p. 19.
+ // No new species heading explains the repetitions. Keep the source locks.
  if(row.locked_source_alignment===true)
    return hold(kind,'Veterinary source row has unresolved species/tissue alignment; do not compare',
      {veterinarySerial:e.serial,sourceArticle:row.article});

@@ -9,6 +9,8 @@ const focusedRounds=new Set([45,46,47,48,...Array.from({length:16},(_,i)=>54+i)]
 const followup=read('ctr-remaining-source-scope-r69-2026-11-14.json');
 const gazetteFile='ctr-original-gazette-concordance-r70-2026-11-14.json';
 const gazette=read(gazetteFile);
+const residueFile='ctr-residue-gazette-concordance-r71-2026-11-14.json';
+const residue=read(residueFile);
 const followupById=new Map(followup.records.map(x=>[x.id,x]));
 assert.equal(followupById.size,70);
 const reports=new Map([...ids].map(id=>[id,[]]));
@@ -42,13 +44,19 @@ const records=register.records.map(row=>({
 }));
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-14',latestRound:70,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-14',latestRound:71,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile],records,
+ residueGazetteReview:{round:71,report:residueFile.replace(/\.json$/,'.md'),checkedOn:residue.reviewedOn,
+  pesticideRows:residue.counts.pesticideRows,veterinaryRows:residue.counts.veterinaryRows,
+  honeyRows:residue.counts.honeyRows,prohibitedClasses:residue.counts.prohibitedClasses,
+  numericMismatches:0,numericRulesChanged:false,fullCurrentLawComplete:false,productApprovals:0,
+  summary:'1,098 pesticide entries and 358 veterinary entries were compared with original Gazette tables, plus 12 honey entries and 14 prohibited substance classes. No stored numerical limit changed. Article wording, chemical names, sample basis and repeated rows retain explicit safeguards.',
+  findings:residue.findings},
  originalGazetteReview:{round:70,report: gazetteFile.replace(/\.json$/,'.md'),checkedOn:gazette.reviewedOn,
   metalRows:gazette.counts.metalRows,cropRows:gazette.counts.cropRows,
   fullCurrentLawComplete:false,numericRulesChanged:false,productApprovals:0,

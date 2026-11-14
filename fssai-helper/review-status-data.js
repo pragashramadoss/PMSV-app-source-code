@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-14",
-  "latestRound": 70,
+  "latestRound": 71,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -34,7 +34,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-sweeteners-six-source-review-r60-2026-11-05.json",
     "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.json",
     "ctr-vanilla-three-source-review-r64-2026-11-11.json",
-    "ctr-original-gazette-concordance-r70-2026-11-14.json"
+    "ctr-original-gazette-concordance-r70-2026-11-14.json",
+    "ctr-residue-gazette-concordance-r71-2026-11-14.json"
   ],
   "records": [
     {
@@ -2504,6 +2505,62 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "residueGazetteReview": {
+    "round": 71,
+    "report": "ctr-residue-gazette-concordance-r71-2026-11-14.md",
+    "checkedOn": "2026-11-14",
+    "pesticideRows": 1098,
+    "veterinaryRows": 358,
+    "honeyRows": 12,
+    "prohibitedClasses": 14,
+    "numericMismatches": 0,
+    "numericRulesChanged": false,
+    "fullCurrentLawComplete": false,
+    "productApprovals": 0,
+    "summary": "1,098 pesticide entries and 358 veterinary entries were compared with original Gazette tables, plus 12 honey entries and 14 prohibited substance classes. No stored numerical limit changed. Article wording, chemical names, sample basis and repeated rows retain explicit safeguards.",
+    "findings": [
+      {
+        "id": "duplicate-pesticide-articles",
+        "title": "Two duplicate pesticide article pairs remain held",
+        "detail": "The original page 33 itself prints Carbaryl/Maize at 0.02 within the food-grains cell and 0.5 separately. It prints Carbendazim/Rice at 2.0 within the food-grains cell and 2* separately. Equal numeric values do not erase the latter LOQ marker. No preferred row is selected."
+      },
+      {
+        "id": "chlorpyriphos-grain-scope",
+        "title": "Food-grain scope differs from the stored label",
+        "detail": "At serial 36, page 34 prints Wheat 0.5, Rice 0.5 and Food grains 0.05. The stored Other food grains label adds a qualification absent from the original. That normalized row is held pending legal article reconciliation; wheat and rice values are not reassigned."
+      },
+      {
+        "id": "alpha-cypermethrin-subentry",
+        "title": "Alpha Cypermethrin needs its own identity check",
+        "detail": "Serial 50 page 36 gives Cypermethrin cottonseed oil 0.01 and sub-entry (a) Alpha Cypermethrin cotton seed oil 0.05. Matching the spacing of a food label must not choose the higher value. The sub-entry requires verified Alpha Cypermethrin identity. Serial 5 also separately prints Alpha cypermethrin 0.05."
+      },
+      {
+        "id": "pesticide-name-variants",
+        "title": "Five chemical-name differences require reconciliation",
+        "detail": "Serials 7, 37, 46, 55 and 142 differ between original and stored names, affecting 24 rows. The evidence retains both spellings and the full metabolite wording; no authoritative chemical alias or correction is inferred."
+      },
+      {
+        "id": "repeated-veterinary-muscle",
+        "title": "Two repeated Muscle rows remain source-locked",
+        "detail": "Original page 19 repeats Muscle at the end of Amoxicillin after the Sheep block and after the Cattle block of the tetracycline group. No new species heading identifies those repetitions. The original layout does not justify inventing a missing species or dropping the duplicate."
+      },
+      {
+        "id": "milk-and-fish-scope",
+        "title": "Milk units and the narrowed fish drug label are retained",
+        "detail": "Ceftiofur, Gentamicin and Spectinomycin cattle-milk limits expressly use mg/l. Serial 7 fish is labelled Oxytetracycline in the drug column, not the entire three-drug heading. Pre-December overlap with the separate seafood clause remains held."
+      },
+      {
+        "id": "misuse-not-permission",
+        "title": "Honey and prohibited-use thresholds do not authorize treatment",
+        "detail": "The 12 honey rows match original page 18, including the two collective-group conditions. The 14 prohibited classes and their 0.001 mg/kg EMRL, with 0.0003 mg/kg for chloramphenicol, match pages 17–18. These are not permission to administer antibiotics."
+      },
+      {
+        "id": "pesticide-direction-scope",
+        "title": "Pesticide defaults remain conditional on the applicable direction",
+        "detail": "The 11 January 2021 clarification addresses the 213-table/default scope for agricultural commodities and physically processed foods. The 8 April 2024 spice/herb order supersedes both 2022 orders and has specific FSSAI/Codex/registration branches. Neither becomes a blanket processed-food exemption or automatic 0.01/0.1 mg/kg rule."
+      }
+    ]
+  },
   "originalGazetteReview": {
     "round": 70,
     "report": "ctr-original-gazette-concordance-r70-2026-11-14.md",

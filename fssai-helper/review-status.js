@@ -44,6 +44,20 @@
     return denied('Future amendment scope is inconsistent.');
    changes.add(change.id);
   }
+  const residue=data.residueGazetteReview;
+  if(!residue||residue.round!==71||residue.checkedOn!==data.checkpointDate||
+    residue.report!=='ctr-residue-gazette-concordance-r71-2026-11-14.md'||
+    residue.pesticideRows!==1098||residue.veterinaryRows!==358||residue.honeyRows!==12||residue.prohibitedClasses!==14||
+    residue.numericMismatches!==0||residue.numericRulesChanged!==false||residue.fullCurrentLawComplete!==false||
+    residue.productApprovals!==0||typeof residue.summary!=='string'||!residue.summary.trim()||
+    !Array.isArray(residue.findings)||residue.findings.length!==8)return denied('Residue source evidence is incomplete.');
+  const findings=new Set();
+  for(const finding of residue.findings){
+   if(!finding||typeof finding.id!=='string'||!finding.id.trim()||findings.has(finding.id)||
+     typeof finding.title!=='string'||!finding.title.trim()||typeof finding.detail!=='string'||!finding.detail.trim())
+    return denied('Residue source findings are inconsistent.');
+   findings.add(finding.id);
+  }
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}

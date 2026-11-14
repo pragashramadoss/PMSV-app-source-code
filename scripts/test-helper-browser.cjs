@@ -51,6 +51,13 @@ let browser;
  const sourceReport=await page.request.get(base+data.originalGazetteReview.report);
  assert.equal(sourceReport.status(),200);
  assert.match(await sourceReport.text(),/382 metal-table entries and 27 crop-contaminant entries/);
+ assert.match(await page.locator('#residueReviewSummary').textContent(),/1,098 pesticide entries and 358 veterinary entries/);
+ assert.equal(data.residueGazetteReview.findings.length,8,'Export must retain residue-source findings.');
+ await page.locator('#residueReviewSummary summary').click();
+ assert.equal(await page.locator('#residueReviewSummary li').count(),8);
+ const residueReport=await page.request.get(base+data.residueGazetteReview.report);
+ assert.equal(residueReport.status(),200);
+ assert.match(await residueReport.text(),/137 product-specific CTR decisions remain open/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -69,6 +76,7 @@ let browser;
   // Sticky page navigation can overlay the middle of a tall element-only capture.
   // Keep normal viewport screenshots above; hide navigation only for this crop.
   if(width===390||width===1440)await page.locator('#gazetteReviewSummary').screenshot({path:path.join(artifacts,'original-gazette-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+  if(width===390||width===1440)await page.locator('#residueReviewSummary').screenshot({path:path.join(artifacts,'residue-sources-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
  }
  await page.goto(base+'#%E0%A4%A',{waitUntil:'networkidle'});
  await page.locator('#overview').waitFor({state:'visible'});
@@ -86,7 +94,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

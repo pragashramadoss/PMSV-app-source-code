@@ -70,3 +70,13 @@ The subsequent [R70 original-Gazette reconciliation](ctr-original-gazette-concor
 The 14 Ayurveda ingredient CTR source gaps, recipe 14.6/14.7 clarification, recorded numerical-source ambiguities, current IS 10500 reconciliation, legacy dextrin claim wording and any outstanding original-Gazette/cross-regulatory checks remain visible. No full all-533 legal certification, product PASS or commercial lot release is claimed.
 
 Native Android/PWA push delivery and production integration remain untested in this pass. PR #2 stays draft and unmerged.
+
+## R71 residue-source follow-up
+
+[R71](ctr-residue-gazette-concordance-r71-2026-11-14.md) compares **1,098 pesticide entries, 358 veterinary entries, 12 honey entries and 14 prohibited substance classes** with the original 2018 and 2024 notifications. The pesticide count includes 27 nonnumeric copper pointers. All numerical literals and LOQ markers agree; no core threshold changed. Original cells, headings, symbols, page references and source hashes are preserved in the accompanying JSON.
+
+The draft source-comparison module now holds the Chlorpyriphos grain-label discrepancy and five chemical-name discrepancies affecting 24 rows. It requires an explicit Alpha Cypermethrin sub-entry check before using that cottonseed-oil value. Existing duplicate pesticide, repeated veterinary Muscle, seafood-overlap, units, method and misuse-testing guards remain. The review page and export include eight source findings and a link to the full comparison.
+
+**49/49 current audit checks passed locally**, including the new one-to-one source reconciliation and negative guard tests. The draft PR records the current Helper CI run and browser screenshots for the final revision. The earlier 1,265 integration-test result above belongs to its stated revision; R71 leaves the legacy preview core and consumers unchanged.
+
+The original 2021 pesticide-scope clarification and the 2024 spice/herb order were retrieved and visually checked. Neither is applied as an unconditional pesticide default or a blanket processed-food exemption. All 137 product-specific CTR decisions and the earlier Ayurveda/legal-completeness questions remain open.
