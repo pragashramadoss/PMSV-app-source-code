@@ -7,7 +7,10 @@ import tailwind from '@tailwindcss/postcss';
 const here=path.dirname(fileURLToPath(import.meta.url));const root=path.resolve(here,'..');const out=path.join(here,'www');
 await build(mergeConfig(wp,{
  root:here,base:'/',css:{postcss:{plugins:[tailwind({base:root})]}},
- plugins:[{name:'pmsv-native-notifications',enforce:'pre',resolveId(source,importer){if(source==='./app-notifications'&&importer?.replaceAll('\\','/').startsWith(root.replaceAll('\\','/')+'/app/'))return path.join(here,'shared/notifications.tsx');}}],
+ plugins:[{name:'pmsv-native-notifications',enforce:'pre',resolveId(source,importer){if(source==='./app-notifications'&&importer?.replaceAll('\\','/').startsWith(root.replaceAll('\\','/')+'/app/'))return path.join(here,'shared/notifications.tsx');},transform(code,id){
+   // Packaged WebKit needs the actual bundled file, not a server directory redirect.
+   if(id.replaceAll('\\','/').startsWith(root.replaceAll('\\','/')+'/app/')&&id.endsWith('.tsx'))return code.replace(/(['"])\/fssai-license\1/g,'"/fssai-license/index.html"');
+ }}],
  build:{outDir:out,emptyOutDir:true,manifest:true,rollupOptions:{input:{app:path.join(here,'index.html'),runtime:path.join(here,'shared/runtime.ts')},output:{entryFileNames:'native/[name].js',chunkFileNames:'native/[name]-[hash].js',assetFileNames:'native/[name]-[hash][extname]'}}}
 }));
 await cp(path.join(root,'wordpress/plugin/public'),out,{recursive:true});

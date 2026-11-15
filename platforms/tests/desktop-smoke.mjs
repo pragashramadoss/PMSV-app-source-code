@@ -12,6 +12,9 @@ try{
  await expect(hiddenHint).toHaveCSS('position','absolute');
  await expect(hiddenHint).toHaveCSS('width','1px');
  await page.screenshot({path:'test-results/home.png'});
+ await page.locator('.primary-nav a').filter({hasText:'FSSAI Licence'}).click();
+ await expect(page).toHaveURL('pmsv://app/fssai-license/index.html');
+ await expect(page.getByRole('heading',{name:'Find the right FSSAI licence',exact:true})).toBeVisible();
  await page.goto('pmsv://app/audits/general-manufacturing.html');
  const sidebarRight=await page.locator('.platform-sidebar').evaluate(el=>el.getBoundingClientRect().right);
  const formLeft=await page.locator('.meta').evaluate(el=>el.getBoundingClientRect().left);

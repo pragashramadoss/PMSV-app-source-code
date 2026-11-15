@@ -70,7 +70,8 @@ async function saveReport(url:string,name:string) {
   }
 }
 document.addEventListener('click',event=>{
-  const a=(event.target as Element)?.closest?.('a');if(!a)return;
+  const target=event.target instanceof Element?event.target:event.target instanceof Node?event.target.parentElement:null;
+  const a=target?.closest('a');if(!a)return;
   if(a.href.startsWith('blob:')||a.href.startsWith('data:')){event.preventDefault();void saveReport(a.href,a.download).catch(e=>alert(e.message));return;}
   let u:URL;try{u=new URL(a.href)}catch{return;}
   if(u.origin===location.origin&&/^\/fssai-license\/?$/.test(u.pathname)){event.preventDefault();location.href='/fssai-license/index.html';return;}
