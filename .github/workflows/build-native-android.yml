@@ -35,7 +35,7 @@ jobs:
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Build native APK and run checks
         working-directory: android
-        run: gradle --no-daemon :native-app:assembleDebug :native-app:assembleRelease :native-app:testDebugUnitTest :native-app:lint :native-app:assembleDebugAndroidTest
+        run: gradle --no-daemon :native-app:assembleDebug :native-app:assembleRelease :native-app:testDebugUnitTest :native-app:lint :native-app:assembleDebugAndroidTest :play-app:assembleDebug :play-app:assembleRelease :play-app:bundleRelease :play-app:testDebugUnitTest :play-app:lint :play-app:assembleDebugAndroidTest
       - name: Verify native package has no TWA launcher
         run: |
           APK=android/native-app/build/outputs/apk/debug/native-app-debug.apk
@@ -46,6 +46,13 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk > /tmp/release-badging.txt
           grep -q "name='com.pmsvgroup.foodsafety.preview'" /tmp/release-badging.txt
           ! grep -q 'application-debuggable' /tmp/release-badging.txt
+          PLAY=android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$PLAY" > /tmp/play-badging.txt
+          grep -q "name='com.pmsvgroup.foodsafety'" /tmp/play-badging.txt
+          grep -q "versionCode='11'" /tmp/play-badging.txt
+          grep -q 'com.pmsvgroup.nativeapp.MainActivity' /tmp/play-badging.txt
+          ! grep -qE 'application-debuggable|PmsvLauncherActivity' /tmp/play-badging.txt
+          test -s android/play-app/build/outputs/bundle/release/play-app-release.aab
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -60,21 +67,25 @@ jobs:
           profile: pixel_6
           disable-animations: true
           script: bash android/run-native-emulator-tests.sh
-      - name: Package native preview
+      - name: Package Android release
         if: success()
         run: |
           mkdir -p native-release
-          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk native-release/PMSV-Preview-2.0.5-unsigned.apk
-          cp android/NATIVE-README.md native-release/README.md
+          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk native-release/PMSV-2.1.0-Website-unsigned.apk
+          cp android/play-app/build/outputs/bundle/release/play-app-release.aab native-release/PMSV-2.1.0-Play-unsigned.aab
+          cp android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk native-release/PMSV-2.1.0-Play-unsigned.apk
+          cp android/README-PLAYSTORE.md native-release/README.md
           cp -R native-qa native-release/
-          sha256sum native-release/PMSV-Preview-2.0.5-unsigned.apk > native-release/SHA256SUMS
+          sha256sum native-release/*.apk native-release/*.aab > native-release/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PMSV-Native-Preview-and-Test-Results
+          name: PMSV-Android-2.1.0-and-Test-Results
           path: |
             native-release/
             native-qa/
             android/native-app/build/reports/
             android/native-app/build/outputs/androidTest-results/
+            android/play-app/build/reports/
+            android/play-app/build/outputs/androidTest-results/
           retention-days: 30

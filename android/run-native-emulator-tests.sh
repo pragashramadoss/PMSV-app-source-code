@@ -2,6 +2,10 @@
 set +e
 gradle -p android --no-daemon :native-app:connectedDebugAndroidTest
 test_status=$?
+if [ "$test_status" -eq 0 ]; then
+  gradle -p android --no-daemon :play-app:connectedDebugAndroidTest
+  test_status=$?
+fi
 mkdir -p native-qa
 adb pull /sdcard/Download/pmsv-native-qa native-qa/
 if [ "$test_status" -eq 0 ]; then
@@ -19,6 +23,16 @@ if [ "$test_status" -eq 0 ]; then
   adb shell screencap -p /sdcard/pmsv-release.png &&
   adb pull /sdcard/pmsv-release.png native-qa/release-home.png
   test_status=$?
+  if [ "$test_status" -eq 0 ]; then
+    "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks /tmp/pmsv-ci-release.p12 --ks-pass pass:android --key-pass pass:android --out /tmp/pmsv-play-test.apk android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk &&
+    adb install /tmp/pmsv-play-test.apk &&
+    adb install -r /tmp/pmsv-play-test.apk &&
+    adb shell am start -W -n com.pmsvgroup.foodsafety/com.pmsvgroup.nativeapp.MainActivity &&
+    adb shell uiautomator dump /sdcard/pmsv-play-release.xml &&
+    adb pull /sdcard/pmsv-play-release.xml native-qa/play-release-launch.xml &&
+    grep -q 'Welcome to the Forum' native-qa/play-release-launch.xml
+    test_status=$?
+  fi
 fi
 if [ "$test_status" -ne 0 ]; then
   adb logcat -d -t 1000 > native-qa/emulator-logcat.txt

@@ -34,27 +34,25 @@ jobs:
         with:
           gradle-version: '8.13'
 
-      - name: Validate compiled website trust statement
-        run: python3 android/verify-asset-statements.py "$ANDROID_HOME/build-tools/35.0.0/aapt2"
-
       - name: Build unsigned release AAB
         working-directory: android
-        run: gradle --no-daemon :app:bundleRelease
+        run: gradle --no-daemon :play-app:bundleRelease :play-app:testDebugUnitTest :play-app:lint
 
       - name: Verify bundle and merged manifest
         run: |
-          test -s android/app/build/outputs/bundle/release/app-release.aab
-          unzip -l android/app/build/outputs/bundle/release/app-release.aab | grep -q 'base/manifest/AndroidManifest.xml'
-          MERGED="$(find android/app/build/intermediates -path '*release*' -name AndroidManifest.xml | head -n 1)"
+          test -s android/play-app/build/outputs/bundle/release/play-app-release.aab
+          unzip -l android/play-app/build/outputs/bundle/release/play-app-release.aab | grep -q 'base/manifest/AndroidManifest.xml'
+          MERGED="$(find android/play-app/build/intermediates -path '*release*' -name AndroidManifest.xml | head -n 1)"
           test -n "$MERGED"
           grep -q 'android.permission.POST_NOTIFICATIONS' "$MERGED"
-          grep -q 'com.pmsvgroup.foodsafety.PmsvLauncherActivity' "$MERGED"
-          grep -q 'com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity' "$MERGED"
+          grep -q 'com.pmsvgroup.nativeapp.MainActivity' "$MERGED"
+          ! grep -q 'com.google.androidbrowserhelper' "$MERGED"
+          grep -q 'com.pmsvgroup.foodsafety' "$MERGED"
 
       - name: Upload unsigned AAB
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Android-unsigned-v1.0.3
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          name: PMSV-Play-unsigned-v2.1.0
+          path: android/play-app/build/outputs/bundle/release/play-app-release.aab
           if-no-files-found: error
           retention-days: 14

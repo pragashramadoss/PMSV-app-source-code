@@ -1,4 +1,4 @@
-# PMSV native Android preview
+# PMSV native Android app
 
 This module is a Kotlin / Jetpack Compose Android app. Home, news and regulatory
 feeds, search, update details, bookmarks, sharing, settings and notification
@@ -27,8 +27,8 @@ selected native tab. App-scoped presentation CSS removes duplicate web navigatio
 and normalizes the helper header; the website and form calculations are unchanged.
 Tapping the current section or opening notifications preserves the active form.
 
-The distributed preview installs as `com.pmsvgroup.foodsafety.preview`, labelled
-PMSV Preview. CI debug builds have a `.debug` suffix. The first 2.0.0 preview used
+The website distribution installs as `com.pmsvgroup.foodsafety.preview`, labelled
+PMSV. CI debug builds have a `.debug` suffix. The first 2.0.0 preview used
 an ephemeral CI debug signing key, which was not retained; Android cannot update
 that package with a different key. This new identity preserves all existing apps
 and their local records. Keep the old apps for existing saved audits/bookmarks.
@@ -36,8 +36,9 @@ CI outputs an UNSIGNED release APK, not an installer. Distribution must sign it
 with the persistent private PMSV preview key backed up separately in the owner's
 private files. Never publish that key, password or a debug-signed distributable.
 Future updates must keep both this package ID and signing key and increase the
-version code. This is a preview, not a production Play update.
-The existing `:app` module and live WordPress plugin are unchanged.
+version code. The `:play-app` module compiles the same source for the existing Play package.
+See README-PLAYSTORE.md for the two signing identities and release instructions.
+The legacy `:app` TWA module is retained for history only.
 
 ## Content and GitHub
 
@@ -97,10 +98,10 @@ still require connectivity. Tool definitions update with a signed app release.
   sharing, saved-audit migration, and native audit/licence forms are release work.
   No Firebase configuration has been supplied or fabricated. No push registration
   is taken away from the existing working app.
-- Before production: configure the user's Firebase project/client and server
-  delivery, verify offline data migration and report sharing, use the existing
-  production package identity/upload key, update Play privacy disclosures, and
-  verify a Play-signed build on the user's Android phone.
+- Release 2.1.0 keeps periodic news alerts, local saves and the bundled form
+  renderer. Instant FCM, browser-record import and report attachment sharing
+  remain future work. The Play variant uses the existing production identity
+  and upload key. A Play-signed install still needs verification after upload.
 
 ## Build and validation
 
