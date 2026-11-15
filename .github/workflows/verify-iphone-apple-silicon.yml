@@ -1,0 +1,84 @@
+name: Verify PMSV iPhone on Apple Silicon
+on:
+  push:
+    branches: [release/complete-platforms-20261115]
+    paths:
+      - 'platforms/**'
+      - '.github/workflows/verify-iphone-apple-silicon.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pmsv-iphone-apple-silicon-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  iphone:
+    name: iPhone archive and simulator tests
+    runs-on: macos-26
+    timeout-minutes: 40
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - run: npm ci --no-audit --no-fund && npm ci --prefix platforms --no-audit --no-fund
+      - run: npm run --prefix platforms build:web
+      - run: npx cap sync ios
+        working-directory: platforms
+      - run: brew install xcodegen
+      - run: xcodegen generate
+        working-directory: platforms/ios/App
+      - name: Build iPhone archive
+        working-directory: platforms/ios/App
+        run: |
+          set -o pipefail
+          xcodebuild -project App.xcodeproj -scheme App -configuration Release -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/PMSV-2.2.0.xcarchive" CODE_SIGNING_ALLOWED=NO archive > "$RUNNER_TEMP/iphone-build.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-build.log"; exit 1; }
+      - name: Build simulator app and test runner
+        working-directory: platforms/ios/App
+        run: |
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath "$RUNNER_TEMP/PMSVDerived" CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES build-for-testing > "$RUNNER_TEMP/iphone-simulator-build.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-simulator-build.log"; exit 1; }
+      - name: Test bundled tools in iPhone simulator
+        timeout-minutes: 15
+        working-directory: platforms/ios/App
+        run: |
+          set -euo pipefail
+          device=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for runtime,devices in d["devices"].items() if runtime.endswith("iOS-26-2") for x in devices if x["name"].startswith("iPhone")))')
+          xcrun simctl boot "$device" || true
+          xcrun simctl bootstatus "$device" -b
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination "id=$device" -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 360 -derivedDataPath "$RUNNER_TEMP/PMSVDerived" -resultBundlePath "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES test-without-building > "$RUNNER_TEMP/iphone-test.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-test.log"; exit 1; }
+      - name: Prepare signing handoff and simulator bundles
+        working-directory: platforms
+        run: |
+          set -euo pipefail
+          mkdir -p release handoff/PMSV-iPhone-2.2.0
+          ditto "$RUNNER_TEMP/PMSV-2.2.0.xcarchive" handoff/PMSV-iPhone-2.2.0/PMSV-2.2.0.xcarchive
+          ditto ios handoff/PMSV-iPhone-2.2.0/ios
+          cp README.md SIGNING.md handoff/PMSV-iPhone-2.2.0/
+          mkdir -p handoff/PMSV-iPhone-2.2.0/scripts
+          cp scripts/sign-ios.sh handoff/PMSV-iPhone-2.2.0/scripts/
+          cp package.json package-lock.json capacitor.config.json handoff/PMSV-iPhone-2.2.0/
+          ditto -c -k --keepParent handoff/PMSV-iPhone-2.2.0 release/PMSV-2.2.0-iPhone-Signing-Package.zip
+          ditto -c -k --keepParent "$RUNNER_TEMP/PMSVDerived/Build/Products/Debug-iphonesimulator/PMSV.app" release/PMSV-2.2.0-iPhone-Simulator.zip
+          node scripts/checksums.mjs release
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: PMSV-2.2.0-iPhone-Tested-Signing-Package
+          path: platforms/release/
+          compression-level: 0
+          retention-days: 30
+      - name: Export iPhone screenshots
+        if: always()
+        run: |
+          mkdir -p platforms/test-results
+          cp "$RUNNER_TEMP"/iphone-*.log platforms/test-results/ || true
+          if [ -d "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" ]; then xcrun xcresulttool export attachments --path "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" --output-path platforms/test-results/attachments || true; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: PMSV-QA-iPhone
+          path: platforms/test-results/
+          retention-days: 14
+
