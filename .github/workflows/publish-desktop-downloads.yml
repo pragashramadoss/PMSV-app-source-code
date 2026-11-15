@@ -41,9 +41,9 @@ jobs:
           python3 - <<'PY'
           import hashlib, pathlib, zipfile
           specs=[
-            ('windows.zip','PMSV-2.2.0-Windows-x64-Preview.exe',121955578,'0648a3bd72020468bc83865da1a02f71665b58a0712e7cfd18e26fdf93f193c1'),
-            ('arm64.zip','PMSV-2.2.0-Mac-arm64-Preview.dmg',120520776,'ce040c83cf18705082cbe3b9961b2a37714b5768e2351d7d4b31a4678b257c58'),
-            ('intel.zip','PMSV-2.2.0-Mac-x64-Preview.dmg',127754991,'72b1cc52c6c7a25ce300b868ccc8b78fdffc0b60ff00935aac3cd63015c5ce43')]
+            ('windows.zip','PMSV-2.2.0-Windows-x64-Preview.exe',121955872,'3ef9e8ae33fd5de1fb6249eeca142c756a36abbcad20aaa7e4fb4db2dbbe1d47'),
+            ('arm64.zip','PMSV-2.2.0-Mac-arm64-Preview.dmg',120519855,'acabca532aae1cee7a42e2baebd9ad1ba5c006465d41014a00b480f49d05656e'),
+            ('intel.zip','PMSV-2.2.0-Mac-x64-Preview.dmg',127755162,'a4b6ed77e1d5cdc9de34b27d491250039ba00baed65531634d2361d9b5294e62')]
           sums=[]
           for archive,name,size,digest in specs:
               with zipfile.ZipFile(archive) as z:
