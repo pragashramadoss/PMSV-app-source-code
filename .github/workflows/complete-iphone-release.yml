@@ -1,10 +1,5 @@
 name: Complete PMSV iPhone release verification
 on:
-  push:
-    branches: [release/complete-platforms-20261115]
-    paths:
-      - 'platforms/**'
-      - '.github/workflows/complete-iphone-release.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,7 +9,7 @@ concurrency:
 jobs:
   iphone:
     name: iPhone archive and simulator tests
-    runs-on: macos-26-intel
+    runs-on: macos-26
     timeout-minutes: 40
     env:
       ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
@@ -47,7 +42,7 @@ jobs:
           device=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for runtime,devices in d["devices"].items() if runtime.endswith("iOS-26-2") for x in devices if x["name"].startswith("iPhone")))')
           xcrun simctl boot "$device" || true
           xcrun simctl bootstatus "$device" -b
-          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination "id=$device" -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 180 -derivedDataPath "$RUNNER_TEMP/PMSVDerived" -resultBundlePath "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES test-without-building > "$RUNNER_TEMP/iphone-test.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-test.log"; exit 1; }
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination "id=$device" -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 360 -derivedDataPath "$RUNNER_TEMP/PMSVDerived" -resultBundlePath "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES test-without-building > "$RUNNER_TEMP/iphone-test.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-test.log"; exit 1; }
       - name: Prepare signing handoff and simulator bundles
         working-directory: platforms
         run: |

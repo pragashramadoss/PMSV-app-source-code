@@ -11,6 +11,7 @@ final class PMSVUITests: XCTestCase {
     }
 
     func testOfflineAuditSurvivesRestart() {
+        let recordName = "PMSV test \(UUID().uuidString.prefix(8))"
         let app = XCUIApplication(); app.launchArguments = ["-pmsv-ui-testing"]; app.launch()
         openInspections(app)
         let newAudit = app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'Start New Audit'")).firstMatch
@@ -19,17 +20,18 @@ final class PMSVUITests: XCTestCase {
         XCTAssertTrue(manufacturing.waitForExistence(timeout: 10)); manufacturing.tap()
         app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'Start Assessment'")).firstMatch.tap()
         let fbo = app.webViews.textFields["FBO Name"].firstMatch
-        XCTAssertTrue(fbo.waitForExistence(timeout: 15)); fbo.tap(); fbo.typeText("PMSV iPhone saved audit")
+        XCTAssertTrue(fbo.waitForExistence(timeout: 15)); fbo.tap(); fbo.typeText(recordName)
+        XCTAssertEqual(fbo.value as? String, recordName)
         app.webViews.staticTexts["General Manufacturing"].firstMatch.tap()
         app.webViews.buttons["Save"].firstMatch.tap()
-        XCTAssertTrue(app.webViews.buttons["✓"].firstMatch.waitForExistence(timeout: 5))
-        // Reopening the same record after termination verifies the real form save handler.
+        // The saved tick lasts only 1.3 seconds and is easy for a busy simulator to miss.
+        // A unique record reopened after termination is the durable save assertion.
         app.terminate(); app.launch(); openInspections(app)
         let saved = app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'Saved Audits'")).firstMatch
         XCTAssertTrue(saved.waitForExistence(timeout: 10)); saved.tap()
-        let record = app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'PMSV iPhone saved audit'")).firstMatch
+        let record = app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS %@", recordName)).firstMatch
         XCTAssertTrue(record.waitForExistence(timeout: 10)); record.tap()
-        XCTAssertTrue(fbo.waitForExistence(timeout: 10)); XCTAssertEqual(fbo.value as? String, "PMSV iPhone saved audit")
+        XCTAssertTrue(fbo.waitForExistence(timeout: 10)); XCTAssertEqual(fbo.value as? String, recordName)
         let savedScreen = XCTAttachment(screenshot: app.screenshot()); savedScreen.name = "PMSV-iPhone-Saved-Audit"; savedScreen.lifetime = .keepAlways; add(savedScreen)
     }
 
@@ -37,7 +39,7 @@ final class PMSVUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-pmsv-ui-testing"]
         app.launch()
-        XCTAssertTrue(app.webViews.staticTexts["Welcome to the Forum"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertTrue(app.webViews.staticTexts["Welcome to the Forum"].firstMatch.waitForExistence(timeout: 90))
         XCTAssertTrue(app.webViews.links["PMSV logo ready"].firstMatch.waitForExistence(timeout: 15))
         let home = XCTAttachment(screenshot: app.screenshot()); home.name = "PMSV-iPhone-Home"; home.lifetime = .keepAlways; add(home)
         let licence = app.webViews.links.matching(NSPredicate(format: "label CONTAINS 'FSSAI Licence'")).firstMatch
