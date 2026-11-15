@@ -28,6 +28,14 @@ function pmsv_wp_install() {
 // Editorial exclusions: user-confirmed off-topic reports (12–13 October 2026).
 // Keep the stored row for recovery, but never expose or reinsert this story.
 function pmsv_wp_news_excluded($n) {
+    // CQI/IRCA is an English feed. Hide legacy Japan entries without deleting history.
+    if(preg_match('/^(?:CQI|IRCA)/i',(string)($n['source']??''))){
+        $host=strtolower((string)wp_parse_url((string)($n['url']??''),PHP_URL_HOST));
+        $title=(string)($n['title']??'');
+        if(!in_array($host,['quality.org','www.quality.org'],true)
+            || preg_match('/[\\x{3040}-\\x{30ff}\\x{3400}-\\x{9fff}\\x{ff65}-\\x{ff9f}]/u',$title)
+            || !preg_match('/[A-Za-z]{3}/',$title))return true;
+    }
     $u=wp_parse_url((string)($n['url']??''));
     if(!is_array($u))return false;
     $host=strtolower((string)($u['host']??''));
