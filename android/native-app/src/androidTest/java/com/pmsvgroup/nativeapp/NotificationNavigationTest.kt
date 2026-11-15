@@ -1,6 +1,7 @@
 package com.pmsvgroup.nativeapp
 
 import android.Manifest
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
 import android.app.NotificationManager
 import android.app.Notification
@@ -114,21 +115,40 @@ class NotificationNavigationTest {
 
     private fun captureNotification() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val automation = instrumentation.uiAutomation
+        val originalInfo = automation.serviceInfo
         fun shell(command: String) {
             ParcelFileDescriptor.AutoCloseInputStream(instrumentation.uiAutomation.executeShellCommand(command)).use { it.readBytes() }
         }
-        try {
-            shell("cmd statusbar expand-notifications")
-            compose.waitUntil(5000) {
-                instrumentation.uiAutomation.rootInActiveWindow?.findAccessibilityNodeInfosByText("News · ${displayDate(newsDate)}")?.isNotEmpty() == true
-            }
-            instrumentation.uiAutomation.waitForIdle(500, 5000)
+        fun capture() {
             val file = File(instrumentation.targetContext.getExternalFilesDir(null), "qa/native-news-notification.png")
             file.parentFile!!.mkdirs()
-            file.outputStream().use { instrumentation.uiAutomation.takeScreenshot().compress(Bitmap.CompressFormat.PNG, 100, it) }
+            file.outputStream().use { automation.takeScreenshot().compress(Bitmap.CompressFormat.PNG, 100, it) }
             shell("mkdir -p /sdcard/Download/pmsv-native-qa")
             shell("cp ${file.absolutePath} /sdcard/Download/pmsv-native-qa/${file.name}")
-        } finally { shell("cmd statusbar collapse") }
+        }
+        try {
+            // System UI is a separate interactive window; the active app root is
+            // not a reliable way to find notification text during shade expansion.
+            automation.serviceInfo = automation.serviceInfo.apply {
+                flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+            }
+            shell("cmd statusbar expand-notifications")
+            try {
+                compose.waitUntil(15000) {
+                    automation.windows.any { window ->
+                        window.root?.findAccessibilityNodeInfosByText("News · ${displayDate(newsDate)}")?.isNotEmpty() == true
+                    }
+                }
+                automation.waitForIdle(500, 5000)
+            } finally {
+                // Preserve visual evidence even if the accessibility assertion fails.
+                capture()
+            }
+        } finally {
+            shell("cmd statusbar collapse")
+            automation.serviceInfo = originalInfo
+        }
     }
     @Test fun currentScreenSurvivesActivityRecreation() {
         compose.onNodeWithContentDescription("More options").performClick()
