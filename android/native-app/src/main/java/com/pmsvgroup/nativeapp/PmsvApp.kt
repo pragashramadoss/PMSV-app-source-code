@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import java.text.DateFormat
 import java.time.LocalDate
@@ -257,8 +258,8 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
                     Image(painterResource(R.drawable.pmsv_logo), null, Modifier.size(50.dp))
                     Column(Modifier.weight(1f).padding(end = 4.dp)) {
-                        Text("PMSV", fontSize = 19.sp, lineHeight = 23.sp, letterSpacing = (-0.5).sp, fontWeight = FontWeight.ExtraBold)
-                        Text("Food Safety & Quality Forum", fontSize = 12.sp, lineHeight = 16.sp, fontWeight = FontWeight.Medium)
+                        Text("PMSV", modifier = Modifier.fillMaxWidth(), fontSize = 19.sp, lineHeight = 1.25.em, letterSpacing = (-0.5).sp, fontWeight = FontWeight.ExtraBold)
+                        Text("Food Safety & Quality Forum", modifier = Modifier.fillMaxWidth(), fontSize = 12.sp, lineHeight = 1.35.em, fontWeight = FontWeight.Medium)
                     }
                 }
                 OutlinedIconButton(onClick = onNotifications, modifier = Modifier.size(40.dp), shape = RoundedCornerShape(10.dp), border = BorderStroke(1.dp, Color(0xFFDCE4F7)),
@@ -306,14 +307,14 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                         .semantics { contentDescription = "Navigate to ${destination.title}" }
                         .fillMaxHeight().heightIn(min = 60.dp).padding(horizontal = 1.dp, vertical = 7.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
                         Icon(destination.icon, null, tint = if (selected) Blue else Color(0xFF8591A6), modifier = Modifier.size(20.dp))
-                        Text(destination.title, fontSize = 11.sp, lineHeight = 14.sp, fontWeight = FontWeight.Bold, color = if (selected) Blue else Color(0xFF8591A6), textAlign = TextAlign.Center)
+                        Text(destination.title, modifier = Modifier.fillMaxWidth(), fontSize = 11.sp, lineHeight = 1.3.em, fontWeight = FontWeight.Bold, color = if (selected) Blue else Color(0xFF8591A6), textAlign = TextAlign.Center)
                     }
                 }
             }
         }
     }
 }
-@Composable private fun PageTitle(text: String) { Text(text, style = MaterialTheme.typography.titleLarge) }
+@Composable private fun PageTitle(text: String) { Text(text, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, lineHeight = 1.3.em) }
 @Composable private fun Breadcrumb(title: String, back: () -> Unit, description: String = "Back", modifier: Modifier = Modifier, inset: Boolean = true) {
     Row(modifier.then(if (inset) Modifier.padding(horizontal = 18.dp, vertical = 6.dp) else Modifier), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = back, modifier = Modifier.size(36.dp)) { Icon(Icons.AutoMirrored.Outlined.ArrowBack, description, tint = Blue, modifier = Modifier.size(20.dp)) }
@@ -350,7 +351,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                 colors = CardDefaults.outlinedCardColors(containerColor = Color.White), border = BorderStroke(1.dp, Line)) {
                 Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Icon(entry.icon, null, tint = entry.tint, modifier = Modifier.size(21.dp))
-                    Text(if (entry.id == "licence") "FSSAI\nLicence" else entry.title, fontSize = 13.sp, lineHeight = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(if (entry.id == "licence") "FSSAI\nLicence" else entry.title, modifier = Modifier.fillMaxWidth(), fontSize = 13.sp, lineHeight = 1.25.em, fontWeight = FontWeight.Bold)
                 }
             }
         }

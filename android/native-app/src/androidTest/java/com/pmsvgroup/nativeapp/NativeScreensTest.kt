@@ -104,17 +104,17 @@ class NativeScreensTest {
         val frame = compose.onNodeWithTag("screen-frame").fetchSemanticsNode().boundsInRoot
         val header = compose.onNodeWithTag("pmsv-header").fetchSemanticsNode().boundsInRoot
         val footer = compose.onNodeWithTag("pmsv-navigation").fetchSemanticsNode().boundsInRoot
+        capture("native-home-large-text.png")
         listOf("PMSV", "Food Safety & Quality Forum", "Welcome to the Forum", "Updates/News", "Audits", "FSSAI Licence", "Blogs", "Discussions").forEach { label ->
             compose.onAllNodesWithText(label, useUnmergedTree = true).fetchSemanticsNodes().forEach { node ->
                 org.junit.Assert.assertTrue("$label stays inside the screen", node.boundsInRoot.left >= frame.left && node.boundsInRoot.right <= frame.right)
                 val layouts = mutableListOf<TextLayoutResult>()
                 node.config.getOrNull(SemanticsActions.GetTextLayoutResult)?.action?.invoke(layouts)
-                org.junit.Assert.assertTrue("$label is readable without clipping", layouts.all { !it.hasVisualOverflow })
+                org.junit.Assert.assertTrue("$label is readable without clipping: ${layouts.map { "size=${it.size}, paragraph=${it.multiParagraph.width}x${it.multiParagraph.height}, widthOverflow=${it.didOverflowWidth}, heightOverflow=${it.didOverflowHeight}" }}", layouts.all { !it.hasVisualOverflow })
             }
         }
         val search = compose.onNodeWithTag("pmsv-search").fetchSemanticsNode().boundsInRoot
         org.junit.Assert.assertTrue("Content fits between the shared bars", search.top >= header.bottom && search.bottom < footer.top)
-        capture("native-home-large-text.png")
         compose.onNodeWithContentDescription("Navigate to Blogs").performClick()
         compose.onNodeWithText("Practical food safety lessons").assertIsDisplayed()
         compose.onNodeWithContentDescription("PMSV home").performClick()
