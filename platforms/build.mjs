@@ -3,9 +3,10 @@ import {cp,mkdir,readFile,writeFile,readdir,rm} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import wp from '../wordpress/vite.config.mjs';
+import tailwind from '@tailwindcss/postcss';
 const here=path.dirname(fileURLToPath(import.meta.url));const root=path.resolve(here,'..');const out=path.join(here,'www');
 await build(mergeConfig(wp,{
- root:here,base:'/',css:{postcss:root},
+ root:here,base:'/',css:{postcss:{plugins:[tailwind({base:root})]}},
  plugins:[{name:'pmsv-native-notifications',enforce:'pre',resolveId(source,importer){if(source==='./app-notifications'&&importer?.replaceAll('\\','/').startsWith(root.replaceAll('\\','/')+'/app/'))return path.join(here,'shared/notifications.tsx');}}],
  build:{outDir:out,emptyOutDir:true,manifest:true,rollupOptions:{input:{app:path.join(here,'index.html'),runtime:path.join(here,'shared/runtime.ts')},output:{entryFileNames:'native/[name].js',chunkFileNames:'native/[name]-[hash].js',assetFileNames:'native/[name]-[hash][extname]'}}}
 }));

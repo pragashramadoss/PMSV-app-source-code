@@ -8,6 +8,9 @@ let app=await launch();let page=await app.firstWindow();page.on('dialog',d=>d.ac
 try{
  await expect(page.getByRole('heading',{name:'Welcome to the Forum',exact:true})).toBeVisible({timeout:30000});
  await expect(page.locator('.app-notification-actions')).toBeVisible();
+ const hiddenHint=page.locator('.sr-only').first();
+ await expect(hiddenHint).toHaveCSS('position','absolute');
+ await expect(hiddenHint).toHaveCSS('width','1px');
  await page.screenshot({path:'test-results/home.png'});
  await page.goto('pmsv://app/audits/general-manufacturing.html');
  await expect(page.locator('#fbo')).toBeVisible();await page.locator('#fbo').fill('PMSV offline test');
