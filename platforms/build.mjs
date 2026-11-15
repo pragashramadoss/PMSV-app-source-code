@@ -12,9 +12,11 @@ await build(mergeConfig(wp,{
 }));
 await cp(path.join(root,'wordpress/plugin/public'),out,{recursive:true});
 await cp(path.join(root,'wordpress/plugin/archive-seed.json'),path.join(out,'archive-seed.json'));
+await cp(path.join(here,'shared/native-tool-shell.css'),path.join(out,'native/tool-shell.css'));
+await cp(path.join(here,'shared/tool-chrome.css'),path.join(out,'native/tool-chrome.css'));
 await rm(path.join(out,'sw.js'),{force:true});
 await rm(path.join(out,'manifest.webmanifest'),{force:true});
-async function instrument(dir){for(const e of await readdir(dir,{withFileTypes:true})){const file=path.join(dir,e.name);if(e.isDirectory())await instrument(file);else if(e.name.endsWith('.html')&&file!==path.join(out,'index.html')){let html=await readFile(file,'utf8');html=html.replace('</head>','<script type="module" src="/native/runtime.js"></script></head>');await writeFile(file,html);}}}
+async function instrument(dir){for(const e of await readdir(dir,{withFileTypes:true})){const file=path.join(dir,e.name);if(e.isDirectory())await instrument(file);else if(e.name.endsWith('.html')&&file!==path.join(out,'index.html')){let html=await readFile(file,'utf8');html=html.replace('</head>','<link rel="stylesheet" href="/native/tool-shell.css"><link rel="stylesheet" href="/native/tool-chrome.css"><script type="module" src="/native/runtime.js"></script></head>');await writeFile(file,html);}}}
 await instrument(out);
 await writeFile(path.join(out,'platform-build.json'),JSON.stringify({version:'2.2.0',bundled:true,source:process.env.GITHUB_SHA||'local',newsAndDiscussionsRequireNetwork:true}));
 console.log('Packaged website interface and offline audit/licence tools.');

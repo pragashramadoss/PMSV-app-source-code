@@ -22,7 +22,16 @@ try{
  await page.goto('pmsv://app/fssai-license/index.html');
  await expect(page.getByRole('heading',{name:'Find the right FSSAI licence',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'Start licence finder',exact:true}).click();
+ await expect(page.locator('.platform-masthead')).toBeVisible();
  await page.screenshot({path:'test-results/licence.png'});
+ await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].setContentSize(420,860));
+ await expect(page.locator('.platform-bottom')).toBeVisible();
+ await expect(page.locator('.platform-bottom svg')).toHaveCount(5);
+ await expect(page.locator('.platform-bottom [aria-current=page]')).toHaveText('FSSAI Licence');
+ await page.screenshot({path:'test-results/licence-phone.png'});
+ await page.goto('pmsv://app/audits/index.html');
+ await expect(page.locator('.platform-bottom [aria-current=page]')).toHaveText('Audits');
+ await page.screenshot({path:'test-results/audits-phone.png'});
  // Native export uses a chosen destination. Stub only the OS chooser; exercise the real IPC and filesystem write.
  const exportFile=path.join(userData,'PMSV-QA-report.csv');
  await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},exportFile);
