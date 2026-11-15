@@ -2,6 +2,7 @@ import {createRoot} from 'react-dom/client';
 import Newsroom from '../../app/newsroom';
 import Privacy from '../../app/privacy/page';
 import About from '../../app/about/page';
+import Downloads from '../../app/downloads/page';
 import Manage from '../../app/subscriptions/manage/page';
 import Discussions from '../../app/discussions';
 import status from '../../data/status.json';
@@ -18,4 +19,4 @@ else if(parts[0]==='blogs'&&parts.length===2)view={kind:'blog-tag',tag:parts[1]}
 else if(parts[0]==='regulatory'&&parts.length===2&&regions.some(r=>r.id===parts[1]))view={kind:'country',region:parts[1]};
 else if(parts[0]==='news'&&parts.length===2&&['india','global'].includes(parts[1]))view={kind:'feed',region:parts[1]};
 else if(['quality','excellence','certifications'].includes(parts[0])&&(parts.length===1||(parts.length===2&&professionalBodies.some(b=>b.id===parts[1]&&b.topics.includes(parts[0])))))view={kind:'topic',topic:parts[0],body:parts[1]};
-createRoot(document.getElementById('root')!).render(path==='/privacy'?<Privacy/>:path==='/about'?<About/>:path==='/subscriptions/manage'?<Manage/>:path==='/discussions'||discussionId||discussionAsk||discussionTopic?<Discussions questionId={discussionId} askMode={discussionAsk} topic={discussionTopic}/>:view?<Newsroom initialNews={[]} status={status} view={view}/>:<main><h1>Page not found</h1><a href={window.PMSV.base+'/'}>Return to PMSV</a></main>);
+createRoot(document.getElementById('root')!).render(path==='/downloads'?<Downloads/>:path==='/privacy'?<Privacy/>:path==='/about'?<About/>:path==='/subscriptions/manage'?<Manage/>:path==='/discussions'||discussionId||discussionAsk||discussionTopic?<Discussions questionId={discussionId} askMode={discussionAsk} topic={discussionTopic}/>:view?<Newsroom initialNews={[]} status={status} view={view}/>:<main><h1>Page not found</h1><a href={window.PMSV.base+'/'}>Return to PMSV</a></main>);
