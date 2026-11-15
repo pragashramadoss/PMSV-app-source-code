@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import WebsiteBookmark from '../website-bookmark';
+import {BookmarksLink,BookmarkFeedback} from '../bookmark-controls';
 
 export const metadata = {
   title: 'About me | PMSV Food Safety Updates',
@@ -7,7 +9,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return <main className="privacy-page about-page">
-    <Link href="/">← Back to PMSV</Link>
+    <Link href="/">← Back to PMSV</Link><div className="document-bookmarks"><WebsiteBookmark/><BookmarksLink/></div><BookmarkFeedback/>
     <header><img src="/icons/pmsv-family-64.png" alt="PMSV" width="64" height="64"/><div><h1>About me</h1><p>Pragash Ramadoss · Food Safety, Quality & Process Excellence</p></div></header>
 
     <section className="about-hero"><div className="about-photo-wrap"><img className="about-photo" src="https://pmsvgroup.com/wp-content/uploads/2026/09/pragash-profile.jpg" alt="Pragash Ramadoss"/></div><div><h2>Professional profile</h2>

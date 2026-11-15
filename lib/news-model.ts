@@ -6,7 +6,7 @@ export const regions=[
  {id:'uk',code:'UK',name:'United Kingdom',agency:'FSA · Food Standards Scotland',description:'UK food safety authorities',detail:'Food Standards Agency and Food Standards Scotland updates, recalls, enforcement and food safety news.'},
  {id:'australia',code:'AU',name:'Australia',agency:'FSANZ · State authorities',description:'Food Standards Australia New Zealand',detail:'FSANZ standards announcements and Australian food safety news. FSANZ is a joint Australia–New Zealand standards body.'}
 ];
-export type View={kind:'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs'|'blog-tag';region?:string;topic?:string;body?:string;tag?:string};
+export type View={kind:'bookmarks'|'home'|'updates'|'regulatory'|'country'|'news'|'feed'|'topic'|'blogs'|'blog-tag';region?:string;topic?:string;body?:string;tag?:string};
 export function regionName(id:string){return regions.find(r=>r.id===id)?.name||(id==='global'?'International':id)}
 export function blogTagSlug(tag:string){return tag.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)||'uncategorized'}
 export function blogTags(n:News){const tags=Array.isArray(n.tags)?n.tags.filter(t=>typeof t==='string'&&t.trim()).map(t=>t.trim()):[];if(tags.length)return Array.from(new Set(tags));const category=(n.category||'').trim();return category&&category.toLowerCase()!=='uncategorized'?[category]:['Uncategorized']}

@@ -1,0 +1,16 @@
+'use client';
+import {useState} from 'react';
+import {Bookmark,Search,ArrowUpRight,FileText,Newspaper,Trash2} from 'lucide-react';
+import {useBookmarks,saveBookmark} from '@/lib/use-bookmarks';
+import type {SavedBookmark} from '@/lib/bookmark-store';
+
+function SavedCard({item}:{item:SavedBookmark}){
+ const [busy,setBusy]=useState(false),Icon=item.kind==='article'?Newspaper:FileText;
+ return <article className="saved-card"><div className="saved-meta"><span><Icon size={15} aria-hidden="true"/>{item.kind==='article'?'Article':'PMSV page'}</span><span>{item.source}</span></div><h2><a href={item.url} target={item.kind==='article'?'_blank':undefined} rel={item.kind==='article'?'noopener noreferrer':undefined}>{item.title}</a></h2>{item.summary&&<p>{item.summary}</p>}<div className="saved-actions"><span>Saved {new Date(item.savedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span><a href={item.url} target={item.kind==='article'?'_blank':undefined} rel={item.kind==='article'?'noopener noreferrer':undefined} aria-label={'Open: '+item.title}>Open <ArrowUpRight size={16} aria-hidden="true"/></a><button type="button" disabled={busy} aria-label={'Remove bookmark: '+item.title} onClick={async()=>{setBusy(true);try{await saveBookmark(item,false);}finally{setBusy(false);}}}><Trash2 size={16} aria-hidden="true"/>Remove</button></div></article>;
+}
+export default function BookmarksPanel(){
+ const {items,ready,error}=useBookmarks(),[query,setQuery]=useState(''),[kind,setKind]=useState('all');
+ const q=query.trim().toLocaleLowerCase(),shown=items.filter(item=>(kind==='all'||item.kind===kind)&&`${item.title} ${item.source||''} ${item.summary||''}`.toLocaleLowerCase().includes(q));
+ if(!ready)return <p role="status">Loading bookmarks…</p>;
+ return <section className="bookmarks-panel" aria-label="Saved bookmarks"><p className="bookmarks-note">Saved in this browser. Clearing website data removes these bookmarks.</p>{items.length>0?<><div className="bookmarks-toolbar"><label className="searchbox"><Search size={20} aria-hidden="true"/><input type="search" value={query} onChange={event=>setQuery(event.target.value)} placeholder="Search your bookmarks…" aria-label="Search bookmarks"/></label><div className="bookmark-filters" role="group" aria-label="Bookmark type">{[['all','All'],['article','Articles'],['page','Pages']].map(([value,label])=><button type="button" key={value} aria-pressed={kind===value} onClick={()=>setKind(value)}>{label}</button>)}</div></div><p className="bookmarks-count" role="status">{shown.length} {shown.length===1?'bookmark':'bookmarks'} · Newest saved first</p>{shown.length?<div className="saved-list">{shown.map(item=><SavedCard key={item.url} item={item}/>)}</div>:<div className="bookmarks-empty"><Search size={28}/><h2>No matching bookmarks</h2><p>Try another search or choose a different type.</p><button type="button" onClick={()=>{setQuery('');setKind('all');}}>Show all bookmarks</button></div>}</>:!error&&<div className="bookmarks-empty"><Bookmark size={32} aria-hidden="true"/><h2>No bookmarks yet</h2><p>Tap Save beside an article or at the top of a PMSV page. Your saved items will appear here.</p><a href="/updates">Explore updates <ArrowUpRight size={16}/></a></div>}</section>;
+}
