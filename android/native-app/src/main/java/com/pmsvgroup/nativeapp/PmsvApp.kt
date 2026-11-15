@@ -54,7 +54,7 @@ import kotlinx.coroutines.launch
 private val Teal = Color(0xFF075C58)
 private val Navy = Color(0xFF18243E)
 private val Blue = Color(0xFF3155D9)
-private val Muted = Color(0xFF65758F)
+private val Muted = Color(0xFF60708A)
 private val Line = Color(0xFFE1E7F1)
 private val Page = Color(0xFFF3F6FC)
 private val CardShape = RoundedCornerShape(16.dp)
@@ -394,9 +394,9 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
 @Composable private fun TopicLauncher(entries: List<Destination>, select: (String) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(9.dp)) {
         entries.chunked(3).forEach { row ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEach { entry ->
-                    Column(Modifier.weight(1f).clip(CardShape).background(Color.White).border(0.5.dp, Line, CardShape)
+                    Column(Modifier.weight(1f).fillMaxHeight().clip(CardShape).background(Color.White).border(0.5.dp, Line, CardShape)
                         .clickable(role = Role.Button) { select(entry.id) }.semantics { contentDescription = "Browse ${entry.title}" }.padding(horizontal = 7.dp, vertical = 12.dp),
                         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Box(Modifier.size(38.dp).background(entry.tint.copy(alpha = 0.10f), RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
