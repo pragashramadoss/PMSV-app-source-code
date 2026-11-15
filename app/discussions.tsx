@@ -57,7 +57,8 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
  const [name,setName]=useState('');
  const [title,setTitle]=useState('');
  const [body,setBody]=useState('');
- const [notifyOnAnswer,setNotifyOnAnswer]=useState(true);
+ const nativeApp=typeof window!=='undefined'&&Boolean((window as unknown as {PMSV?:{nativeApp?:boolean}}).PMSV?.nativeApp);
+ const [notifyOnAnswer,setNotifyOnAnswer]=useState(!nativeApp);
  const [answerName,setAnswerName]=useState('');
  const [answerBody,setAnswerBody]=useState('');
  const [previewView,setPreviewView]=useState<'list'|'ask'|'topic'|'detail'>('list');
@@ -211,7 +212,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
     <label>Display name<input required minLength={2} maxLength={40} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name"/></label>
     <label>Question title<input required minLength={12} maxLength={180} value={title} onChange={e=>setTitle(e.target.value)} placeholder="Example: How should allergen changeover validation be designed?"/></label>
     <label>Details<textarea required minLength={20} maxLength={3000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Add enough context for professionals to answer clearly…"/></label>
-    <label className="discussion-notify-option"><input type="checkbox" checked={notifyOnAnswer} onChange={e=>setNotifyOnAnswer(e.target.checked)}/><span><strong>Notify me when someone answers</strong><small>Get a PMSV device notification. Your browser may ask for permission when you post. No login required.</small></span></label>
+    {!nativeApp&&<label className="discussion-notify-option"><input type="checkbox" checked={notifyOnAnswer} onChange={e=>setNotifyOnAnswer(e.target.checked)}/><span><strong>Notify me when someone answers</strong><small>Get a PMSV device notification. Your browser may ask for permission when you post. No login required.</small></span></label>}
     <p className="discussion-rule">Only Food Safety, Quality and Process Excellence questions are accepted. Text only; no links or advertisements.</p>
     <button type="submit" disabled={submitting}><Send size={17}/>{submitting?'Posting…':'Post question'}</button>
    </form></section>

@@ -1,0 +1,51 @@
+name: App
+options:
+  deploymentTarget:
+    iOS: '15.0'
+packages:
+  CapApp-SPM:
+    path: CapApp-SPM
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+    MARKETING_VERSION: '2.2.0'
+    CURRENT_PROJECT_VERSION: '12'
+targets:
+  App:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes: [public, capacitor.config.json, config.xml, Info.plist]
+      - path: App/public
+        type: folder
+        buildPhase: resources
+      - path: App/capacitor.config.json
+        buildPhase: resources
+      - path: App/config.xml
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pmsvgroup.foodsafety
+        PRODUCT_NAME: PMSV
+        PRODUCT_MODULE_NAME: App
+        INFOPLIST_FILE: App/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: '1,2'
+        CODE_SIGN_STYLE: Automatic
+    dependencies:
+      - package: CapApp-SPM
+    scheme:
+      testTargets: [PMSVUITests]
+  PMSVUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: UITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.pmsvgroup.foodsafety.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: App
+    dependencies:
+      - target: App

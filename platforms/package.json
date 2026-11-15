@@ -1,0 +1,76 @@
+{
+  "name": "pmsv-platform-apps",
+  "version": "2.2.0",
+  "private": true,
+  "description": "PMSV Food Safety & Quality Forum with bundled offline tools",
+  "author": {
+    "name": "Pragash Ramadoss",
+    "email": "Pragash.ramadoss@gmail.com"
+  },
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "build:web": "node build.mjs",
+    "test": "node --test tests/policy.test.cjs",
+    "package": "electron-builder --publish never",
+    "ios:sync": "cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.6.2",
+    "@capacitor/ios": "8.6.2",
+    "@capacitor/local-notifications": "8.3.1",
+    "@capacitor/filesystem": "8.1.5",
+    "@capacitor/share": "8.0.3",
+    "@capacitor/browser": "8.0.5"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.2",
+    "electron": "45.3.2",
+    "electron-builder": "26.18.0",
+    "@playwright/test": "1.65.1"
+  },
+  "build": {
+    "appId": "com.pmsvgroup.foodsafety.desktop",
+    "productName": "PMSV",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "desktop/**/*",
+      "www/**/*",
+      "package.json",
+      "!node_modules/**"
+    ],
+    "asar": true,
+    "npmRebuild": false,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "resources/icon.png",
+      "artifactName": "PMSV-${version}-Windows-${arch}-Preview.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "resources/icon.png",
+      "identity": "-",
+      "hardenedRuntime": true,
+      "notarize": false,
+      "entitlements": "resources/entitlements.mac.plist",
+      "entitlementsInherit": "resources/entitlements.mac.plist",
+      "category": "public.app-category.education",
+      "artifactName": "PMSV-${version}-Mac-${arch}-Preview.${ext}"
+    },
+    "dmg": {
+      "title": "PMSV 2.2.0 Preview"
+    }
+  }
+}
