@@ -4,7 +4,7 @@ on:
     branches: ['platform/**']
   workflow_dispatch:
 concurrency:
-  group: pmsv-platform-${{ github.ref }}
+  group: pmsv-platform-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 permissions:
   contents: read

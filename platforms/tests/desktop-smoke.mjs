@@ -13,6 +13,9 @@ try{
  await expect(hiddenHint).toHaveCSS('width','1px');
  await page.screenshot({path:'test-results/home.png'});
  await page.goto('pmsv://app/audits/general-manufacturing.html');
+ const sidebarRight=await page.locator('.platform-sidebar').evaluate(el=>el.getBoundingClientRect().right);
+ const formLeft=await page.locator('.meta').evaluate(el=>el.getBoundingClientRect().left);
+ expect(formLeft).toBeGreaterThanOrEqual(sidebarRight);
  await expect(page.locator('#fbo')).toBeVisible();await page.locator('#fbo').fill('PMSV offline test');
  await page.locator('tbody select').first().selectOption('C');await page.locator('.pmsv-draft').click();
  await expect(page).toHaveURL(/draft=/);const draft=page.url();
@@ -32,6 +35,11 @@ try{
  await page.goto('pmsv://app/audits/index.html');
  await expect(page.locator('.platform-bottom [aria-current=page]')).toHaveText('Audits');
  await page.screenshot({path:'test-results/audits-phone.png'});
+ await page.goto(draft);
+ await page.locator('#finish').scrollIntoViewIfNeeded();
+ const bottomLayout=await page.evaluate(()=>({finish:document.querySelector('#finish').getBoundingClientRect().bottom,footer:document.querySelector('.platform-bottom').getBoundingClientRect().top}));
+ expect(bottomLayout.finish).toBeLessThanOrEqual(bottomLayout.footer);
+ await page.screenshot({path:'test-results/audit-footer-phone.png'});
  // Native export uses a chosen destination. Stub only the OS chooser; exercise the real IPC and filesystem write.
  const exportFile=path.join(userData,'PMSV-QA-report.csv');
  await app.evaluate(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},exportFile);
