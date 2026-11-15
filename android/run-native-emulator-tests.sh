@@ -17,9 +17,7 @@ if [ "$test_status" -eq 0 ]; then
   adb install /tmp/pmsv-release-test.apk &&
   adb install -r /tmp/pmsv-release-test.apk &&
   adb shell am start -W -n com.pmsvgroup.foodsafety.preview/com.pmsvgroup.nativeapp.MainActivity &&
-  adb shell uiautomator dump /sdcard/pmsv-release.xml &&
-  adb pull /sdcard/pmsv-release.xml native-qa/release-launch.xml &&
-  grep -q 'Welcome to the Forum' native-qa/release-launch.xml &&
+  python3 android/verify-native-launch.py com.pmsvgroup.foodsafety.preview native-qa/release-launch.xml &&
   adb shell screencap -p /sdcard/pmsv-release.png &&
   adb pull /sdcard/pmsv-release.png native-qa/release-home.png
   test_status=$?
@@ -28,9 +26,7 @@ if [ "$test_status" -eq 0 ]; then
     adb install /tmp/pmsv-play-test.apk &&
     adb install -r /tmp/pmsv-play-test.apk &&
     adb shell am start -W -n com.pmsvgroup.foodsafety/com.pmsvgroup.nativeapp.MainActivity &&
-    adb shell uiautomator dump /sdcard/pmsv-play-release.xml &&
-    adb pull /sdcard/pmsv-play-release.xml native-qa/play-release-launch.xml &&
-    grep -q 'Welcome to the Forum' native-qa/play-release-launch.xml
+    python3 android/verify-native-launch.py com.pmsvgroup.foodsafety native-qa/play-release-launch.xml
     test_status=$?
   fi
 fi

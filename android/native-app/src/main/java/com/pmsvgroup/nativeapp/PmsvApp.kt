@@ -157,7 +157,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     } }
                     item { Text("Saved audit drafts stay inside this app on this phone. Reopen them through Audits → Saved Audits. Account backup is not connected; uninstalling or clearing app data can erase them.", color = Muted, style = MaterialTheme.typography.bodyMedium) }
                     item { TextButton(onClick = { openTool("Privacy & support", "https://pmsvgroup.com/privacy") }) { Text("Privacy & support") } }
-                    item { Text("PMSV Preview · ${BuildConfig.VERSION_NAME}", color = Muted, style = MaterialTheme.typography.bodySmall) }
+                    item { Text("PMSV · ${BuildConfig.VERSION_NAME}", color = Muted, style = MaterialTheme.typography.bodySmall) }
                 }
             } else {
                 val home = screen == "home"
