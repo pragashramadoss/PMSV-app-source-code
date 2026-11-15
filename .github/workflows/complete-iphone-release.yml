@@ -55,7 +55,9 @@ jobs:
           mkdir -p release handoff/PMSV-iPhone-2.2.0
           ditto "$RUNNER_TEMP/PMSV-2.2.0.xcarchive" handoff/PMSV-iPhone-2.2.0/PMSV-2.2.0.xcarchive
           ditto ios handoff/PMSV-iPhone-2.2.0/ios
-          cp README.md handoff/PMSV-iPhone-2.2.0/README.md
+          cp README.md SIGNING.md handoff/PMSV-iPhone-2.2.0/
+          mkdir -p handoff/PMSV-iPhone-2.2.0/scripts
+          cp scripts/sign-ios.sh handoff/PMSV-iPhone-2.2.0/scripts/
           cp package.json package-lock.json capacitor.config.json handoff/PMSV-iPhone-2.2.0/
           ditto -c -k --keepParent handoff/PMSV-iPhone-2.2.0 release/PMSV-2.2.0-iPhone-Signing-Package.zip
           ditto -c -k --keepParent "$RUNNER_TEMP/PMSVDerived/Build/Products/Debug-iphonesimulator/PMSV.app" release/PMSV-2.2.0-iPhone-Simulator.zip

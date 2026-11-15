@@ -21,6 +21,10 @@ These new platform builds use PMSV's website interface and include the audit che
 - News notifications can run while this preview is open. These builds do not yet provide background server push when closed, or discussion-reply alerts.
 - Uninstalling or clearing app data can erase saved assessments. Export important records. Cloud backup is not connected.
 
+## Publisher-signed releases
+
+See [SIGNING.md](SIGNING.md) for the prepared Windows/Mac signing configuration and iPhone signing/export command. Signing requires the publisher's developer credentials; the present downloadable desktop packages remain previews.
+
 ## Rebuild
 
 Source: https://github.com/pragashramadoss/PMSV-app-source-code/tree/platform/desktop-ios-2.2.0
