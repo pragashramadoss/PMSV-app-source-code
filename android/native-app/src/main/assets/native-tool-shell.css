@@ -1,14 +1,15 @@
 /* App-only presentation: keep form behaviour, saved data and content intact. */
 html[data-pmsv-native] {
   color-scheme: light;
-  --blue: #3155d9; --navy: #192642; --ink: #192642;
-  --bg: #f5f7fa; --muted: #647591; --line: #e2e7f0;
+  --blue: #3155d9; --navy: #18243e; --ink: #18243e;
+  --bg: #f0f3f9; --muted: #728099; --line: #e2e7f0;
 }
 html[data-pmsv-native] body {
   margin: 0 !important; padding: 0 !important;
   min-height: 100dvh !important;
-  background: #f5f7fa !important; color: #192642;
-  font-family: Roboto, system-ui, sans-serif;
+  background: #f0f3f9 !important; color: #18243e;
+  font-family: Roboto, system-ui, sans-serif !important;
+  font-size: 14px; line-height: 1.5;
 }
 /* Only workspace chrome is replaced. Tool tabs and content footers stay visible. */
 html[data-pmsv-native] .pmsv-audit-nav,
@@ -22,9 +23,9 @@ html[data-pmsv-native] .app-dashboard {
 html[data-pmsv-native="audits"] body > header,
 html[data-pmsv-native="audits"] body > .top,
 html[data-pmsv-native="licence"] body > .top {
-  position: static !important; background: #f5f7fa !important;
-  color: #192642 !important; box-shadow: none !important;
-  border: 0 !important; padding: 20px 18px 0 !important;
+  position: static !important; background: #f0f3f9 !important;
+  color: #18243e !important; box-shadow: none !important;
+  border: 0 !important; padding: 18px 18px 0 !important;
 }
 html[data-pmsv-native="audits"] body > header .brand,
 html[data-pmsv-native="audits"] body > header .links,
@@ -36,13 +37,14 @@ html[data-pmsv-native="licence"] .top .wrap {
 }
 html[data-pmsv-native="audits"] body > header h1,
 html[data-pmsv-native="licence"] .top h1 {
-  margin: 0 0 8px !important; font-size: 27px !important;
-  line-height: 33px !important; font-weight: 800; letter-spacing: -0.6px;
+  margin: 0 0 4px !important; font-size: 23px !important;
+  line-height: 29px !important; font-weight: 700; letter-spacing: -0.5px !important;
 }
 html[data-pmsv-native="audits"] body > header p,
-html[data-pmsv-native="licence"] .top p { color: #647591 !important; font-size: 14px; line-height: 21px; }
+html[data-pmsv-native="audits"] body > header .hero p,
+html[data-pmsv-native="licence"] .top p { color: #728099 !important; font-size: 13px !important; line-height: 19px !important; }
 html[data-pmsv-native="audits"] main {
-  margin: auto !important; padding: 18px 18px 24px !important; max-width: 1016px;
+  margin: auto !important; padding: 16px 18px 24px !important; max-width: 1016px;
 }
 html[data-pmsv-native="audits"] main > .wrap { padding: 0 !important; width: 100% !important; }
 html[data-pmsv-native="audits"] .scorebar,
@@ -51,11 +53,24 @@ html[data-pmsv-native="licence"] main.wrap {
   width: auto !important; max-width: 980px; margin: auto;
   padding: 0 18px 24px !important;
 }
-html[data-pmsv-native="licence"] .tabs { padding: 16px 0; }
-html[data-pmsv-native="licence"] .tab { border-radius: 8px; }
+html[data-pmsv-native="licence"] .tabs { padding: 14px 0; gap: 7px; }
+html[data-pmsv-native="licence"] .tab { border-radius: 999px; font-size: 13px; min-height: 44px; padding: 9px 13px; }
 html[data-pmsv-native="licence"] .card,
 html[data-pmsv-native="audits"] .panel {
   border-color: #e2e7f0 !important; border-radius: 12px !important; box-shadow: none !important;
+  padding: 16px !important;
 }
-html[data-pmsv-native="licence"] .btn { border-radius: 8px; }
-html[data-pmsv-native] .app-dashboard > main { padding: 20px 18px 24px !important; }
+html[data-pmsv-native="licence"] .card h2,
+html[data-pmsv-native="audits"] .panel > h2 { font-size: 20px; line-height: 26px; letter-spacing: -0.3px; }
+html[data-pmsv-native="licence"] .card h3 { font-size: 16px; line-height: 22px; }
+html[data-pmsv-native="licence"] .muted,
+html[data-pmsv-native="audits"] .hint { font-size: 13px; line-height: 19px; }
+html[data-pmsv-native="audits"] .hint { margin-bottom: 16px; }
+html[data-pmsv-native="audits"] .tile { border-radius: 12px !important; padding: 11px !important; }
+html[data-pmsv-native="audits"] .tile .title { font-size: 14px !important; line-height: 19px; }
+html[data-pmsv-native="licence"] .mini { padding: 12px; border-radius: 10px; }
+html[data-pmsv-native="licence"] .btn { border-radius: 8px; font-size: 14px; min-height: 44px; padding: 10px 14px; }
+html[data-pmsv-native="licence"] .q { font-size: 20px; line-height: 26px; }
+html[data-pmsv-native="licence"] .choice { font-size: 14px; line-height: 20px; padding: 12px; }
+html[data-pmsv-native="licence"] .footer { padding: 8px 0 20px; line-height: 17px; }
+html[data-pmsv-native] .app-dashboard > main { padding: 18px 18px 24px !important; }

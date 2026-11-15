@@ -11,7 +11,16 @@ Updates/News includes regulatory country desks and professional topics. Blogs,
 saved updates, details and the notification dialog retain the same visual style.
 The light theme is intentional, matching the website regardless of Chrome settings.
 
-Version 2.0.3 keeps that SAME native masthead, notification dialog and five-tab
+Version 2.0.4 uses the website's compact mobile spacing, untracked typography,
+light blue-grey background and Lucide outline icons. The home screen has three
+primary tool cards and five recent headlines; Blogs and Discussions remain in
+the footer. View all updates opens the complete feed. Topic shortcuts and
+regulator cards use the website's colours and original regulator logos.
+Headings, cards and controls in the installed tools follow the same sizing.
+Text still follows Android accessibility scaling, with navigation allowed to
+grow instead of clipping labels. The Lucide licence is bundled in assets/licenses.
+
+The app keeps the SAME native masthead, notification dialog and five-tab
 footer around Audits, FSSAI Licence and Discussions. Tool subpages update the
 selected native tab. App-scoped presentation CSS removes duplicate web navigation
 and normalizes the helper header; the website and form calculations are unchanged.
@@ -109,3 +118,6 @@ helper subtabs, form continuity, back navigation, an actual offline saved audit
 and private storage persistence. Tool device tests disable internet access.
 
 Notification tests verify real headline content/date, logo resources, repeated native navigation, cached and empty news, and daily deduplication. Android 16 captures include the notification shade.
+
+Design checks include a 360 dp layout with 130% text, unclipped navigation,
+the full-feed journey, topic/regulator screens and matching tool chrome.
