@@ -122,6 +122,9 @@ class NativeScreensTest {
                 val layouts = mutableListOf<TextLayoutResult>()
                 node.config.getOrNull(SemanticsActions.GetTextLayoutResult)?.action?.invoke(layouts)
                 org.junit.Assert.assertTrue("$label is readable without clipping: ${layouts.map { "size=${it.size}, paragraph=${it.multiParagraph.width}x${it.multiParagraph.height}, widthOverflow=${it.didOverflowWidth}, heightOverflow=${it.didOverflowHeight}" }}", layouts.all { !it.hasVisualOverflow })
+                if (section == "pmsv-navigation" && label == "Discussions") {
+                    org.junit.Assert.assertTrue("Discussions stays on one line at 130% text size", layouts.all { it.lineCount == 1 })
+                }
             }
         } }
         val search = compose.onNodeWithTag("pmsv-search").fetchSemanticsNode().boundsInRoot
