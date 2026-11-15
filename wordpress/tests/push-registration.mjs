@@ -5,7 +5,9 @@ import {runInNewContext} from 'node:vm';
 import {stripTypeScriptTypes} from 'node:module';
 
 const text=await readFile(new URL('../../app/app-notifications.tsx',import.meta.url),'utf8');
-const helpers=stripTypeScriptTypes(text.slice(text.indexOf('type InstallEvent='),text.indexOf('// Called only')));
+const start=text.indexOf('type PMSVWindow='),end=text.indexOf('// Called only');
+assert(start>=0&&end>start,'Push helper extraction boundaries must exist');
+const helpers=stripTypeScriptTypes(text.slice(start,end));
 function environment({refresh=false,off=false,mismatch=false,permission='granted',renewalFails=false,postFails=false}={}){
  const entries=new Map([['pmsv-push-token','t'.repeat(64)]]);
  if(off)entries.set('pmsv-push-preference','off');

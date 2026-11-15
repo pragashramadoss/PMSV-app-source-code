@@ -1,11 +1,11 @@
 'use client';
 import {useEffect,useState} from 'react';
-import {Bell,BellRing,Download} from 'lucide-react';
-import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+import {Bell,BellRing} from 'lucide-react';
+import WebsiteBookmark from './website-bookmark';
+import {Dialog,DialogTrigger,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {readNotificationStatus,requestNotificationPermission,type NotificationCheck} from '@/lib/notification-status';
 
-type InstallEvent=Event&{prompt:()=>Promise<void>;userChoice:Promise<{outcome:string}>};
-type PMSVWindow=Window&{PMSV?:{base?:string;publicBase?:string;installPrompt?:InstallEvent|null}};
+type PMSVWindow=Window&{PMSV?:{base?:string;publicBase?:string}};
 
 function basePath(){
  if(typeof window==='undefined')return '';
@@ -23,7 +23,7 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.27'),{scope:appUrl('/'),updateViaCache:'none'});
+ const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.28'),{scope:appUrl('/'),updateViaCache:'none'});
  await navigator.serviceWorker.ready;
  return reg;
 }
@@ -114,11 +114,12 @@ export async function subscribeToDiscussionAnswers():Promise<{endpoint:string;to
 }
 
 export default function AppNotifications(){
- const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false);
+ const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false),[appleMobile,setAppleMobile]=useState(false);
  const [checks,setChecks]=useState<NotificationCheck[]>([]),[checking,setChecking]=useState(false);
 
  useEffect(()=>{
   setSupported(window.isSecureContext&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
+  setAppleMobile(/iPad|iPhone|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1));
 
   let cancelled=false;
   const syncExisting=async(force=false)=>{
@@ -168,7 +169,7 @@ export default function AppNotifications(){
    const permission=await requestNotificationPermission();
    if(permission!=='granted'){
     void checkNotificationStatus(permission);
-    throw Error(permission==='denied'?'This session reports notification permission as denied. If Android notifications are already allowed, the app and browser connection needs checking. See the status below.':'Notification permission was not granted.');
+    throw Error(permission==='denied'?'Notifications are blocked for this website. Open your browser’s site settings for PMSV, allow notifications, then try again.':'Notification permission was not granted.');
    }
 
    localStorage.removeItem('pmsv-push-preference');
@@ -211,7 +212,7 @@ export default function AppNotifications(){
     data=await result.json().catch(()=>({})) as typeof data;
    }
    if(!result.ok)throw Error((data.error||'Test notification could not be sent.')+(data.reason?' ('+data.reason+')':''));
-   setMessage('Push provider accepted the test. Check whether it arrives on your phone.');
+   setMessage('Push provider accepted the test. Check whether it arrives on your device.');
   }catch(e){setMessage(e instanceof Error?e.message:'Test notification could not be sent.')}
   finally{setBusy(false)}
  }
@@ -242,5 +243,17 @@ export default function AppNotifications(){
   }catch{setMessage('Could not turn off notifications.')}finally{setBusy(false)}
  }
 
- return <><div className="app-notification-actions"><a href={appUrl('/downloads')} aria-label="Download PMSV for your device" title="Android, iPhone, Windows and Mac"><Download size={18}/><span>Download app</span></a><button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader>{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">Notifications are not supported by this browser.</p>}<p role="status" className="push-status">{message}</p><button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>{checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl><p>Installed Android app version: see Android App info. Website version above is separate.</p></div>}</DialogContent></Dialog></>;
+ return <Dialog open={open} onOpenChange={setOpen}>
+  <div className="app-notification-actions">
+   <WebsiteBookmark/>
+   <DialogTrigger asChild><button type="button" aria-label={enabled?'Manage website notifications':'Turn on website notifications'} title="Website notifications">{enabled?<BellRing size={19} aria-hidden="true"/>:<Bell size={19} aria-hidden="true"/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></DialogTrigger>
+  </div>
+  <DialogContent className="subscription-dialog">
+   <DialogHeader><DialogTitle>Website notifications</DialogTitle><DialogDescription>Get alerts for new PMSV updates in this browser.</DialogDescription></DialogHeader>
+   {supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">{appleMobile?'Notifications are unavailable in an iPhone or iPad browser tab. You can still bookmark PMSV and visit for updates.':'Notifications are not supported by this browser. You can still bookmark PMSV and visit for updates.'}</p>}
+   <p role="status" className="push-status">{message}</p>
+   <button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>
+   {checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl></div>}
+  </DialogContent>
+ </Dialog>;
 }

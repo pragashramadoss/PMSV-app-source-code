@@ -7,8 +7,6 @@ export const metadata: Metadata = {
   other: {
     "codex-preview": "development",
   },
-  manifest: "/manifest.webmanifest",
-  appleWebApp: {capable: true, title: "PMSV", statusBarStyle: "default"},
   icons: {
     apple: "/icons/pmsv-family-192.png",
     icon: "/icons/pmsv-family-64.png",

@@ -373,3 +373,19 @@ img[src*="australia.svg"]{background:#143352;border-radius:5px;padding:6px}.nav-
 .notification-checks{font-size:13px;line-height:1.5}.notification-checks p{color:#526776;margin:0 0 10px}.notification-checks dl{margin:0 0 12px}.notification-checks dl>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,.8fr);gap:12px;padding:7px 0;border-bottom:1px solid #e2e8ed}.notification-checks dt{font-weight:600}.notification-checks dd{margin:0;overflow-wrap:anywhere}
 
 .app-notification-actions a{text-decoration:none}
+
+/* Website bookmarks */
+.footer-links{flex-wrap:wrap}
+.footer-links .footer-bookmark{display:inline-flex;align-items:center;gap:5px;padding:0;border:0;background:none;font:inherit;color:#3155d9;cursor:pointer;white-space:nowrap}
+.bookmark-dialog{width:min(440px,calc(100vw - 32px))}
+.bookmark-instructions{background:#f1f5ff;border:1px solid #dce4f7;border-radius:12px;padding:16px;color:#253455}
+.bookmark-instructions strong{display:block;margin-bottom:8px;font-size:15px}
+.bookmark-instructions p,.bookmark-note{font-size:14px;line-height:1.6;margin:0}
+.bookmark-instructions kbd{font-family:inherit;font-size:13px;border:1px solid #cad4ec;border-bottom-width:2px;background:#fff;border-radius:5px;padding:2px 5px;white-space:nowrap}
+.bookmark-note{color:#68738b}
+.bookmark-address{display:grid;gap:6px;min-width:0}
+.bookmark-address label{font-size:13px;font-weight:600;color:#536079}
+.bookmark-address input{width:100%;min-width:0;border:1px solid #dce4ef;border-radius:8px;background:#f8faff;color:#253455;font-size:16px;padding:10px}
+.bookmark-copy{display:flex;align-items:center;justify-content:center;gap:8px}
+.bookmark-dialog .push-status:empty{display:none}
+.footer-bookmark:focus-visible,.app-notification-actions button:focus-visible{outline:2px solid #3155d9;outline-offset:3px}
