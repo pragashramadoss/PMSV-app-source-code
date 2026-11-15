@@ -106,14 +106,24 @@ class NativeScreensTest {
         val header = compose.onNodeWithTag("pmsv-header").fetchSemanticsNode().boundsInRoot
         val footer = compose.onNodeWithTag("pmsv-navigation").fetchSemanticsNode().boundsInRoot
         capture("native-home-large-text.png")
-        listOf("PMSV", "Food Safety & Quality Forum", "Welcome to the Forum", "Updates/News", "Audits", "FSSAI Licence", "Blogs", "Discussions").forEach { label ->
-            compose.onAllNodesWithText(label, useUnmergedTree = true).fetchSemanticsNodes().forEach { node ->
-                org.junit.Assert.assertTrue("$label stays inside the screen", node.boundsInRoot.left >= frame.left && node.boundsInRoot.right <= frame.right)
+        val labels = listOf(
+            "pmsv-header" to listOf("PMSV", "Food Safety & Quality Forum"),
+            "home-welcome" to listOf("Welcome to the Forum"),
+            "home-tools" to listOf("Updates/News", "Audits", "FSSAI\nLicence"),
+            "pmsv-navigation" to listOf("Updates/News", "Audits", "FSSAI Licence", "Blogs", "Discussions")
+        )
+        labels.forEach { (section, texts) -> texts.forEach { label ->
+            // A news source can also be named PMSV. Test the labelled component,
+            // not a prefetched off-screen story with the same text and empty bounds.
+            val nodes = compose.onAllNodes(hasText(label) and hasAnyAncestor(hasTestTag(section)), useUnmergedTree = true).fetchSemanticsNodes()
+            org.junit.Assert.assertTrue("$label exists in $section", nodes.isNotEmpty())
+            nodes.forEach { node ->
+                org.junit.Assert.assertTrue("$label stays inside the screen: ${node.boundsInRoot} within $frame", node.boundsInRoot.left >= frame.left && node.boundsInRoot.right <= frame.right)
                 val layouts = mutableListOf<TextLayoutResult>()
                 node.config.getOrNull(SemanticsActions.GetTextLayoutResult)?.action?.invoke(layouts)
                 org.junit.Assert.assertTrue("$label is readable without clipping: ${layouts.map { "size=${it.size}, paragraph=${it.multiParagraph.width}x${it.multiParagraph.height}, widthOverflow=${it.didOverflowWidth}, heightOverflow=${it.didOverflowHeight}" }}", layouts.all { !it.hasVisualOverflow })
             }
-        }
+        } }
         val search = compose.onNodeWithTag("pmsv-search").fetchSemanticsNode().boundsInRoot
         org.junit.Assert.assertTrue("Content fits between the shared bars", search.top >= header.bottom && search.bottom < footer.top)
         compose.onNodeWithContentDescription("Navigate to Blogs").performClick()

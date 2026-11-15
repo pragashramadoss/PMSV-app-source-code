@@ -308,7 +308,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
 @Composable internal fun PmsvNavigation(screen: String, go: (String) -> Unit) {
     Surface(color = Color.White, shadowElevation = 8.dp, shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
         Column(Modifier.testTag("pmsv-navigation").navigationBarsPadding()) {
-            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 5.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 2.dp, vertical = 6.dp)) {
                 destinations.forEach { destination ->
                     val selected = screen == destination.id || (destination.id == "updates" && screen in listOf("feed", "regulatory"))
                     Column(Modifier.weight(1f).clip(RoundedCornerShape(12.dp))
