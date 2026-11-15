@@ -20,7 +20,9 @@ final class PMSVUITests: XCTestCase {
         app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'Start Assessment'")).firstMatch.tap()
         let fbo = app.webViews.textFields["FBO Name"].firstMatch
         XCTAssertTrue(fbo.waitForExistence(timeout: 15)); fbo.tap(); fbo.typeText("PMSV iPhone saved audit")
+        app.webViews.staticTexts["General Manufacturing"].firstMatch.tap()
         app.webViews.buttons["Save"].firstMatch.tap()
+        XCTAssertTrue(app.webViews.buttons["✓"].firstMatch.waitForExistence(timeout: 5))
         // Reopening the same record after termination verifies the real form save handler.
         app.terminate(); app.launch(); openInspections(app)
         let saved = app.webViews.buttons.matching(NSPredicate(format: "label CONTAINS 'Saved Audits'")).firstMatch
@@ -36,11 +38,12 @@ final class PMSVUITests: XCTestCase {
         app.launchArguments = ["-pmsv-ui-testing"]
         app.launch()
         XCTAssertTrue(app.webViews.staticTexts["Welcome to the Forum"].firstMatch.waitForExistence(timeout: 30))
-        XCTAssertTrue(app.webViews.images["PMSV family logo loaded"].firstMatch.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.webViews.links["PMSV logo ready"].firstMatch.waitForExistence(timeout: 15))
         let home = XCTAttachment(screenshot: app.screenshot()); home.name = "PMSV-iPhone-Home"; home.lifetime = .keepAlways; add(home)
         let licence = app.webViews.links.matching(NSPredicate(format: "label CONTAINS 'FSSAI Licence'")).firstMatch
         XCTAssertTrue(licence.waitForExistence(timeout: 10)); licence.tap()
         XCTAssertTrue(app.webViews.staticTexts["Find the right FSSAI licence"].firstMatch.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.webViews.links["PMSV logo ready"].firstMatch.waitForExistence(timeout: 15))
         let tool = XCTAttachment(screenshot: app.screenshot()); tool.name = "PMSV-iPhone-Licence"; tool.lifetime = .keepAlways; add(tool)
         let start = app.webViews.buttons["Start licence finder"].firstMatch
         XCTAssertTrue(start.exists); start.tap()

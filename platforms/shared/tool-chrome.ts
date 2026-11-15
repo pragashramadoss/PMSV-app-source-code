@@ -12,7 +12,7 @@ function mount(){
  if(!section||document.querySelector('.platform-masthead'))return;
  document.documentElement.dataset.pmsvNative=section;
  const links=routes.map(([key,label,url,icon])=>'<a href="'+url+'"'+(key===section?' aria-current="page"':'')+'>'+svg(icon)+'<span>'+label+'</span></a>').join('');
- const top=document.createElement('header');top.className='platform-masthead';top.innerHTML='<a class="platform-brand" href="/"><img src="/icons/pmsv-family-64.png" alt="PMSV"/><span><strong>PMSV</strong><small>Food Safety &amp; Quality Forum</small></span></a><a class="platform-home" href="/" aria-label="Home">'+svg('<path d="m3 10 9-7 9 7v11h-7v-7h-4v7H3Z"/>')+'</a>';
+ const top=document.createElement('header');top.className='platform-masthead';top.innerHTML='<a class="platform-brand" href="/" aria-label="PMSV Food Safety &amp; Quality Forum home"><img src="/brand/pmsv-family.png" alt="PMSV"/><span><strong>PMSV</strong><small>Food Safety &amp; Quality Forum</small></span></a><a class="platform-home" href="/" aria-label="Home">'+svg('<path d="m3 10 9-7 9 7v11h-7v-7h-4v7H3Z"/>')+'</a>';
  const side=document.createElement('nav');side.className='platform-sidebar';side.setAttribute('aria-label','Main navigation');side.innerHTML='<span class="platform-caption">WORKSPACE</span>'+links;
  const footer=document.createElement('nav');footer.className='platform-bottom';footer.setAttribute('aria-label','Main navigation');footer.innerHTML=links;
  document.body.prepend(top,side);document.body.append(footer);

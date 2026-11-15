@@ -10,8 +10,12 @@ class AppViewController: CAPBridgeViewController {
             document.addEventListener('DOMContentLoaded',()=>{
                 let attempts=0;
                 const ready=setInterval(()=>{
-                    const image=document.querySelector('.family-brand img');
-                    if(image){clearInterval(ready);image.decode().then(()=>image.alt='PMSV family logo loaded').catch(()=>image.alt='PMSV family logo failed');}
+                    const image=document.querySelector('.family-brand img,.platform-brand img');
+                    if(image){
+                        clearInterval(ready);
+                        image.decode().then(()=>image.closest('a')?.setAttribute('aria-label','PMSV logo ready'))
+                            .catch(()=>image.closest('a')?.setAttribute('aria-label','PMSV logo failed'));
+                    }
                     else if(++attempts>100)clearInterval(ready);
                 },100);
             },{once:true});
