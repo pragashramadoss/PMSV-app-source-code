@@ -1,0 +1,72 @@
+name: Publish verified PMSV desktop downloads
+on:
+  push:
+    branches: [release/downloads-20261115]
+    paths: [.github/workflows/publish-desktop-downloads.yml]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: pmsv-desktop-downloads-2.2.0
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: pragashramadoss/PMSV-app-source-code
+    steps:
+      - name: Verify source and successful desktop jobs
+        run: |
+          set -euo pipefail
+          gh api repos/$GH_REPO/actions/runs/43690819651 > run.json
+          gh api 'repos/'$GH_REPO'/actions/runs/43690819651/jobs?per_page=100' > jobs.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('run.json'))
+          assert r['head_sha']=='f1f90815db7e769dae467143f3dd283c1b3f1cbf'
+          jobs={j['name']:j['conclusion'] for j in json.load(open('jobs.json'))['jobs']}
+          for name in ['Windows x64','Mac Apple Silicon','Mac Intel']:
+              assert jobs.get(name)=='success', (name,jobs.get(name))
+          # The iPhone test job failed; no iPhone artifact is published by this workflow.
+          PY
+      - name: Retrieve and verify only desktop installers
+        run: |
+          set -euo pipefail
+          mkdir downloads
+          gh api repos/$GH_REPO/actions/artifacts/14152387273/zip > windows.zip
+          gh api repos/$GH_REPO/actions/artifacts/14152661190/zip > arm64.zip
+          gh api repos/$GH_REPO/actions/artifacts/14152291882/zip > intel.zip
+          python3 - <<'PY'
+          import hashlib, pathlib, zipfile
+          specs=[
+            ('windows.zip','PMSV-2.2.0-Windows-x64-Preview.exe',121955578,'0648a3bd72020468bc83865da1a02f71665b58a0712e7cfd18e26fdf93f193c1'),
+            ('arm64.zip','PMSV-2.2.0-Mac-arm64-Preview.dmg',120520776,'ce040c83cf18705082cbe3b9961b2a37714b5768e2351d7d4b31a4678b257c58'),
+            ('intel.zip','PMSV-2.2.0-Mac-x64-Preview.dmg',127754991,'72b1cc52c6c7a25ce300b868ccc8b78fdffc0b60ff00935aac3cd63015c5ce43')]
+          sums=[]
+          for archive,name,size,digest in specs:
+              with zipfile.ZipFile(archive) as z:
+                  matches=[p for p in z.namelist() if pathlib.PurePosixPath(p).name==name]
+                  assert len(matches)==1, (archive,matches)
+                  data=z.read(matches[0])
+              assert len(data)==size and hashlib.sha256(data).hexdigest()==digest, name
+              pathlib.Path('downloads',name).write_bytes(data)
+              sums.append(digest+'  '+name)
+          pathlib.Path('downloads/SHA256SUMS.txt').write_text('\n'.join(sums)+'\n')
+          PY
+      - name: Publish the preview with explicit signing status
+        run: |
+          set -euo pipefail
+          cat > release-notes.md <<'NOTES'
+          PMSV Food Safety & Quality Forum 2.2.0 desktop previews.
+
+          Windows x64 installer and separate Apple silicon / Intel Mac disk images. Each includes the PMSV interface, audit tools and FSSAI licence helper. News refresh requires internet; bundled audit and licence tools work offline. Records stay in that installation; there is no automatic cross-device sync. Export important assessments before removing the app.
+
+          **Preview signing status:** Windows is not publisher-signed. Mac builds are ad-hoc signed, without Apple Developer ID signing or notarization. Operating-system security warnings or blocks can occur. A normal signed public release is still pending. Do not disable operating-system security protections; PMSV remains available at https://pmsvgroup.com.
+
+          These exact installers passed Windows installation / Mac DMG checks, offline saved-audit persistence, bundled licence-helper, native export, renderer isolation and live-news checks in run 43690819651, source f1f90815db7e769dae467143f3dd283c1b3f1cbf. SHA256SUMS.txt identifies every published binary. Physical user-device testing remains separate.
+
+          No iPhone binary is included: the latest iPhone simulator test did not pass, and Apple signing and distribution are not complete. iPhone users can open the website in Safari and add it to their Home Screen.
+          NOTES
+          gh release create desktop-v2.2.0 downloads/* --target f1f90815db7e769dae467143f3dd283c1b3f1cbf --title 'PMSV 2.2.0 — Desktop previews' --notes-file release-notes.md --prerelease --latest=false
