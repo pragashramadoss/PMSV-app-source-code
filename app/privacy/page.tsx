@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import WebsiteBookmark from '../website-bookmark';
-import {BookmarksLink,BookmarkFeedback} from '../bookmark-controls';
 
 export const metadata = {
   title: 'Privacy policy | PMSV Food Safety Updates',
@@ -9,7 +7,7 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return <main className="privacy-page">
-    <Link href="/">← Back to PMSV</Link><div className="document-bookmarks"><WebsiteBookmark/><BookmarksLink/></div><BookmarkFeedback/>
+    <Link href="/">← Back to PMSV</Link>
     <header><img src="/icons/pmsv-family-64.png" alt="PMSV" width="64" height="64"/><div><h1>Privacy policy</h1><p>PMSV Food Safety Updates</p></div></header>
     <p><strong>Effective date: 15 November 2026</strong></p>
     <p>PMSV Food Safety Updates is operated by Pragash Ramadoss under the PMSV name. This policy covers pmsvgroup.com and the PMSV app that displays this service. For support or privacy requests, email <a href="mailto:Pragash.ramadoss@gmail.com">Pragash.ramadoss@gmail.com</a>.</p>
@@ -27,9 +25,6 @@ export default function PrivacyPage() {
 
     <h2>Discussions</h2>
     <p>If you choose to post a question or answer, your display name and message are sent to PMSV and may be publicly displayed with the post date and category. Moderators may review or remove content. Optional answer alerts use the website notification subscription. Please do not include confidential audit findings or personal documents in public discussions. Contact the support email below to request removal of a post you submitted.</p>
-
-    <h2>Website bookmarks</h2>
-    <p>Saved article links, titles, summaries, source names and save dates are stored in this browser. PMSV page bookmarks store the page link and title. They are not uploaded to a PMSV account or synchronized across browsers or devices. Remove them in Bookmarks; clearing website data also removes them. Original articles remain on their publishers’ websites.</p>
 
     <h2>Website device storage</h2>
     <p>PMSV stores your notification preference, a subscription management token and whether a permission prompt has been shown in your browser. A service worker caches an offline information page. This storage supports app functions and is not used for advertising. It stays on your device until it is cleared or removed by the browser.</p>

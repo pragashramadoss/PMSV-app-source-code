@@ -1,7 +1,6 @@
 'use client';
 import {useEffect,useState} from 'react';
 import {Bell,BellRing} from 'lucide-react';
-import WebsiteBookmark from './website-bookmark';
 import {Dialog,DialogTrigger,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {readNotificationStatus,requestNotificationPermission,type NotificationCheck} from '@/lib/notification-status';
 
@@ -23,7 +22,7 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.29'),{scope:appUrl('/'),updateViaCache:'none'});
+ const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.30'),{scope:appUrl('/'),updateViaCache:'none'});
  await navigator.serviceWorker.ready;
  return reg;
 }
@@ -245,12 +244,11 @@ export default function AppNotifications(){
 
  return <Dialog open={open} onOpenChange={setOpen}>
   <div className="app-notification-actions">
-   <WebsiteBookmark/>
    <DialogTrigger asChild><button type="button" aria-label={enabled?'Manage website notifications':'Turn on website notifications'} title="Website notifications">{enabled?<BellRing size={19} aria-hidden="true"/>:<Bell size={19} aria-hidden="true"/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></DialogTrigger>
   </div>
   <DialogContent className="subscription-dialog">
    <DialogHeader><DialogTitle>Website notifications</DialogTitle><DialogDescription>Get alerts for new PMSV updates in this browser.</DialogDescription></DialogHeader>
-   {supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">{appleMobile?'Notifications are unavailable in an iPhone or iPad browser tab. You can still bookmark PMSV and visit for updates.':'Notifications are not supported by this browser. You can still bookmark PMSV and visit for updates.'}</p>}
+   {supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">{appleMobile?'Notifications are unavailable in an iPhone or iPad browser tab. You can still visit PMSV for updates.':'Notifications are not supported by this browser. You can still visit PMSV for updates.'}</p>}
    <p role="status" className="push-status">{message}</p>
    <button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>
    {checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl></div>}

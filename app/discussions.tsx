@@ -1,7 +1,6 @@
 'use client';
 import {useEffect,useMemo,useState} from 'react';
 import {BookOpen,Newspaper,ShieldCheck,FileText,MessagesSquare,MessageCircleQuestion,ArrowLeft,Send,Flag,Search,Shield,BadgeCheck,TrendingUp} from 'lucide-react';
-import {BookmarksLink,BookmarkFeedback} from './bookmark-controls';
 import AppNotifications,{subscribeToDiscussionAnswers} from './app-notifications';
 
 type Question={
@@ -36,14 +35,14 @@ function Shell({children,detail=false}:{children:React.ReactNode;detail?:boolean
  return <div className="app-shell app-dashboard discussion-shell">
   <header className="masthead"><a className="brand" href={route('/')} aria-label="PMSV Food Safety & Quality Forum home"><span className="brand-mark family-brand"><img src={publicAsset('/brand/pmsv-family.png')} alt="PMSV family logo"/></span><div><div className="brand-name">PMSV <span>Food Safety &amp; Quality Forum</span></div><div className="brand-sub">FOOD SAFETY · QUALITY · EXCELLENCE</div></div></a><AppNotifications/></header>
   <nav className="primary-nav" aria-label="Main navigation"><div className="nav-caption">WORKSPACE</div>
-   <a aria-label="Updates/News" href={route('/updates')}><Newspaper size={17}/><span className="nav-full">Updates/News</span><span className="nav-short" aria-hidden="true">Updates</span></a>
+   <a href={route('/updates')}><Newspaper size={17}/><span>Updates/News</span></a>
    <a href={route('/audits/index.html')}><ShieldCheck size={17}/><span>Audits</span></a>
-   <a aria-label="FSSAI Licence" href={route('/fssai-license')}><FileText size={17}/><span className="nav-full">FSSAI Licence</span><span className="nav-short" aria-hidden="true">Licence</span></a>
+   <a href={route('/fssai-license')}><FileText size={17}/><span>FSSAI Licence</span></a>
    <a href={route('/blogs')}><BookOpen size={17}/><span>Blogs</span></a>
-   <a aria-label="Discussions" href={route('/discussions')} aria-current="page"><MessagesSquare size={17}/><span className="nav-full">Discussions</span><span className="nav-short" aria-hidden="true">Discuss</span></a>
-   <BookmarksLink/><div className="nav-bottom"><img className="sidebar-family-logo" src={publicAsset('/icons/pmsv-family-192.png')} alt="PMSV family logo"/><span>PMSV<small>Food safety, quality &amp; excellence</small></span></div>
+   <a href={route('/discussions')} aria-current="page"><MessagesSquare size={17}/><span>Discussions</span></a>
+   <div className="nav-bottom"><img className="sidebar-family-logo" src={publicAsset('/icons/pmsv-family-192.png')} alt="PMSV family logo"/><span>PMSV<small>Food safety, quality &amp; excellence</small></span></div>
   </nav>
-  <main><BookmarkFeedback/>{detail&&<a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();history.back()}}}><ArrowLeft size={17}/>All discussions</a>}{children}</main>
+  <main>{detail&&<a className="discussion-back" href={route('/discussions')} onClick={e=>{if(isPreview()){e.preventDefault();history.back()}}}><ArrowLeft size={17}/>All discussions</a>}{children}</main>
   <footer><strong>PMSV Food Safety &amp; Quality Forum</strong><span>Professional text discussions only. No advertising or unrelated topics.</span></footer>
  </div>
 }
@@ -175,7 +174,7 @@ export default function Discussions({questionId,askMode=false,topic}:{questionId
    {reportNotice&&<p className="discussion-report-notice">{reportNotice}</p>}
    {loading?<p className="discussion-loading">Loading discussion…</p>:detail?<><article className="question-detail">
     <div className="discussion-meta"><span className={'discussion-category '+detail.question.category}>{categoryLabel(detail.question.category)}</span><span>{dateLabel(detail.question.createdAt)}</span></div>
-    <h2 data-bookmark-title>{detail.question.title}</h2><p>{detail.question.body}</p><div className="discussion-author"><span>Asked by <strong>{detail.question.name}</strong></span><ReportControl type="question" id={detail.question.id}/></div>
+    <h2>{detail.question.title}</h2><p>{detail.question.body}</p><div className="discussion-author"><span>Asked by <strong>{detail.question.name}</strong></span><ReportControl type="question" id={detail.question.id}/></div>
    </article>
    <section className="answers-section"><h2>{detail.answers.length} {detail.answers.length===1?'Answer':'Answers'}</h2>
     {detail.answers.length===0&&<p className="discussion-empty">No answers yet. Be the first to respond.</p>}

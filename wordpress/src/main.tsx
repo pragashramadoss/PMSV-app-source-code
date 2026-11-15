@@ -11,11 +11,11 @@ import '../../app/globals.css';
 declare global {interface Window {PMSV:{base:string;publicBase:string}}}
 window.PMSV ??= {base:'',publicBase:''};
 let path=location.pathname.slice(window.PMSV.base.length).replace(/\/+$/,'')||'/';
-// Retired download links return to the website, including cached client navigation.
-if(path==='/downloads'){history.replaceState(null,'',window.PMSV.base+'/');path='/';}
+// Retired feature links return to the website, including cached client navigation.
+if(path==='/downloads'||path==='/bookmarks'){history.replaceState(null,'',window.PMSV.base+'/');path='/';}
 const parts=path.split('/').filter(Boolean);const discussionId=parts[0]==='discussions'&&parts.length===2&&/^[0-9]+$/.test(parts[1])?parts[1]:undefined;const discussionAsk=parts[0]==='discussions'&&parts.length===2&&parts[1]==='ask';const discussionTopic=parts[0]==='discussions'&&parts[1]==='topic'&&parts.length===3&&['food-safety','quality','process-excellence'].includes(parts[2])?parts[2] as 'food-safety'|'quality'|'process-excellence':undefined;let view:View|null=null;
 if(!parts.length)view={kind:'home'};
-else if(parts.length===1&&['updates','regulatory','news','blogs','bookmarks'].includes(parts[0]))view={kind:parts[0] as 'updates'|'regulatory'|'news'|'blogs'|'bookmarks'};
+else if(parts.length===1&&['updates','regulatory','news','blogs'].includes(parts[0]))view={kind:parts[0] as 'updates'|'regulatory'|'news'|'blogs'};
 else if(parts[0]==='blogs'&&parts.length===2)view={kind:'blog-tag',tag:parts[1]};
 else if(parts[0]==='regulatory'&&parts.length===2&&regions.some(r=>r.id===parts[1]))view={kind:'country',region:parts[1]};
 else if(parts[0]==='news'&&parts.length===2&&['india','global'].includes(parts[1]))view={kind:'feed',region:parts[1]};

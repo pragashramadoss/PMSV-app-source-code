@@ -1,4 +1,4 @@
-export const NOTIFICATION_VERSION='1.0.29';
+export const NOTIFICATION_VERSION='1.0.30';
 export type NotificationCheck={label:string;value:string};
 
 export function installedNotificationContext(){
