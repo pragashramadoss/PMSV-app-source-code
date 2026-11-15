@@ -36,6 +36,7 @@ final class PMSVUITests: XCTestCase {
         app.launchArguments = ["-pmsv-ui-testing"]
         app.launch()
         XCTAssertTrue(app.webViews.staticTexts["Welcome to the Forum"].firstMatch.waitForExistence(timeout: 30))
+        XCTAssertTrue(app.webViews.images["PMSV family logo loaded"].firstMatch.waitForExistence(timeout: 15))
         let home = XCTAttachment(screenshot: app.screenshot()); home.name = "PMSV-iPhone-Home"; home.lifetime = .keepAlways; add(home)
         let licence = app.webViews.links.matching(NSPredicate(format: "label CONTAINS 'FSSAI Licence'")).firstMatch
         XCTAssertTrue(licence.waitForExistence(timeout: 10)); licence.tap()

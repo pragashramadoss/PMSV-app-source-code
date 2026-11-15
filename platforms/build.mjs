@@ -11,6 +11,8 @@ await build(mergeConfig(wp,{
  build:{outDir:out,emptyOutDir:true,manifest:true,rollupOptions:{input:{app:path.join(here,'index.html'),runtime:path.join(here,'shared/runtime.ts')},output:{entryFileNames:'native/[name].js',chunkFileNames:'native/[name]-[hash].js',assetFileNames:'native/[name]-[hash][extname]'}}}
 }));
 await cp(path.join(root,'wordpress/plugin/public'),out,{recursive:true});
+// Use the smaller RGB app-logo asset for reliable decoding in the iPhone web view.
+await cp(path.join(root,'wordpress/plugin/public/icons/pmsv-family-512.png'),path.join(out,'brand/pmsv-family.png'));
 await cp(path.join(root,'wordpress/plugin/archive-seed.json'),path.join(out,'archive-seed.json'));
 await cp(path.join(here,'shared/native-tool-shell.css'),path.join(out,'native/tool-shell.css'));
 await cp(path.join(here,'shared/tool-chrome.css'),path.join(out,'native/tool-chrome.css'));
