@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
@@ -22,8 +23,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalFocusManager
@@ -40,21 +46,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import java.text.DateFormat
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.Date
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 
-// Match the website's light palette, compact cards and navigation.
+// PMSV's website palette, with a shared editorial treatment across app screens.
 private val Teal = Color(0xFF075C58)
 private val Navy = Color(0xFF18243E)
 private val Blue = Color(0xFF3155D9)
-private val Muted = Color(0xFF728099)
-private val Line = Color(0xFFE2E7F0)
-private val Page = Color(0xFFF0F3F9)
-private val CardShape = RoundedCornerShape(12.dp)
-private val ButtonShape = RoundedCornerShape(8.dp)
+private val Muted = Color(0xFF65758F)
+private val Line = Color(0xFFE1E7F1)
+private val Page = Color(0xFFF3F6FC)
+private val CardShape = RoundedCornerShape(16.dp)
+private val ButtonShape = RoundedCornerShape(11.dp)
 
 @Composable fun PmsvTheme(content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = lightColorScheme(primary = Teal, onPrimary = Color.White,
@@ -176,9 +180,9 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                 val recent = (home || screen == "updates" || screen == "regulatory") && query.isBlank()
                 key(screen, region) {
                 LazyColumn(contentPadding = PaddingValues(start = 18.dp, end = 18.dp, top = 18.dp, bottom = 24.dp)) {
-                    if (!home) item { Breadcrumb(heading, back, modifier = Modifier.padding(bottom = 8.dp), inset = false) }
+                    if (!home) item { Breadcrumb("Back", back, modifier = Modifier.padding(bottom = 4.dp), inset = false) }
                     item {
-                        PageTitle(heading)
+                        if (home) HomeWelcome() else PageTitle(heading)
                         val intro = when (screen) {
                             "home" -> "Learn, share and stay updated on food safety, quality and process excellence."
                             "updates" -> "Regulatory, food safety, quality, process excellence, certification and blog updates in one place."
@@ -186,7 +190,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                             "saved" -> "Saved headlines and summaries stay available offline on this phone."
                             else -> ""
                         }
-                        if (intro.isNotBlank()) Text(intro, color = Muted, fontSize = 13.sp, lineHeight = 19.sp, modifier = Modifier.padding(top = 4.dp))
+                        if (!home && intro.isNotBlank()) Text(intro, color = Muted, fontSize = 13.sp, lineHeight = 19.sp, modifier = Modifier.padding(top = 4.dp))
                         Spacer(Modifier.height(12.dp))
                         SearchBox(query, { query = it }, home || screen == "updates")
                         Spacer(Modifier.height(16.dp))
@@ -214,9 +218,12 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     if (state.error != null && !saved) item { StatusMessage(state.error, refresh); Spacer(Modifier.height(14.dp)) }
                     item {
                         Row(Modifier.fillMaxWidth().padding(bottom = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Text(if (query.isNotBlank()) "Search results" else if (recent) "Latest updates" else if (saved) "On this device" else "Latest stories",
-                                fontSize = 17.sp, lineHeight = 23.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-                            if (recent) Text("All sections".takeIf { home || screen == "updates" } ?: "Regulatory", fontSize = 12.sp, color = Muted)
+                            Column(Modifier.weight(1f)) {
+                                if (recent) Text("NEWS & INSIGHTS", color = Blue, fontSize = 9.sp, lineHeight = 1.3.em, letterSpacing = 1.1.sp, fontWeight = FontWeight.Bold)
+                                Text(if (query.isNotBlank()) "Search results" else if (recent) "Latest updates" else if (saved) "On this device" else "Latest stories",
+                                    fontSize = 18.sp, lineHeight = 1.35.em, fontWeight = FontWeight.Bold)
+                            }
+                            if (recent) Text("All sections".takeIf { home || screen == "updates" } ?: "Regulatory", fontSize = 11.sp, color = Muted)
                             else Text("${visible.size} ${if (visible.size == 1) "item" else "items"}", fontSize = 12.sp, color = Muted)
                         }
                     }
@@ -226,7 +233,10 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     }
                     if (recent) {
                         val latest = visible.take(5)
-                        itemsIndexed(latest, key = { _, item -> item.id }) { index, item -> RecentUpdateRow(item, index == 0, index == latest.lastIndex) { articleId = item.id } }
+                        itemsIndexed(latest, key = { _, item -> item.id }) { index, item ->
+                            RecentUpdateRow(item, index == 0) { articleId = item.id }
+                            if (index != latest.lastIndex) Spacer(Modifier.height(8.dp))
+                        }
                         if (visible.size > 5) item {
                             TextButton(onClick = { filter = if (screen == "regulatory") "fssai" else "all"; screen = "feed" }, modifier = Modifier.fillMaxWidth().padding(top = 6.dp), shape = ButtonShape) { Text("View all updates", color = Blue) }
                         }
@@ -251,15 +261,15 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     onRefresh: () -> Unit, refreshEnabled: Boolean = true, refreshLabel: String = "Refresh updates"
 ) {
     var menu by remember { mutableStateOf(false) }
-    Surface(color = Color.White) {
+    Surface(color = Color.White, shadowElevation = 1.dp) {
         Column(Modifier.testTag("pmsv-header").statusBarsPadding()) {
-            Row(Modifier.fillMaxWidth().heightIn(min = 78.dp).padding(horizontal = 18.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Row(Modifier.fillMaxWidth().heightIn(min = 68.dp).padding(horizontal = 18.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
                 Row(Modifier.weight(1f).clickable(onClick = onHome).semantics { contentDescription = "PMSV home" },
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
-                    Image(painterResource(R.drawable.pmsv_logo), null, Modifier.size(50.dp))
+                    Image(painterResource(R.drawable.pmsv_logo), null, Modifier.size(44.dp))
                     Column(Modifier.weight(1f).padding(end = 4.dp)) {
                         Text("PMSV", modifier = Modifier.fillMaxWidth(), fontSize = 19.sp, lineHeight = 1.25.em, letterSpacing = (-0.5).sp, fontWeight = FontWeight.ExtraBold)
-                        Text("Food Safety & Quality Forum", modifier = Modifier.fillMaxWidth(), fontSize = 12.sp, lineHeight = 1.35.em, fontWeight = FontWeight.Medium)
+                        Text("Food Safety & Quality Forum", modifier = Modifier.fillMaxWidth(), color = Muted, fontSize = 11.sp, lineHeight = 1.4.em, fontWeight = FontWeight.Medium)
                     }
                 }
                 OutlinedIconButton(onClick = onNotifications, modifier = Modifier.size(40.dp), shape = RoundedCornerShape(10.dp), border = BorderStroke(1.dp, Color(0xFFDCE4F7)),
@@ -296,22 +306,40 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
 }
 
 @Composable internal fun PmsvNavigation(screen: String, go: (String) -> Unit) {
-    Surface(color = Color.White) {
+    Surface(color = Color.White, shadowElevation = 8.dp, shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)) {
         Column(Modifier.testTag("pmsv-navigation").navigationBarsPadding()) {
-            HorizontalDivider(color = Line)
-            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 4.dp, vertical = 7.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(horizontal = 5.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
                 destinations.forEach { destination ->
                     val selected = screen == destination.id || (destination.id == "updates" && screen in listOf("feed", "regulatory"))
-                    Column(Modifier.weight(1f).background(if (selected) Color(0xFFEDF2FF) else Color.Transparent, RoundedCornerShape(10.dp))
+                    Column(Modifier.weight(1f).clip(RoundedCornerShape(12.dp))
                         .selectable(selected = selected, role = Role.Tab, onClick = { go(destination.id) })
                         .semantics { contentDescription = "Navigate to ${destination.title}" }
-                        .fillMaxHeight().heightIn(min = 60.dp).padding(horizontal = 1.dp, vertical = 7.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)) {
-                        Icon(destination.icon, null, tint = if (selected) Blue else Color(0xFF8591A6), modifier = Modifier.size(20.dp))
-                        Text(destination.title, modifier = Modifier.fillMaxWidth(), fontSize = 11.sp, lineHeight = 1.3.em, fontWeight = FontWeight.Bold, color = if (selected) Blue else Color(0xFF8591A6), textAlign = TextAlign.Center)
+                        .fillMaxHeight().heightIn(min = 54.dp).padding(vertical = 4.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically)) {
+                        Box(Modifier.size(width = 42.dp, height = 28.dp).background(if (selected) Color(0xFFE9EFFF) else Color.Transparent, RoundedCornerShape(10.dp)), contentAlignment = Alignment.Center) {
+                            Icon(destination.icon, null, tint = if (selected) Blue else Muted, modifier = Modifier.size(20.dp))
+                        }
+                        Text(destination.title, modifier = Modifier.fillMaxWidth(), fontSize = 10.sp, lineHeight = 1.35.em, fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium, color = if (selected) Blue else Muted, textAlign = TextAlign.Center)
                     }
                 }
             }
         }
+    }
+}
+@Composable private fun HomeWelcome() {
+    Column(Modifier.fillMaxWidth().testTag("home-welcome").clip(RoundedCornerShape(20.dp))
+        .background(Brush.linearGradient(listOf(Color(0xFF183369), Blue)))
+        .drawBehind {
+            val centre = Offset(size.width + 20.dp.toPx(), 10.dp.toPx())
+            listOf(72.dp, 110.dp, 148.dp).forEach { radius ->
+                drawCircle(Color.White.copy(alpha = 0.07f), radius.toPx(), centre, style = Stroke(1.dp.toPx()))
+            }
+        }.padding(18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Box(Modifier.size(5.dp).background(Color(0xFF7CE2CD), CircleShape))
+            Text("FOOD SAFETY · QUALITY · EXCELLENCE", color = Color(0xFFD8E5FF), fontSize = 9.sp, lineHeight = 1.4.em, letterSpacing = 0.8.sp, fontWeight = FontWeight.Bold)
+        }
+        Text("Welcome to the Forum", modifier = Modifier.fillMaxWidth(), color = Color.White, fontSize = 23.sp, lineHeight = 1.25.em, letterSpacing = (-0.6).sp, fontWeight = FontWeight.Bold)
+        Text("Learn, share and stay updated on food safety, quality and process excellence.", color = Color(0xFFE1E9FF), fontSize = 12.sp, lineHeight = 1.5.em)
     }
 }
 @Composable private fun PageTitle(text: String) { Text(text, modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleLarge, lineHeight = 1.3.em) }
@@ -330,14 +358,14 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
         textStyle = MaterialTheme.typography.bodyMedium.copy(color = Navy), cursorBrush = SolidColor(Blue),
         interactionSource = interaction, keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions(onSearch = { focus.clearFocus() }), decorationBox = { input ->
-            Row(Modifier.fillMaxWidth().background(Color.White, CardShape)
-                .border(1.dp, if (focused) Blue else Line, CardShape).heightIn(min = 50.dp)
+            Row(Modifier.fillMaxWidth().background(Color.White, RoundedCornerShape(14.dp))
+                .border(1.dp, if (focused) Blue else Line, RoundedCornerShape(14.dp)).heightIn(min = 48.dp)
                 .padding(start = 14.dp, end = if (value.isEmpty()) 14.dp else 2.dp),
                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Icon(PmsvIcons.Search, null, tint = Muted, modifier = Modifier.size(20.dp))
+                Icon(PmsvIcons.Search, null, tint = Blue, modifier = Modifier.size(19.dp))
                 Box(Modifier.weight(1f).padding(vertical = 12.dp)) {
-                    if (value.isEmpty()) Text(if (global) "Search all topics, countries, regulators and news…" else "Search this feed by topic, organisation or date…",
-                        color = Color(0xFF8895A8), fontSize = 14.sp, lineHeight = 20.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    if (value.isEmpty()) Text(if (global) "Search news, topics & regulators" else "Search this feed",
+                        color = Muted, fontSize = 13.sp, lineHeight = 1.4.em, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     input()
                 }
                 if (value.isNotEmpty()) IconButton(onClick = { update("") }) { Icon(Icons.Outlined.Close, "Clear search", modifier = Modifier.size(18.dp)) }
@@ -345,12 +373,18 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
         })
 }
 @Composable private fun HomeLauncher(entries: List<Destination>, select: (String) -> Unit) {
-    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).testTag("home-tools"), horizontalArrangement = Arrangement.spacedBy(7.dp)) {
+    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min).testTag("home-tools"), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         entries.forEach { entry ->
-            OutlinedCard(onClick = { select(entry.id) }, modifier = Modifier.weight(1f).fillMaxHeight().heightIn(min = 78.dp), shape = CardShape,
-                colors = CardDefaults.outlinedCardColors(containerColor = Color.White), border = BorderStroke(1.dp, Line)) {
-                Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Icon(entry.icon, null, tint = entry.tint, modifier = Modifier.size(21.dp))
+            Surface(onClick = { select(entry.id) }, modifier = Modifier.weight(1f).fillMaxHeight().heightIn(min = 94.dp), shape = CardShape,
+                color = Color.White, shadowElevation = 1.dp, border = BorderStroke(0.5.dp, Line)) {
+                Column(Modifier.padding(11.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Box(Modifier.size(32.dp).background(entry.tint.copy(alpha = 0.10f), RoundedCornerShape(10.dp)), contentAlignment = Alignment.Center) {
+                            Icon(entry.icon, null, tint = entry.tint, modifier = Modifier.size(19.dp))
+                        }
+                        Spacer(Modifier.weight(1f))
+                        Icon(PmsvIcons.ArrowUpRight, null, tint = entry.tint.copy(alpha = 0.6f), modifier = Modifier.size(14.dp))
+                    }
                     Text(if (entry.id == "licence") "FSSAI\nLicence" else entry.title, modifier = Modifier.fillMaxWidth(), fontSize = 13.sp, lineHeight = 1.25.em, fontWeight = FontWeight.Bold)
                 }
             }
@@ -358,16 +392,17 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     }
 }
 @Composable private fun TopicLauncher(entries: List<Destination>, select: (String) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(9.dp)) {
         entries.chunked(3).forEach { row ->
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEach { entry ->
-                    Column(Modifier.weight(1f).clickable(role = Role.Button) { select(entry.id) }.padding(horizontal = 2.dp, vertical = 6.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(9.dp)) {
-                        Box(Modifier.size(58.dp).background(entry.tint.copy(alpha = 0.09f), RoundedCornerShape(17.dp)), contentAlignment = Alignment.Center) {
-                            Icon(entry.icon, null, tint = entry.tint, modifier = Modifier.size(29.dp))
+                    Column(Modifier.weight(1f).clip(CardShape).background(Color.White).border(0.5.dp, Line, CardShape)
+                        .clickable(role = Role.Button) { select(entry.id) }.semantics { contentDescription = "Browse ${entry.title}" }.padding(horizontal = 7.dp, vertical = 12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Box(Modifier.size(38.dp).background(entry.tint.copy(alpha = 0.10f), RoundedCornerShape(12.dp)), contentAlignment = Alignment.Center) {
+                            Icon(entry.icon, null, tint = entry.tint, modifier = Modifier.size(22.dp))
                         }
-                        Text(entry.title, fontSize = 14.sp, lineHeight = 19.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+                        Text(entry.title, modifier = Modifier.fillMaxWidth(), fontSize = 12.sp, lineHeight = 1.3.em, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
                     }
                 }
                 repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
@@ -383,11 +418,16 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
                     OutlinedCard(onClick = { select(id) }, modifier = Modifier.weight(1f).fillMaxHeight()
                         .semantics { contentDescription = name }, shape = RoundedCornerShape(15.dp),
                         colors = CardDefaults.outlinedCardColors(containerColor = Color.White), border = BorderStroke(1.dp, Line)) {
-                        Column(Modifier.fillMaxWidth().padding(horizontal = 15.dp, vertical = 20.dp)) {
-                            Image(painterResource(regionLogos.getValue(id)), null, Modifier.fillMaxWidth().height(55.dp))
-                            Spacer(Modifier.height(16.dp))
-                            Text(name.substringBefore(" · "), fontSize = 17.sp, lineHeight = 22.sp, fontWeight = FontWeight.Bold)
-                            Text(name.substringAfter(" · "), color = Muted, fontSize = 13.sp, lineHeight = 19.sp, modifier = Modifier.padding(top = 4.dp))
+                        Column(Modifier.fillMaxWidth().padding(14.dp)) {
+                            Box(Modifier.fillMaxWidth().background(Page, RoundedCornerShape(10.dp)).padding(8.dp)) {
+                                Image(painterResource(regionLogos.getValue(id)), null, Modifier.fillMaxWidth().height(43.dp))
+                            }
+                            Spacer(Modifier.height(12.dp))
+                            Text(name.substringBefore(" · "), fontSize = 15.sp, lineHeight = 1.35.em, fontWeight = FontWeight.Bold)
+                            Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Text(name.substringAfter(" · "), color = Muted, fontSize = 12.sp, lineHeight = 1.4.em, modifier = Modifier.weight(1f))
+                                Icon(PmsvIcons.ArrowUpRight, null, tint = Blue, modifier = Modifier.size(16.dp))
+                            }
                         }
                     }
                 }
@@ -396,33 +436,58 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
         }
     }
 }
-@Composable private fun RecentUpdateRow(item: NewsItem, first: Boolean, last: Boolean, open: () -> Unit) {
-    Surface(onClick = open, color = Color.White, border = BorderStroke(0.5.dp, Line),
-        shape = RoundedCornerShape(topStart = if (first) 12.dp else 0.dp, topEnd = if (first) 12.dp else 0.dp,
-            bottomStart = if (last) 12.dp else 0.dp, bottomEnd = if (last) 12.dp else 0.dp)) {
-        Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                val today = LocalDate.now(ZoneId.of("Asia/Kolkata")).toString()
-                Text("${item.source} · ${displayDate(item.published)}${if (item.published == today) " · Today" else ""}", color = Muted, fontSize = 12.sp, lineHeight = 17.sp)
-                Text(item.title, color = Color(0xFF253756), fontWeight = FontWeight.SemiBold, fontSize = 14.sp, lineHeight = 20.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
+private fun storyTint(item: NewsItem): Color = when (item.tab) {
+    "fssai" -> Blue
+    "blogs" -> Color(0xFFA53C61)
+    "quality" -> Color(0xFF9A621D)
+    "excellence" -> Color(0xFF176C4A)
+    "certifications" -> Color(0xFF7050A3)
+    else -> Color(0xFF087881)
+}
+private fun storyLabel(item: NewsItem): String = when (item.tab) {
+    "fssai" -> "Regulatory"
+    "blogs" -> "PMSV Blogs"
+    "quality" -> "Quality"
+    "excellence" -> "Excellence"
+    "certifications" -> "Certifications"
+    else -> item.category.ifBlank { "Food safety" }
+}
+@Composable private fun StoryBadge(item: NewsItem, modifier: Modifier = Modifier) {
+    val tint = storyTint(item)
+    Text(storyLabel(item), modifier = modifier.background(tint.copy(alpha = 0.08f), RoundedCornerShape(6.dp)).padding(horizontal = 7.dp, vertical = 3.dp),
+        color = tint, fontSize = 10.sp, lineHeight = 1.3.em, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+}
+@Composable private fun RecentUpdateRow(item: NewsItem, first: Boolean, open: () -> Unit) {
+    Surface(onClick = open, color = Color.White, border = BorderStroke(0.5.dp, if (first) Color(0xFFCEDAF3) else Line),
+        shadowElevation = if (first) 1.dp else 0.dp, shape = CardShape) {
+        Column(Modifier.fillMaxWidth().then(if (first) Modifier.background(Brush.verticalGradient(listOf(Color(0xFFF4F7FF), Color.White))) else Modifier)
+            .padding(horizontal = 13.dp, vertical = 11.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Box(Modifier.weight(1f)) { StoryBadge(item) }
+                Text(displayDate(item.published), color = Muted, fontSize = 10.sp, lineHeight = 1.3.em)
             }
-            Icon(PmsvIcons.ArrowUpRight, null, tint = Blue, modifier = Modifier.size(19.dp))
+            Text(item.title, color = Navy, fontWeight = if (first) FontWeight.Bold else FontWeight.SemiBold,
+                fontSize = if (first) 16.sp else 14.sp, lineHeight = 1.4.em, maxLines = if (first) 3 else 2, overflow = TextOverflow.Ellipsis)
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(item.source, modifier = Modifier.weight(1f).padding(end = 8.dp), color = Muted, fontSize = 10.sp, lineHeight = 1.4.em, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Icon(PmsvIcons.ArrowUpRight, null, tint = storyTint(item), modifier = Modifier.size(16.dp))
+            }
         }
     }
 }
 @Composable private fun NewsCard(item: NewsItem, saved: Boolean, open: () -> Unit, save: () -> Unit) {
     OutlinedCard(onClick = open, modifier = Modifier.fillMaxWidth(), shape = CardShape,
         colors = CardDefaults.outlinedCardColors(containerColor = Color.White), border = BorderStroke(1.dp, Line)) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(item.category, color = Teal, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f).padding(end = 8.dp))
-                Text(displayDate(item.published), color = Muted, fontSize = 11.sp)
+        Column(Modifier.padding(15.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Box(Modifier.weight(1f)) { StoryBadge(item) }
+                Text(displayDate(item.published), color = Muted, fontSize = 10.sp)
             }
-            Text(item.title, fontSize = 18.sp, lineHeight = 25.sp, fontWeight = FontWeight.Bold)
-            if (item.summary.isNotBlank() && item.summary != item.title) Text(item.summary, color = Muted, fontSize = 14.sp, lineHeight = 21.sp, maxLines = 4, overflow = TextOverflow.Ellipsis)
+            Text(item.title, fontSize = 17.sp, lineHeight = 1.4.em, fontWeight = FontWeight.Bold)
+            if (item.summary.isNotBlank() && item.summary != item.title) Text(item.summary, color = Muted, fontSize = 13.sp, lineHeight = 1.5.em, maxLines = 3, overflow = TextOverflow.Ellipsis)
             HorizontalDivider(color = Line)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(item.source, modifier = Modifier.weight(1f), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                Text(item.source, modifier = Modifier.weight(1f), color = Muted, fontSize = 11.sp, fontWeight = FontWeight.Medium)
                 IconButton(onClick = save) { Icon(if (saved) Icons.Outlined.BookmarkAdded else Icons.Outlined.BookmarkBorder, if (saved) "Unsave ${item.title}" else "Save ${item.title}", tint = Blue) }
                 Icon(PmsvIcons.ArrowUpRight, null, tint = Blue, modifier = Modifier.size(20.dp))
             }
@@ -430,13 +495,17 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     }
 }
 @Composable private fun ArticleDetail(item: NewsItem, saved: Boolean, save: () -> Unit, source: () -> Unit, share: () -> Unit) {
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
-        Text(item.source.uppercase(), color = Blue, style = MaterialTheme.typography.labelLarge)
-        PageTitle(item.title)
-        Text("Published ${displayDate(item.published)}\n${item.category}", color = Muted, style = MaterialTheme.typography.bodyMedium)
-        HorizontalDivider(color = Line)
-        Text(item.summary.ifBlank { "Open the source for the full article or official document." }, style = MaterialTheme.typography.bodyLarge)
-        Button(onClick = source, modifier = Modifier.fillMaxWidth(), shape = ButtonShape) { Icon(Icons.AutoMirrored.Outlined.OpenInNew, null); Spacer(Modifier.width(8.dp)); Text("Read original source") }
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(18.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        WhiteCard {
+            StoryBadge(item)
+            PageTitle(item.title)
+            Text("${item.source} · ${displayDate(item.published)}", color = Muted, style = MaterialTheme.typography.bodySmall)
+            if (item.category.isNotBlank() && item.category != storyLabel(item)) Text(item.category, color = Muted, style = MaterialTheme.typography.bodySmall)
+            HorizontalDivider(color = Line)
+            Text(item.summary.ifBlank { "Open the source for the full article or official document." }, style = MaterialTheme.typography.bodyLarge)
+        }
+        Button(onClick = source, modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp), shape = ButtonShape,
+            colors = ButtonDefaults.buttonColors(containerColor = Blue)) { Icon(Icons.AutoMirrored.Outlined.OpenInNew, null, modifier = Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Read original source") }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             OutlinedButton(onClick = save, modifier = Modifier.weight(1f), shape = ButtonShape) { Text(if (saved) "Saved" else "Save update") }
             OutlinedButton(onClick = share, modifier = Modifier.weight(1f), shape = ButtonShape) { Icon(Icons.Outlined.Share, null); Spacer(Modifier.width(6.dp)); Text("Share") }

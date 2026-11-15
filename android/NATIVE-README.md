@@ -11,14 +11,15 @@ Updates/News includes regulatory country desks and professional topics. Blogs,
 saved updates, details and the notification dialog retain the same visual style.
 The light theme is intentional, matching the website regardless of Chrome settings.
 
-Version 2.0.4 uses the website's compact mobile spacing, untracked typography,
-light blue-grey background and Lucide outline icons. The home screen has three
-primary tool cards and five recent headlines; Blogs and Discussions remain in
-the footer. View all updates opens the complete feed. Topic shortcuts and
-regulator cards use the website's colours and original regulator logos.
-Headings, cards and controls in the installed tools follow the same sizing.
-Text still follows Android accessibility scaling, with navigation allowed to
-grow instead of clipping labels. The Lucide licence is bundled in assets/licenses.
+Version 2.0.5 adds a blue PMSV welcome panel, distinct tool icon tiles, colour-coded
+news badges, compact source/date metadata, an emphasized leading headline, and
+lighter selected-tab indicators. The same rounded blue introduction panels,
+card surfaces and control styles continue into the installed audit and licence
+tools. Programme tiles use outline icons instead of emoji. The website palette,
+original logos and familiar five destinations remain intact. Home still offers
+three primary tools, five recent headlines and access to the complete feed.
+Text follows Android accessibility scaling without clipping. The Lucide licence
+is bundled in assets/licenses.
 
 The app keeps the SAME native masthead, notification dialog and five-tab
 footer around Audits, FSSAI Licence and Discussions. Tool subpages update the

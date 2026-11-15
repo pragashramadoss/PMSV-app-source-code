@@ -1,76 +1,102 @@
-/* App-only presentation: keep form behaviour, saved data and content intact. */
+/* App-only presentation. Form logic, scoring and saved records are unchanged. */
 html[data-pmsv-native] {
   color-scheme: light;
   --blue: #3155d9; --navy: #18243e; --ink: #18243e;
-  --bg: #f0f3f9; --muted: #728099; --line: #e2e7f0;
+  --bg: #f3f6fc; --muted: #65758f; --line: #e1e7f1;
+  --pmsv-ink: #18243e; --pmsv-muted: #65758f; --pmsv-line: #e1e7f1;
 }
 html[data-pmsv-native] body {
-  margin: 0 !important; padding: 0 !important;
-  min-height: 100dvh !important;
-  background: #f0f3f9 !important; color: #18243e;
-  font-family: Roboto, system-ui, sans-serif !important;
-  font-size: 14px; line-height: 1.5;
+  margin: 0 !important; padding: 0 !important; min-height: 100dvh !important;
+  background: #f3f6fc !important; color: #18243e;
+  font-family: Roboto, system-ui, sans-serif !important; font-size: 14px; line-height: 1.5;
+  -webkit-tap-highlight-color: #3155d918;
 }
-/* Only workspace chrome is replaced. Tool tabs and content footers stay visible. */
+/* One native masthead and footer surround every screen. */
 html[data-pmsv-native] .pmsv-audit-nav,
 html[data-pmsv-native] .pmsv-audit-masthead,
 html[data-pmsv-native] .helper-bottom-nav,
 html[data-pmsv-native] .app-dashboard > .masthead,
 html[data-pmsv-native] .app-dashboard > .primary-nav { display: none !important; }
-html[data-pmsv-native] .app-dashboard {
-  padding: 0 !important; min-height: 100dvh !important;
-}
+html[data-pmsv-native] .app-dashboard { padding: 0 !important; min-height: 100dvh !important; }
+/* The installed tools use the same blue introduction panel as native Home. */
 html[data-pmsv-native="audits"] body > header,
 html[data-pmsv-native="audits"] body > .top,
 html[data-pmsv-native="licence"] body > .top {
-  position: static !important; background: #f0f3f9 !important;
-  color: #18243e !important; box-shadow: none !important;
-  border: 0 !important; padding: 18px 18px 0 !important;
+  position: static !important; color: #fff !important;
+  background: radial-gradient(circle at 105% 0%, transparent 0 72px, #ffffff12 73px 74px, transparent 75px 110px, #ffffff12 111px 112px, transparent 113px), linear-gradient(135deg,#183369,#3155d9) !important;
+  border: 0 !important; border-radius: 20px !important;
+  margin: 16px 18px 0 !important; padding: 18px !important;
+  box-shadow: 0 4px 14px #1833690b !important;
 }
-html[data-pmsv-native="audits"] body > header .brand,
 html[data-pmsv-native="audits"] body > header .links,
-html[data-pmsv-native="licence"] .top .badge,
 html[data-pmsv-native="licence"] .top p:has(a[href="/"]) { display: none !important; }
 html[data-pmsv-native="audits"] body > header .wrap,
 html[data-pmsv-native="licence"] .top .wrap {
   width: 100% !important; max-width: 980px; padding: 0 !important; margin: auto !important;
 }
+html[data-pmsv-native="audits"] body > header .brand,
+html[data-pmsv-native="licence"] .top .badge {
+  display: block !important; background: none !important; border: 0 !important; padding: 0 !important;
+  font-size: 9px !important; font-weight: 700; letter-spacing: .8px !important;
+  color: #d8e5ff !important; margin: 0 0 6px !important;
+}
 html[data-pmsv-native="audits"] body > header h1,
+html[data-pmsv-native="audits"] body > .top h1,
 html[data-pmsv-native="licence"] .top h1 {
-  margin: 0 0 4px !important; font-size: 23px !important;
-  line-height: 29px !important; font-weight: 700; letter-spacing: -0.5px !important;
+  margin: 0 0 6px !important; font-size: 23px !important;
+  line-height: 1.25 !important; font-weight: 700; letter-spacing: -.6px !important; color: #fff !important;
 }
 html[data-pmsv-native="audits"] body > header p,
 html[data-pmsv-native="audits"] body > header .hero p,
-html[data-pmsv-native="licence"] .top p { color: #728099 !important; font-size: 13px !important; line-height: 19px !important; }
-html[data-pmsv-native="audits"] main {
-  margin: auto !important; padding: 16px 18px 24px !important; max-width: 1016px;
-}
+html[data-pmsv-native="audits"] body > .top p,
+html[data-pmsv-native="licence"] .top p { color: #e1e9ff !important; font-size: 12px !important; line-height: 1.5 !important; }
+html[data-pmsv-native="audits"] main { margin: auto !important; padding: 16px 18px 24px !important; max-width: 1016px; }
 html[data-pmsv-native="audits"] main > .wrap { padding: 0 !important; width: 100% !important; }
 html[data-pmsv-native="audits"] .scorebar,
 html[data-pmsv-native="audits"] .score { top: 0 !important; }
-html[data-pmsv-native="licence"] main.wrap {
-  width: auto !important; max-width: 980px; margin: auto;
-  padding: 0 18px 24px !important;
+html[data-pmsv-native="licence"] main.wrap { width: auto !important; max-width: 980px; margin: auto; padding: 0 18px 24px !important; }
+/* Segmented tool tabs, with a clear selected state. */
+html[data-pmsv-native="licence"] .tabs { padding: 4px; margin: 14px 0; gap: 3px; background: #e8edf6; border-radius: 13px; }
+html[data-pmsv-native="licence"] .tab {
+  flex: 1; border: 0; border-radius: 10px; background: transparent; color: #65758f;
+  font-size: 12px; min-height: 44px; padding: 9px 8px; font-weight: 600;
 }
-html[data-pmsv-native="licence"] .tabs { padding: 14px 0; gap: 7px; }
-html[data-pmsv-native="licence"] .tab { border-radius: 999px; font-size: 13px; min-height: 44px; padding: 9px 13px; }
+html[data-pmsv-native="licence"] .tab.active { background: #fff; color: #3155d9; box-shadow: 0 2px 5px #1833690d; }
 html[data-pmsv-native="licence"] .card,
 html[data-pmsv-native="audits"] .panel {
-  border-color: #e2e7f0 !important; border-radius: 12px !important; box-shadow: none !important;
-  padding: 16px !important;
+  border-color: #e1e7f1 !important; border-radius: 16px !important;
+  box-shadow: 0 3px 12px #18336907 !important; padding: 16px !important;
 }
 html[data-pmsv-native="licence"] .card h2,
-html[data-pmsv-native="audits"] .panel > h2 { font-size: 20px; line-height: 26px; letter-spacing: -0.3px; }
-html[data-pmsv-native="licence"] .card h3 { font-size: 16px; line-height: 22px; }
+html[data-pmsv-native="audits"] .panel > h2 { font-size: 20px; line-height: 1.3; letter-spacing: -.3px; }
+html[data-pmsv-native="licence"] .card h3 { font-size: 16px; line-height: 1.4; }
 html[data-pmsv-native="licence"] .muted,
-html[data-pmsv-native="audits"] .hint { font-size: 13px; line-height: 19px; }
+html[data-pmsv-native="audits"] .hint { font-size: 13px; line-height: 1.5; }
 html[data-pmsv-native="audits"] .hint { margin-bottom: 16px; }
-html[data-pmsv-native="audits"] .tile { border-radius: 12px !important; padding: 11px !important; }
-html[data-pmsv-native="audits"] .tile .title { font-size: 14px !important; line-height: 19px; }
-html[data-pmsv-native="licence"] .mini { padding: 12px; border-radius: 10px; }
-html[data-pmsv-native="licence"] .btn { border-radius: 8px; font-size: 14px; min-height: 44px; padding: 10px 14px; }
-html[data-pmsv-native="licence"] .q { font-size: 20px; line-height: 26px; }
-html[data-pmsv-native="licence"] .choice { font-size: 14px; line-height: 20px; padding: 12px; }
-html[data-pmsv-native="licence"] .footer { padding: 8px 0 20px; line-height: 17px; }
+html[data-pmsv-native="audits"] .tile { position: relative; border-radius: 14px !important; padding: 13px !important; }
+html[data-pmsv-native="audits"] .tile .title { font-size: 14px !important; line-height: 1.35; }
+/* Programme tiles replace emoji with the same outline icon family as the app. */
+html[data-pmsv-native="audits"] body:has(.hero) .panel .grid .tile { background: #f5faf8 !important; border-color: #dcebe5 !important; }
+html[data-pmsv-native="audits"] body:has(.hero) .panel .grid .tile:nth-child(2) { background: #f4f7ff !important; border-color: #dce4f7 !important; }
+html[data-pmsv-native="audits"] body:has(.hero) .panel .grid .tile::after { content: '\2197'; position: absolute; right: 13px; top: 14px; color: #65758f; font-size: 17px; }
+html[data-pmsv-native="audits"] body:has(.hero) .tile .icon {
+  display: block !important; width: 36px; height: 36px; font-size: 0 !important; margin-bottom: 12px !important; border-radius: 10px;
+  background: #e3f0e9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23136c48' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E") center/22px no-repeat !important;
+}
+html[data-pmsv-native="audits"] body:has(.hero) .tile:nth-child(2) .icon {
+  background: #e7edff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233155d9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='m8.2 13-1 9 4.8-3 4.8 3-1-9'/%3E%3C/svg%3E") center/22px no-repeat !important;
+}
+html[data-pmsv-native="licence"] .pill { font-size: 10px; padding: 4px 8px; background: #eaf0ff; color: #3155d9; border-radius: 6px; }
+html[data-pmsv-native="licence"] .mini { padding: 13px; border-radius: 12px; border: 0; background: #f3f6fc; }
+html[data-pmsv-native="licence"] .mini > b { font-size: 14px; color: #18243e; }
+html[data-pmsv-native="licence"] .btn { border-radius: 11px; font-size: 14px; min-height: 44px; padding: 11px 15px; }
+html[data-pmsv-native="licence"] #startLicenceBtn { width: 100%; margin: 2px 0 4px; box-shadow: 0 3px 8px #3155d91a; }
+html[data-pmsv-native="licence"] .q { font-size: 20px; line-height: 1.3; }
+html[data-pmsv-native="licence"] .choice { font-size: 14px; line-height: 1.4; padding: 13px; border-radius: 12px; }
+html[data-pmsv-native="licence"] .choice.selected { box-shadow: 0 0 0 1px #3155d9 inset; }
+html[data-pmsv-native="licence"] .footer { padding: 8px 0 20px; line-height: 1.5; font-size: 11px; }
 html[data-pmsv-native] .app-dashboard > main { padding: 18px 18px 24px !important; }
+html[data-pmsv-native] :focus-visible { outline: 2px solid #3155d9; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-pmsv-native] .tile, html[data-pmsv-native] .btn, html[data-pmsv-native] .tab { transition: background-color .15s, border-color .15s; }
+}
