@@ -9,17 +9,24 @@ export default function PrivacyPage() {
   return <main className="privacy-page">
     <Link href="/">← Back to PMSV</Link>
     <header><img src="/icons/pmsv-family-64.png" alt="PMSV" width="64" height="64"/><div><h1>Privacy policy</h1><p>PMSV Food Safety Updates</p></div></header>
-    <p><strong>Effective date: 27 September 2026</strong></p>
+    <p><strong>Effective date: 15 November 2026</strong></p>
     <p>PMSV Food Safety Updates is operated by Pragash Ramadoss under the PMSV name. This policy covers pmsvgroup.com and the PMSV app that displays this service. For support or privacy requests, email <a href="mailto:Pragash.ramadoss@gmail.com">Pragash.ramadoss@gmail.com</a>.</p>
 
     <h2>Reading and searching</h2>
-    <p>You do not need an account to read PMSV. News searches run in your browser against the downloaded news archive; the app does not send your search terms to a separate analytics service. The current app does not include advertising or reader analytics trackers, or request access to your contacts, camera, microphone or precise location.</p>
+    <p>You do not need an account to read PMSV. News searches run on your device against the downloaded news archive; the app does not send your search terms to a separate analytics service. The current app does not include advertising or reader analytics trackers, or request access to your contacts, camera, microphone or precise location.</p>
 
-    <h2>Optional notifications</h2>
+    <h2>Website notifications</h2>
     <p>Notifications require your device or browser permission. If you enable them, PMSV stores a push subscription address that identifies your browser or installation, hashed subscription and management identifiers, and timestamps used to track delivery attempts and prevent duplicate alerts. We use these records to provide the notifications you requested, manage your subscription and prevent abuse.</p>
     <p>Your browser or operating system’s push provider processes the subscription address and delivery requests. Notification content can appear on your lock screen depending on your device settings.</p>
 
-    <h2>Device storage</h2>
+    <h2>Native Android app</h2>
+    <p>The Android app stores downloaded news, bookmarks, notification preferences and saved audit or licence assessments in private storage on your phone. Audit and licence forms are included in the installer and can be used offline. These saved records are not uploaded to GitHub or to a PMSV cloud backup. Updating the same app keeps its records; clearing its data or uninstalling it can remove them. Records saved in an earlier browser or Chrome-based app stay in that browser and are not imported automatically.</p>
+    <p>When enabled, native news alerts periodically fetch the PMSV news feed and create a notification on your phone. This version does not register an FCM push token for these news alerts. You can turn native alerts off in PMSV or Android notification settings. Network requests for news, discussions and external links are processed by the relevant hosting services as described below.</p>
+
+    <h2>Discussions</h2>
+    <p>If you choose to post a question or answer, your display name and message are sent to PMSV and may be publicly displayed with the post date and category. Moderators may review or remove content. Optional answer alerts use the website notification subscription. Please do not include confidential audit findings or personal documents in public discussions. Contact the support email below to request removal of a post you submitted.</p>
+
+    <h2>Website device storage</h2>
     <p>PMSV stores your notification preference, a subscription management token and whether a permission prompt has been shown in your browser. A service worker caches an offline information page. This storage supports app functions and is not used for advertising. It stays on your device until it is cleared or removed by the browser.</p>
 
     <h2>Hosting, security and service providers</h2>

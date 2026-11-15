@@ -2,12 +2,13 @@
 import {useEffect,useState} from 'react';
 import {Bell,BellRing,Download} from 'lucide-react';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogDescription} from '@/components/ui/dialog';
-import {installedNotificationContext,readNotificationStatus,requestNotificationPermission,type NotificationCheck} from '@/lib/notification-status';
+import {readNotificationStatus,requestNotificationPermission,type NotificationCheck} from '@/lib/notification-status';
 
 type InstallEvent=Event&{prompt:()=>Promise<void>;userChoice:Promise<{outcome:string}>};
 type PMSVWindow=Window&{PMSV?:{base?:string;publicBase?:string;installPrompt?:InstallEvent|null}};
 
 function basePath(){
+ if(typeof window==='undefined')return '';
  const base=((window as PMSVWindow).PMSV?.base||'').replace(/\/$/,'');
  return base;
 }
@@ -22,7 +23,7 @@ function pushKey(value:string){
  return Uint8Array.from(raw,c=>c.charCodeAt(0));
 }
 async function registerPmsvServiceWorker(){
- const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.25'),{scope:appUrl('/'),updateViaCache:'none'});
+ const reg=await navigator.serviceWorker.register(appUrl('/?pmsv-sw=1&v=1.0.26'),{scope:appUrl('/'),updateViaCache:'none'});
  await navigator.serviceWorker.ready;
  return reg;
 }
@@ -113,35 +114,11 @@ export async function subscribeToDiscussionAnswers():Promise<{endpoint:string;to
 }
 
 export default function AppNotifications(){
- const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false),[installed,setInstalled]=useState(false),[install,setInstall]=useState<InstallEvent|null>(null);
+ const [open,setOpen]=useState(false),[enabled,setEnabled]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[supported,setSupported]=useState(false);
  const [checks,setChecks]=useState<NotificationCheck[]>([]),[checking,setChecking]=useState(false);
 
  useEffect(()=>{
-  setInstalled(installedNotificationContext());
   setSupported(window.isSecureContext&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
-
-  const cached=(window as PMSVWindow).PMSV?.installPrompt||null;
-  if(cached)setInstall(cached);
-
-  const onPrompt=(e:Event)=>{
-   e.preventDefault();
-   const event=e as InstallEvent;
-   if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=event;
-   setInstall(event);
-  };
-  const onAvailable=()=>{
-   const event=(window as PMSVWindow).PMSV?.installPrompt||null;
-   if(event)setInstall(event);
-  };
-  const onInstalled=()=>{
-   setInstalled(true);
-   setInstall(null);
-   if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
-  };
-
-  window.addEventListener('beforeinstallprompt',onPrompt);
-  window.addEventListener('pmsv-install-available',onAvailable);
-  window.addEventListener('appinstalled',onInstalled);
 
   let cancelled=false;
   const syncExisting=async(force=false)=>{
@@ -175,31 +152,12 @@ export default function AppNotifications(){
 
   return()=>{
    cancelled=true;
-   window.removeEventListener('beforeinstallprompt',onPrompt);
-   window.removeEventListener('pmsv-install-available',onAvailable);
-   window.removeEventListener('appinstalled',onInstalled);
    document.removeEventListener('visibilitychange',onVisible);
    window.removeEventListener('online',onOnline);
    window.removeEventListener('focus',onFocus);
    permissionStatus?.removeEventListener('change',onPermissionChange);
   };
  },[]);
-
- async function installApp(){
-  setMessage('');
-  const event=install||(window as PMSVWindow).PMSV?.installPrompt||null;
-  if(!event){setMessage('Install is not ready yet.');return}
-  try{
-   // Chrome requires prompt() to run directly from the user's click.
-   // Do not await service-worker/network work before calling it.
-   await event.prompt();
-   const choice=await event.userChoice;
-   if(choice.outcome==='accepted'){
-    setInstall(null);
-    if((window as PMSVWindow).PMSV)(window as PMSVWindow).PMSV!.installPrompt=null;
-   }
-  }catch{setMessage('Install could not start. Please try again.')}
- }
 
  async function enable(){
   setBusy(true);setMessage('');setChecks([]);
@@ -284,5 +242,5 @@ export default function AppNotifications(){
   }catch{setMessage('Could not turn off notifications.')}finally{setBusy(false)}
  }
 
- return <><div className="app-notification-actions">{!installed&&install&&<button onClick={()=>{void installApp()}} aria-label="Install PMSV"><Download size={18}/><span>Install app</span></button>}<button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader>{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">Notifications are not supported by this browser.</p>}<p role="status" className="push-status">{message}</p><button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>{checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl><p>Installed Android app version: see Android App info. Website version above is separate.</p></div>}</DialogContent></Dialog></>;
+ return <><div className="app-notification-actions"><a href={appUrl('/?pmsv_android=1')} aria-label="Download PMSV for Android" title="Download PMSV for Android" download="PMSV-2.1.0-Android.apk"><Download size={18}/><span>Android app</span></a><button onClick={()=>setOpen(true)} aria-label={enabled?'Manage app notifications':'Turn on app notifications'}>{enabled?<BellRing size={19}/>:<Bell size={19}/>}<span>{enabled?'Notifications on':'Notifications'}</span></button></div><Dialog open={open} onOpenChange={setOpen}><DialogContent className="subscription-dialog"><DialogHeader><DialogTitle>App notifications</DialogTitle><DialogDescription>Turn on alerts for new PMSV updates.</DialogDescription></DialogHeader>{supported?<><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>:<p className="push-status">Notifications are not supported by this browser.</p>}<p role="status" className="push-status">{message}</p><button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>{checks.length>0&&<div className="notification-checks"><p>These results stay on your device. Share a screenshot for support.</p><dl>{checks.map(check=><div key={check.label}><dt>{check.label}</dt><dd>{check.value}</dd></div>)}</dl><p>Installed Android app version: see Android App info. Website version above is separate.</p></div>}</DialogContent></Dialog></>;
 }
