@@ -1,30 +1,67 @@
-# PMSV Google Play build
+# PMSV Android 2.1.0
 
-- App: PMSV Food Safety & Quality Forum
-- Application ID: com.pmsvgroup.foodsafety
-- Website: https://pmsvgroup.com/
-- Version: 1.0.3 (versionCode 4)
-- Target SDK: 36 (Android 16)
-- Minimum SDK: 24
-- Packaging: Trusted Web Activity using Android Browser Helper
+The Google Play package now builds the same native PMSV interface as the website
+installer. Home, feeds, search, bookmarks, settings and notifications use Compose.
+Audits and FSSAI Licence are packaged offline tools within the shared app shell.
 
-The release bundle built by CI is intentionally unsigned. Signing is performed outside GitHub so the upload key is never committed to the public repository.
+## Distribution
 
-After the first AAB is uploaded to Google Play, use Play Console > App integrity to obtain the Google Play app-signing SHA-256 fingerprint. Add that fingerprint to https://pmsvgroup.com/.well-known/assetlinks.json so the TWA is verified when installed from Google Play.
+| Channel | Package | Artifact | Signature |
+| --- | --- | --- | --- |
+| Existing Google Play listing | com.pmsvgroup.foodsafety | :play-app release AAB | Existing Play upload key |
+| Website / existing preview installs | com.pmsvgroup.foodsafety.preview | :native-app release APK | Retained private preview signing key |
 
-## 1.0.3 verification repair
+Both are version 2.1.0, versionCode 11, target SDK 36 and minimum SDK 26.
+Both show PMSV as the launcher name. They compile identical sources and tools.
+Debug builds add .debug and are never distributed.
 
-The asset_statements JSON string previously contained unescaped double quotes.
-AAPT2 removed these during compilation, leaving invalid JSON in the app resource.
-Quotes are now Android-escaped and a CI check parses the compiled resource.
+The Play upload certificate SHA-256 is
+26:5F:74:D7:00:54:D5:7B:E2:EE:98:11:93:10:8B:98:DF:AD:0D:AD:B2:FD:C1:CB:38:74:1D:28:10:17:57:C5.
+Google's existing Play app-signing certificate is
+B1:77:8B:BF:10:BE:26:26:FE:54:A1:5B:8C:CE:D4:58:8D:08:EA:DE:BD:C3:78:1A:06:0A:2B:3F:CC:D3:1D:C1.
+Do not sign a website APK with the upload key under the Play package: it would
+conflict with Play-installed copies. Keep each distribution's package and key.
+A Play-signed universal APK can replace this separate website channel later,
+after it is obtained from Play Console. Do not fabricate that signature.
 
-On 14 October 2026 the user confirmed the Play app-signing SHA-256 matches the
-live site's assetlinks.json:
-`B1:77:8B:BF:10:BE:26:26:FE:54:A1:5B:8C:CE:D4:58:8D:08:EA:DE:BD:C3:78:1A:06:0A:2B:3F:CC:D3:1D:C1`.
-Google Digital Asset Links returned linked=true for this association.
+CI builds unsigned release artifacts. Sign the AAB outside GitHub using the
+retained upload key; sign only the website APK with its retained direct-install
+key. Never commit passwords, private keys or CI debug-signed installers.
 
-Release requires signing the CI AAB with the existing upload key and uploading
-to the existing Play testing track. Do not substitute a new signing key.
-The installed Play-signed release must still be checked on a physical phone:
-launch from the icon and from a notification and confirm the browser toolbar
-is absent. The compiler regression check does not prove device-level TWA success.
+## Play Console handoff
+
+Upload PMSV-2.1.0-Play-Upload-Signed.aab to the existing app and testing track.
+Do not create a new Play listing. Review the release and Data safety declaration,
+then submit it. Building or signing an AAB does not publish it to Google Play.
+
+Suggested release notes:
+- Redesigned PMSV interface with consistent navigation across all sections.
+- News, search, saved updates and branded notifications within the Android app.
+- Included offline audit checklists and FSSAI Licence Helper.
+- Improved compact layouts and support for larger text.
+
+## Storage and migration
+
+Updating the website package keeps its existing saved audits and bookmarks.
+Do not uninstall or clear app data. The previous Play app used Chrome/TWA storage;
+those records remain in the browser and cannot be imported automatically into the
+new native app. Open pmsvgroup.com in the original browser for earlier records.
+New audits are saved privately on the phone. No account backup is connected.
+
+Daily news notifications use Android WorkManager periodic synchronization, not
+instant FCM push. Existing source dates and categories are retained. Fresh news,
+discussions and external documents require internet. Report attachment sharing
+and automatic migration of browser-saved records remain outside this release.
+The policy at https://pmsvgroup.com/privacy covers both app and website behavior.
+
+## Build and verification
+
+From android with Java 17, Gradle 8.13 and SDK 36:
+
+    gradle :play-app:bundleRelease :play-app:assembleRelease
+    gradle :native-app:assembleRelease
+
+Both modules share native-app-config.gradle and native-app/src. CI runs unit,
+lint and Android 16 device checks for both distributions, then validates release
+package identity, native launch, install and update. Private signing is separate.
+The legacy :app TWA source is retained for history and is no longer the Play build.
