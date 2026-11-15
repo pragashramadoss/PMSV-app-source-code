@@ -102,13 +102,14 @@ jobs:
           set -o pipefail
           xcodebuild -project App.xcodeproj -scheme App -configuration Release -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/PMSV-2.2.0.xcarchive" CODE_SIGNING_ALLOWED=NO archive > "$RUNNER_TEMP/iphone-build.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-build.log"; exit 1; }
       - name: Test bundled tools in iPhone simulator
+        timeout-minutes: 15
         working-directory: platforms/ios/App
         run: |
           set -euo pipefail
           device=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(x["udid"] for runtime,devices in d["devices"].items() if "iOS" in runtime for x in devices if x["name"].startswith("iPhone")))')
           xcrun simctl boot "$device" || true
           xcrun simctl bootstatus "$device" -b
-          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination "id=$device" -derivedDataPath "$RUNNER_TEMP/PMSVDerived" -resultBundlePath "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" CODE_SIGNING_ALLOWED=NO test > "$RUNNER_TEMP/iphone-test.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-test.log"; exit 1; }
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -destination "id=$device" -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 120 -derivedDataPath "$RUNNER_TEMP/PMSVDerived" -resultBundlePath "$RUNNER_TEMP/PMSV-iPhone-QA.xcresult" CODE_SIGNING_ALLOWED=NO test > "$RUNNER_TEMP/iphone-test.log" 2>&1 || { tail -150 "$RUNNER_TEMP/iphone-test.log"; exit 1; }
       - name: Prepare signing handoff and simulator bundles
         working-directory: platforms
         run: |

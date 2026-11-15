@@ -29,5 +29,10 @@ try{
  await page.evaluate(()=>{const a=document.createElement('a');a.download='PMSV-QA-report.csv';a.href=URL.createObjectURL(new Blob(['Question,Status\nTest,C\n'],{type:'text/csv'}));a.click();});
  await expect.poll(async()=>{try{return await readFile(exportFile,'utf8')}catch{return''}}).toContain('Question,Status');
  await expect(page.evaluate(()=>({node:typeof window.require,bridge:typeof window.pmsvDesktop.save}))).resolves.toEqual({node:'undefined',bridge:'function'});
- console.log('PASS: packaged Home, offline audit save/relaunch, local licence tool, native report export, isolated renderer.');
+ await app.close();
+ app=await electron.launch({executablePath,args:['--pmsv-test-data='+userData],timeout:60000});page=await app.firstWindow();
+ await expect(page.getByRole('heading',{name:'Welcome to the Forum',exact:true})).toBeVisible({timeout:30000});
+ const live=await page.evaluate(async()=>{const r=await window.pmsvDesktop.request('/api/news','GET');return {status:r.status,offline:!!r.data.offline,count:r.data.news?.length||0};});
+ expect(live.status).toBe(200);expect(live.offline).toBe(false);expect(live.count).toBeGreaterThan(600);
+ console.log('PASS: packaged Home, offline audit save/relaunch, local licence tool, native report export, isolated renderer, live news feed ('+live.count+' records).');
 }finally{await app.close();}
