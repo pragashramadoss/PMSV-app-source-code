@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             permission.launch(Manifest.permission.POST_NOTIFICATIONS)
                         else openSettings()
                     },
-                    testAlert = { Alerts.post(this, "PMSV native notification", "This notification opens your native PMSV Updates screen.", 101) },
+                    testAlert = { Alerts.previewLatest(this) },
                     openNotificationSettings = ::openSettings)
             }
         }

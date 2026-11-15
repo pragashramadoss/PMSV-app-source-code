@@ -23,7 +23,7 @@ class NativeScreensTest {
             var saved by remember { mutableStateOf(emptyList<NewsItem>()) }
             PmsvTheme { PmsvApp(PmsvState(listOf(news, milk, blog, us), saved, false, updatedAt = 1794650000000L), "home" to 1L,
                 {}, { item -> saved = if (saved.any { it.id == item.id }) saved.filterNot { it.id == item.id } else saved + item },
-                { title, url -> openedTool = title to url }, {}, {}, false, true, {}, { true }, {}) }
+                { title, url -> openedTool = title to url }, {}, {}, false, true, {}, { NewsAlertResult(true, "Headlines from 14 Nov 2026 posted. Tap the notification to open Updates.") }, {}) }
         }
     }
     @Test fun nativeSearchAndBookmarkJourney() {
@@ -48,8 +48,8 @@ class NativeScreensTest {
         capture("native-home.png")
         compose.onNodeWithContentDescription("App notifications").performClick()
         compose.onNodeWithText("Daily update alerts").assertIsDisplayed()
-        compose.onNodeWithText("Send test notification").performClick()
-        compose.onNodeWithText("Test posted. Check your notification shade and tap it to open Updates.").assertExists()
+        compose.onNodeWithText("Send news notification").performClick()
+        compose.onNodeWithText("Headlines from 14 Nov 2026 posted. Tap the notification to open Updates.").assertExists()
         capture("native-notifications.png")
         compose.onNodeWithContentDescription("Close notifications").performClick()
         compose.onNodeWithContentDescription("More options").performClick()

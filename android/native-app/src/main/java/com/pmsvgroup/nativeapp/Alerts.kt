@@ -7,12 +7,20 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
+
+data class NewsAlertResult(val posted: Boolean, val message: String)
 
 object Alerts {
     const val CHANNEL = "pmsv_daily_native"
@@ -48,12 +56,37 @@ object Alerts {
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pending = PendingIntent.getActivity(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, CHANNEL).setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.pmsv_logo))
+            .setColor(Color.rgb(49, 85, 217))
             .setContentTitle(title).setContentText(body).setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setContentIntent(pending).setAutoCancel(true).build()
         return try { NotificationManagerCompat.from(context).notify(id, notification); true } catch (_: SecurityException) { false }
     }
     fun last(context: Context) = prefs(context).getString("lastDigest", "")
     fun mark(context: Context, id: String) { prefs(context).edit().putString("lastDigest", id).apply() }
+
+    suspend fun previewLatest(context: Context, load: () -> NewsSnapshot = { PmsvRepository(context).latestNews() }): NewsAlertResult = withContext(Dispatchers.IO) {
+        if (!allowed(context)) return@withContext NewsAlertResult(false,
+            "Android has not allowed notifications. Open notification settings below.")
+        val snapshot = load()
+        val digest = DigestCodec.latestAvailable(snapshot.items) ?: return@withContext NewsAlertResult(false,
+            if (snapshot.fromCache) "Could not load news. Connect to the internet and try again."
+            else "No news headlines are available yet. Try again later.")
+        currentCoroutineContext().ensureActive()
+        // Manual previews must not mark today's digest delivered or enable background alerts.
+        if (!post(context, digest.title, digest.body, 101)) return@withContext NewsAlertResult(false,
+            "Android has not allowed notifications. Open notification settings below.")
+        NewsAlertResult(true, if (snapshot.fromCache)
+            "Saved headlines from ${displayDate(digest.date)} posted. Could not refresh; showing news already on this phone."
+            else "Headlines from ${displayDate(digest.date)} posted. Tap the notification to open Updates.")
+    }
+
+    internal fun deliverDaily(context: Context, digest: Digest?): Boolean {
+        if (digest == null || !enabled(context) || digest.id == last(context)) return false
+        if (!post(context, digest.title, digest.body)) return false
+        mark(context, digest.id)
+        return true
+    }
 }
 
 class DailyUpdatesWorker(context: Context, parameters: WorkerParameters) : Worker(context, parameters) {
@@ -61,9 +94,7 @@ class DailyUpdatesWorker(context: Context, parameters: WorkerParameters) : Worke
         if (!Alerts.enabled(applicationContext) || !Alerts.allowed(applicationContext)) return Result.success()
         return try {
             val digest = PmsvRepository(applicationContext).digest() ?: return Result.success()
-            if (digest.id == Alerts.last(applicationContext)) return Result.success()
-            if (Alerts.enabled(applicationContext) && Alerts.post(applicationContext, digest.title, digest.body))
-                Alerts.mark(applicationContext, digest.id)
+            Alerts.deliverDaily(applicationContext, digest)
             Result.success()
         } catch (_: Exception) { Result.retry() }
     }

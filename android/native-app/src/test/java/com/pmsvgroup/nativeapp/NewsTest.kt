@@ -46,4 +46,24 @@ class NewsTest {
         json.put("count", 0)
         assertNull(DigestCodec.parse(json, "2026-11-15"))
     }
+    @Test fun manualNewsPreviewUsesActualLatestDateWhenTodayIsEmpty() {
+        val digest = DigestCodec.latestAvailable(listOf(milk, news), "2026-11-15")!!
+        assertEquals("2026-11-14", digest.date)
+        assertEquals("News · 14 Nov 2026", digest.title)
+        assertEquals("1. Food safety news", digest.body)
+        assertFalse(digest.body.contains("native notification"))
+    }
+    @Test fun previewContainsThreeDistinctHeadlinesFromOneDayWithIndiaFirst() {
+        val india = news.copy(id = "india", title = "Indian food safety notice", region = "india")
+        val other = news.copy(id = "other", title = "Another food safety notice")
+        val extra = news.copy(id = "extra", title = "Z extra notice")
+        val duplicate = india.copy(id = "duplicate")
+        val digest = DigestCodec.latestAvailable(listOf(news, india, other, extra, duplicate, milk), "2026-11-15")!!
+        assertEquals(listOf("1. Indian food safety notice", "2. Another food safety notice", "3. Food safety news"), digest.body.lines())
+    }
+    @Test fun previewRejectsFutureDatesInvalidDatesBlogsAndEmptyNews() {
+        assertNull(DigestCodec.latestAvailable(emptyList(), "2026-11-15"))
+        assertNull(DigestCodec.latestAvailable(listOf(news.copy(published = "2026-11-16"),
+            news.copy(published = "bad"), news.copy(tab = "blogs")), "2026-11-15"))
+    }
 }

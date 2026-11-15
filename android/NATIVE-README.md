@@ -11,7 +11,7 @@ Updates/News includes regulatory country desks and professional topics. Blogs,
 saved updates, details and the notification dialog retain the same visual style.
 The light theme is intentional, matching the website regardless of Chrome settings.
 
-Version 2.0.2 keeps that SAME native masthead, notification dialog and five-tab
+Version 2.0.3 keeps that SAME native masthead, notification dialog and five-tab
 footer around Audits, FSSAI Licence and Discussions. Tool subpages update the
 selected native tab. App-scoped presentation CSS removes duplicate web navigation
 and normalizes the helper header; the website and form calculations are unchanged.
@@ -73,8 +73,16 @@ still require connectivity. Tool definitions update with a signed app release.
   records stay in the old app. Do not uninstall it. Continue using it for report
   export/email and existing records until explicit export/import is implemented.
 - Daily alerts use WorkManager with a 30-minute requested interval and Android
-  may defer them. This is periodic synchronization, not instant push. A native
-  test notification validates Android permission and native click navigation.
+  may defer them. This is periodic synchronization, not instant push. Automatic
+  alerts only use a nonempty digest for the current India date, once per day.
+  Send news notification fetches the latest available headlines, showing their
+  actual publication date (including an older day when today is empty). If the
+  network fails it can preview cached news, with a clear saved-headlines message.
+  Empty news never produces a placeholder test alert. Fetching runs off the UI
+  thread. Manual previews neither enable daily alerts nor consume the daily digest.
+  Both manual and daily notifications use a monochrome PMSV family emblem in the
+  small icon and the original full-colour logo as the large icon. Notification
+  taps continue to open the native Updates screen. No browser is involved.
 - Instant FCM push, authenticated discussion reply alerts, report attachment
   sharing, saved-audit migration, and native audit/licence forms are release work.
   No Firebase configuration has been supplied or fabricated. No push registration
@@ -99,3 +107,5 @@ screenshots cover native fixture screens and offline installed Audits/FSSAI tool
 Tool tests check shared header/footer geometry, hidden duplicate web navigation,
 helper subtabs, form continuity, back navigation, an actual offline saved audit
 and private storage persistence. Tool device tests disable internet access.
+
+Notification tests verify real headline content/date, logo resources, repeated native navigation, cached and empty news, and daily deduplication. Android 16 captures include the notification shade.

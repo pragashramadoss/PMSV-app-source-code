@@ -33,6 +33,8 @@ import java.text.DateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.Date
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 
 // Match the website's light palette, compact cards and navigation.
 private val Teal = Color(0xFF075C58)
@@ -72,7 +74,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
     state: PmsvState, navigation: Pair<String, Long>, refresh: () -> Unit, toggleSaved: (NewsItem) -> Unit,
     openTool: (String, String) -> Unit, openSource: (NewsItem) -> Unit, share: (NewsItem) -> Unit,
     alertsEnabled: Boolean, alertsAllowed: Boolean, toggleAlerts: (Boolean) -> Unit,
-    testAlert: () -> Boolean, openNotificationSettings: () -> Unit
+    testAlert: suspend () -> NewsAlertResult, openNotificationSettings: () -> Unit
 ) {
     var screen by rememberSaveable { mutableStateOf(navigation.first) }
     var articleId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -266,7 +268,7 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
 }
 
 @Composable internal fun PmsvNotificationDialog(
-    enabled: Boolean, allowed: Boolean, toggle: (Boolean) -> Unit, test: () -> Boolean,
+    enabled: Boolean, allowed: Boolean, toggle: (Boolean) -> Unit, test: suspend () -> NewsAlertResult,
     settings: () -> Unit, onDismiss: () -> Unit
 ) {
     var message by rememberSaveable { mutableStateOf("") }
@@ -379,12 +381,26 @@ private val filters = listOf("all" to "All", "fssai" to "Regulatory", "general" 
         Text("Publication date is not an effective date. Refer to the original document for applicability and implementation dates.", color = Muted, style = MaterialTheme.typography.bodySmall)
     }
 }
-@Composable private fun NotificationControls(enabled: Boolean, allowed: Boolean, toggle: (Boolean) -> Unit, test: () -> Boolean, settings: () -> Unit, message: String, setMessage: (String) -> Unit) {
+@Composable private fun NotificationControls(enabled: Boolean, allowed: Boolean, toggle: (Boolean) -> Unit, test: suspend () -> NewsAlertResult, settings: () -> Unit, message: String, setMessage: (String) -> Unit) {
+    val scope = rememberCoroutineScope()
+    var sending by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("Daily update alerts", fontWeight = FontWeight.Bold)
         Text(if (enabled && allowed) "Enabled on this device" else "Alerts are off", color = Muted, style = MaterialTheme.typography.bodyMedium)
         Button(onClick = { toggle(!(enabled && allowed)) }, modifier = Modifier.fillMaxWidth(), shape = ButtonShape) { Text(if (enabled && allowed) "Turn off notifications" else "Allow notifications") }
-        OutlinedButton(onClick = { setMessage(if (test()) "Test posted. Check your notification shade and tap it to open Updates." else "Android has not allowed notifications. Open notification settings below.") }, modifier = Modifier.fillMaxWidth(), shape = ButtonShape) { Text("Send test notification") }
+        OutlinedButton(onClick = {
+            sending = true
+            setMessage("")
+            scope.launch {
+                try { setMessage(test().message) }
+                catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { setMessage("Could not load news. Check your connection and try again.") }
+                finally { sending = false }
+            }
+        }, enabled = !sending, modifier = Modifier.fillMaxWidth(), shape = ButtonShape) {
+            Text(if (sending) "Loading headlines…" else "Send news notification")
+        }
+        Text("Sends the latest available headlines with their publication date.", color = Muted, style = MaterialTheme.typography.bodySmall)
         if (message.isNotBlank()) Text(message, style = MaterialTheme.typography.bodyMedium)
         TextButton(onClick = settings) { Text("Android notification settings") }
         Text("The app checks for daily updates about every 30 minutes. Android may delay checks to save battery.", color = Muted, style = MaterialTheme.typography.bodySmall)

@@ -142,7 +142,7 @@ class ToolActivity : ComponentActivity() {
                     }
                 }
                 if (notifications) PmsvNotificationDialog(alertEnabled, alertAllowed, ::toggleAlerts,
-                    test = { Alerts.post(this, "PMSV native notification", "This notification opens your native PMSV Updates screen.", 101) },
+                    test = { Alerts.previewLatest(this) },
                     settings = ::openSettings, onDismiss = { notifications = false })
             }
         }
