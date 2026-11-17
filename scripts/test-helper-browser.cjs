@@ -117,7 +117,7 @@ let browser;
  }
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
  await page.locator('#openIngredientWater').click();
- await page.locator('.water-product-note summary').click();
+ await page.locator('.water-product-note details:has(#waterEvidenceForm) > summary').click();
  const waterForm=page.locator('#waterEvidenceForm');
  await waterForm.getByRole('button').click();assert.match(await waterForm.getByRole('status').textContent(),/Identify the supplier/);
  await page.locator('#waterSupplier').selectOption('municipal');await waterForm.getByRole('button').click();
@@ -139,6 +139,35 @@ let browser;
  assert.equal(await page.locator('#waterSupplier').inputValue(),'','Prior supplier must not carry into a reopened product');
  const waterReport=await page.request.get(base+water.report);assert.equal(waterReport.status(),200);
  assert.match(await waterReport.text(),/All 137 product-specific CTR decisions remain open/);
+ assert.equal(data.waterStandardReview.rows.length,74,'Full filtered export retains all water-standard entries');
+ await page.locator('.water-standard-reference > summary').click();
+ assert.equal(await page.locator('#waterReferenceRows tr').count(),74);
+ await page.locator('#waterReferenceGroup').selectOption('5');
+ assert.equal(await page.locator('#waterReferenceRows tr').count(),18);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/µg\/L/);
+ await page.locator('#waterReferenceSearch').fill('uranium');
+ assert.match(await page.locator('#waterReferenceCount').textContent(),/0 of 74/);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/No source entries match/);
+ await page.locator('#waterReferenceGroup').selectOption('all');
+ assert.equal(await page.locator('#waterReferenceRows tr').count(),1);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/0\.03/);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/No relaxation/);
+ assert.equal(await page.locator('#waterReferenceRows a').count(),3);
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Water source reference overflows at '+width);
+  if(width!==320)await page.locator('.water-standard-reference').screenshot({path:path.join(artifacts,'water-standard-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.locator('#waterReferenceSearch').fill('');
+ await page.locator('#waterReferenceGroup').selectOption('6');
+ assert.equal(await page.locator('#waterReferenceRows tr').count(),5);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/100 mL/);
+ await page.locator('#waterReferenceGroup').selectOption('clauses');
+ assert.equal(await page.locator('#waterReferenceRows tr').count(),3);
+ assert.match(await page.locator('#waterReferenceRows').textContent(),/10 L/);
+ const waterStandardReport=await page.request.get(base+data.waterStandardReview.report);assert.equal(waterStandardReport.status(),200);
+ assert.match(await waterStandardReport.text(),/All 137 product-specific CTR decisions remain open/);
+
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -178,7 +207,7 @@ let browser;
  assert.deepEqual(errors,[]);
  const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
- Object.assign(result,{waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
+ Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

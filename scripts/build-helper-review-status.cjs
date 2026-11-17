@@ -17,6 +17,8 @@ const fibreFile='ctr-fibre-claims-source-r73-2026-11-17.json';
 const fibre=read(fibreFile);
 const waterFile='ctr-water-source-review-r74-2026-11-17.json';
 const water=read(waterFile);
+const waterStandardFile='ctr-water-standard-concordance-r75-2026-11-17.json';
+const waterStandard=read(waterStandardFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
 vm.createContext(catalogueContext);
 vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
@@ -64,15 +66,22 @@ for(const note of water.records){
  row.sourceReviewResult+=' '+note.sourceReviewResult;
  row.sourceReviewNextAction+=' '+note.sourceReviewNextAction;
 }
+for(const note of waterStandard.records){
+ const row=records.find(x=>x.id===note.id);assert(row);
+ row.reports.unshift({round:75,file:waterStandardFile.replace(/\.json$/,'.md')});
+ row.sourceReviewResult=note.sourceReviewResult;
+ row.sourceReviewNextAction=note.sourceReviewNextAction;
+}
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:74,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:75,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile],records,
+ waterStandardReview:{...waterStandard,report:waterStandardFile.replace(/\.json$/,'.md')},
  waterSourceReview:{round:74,report:waterFile.replace(/\.json$/,'.md'),checkedOn:water.reviewedOn,
   records:water.records,bisStandard:water.bisStandard,draftReplacement:water.draftReplacement,counts:water.counts,
   sources:{vending:water.sources.vending2019.url+'#page=4',ingredient:water.sources.licensingFAQ2022.url+'#page=18',bis:water.sources.bisMetadata.url,draft:water.sources.vendingDraft2025.url+'#page=10'},

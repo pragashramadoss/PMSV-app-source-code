@@ -93,3 +93,12 @@ The original 2021 pesticide-scope clarification and the 2024 spice/herb order we
 Five product views receive source notes. Four recipe views provide a supplier-specific document checklist from FoSCoS FAQs 121–123, with the private-supplier report-age condition, financial-year/minimum-gap wording and municipal evidence conditions kept in context. Mixed or unknown supply does not receive a concession, changing supply clears the prior result, and reopening a product resets the form. No due date, quality approval or numeric limit is calculated. The original four recipe-water identities and the 14.6/14.7 title–method hold are preserved.
 
 The local current audit passed **52/52 checks**, including 25 route/invalid-input cases and rejection of draft activation, false gap closure or modified source hosts. Browser CI is recorded against its exact revision in draft PR #2. All 137 CTR decisions and all 14 Ayurveda ingredient source gaps remain open.
+
+
+## R75 IS 10500 source concordance
+
+[R75](ctr-water-standard-concordance-r75-2026-11-17.md) resolves the earlier full-text access gap: the base standard and all four amendments were obtained from the public BIS service. **74 source entries** cover Tables 1–6 and the MS2/protozoan requirements, including 18 pesticide entries and eight scoped microbial entries. The amendment-3 heading is February 2021, correcting reliance on the catalogue's 2020 metadata label.
+
+The searchable reference keeps acceptable and conditional permissible columns, mixed units, minimum chlorine, 100 mL/1 L/10 L sample volumes, method notes and source links distinct. The iron amendment and retained Fe + Mn combined remark remain an interpretation hold. Uranium is not automatically omitted under the ingredient-water FAQ exclusion. No analytical comparison or water/product approval is made.
+
+The expanded local current audit passed **53/53 checks**, including amendment precedence and 17 altered-evidence refusals. Browser CI and artifact fingerprints are recorded against the tested revision in draft PR #2. All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open.

@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==74||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==75||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -107,6 +107,38 @@
    catch(error){return denied('Water source URL is invalid.');}
   }
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
+  const ws=data.waterStandardReview;
+  if(!ws||ws.round!==75||ws.standard!=='IS 10500:2012'||ws.reviewedOn!==data.latestSourceReviewDate||
+    ws.report!=='ctr-water-standard-concordance-r75-2026-11-17.md'||ws.requirementsTablesReconciled!==true||ws.allFourAmendmentsReviewed!==true||
+    ws.allReferencedMethodsVerified!==false||ws.ironManganeseInterpretationResolved!==false||ws.fullCurrentLawComplete!==false||
+    ws.waterQualityApproved!==false||ws.legalProductApproval!==false||ws.batchRelease!==false||ws.autoApplyLimits!==false||
+    ws.remainingAyurvedaIngredientGaps!==14||!Array.isArray(ws.rows)||ws.rows.length!==74||
+    !Array.isArray(ws.amendmentReview)||ws.amendmentReview.length!==4||!Array.isArray(ws.findings)||ws.findings.length!==6)
+   return denied('IS 10500 source review is incomplete.');
+  const waterRows=new Map();
+  for(const r of ws.rows){
+   if(!r||typeof r.id!=='string'||!r.id.trim()||waterRows.has(r.id)||!['max','min','range','qualitative','pointer','absence'].includes(r.operator)||
+     r.referenceOnly!==true||r.autoApply!==false||!r.name||!r.unit||typeof r.acceptable!=='string'||!r.acceptable||typeof r.permissible!=='string'||!r.permissible||
+     !ws.sources?.[r.source?.id]||!Number.isInteger(r.source.pdfPage)||r.source.pdfPage<1||r.source.pdfPage>ws.sources[r.source.id].pdfPages||
+     !Array.isArray(r.amendments)||r.amendments.some(id=>!ws.sources[id]))return denied('IS 10500 reference rows are inconsistent.');
+   waterRows.set(r.id,r);
+  }
+  for(const [key,count] of [[1,6],[2,24],[3,16],[4,2],[5,18],[6,5],['clauses',3]]){
+   if(ws.rows.filter(r=>r.table===key).length!==count)return denied('IS 10500 table coverage is inconsistent.');
+  }
+  for(const [id,a,p] of [['iron','1','No relaxation'],['arsenic','0.01','No relaxation'],['boron','0.5','2.4'],['mineral-oil','1','No relaxation'],['uranium','0.03','No relaxation']]){
+   const r=waterRows.get(id);if(!r||r.acceptable!==a||r.permissible!==p||r.unit!=='mg/L')return denied('IS 10500 amendment values are inconsistent.');
+  }
+  if(waterRows.get('free-chlorine')?.operator!=='min'||waterRows.get('pesticide-pointer')?.operator!=='pointer'||
+     ws.rows.filter(r=>r.table===5).some(r=>r.unit!=='µg/L')||
+     ws.rows.filter(r=>r.table===6).some(r=>r.sampleVolumeMl!==100)||
+     waterRows.get('ms2')?.sampleVolumeMl!==1000||waterRows.get('cryptosporidium')?.sampleVolumeMl!==10000||waterRows.get('giardia')?.sampleVolumeMl!==10000)
+   return denied('IS 10500 units or sample bases are inconsistent.');
+  for(const [key,suffix] of [['is10500','S06/S06V01/10500.pdf'],['amendment1','S16/S16V01/10500A1.pdf'],['amendment2','S16/S16V01/10500A2.pdf'],['amendment3','S16/S16V01/10500A3.pdf'],['amendment4','S16/S16V01/10500A4.pdf']]){
+   const s=ws.sources?.[key];
+   if(!s||s.url!=='https://bmqsdqljvwgm.compat.objectstorage.ap-mumbai-1.oraclecloud.com/BisProd/bisProd/oldStandards/'+suffix||!(/^[a-f0-9]{64}$/).test(s.sha256))
+    return denied('BIS source document is inconsistent.');
+  }
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

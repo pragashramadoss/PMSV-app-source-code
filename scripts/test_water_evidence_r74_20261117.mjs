@@ -46,7 +46,7 @@ const register=JSON.parse(JSON.stringify(context.window.PMSV_REVIEW_REGISTER));
 const catalogue=JSON.parse(JSON.stringify(context.window.PMSV_CATALOGUE));
 const {validateReview}=require('../fssai-helper/review-status.js');
 assert.equal(validateReview(register,catalogue).ok,true);
-for(const row of review.records){assert.equal(register.records.find(r=>r.id===row.id).reports[0].round,74);}
+for(const row of review.records){assert(register.records.find(r=>r.id===row.id).reports.some(r=>r.round===74));}
 for(const mutate of [d=>delete d.waterSourceReview,d=>d.waterSourceReview.records.pop(),d=>d.waterSourceReview.records[0].use='ingredient',d=>d.waterSourceReview.records[3].recipeTitleMethodHold=false,d=>d.waterSourceReview.draftReplacement.autoApply=true,d=>d.waterSourceReview.draftReplacement.finalReplacementEstablished=true,d=>d.waterSourceReview.bisStandard.completeNormativeTextVerified=true,d=>d.waterSourceReview.counts.waterGapsClosed=4,d=>d.waterSourceReview.legalProductApproval=true,d=>d.waterSourceReview.sources.bis='https://bis.gov.in.example.test/standard',d=>d.waterSourceReview.sources.ingredient='javascript:alert(1)']){
  const bad=structuredClone(register);mutate(bad);assert.equal(validateReview(bad,catalogue).ok,false);
 }
