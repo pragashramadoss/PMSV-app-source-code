@@ -25,6 +25,8 @@
   if(waterNote)sourceNote+=waterMarkup(waterNote);
   const asafoetida=data.asafoetidaReview;
   if(id===asafoetida.productId||id===asafoetida.recipeProductId)sourceNote+=window.PMSVAsafoetida?.markup(asafoetida,id===asafoetida.recipeProductId)||'<p>Asafoetida reference unavailable.</p>';
+  const camphor=data.camphorReview,camphorNote=camphor.records.find(x=>x.id===id);
+  if(camphorNote)sourceNote+=window.PMSVCamphor?.markup(camphor,camphorNote)||'<p>Camphor source reference unavailable.</p>';
   const row=byId.get(id);
   if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
   return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(data.latestSourceReviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
@@ -74,6 +76,12 @@
  waterPanel.insertAdjacentElement('afterend',asafoetidaPanel);
  $('openAsafoetida').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.productId));
  $('openHinguRecipe').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.recipeProductId));
+ const camphor=data.camphorReview,camphorPanel=document.createElement('section');
+ camphorPanel.id='camphorReviewSummary';camphorPanel.className='panel compact';
+ camphorPanel.innerHTML=`<h3>Natural-camphor source and recipe identity</h3><p>The original 2008 pharmacopoeial scan supplies five source entries. Optical-rotation wording, botanical substitutions and food-use safety remain open. The 14.6 recipe hold is preserved.</p><a class="source-ref" href="${esc(camphor.report)}" target="_blank" rel="noopener noreferrer">Read the camphor-source review ↗</a><div class="controls"><button type="button" id="openCamphorIngredient">Open recipe 14.5 source scope</button><button type="button" id="openCamphorMethodHold">Open recipe 14.6 hold</button></div>`;
+ asafoetidaPanel.insertAdjacentElement('afterend',camphorPanel);
+ $('openCamphorIngredient').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(camphor.records[0].id));
+ $('openCamphorMethodHold').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(camphor.records[1].id));
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');

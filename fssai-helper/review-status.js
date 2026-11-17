@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==76||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==77||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -174,6 +174,39 @@
      !/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)return denied('Asafoetida source document is invalid.');}
    catch(error){return denied('Asafoetida source document is invalid.');}
   }
+  const cam=data.camphorReview;
+  if(!cam||cam.round!==77||cam.reviewedOn!==data.latestSourceReviewDate||cam.report!=='ctr-camphor-source-r77-2026-11-17.md'||
+     cam.sourceStatus!=='ARCHIVED_PRIMARY_MONOGRAPH_REFERENCE'||cam.publicationYear!==2008||cam.edition!=='First edition'||
+     cam.editionEffectiveFrom!=='2009-01-01'||cam.sourceEntryCount!==5||cam.parsedNumericEntries!==3||cam.sourceLiteralEntries!==1||cam.referencePointerEntries!==1||
+     cam.baseMonographRetrieved!==true||cam.baseMonographVisuallyChecked!==true||cam.fullCurrentLawComplete!==false||
+     cam.allReferencedMethodsVerified!==false||cam.opticalRotationInterpretationResolved!==false||cam.recipeSafeDoseEstablished!==false||
+     cam.therapeuticDoseImported!==false||cam.syntheticSubstitutionApproved!==false||cam.ocimumSubstitutionApproved!==false||
+     cam.recipe146HoldResolved!==false||cam.legalProductApproval!==false||cam.batchRelease!==false||cam.autoApplyLimits!==false||
+     cam.ctrRulesChanged!==false||cam.ingredientGapsClosed!==0||cam.remainingAyurvedaIngredientGaps!==14||
+     !Array.isArray(cam.rows)||cam.rows.length!==5||!Array.isArray(cam.records)||cam.records.length!==2||!Array.isArray(cam.findings)||cam.findings.length!==6)
+   return denied('Camphor source evidence is incomplete.');
+  const camExpected=[['melting-range','range',174,179,'°C','174–179 °C'],['specific-optical-rotation','source-literal',null,null,'degrees','+41° +43° (as printed)'],['non-volatile-matter','maximum',null,0.05,'%','Maximum 0.05%'],['camphor-assay','minimum',96,null,'%','Minimum 96.0%'],['pesticide-residue','pointer',null,null,null,'API Appendix 2.5 reference']];
+  if(!cam.rows.every((r,i)=>r&&[r.id,r.kind,r.minimum,r.maximum,r.unit,r.display].every((v,j)=>v===camExpected[i][j])&&
+    r.sourceId==='monograph210'&&r.printedPage===210&&r.referenceOnly===true&&r.autoApply===false&&r.method&&r.note))
+   return denied('Camphor source values or unresolved literals are inconsistent.');
+  const camIds=['102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings','102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk'];
+  if(!cam.records.every((r,i)=>r&&r.id===camIds[i]&&ids.has(r.id)&&r.recipeNumber===(i===0?'14.5':'14.6')&&
+    r.use===(i===0?'listed-ingredient':'method-only')&&r.ingredientSerial===(i===0?5:null)&&r.recipeAlignmentHold===(i===1)&&
+    r.partLiteral===(i===0?'Sub. extract':null)&&r.ratio===(i===0?'Q.S.':null)&&r.sourceReviewResult&&r.sourceReviewNextAction))
+   return denied('Camphor recipe mapping is inconsistent.');
+  for(const [key,scan,page] of [['title',9,'III'],['publication',10,'IV'],['generalNotices',22,'XVI'],['monograph210',250,'210'],['monograph211',251,'211']]){
+   const s=cam.sources?.[key];
+   if(!s||s.url!==`https://iiif.wellcomecollection.org/image/b32220522_0006_${String(scan).padStart(4,'0')}.jp2/full/1400,/0/default.jpg`||
+     s.assetType!=='page-image'||s.scanNumber!==scan||s.printedPage!==page||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)
+    return denied('Archived camphor source image is inconsistent.');
+  }
+  for(const key of ['recipe2025','ayurveda2022']){
+   const s=cam.sources?.[key];
+   try{const u=new URL(s?.url);if(u.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(u.hostname)||!/^[a-f0-9]{64}$/.test(s.sha256))return denied('Camphor food-source reference is invalid.');}
+   catch(error){return denied('Camphor food-source reference is invalid.');}
+  }
+  if(cam.amendmentWatch?.completeAmendmentChain!==false||cam.amendmentWatch.pdfBytesVerified!==false||
+    cam.amendmentWatch.url!=='https://www.pcimh.gov.in/assets/pdf/whatsnew/Amendment.pdf')return denied('Camphor amendment review is overstated.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

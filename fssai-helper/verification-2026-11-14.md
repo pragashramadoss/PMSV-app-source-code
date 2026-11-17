@@ -112,3 +112,13 @@ The grade selector starts empty and resets when changing products. Khichdi retai
 The local current audit passed **54/54 checks**, including four primary-document fingerprints and 16 altered-evidence refusals. Browser verification checks all three grades, clearing and switching products, full filtered export, preserved water evidence and narrow/desktop layout. Exact CI revisions and results are recorded in draft PR #2. The R75 legacy integration run 44032542482 subsequently passed all five jobs.
 
 All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open. The later-amendment/corrigendum chain, analytical-method acceptance and remaining pharmacopoeial sources still require review.
+
+## R77 natural-camphor source and recipe scope
+
+[R77](ctr-camphor-source-r77-2026-11-17.md) resolves the base-monograph access gap for Karpura using the original Government of India publication digitised by Wellcome Collection. The title/publication leaves establish API Part I, Volume VI, first edition 2008, effective 1 January 2009. Five source entries comprise three parsed quantitative references, one unresolved optical-rotation literal and one pesticide-appendix pointer. Image fingerprints identify the exact inspected scan assets.
+
+Recipe 14.5 gains a material-source review distinguishing Cinnamomum, Ocimum, synthetic and unidentified material. The wider pharmacopoeial definition does not authorize a recipe substitution. Recipe 14.6 retains its method-only Karpura and official source-alignment hold for every selection. The medicinal dose and therapeutic claims are not imported as food-use guidance. Material selection resets across recipes; the source entries remain separate from any analytical pass/fail calculation.
+
+The local current audit passed **55/55 checks**, including 39 scope/invalid-input cases, five scan fingerprints and 22 altered-evidence refusals. Browser checks cover both recipe notes, all four material choices, the unresolved source literal, preserved earlier controls, full filtered exports, all 533 product pages and mobile/desktop layout. The draft PR records the exact CI revision and artifacts. R76 legacy integration run 44038907942 has passed all five jobs.
+
+The 2026 API amendment text was read through the available web extract; direct PDF/screenshot retrieval failed, so no PDF fingerprint or visual-verification claim is made. The complete amendment chain, referenced methods, actual ingredient criteria and food-use safety remain open. All 137 CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open; nothing is deployed.

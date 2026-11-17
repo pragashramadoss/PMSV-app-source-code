@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-17",
-  "latestRound": 76,
+  "latestRound": 77,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -40,7 +40,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-fibre-claims-source-r73-2026-11-17.json",
     "ctr-water-source-review-r74-2026-11-17.json",
     "ctr-water-standard-concordance-r75-2026-11-17.json",
-    "ctr-asafoetida-purity-r76-2026-11-17.json"
+    "ctr-asafoetida-purity-r76-2026-11-17.json",
+    "ctr-camphor-source-r77-2026-11-17.json"
   ],
   "records": [
     {
@@ -1656,13 +1657,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 77,
+          "file": "ctr-camphor-source-r77-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The source includes rice, milk, ghee, sugar and botanical camphor; its method makes, fills and fries chhena dumplings before syrup infusion.",
-      "sourceReviewNextAction": "The finished recipe is not plain chhena. Ingredient identity/food-grade purity, including Karpura, needs a defensible source; no unrestricted camphor use is inferred.",
+      "sourceReviewResult": "The source includes rice, milk, ghee, sugar and botanical camphor; its method makes, fills and fries chhena dumplings before syrup infusion. R77 retrieves and visually checks the archived API Part I, Volume VI (2008) natural-camphor monograph. Recipe 14.5 names Cinnamomum camphora, Sub. extract, Q.S.; the wider monograph source and synthetic-camphor note do not establish recipe substitutions.",
+      "sourceReviewNextAction": "The finished recipe is not plain chhena. Ingredient identity/food-grade purity, including Karpura, needs a defensible source; no unrestricted camphor use is inferred. Confirm the actual botanical source, extraction and food-use grade, adopted purity standard and amendments, methods and intended use quantity/safety. Do not convert the medicinal dose, assay purity or Q.S. recipe entry into a food-use limit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1674,13 +1679,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 77,
+          "file": "ctr-camphor-source-r77-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method.",
-      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy.",
+      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2558,6 +2567,289 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "camphorReview": {
+    "schemaVersion": 1,
+    "round": 77,
+    "reviewedOn": "2026-11-17",
+    "report": "ctr-camphor-source-r77-2026-11-17.md",
+    "sourceStatus": "ARCHIVED_PRIMARY_MONOGRAPH_REFERENCE",
+    "publication": "Ayurvedic Pharmacopoeia of India, Part I, Volume VI",
+    "edition": "First edition",
+    "publicationYear": 2008,
+    "editionEffectiveFrom": "2009-01-01",
+    "isbn": "978-81-905952-1-6",
+    "sourceEntryCount": 5,
+    "parsedNumericEntries": 3,
+    "sourceLiteralEntries": 1,
+    "referencePointerEntries": 1,
+    "baseMonographRetrieved": true,
+    "baseMonographVisuallyChecked": true,
+    "fullCurrentLawComplete": false,
+    "allReferencedMethodsVerified": false,
+    "opticalRotationInterpretationResolved": false,
+    "recipeSafeDoseEstablished": false,
+    "therapeuticDoseImported": false,
+    "syntheticSubstitutionApproved": false,
+    "ocimumSubstitutionApproved": false,
+    "recipe146HoldResolved": false,
+    "legalProductApproval": false,
+    "batchRelease": false,
+    "autoApplyLimits": false,
+    "ctrRulesChanged": false,
+    "ingredientGapsClosed": 0,
+    "remainingAyurvedaIngredientGaps": 14,
+    "rows": [
+      {
+        "id": "melting-range",
+        "name": "Melting range",
+        "kind": "range",
+        "minimum": 174,
+        "maximum": 179,
+        "unit": "°C",
+        "display": "174–179 °C",
+        "method": "Appendix 3.2.1",
+        "note": "Celsius is established by the general notices, printed page XVI.",
+        "sourceId": "monograph210",
+        "printedPage": 210,
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "specific-optical-rotation",
+        "name": "Specific optical rotation",
+        "kind": "source-literal",
+        "minimum": null,
+        "maximum": null,
+        "unit": "degrees",
+        "display": "+41° +43° (as printed)",
+        "method": "Appendix 3.3.B",
+        "note": "The printed entry has no explicit range separator. Retain the literal; do not silently construct a numerical comparison. Conditions and interpretation remain open.",
+        "sourceId": "monograph210",
+        "printedPage": 210,
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "non-volatile-matter",
+        "name": "Non-volatile matter",
+        "kind": "maximum",
+        "minimum": null,
+        "maximum": 0.05,
+        "unit": "%",
+        "display": "Maximum 0.05%",
+        "method": "Monograph entry; method applicability requires review",
+        "note": "An archived ingredient-purity entry, not a finished-food contaminant limit.",
+        "sourceId": "monograph210",
+        "printedPage": 210,
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "camphor-assay",
+        "name": "Camphor assay",
+        "kind": "minimum",
+        "minimum": 96,
+        "maximum": null,
+        "unit": "%",
+        "display": "Minimum 96.0%",
+        "method": "Monograph assay, printed pages 210–211",
+        "note": "Camphor (C10H16O) in the ingredient. No food inclusion rate or safe dose is derived.",
+        "sourceId": "monograph210",
+        "printedPage": 210,
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "pesticide-residue",
+        "name": "Pesticide residue",
+        "kind": "pointer",
+        "minimum": null,
+        "maximum": null,
+        "unit": null,
+        "display": "API Appendix 2.5 reference",
+        "method": "Appendix 2.5",
+        "note": "The monograph supplies a cross-reference, not a numeric FSSAI MRL. Appendix currency and the food article still require review.",
+        "sourceId": "monograph210",
+        "printedPage": 210,
+        "referenceOnly": true,
+        "autoApply": false
+      }
+    ],
+    "records": [
+      {
+        "id": "102-102-1-14-5-dugdha-kupika-stuffed-fried-cottage-cheese-dumplings",
+        "recipeNumber": "14.5",
+        "use": "listed-ingredient",
+        "ingredientSerial": 5,
+        "ingredient": "Karpura",
+        "botanicalLiteral": "Camphor/Cinnamomum camphora (L.) J.Presl",
+        "partLiteral": "Sub. extract",
+        "ratio": "Q.S.",
+        "pdfPages": [
+          95
+        ],
+        "printedPages": [
+          59
+        ],
+        "recipeAlignmentHold": false,
+        "sourceReviewResult": "R77 retrieves and visually checks the archived API Part I, Volume VI (2008) natural-camphor monograph. Recipe 14.5 names Cinnamomum camphora, Sub. extract, Q.S.; the wider monograph source and synthetic-camphor note do not establish recipe substitutions.",
+        "sourceReviewNextAction": "Confirm the actual botanical source, extraction and food-use grade, adopted purity standard and amendments, methods and intended use quantity/safety. Do not convert the medicinal dose, assay purity or Q.S. recipe entry into a food-use limit."
+      },
+      {
+        "id": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+        "recipeNumber": "14.6",
+        "use": "method-only",
+        "ingredientSerial": null,
+        "ingredient": "Karpura",
+        "botanicalLiteral": null,
+        "partLiteral": null,
+        "ratio": null,
+        "pdfPages": [
+          96,
+          97
+        ],
+        "printedPages": [
+          60,
+          61
+        ],
+        "recipeAlignmentHold": true,
+        "sourceReviewResult": "R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy.",
+        "sourceReviewNextAction": "Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict."
+      }
+    ],
+    "sources": {
+      "title": {
+        "url": "https://iiif.wellcomecollection.org/image/b32220522_0006_0009.jp2/full/1400,/0/default.jpg",
+        "sha256": "fe67ae83ef4e32adfadf2aacd7998c998d303b62f159fd6f209a219896182ea5",
+        "bytes": 172856,
+        "assetType": "page-image",
+        "scanNumber": 9,
+        "printedPage": "III",
+        "retrievedOn": "2026-11-17"
+      },
+      "publication": {
+        "url": "https://iiif.wellcomecollection.org/image/b32220522_0006_0010.jp2/full/1400,/0/default.jpg",
+        "sha256": "826e9c03500a024e4cb3d0ec008c9869ac77317b1bcec50c954f2709ae5f64e9",
+        "bytes": 206183,
+        "assetType": "page-image",
+        "scanNumber": 10,
+        "printedPage": "IV",
+        "retrievedOn": "2026-11-17"
+      },
+      "generalNotices": {
+        "url": "https://iiif.wellcomecollection.org/image/b32220522_0006_0022.jp2/full/1400,/0/default.jpg",
+        "sha256": "123e6bf3a7e11a0e809a73eda0ff22a591747c7cfe9cce134f889d539b016e79",
+        "bytes": 319972,
+        "assetType": "page-image",
+        "scanNumber": 22,
+        "printedPage": "XVI",
+        "retrievedOn": "2026-11-17"
+      },
+      "monograph210": {
+        "url": "https://iiif.wellcomecollection.org/image/b32220522_0006_0250.jp2/full/1400,/0/default.jpg",
+        "sha256": "a0b6c01a8070985c0b419e0bd2436cdb427638278032ea599d71e858c9b55276",
+        "bytes": 301314,
+        "assetType": "page-image",
+        "scanNumber": 250,
+        "printedPage": "210",
+        "retrievedOn": "2026-11-17"
+      },
+      "monograph211": {
+        "url": "https://iiif.wellcomecollection.org/image/b32220522_0006_0251.jp2/full/1400,/0/default.jpg",
+        "sha256": "8a356e698e4837825bc7ee2bf1a1ccf42550768e32de15a205d99e4332f9b456",
+        "bytes": 262125,
+        "assetType": "page-image",
+        "scanNumber": 251,
+        "printedPage": "211",
+        "retrievedOn": "2026-11-17"
+      },
+      "recipe2025": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
+        "sha256": "498d6f579357e7bb8e8d7b9f7741db5863f6eea8d29ffd559ff9add7d32d7edc",
+        "bytes": 9881569,
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          95,
+          96,
+          97
+        ]
+      },
+      "ayurveda2022": {
+        "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
+        "sha256": "1ae8cfc632fad0a775316a84999a48adb6cf4b47d05bd4faa75f5190c511f699",
+        "bytes": 2307105,
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          16
+        ]
+      },
+      "apiManifest": {
+        "url": "https://iiif.wellcomecollection.org/presentation/v2/b32220522_0006",
+        "sha256": "0e04803c9fcd3e92aea3ea24ad9b1f276f82aafd675194b3451cea74343574a5",
+        "hashBasis": "Locally serialized retrieved JSON, not the complete book",
+        "assetType": "manifest-json",
+        "retrievedOn": "2026-11-17"
+      }
+    },
+    "attribution": "Government of India, The Ayurvedic Pharmacopoeia of India, Part I, Volume VI (2008), pp. 210–211. Digitised scan: Wellcome Collection.",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "archiveWorkUrl": "https://wellcomecollection.org/works/wuefsh5j",
+    "monographIdentity": {
+      "name": "Karpura (Natural Camphor)",
+      "botanicals": [
+        {
+          "name": "Cinnamomum camphora (L.) Nees & Eberm.",
+          "part": "Leaves, chipped wood and roots"
+        },
+        {
+          "name": "Ocimum kilimandscharicum Guerke",
+          "part": "Whole plant"
+        }
+      ],
+      "process": "Hydrodistillation",
+      "syntheticNote": "Synthetic camphor is described as optically inactive and racemic; this is not permission to substitute it into an FSSAI recipe."
+    },
+    "amendmentWatch": {
+      "url": "https://www.pcimh.gov.in/assets/pdf/whatsnew/Amendment.pdf",
+      "date": "2026-09-09",
+      "access": "WEB_EXTRACT_ONLY_PDF_DOWNLOAD_UNAVAILABLE",
+      "pdfBytesVerified": false,
+      "reviewedScope": "Marica in API Part I Volume III and Anu Taila in Part II Volume III; no Karpura entry appears in this retrieved amendment text.",
+      "completeAmendmentChain": false
+    },
+    "findings": [
+      {
+        "id": "edition",
+        "title": "Archived primary source, dated explicitly",
+        "detail": "The title and publication leaves establish first edition 2008, effective 1 January 2009. It is not represented as a complete current standard; later amendments and referenced methods remain open."
+      },
+      {
+        "id": "botanical",
+        "title": "Recipe scope is narrower",
+        "detail": "The monograph names Cinnamomum leaves/wood/roots and Ocimum whole plant, with hydrodistillation. Recipe 14.5 names Cinnamomum camphora only. Do not expand the recipe to Ocimum or synthetic material from the monograph alone."
+      },
+      {
+        "id": "rotation",
+        "title": "Optical rotation stays a source literal",
+        "detail": "The scan prints +41° +43° without an explicit separator. The helper preserves it and supplies no min/max values. It does not normalize punctuation into an acceptance interval."
+      },
+      {
+        "id": "dose",
+        "title": "Purity is not a food-use dose",
+        "detail": "The medicinal dose and therapeutic-use sections are not imported into the helper. Q.S., assay purity and botanical-name alignment do not establish a safe food inclusion rate."
+      },
+      {
+        "id": "ctr",
+        "title": "Pesticide cross-reference is not an FSSAI MRL",
+        "detail": "API Appendix 2.5 remains a source pointer. No drug-monograph residue value is mapped to a raw food commodity or a finished dish."
+      },
+      {
+        "id": "recipe",
+        "title": "Method-only Karpura remains held",
+        "detail": "Recipe 14.6 lists Karpura only in its method. Every selected material retains the official-recipe alignment hold; its 13 original ingredient rows remain unchanged."
+      }
+    ]
+  },
   "asafoetidaReview": {
     "schemaVersion": 1,
     "round": 76,

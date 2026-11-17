@@ -202,6 +202,37 @@ let browser;
  assert.equal(await page.locator('.asafoetida-product-note').count(),0,'Purity references must not leak to unrelated products');
  const asafoetidaReport=await page.request.get(base+asafoetida.report);assert.equal(asafoetidaReport.status(),200);
  assert.match(await asafoetidaReport.text(),/All 137 product-specific CTR decisions remain open/);
+ const camphor=data.camphorReview;
+ assert.equal(camphor.rows.length,5,'Full export retains all camphor entries');
+ assert.equal(camphor.rows[1].minimum,null,'Export must not silently parse optical rotation');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openCamphorIngredient').click();
+ assert.equal(await page.locator('#camphorMaterial').inputValue(),'');
+ assert.match(await page.locator('.camphor-product-note').textContent(),/2008/);
+ const camphorChoices=[['cinnamomum',/source lead, not approval/],['ocimum',/does not authorize/],['synthetic',/does not establish equivalence/],['unknown',/Obtain the actual/]];
+ for(const [choice,message] of camphorChoices){await page.locator('#camphorMaterial').selectOption(choice);assert.match(await page.locator('#camphorScopeResult').textContent(),message);}
+ await page.locator('#camphorMaterial').selectOption('');assert.match(await page.locator('#camphorScopeResult').textContent(),/Select a material/);
+ await page.locator('.camphor-source-entries > summary').click();
+ assert.equal(await page.locator('.camphor-reference-entry').count(),5);
+ assert.match(await page.locator('.camphor-source-entries').textContent(),/\+41° \+43° \(as printed\)/);
+ assert.equal(await page.locator('.camphor-product-note input[type=number]').count(),0);
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Camphor reference overflows at '+width);
+  if(width!==320)await page.locator('.camphor-product-note').screenshot({path:path.join(artifacts,'camphor-reference-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openCamphorMethodHold').click();
+ assert.equal(await page.locator('#camphorMaterial').inputValue(),'');
+ assert.match(await page.locator('#camphorScopeResult').textContent(),/remains on hold/);
+ for(const [choice] of camphorChoices){await page.locator('#camphorMaterial').selectOption(choice);assert.match(await page.locator('#camphorScopeResult').textContent(),/remains on hold/);}
+ assert.match(await page.locator('#productDetail').textContent(),/discrepancy is confirmed visually, not resolved/);
+ await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),camphor.records[0].id);
+ assert.equal(await page.locator('#camphorMaterial').inputValue(),'','Prior material must not carry across recipes');
+ await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),asafoetida.productId);
+ assert.equal(await page.locator('.camphor-product-note').count(),0,'Camphor note must not leak to unrelated products');
+ const camphorReport=await page.request.get(base+camphor.report);assert.equal(camphorReport.status(),200);
+ assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -243,6 +274,7 @@ let browser;
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
+ Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});
