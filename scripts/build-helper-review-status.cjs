@@ -23,6 +23,8 @@ const asafoetidaFile='ctr-asafoetida-purity-r76-2026-11-17.json';
 const asafoetida=read(asafoetidaFile);
 const camphorFile='ctr-camphor-source-r77-2026-11-17.json';
 const camphor=read(camphorFile);
+const lajadiFile='ctr-lajadi-botanicals-r78-2026-11-17.json';
+const lajadi=read(lajadiFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
 vm.createContext(catalogueContext);
 vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
@@ -87,15 +89,20 @@ for(const note of camphor.records){
  row.sourceReviewResult+=' '+note.sourceReviewResult;
  row.sourceReviewNextAction+=' '+note.sourceReviewNextAction;
 }
+const lajadiRecipe=records.find(x=>x.id===lajadi.recipeProductId);assert(lajadiRecipe);
+lajadiRecipe.reports.unshift({round:78,file:lajadi.report});
+lajadiRecipe.sourceReviewResult+=' '+lajadi.sourceReviewResult;
+lajadiRecipe.sourceReviewNextAction+=' '+lajadi.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:77,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:78,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile],records,
+ lajadiBotanicalReview:lajadi,
  camphorReview:camphor,
  asafoetidaReview:{...asafoetida,report:asafoetidaFile.replace(/\.json$/,'.md')},
  waterStandardReview:{...waterStandard,report:waterStandardFile.replace(/\.json$/,'.md')},

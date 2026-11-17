@@ -122,3 +122,14 @@ Recipe 14.5 gains a material-source review distinguishing Cinnamomum, Ocimum, sy
 The local current audit passed **55/55 checks**, including 39 scope/invalid-input cases, five scan fingerprints and 22 altered-evidence refusals. Browser checks cover both recipe notes, all four material choices, the unresolved source literal, preserved earlier controls, full filtered exports, all 533 product pages and mobile/desktop layout. The draft PR records the exact CI revision and artifacts. R76 legacy integration run 44038907942 has passed all five jobs.
 
 The 2026 API amendment text was read through the available web extract; direct PDF/screenshot retrieval failed, so no PDF fingerprint or visual-verification claim is made. The complete amendment chain, referenced methods, actual ingredient criteria and food-use safety remain open. All 137 CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open; nothing is deployed.
+
+
+## R78 Lajadi Kashaya botanical sources
+
+[R78](ctr-lajadi-botanicals-r78-2026-11-17.md) retrieves three monographs from the original Government of India API Part I, Volume III (first edition, copyright 2001), digitised by Wellcome Collection. The 17 purity entries distinguish Juniperus communis fruit, Santalum album heart wood and Vetiveria root. Hribera/Hapusa naming and the recipe/API botanical spelling difference remain explicit and unresolved. Ten visually checked page-image fingerprints cover the title, publication leaves, monographs and selected method bases.
+
+The ingredient and material selectors start empty, reset independently when changing ingredients/products, and distinguish named dried material, other species/parts, oils/extracts and unknown composition. Archived percentages retain air-dried and volume/weight bases; alcohol strength and complete method acceptance remain open. The water-reduction instruction creates no contaminant multiplier. All existing recipe-water references are retained.
+
+The local current audit passed **56/56 checks**. The R78 regression covers 132 form/invalid-input combinations, ten source fingerprints and 24 altered-evidence refusals, including malformed and duplicate entries. Browser CI checks all 533 products, all three botanical ingredients and 12 material branches, reset/clearing behavior, combined water/botanical panels, full filtered export and mobile/desktop layout. Exact revision, result and artifact fingerprints are recorded in draft PR #2. R77 legacy integration run 44041298766 passed all five jobs.
+
+All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open. Base-source retrieval does not establish current adoption, complete amendments, actual ingredient identity, a safe food dose, substitution permission, finished-tea limits or a batch release. The draft is not deployed.

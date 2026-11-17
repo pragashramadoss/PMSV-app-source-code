@@ -233,6 +233,40 @@ let browser;
  assert.equal(await page.locator('.camphor-product-note').count(),0,'Camphor note must not leak to unrelated products');
  const camphorReport=await page.request.get(base+camphor.report);assert.equal(camphorReport.status(),200);
  assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
+ const lajadi=data.lajadiBotanicalReview;
+ assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openLajadiBotanicals').click();
+ assert.equal(await page.locator('.water-product-note').count(),1,'Existing water review remains alongside botanical references');
+ assert.equal(await page.locator('#lajadiIngredient').inputValue(),'');assert.equal(await page.locator('#lajadiMaterial').isDisabled(),true);
+ assert.equal(await page.locator('.lajadi-reference-entry').count(),0);
+ for(const [id,count] of [['hribera',5],['chandana',6],['ushira',6]]){
+  await page.locator('#lajadiIngredient').selectOption(id);
+  assert.equal(await page.locator('#lajadiMaterial').inputValue(),'','Changing ingredient clears prior material choice');
+  assert.equal(await page.locator('#lajadiMaterial').isDisabled(),false);
+  await page.locator('.lajadi-source-entries summary').click();
+  assert.equal(await page.locator('.lajadi-reference-entry').count(),count);
+  for(const [form,message] of [['named',/Candidate source only/],['other',/different species or plant part/],['extract',/does not authorize/],['unknown',/does not authenticate/]]){
+   await page.locator('#lajadiMaterial').selectOption(form);assert.match(await page.locator('#lajadiScopeResult').textContent(),message);
+   assert.equal(await page.locator('.lajadi-source-entries').evaluate(el=>el.open),true,'Material change must preserve open source table');
+  }
+ }
+ assert.match(await page.locator('#lajadiReference').textContent(),/zizaniodes/);assert.match(await page.locator('#lajadiReference').textContent(),/zizanioides/);
+ assert.match(await page.locator('#lajadiReference').textContent(),/Minimum 1% v\/w/);
+ await page.locator('#lajadiMaterial').selectOption('named');
+ assert.equal(await page.locator('.lajadi-product-note input[type=number]').count(),0);
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Botanical reference overflow at '+width);
+  if(width!==320)await page.locator('.lajadi-product-note').screenshot({path:path.join(artifacts,'lajadi-reference-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.locator('#lajadiIngredient').selectOption('');assert.equal(await page.locator('#lajadiMaterial').isDisabled(),true);
+ assert.equal(await page.locator('.lajadi-reference-entry').count(),0,'Clearing ingredient removes prior references');
+ await page.locator('#lajadiIngredient').selectOption('hribera');await page.locator('#lajadiMaterial').selectOption('named');
+ await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),asafoetida.productId);assert.equal(await page.locator('.lajadi-product-note').count(),0);
+ await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),lajadi.recipeProductId);assert.equal(await page.locator('#lajadiIngredient').inputValue(),'');
+ assert.equal(await page.locator('#lajadiMaterial').inputValue(),'');
+ const lajadiReport=await page.request.get(base+lajadi.report);assert.equal(lajadiReport.status(),200);assert.match(await lajadiReport.text(),/All 137 product-specific CTR decisions remain open/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -275,6 +309,7 @@ let browser;
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
+ Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

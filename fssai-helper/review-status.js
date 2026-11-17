@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==77||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==78||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -207,6 +207,43 @@
   }
   if(cam.amendmentWatch?.completeAmendmentChain!==false||cam.amendmentWatch.pdfBytesVerified!==false||
     cam.amendmentWatch.url!=='https://www.pcimh.gov.in/assets/pdf/whatsnew/Amendment.pdf')return denied('Camphor amendment review is overstated.');
+  const laj=data.lajadiBotanicalReview;
+  if(!laj||laj.round!==78||laj.reviewedOn!==data.latestSourceReviewDate||laj.report!=='ctr-lajadi-botanicals-r78-2026-11-17.md'||
+    laj.sourceStatus!=='ARCHIVED_PRIMARY_MONOGRAPH_REFERENCE'||laj.publicationYear!==2001||laj.edition!=='First edition'||laj.editionEffectiveFrom!==null||
+    laj.isbn!=='81-901151-2-X'||laj.recipeProductId!=='102-102-1-12-1-lajadi-kashaya-parched-rice-tea'||!ids.has(laj.recipeProductId)||
+    laj.recipeNumber!=='12.1'||laj.recipePdfPage!==84||laj.recipePrintedPage!==51||laj.sourceEntryCount!==17||laj.botanicalCount!==3||
+    laj.baseMonographsRetrieved!==true||laj.baseMonographsVisuallyChecked!==true||laj.selectedMethodBasesVisuallyChecked!==true||
+    laj.ingredientGapsClosed!==0||laj.remainingAyurvedaIngredientGaps!==14||
+    ['fullCurrentLawComplete','allReferencedMethodsVerified','alcoholStrengthResolved','identityDifferencesResolved','therapeuticDoseImported','recipeSafeDoseEstablished','concentrationMultiplierEstablished','legalProductApproval','batchRelease','autoApplyLimits','ctrRulesChanged'].some(key=>laj[key]!==false)||
+    !Array.isArray(laj.ingredients)||laj.ingredients.length!==3||!Array.isArray(laj.rows)||laj.rows.length!==17||laj.rows.some(r=>!r||typeof r!=='object')||!laj.sourceReviewResult||!laj.sourceReviewNextAction)
+   return denied('Lajadi botanical source evidence is incomplete.');
+  const lajExpected=[
+   ['hribera',3,'Hribera','Juniper/Juniperus communis L.','Fruit','Hapusa (Fruit)','Juniperus communis Linn.','Dried fruit','hapusa63','hapusa64',[1,5,0.5,12,9]],
+   ['chandana',4,'Chandana','Sandal wood/Santalum album L.','Heart wood','Svetacandana (Heart Wood)','Santalum album Linn.','Dried heart wood','svetacandana207','svetacandana208',[1,1,0.2,8,1,1.5]],
+   ['ushira',5,'Ushira','Khas Khas grass/Vetiveria zizaniodes (L.) Nash.','Root','Usira (Root)','Vetiveria zizanioides (Linn.) Nash','Dried fragrant fibrous roots','usira219','usira220',[2,9,6,4,5,1]]
+  ];
+  const lajParameters=[['foreign-matter','Foreign matter','2.2.2','Percentage of the weighed ingredient sample','methods234'],['total-ash','Total ash','2.2.3','Percentage relative to the air-dried ingredient','methods234'],['acid-insoluble-ash','Acid-insoluble ash','2.2.4','Percentage relative to the air-dried ingredient','methods234'],['alcohol-extractive','Alcohol-soluble extractive','2.2.6','Percentage relative to the air-dried ingredient; alcohol strength remains to be established','methods235'],['water-extractive','Water-soluble extractive','2.2.7','Percentage relative to the air-dried ingredient; archived method uses chloroform water','methods235'],['volatile-oil','Volatile oil','2.2.10','Volume/weight percentage of the ingredient; not an oil substitution permission','methods235']];
+  for(let i=0;i<3;i++){
+   const r=laj.ingredients[i],ex=lajExpected[i];
+   if(!r||![r.id,r.ingredientSerial,r.name,r.botanicalLiteral,r.partLiteral,r.monograph,r.apiBotanicalLiteral,r.apiPart,r.identitySourceId,r.entriesSourceId].every((v,j)=>v===ex[j])||
+    r.entryCount!==ex[10].length||r.ratio!=='1/4 part'||!r.identityNote||r.identityResolved!==false||r.substitutionApproved!==false)return denied('Lajadi botanical identity or plant part is inconsistent.');
+   const rows=laj.rows.filter(x=>x.ingredientId===r.id);
+   if(rows.length!==ex[10].length||!rows.every((row,j)=>{
+    const [key,label,method,basis,methodSource]=lajParameters[j],minimum=j>=3,value=ex[10][j],unit=j===5?'% v/w':'%';
+    return row.id===r.id+'-'+key&&row.parameter===key&&row.name===label&&row.kind===(minimum?'minimum':'maximum')&&
+     row.minimum===(minimum?value:null)&&row.maximum===(minimum?null:value)&&row.unit===unit&&row.display===(minimum?'Minimum ':'Maximum ')+value+unit&&
+     row.method==='Appendix '+method&&row.basis===basis&&row.methodSourceId===methodSource&&row.sourceId===r.entriesSourceId&&row.printedPage===[64,208,220][i]&&row.referenceOnly===true&&row.autoApply===false;
+   }))return denied('Lajadi botanical source value, method or basis is inconsistent.');
+  }
+  for(const [key,scan,page] of [['title',9,null],['publication',10,null],['hapusa63',105,63],['hapusa64',106,64],['svetacandana207',249,207],['svetacandana208',250,208],['usira219',261,219],['usira220',262,220],['methods234',276,234],['methods235',277,235]]){
+   const s=laj.sources?.[key];
+   if(!s||s.url!==`https://iiif.wellcomecollection.org/image/b32220522_0003_${String(scan).padStart(4,'0')}.jp2/full/1400,/0/default.jpg`||
+    s.scanNumber!==scan||s.printedPage!==page||s.assetType!=='page-image'||s.visuallyChecked!==true||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)
+    return denied('Lajadi source image is inconsistent.');
+  }
+  if(laj.sources?.recipe2025?.url!==cam.sources.recipe2025.url||laj.sources.recipe2025.sha256!==cam.sources.recipe2025.sha256||
+   JSON.stringify(laj.sources.recipe2025.pdfPagesReviewed)!=='[84]'||laj.amendmentWatch?.completeAmendmentChain!==false||laj.amendmentWatch.pdfBytesVerified!==false)
+   return denied('Lajadi recipe source or amendment review is inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}
