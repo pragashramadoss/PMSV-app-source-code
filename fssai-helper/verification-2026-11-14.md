@@ -2,6 +2,8 @@
 
 Subsequent source review: [R72, 17 November 2026](ctr-toxin-gazette-concordance-r72-2026-11-17.md) compares 37 toxin-limit/sampling rows and 119 histamine species entries with original notifications. It adds a separate draft histamine species/sampling gate and source notes in the current review UI. The earlier verification totals below retain their original tested revisions; current CI evidence is recorded on [draft PR #2](https://github.com/pragashramadoss/PMSV-app-source-code/pull/2).
 
+R73 follow-up: [dietary fibre claims, 17 November 2026](ctr-fibre-claims-source-r73-2026-11-17.md) verifies six thresholds against original notifications and adds a basis-aware arithmetic reference. The dextrin source conflict remains open.
+
 ## Result
 
 Automated software verification passed: the data integration suite, all older browser groups, current Helper checks and numerical comparison guards. **Full regulatory verification remains incomplete:** linked source reviews do not establish every current-law requirement or a product approval.

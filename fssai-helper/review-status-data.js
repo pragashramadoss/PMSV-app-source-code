@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-17",
-  "latestRound": 72,
+  "latestRound": 73,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -36,7 +36,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-vanilla-three-source-review-r64-2026-11-11.json",
     "ctr-original-gazette-concordance-r70-2026-11-14.json",
     "ctr-residue-gazette-concordance-r71-2026-11-14.json",
-    "ctr-toxin-gazette-concordance-r72-2026-11-17.json"
+    "ctr-toxin-gazette-concordance-r72-2026-11-17.json",
+    "ctr-fibre-claims-source-r73-2026-11-17.json"
   ],
   "records": [
     {
@@ -2406,13 +2407,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "FOSCOS_CLASSIFICATION_ROUTE_NOT_CTR_DECISION",
       "reports": [
         {
+          "round": 73,
+          "file": "ctr-fibre-claims-source-r73-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "Soluble dextrin has defined origin, polymer/linkage description, non-GM source and listed food uses. This older chapter also prints legacy fibre-claim wording.",
-      "sourceReviewNextAction": "Reconcile legacy claims with the current claims regulations before enabling a claim. GMP ingredient use and fibre content do not establish a contaminant exemption.",
+      "sourceReviewResult": "The 2016 original notification places the conflicting high-fibre range in FPSFA 2.11.8 itself. The 2022 original Claims amendment replaces Schedule I and confirms six source/high thresholds, including a separate liquid basis. No express deletion or reconciliation of the dextrin proviso was established in this scoped review.",
+      "sourceReviewNextAction": "Resolve the FPSFA 2.11.8 high-source proviso against Claims regulation 5(3) and Schedule I before approving a dextrin-related claim. Compare finished-food fibre using the matching solid, liquid or energy basis; ingredient dosage is not measured dietary fibre.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2506,6 +2511,90 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "fibreClaimsReview": {
+    "round": 73,
+    "report": "ctr-fibre-claims-source-r73-2026-11-17.md",
+    "checkedOn": "2026-11-17",
+    "productId": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+    "sourceDecision": "CONFLICT_OPEN",
+    "thresholdRows": [
+      {
+        "claim": "source",
+        "basis": "g_per_100g_solids",
+        "minimum": 3,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      },
+      {
+        "claim": "source",
+        "basis": "g_per_100ml_liquids",
+        "minimum": 1.5,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      },
+      {
+        "claim": "source",
+        "basis": "g_per_100kcal",
+        "minimum": 1.5,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      },
+      {
+        "claim": "high",
+        "basis": "g_per_100g_solids",
+        "minimum": 6,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      },
+      {
+        "claim": "high",
+        "basis": "g_per_100ml_liquids",
+        "minimum": 3,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      },
+      {
+        "claim": "high",
+        "basis": "g_per_100kcal",
+        "minimum": 3,
+        "operator": ">=",
+        "sourceId": "claims2022dec",
+        "pdfPage": 13
+      }
+    ],
+    "findings": [
+      {
+        "id": "original-scope",
+        "title": "Original location corrected",
+        "detail": "The 2016 original notification places the conflicting high-fibre range in FPSFA 2.11.8 itself. The 2022 original Claims amendment replaces Schedule I and confirms six source/high thresholds, including a separate liquid basis. No express deletion or reconciliation of the dextrin proviso was established in this scoped review."
+      },
+      {
+        "id": "basis",
+        "title": "Six thresholds confirmed",
+        "detail": "Source: 3 g/100 g solids, 1.5 g/100 ml liquids or 1.5 g/100 kcal. High/rich: 6, 3 or 3 on the same respective bases. These are alternative minimums, not maximums or a serving-size route."
+      },
+      {
+        "id": "amendment-chain",
+        "title": "Amendment scope checked",
+        "detail": "The 2020 amendment addresses oils and protein claim labels; August 2022 replaces the edible-oil schedule. December 2022 replaces Schedules I–III. The July 2023 direction extends only regulation 4(7), not fibre thresholds."
+      },
+      {
+        "id": "evidence",
+        "title": "Arithmetic does not approve a claim",
+        "detail": "Use validated finished-food fibre data with an explicit basis. Other claim conditions, special-category provisions and the dextrin conflict remain separate. Health-supplement categories are referred to their own regulations by Schedule I Note 1."
+      }
+    ],
+    "source": "https://stg-old.fssai.gov.in/upload/notifications/2022/12/63998e33c2ad6Gazette_Notification_Amendment_14_12_2022.pdf#page=13",
+    "originalDextrinSource": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Plant_Sterol_HFD_25_07_2016.pdf#page=5",
+    "legalProductApproval": false,
+    "labelApproved": false,
+    "batchRelease": false
+  },
   "toxinGazetteReview": {
     "round": 72,
     "report": "ctr-toxin-gazette-concordance-r72-2026-11-17.md",

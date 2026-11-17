@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "round": 73,
+  "reviewedOn": "2026-11-17",
+  "productId": "99-99-7-dietary-fibre-dextrin-soluble-fibre",
+  "sourceDecision": "CONFLICT_OPEN",
+  "thresholdRows": [
+    {
+      "claim": "source",
+      "basis": "g_per_100g_solids",
+      "minimum": 3,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    },
+    {
+      "claim": "source",
+      "basis": "g_per_100ml_liquids",
+      "minimum": 1.5,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    },
+    {
+      "claim": "source",
+      "basis": "g_per_100kcal",
+      "minimum": 1.5,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    },
+    {
+      "claim": "high",
+      "basis": "g_per_100g_solids",
+      "minimum": 6,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    },
+    {
+      "claim": "high",
+      "basis": "g_per_100ml_liquids",
+      "minimum": 3,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    },
+    {
+      "claim": "high",
+      "basis": "g_per_100kcal",
+      "minimum": 3,
+      "operator": ">=",
+      "sourceId": "claims2022dec",
+      "pdfPage": 13
+    }
+  ],
+  "sources": {
+    "claims2020": {
+      "url": "https://stg-old.fssai.gov.in/upload/notifications/2020/10/5f86e06ba342fGazette_Notification_Claims_Edible_Oil_14_10_2020.pdf",
+      "sha256": "437df01dee94f3a3bcbfaa941c40ac2de2fdaf74962b69ca65904af3d517d98f",
+      "bytes": 1651414,
+      "pdfPages": [
+        5
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Amendment 2(1)-(3)"
+    },
+    "claims2022aug": {
+      "url": "https://stg-old.fssai.gov.in/upload/notifications/2022/09/63106ab314c26Gazette_Notification_Advertisement_01_09_2022.pdf",
+      "sha256": "92e1dd4a193b3e349a0ad4e90ff68d2f63623fd5021f826e5278ba530da19e05",
+      "bytes": 1137703,
+      "pdfPages": [
+        4
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Amendment 2: Schedule IIA replacement"
+    },
+    "claims2022dec": {
+      "url": "https://stg-old.fssai.gov.in/upload/notifications/2022/12/63998e33c2ad6Gazette_Notification_Amendment_14_12_2022.pdf",
+      "sha256": "9e516f3fa689955ecd3eda3f4f9c07511d89b68a4272bfebc277cbb10be6da72",
+      "bytes": 1654559,
+      "pdfPages": [
+        10,
+        11,
+        13
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Amendment 3(a), 6; Schedule I row 14 and Note 1"
+    },
+    "direction2023jul": {
+      "url": "https://stg-old.fssai.gov.in/upload/advisories/2023/07/64a669e74d46edirection_Ads_06072023.pdf",
+      "sha256": "aed816056ebf14fbbb15e5ddc58a0dba5d29dbde9b16ce02cc9735cdb92bc030",
+      "bytes": 407224,
+      "pdfPages": [
+        1
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Paragraphs 2-4; regulation 4(7) only"
+    },
+    "dextrin2016": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Plant_Sterol_HFD_25_07_2016.pdf",
+      "sha256": "0d0132f042550e57f2beb01bfffd9b691ad3f9f388d47d20eba9bf4a39b11df4",
+      "bytes": 176183,
+      "pdfPages": [
+        5
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "FPSFA amendment 2(C), inserted 2.11.8"
+    },
+    "claims2018": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Advertising_Claims_27_11_2018.pdf",
+      "sha256": "58184c716ad254e2ec698e3c4d212dfaacea4bf43cc09dcd48daeb590e94d9f4",
+      "bytes": 1178339,
+      "pdfPages": [
+        19,
+        21,
+        28
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Regulations 1, 4(6), 5(3); Schedule I row 14"
+    },
+    "claimsCompendium": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Compendium_Advertising_Claims_Regulations_14_12_2022.pdf",
+      "sha256": "4bfe17ba6fe59a3a8ffc7326ad723014b19d69b68cebffdc68717cdfff5cb191",
+      "bytes": 787091,
+      "pdfPages": [
+        9
+      ],
+      "reviewedOn": "2026-11-17",
+      "clause": "Schedule I row 14; secondary cross-check"
+    }
+  },
+  "indexCheck": {
+    "url": "https://fssai.gov.in/food-law/regulations/amendments/advertising-claims",
+    "checkedOn": "2026-11-17",
+    "amendmentsListed": [
+      "2020-10-09",
+      "2022-08-30",
+      "2022-12-13"
+    ],
+    "scope": "Targeted index and original-provision review; not exhaustive current-law certification."
+  },
+  "findings": [
+    {
+      "id": "original-scope",
+      "title": "Original location corrected",
+      "detail": "The 2016 original notification places the conflicting high-fibre range in FPSFA 2.11.8 itself. The 2022 original Claims amendment replaces Schedule I and confirms six source/high thresholds, including a separate liquid basis. No express deletion or reconciliation of the dextrin proviso was established in this scoped review."
+    },
+    {
+      "id": "basis",
+      "title": "Six thresholds confirmed",
+      "detail": "Source: 3 g/100 g solids, 1.5 g/100 ml liquids or 1.5 g/100 kcal. High/rich: 6, 3 or 3 on the same respective bases. These are alternative minimums, not maximums or a serving-size route."
+    },
+    {
+      "id": "amendment-chain",
+      "title": "Amendment scope checked",
+      "detail": "The 2020 amendment addresses oils and protein claim labels; August 2022 replaces the edible-oil schedule. December 2022 replaces Schedules I–III. The July 2023 direction extends only regulation 4(7), not fibre thresholds."
+    },
+    {
+      "id": "evidence",
+      "title": "Arithmetic does not approve a claim",
+      "detail": "Use validated finished-food fibre data with an explicit basis. Other claim conditions, special-category provisions and the dextrin conflict remain separate. Health-supplement categories are referred to their own regulations by Schedule I Note 1."
+    }
+  ],
+  "sourceReviewResult": "The 2016 original notification places the conflicting high-fibre range in FPSFA 2.11.8 itself. The 2022 original Claims amendment replaces Schedule I and confirms six source/high thresholds, including a separate liquid basis. No express deletion or reconciliation of the dextrin proviso was established in this scoped review.",
+  "sourceReviewNextAction": "Resolve the FPSFA 2.11.8 high-source proviso against Claims regulation 5(3) and Schedule I before approving a dextrin-related claim. Compare finished-food fibre using the matching solid, liquid or energy basis; ingredient dosage is not measured dietary fibre.",
+  "numericMismatchesWithR12": 0,
+  "coreRulesChanged": false,
+  "fullCurrentLawComplete": false,
+  "legalProductApproval": false,
+  "labelApproved": false,
+  "batchRelease": false
+}

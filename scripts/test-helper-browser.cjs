@@ -72,6 +72,37 @@ let browser;
   assert.equal(await page.locator('#productDetail .toxin-product-note').count(),1);
   assert.match(await page.locator('#productDetail .toxin-product-note').textContent(),/listed fish species/);
  }
+ const fibreId=data.fibreClaimsReview.productId;
+ assert.equal(data.fibreClaimsReview.thresholdRows.length,6);
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openFibreReference').click();
+ assert.match(await page.locator('.fibre-product-note').textContent(),/FPSFA 2\.11\.8 itself/);
+ assert.equal(await page.locator('.fibre-product-note tbody tr').count(),3);
+ await page.locator('.fibre-product-note summary').click();
+ const form=page.locator('#fibreReferenceForm');
+ await form.getByRole('button').click();
+ assert.match(await form.getByRole('status').textContent(),/Select a basis/);
+ await page.locator('#fibreBasis').selectOption('g_per_100g_solids');
+ await page.locator('#fibreClaim').selectOption('high');
+ await page.locator('#fibreAmount').fill('4');await form.getByRole('button').click();
+ assert.match(await form.getByRole('status').textContent(),/Below the selected numerical minimum \(6 g\)/);
+ await page.locator('#fibreAmount').fill('6');
+ assert.match(await form.getByRole('status').textContent(),/Values changed/);
+ await form.getByRole('button').click();assert.match(await form.getByRole('status').textContent(),/Meets the selected numerical minimum/);
+ assert.match(await form.getByRole('status').textContent(),/no label approval/);
+ await page.locator('#fibreBasis').selectOption('g_per_100ml_liquids');
+ assert.match(await form.getByRole('status').textContent(),/Values changed/);
+ await page.locator('#fibreAmount').fill('3');await form.getByRole('button').click();
+ assert.match(await form.getByRole('status').textContent(),/minimum \(3 g\)/);
+ await page.locator('#fibreAmount').fill('-1');await form.getByRole('button').click();assert.match(await form.getByRole('status').textContent(),/non-negative/);
+ await page.locator('#fibreAmount').fill('');await form.getByRole('button').click();assert.match(await form.getByRole('status').textContent(),/Select a basis/);
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Fibre reference overflows at '+width);
+  if(width!==320)await page.locator('.fibre-product-note').screenshot({path:path.join(artifacts,'fibre-reference-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ const fibreReport=await page.request.get(base+data.fibreClaimsReview.report);assert.equal(fibreReport.status(),200);
+ assert.match(await fibreReport.text(),/All 137 product-specific CTR decisions remain open/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -110,7 +141,7 @@ let browser;
  }
  assert.deepEqual(errors,[]);
  const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
- Object.assign(result,{toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
+ Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

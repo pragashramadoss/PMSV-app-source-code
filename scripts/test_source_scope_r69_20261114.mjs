@@ -55,11 +55,13 @@ const ctx={window:{}};vm.createContext(ctx);vm.runInContext(read('review-status-
 const register=JSON.parse(JSON.stringify(ctx.window.PMSV_REVIEW_REGISTER));
 assert.equal(register.focusedCount,137);assert.equal(register.remainingFocusedCount,0);
 assert.equal(register.records.filter(x=>x.reports.some(r=>r.round===69)).length,70);
-assert.equal(register.records.filter(x=>x.reports.some(r=>r.round!==69)).length,67);
+assert.equal(register.records.filter(x=>x.reports.some(r=>r.round<69)).length,67);
+const fibreFollowup=JSON.parse(read('ctr-fibre-claims-source-r73-2026-11-17.json'));
 for(const record of r.records){
+ const current=record.id===fibreFollowup.productId?fibreFollowup:record;
  const linked=register.records.find(x=>x.id===record.id);
- assert.equal(linked.sourceReviewResult,record.sourceReviewResult);
- assert.equal(linked.sourceReviewNextAction,record.sourceReviewNextAction);
+ assert.equal(linked.sourceReviewResult,current.sourceReviewResult);
+ assert.equal(linked.sourceReviewNextAction,current.sourceReviewNextAction);
  assert.equal(linked.legalArticleDecision,'OPEN');
 }
 assert.equal(register.currencyWatch[1].effectiveFrom,milk.commencement);

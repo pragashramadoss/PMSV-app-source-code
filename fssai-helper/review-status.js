@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==72||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==73||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -76,6 +76,19 @@
   const seafoodIds=rows.filter(x=>/^2\.6(?:\.|$)/.test(x.fssr)).map(x=>x.id);
   if(!Array.isArray(toxin.seafoodNoteIds)||toxin.seafoodNoteIds.length!==24||new Set(toxin.seafoodNoteIds).size!==24||
      seafoodIds.length!==24||!seafoodIds.every(id=>toxin.seafoodNoteIds.includes(id)))return denied('Seafood source-note coverage is inconsistent.');
+  const fibre=data.fibreClaimsReview;
+  if(!fibre||fibre.round!==73||fibre.checkedOn!==data.latestSourceReviewDate||
+     fibre.productId!=='99-99-7-dietary-fibre-dextrin-soluble-fibre'||fibre.sourceDecision!=='CONFLICT_OPEN'||
+     fibre.report!=='ctr-fibre-claims-source-r73-2026-11-17.md'||!Array.isArray(fibre.thresholdRows)||fibre.thresholdRows.length!==6||
+     fibre.legalProductApproval!==false||fibre.labelApproved!==false||fibre.batchRelease!==false||
+     !Array.isArray(fibre.findings)||fibre.findings.length!==4)return denied('Fibre source review is incomplete.');
+  const expectedFibre=[['source','g_per_100g_solids',3],['source','g_per_100ml_liquids',1.5],['source','g_per_100kcal',1.5],['high','g_per_100g_solids',6],['high','g_per_100ml_liquids',3],['high','g_per_100kcal',3]];
+  if(!fibre.thresholdRows.every((r,i)=>r&&r.claim===expectedFibre[i][0]&&r.basis===expectedFibre[i][1]&&r.minimum===expectedFibre[i][2]&&r.operator==='>='&&r.sourceId==='claims2022dec'&&r.pdfPage===13))return denied('Fibre thresholds or bases are inconsistent.');
+  for(const source of [fibre.source,fibre.originalDextrinSource]){
+   try{const url=new URL(source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Fibre source URL is invalid.');}
+   catch(error){return denied('Fibre source URL is invalid.');}
+  }
+  if(!fibre.findings.every(f=>f&&typeof f.title==='string'&&f.title.trim()&&typeof f.detail==='string'&&f.detail.trim()))return denied('Fibre findings are incomplete.');
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}

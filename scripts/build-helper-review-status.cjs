@@ -13,6 +13,8 @@ const residueFile='ctr-residue-gazette-concordance-r71-2026-11-14.json';
 const residue=read(residueFile);
 const toxinFile='ctr-toxin-gazette-concordance-r72-2026-11-17.json';
 const toxin=read(toxinFile);
+const fibreFile='ctr-fibre-claims-source-r73-2026-11-17.json';
+const fibre=read(fibreFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
 vm.createContext(catalogueContext);
 vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
@@ -49,15 +51,23 @@ const records=register.records.map(row=>({
    'Keep product-form and competing-article conditions explicit.'),
  lotReleaseEvidence:'Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification.'
 }));
+const fibreRecord=records.find(x=>x.id===fibre.productId);
+assert(fibreRecord);
+fibreRecord.reports.unshift({round:73,file:fibreFile.replace(/\.json$/,'.md')});
+fibreRecord.sourceReviewResult=fibre.sourceReviewResult;
+fibreRecord.sourceReviewNextAction=fibre.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:72,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:73,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile],records,
+ fibreClaimsReview:{round:73,report:fibreFile.replace(/\.json$/,'.md'),checkedOn:fibre.reviewedOn,productId:fibre.productId,sourceDecision:fibre.sourceDecision,
+  thresholdRows:fibre.thresholdRows,findings:fibre.findings,source:fibre.sources.claims2022dec.url+'#page=13',originalDextrinSource:fibre.sources.dextrin2016.url+'#page=5',
+  legalProductApproval:false,labelApproved:false,batchRelease:false},
  toxinGazetteReview:{round:72,report:toxinFile.replace(/\.json$/,'.md'),checkedOn:toxin.reviewedOn,
   ...toxin.counts,fullCurrentLawComplete:false,numericRulesChanged:false,productApprovals:0,
   summary:'37 toxin-limit or sampling-plan rows and 119 histamine species entries were compared with original notifications. Numerical values agree. Histamine species scope, all three sampling criteria, mixed toxin units and the melamine corrigendum are explicit.',
