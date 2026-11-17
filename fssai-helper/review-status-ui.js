@@ -9,9 +9,11 @@
  function reportLinks(row){return row.reports.map(r=>`<a class="source-ref" href="${esc(r.file)}" target="_blank" rel="noopener noreferrer">R${r.round} source review ↗</a>`).join('');}
  function productMarkup(id){
   if(!available)return '<div class="notice">Current review progress is unavailable. No verification is inferred.</div>';
+  const toxin=data.toxinGazetteReview;
+  const sourceNote=toxin.seafoodNoteIds.includes(id)?`<section class="panel compact toxin-product-note"><h4>Histamine species and sampling scope</h4><p>${esc(toxin.seafoodNote)}</p><a class="source-ref" href="${esc(toxin.report)}" target="_blank" rel="noopener noreferrer">R72 original-source findings ↗</a></section>`:'';
   const row=byId.get(id);
-  if(!row)return '<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
-  return `<section class="panel compact"><h4>Current source review · ${esc(data.checkpointDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
+  if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
+  return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(data.latestSourceReviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
  }
  window.PMSVReviewUI=Object.freeze({productMarkup});
  if(!$('verificationStatus'))return;
@@ -22,7 +24,7 @@
  }
  $('focusedTotal').textContent=String(status.focusedCount);
  $('remainingFocusedTotal').textContent=String(status.remainingFocusedCount);
- $('verificationStatus').textContent=`Checked ${data.checkpointDate} · ${data.queueCount} open CTR article decisions · ${data.focusedCount} focused source reviews · ${data.remainingFocusedCount} outside the selected rounds`;
+ $('verificationStatus').textContent=`Source review through ${data.latestSourceReviewDate} · ${data.queueCount} open CTR article decisions · ${data.focusedCount} focused source reviews · ${data.remainingFocusedCount} outside the selected rounds`;
  $('verificationScope').textContent=data.scope;
  $('verificationSoftware').textContent=data.softwareVerification;
  const evidenceLink=document.createElement('a');
@@ -37,6 +39,10 @@
  residuePanel.id='residueReviewSummary';residuePanel.className='panel compact';
  residuePanel.innerHTML=`<h3>Pesticide and veterinary source checks</h3><p>${esc(residue.summary)}</p><a class="source-ref" href="${esc(residue.report)}" target="_blank" rel="noopener noreferrer">Read the residue-source comparison ↗</a><details><summary>8 source findings and safeguards</summary><ul>${residue.findings.map(finding=>`<li><b>${esc(finding.title)}:</b> ${esc(finding.detail)}</li>`).join('')}</ul></details>`;
  sourcePanel.insertAdjacentElement('afterend',residuePanel);
+ const toxin=data.toxinGazetteReview,toxinPanel=document.createElement('section');
+ toxinPanel.id='toxinReviewSummary';toxinPanel.className='panel compact';
+ toxinPanel.innerHTML=`<h3>Natural toxins and seafood source checks</h3><p>${esc(toxin.summary)}</p><a class="source-ref" href="${esc(toxin.report)}" target="_blank" rel="noopener noreferrer">Read the toxin-source comparison ↗</a><details><summary>6 source findings and safeguards</summary><ul>${toxin.findings.map(finding=>`<li><b>${esc(finding.title)}:</b> ${esc(finding.detail)}</li>`).join('')}</ul></details>`;
+ residuePanel.insertAdjacentElement('afterend',toxinPanel);
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');
@@ -52,7 +58,7 @@
  $('reviewResults').addEventListener('click',event=>{const button=event.target.closest('[data-review-product]');if(button)window.PMSV_HELPER_TEST?.selectProduct(button.dataset.reviewProduct);});
  $('exportReviewJSON').addEventListener('click',()=>{
   const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='PMSV_FSSAI_Review_Status_2026-11-14.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+  a.href=url;a.download='PMSV_FSSAI_Review_Status_'+data.latestSourceReviewDate+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
  });
  render();
 })();

@@ -11,6 +11,13 @@ const gazetteFile='ctr-original-gazette-concordance-r70-2026-11-14.json';
 const gazette=read(gazetteFile);
 const residueFile='ctr-residue-gazette-concordance-r71-2026-11-14.json';
 const residue=read(residueFile);
+const toxinFile='ctr-toxin-gazette-concordance-r72-2026-11-17.json';
+const toxin=read(toxinFile);
+const vm=require('node:vm'),catalogueContext={window:{}};
+vm.createContext(catalogueContext);
+vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
+const seafoodNoteIds=catalogueContext.window.PMSV_CATALOGUE.filter(x=>/^2\.6(?:\.|$)/.test(x.fssr)).map(x=>x.id);
+assert.equal(seafoodNoteIds.length,24);
 const followupById=new Map(followup.records.map(x=>[x.id,x]));
 assert.equal(followupById.size,70);
 const reports=new Map([...ids].map(id=>[id,[]]));
@@ -44,13 +51,18 @@ const records=register.records.map(row=>({
 }));
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-14',latestRound:71,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:72,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile],records,
+ toxinGazetteReview:{round:72,report:toxinFile.replace(/\.json$/,'.md'),checkedOn:toxin.reviewedOn,
+  ...toxin.counts,fullCurrentLawComplete:false,numericRulesChanged:false,productApprovals:0,
+  summary:'37 toxin-limit or sampling-plan rows and 119 histamine species entries were compared with original notifications. Numerical values agree. Histamine species scope, all three sampling criteria, mixed toxin units and the melamine corrigendum are explicit.',
+  findings:toxin.findings,seafoodNoteIds,
+  seafoodNote:'If a histamine route is selected, confirm the listed fish species as well as the product category. The original applicability cell spans processed-product rows too. Nine individual results must satisfy the mean, count and maximum criteria. No fish-table limit is assigned solely by this catalogue category.'},
  residueGazetteReview:{round:71,report:residueFile.replace(/\.json$/,'.md'),checkedOn:residue.reviewedOn,
   pesticideRows:residue.counts.pesticideRows,veterinaryRows:residue.counts.veterinaryRows,
   honeyRows:residue.counts.honeyRows,prohibitedClasses:residue.counts.prohibitedClasses,

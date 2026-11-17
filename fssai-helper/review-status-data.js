@@ -2,8 +2,8 @@
 window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
-  "latestSourceReviewDate": "2026-11-14",
-  "latestRound": 71,
+  "latestSourceReviewDate": "2026-11-17",
+  "latestRound": 72,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -35,7 +35,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.json",
     "ctr-vanilla-three-source-review-r64-2026-11-11.json",
     "ctr-original-gazette-concordance-r70-2026-11-14.json",
-    "ctr-residue-gazette-concordance-r71-2026-11-14.json"
+    "ctr-residue-gazette-concordance-r71-2026-11-14.json",
+    "ctr-toxin-gazette-concordance-r72-2026-11-17.json"
   ],
   "records": [
     {
@@ -2505,6 +2506,82 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "toxinGazetteReview": {
+    "round": 72,
+    "report": "ctr-toxin-gazette-concordance-r72-2026-11-17.md",
+    "checkedOn": "2026-11-17",
+    "notsRows": 15,
+    "fishPcbPahRows": 3,
+    "biotoxinRows": 5,
+    "melamineRows": 3,
+    "histaminePlans": 11,
+    "histamineSpeciesEntries": 119,
+    "totalLimitOrPlanRows": 37,
+    "numericMismatches": 0,
+    "fullCurrentLawComplete": false,
+    "numericRulesChanged": false,
+    "productApprovals": 0,
+    "summary": "37 toxin-limit or sampling-plan rows and 119 histamine species entries were compared with original notifications. Numerical values agree. Histamine species scope, all three sampling criteria, mixed toxin units and the melamine corrigendum are explicit.",
+    "findings": [
+      {
+        "id": "histamine-merged-species",
+        "title": "Histamine species condition spans processed products",
+        "detail": "The original page 12 applicability cell spans rows 1–10, while the stored core attaches it only to row 1. Fish Pickle continues on page 13 with a blank cell; the draft conservatively requires explicit species/scope confirmation there too. No species exemption is inferred from a processed-product name."
+      },
+      {
+        "id": "histamine-sampling",
+        "title": "Histamine needs all nine individual results",
+        "detail": "The mean must not exceed m, no more than two results may exceed m, and none may exceed M. A mean alone or a single result cannot establish that the source sampling plan is satisfied."
+      },
+      {
+        "id": "fish-unit-basis",
+        "title": "Fish contaminant units and analyte groups stay distinct",
+        "detail": "PCB limits use ppm and the sum of six specified congeners; Benzo(a)pyrene in smoked fishery products uses ppb. Biotoxin row-specific units and toxin-equivalent expressions override the generic column heading; Brevetoxin mouse units are not silently converted to mass units."
+      },
+      {
+        "id": "melamine-corrigendum",
+        "title": "Melamine clause numbering resolved by original corrigendum",
+        "detail": "The 31 March 2016 corrigendum changes 2.4/2.4.1 to 2.5/2.5.1 and names the Second Amendment Regulations. Powdered infant formula, liquid infant formula and other foods retain distinct values; the broader other-foods value cannot replace an infant-formula value."
+      },
+      {
+        "id": "saffrole-future-scope",
+        "title": "Saffrole replacement remains future until 1 December",
+        "detail": "The 2026 notification replaces the whole serial-number-4 entry with an ingredient-qualified article. The existing six 2015 articles are not carried forward automatically or replaced early. The draft source comparison refuses assessment dates on or after 1 December pending reconciliation."
+      },
+      {
+        "id": "hcn-sago-insertion",
+        "title": "Sago/cassava hydrocyanic-acid row has its own source",
+        "detail": "The 21 July 2017 notification inserts a 10 ppm row for the named sago/flour articles and their products. It is separate from the five 5 ppm articles in the 2015 table; the higher value cannot be selected solely because a confectionery recipe contains starch."
+      }
+    ],
+    "seafoodNoteIds": [
+      "02-02-1-fish-oil",
+      "09-09-1-live-and-raw-bivalve-molluscs",
+      "09-09-2-frozen-shrimp",
+      "09-09-2-frozen-lobsters",
+      "09-09-2-frozen-squid-and-parts-of-squid",
+      "09-09-2-frozen-finfish",
+      "09-09-2-frozen-fish-fillets",
+      "09-09-2-frozen-cephalopods",
+      "09-09-2-frozen-clam-meat",
+      "09-09-2-fresh-and-quick-frozen-raw-scallop-products",
+      "09-09-2-quick-frozen-fish-sticks-fish-fingers-fish-portions-and-fish-fillets-breaded-or-ba",
+      "09-09-2-frozen-minced-fish-meat",
+      "09-09-2-salted-fish-dried-salted-fish",
+      "09-09-2-edible-fish-powder",
+      "09-09-2-freeze-dried-prawns-shrimps",
+      "09-09-2-smoked-fishery-products",
+      "09-09-2-pasteurized-fish-sausage",
+      "09-09-2-pasteurised-crab-meat",
+      "09-09-3-fish-pickles",
+      "09-09-3-sturgeon-caviar",
+      "09-09-4-canned-fishery-products",
+      "09-09-4-ready-to-eat-finfish-or-shell-fish-curry-in-retortable-pouches",
+      "12-12-6-fish-sauce",
+      "99-99-1-gelatin-from-fish-processing-waste"
+    ],
+    "seafoodNote": "If a histamine route is selected, confirm the listed fish species as well as the product category. The original applicability cell spans processed-product rows too. Nine individual results must satisfy the mean, count and maximum criteria. No fish-table limit is assigned solely by this catalogue category."
+  },
   "residueGazetteReview": {
     "round": 71,
     "report": "ctr-residue-gazette-concordance-r71-2026-11-14.md",

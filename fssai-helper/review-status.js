@@ -58,6 +58,24 @@
     return denied('Residue source findings are inconsistent.');
    findings.add(finding.id);
   }
+  const toxin=data.toxinGazetteReview;
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==72||
+    toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
+    toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
+    toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
+    toxin.numericMismatches!==0||toxin.numericRulesChanged!==false||toxin.fullCurrentLawComplete!==false||toxin.productApprovals!==0||
+    typeof toxin.summary!=='string'||!toxin.summary.trim()||typeof toxin.seafoodNote!=='string'||!toxin.seafoodNote.trim()||
+    !Array.isArray(toxin.findings)||toxin.findings.length!==6)return denied('Toxin source evidence is incomplete.');
+  const toxinFindings=new Set();
+  for(const finding of toxin.findings){
+   if(!finding||typeof finding.id!=='string'||!finding.id.trim()||toxinFindings.has(finding.id)||
+      typeof finding.title!=='string'||!finding.title.trim()||typeof finding.detail!=='string'||!finding.detail.trim())
+    return denied('Toxin source findings are inconsistent.');
+   toxinFindings.add(finding.id);
+  }
+  const seafoodIds=rows.filter(x=>/^2\.6(?:\.|$)/.test(x.fssr)).map(x=>x.id);
+  if(!Array.isArray(toxin.seafoodNoteIds)||toxin.seafoodNoteIds.length!==24||new Set(toxin.seafoodNoteIds).size!==24||
+     seafoodIds.length!==24||!seafoodIds.every(id=>toxin.seafoodNoteIds.includes(id)))return denied('Seafood source-note coverage is inconsistent.');
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}

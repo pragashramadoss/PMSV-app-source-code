@@ -122,7 +122,7 @@ for(const file of ['full-catalogue-533.js','review-status-data.js'])vm.runInCont
 const data=JSON.parse(JSON.stringify(context.window.PMSV_REVIEW_REGISTER));
 const catalogue=JSON.parse(JSON.stringify(context.window.PMSV_CATALOGUE));
 const require=createRequire(import.meta.url),api=require('../fssai-helper/review-status.js');
-assert.equal(api.validateReview(data,catalogue).ok,true);assert.equal(data.latestRound,71);
+assert.equal(api.validateReview(data,catalogue).ok,true);assert.equal(data.residueGazetteReview.round,71);
 assert.deepEqual(data.residueGazetteReview.findings,r.findings);
 for(const mutate of [d=>delete d.residueGazetteReview,d=>d.residueGazetteReview.pesticideRows--,
  d=>d.residueGazetteReview.veterinaryRows--,d=>d.residueGazetteReview.honeyRows--,
