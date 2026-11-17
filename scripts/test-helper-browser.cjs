@@ -154,6 +154,8 @@ let browser;
  assert.match(await page.locator('#waterReferenceRows').textContent(),/No relaxation/);
  assert.equal(await page.locator('#waterReferenceRows a').count(),3);
  await page.locator('#waterReferenceRows details summary').click();
+ assert.equal(await page.locator('#waterReferenceRows details').getAttribute('open'),'','Source details must stay open after leaving the search input');
+ assert.equal(await page.locator('#waterReferenceRows a').first().isVisible(),true);
  for(const width of [320,390,1440]){
   await page.setViewportSize({width,height:900});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Water source reference overflows at '+width);
