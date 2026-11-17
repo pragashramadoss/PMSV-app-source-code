@@ -84,3 +84,12 @@ The draft source-comparison module now holds the Chlorpyriphos grain-label discr
 **49/49 current audit checks passed locally**, including the new one-to-one source reconciliation and negative guard tests. The draft PR records the current Helper CI run and browser screenshots for the final revision. The earlier 1,265 integration-test result above belongs to its stated revision; R71 leaves the legacy preview core and consumers unchanged.
 
 The original 2021 pesticide-scope clarification and the 2024 spice/herb order were retrieved and visually checked. Neither is applied as an unconditional pesticide default or a blanket processed-food exemption. All 137 product-specific CTR decisions and the earlier Ayurveda/legal-completeness questions remain open.
+
+
+## R74 water-source follow-up
+
+[R74](ctr-water-source-review-r74-2026-11-17.md) separates the original vending-water definition from ingredient-water documentation guidance. BIS public metadata confirms IS 10500:2012, its August 2023 reaffirmation and four amendments; the full normative text remains to be reconciled. The retrieved June 2025 replacement tables remain draft-only and inactive.
+
+Five product views receive source notes. Four recipe views provide a supplier-specific document checklist from FoSCoS FAQs 121–123, with the private-supplier report-age condition, financial-year/minimum-gap wording and municipal evidence conditions kept in context. Mixed or unknown supply does not receive a concession, changing supply clears the prior result, and reopening a product resets the form. No due date, quality approval or numeric limit is calculated. The original four recipe-water identities and the 14.6/14.7 title–method hold are preserved.
+
+The local current audit passed **52/52 checks**, including 25 route/invalid-input cases and rejection of draft activation, false gap closure or modified source hosts. Browser CI is recorded against its exact revision in draft PR #2. All 137 CTR decisions and all 14 Ayurveda ingredient source gaps remain open.

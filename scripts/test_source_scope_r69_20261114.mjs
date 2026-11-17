@@ -57,11 +57,13 @@ assert.equal(register.focusedCount,137);assert.equal(register.remainingFocusedCo
 assert.equal(register.records.filter(x=>x.reports.some(r=>r.round===69)).length,70);
 assert.equal(register.records.filter(x=>x.reports.some(r=>r.round<69)).length,67);
 const fibreFollowup=JSON.parse(read('ctr-fibre-claims-source-r73-2026-11-17.json'));
+const waterFollowup=JSON.parse(read('ctr-water-source-review-r74-2026-11-17.json'));
 for(const record of r.records){
  const current=record.id===fibreFollowup.productId?fibreFollowup:record;
  const linked=register.records.find(x=>x.id===record.id);
- assert.equal(linked.sourceReviewResult,current.sourceReviewResult);
- assert.equal(linked.sourceReviewNextAction,current.sourceReviewNextAction);
+ const water=waterFollowup.records.find(x=>x.id===record.id);
+ assert.equal(linked.sourceReviewResult,current.sourceReviewResult+(water?' '+water.sourceReviewResult:''));
+ assert.equal(linked.sourceReviewNextAction,current.sourceReviewNextAction+(water?' '+water.sourceReviewNextAction:''));
  assert.equal(linked.legalArticleDecision,'OPEN');
 }
 assert.equal(register.currencyWatch[1].effectiveFrom,milk.commencement);

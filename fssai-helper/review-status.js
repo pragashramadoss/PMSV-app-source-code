@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==73||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==74||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -89,6 +89,23 @@
    catch(error){return denied('Fibre source URL is invalid.');}
   }
   if(!fibre.findings.every(f=>f&&typeof f.title==='string'&&f.title.trim()&&typeof f.detail==='string'&&f.detail.trim()))return denied('Fibre findings are incomplete.');
+  const water=data.waterSourceReview;
+  if(!water||water.round!==74||water.checkedOn!==data.latestSourceReviewDate||
+    water.report!=='ctr-water-source-review-r74-2026-11-17.md'||
+    water.fullCurrentLawComplete!==false||water.legalProductApproval!==false||water.batchRelease!==false||water.autoApplyLimits!==false||
+    water.bisStandard?.number!=='IS 10500:2012'||water.bisStandard.amendmentCount!==4||water.bisStandard.completeNormativeTextVerified!==false||
+    water.draftReplacement?.status!=='DRAFT_SOURCE_ONLY'||water.draftReplacement.autoApply!==false||water.draftReplacement.finalReplacementEstablished!==false||
+    water.counts?.waterGapsClosed!==0||water.counts.remainingAyurvedaIngredientGaps!==14||water.counts.numericRulesAdded!==0||
+    !Array.isArray(water.records)||water.records.length!==5)return denied('Water source review is incomplete.');
+  const waterIds=['purified-vending-water','102-102-1-12-1-lajadi-kashaya-parched-rice-tea','102-102-1-13-1-krishara-khichdi','102-102-1-14-7-ksheerapaka-mystic-milk-quartet','102-102-1-15-1-kulmasha-barley-savory-discs'];
+  if(!water.records.every((r,i)=>r&&r.id===waterIds[i]&&ids.has(r.id)&&r.use===(i===0?'vending':'ingredient')&&
+    typeof r.sourceReviewResult==='string'&&r.sourceReviewResult.trim()&&typeof r.sourceReviewNextAction==='string'&&r.sourceReviewNextAction.trim())||
+    water.records[3].recipeTitleMethodHold!==true)return denied('Water source coverage is inconsistent.');
+  for(const key of ['vending','ingredient','bis','draft']){
+   try{const url=new URL(water.sources?.[key]);const host=key==='bis'?/(^|\.)bis\.gov\.in$/i:/(^|\.)fssai\.gov\.in$/i;
+    if(url.protocol!=='https:'||!host.test(url.hostname))return denied('Water source URL is invalid.');}
+   catch(error){return denied('Water source URL is invalid.');}
+  }
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}

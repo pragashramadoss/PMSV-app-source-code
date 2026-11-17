@@ -15,6 +15,8 @@ const toxinFile='ctr-toxin-gazette-concordance-r72-2026-11-17.json';
 const toxin=read(toxinFile);
 const fibreFile='ctr-fibre-claims-source-r73-2026-11-17.json';
 const fibre=read(fibreFile);
+const waterFile='ctr-water-source-review-r74-2026-11-17.json';
+const water=read(waterFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
 vm.createContext(catalogueContext);
 vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
@@ -56,15 +58,25 @@ assert(fibreRecord);
 fibreRecord.reports.unshift({round:73,file:fibreFile.replace(/\.json$/,'.md')});
 fibreRecord.sourceReviewResult=fibre.sourceReviewResult;
 fibreRecord.sourceReviewNextAction=fibre.sourceReviewNextAction;
+for(const note of water.records){
+ const row=records.find(x=>x.id===note.id);assert(row);
+ row.reports.unshift({round:74,file:waterFile.replace(/\.json$/,'.md')});
+ row.sourceReviewResult+=' '+note.sourceReviewResult;
+ row.sourceReviewNextAction+=' '+note.sourceReviewNextAction;
+}
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:73,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:74,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile],records,
+ waterSourceReview:{round:74,report:waterFile.replace(/\.json$/,'.md'),checkedOn:water.reviewedOn,
+  records:water.records,bisStandard:water.bisStandard,draftReplacement:water.draftReplacement,counts:water.counts,
+  sources:{vending:water.sources.vending2019.url+'#page=4',ingredient:water.sources.licensingFAQ2022.url+'#page=18',bis:water.sources.bisMetadata.url,draft:water.sources.vendingDraft2025.url+'#page=10'},
+  fullCurrentLawComplete:false,legalProductApproval:false,batchRelease:false,autoApplyLimits:false},
  fibreClaimsReview:{round:73,report:fibreFile.replace(/\.json$/,'.md'),checkedOn:fibre.reviewedOn,productId:fibre.productId,sourceDecision:fibre.sourceDecision,
   thresholdRows:fibre.thresholdRows,findings:fibre.findings,source:fibre.sources.claims2022dec.url+'#page=13',originalDextrinSource:fibre.sources.dextrin2016.url+'#page=5',
   legalProductApproval:false,labelApproved:false,batchRelease:false},

@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-17",
-  "latestRound": 73,
+  "latestRound": 74,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -37,7 +37,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-original-gazette-concordance-r70-2026-11-14.json",
     "ctr-residue-gazette-concordance-r71-2026-11-14.json",
     "ctr-toxin-gazette-concordance-r72-2026-11-17.json",
-    "ctr-fibre-claims-source-r73-2026-11-17.json"
+    "ctr-fibre-claims-source-r73-2026-11-17.json",
+    "ctr-water-source-review-r74-2026-11-17.json"
   ],
   "records": [
     {
@@ -1543,13 +1544,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 74,
+          "file": "ctr-water-source-review-r74-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The parched-rice drink contains specifically identified juniper fruit, sandal heartwood and khas root; the method reduces water to one-eighth.",
-      "sourceReviewNextAction": "Species, plant part and reduction matter for ingredient-purity and concentration questions. A beverage name is not a raw cereal CTR article.",
+      "sourceReviewResult": "The parched-rice drink contains specifically identified juniper fruit, sandal heartwood and khas root; the method reduces water to one-eighth. The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Species, plant part and reduction matter for ingredient-purity and concentration questions. A beverage name is not a raw cereal CTR article. Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1561,13 +1566,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 74,
+          "file": "ctr-water-source-review-r74-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The cooked dish uses lentils and rice, spices, rock salt and ghee, with distinct proportions; the method includes soaking, dry roasting and cooking.",
-      "sourceReviewNextAction": "Resolve the actual lentil species and recipe. Rice or pulse raw-commodity limits are not a finished khichdi panel.",
+      "sourceReviewResult": "The cooked dish uses lentils and rice, spices, rock salt and ghee, with distinct proportions; the method includes soaking, dry roasting and cooking. The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Resolve the actual lentil species and recipe. Rice or pulse raw-commodity limits are not a finished khichdi panel. Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1669,13 +1678,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 74,
+          "file": "ctr-water-source-review-r74-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The four-ingredient Ksheerapaka table is followed by a flower-water infusion method; flowers are removed, buffalo milk is added and water evaporated. Ketaki/Jati/etc. are footnote examples.",
-      "sourceReviewNextAction": "The source does not place the four-stage method here. Preserve the published mapping pending clarification; flower removal does not prove zero transfer or permit any flower species.",
+      "sourceReviewResult": "The four-ingredient Ksheerapaka table is followed by a flower-water infusion method; flowers are removed, buffalo milk is added and water evaporated. Ketaki/Jati/etc. are footnote examples. The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "The source does not place the four-stage method here. Preserve the published mapping pending clarification; flower removal does not prove zero transfer or permit any flower species. Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1687,13 +1700,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 74,
+          "file": "ctr-water-source-review-r74-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "Barley discs are steamed with rock salt and mustard oil. The method explicitly allows Mudga or Masha instead of barley.",
-      "sourceReviewNextAction": "Confirm which cereal/pulse variant is used; the variant changes raw-ingredient references and cannot be flattened into one raw-grain CTR assignment.",
+      "sourceReviewResult": "Barley discs are steamed with rock salt and mustard oil. The method explicitly allows Mudga or Masha instead of barley. The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Confirm which cereal/pulse variant is used; the variant changes raw-ingredient references and cannot be flattened into one raw-grain CTR assignment. Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2501,16 +2518,114 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "SOURCE_IDENTITY_STANDARD_NOT_CTR_DECISION",
       "reports": [
         {
+          "round": 74,
+          "file": "ctr-water-source-review-r74-2026-11-17.md"
+        },
+        {
           "round": 69,
           "file": "ctr-remaining-source-scope-r69-2026-11-14.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "Purified vending water is expressly separate from packaged drinking water and natural mineral water; the clause incorporates IS 10500 and excludes captive-consumption installations.",
-      "sourceReviewNextAction": "The adjacent packaged-water tables cannot be transferred to vending water. Verify the applicable IS 10500 edition/amendments and the actual vending installation.",
+      "sourceReviewResult": "Purified vending water is expressly separate from packaged drinking water and natural mineral water; the clause incorporates IS 10500 and excludes captive-consumption installations. The original 2019 FPSFA 2.10.9 notification incorporates IS 10500 and excludes packaged drinking water, natural mineral water and installations for captive consumption. BIS metadata identifies IS 10500:2012, reaffirmed August 2023, with four amendments. The June 2025 replacement tables retrieved here are draft text; they are not activated.",
+      "sourceReviewNextAction": "The adjacent packaged-water tables cannot be transferred to vending water. Verify the applicable IS 10500 edition/amendments and the actual vending installation. Reconcile the complete IS 10500 normative text and all four amendments, and establish any final FSSAI replacement and commencement before assigning water limits. Ingredient-water FAQ documentation concessions do not establish vending-water compliance.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "waterSourceReview": {
+    "round": 74,
+    "report": "ctr-water-source-review-r74-2026-11-17.md",
+    "checkedOn": "2026-11-17",
+    "records": [
+      {
+        "id": "purified-vending-water",
+        "use": "vending",
+        "sourceReviewResult": "The original 2019 FPSFA 2.10.9 notification incorporates IS 10500 and excludes packaged drinking water, natural mineral water and installations for captive consumption. BIS metadata identifies IS 10500:2012, reaffirmed August 2023, with four amendments. The June 2025 replacement tables retrieved here are draft text; they are not activated.",
+        "sourceReviewNextAction": "Reconcile the complete IS 10500 normative text and all four amendments, and establish any final FSSAI replacement and commencement before assigning water limits. Ingredient-water FAQ documentation concessions do not establish vending-water compliance."
+      },
+      {
+        "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
+        "use": "ingredient",
+        "recipeNumber": "12.1",
+        "ingredientSerial": 1,
+        "ingredientName": "Jala",
+        "ratio": "16 parts",
+        "recipeTitleMethodHold": false,
+        "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+        "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+      },
+      {
+        "id": "102-102-1-13-1-krishara-khichdi",
+        "use": "ingredient",
+        "recipeNumber": "13.1",
+        "ingredientSerial": 1,
+        "ingredientName": "Jala",
+        "ratio": "3 parts",
+        "recipeTitleMethodHold": false,
+        "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+        "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+      },
+      {
+        "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+        "use": "ingredient",
+        "recipeNumber": "14.7",
+        "ingredientSerial": 3,
+        "ingredientName": "Jala",
+        "ratio": "Q.S.",
+        "recipeTitleMethodHold": true,
+        "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+        "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+      },
+      {
+        "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
+        "use": "ingredient",
+        "recipeNumber": "15.1",
+        "ingredientSerial": 2,
+        "ingredientName": "Ushna Jala",
+        "ratio": "Q.S.",
+        "recipeTitleMethodHold": false,
+        "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+        "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+      }
+    ],
+    "bisStandard": {
+      "number": "IS 10500:2012",
+      "revision": 2,
+      "reaffirmedOn": "2023-08-01",
+      "amendmentCount": 4,
+      "amendmentYears": [
+        2015,
+        2018,
+        2020,
+        2021
+      ],
+      "metadataVerified": true,
+      "completeNormativeTextVerified": false
+    },
+    "draftReplacement": {
+      "sourceId": "vendingDraft2025",
+      "status": "DRAFT_SOURCE_ONLY",
+      "finalReplacementEstablished": false,
+      "autoApply": false
+    },
+    "counts": {
+      "vendingIdentities": 1,
+      "ingredientWaterInstances": 4,
+      "waterGapsClosed": 0,
+      "remainingAyurvedaIngredientGaps": 14,
+      "numericRulesAdded": 0
+    },
+    "sources": {
+      "vending": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Drinking_Water_05_02_2019.pdf#page=4",
+      "ingredient": "https://www.fssai.gov.in/upload/uploadfiles/files/FAQs_Licensing_Registration_26_07_2022.pdf#page=18",
+      "bis": "https://standards.bis.gov.in/website/standard-details?encryptedId=eyJpdiI6IlhsVzR2UDd6SS9nZWU0VnpjY0NVV0E9PSIsInZhbHVlIjoiL1kwemJVeXZnVWExaElxeWtPeExqdz09IiwibWFjIjoiOGI2NDM3MmQzYjViM2NmZjdkODI3ZjczMGRkZTc5Y2RjNDA3ODA4NWM2MzZjYmNhYmMzNTZmYmU1YmVhNDU4MiIsInRhZyI6IiJ9",
+      "draft": "https://www.fssai.gov.in/upload/uploadfiles/files/Notification%20dt%2004_06_2025-Cheese%20powder%20draft.pdf#page=10"
+    },
+    "fullCurrentLawComplete": false,
+    "legalProductApproval": false,
+    "batchRelease": false,
+    "autoApplyLimits": false
+  },
   "fibreClaimsReview": {
     "round": 73,
     "report": "ctr-fibre-claims-source-r73-2026-11-17.md",
