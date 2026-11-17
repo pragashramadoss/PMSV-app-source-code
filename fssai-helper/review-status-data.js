@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-17",
-  "latestRound": 75,
+  "latestRound": 76,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -39,7 +39,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-toxin-gazette-concordance-r72-2026-11-17.json",
     "ctr-fibre-claims-source-r73-2026-11-17.json",
     "ctr-water-source-review-r74-2026-11-17.json",
-    "ctr-water-standard-concordance-r75-2026-11-17.json"
+    "ctr-water-standard-concordance-r75-2026-11-17.json",
+    "ctr-asafoetida-purity-r76-2026-11-17.json"
   ],
   "records": [
     {
@@ -1571,6 +1572,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 76,
+          "file": "ctr-asafoetida-purity-r76-2026-11-17.md"
+        },
+        {
           "round": 75,
           "file": "ctr-water-standard-concordance-r75-2026-11-17.md"
         },
@@ -1584,8 +1589,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit.",
-      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference.",
+      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted.",
+      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2553,6 +2558,403 @@ window.PMSV_REVIEW_REGISTER = {
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     }
   ],
+  "asafoetidaReview": {
+    "schemaVersion": 1,
+    "round": 76,
+    "reviewedOn": "2026-11-17",
+    "clause": "FPSFA 2.9.29",
+    "productId": "12-12-2-asafoetida-hing-or-hingra",
+    "recipeProductId": "102-102-1-13-1-krishara-khichdi",
+    "numericRows": 11,
+    "numericMismatches": 0,
+    "puritySourceRowsReconciled": true,
+    "fullCurrentLawComplete": false,
+    "allReferencedMethodsVerified": false,
+    "recipeSubstitutionApproved": false,
+    "legalProductApproval": false,
+    "batchRelease": false,
+    "autoApplyLimits": false,
+    "ctrRulesChanged": false,
+    "ingredientGapsClosed": 0,
+    "remainingAyurvedaIngredientGaps": 14,
+    "sources": {
+      "spices2024": {
+        "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt%20Spices%20Condiments%20and%20related%20products.pdf",
+        "sha256": "7f7cd2a3a5efd6f114299872d45ef2b1b50260818bf695be6cefe4430547a447",
+        "bytes": 979495,
+        "type": "pdf",
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          34,
+          35
+        ]
+      },
+      "recipe2025": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
+        "sha256": "498d6f579357e7bb8e8d7b9f7741db5863f6eea8d29ffd559ff9add7d32d7edc",
+        "bytes": 9881569,
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          88
+        ]
+      },
+      "ayurveda2022": {
+        "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
+        "sha256": "1ae8cfc632fad0a775316a84999a48adb6cf4b47d05bd4faa75f5190c511f699",
+        "bytes": 2307105,
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          16
+        ]
+      },
+      "gazette2011": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63",
+        "bytes": 768904,
+        "retrievedOn": "2026-11-17",
+        "pdfPagesReviewed": [
+          115,
+          116
+        ]
+      }
+    },
+    "rows": [
+      {
+        "id": "hing-total-ash",
+        "grade": "hing",
+        "parameter": "total-ash",
+        "name": "Total ash",
+        "operator": "<=",
+        "limit": 15,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 34
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hing-acid-insoluble-ash",
+        "grade": "hing",
+        "parameter": "acid-insoluble-ash",
+        "name": "Ash insoluble in dilute HCl",
+        "operator": "<=",
+        "limit": 2.5,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 34
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hing-alcoholic-extract",
+        "grade": "hing",
+        "parameter": "alcoholic-extract",
+        "name": "Alcoholic extract",
+        "operator": ">=",
+        "limit": 12,
+        "unit": "%",
+        "basis": "Percent as stated in clause",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": 90,
+        "methodReference": "U.S.P. 1936",
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 34
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hing-starch",
+        "grade": "hing",
+        "parameter": "starch",
+        "name": "Starch",
+        "operator": "<=",
+        "limit": 1,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 34
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hingra-total-ash",
+        "grade": "hingra",
+        "parameter": "total-ash",
+        "name": "Total ash",
+        "operator": "<=",
+        "limit": 20,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hingra-acid-insoluble-ash",
+        "grade": "hingra",
+        "parameter": "acid-insoluble-ash",
+        "name": "Ash insoluble in dilute HCl",
+        "operator": "<=",
+        "limit": 8,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hingra-alcoholic-extract",
+        "grade": "hingra",
+        "parameter": "alcoholic-extract",
+        "name": "Alcoholic extract",
+        "operator": ">=",
+        "limit": 50,
+        "unit": "%",
+        "basis": "Percent as stated in clause",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": 90,
+        "methodReference": "U.S.P. 1936",
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "hingra-starch",
+        "grade": "hingra",
+        "parameter": "starch",
+        "name": "Starch",
+        "operator": "<=",
+        "limit": 1,
+        "unit": "%",
+        "basis": "By weight",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "compounded-total-ash",
+        "grade": "compounded",
+        "parameter": "total-ash",
+        "name": "Total ash",
+        "operator": "<=",
+        "limit": 10,
+        "unit": "%",
+        "basis": "Percent as stated in clause",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "compounded-acid-insoluble-ash",
+        "grade": "compounded",
+        "parameter": "acid-insoluble-ash",
+        "name": "Ash insoluble in dilute HCl",
+        "operator": "<=",
+        "limit": 1.5,
+        "unit": "%",
+        "basis": "Percent as stated in clause",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": null,
+        "methodReference": null,
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      },
+      {
+        "id": "compounded-alcoholic-extract",
+        "grade": "compounded",
+        "parameter": "alcoholic-extract",
+        "name": "Alcoholic extract",
+        "operator": ">=",
+        "limit": 5,
+        "unit": "%",
+        "basis": "Percent as stated in clause",
+        "dryBasisSpecified": false,
+        "solventAlcoholPercent": 90,
+        "methodReference": "U.S.P. 1936",
+        "originalSource": {
+          "id": "gazette2011",
+          "pdfPage": 116,
+          "printedPage": 402
+        },
+        "compendiumSource": {
+          "id": "spices2024",
+          "pdfPage": 35
+        },
+        "referenceOnly": true,
+        "autoApply": false
+      }
+    ],
+    "grades": [
+      {
+        "id": "hing",
+        "label": "Hing",
+        "definition": "Oleogumresin from Ferula rhizomes and roots.",
+        "exclusions": "No colophony, galbonum, ammoniaccum or other foreign resin.",
+        "extraNote": "The 1% starch maximum belongs to this grade."
+      },
+      {
+        "id": "hingra",
+        "label": "Hingra",
+        "definition": "Oleogumresin from Ferula rhizomes and roots.",
+        "exclusions": "No colophony, galbonum, ammoniaccum or other foreign resin.",
+        "extraNote": "The 1% starch maximum belongs to this grade. The source states an alcoholic-extract minimum of 50%."
+      },
+      {
+        "id": "compounded",
+        "label": "Compounded asafoetida / Bandhani Hing",
+        "definition": "Irani or Pathani Hing, or both, compounded with gum arabic, edible starches or edible cereal flour.",
+        "exclusions": "No colophony, galbanum, ammoniaccum or other foreign resin; no coal-tar dyes or mineral pigment.",
+        "extraNote": "No numeric starch maximum is listed for this grade in clause 2.9.29. Do not copy the 1% Hing/Hingra limit; this does not mean unlimited use or exemption from other requirements."
+      }
+    ],
+    "recipe": {
+      "number": "13.1",
+      "ingredientSerial": 5,
+      "name": "Hingu",
+      "botanicalLiteral": "Asfoetida/ Ferula asfoetida Regel.",
+      "partUsed": "Oleoresin gum",
+      "ratio": "Q.S.",
+      "pdfPage": 88,
+      "printedPage": 53,
+      "automaticGrade": null,
+      "identityStatus": "GRADE_AND_BOTANICAL_IDENTITY_OPEN"
+    },
+    "sourceReviewResult": "R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted.",
+    "sourceReviewNextAction": "Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe.",
+    "findings": [
+      {
+        "id": "grade",
+        "title": "Three separate grades",
+        "detail": "Four Hing limits, four Hingra limits and three compounded-asafoetida limits agree between the two source documents. The helper does not choose a grade from the common name."
+      },
+      {
+        "id": "basis",
+        "title": "Basis and method remain explicit",
+        "detail": "The clause does not specify a dry basis. Each alcoholic-extract limit uses 90% alcohol and cites U.S.P. 1936. These are extraction conditions, not alcohol content of the ingredient. Method text and current method acceptance have not been reconciled."
+      },
+      {
+        "id": "recipe",
+        "title": "Recipe identity is not a substitution permission",
+        "detail": "The 2025 recipe lists Hingu as oleoresin gum at Q.S. Its botanical spelling is retained as printed. Neither Q.S. nor the broad Ferula food-standard definition resolves botanical identity, safety dosage or replacement by compounded Hing."
+      },
+      {
+        "id": "adoption",
+        "title": "Adopted ingredient criteria require disclosure",
+        "detail": "Ayurveda Aahara regulation 3(5) allows named purity-standard sources and requires disclosure of the criteria adopted at licensing and subsequent changes. A matched food-standard source alone does not establish which criteria the FBO adopted."
+      },
+      {
+        "id": "scope",
+        "title": "Purity does not decide contaminants",
+        "detail": "No spice lead, pesticide, aflatoxin, microbiological or finished-food CTR value is assigned through this purity reference. All 137 product-specific CTR decisions remain open; all 14 ingredient applicability gaps remain open."
+      },
+      {
+        "id": "currency",
+        "title": "Current-law completeness remains open",
+        "detail": "The 2011 original and the retrieved chapter marked Version 2, 4 November 2024, were compared. This is not a complete check of all later notifications, corrigenda, test methods or Appendix B. Official pharmacopoeial full-text retrieval was incomplete; no pharmacopoeial purity value was inferred from an index."
+      }
+    ],
+    "report": "ctr-asafoetida-purity-r76-2026-11-17.md"
+  },
   "waterStandardReview": {
     "schemaVersion": 1,
     "round": 75,

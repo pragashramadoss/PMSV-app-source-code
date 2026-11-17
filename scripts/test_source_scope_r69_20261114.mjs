@@ -59,13 +59,14 @@ assert.equal(register.records.filter(x=>x.reports.some(r=>r.round<69)).length,67
 const fibreFollowup=JSON.parse(read('ctr-fibre-claims-source-r73-2026-11-17.json'));
 const waterFollowup=JSON.parse(read('ctr-water-source-review-r74-2026-11-17.json'));
 const waterStandard=JSON.parse(read('ctr-water-standard-concordance-r75-2026-11-17.json'));
+const asafoetida=JSON.parse(read('ctr-asafoetida-purity-r76-2026-11-17.json'));
 for(const record of r.records){
  const current=record.id===fibreFollowup.productId?fibreFollowup:record;
  const linked=register.records.find(x=>x.id===record.id);
  const water=waterFollowup.records.find(x=>x.id===record.id);
  const latestWater=waterStandard.records.find(x=>x.id===record.id);
- assert.equal(linked.sourceReviewResult,latestWater?.sourceReviewResult??current.sourceReviewResult+(water?' '+water.sourceReviewResult:''));
- assert.equal(linked.sourceReviewNextAction,latestWater?.sourceReviewNextAction??current.sourceReviewNextAction+(water?' '+water.sourceReviewNextAction:''));
+ assert.equal(linked.sourceReviewResult,(latestWater?.sourceReviewResult??current.sourceReviewResult+(water?' '+water.sourceReviewResult:''))+(record.id===asafoetida.recipeProductId?' '+asafoetida.sourceReviewResult:''));
+ assert.equal(linked.sourceReviewNextAction,(latestWater?.sourceReviewNextAction??current.sourceReviewNextAction+(water?' '+water.sourceReviewNextAction:''))+(record.id===asafoetida.recipeProductId?' '+asafoetida.sourceReviewNextAction:''));
  assert.equal(linked.legalArticleDecision,'OPEN');
 }
 assert.equal(register.currencyWatch[1].effectiveFrom,milk.commencement);

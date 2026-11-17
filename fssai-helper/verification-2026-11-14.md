@@ -102,3 +102,13 @@ The local current audit passed **52/52 checks**, including 25 route/invalid-inpu
 The searchable reference keeps acceptable and conditional permissible columns, mixed units, minimum chlorine, 100 mL/1 L/10 L sample volumes, method notes and source links distinct. The iron amendment and retained Fe + Mn combined remark remain an interpretation hold. Uranium is not automatically omitted under the ingredient-water FAQ exclusion. No analytical comparison or water/product approval is made.
 
 The expanded local current audit passed **53/53 checks**, including amendment precedence and 17 altered-evidence refusals. Browser CI and artifact fingerprints are recorded against the tested revision in draft PR #2. All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open.
+
+## R76 asafoetida purity sources
+
+[R76](ctr-asafoetida-purity-r76-2026-11-17.md) compares **11 grade-specific purity entries** in FPSFA 2.9.29 with the original 2011 Gazette and the retrieved 2024 compendium. Hing, Hingra and compounded/Bandhani Hing have separate references. Alcoholic-extract minima, the 90% extraction solvent, U.S.P. 1936 method citation and the absence of a stated dry basis remain explicit. The 1% starch maximum is not copied into the compounded grade.
+
+The grade selector starts empty and resets when changing products. Khichdi retains its water evidence and gains a Hingu note preserving the recipe's oleoresin-gum identity and Q.S. quantity. Compounded substitution, botanical identity and adopted ingredient purity criteria remain unresolved. No contaminant rule changes and no automatic grade or product approval are introduced.
+
+The local current audit passed **54/54 checks**, including four primary-document fingerprints and 16 altered-evidence refusals. Browser verification checks all three grades, clearing and switching products, full filtered export, preserved water evidence and narrow/desktop layout. Exact CI revisions and results are recorded in draft PR #2. The R75 legacy integration run 44032542482 subsequently passed all five jobs.
+
+All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open. The later-amendment/corrigendum chain, analytical-method acceptance and remaining pharmacopoeial sources still require review.

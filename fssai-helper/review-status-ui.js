@@ -23,6 +23,8 @@
   if(id===data.fibreClaimsReview.productId)sourceNote+=fibreMarkup();
   const waterNote=data.waterSourceReview.records.find(x=>x.id===id);
   if(waterNote)sourceNote+=waterMarkup(waterNote);
+  const asafoetida=data.asafoetidaReview;
+  if(id===asafoetida.productId||id===asafoetida.recipeProductId)sourceNote+=window.PMSVAsafoetida?.markup(asafoetida,id===asafoetida.recipeProductId)||'<p>Asafoetida reference unavailable.</p>';
   const row=byId.get(id);
   if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
   return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(data.latestSourceReviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
@@ -66,6 +68,12 @@
  fibrePanel.insertAdjacentElement('afterend',waterPanel);
  $('openVendingWater').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(water.records[0].id));
  $('openIngredientWater').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(water.records[1].id));
+ const asafoetida=data.asafoetidaReview,asafoetidaPanel=document.createElement('section');
+ asafoetidaPanel.id='asafoetidaReviewSummary';asafoetidaPanel.className='panel compact';
+ asafoetidaPanel.innerHTML=`<h3>Asafoetida purity by grade</h3><p>Eleven purity limits match the original Gazette and the retrieved compendium. Hing, Hingra and compounded asafoetida remain separate; the Hingu recipe substitution question is open.</p><a class="source-ref" href="${esc(asafoetida.report)}" target="_blank" rel="noopener noreferrer">Read the asafoetida-source comparison ↗</a><div class="controls"><button type="button" id="openAsafoetida">Open asafoetida grades</button><button type="button" id="openHinguRecipe">Open Hingu recipe scope</button></div>`;
+ waterPanel.insertAdjacentElement('afterend',asafoetidaPanel);
+ $('openAsafoetida').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.productId));
+ $('openHinguRecipe').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.recipeProductId));
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');

@@ -171,6 +171,37 @@ let browser;
  const waterStandardReport=await page.request.get(base+data.waterStandardReview.report);assert.equal(waterStandardReport.status(),200);
  assert.match(await waterStandardReport.text(),/All 137 product-specific CTR decisions remain open/);
 
+ const asafoetida=data.asafoetidaReview;
+ assert.equal(asafoetida.rows.length,11,'Filtered full export retains all purity rows');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openAsafoetida').click();
+ assert.equal(await page.locator('#asafoetidaGrade').inputValue(),'');
+ assert.equal(await page.locator('.asafoetida-reference-table').count(),0);
+ for(const [grade,count,extract] of [['hing',4,'Minimum 12%'],['hingra',4,'Minimum 50%'],['compounded',3,'Minimum 5%']]){
+  await page.locator('#asafoetidaGrade').selectOption(grade);
+  assert.equal(await page.locator('.asafoetida-reference-table tbody tr').count(),count);
+  assert.match(await page.locator('.asafoetida-reference-table').textContent(),new RegExp(extract));
+  assert.match(await page.locator('#asafoetidaGradeStatus').textContent(),/no product approval/);
+ }
+ assert.match(await page.locator('#asafoetidaGradeReference').textContent(),/Do not copy the 1%/);
+ assert(!await page.locator('.asafoetida-reference-table').textContent().then(t=>t.includes('Starch')));
+ for(const width of [320,390,1440]){
+  await page.setViewportSize({width,height:900});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Asafoetida reference overflows at '+width);
+  if(width!==320)await page.locator('.asafoetida-product-note').screenshot({path:path.join(artifacts,'asafoetida-reference-'+width+'.png'),style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.locator('#openHinguRecipe').click();
+ assert.equal(await page.locator('#asafoetidaGrade').inputValue(),'','Grade must reset on switching products');
+ assert.match(await page.locator('.asafoetida-product-note').textContent(),/oleoresin gum/);
+ assert.equal(await page.locator('.water-product-note').count(),1,'Khichdi retains its water evidence');
+ await page.locator('#asafoetidaGrade').selectOption('hing');
+ await page.locator('#asafoetidaGrade').selectOption('');
+ assert.equal(await page.locator('.asafoetida-reference-table').count(),0,'Clearing grade removes old values');
+ await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),fibreId);
+ assert.equal(await page.locator('.asafoetida-product-note').count(),0,'Purity references must not leak to unrelated products');
+ const asafoetidaReport=await page.request.get(base+asafoetida.report);assert.equal(asafoetidaReport.status(),200);
+ assert.match(await asafoetidaReport.text(),/All 137 product-specific CTR decisions remain open/);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -211,6 +242,7 @@ let browser;
  const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
+ Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(browser)await browser.close();server.close();});

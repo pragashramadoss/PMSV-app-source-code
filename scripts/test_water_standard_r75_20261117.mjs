@@ -48,7 +48,7 @@ for(const name of ['full-catalogue-533.js','review-status-data.js'])vm.runInCont
 const register=JSON.parse(JSON.stringify(context.window.PMSV_REVIEW_REGISTER)),catalogue=JSON.parse(JSON.stringify(context.window.PMSV_CATALOGUE));
 const {validateReview}=require('../fssai-helper/review-status.js');assert.equal(validateReview(register,catalogue).ok,true);
 assert.equal(register.waterStandardReview.rows.length,74);
-for(const r of data.records){assert.equal(register.records.find(x=>x.id===r.id).reports[0].round,75);}
+for(const r of data.records){assert(register.records.find(x=>x.id===r.id).reports.some(report=>report.round===75));}
 const row=(d,id)=>d.waterStandardReview.rows.find(r=>r.id===id);
 const mutations=[d=>delete d.waterStandardReview,d=>d.waterStandardReview.rows.pop(),d=>d.waterStandardReview.waterQualityApproved=true,d=>d.waterStandardReview.fullCurrentLawComplete=true,d=>d.waterStandardReview.ironManganeseInterpretationResolved=true,d=>row(d,'arsenic').permissible='0.05',d=>row(d,'iron').acceptable='0.3',d=>row(d,'boron').permissible='1',d=>row(d,'mineral-oil').acceptable='0.5',d=>row(d,'uranium').unit='Bq/L',d=>row(d,'free-chlorine').operator='max',d=>row(d,'alachlor').unit='mg/L',d=>row(d,'ms2').sampleVolumeMl=100,d=>row(d,'giardia').sampleVolumeMl=1000,d=>row(d,'ecoli-entering').sampleVolumeMl=10,d=>row(d,'nitrate').autoApply=true,d=>d.waterStandardReview.sources.amendment3.url='https://example.com/a3.pdf'];
 for(const mutate of mutations){const bad=structuredClone(register);mutate(bad);assert.equal(validateReview(bad,catalogue).ok,false);}

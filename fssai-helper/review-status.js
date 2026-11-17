@@ -59,7 +59,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==75||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==76||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -138,6 +138,41 @@
    const s=ws.sources?.[key];
    if(!s||s.url!=='https://bmqsdqljvwgm.compat.objectstorage.ap-mumbai-1.oraclecloud.com/BisProd/bisProd/oldStandards/'+suffix||!(/^[a-f0-9]{64}$/).test(s.sha256))
     return denied('BIS source document is inconsistent.');
+  }
+  const a=data.asafoetidaReview;
+  if(!a||a.round!==76||a.reviewedOn!==data.latestSourceReviewDate||a.clause!=='FPSFA 2.9.29'||
+    a.report!=='ctr-asafoetida-purity-r76-2026-11-17.md'||a.productId!=='12-12-2-asafoetida-hing-or-hingra'||
+    a.recipeProductId!=='102-102-1-13-1-krishara-khichdi'||!ids.has(a.productId)||!ids.has(a.recipeProductId)||
+    a.numericRows!==11||a.numericMismatches!==0||a.puritySourceRowsReconciled!==true||
+    a.fullCurrentLawComplete!==false||a.allReferencedMethodsVerified!==false||a.recipeSubstitutionApproved!==false||
+    a.legalProductApproval!==false||a.batchRelease!==false||a.autoApplyLimits!==false||a.ctrRulesChanged!==false||
+    a.ingredientGapsClosed!==0||a.remainingAyurvedaIngredientGaps!==14||!Array.isArray(a.rows)||a.rows.length!==11||
+    !Array.isArray(a.grades)||a.grades.length!==3||!Array.isArray(a.findings)||a.findings.length!==6)
+   return denied('Asafoetida purity evidence is incomplete.');
+  const parameters=['total-ash','acid-insoluble-ash','alcoholic-extract','starch'];
+  let ai=0;
+  for(const [gi,grade] of ['hing','hingra','compounded'].entries()){
+   const g=a.grades[gi];
+   if(!g||g.id!==grade||!g.label||!g.definition||!g.exclusions||!g.extraNote)return denied('Asafoetida grade identity is incomplete.');
+   for(const [pi,limit] of [[15,2.5,12,1],[20,8,50,1],[10,1.5,5]][gi].entries()){
+    const r=a.rows[ai++],extract=pi===2;
+    if(!r||r.id!==grade+'-'+parameters[pi]||r.grade!==grade||r.parameter!==parameters[pi]||!r.name||
+      r.limit!==limit||r.operator!==(extract?'>=':'<=')||r.unit!=='%'||r.dryBasisSpecified!==false||
+      r.basis!==(grade!=='compounded'&&!extract?'By weight':'Percent as stated in clause')||
+      r.solventAlcoholPercent!==(extract?90:null)||r.methodReference!==(extract?'U.S.P. 1936':null)||
+      r.referenceOnly!==true||r.autoApply!==false||r.originalSource?.id!=='gazette2011'||r.originalSource.pdfPage!==116||
+      r.originalSource.printedPage!==402||r.compendiumSource?.id!=='spices2024'||r.compendiumSource.pdfPage!==(gi===0?34:35))
+     return denied('Asafoetida grade limits or bases are inconsistent.');
+   }
+  }
+  if(a.recipe?.number!=='13.1'||a.recipe.ingredientSerial!==5||a.recipe.partUsed!=='Oleoresin gum'||a.recipe.ratio!=='Q.S.'||
+    a.recipe.pdfPage!==88||a.recipe.printedPage!==53||a.recipe.automaticGrade!==null||
+    a.recipe.identityStatus!=='GRADE_AND_BOTANICAL_IDENTITY_OPEN')return denied('Hingu recipe identity is inconsistent.');
+  for(const key of ['gazette2011','spices2024','recipe2025','ayurveda2022']){
+   const s=a.sources?.[key];
+   try{const url=new URL(s?.url);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname)||
+     !/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)return denied('Asafoetida source document is invalid.');}
+   catch(error){return denied('Asafoetida source document is invalid.');}
   }
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
