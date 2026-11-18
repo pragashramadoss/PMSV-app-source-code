@@ -24,6 +24,13 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .hingu-evidence{border-top:1px solid var(--line,#d5dedc);margin-top:14px;padding-top:12px}.hingu-evidence h5{font-size:1rem;margin:0}.hingu-evidence .hingu-confirm{display:flex;align-items:flex-start;gap:.6rem;font-weight:600;cursor:pointer}.hingu-confirm input[type=checkbox]{width:1.1rem;height:1.1rem;min-width:1.1rem;margin:.16rem 0 0;padding:0}.hingu-evidence .hingu-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.hingu-table caption{text-align:left;font-weight:650;padding:5px 0}.hingu-evidence .hingu-table th,.hingu-evidence .hingu-table td{overflow-wrap:anywhere}.hingu-evidence details{margin:14px 0}.hingu-evidence summary{font-weight:650;cursor:pointer}.hingu-methods ul{list-style:none;padding:0}.hingu-methods li{margin:.8rem 0}.hingu-methods li p{margin:.25rem 0}.hingu-evidence .source-ref{max-width:100%;white-space:normal}
 .juniper-scope{margin:18px 0;padding:12px 0;border-block:1px solid var(--line,#d5dedc)}
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
+.recipe-flower-note select{max-width:100%}
+.recipe-flower-note .controls{gap:.4rem}
+.recipe-flower-note .source-ref{white-space:normal;max-width:100%}
+.recipe-flower-note details{margin:12px 0}
+.recipe-flower-note summary{font-weight:650;cursor:pointer}
+.recipe-flower-note .flower-confirm{display:flex;align-items:flex-start;gap:.6rem;margin-top:14px;cursor:pointer}
+.flower-confirm input[type=checkbox]{width:1.1rem;min-width:1.1rem;height:1.1rem;margin:.16rem 0 0;padding:0}
 </style></head><body>
 <header><div class="wrap"><div><div class="brand">PMSV <span style="color:#88d7c5">/</span> FSSAI Helper</div><div class="masthead-note">Product standards · Methods · Quality evidence</div></div><span class="tag">SOURCE REVIEW · IN PROGRESS</span></div></header>
 <main><section class="hero"><div class="eyebrow">FOOD SAFETY REGULATORY INTELLIGENCE</div><h1>FSSAI standards, testing methods and evidence — in one place.</h1><p>Explore the documented product-source register, resolve laboratory method conflicts, and manage the 35-case evidence workflow. Built for quality decisions grounded in official sources.</p><div class="hero-badges"><span>533 source-status catalogue entries</span><span>Review updated 14 Nov 2026</span><span>35-case evidence workspace</span><span>10 method references</span></div></section>
@@ -173,8 +180,9 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="spice-contaminants.js?v=20261118-r80"></script>
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
-<script src="review-status.js?v=20261118-r80"></script>
-<script src="review-status-data.js?v=20261118-r80"></script>
+<script src="recipe-flowers-r81.js?v=20261118-r81"></script>
+<script src="review-status.js?v=20261118-r81"></script>
+<script src="review-status-data.js?v=20261118-r81"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -194,7 +202,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261118-r80"></script>
+<script src="review-status-ui.js?v=20261118-r81"></script>
 <script>
 'use strict';
 (()=>{
@@ -245,11 +253,17 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  function download(name,type,body){const b=new Blob([body],{type}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
  function csv(rows,name){download(name,'text/csv;charset=utf-8','\uFEFF'+rows.map(r=>r.map(csvEscape).join(',')).join('\r\n')+'\r\n');}
  function brief(c){const ck=c.sourceCheck||{};
-  const text=['PMSV FSSAI HELPER — RESEARCH BRIEF','Historical finding: 2026-10-30; current review register: 2026-11-14','Research only — not regulatory PASS or product release','',
+  const register=window.PMSVReviewUI?.available ? window.PMSV_REVIEW_REGISTER : null;
+  const current=register?.records.find(row=>row.id===c.id);
+  const text=['PMSV FSSAI HELPER — RESEARCH BRIEF','Historical finding dated 2026-10-30',
+  register?'Current review register dated '+register.latestSourceReviewDate:'Current review register unavailable','Research only — not regulatory PASS or product release','',
   'Product: '+c.product,'Catalog ID: '+c.id,'Category: '+(c.fcs||'Unconfirmed'),'FSSR: '+(c.fssr||'Unconfirmed'),
   'Review class: '+c.reviewStatus,'Source finding: '+c.finding,'Non-transfer caution: '+c.nonTransfer,
   'Next evidence: '+(ck.nextEvidence||c.nextAction),'Checkpoint analyte: '+(ck.analyte||'Not in 31–60 register'),'Checkpoint caution: '+(ck.sourceCaution||''),
-  'Current focused reviews: '+(window.PMSV_REVIEW_REGISTER?.records.find(r=>r.id===c.id)?.reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
+  'Current focused reviews: '+(current?.reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
+  ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction,
+   ...current.reports.slice(0,1).map(r=>'Latest source review: '+new URL(r.file,document.baseURI).href)]:[]),
+  'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}
  function catalogueCSV(){let head=['catalogue_row','catalog_id','product','fssr','foscos_category','canonical_source_status','detailed_review_status','evidence_level','source_checkpoint_analyte','finding','non_transfer_warning','next_action','official_source','approval_status'];

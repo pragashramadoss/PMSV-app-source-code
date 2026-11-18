@@ -3,6 +3,7 @@
  'use strict';
  const juniper = typeof module === 'object' && module.exports ? require('./juniper-spice-r79.js') : root.PMSVJuniperSpice;
  const hingu = typeof module === 'object' && module.exports ? require('./hingu-asafoetida-r80.js') : root.PMSVHingu;
+ const flowers = typeof module === 'object' && module.exports ? require('./recipe-flowers-r81.js') : root.PMSVRecipeFlowers;
  const denied=reason=>({ok:false,reason,legalProductApproval:false,batchRelease:false});
  function catalogueStatus(rows){
   if(!Array.isArray(rows)||rows.length!==533)return denied('The complete 533-product catalogue is unavailable.');
@@ -17,7 +18,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==80||data.latestSourceReviewDate!=='2026-11-18')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==81||data.latestSourceReviewDate!=='2026-11-18')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -251,10 +252,14 @@
       !data.records.find(row => row.id === spice.recipeProductId)?.reports.some(report =>
         report.round === spice.round && report.file === spice.report)) return denied('Juniper source review is inconsistent.');
   const resin = data.hinguReview;
-  if (!hingu?.validReview(resin, data.ayurvedaIngredientCoverage, spice.coverage) ||
+  if (!hingu?.validReview(resin, resin?.coverage, spice.coverage) ||
       resin.productId !== a.productId || resin.recipeProductId !== a.recipeProductId ||
       ![resin.productId, resin.recipeProductId].every(id => data.records.find(row => row.id === id)?.reports.some(ref =>
         ref.round === resin.round && ref.file === resin.report))) return denied('Hingu source review is inconsistent.');
+  const floral = data.recipeFlowerReview;
+  if (!flowers?.validReview(floral, data.ayurvedaIngredientCoverage, resin.coverage) ||
+      !floral.recipes.every(recipe => data.records.find(row => row.id === recipe.productId)?.reports.some(ref =>
+        ref.round === floral.round && ref.file === floral.report))) return denied('Recipe flower references are inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

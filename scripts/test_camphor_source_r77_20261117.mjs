@@ -38,7 +38,13 @@ const ctx={window:{},URL};vm.createContext(ctx);
 for(const name of ['full-catalogue-533.js','review-status-data.js'])vm.runInContext(read(name),ctx);
 const data=JSON.parse(JSON.stringify(ctx.window.PMSV_REVIEW_REGISTER)),catalogue=JSON.parse(JSON.stringify(ctx.window.PMSV_CATALOGUE));
 const {validateReview}=require('../fssai-helper/review-status.js');assert.equal(validateReview(data,catalogue).ok,true);
-for(const note of d.records){const linked=data.records.find(r=>r.id===note.id);assert.equal(linked.reports[0].round,77);assert(linked.reports.some(r=>r.round===69));assert(linked.sourceReviewResult.endsWith(note.sourceReviewResult));assert.equal(linked.legalArticleDecision,'OPEN');}
+for (const note of d.records) {
+ const linked = data.records.find(r => r.id === note.id);
+ assert(linked.reports.some(r => r.round === 77 && r.file === d.report));
+ assert(linked.reports.some(r => r.round === 69));
+ assert(linked.sourceReviewResult.includes(note.sourceReviewResult));
+ assert.equal(linked.legalArticleDecision, 'OPEN');
+}
 assert.match(data.records.find(r=>r.id===d.records[1].id).sourceReviewNextAction,/discrepancy is confirmed visually, not resolved/);
 const mutateRow=(x,id)=>x.camphorReview.rows.find(r=>r.id===id);
 const changes=[x=>delete x.camphorReview,x=>x.camphorReview.fullCurrentLawComplete=true,x=>x.camphorReview.therapeuticDoseImported=true,x=>x.camphorReview.recipeSafeDoseEstablished=true,x=>x.camphorReview.syntheticSubstitutionApproved=true,x=>x.camphorReview.ocimumSubstitutionApproved=true,x=>x.camphorReview.recipe146HoldResolved=true,x=>x.camphorReview.rows.pop(),x=>mutateRow(x,'specific-optical-rotation').minimum=41,x=>mutateRow(x,'specific-optical-rotation').kind='range',x=>mutateRow(x,'pesticide-residue').maximum=0.1,x=>mutateRow(x,'melting-range').unit='°F',x=>mutateRow(x,'camphor-assay').minimum=99,x=>mutateRow(x,'non-volatile-matter').maximum=0.5,x=>mutateRow(x,'camphor-assay').autoApply=true,x=>x.camphorReview.records[1].ingredientSerial=14,x=>x.camphorReview.records[1].recipeAlignmentHold=false,x=>x.camphorReview.sources.monograph210.url='https://example.com/scan.jpg',x=>x.camphorReview.sources.monograph210.printedPage='211',x=>x.camphorReview.amendmentWatch.completeAmendmentChain=true,x=>x.camphorReview.amendmentWatch.pdfBytesVerified=true,x=>x.camphorReview.ingredientGapsClosed=1];

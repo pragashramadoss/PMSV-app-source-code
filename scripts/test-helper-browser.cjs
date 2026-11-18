@@ -13,15 +13,15 @@ const server=http.createServer((req,res)=>{
 });
 async function testHingu(page, register, base, artifacts) {
  const review = register.hinguReview;
- const coverage = register.ayurvedaIngredientCoverage;
+ const coverage = review.coverage;
  assert.deepEqual([coverage.withCandidate, coverage.withoutCandidate, coverage.candidateLinks], [34, 12, 102]);
  assert.equal(register.juniperSpiceReview.coverage.withCandidate, 33);
  await page.getByRole('button', {name:'Review progress', exact:true}).click();
  const overview = page.locator('#ayurvedaIngredientCoverage');
- assert.match(await overview.textContent(), /34 of 46/);
+ assert.match(await overview.textContent(), /35 of 46/);
  await overview.locator('summary').click();
- assert.equal(await overview.locator('li').count(), 12);
- assert(!/Hingu|Hribera/.test(await overview.locator('ul').textContent()));
+ assert.equal(await overview.locator('li').count(), 11);
+ assert(!/Hingu|Hribera|Jati/.test(await overview.locator('ul').textContent()));
  await page.locator('#openHinguRecipe').click();
  assert.equal(await page.locator('.water-product-note').count(), 1);
  const grade = page.locator('#asafoetidaGrade');
@@ -82,6 +82,83 @@ async function testHingu(page, register, base, artifacts) {
  const report = await page.request.get(base + review.report);
  assert.equal(report.status(), 200);
  assert.match(await report.text(), /34 of 46/);
+}
+
+async function testRecipeFlowers(page, register, base, artifacts) {
+ const review = register.recipeFlowerReview;
+ const [named, aromatic] = review.recipes;
+ const progress = page.getByRole('button', {name:'Review progress', exact:true});
+ const panel = page.locator('.recipe-flower-note');
+ const choice = panel.getByLabel('Recipe flower', {exact:true});
+ const confirmed = panel.getByRole('checkbox');
+ const lead = panel.locator('.flower-lead');
+ assert.deepEqual([register.ayurvedaIngredientCoverage.withCandidate, register.ayurvedaIngredientCoverage.candidateLinks], [35,103]);
+ await progress.click();
+ await page.locator('#openNamedFlowers').click();
+ assert.equal(await panel.getAttribute('data-flower-product'), named.productId);
+ assert.equal(await choice.inputValue(), '');
+ assert.equal(await choice.locator('option').count(), 5);
+ assert.equal(await lead.count(), 0);
+ for (const flower of named.flowers) {
+  await choice.selectOption(flower.key);
+  const detail = panel.locator('#flowerDetail');
+  assert((await detail.innerText()).includes(flower.species));
+  assert((await detail.innerText()).includes(flower.stage));
+  assert.equal(await lead.count(), 0);
+  for (const [source, pdfPage, label] of flower.references) {
+   assert.equal(await detail.getByRole('link', {name:label + ' ↗', exact:true}).getAttribute('href'),
+    review.sources[source].url + (pdfPage ? '#page=' + pdfPage : ''));
+  }
+  assert.equal(await confirmed.count(), flower.key === 'jati' ? 1 : 0);
+  if (flower.key === 'ketaki') {
+   await detail.locator('summary').click();
+   assert.match(await detail.innerText(), /0\.5% for Kewda\/Kewra/);
+   assert.equal(await detail.getByRole('link', {name:'FSSAI Schedule C ↗'}).getAttribute('href'), review.sources.ayurveda.url + '#page=22');
+  }
+  if (flower.key === 'jati') {
+   assert.equal(await confirmed.isChecked(), false);
+   await confirmed.check();
+   assert.match(await lead.innerText(), /10 mg\/kg on a dry-matter basis/);
+   assert.equal(await lead.locator('a').getAttribute('href'), review.sources.gazette.url + '#page=20');
+   await confirmed.uncheck();
+   assert.equal(await lead.count(), 0);
+   await confirmed.check();
+  }
+ }
+ await choice.selectOption('jati');
+ assert.equal(await confirmed.isChecked(), false);
+ await confirmed.check();
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width, height:900});
+  assert(await panel.evaluate(el => el.scrollWidth <= el.clientWidth + 1));
+  if (width !== 320) await panel.screenshot({path:path.join(artifacts,'flower-reference-' + width + '.png'),animations:'disabled',
+   style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ const namedDownload = page.waitForEvent('download');
+ await page.locator('#briefBtn').click();
+ const brief = fs.readFileSync(await (await namedDownload).path(), 'utf8');
+ assert.match(brief, /Current review register dated 2026-11-18/);
+ assert(brief.includes(named.sourceReviewResult) && brief.includes(base + review.report));
+ await progress.click();
+ await page.locator('#openAromaticFlower').click();
+ assert.equal(await panel.getAttribute('data-flower-product'), aromatic.productId);
+ assert.equal(await choice.count(), 0);
+ assert.equal(await confirmed.count(), 0);
+ assert.equal(await lead.count(), 0);
+ assert.match(await panel.innerText(), /Ketaki \(Pandanus tectorius\) and Jati \(Jasminum officinale\)/);
+ assert.equal(await page.locator('.water-product-note').count(), 1);
+ const unknownDownload = page.waitForEvent('download');
+ await page.locator('#briefBtn').click();
+ const unknownBrief = fs.readFileSync(await (await unknownDownload).path(), 'utf8');
+ assert(unknownBrief.includes(aromatic.sourceReviewResult) && !unknownBrief.includes(named.sourceReviewResult));
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id), named.productId);
+ assert.equal(await choice.inputValue(), '');
+ await choice.selectOption('jati');
+ assert.equal(await confirmed.isChecked(), false);
+ assert.equal(await lead.count(), 0);
+ const report = await page.request.get(base + review.report);
+ assert.equal(report.status(), 200);
+ assert((await report.text()).includes('35 of 46'));
 }
 
 async function testJuniperSpice(page, review, base, artifacts) {
@@ -372,6 +449,7 @@ let browser;
  const camphorReport=await page.request.get(base+camphor.report);assert.equal(camphorReport.status(),200);
  assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
  await testHingu(page, data, base, artifacts);
+ await testRecipeFlowers(page, data, base, artifacts);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
@@ -454,7 +532,8 @@ let browser;
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
-  ayurvedaIngredientsWithCandidate:34,ayurvedaIngredientsWithoutCandidate:12,ayurvedaCandidateLinks:102});
+  ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:103});
+ Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerLeadCandidates:1,flowerMaterialResets:true,flowerProductBriefs:2});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');

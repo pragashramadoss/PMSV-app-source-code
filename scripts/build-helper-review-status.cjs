@@ -29,6 +29,8 @@ const juniperFile = 'ctr-juniper-spice-r79-2026-11-18.json';
 const juniper = read(juniperFile);
 const hinguFile = 'ctr-hingu-asafoetida-r80-2026-11-18.json';
 const hingu = read(hinguFile);
+const flowerFile = 'ctr-recipe-flowers-r81-2026-11-18.json';
+const flowers = read(flowerFile);
 const ingredientBaselineFile = 'ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json';
 const ingredientBaseline = read(ingredientBaselineFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
@@ -133,7 +135,7 @@ function gazetteRows(keys) {
   const matches = key.metal
    ? gazette.metalRows.filter(row => row.metal === key.metal && row.coreIndex === key.coreIndex)
    : gazette.cropRows.filter(row => row.group === key.group && row.article === key.article);
-  assert.equal(matches.length, 1, 'A spice reference must identify one Gazette row');
+  assert.equal(matches.length, 1, 'An ingredient reference must identify one Gazette row');
   const [row] = matches;
   assert.equal(row.sourceId, 'ctr2020');
   assert.equal(row.automaticProductApplication, false);
@@ -156,7 +158,7 @@ assert.equal(hingu.productId, asafoetida.productId);
 assert.equal(hingu.ingredient.serial, asafoetida.recipe.ingredientSerial);
 assert.equal(hingu.ingredient.name, asafoetida.recipe.name);
 const hinguRows = gazetteRows(hingu.gazetteRowKeys);
-const currentCoverage = linkIngredient(coverage, hingu.ingredient, hinguRows);
+const hinguCoverage = linkIngredient(coverage, hingu.ingredient, hinguRows);
 for (const id of [hingu.productId, hingu.recipeProductId]) {
  const row = records.find(record => record.id === id);
  assert(row);
@@ -164,18 +166,36 @@ for (const id of [hingu.productId, hingu.recipeProductId]) {
  row.sourceReviewResult += ' ' + hingu.sourceReviewResult;
  row.sourceReviewNextAction += ' ' + hingu.sourceReviewNextAction;
 }
+const flowerRows = gazetteRows(flowers.gazetteRowKeys);
+const currentCoverage = linkIngredient(hinguCoverage, flowers.ingredient, flowerRows);
+const recipeRegister = read('ayurveda-category-a-recipe-evidence-r35-2026-11-04.json');
+for (const recipe of flowers.recipes) {
+ const entry = recipeRegister.records.find(row => row.catalogue_id === recipe.productId);
+ assert.equal(entry?.recipe_number, recipe.number);
+ for (const flower of recipe.flowers) {
+  const original = entry.ingredients.find(row => row.serial === flower.serial);
+  assert.equal(original?.source_name, flower.name);
+  assert.equal(original.part_used, 'Flower');
+  assert.equal(original.source_ratio, 'Q.S.');
+ }
+ const row = records.find(record => record.id === recipe.productId);
+ row.reports.unshift({round: flowers.round, file: flowers.report});
+ row.sourceReviewResult += ' ' + recipe.sourceReviewResult;
+ row.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
+}
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:hingu.reviewedOn,latestRound:hingu.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:flowers.reviewedOn,latestRound:flowers.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
- hinguReview:{...hingu,rawRows:hinguRows,sources:{...hingu.sources,
+ recipeFlowerReview:{...flowers,rawRows:flowerRows},
+ hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,
   gazette:juniper.sources.gazette,spicesAct:juniper.sources.boardArchive,recipe:asafoetida.sources.recipe2025}},
  lajadiBotanicalReview:lajadi,
  camphorReview:camphor,

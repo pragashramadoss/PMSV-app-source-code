@@ -14,10 +14,10 @@ const data = JSON.parse(JSON.stringify(context.window.PMSV_REVIEW_REGISTER));
 const catalogue = context.window.PMSV_CATALOGUE;
 const hingu = data.hinguReview;
 const previous = data.juniperSpiceReview.coverage;
-const current = data.ayurvedaIngredientCoverage;
+const current = hingu.coverage;
 
 assert.equal(validateReview(data, catalogue).ok, true);
-assert.deepEqual([data.latestRound, data.latestSourceReviewDate], [80, '2026-11-18']);
+assert.deepEqual([hingu.round, hingu.reviewedOn], [80, '2026-11-18']);
 assert.deepEqual([previous.withCandidate, previous.withoutCandidate, previous.candidateLinks], [33, 13, 98]);
 assert.deepEqual([current.withCandidate, current.withoutCandidate, current.candidateLinks], [34, 12, 102]);
 assert.equal(previous.remainingInstances.filter(row => row.recipe === '13.1' && row.serial === 5).length, 1);
@@ -77,8 +77,8 @@ const mutations = [
   r => {r.hinguReview.sources.is7807.addendum = null;}, r => {r.hinguReview.sources.bisProgramme.reaffirmed = '2003';},
   r => {r.hinguReview.sources.manual.url = 'https://example.com/';}, r => {r.hinguReview.boundaries.autoApplyLimits = true;},
   r => {r.hinguReview.boundaries.recipeSubstitutionApproved = true;}, r => {r.hinguReview.boundaries.batchRelease = true;},
-  r => {r.ayurvedaIngredientCoverage.remainingInstances[0] = {recipe:'13.1', serial:5, name:'Hingu'};},
-  r => {r.ayurvedaIngredientCoverage.withoutCandidate = 13;}, r => {r.ayurvedaIngredientCoverage.candidateLinks = 106;},
+  r => {r.hinguReview.coverage.remainingInstances[0] = {recipe:'13.1', serial:5, name:'Hingu'};},
+  r => {r.hinguReview.coverage.withoutCandidate = 13;}, r => {r.hinguReview.coverage.candidateLinks = 106;},
   r => {r.records.find(row => row.id === hingu.productId).reports.shift();}
 ];
 for (const mutate of mutations) {

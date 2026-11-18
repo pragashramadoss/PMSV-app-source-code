@@ -64,14 +64,23 @@ const camphor=JSON.parse(read('ctr-camphor-source-r77-2026-11-17.json'));
 const lajadi=JSON.parse(read('ctr-lajadi-botanicals-r78-2026-11-17.json'));
 const juniper=JSON.parse(read('ctr-juniper-spice-r79-2026-11-18.json'));
 const hingu=JSON.parse(read('ctr-hingu-asafoetida-r80-2026-11-18.json'));
+const floral=JSON.parse(read('ctr-recipe-flowers-r81-2026-11-18.json'));
 for(const record of r.records){
  const current=record.id===fibreFollowup.productId?fibreFollowup:record;
  const linked=register.records.find(x=>x.id===record.id);
  const water=waterFollowup.records.find(x=>x.id===record.id);
  const latestWater=waterStandard.records.find(x=>x.id===record.id);
  const camphorNote=camphor.records.find(x=>x.id===record.id);
- assert.equal(linked.sourceReviewResult,(latestWater?.sourceReviewResult??current.sourceReviewResult+(water?' '+water.sourceReviewResult:''))+(record.id===asafoetida.recipeProductId?' '+asafoetida.sourceReviewResult:'')+(camphorNote?' '+camphorNote.sourceReviewResult:'')+(record.id===lajadi.recipeProductId?' '+lajadi.sourceReviewResult+' '+juniper.sourceReviewResult:'')+([hingu.productId,hingu.recipeProductId].includes(record.id)?' '+hingu.sourceReviewResult:''));
- assert.equal(linked.sourceReviewNextAction,(latestWater?.sourceReviewNextAction??current.sourceReviewNextAction+(water?' '+water.sourceReviewNextAction:''))+(record.id===asafoetida.recipeProductId?' '+asafoetida.sourceReviewNextAction:'')+(camphorNote?' '+camphorNote.sourceReviewNextAction:'')+(record.id===lajadi.recipeProductId?' '+lajadi.sourceReviewNextAction+' '+juniper.sourceReviewNextAction:'')+([hingu.productId,hingu.recipeProductId].includes(record.id)?' '+hingu.sourceReviewNextAction:''));
+ const flowerNote = floral.recipes.find(x => x.productId === record.id);
+ const additions = [
+  record.id === asafoetida.recipeProductId && asafoetida, camphorNote,
+  record.id === lajadi.recipeProductId && lajadi, record.id === lajadi.recipeProductId && juniper,
+  [hingu.productId, hingu.recipeProductId].includes(record.id) && hingu, flowerNote
+ ].filter(Boolean);
+ for (const field of ['sourceReviewResult','sourceReviewNextAction']) {
+  const prior = latestWater?.[field] ?? [current[field], water?.[field]].filter(Boolean).join(' ');
+  assert.equal(linked[field], [prior, ...additions.map(note => note[field])].join(' '));
+ }
  assert.equal(linked.legalArticleDecision,'OPEN');
 }
 assert.equal(register.currencyWatch[1].effectiveFrom,milk.commencement);

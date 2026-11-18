@@ -22,6 +22,7 @@
   let sourceNote=toxin.seafoodNoteIds.includes(id)?`<section class="panel compact toxin-product-note"><h4>Histamine species and sampling scope</h4><p>${esc(toxin.seafoodNote)}</p><a class="source-ref" href="${esc(toxin.report)}" target="_blank" rel="noopener noreferrer">R72 original-source findings ↗</a></section>`:'';
   if(id===data.fibreClaimsReview.productId)sourceNote+=fibreMarkup();
   const waterNote=data.waterSourceReview.records.find(x=>x.id===id);
+  sourceNote += window.PMSVRecipeFlowers.markup(data.recipeFlowerReview, id);
   if(waterNote)sourceNote+=waterMarkup(waterNote);
   const asafoetida=data.asafoetidaReview;
   if(id===asafoetida.productId||id===asafoetida.recipeProductId)sourceNote+=window.PMSVAsafoetida?.markup(asafoetida,id===asafoetida.recipeProductId)||'<p>Asafoetida reference unavailable.</p>';
@@ -34,7 +35,7 @@
   const reviewDate = row.reports[0]?.file.match(/(\d{4}-\d{2}-\d{2})\.md$/)?.[1] || data.checkpointDate;
   return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(reviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
  }
- window.PMSVReviewUI=Object.freeze({productMarkup});
+ window.PMSVReviewUI=Object.freeze({productMarkup, available});
  if(!$('verificationStatus'))return;
  if(!available){
   $('verificationStatus').textContent='Review progress unavailable: '+(status?.reason||'review asset did not load');
@@ -98,8 +99,13 @@
   '<li>Recipe ' + esc(row.recipe) + ' · ingredient ' + esc(row.serial) + ' · ' + esc(row.name) + '</li>').join('');
  ingredientPanel.innerHTML = '<h3>Ayurveda ingredient contaminant references</h3><p><b>' + ingredientCoverage.withCandidate +
   ' of ' + ingredientCoverage.ingredientRows + '</b> ingredient entries have at least one candidate raw-material reference. The supplied material and finished recipe require separate assessments.</p>' +
-  '<details><summary>' + ingredientCoverage.withoutCandidate + ' ingredient entries awaiting a candidate reference</summary><ul>' + outstanding + '</ul></details>';
+  '<details><summary>' + ingredientCoverage.withoutCandidate + ' ingredient entries awaiting a candidate reference</summary><ul>' + outstanding + '</ul></details>' +
+  '<div class="controls"><button type="button" id="openNamedFlowers">Open flowers in recipe 14.6</button>' +
+  '<button type="button" id="openAromaticFlower">Open aromatic flowers in recipe 14.7</button></div>';
  lajadiPanel.insertAdjacentElement('afterend',ingredientPanel);
+ const [namedFlowers, aromaticFlower] = data.recipeFlowerReview.recipes;
+ $('openNamedFlowers').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct(namedFlowers.productId));
+ $('openAromaticFlower').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct(aromaticFlower.productId));
  $('openLajadiBotanicals').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(lajadi.recipeProductId));
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;

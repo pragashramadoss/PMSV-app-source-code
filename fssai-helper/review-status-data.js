@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-18",
-  "latestRound": 80,
+  "latestRound": 81,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -45,7 +45,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-lajadi-botanicals-r78-2026-11-17.json",
     "ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json",
     "ctr-juniper-spice-r79-2026-11-18.json",
-    "ctr-hingu-asafoetida-r80-2026-11-18.json"
+    "ctr-hingu-asafoetida-r80-2026-11-18.json",
+    "ctr-recipe-flowers-r81-2026-11-18.json"
   ],
   "records": [
     {
@@ -1695,6 +1696,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 81,
+          "file": "ctr-recipe-flowers-r81-2026-11-18.md"
+        },
+        {
           "round": 77,
           "file": "ctr-camphor-source-r77-2026-11-17.md"
         },
@@ -1704,8 +1709,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy.",
-      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has one candidate lead reference. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
+      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1716,6 +1721,10 @@ window.PMSV_REVIEW_REGISTER = {
       "priority": "P0",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
+        {
+          "round": 81,
+          "file": "ctr-recipe-flowers-r81-2026-11-18.md"
+        },
         {
           "round": 75,
           "file": "ctr-water-standard-concordance-r75-2026-11-17.md"
@@ -1730,8 +1739,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit.",
-      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference.",
+      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. The printed footnote gives Ketaki and Jati as examples for the aromatic-flower infusion. The supplied species remains open.",
+      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Identify each flower actually supplied and the form used in the infusion. Keep the source recipe and finished milk assessment separate from the four named flower entries in recipe 14.6.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2927,9 +2936,9 @@ window.PMSV_REVIEW_REGISTER = {
   },
   "ayurvedaIngredientCoverage": {
     "ingredientRows": 46,
-    "withCandidate": 34,
-    "withoutCandidate": 12,
-    "candidateLinks": 102,
+    "withCandidate": 35,
+    "withoutCandidate": 11,
+    "candidateLinks": 103,
     "originalUnadjudicatedInstances": 14,
     "remainingInstances": [
       {
@@ -2964,11 +2973,6 @@ window.PMSV_REVIEW_REGISTER = {
       },
       {
         "recipe": "14.6",
-        "serial": 9,
-        "name": "Jati"
-      },
-      {
-        "recipe": "14.6",
         "serial": 10,
         "name": "Dadima"
       },
@@ -2991,6 +2995,215 @@ window.PMSV_REVIEW_REGISTER = {
         "recipe": "15.1",
         "serial": 2,
         "name": "Ushna Jala"
+      }
+    ]
+  },
+  "recipeFlowerReview": {
+    "round": 81,
+    "reviewedOn": "2026-11-18",
+    "report": "ctr-recipe-flowers-r81-2026-11-18.md",
+    "sources": {
+      "recipe": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
+        "sha256": "498d6f579357e7bb8e8d7b9f7741db5863f6eea8d29ffd559ff9add7d32d7edc",
+        "pages": [
+          96,
+          97,
+          98
+        ]
+      },
+      "codex": {
+        "url": "https://codex.fao.org/restapi/searchstandard/CXA_004e.pdf?lang=en&id=39",
+        "sha256": "5d23f32aeaef4ecc4238a0508303c0c71ea6d593a1c5a1594a97d202eb552f01",
+        "edition": "CXA 4-1989, amended 2025",
+        "pages": [
+          33,
+          36,
+          105,
+          109,
+          110,
+          124,
+          218
+        ]
+      },
+      "kew": {
+        "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A670953-1"
+      },
+      "gazette": {
+        "url": "https://www.fssai.gov.in/upload/notifications/2020/08/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
+        "sha256": "5d376f55999049e7272b84294b3b5e5bfc228c3ef772754bfbd328045212c3dd",
+        "pages": [
+          20
+        ]
+      },
+      "ayurveda": {
+        "url": "https://www.fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
+        "sha256": "1ae8cfc632fad0a775316a84999a48adb6cf4b47d05bd4faa75f5190c511f699",
+        "pages": [
+          16,
+          22
+        ]
+      },
+      "pesticides": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_MRL_Pesticides_03_01_2019.pdf",
+        "sha256": "4e46563bc34cc1f4da630a48266aec723cdd666d448803bd965c5aa20c86fc20",
+        "pages": [
+          38
+        ]
+      }
+    },
+    "ingredient": {
+      "recipe": "14.6",
+      "serial": 9,
+      "name": "Jati"
+    },
+    "gazetteRowKeys": [
+      {
+        "metal": "Lead",
+        "coreIndex": 60
+      }
+    ],
+    "oilAdditive": {
+      "schedule": "C",
+      "serial": 28,
+      "material": "Kewda/Kewra (oil from Ketaki)",
+      "maximum": 0.5,
+      "unit": "%",
+      "pdfPage": 22
+    },
+    "recipes": [
+      {
+        "number": "14.6",
+        "productId": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+        "tablePage": 96,
+        "methodPage": 97,
+        "sourceReviewResult": "Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has one candidate lead reference. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
+        "sourceReviewNextAction": "Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
+        "flowers": [
+          {
+            "key": "ketaki",
+            "serial": 2,
+            "name": "Ketaki",
+            "species": "Pandanus tectorius Soland.",
+            "stage": "The ingredient table lists Ketaki. The method gives no specific stage for it.",
+            "scope": "Codex HS 3379 names Pandanus fascicularis flowers. Kew treats that name as a synonym of Pandanus odorifer. A supply label reading “kewra” alone leaves the recipe species unresolved.",
+            "references": [
+              [
+                "codex",
+                124,
+                "Codex HS 3379"
+              ],
+              [
+                "kew",
+                null,
+                "Kew botanical record"
+              ]
+            ]
+          },
+          {
+            "key": "jati",
+            "serial": 9,
+            "name": "Jati",
+            "species": "Jasminum officinale L.",
+            "stage": "The method names Jati in the first milk preparation, Ksheerapaka.",
+            "scope": "Codex lists this species as jasmine in herb subgroup 027A. The group includes naturally dried plant parts used to flavour food. The jasmine entry leaves the part unspecified. The FSSAI recipe supplies the flower identity and leaves its drying status open.",
+            "references": [
+              [
+                "codex",
+                109,
+                "Codex HH 3231"
+              ],
+              [
+                "codex",
+                105,
+                "Codex herb group 027"
+              ]
+            ]
+          },
+          {
+            "key": "dadima",
+            "serial": 10,
+            "name": "Dadima",
+            "species": "Punica granatum L.",
+            "stage": "The method names Dadima flowers in the third preparation, Ghatika.",
+            "scope": "Codex FI 0355 identifies pomegranate fruit. The FSSAI Metiram row for pomegranate supplies no flower-specific limit. Check the part on the supplier and laboratory records.",
+            "references": [
+              [
+                "codex",
+                33,
+                "Codex fruit FI 0355"
+              ],
+              [
+                "pesticides",
+                38,
+                "FSSAI pomegranate residue row"
+              ]
+            ]
+          },
+          {
+            "key": "punnaga",
+            "serial": 11,
+            "name": "Punnaga",
+            "species": "Calophyllum inophyllum L.",
+            "stage": "The method names Punnaga flowers in both Lehya and Sharkara, the second and fourth preparations.",
+            "scope": "The printed part is the flower. Seed, kernel and oil specifications concern other materials. The raw-flower contaminant article still needs identification.",
+            "references": [
+              [
+                "recipe",
+                97,
+                "FSSAI preparation stages"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "number": "14.7",
+        "productId": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+        "tablePage": 98,
+        "methodPage": 98,
+        "sourceReviewResult": "The printed footnote gives Ketaki and Jati as examples for the aromatic-flower infusion. The supplied species remains open.",
+        "sourceReviewNextAction": "Identify each flower actually supplied and the form used in the infusion. Keep the source recipe and finished milk assessment separate from the four named flower entries in recipe 14.6.",
+        "flowers": [
+          {
+            "key": "aromatic",
+            "serial": 2,
+            "name": "Sugandhita pushpa",
+            "species": null,
+            "examples": [
+              "Ketaki (Pandanus tectorius)",
+              "Jati (Jasminum officinale)"
+            ],
+            "stage": "The flowers infuse in water and are removed before the buffalo milk is added.",
+            "scope": "The printed footnote gives examples and ends with “etc.” Identify the species and part actually supplied. Removing the flowers leaves the extent of transfer into the infusion unknown.",
+            "references": [
+              [
+                "recipe",
+                98,
+                "FSSAI flower footnote and method"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "boundaries": {
+      "actualIngredientApplicability": "OPEN",
+      "recipeAlignment": "OPEN",
+      "productArticleDecision": "OPEN",
+      "autoApplyLimits": false,
+      "flowerSubstitutionApproved": false,
+      "pesticideDefaultAssigned": false,
+      "batchRelease": false
+    },
+    "rawRows": [
+      {
+        "name": "Lead",
+        "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+        "maximum": 10,
+        "unit": "mg/kg",
+        "basis": "On dry matter basis.",
+        "pdfPage": 20
       }
     ]
   },
@@ -3219,6 +3432,75 @@ window.PMSV_REVIEW_REGISTER = {
       "fullCurrentLawComplete": false
     },
     "matrixNote": "Confirm the supplied spice is natural dried gum resin exuded from Ferula roots or rhizomes. Powdered root, an extracted oil and a mixture with starch, flour or gum arabic each need a separate assessment.",
+    "coverage": {
+      "ingredientRows": 46,
+      "withCandidate": 34,
+      "withoutCandidate": 12,
+      "candidateLinks": 102,
+      "originalUnadjudicatedInstances": 14,
+      "remainingInstances": [
+        {
+          "recipe": "12.1",
+          "serial": 1,
+          "name": "Jala"
+        },
+        {
+          "recipe": "12.1",
+          "serial": 4,
+          "name": "Chandana"
+        },
+        {
+          "recipe": "12.1",
+          "serial": 5,
+          "name": "Ushira"
+        },
+        {
+          "recipe": "13.1",
+          "serial": 1,
+          "name": "Jala"
+        },
+        {
+          "recipe": "14.5",
+          "serial": 5,
+          "name": "Karpura"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 2,
+          "name": "Ketaki"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 9,
+          "name": "Jati"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 10,
+          "name": "Dadima"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 11,
+          "name": "Punnaga"
+        },
+        {
+          "recipe": "14.7",
+          "serial": 2,
+          "name": "Sugandhita pushpa"
+        },
+        {
+          "recipe": "14.7",
+          "serial": 3,
+          "name": "Jala"
+        },
+        {
+          "recipe": "15.1",
+          "serial": 2,
+          "name": "Ushna Jala"
+        }
+      ]
+    },
     "rawRows": [
       {
         "name": "Lead",
