@@ -11,6 +11,71 @@ const server=http.createServer((req,res)=>{
   res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));
  }catch(error){res.writeHead(404).end('Not found');}
 });
+async function testJuniperSpice(page, review, base, artifacts) {
+ const scope = page.locator('.juniper-scope');
+ const rawRows = scope.locator('.juniper-raw-entry');
+ assert.equal(await scope.count(), 0);
+ await page.locator('#lajadiIngredient').selectOption('hribera');
+ assert.equal(await scope.count(), 0);
+ await page.locator('#lajadiMaterial').selectOption('named');
+ assert.equal(await page.locator('#juniperSupply').inputValue(), '');
+ assert.equal(await rawRows.count(), 0);
+ for (const supply of ['industrial', 'unknown', 'culinary']) {
+  await page.locator('#juniperSupply').selectOption(supply);
+  assert.equal(await rawRows.count(), supply === 'culinary' ? 4 : 0);
+ }
+ assert.deepEqual(await rawRows.locator('th').allTextContents(), review.rawRows.map(row => row.name));
+ for (const [i, row] of review.rawRows.entries()) {
+  assert.match(await rawRows.nth(i).innerText(), new RegExp(row.maximum + ' ' + row.unit));
+  assert.equal(await rawRows.nth(i).locator('a').getAttribute('href'), review.sources.gazette.url + '#page=' + row.pdfPage);
+ }
+ assert.equal(await page.locator('.lajadi-reference-entry').count(), 5);
+ assert(!/volatile oil/i.test(await page.locator('#lajadiReference').textContent()));
+ await scope.locator('#juniperQuality summary').click();
+ const values = scope.locator('#juniperStyleResult');
+ assert.equal(await values.locator('table').count(), 0);
+ for (const style of review.styleOptions) {
+  await scope.locator('#juniperStyle').selectOption(style.id);
+  const cell = label => values.locator('tr').filter({has: page.getByRole('rowheader', {name: label, exact: true})}).getByRole('cell');
+  assert.equal(await cell('Moisture').innerText(), 'Maximum ' + style.moistureMax + ' % w/w');
+  assert.equal(await cell('Volatile oil').innerText(), 'Minimum 0.5 mL/100 g · dry basis');
+  assert.equal(await cell('Live insects').innerText(), 'Maximum 0 count/100 g');
+  if (style.physicalStyle === 'cut') assert.equal(await cell('Other factors').innerText(), 'Blank in the source table');
+  if (style.physicalStyle === 'ground') assert.equal(await values.getByRole('cell', {name:'N/A · no evaluated value', exact:true}).count(), 7);
+ }
+ for (const width of [320, 390, 1440]) {
+  await page.setViewportSize({width, height:900});
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Juniper layout at ' + width);
+  if (width !== 320) await scope.screenshot({path:path.join(artifacts, 'juniper-spice-' + width + '.png'),
+   style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await scope.locator('#juniperStyle').selectOption('');
+ assert.equal(await values.locator('table').count(), 0);
+ await scope.locator('#juniperStyle').selectOption('wholeNatural');
+ await scope.locator('#juniperSupply').selectOption('unknown');
+ assert.equal(await scope.locator('#juniperStyle').count(), 0);
+ await scope.locator('#juniperSupply').selectOption('culinary');
+ assert.equal(await scope.locator('#juniperStyle').inputValue(), '');
+ await page.locator('#lajadiMaterial').selectOption('extract');
+ assert.equal(await scope.count(), 0);
+ await page.locator('#lajadiMaterial').selectOption('named');
+ assert.equal(await scope.locator('#juniperSupply').inputValue(), '');
+ await page.locator('#lajadiIngredient').selectOption('chandana');
+ await page.locator('#lajadiMaterial').selectOption('named');
+ assert.equal(await scope.count(), 0);
+ await page.locator('#lajadiIngredient').selectOption('hribera');
+ await page.locator('#lajadiMaterial').selectOption('named');
+ await scope.locator('#juniperSupply').selectOption('culinary');
+ await page.evaluate(() => PMSV_HELPER_TEST.selectProduct('purified-vending-water'));
+ assert.equal(await scope.count(), 0);
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id), review.recipeProductId);
+ assert.equal(await page.locator('#lajadiIngredient').inputValue(), '');
+ assert.equal(await scope.count(), 0);
+ const report = await page.request.get(base + review.report);
+ assert.equal(report.status(), 200);
+ assert.match(await report.text(), /33 of 46/);
+}
+
 let browser;
 (async()=>{
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -267,6 +332,11 @@ let browser;
  await page.evaluate(id=>PMSV_HELPER_TEST.selectProduct(id),lajadi.recipeProductId);assert.equal(await page.locator('#lajadiIngredient').inputValue(),'');
  assert.equal(await page.locator('#lajadiMaterial').inputValue(),'');
  const lajadiReport=await page.request.get(base+lajadi.report);assert.equal(lajadiReport.status(),200);assert.match(await lajadiReport.text(),/All 137 product-specific CTR decisions remain open/);
+ const juniper = data.juniperSpiceReview;
+ assert.equal(juniper.rawRows.length, 4);
+ assert.equal(juniper.coverage.remainingInstances.length, 13);
+ assert.deepEqual(juniper.rawRows.map(row => row.maximum), [10, 5, 30, 15]);
+ await testJuniperSpice(page, juniper, base, artifacts);
  const rendered=await page.evaluate(()=>{
   let total=0;for(const row of PMSV_HELPER_TEST.getCatalogue()){
    if(!PMSV_HELPER_TEST.selectProduct(row.id))throw Error('Product did not open: '+row.id);
@@ -309,6 +379,7 @@ let browser;
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
+ Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result));

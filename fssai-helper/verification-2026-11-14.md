@@ -133,3 +133,9 @@ The ingredient and material selectors start empty, reset independently when chan
 The local current audit passed **56/56 checks**. The R78 regression covers 132 form/invalid-input combinations, ten source fingerprints and 24 altered-evidence refusals, including malformed and duplicate entries. Browser CI checks all 533 products, all three botanical ingredients and 12 material branches, reset/clearing behavior, combined water/botanical panels, full filtered export and mobile/desktop layout. Exact revision, result and artifact fingerprints are recorded in draft PR #2. R77 legacy integration run 44041298766 passed all five jobs.
 
 All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicability gaps remain open. Base-source retrieval does not establish current adoption, complete amendments, actual ingredient identity, a safe food dose, substitution permission, finished-tea limits or a batch release. The draft is not deployed.
+
+## R79 juniper berry in the Lajadi Kashaya recipe
+
+The [juniper review](ctr-juniper-spice-r79-2026-11-18.md) links four Gazette rows to authenticated culinary-spice-grade dried fruit. The review register now identifies 33 of 46 raw ingredient instances with at least one candidate and lists the remaining 13. The original 14 ingredient applicability decisions and the 137 finished-product decisions remain open.
+
+The current audit passed **57/57 checks**. The juniper regression covers source links, units, dry-matter qualifiers, four supplied styles, 36 ingredient/material combinations and 22 altered-evidence cases. Browser verification exercises the supply and style selectors, clearing a previous selection, the distinction between an empty cell, N/A and zero, the full export and layouts at 320, 390 and 1440 pixels. Chromium verification runs on GitHub Actions. The R78 integration run (44054842646) passed its data job and all four browser jobs. Current revision and run links are recorded in draft PR #2.

@@ -25,6 +25,10 @@ const camphorFile='ctr-camphor-source-r77-2026-11-17.json';
 const camphor=read(camphorFile);
 const lajadiFile='ctr-lajadi-botanicals-r78-2026-11-17.json';
 const lajadi=read(lajadiFile);
+const juniperFile = 'ctr-juniper-spice-r79-2026-11-18.json';
+const juniper = read(juniperFile);
+const ingredientBaselineFile = 'ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json';
+const ingredientBaseline = read(ingredientBaselineFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
 vm.createContext(catalogueContext);
 vm.runInContext(fs.readFileSync(path.join(dir,'full-catalogue-533.js'),'utf8'),catalogueContext);
@@ -93,15 +97,61 @@ const lajadiRecipe=records.find(x=>x.id===lajadi.recipeProductId);assert(lajadiR
 lajadiRecipe.reports.unshift({round:78,file:lajadi.report});
 lajadiRecipe.sourceReviewResult+=' '+lajadi.sourceReviewResult;
 lajadiRecipe.sourceReviewNextAction+=' '+lajadi.sourceReviewNextAction;
+assert.equal(juniper.recipeProductId, lajadiRecipe.id);
+const juniperIngredient = lajadi.ingredients.find(row => row.id === juniper.ingredientId);
+assert.equal(juniperIngredient.ingredientSerial, juniper.ingredientSerial);
+const oldGaps = ingredientBaseline.remaining_14_original_ingredient_instances;
+const remaining = oldGaps.filter(row =>
+ row.recipe_number !== juniper.recipeNumber || row.source_ingredient_serial !== juniper.ingredientSerial);
+assert.equal(oldGaps.length - remaining.length, 1);
+const oldHribera = oldGaps.find(row => !remaining.includes(row));
+assert.equal(oldHribera.source_name, juniperIngredient.name);
+assert.equal(oldHribera.raw_CTR_source_candidate_count, 0);
+
+// Resolve the four references against the reconciled Gazette, preserving its limits,
+// units, article wording and page numbers. No catalogue rule is written here.
+const toxinNames = {total_aflatoxins: 'Total aflatoxins', aflatoxin_b1: 'Aflatoxin B1'};
+const rawRows = juniper.gazetteRowKeys.map(key => {
+ const matches = key.metal
+  ? gazette.metalRows.filter(row => row.metal === key.metal && row.coreIndex === key.coreIndex)
+  : gazette.cropRows.filter(row => row.group === key.group && row.article === key.article);
+ assert.equal(matches.length, 1, 'A juniper source reference must identify one Gazette row');
+ const [row] = matches;
+ assert.equal(row.sourceId, 'ctr2020');
+ assert.equal(row.automaticProductApplication, false);
+ return {
+  name: key.metal || toxinNames[key.group],
+  article: row.originalArticle ?? row.originalArticleCell,
+  maximum: row.coreLimit ?? row.originalLimit,
+  unit: row.coreUnit ?? row.unit,
+  basis: row.coreCondition || '',
+  pdfPage: row.sourcePdfPage
+ };
+});
+const coverage = {
+ ingredientRows: ingredientBaseline.original_ayurveda_recipe_ingredient_rows,
+ withCandidate: ingredientBaseline.R36_to_R40_original_ingredient_rows_with_conditional_reference + 1,
+ withoutCandidate: remaining.length,
+ candidateLinks: ingredientBaseline.R36_to_R40_total_source_reference_links + rawRows.length,
+ originalUnadjudicatedInstances: oldGaps.length,
+ remainingInstances: remaining.map(row => ({
+  recipe: row.recipe_number, serial: row.source_ingredient_serial, name: row.source_name
+ }))
+};
+assert.equal(coverage.withCandidate + coverage.withoutCandidate, coverage.ingredientRows);
+lajadiRecipe.reports.unshift({round: juniper.round, file: juniper.report});
+lajadiRecipe.sourceReviewResult += ' ' + juniper.sourceReviewResult;
+lajadiRecipe.sourceReviewNextAction += ' ' + juniper.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:'2026-11-17',latestRound:78,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:juniper.reviewedOn,latestRound:juniper.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile],records,
+ juniperSpiceReview:{...juniper,rawRows,coverage},
  lajadiBotanicalReview:lajadi,
  camphorReview:camphor,
  asafoetidaReview:{...asafoetida,report:asafoetidaFile.replace(/\.json$/,'.md')},

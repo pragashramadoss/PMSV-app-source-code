@@ -1,6 +1,7 @@
 /* Review coverage only. No product standard, limit or release status is changed. */
 (function(root){
  'use strict';
+ const juniper = typeof module === 'object' && module.exports ? require('./juniper-spice-r79.js') : root.PMSVJuniperSpice;
  const denied=reason=>({ok:false,reason,legalProductApproval:false,batchRelease:false});
  function catalogueStatus(rows){
   if(!Array.isArray(rows)||rows.length!==533)return denied('The complete 533-product catalogue is unavailable.');
@@ -15,7 +16,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false)return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==79||data.latestSourceReviewDate!=='2026-11-18')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -59,7 +60,7 @@
    findings.add(finding.id);
   }
   const toxin=data.toxinGazetteReview;
-  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||data.latestSourceReviewDate!==toxin.checkedOn||data.latestRound!==78||
+  if(!toxin||toxin.round!==72||toxin.checkedOn!=='2026-11-17'||
     toxin.report!=='ctr-toxin-gazette-concordance-r72-2026-11-17.md'||
     toxin.notsRows!==15||toxin.fishPcbPahRows!==3||toxin.biotoxinRows!==5||toxin.melamineRows!==3||
     toxin.histaminePlans!==11||toxin.histamineSpeciesEntries!==119||toxin.totalLimitOrPlanRows!==37||
@@ -77,7 +78,7 @@
   if(!Array.isArray(toxin.seafoodNoteIds)||toxin.seafoodNoteIds.length!==24||new Set(toxin.seafoodNoteIds).size!==24||
      seafoodIds.length!==24||!seafoodIds.every(id=>toxin.seafoodNoteIds.includes(id)))return denied('Seafood source-note coverage is inconsistent.');
   const fibre=data.fibreClaimsReview;
-  if(!fibre||fibre.round!==73||fibre.checkedOn!==data.latestSourceReviewDate||
+  if(!fibre||fibre.round!==73||fibre.checkedOn!=='2026-11-17'||
      fibre.productId!=='99-99-7-dietary-fibre-dextrin-soluble-fibre'||fibre.sourceDecision!=='CONFLICT_OPEN'||
      fibre.report!=='ctr-fibre-claims-source-r73-2026-11-17.md'||!Array.isArray(fibre.thresholdRows)||fibre.thresholdRows.length!==6||
      fibre.legalProductApproval!==false||fibre.labelApproved!==false||fibre.batchRelease!==false||
@@ -90,7 +91,7 @@
   }
   if(!fibre.findings.every(f=>f&&typeof f.title==='string'&&f.title.trim()&&typeof f.detail==='string'&&f.detail.trim()))return denied('Fibre findings are incomplete.');
   const water=data.waterSourceReview;
-  if(!water||water.round!==74||water.checkedOn!==data.latestSourceReviewDate||
+  if(!water||water.round!==74||water.checkedOn!=='2026-11-17'||
     water.report!=='ctr-water-source-review-r74-2026-11-17.md'||
     water.fullCurrentLawComplete!==false||water.legalProductApproval!==false||water.batchRelease!==false||water.autoApplyLimits!==false||
     water.bisStandard?.number!=='IS 10500:2012'||water.bisStandard.amendmentCount!==4||water.bisStandard.completeNormativeTextVerified!==false||
@@ -108,7 +109,7 @@
   }
   if(!Array.isArray(data.currencyWatch))return denied('Official-source watch is missing.');
   const ws=data.waterStandardReview;
-  if(!ws||ws.round!==75||ws.standard!=='IS 10500:2012'||ws.reviewedOn!==data.latestSourceReviewDate||
+  if(!ws||ws.round!==75||ws.standard!=='IS 10500:2012'||ws.reviewedOn!=='2026-11-17'||
     ws.report!=='ctr-water-standard-concordance-r75-2026-11-17.md'||ws.requirementsTablesReconciled!==true||ws.allFourAmendmentsReviewed!==true||
     ws.allReferencedMethodsVerified!==false||ws.ironManganeseInterpretationResolved!==false||ws.fullCurrentLawComplete!==false||
     ws.waterQualityApproved!==false||ws.legalProductApproval!==false||ws.batchRelease!==false||ws.autoApplyLimits!==false||
@@ -140,7 +141,7 @@
     return denied('BIS source document is inconsistent.');
   }
   const a=data.asafoetidaReview;
-  if(!a||a.round!==76||a.reviewedOn!==data.latestSourceReviewDate||a.clause!=='FPSFA 2.9.29'||
+  if(!a||a.round!==76||a.reviewedOn!=='2026-11-17'||a.clause!=='FPSFA 2.9.29'||
     a.report!=='ctr-asafoetida-purity-r76-2026-11-17.md'||a.productId!=='12-12-2-asafoetida-hing-or-hingra'||
     a.recipeProductId!=='102-102-1-13-1-krishara-khichdi'||!ids.has(a.productId)||!ids.has(a.recipeProductId)||
     a.numericRows!==11||a.numericMismatches!==0||a.puritySourceRowsReconciled!==true||
@@ -171,11 +172,11 @@
   for(const key of ['gazette2011','spices2024','recipe2025','ayurveda2022']){
    const s=a.sources?.[key];
    try{const url=new URL(s?.url);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname)||
-     !/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)return denied('Asafoetida source document is invalid.');}
+     !/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==a.reviewedOn)return denied('Asafoetida source document is invalid.');}
    catch(error){return denied('Asafoetida source document is invalid.');}
   }
   const cam=data.camphorReview;
-  if(!cam||cam.round!==77||cam.reviewedOn!==data.latestSourceReviewDate||cam.report!=='ctr-camphor-source-r77-2026-11-17.md'||
+  if(!cam||cam.round!==77||cam.reviewedOn!=='2026-11-17'||cam.report!=='ctr-camphor-source-r77-2026-11-17.md'||
      cam.sourceStatus!=='ARCHIVED_PRIMARY_MONOGRAPH_REFERENCE'||cam.publicationYear!==2008||cam.edition!=='First edition'||
      cam.editionEffectiveFrom!=='2009-01-01'||cam.sourceEntryCount!==5||cam.parsedNumericEntries!==3||cam.sourceLiteralEntries!==1||cam.referencePointerEntries!==1||
      cam.baseMonographRetrieved!==true||cam.baseMonographVisuallyChecked!==true||cam.fullCurrentLawComplete!==false||
@@ -197,7 +198,7 @@
   for(const [key,scan,page] of [['title',9,'III'],['publication',10,'IV'],['generalNotices',22,'XVI'],['monograph210',250,'210'],['monograph211',251,'211']]){
    const s=cam.sources?.[key];
    if(!s||s.url!==`https://iiif.wellcomecollection.org/image/b32220522_0006_${String(scan).padStart(4,'0')}.jp2/full/1400,/0/default.jpg`||
-     s.assetType!=='page-image'||s.scanNumber!==scan||s.printedPage!==page||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)
+     s.assetType!=='page-image'||s.scanNumber!==scan||s.printedPage!==page||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==cam.reviewedOn)
     return denied('Archived camphor source image is inconsistent.');
   }
   for(const key of ['recipe2025','ayurveda2022']){
@@ -208,7 +209,7 @@
   if(cam.amendmentWatch?.completeAmendmentChain!==false||cam.amendmentWatch.pdfBytesVerified!==false||
     cam.amendmentWatch.url!=='https://www.pcimh.gov.in/assets/pdf/whatsnew/Amendment.pdf')return denied('Camphor amendment review is overstated.');
   const laj=data.lajadiBotanicalReview;
-  if(!laj||laj.round!==78||laj.reviewedOn!==data.latestSourceReviewDate||laj.report!=='ctr-lajadi-botanicals-r78-2026-11-17.md'||
+  if(!laj||laj.round!==78||laj.reviewedOn!=='2026-11-17'||laj.report!=='ctr-lajadi-botanicals-r78-2026-11-17.md'||
     laj.sourceStatus!=='ARCHIVED_PRIMARY_MONOGRAPH_REFERENCE'||laj.publicationYear!==2001||laj.edition!=='First edition'||laj.editionEffectiveFrom!==null||
     laj.isbn!=='81-901151-2-X'||laj.recipeProductId!=='102-102-1-12-1-lajadi-kashaya-parched-rice-tea'||!ids.has(laj.recipeProductId)||
     laj.recipeNumber!=='12.1'||laj.recipePdfPage!==84||laj.recipePrintedPage!==51||laj.sourceEntryCount!==17||laj.botanicalCount!==3||
@@ -238,12 +239,16 @@
   for(const [key,scan,page] of [['title',9,null],['publication',10,null],['hapusa63',105,63],['hapusa64',106,64],['svetacandana207',249,207],['svetacandana208',250,208],['usira219',261,219],['usira220',262,220],['methods234',276,234],['methods235',277,235]]){
    const s=laj.sources?.[key];
    if(!s||s.url!==`https://iiif.wellcomecollection.org/image/b32220522_0003_${String(scan).padStart(4,'0')}.jp2/full/1400,/0/default.jpg`||
-    s.scanNumber!==scan||s.printedPage!==page||s.assetType!=='page-image'||s.visuallyChecked!==true||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==data.latestSourceReviewDate)
+    s.scanNumber!==scan||s.printedPage!==page||s.assetType!=='page-image'||s.visuallyChecked!==true||!/^[a-f0-9]{64}$/.test(s.sha256)||s.retrievedOn!==laj.reviewedOn)
     return denied('Lajadi source image is inconsistent.');
   }
   if(laj.sources?.recipe2025?.url!==cam.sources.recipe2025.url||laj.sources.recipe2025.sha256!==cam.sources.recipe2025.sha256||
    JSON.stringify(laj.sources.recipe2025.pdfPagesReviewed)!=='[84]'||laj.amendmentWatch?.completeAmendmentChain!==false||laj.amendmentWatch.pdfBytesVerified!==false)
    return denied('Lajadi recipe source or amendment review is inconsistent.');
+  const spice = data.juniperSpiceReview;
+  if (!juniper?.validReview(spice) || spice.recipeProductId !== laj.recipeProductId ||
+      !data.records.find(row => row.id === spice.recipeProductId)?.reports.some(report =>
+        report.round === spice.round && report.file === spice.report)) return denied('Juniper source review is inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

@@ -31,7 +31,8 @@
   if(id===lajadi.recipeProductId)sourceNote+=window.PMSVLajadiBotanicals?.markup(lajadi)||'<p>Botanical source reference unavailable.</p>';
   const row=byId.get(id);
   if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
-  return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(data.latestSourceReviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
+  const reviewDate = row.reports[0]?.file.match(/(\d{4}-\d{2}-\d{2})\.md$/)?.[1] || data.checkpointDate;
+  return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(reviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
  }
  window.PMSVReviewUI=Object.freeze({productMarkup});
  if(!$('verificationStatus'))return;
@@ -84,9 +85,10 @@
  asafoetidaPanel.insertAdjacentElement('afterend',camphorPanel);
  $('openCamphorIngredient').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(camphor.records[0].id));
  $('openCamphorMethodHold').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(camphor.records[1].id));
+ const juniper=data.juniperSpiceReview;
  const lajadi=data.lajadiBotanicalReview,lajadiPanel=document.createElement('section');
  lajadiPanel.id='lajadiReviewSummary';lajadiPanel.className='panel compact';
- lajadiPanel.innerHTML=`<h3>Lajadi Kashaya botanical references</h3><p>Three archived monographs supply 17 ingredient-purity entries. Species, plant parts, source-name differences and test bases remain explicit. Identity and current applicability are open.</p><a class="source-ref" href="${esc(lajadi.report)}" target="_blank" rel="noopener noreferrer">Read the botanical-source review ↗</a><div class="controls"><button type="button" id="openLajadiBotanicals">Open recipe 12.1 botanicals</button></div>`;
+ lajadiPanel.innerHTML=`<h3>Lajadi Kashaya botanical references</h3><p>Three archived monographs supply 17 ingredient-purity entries. Species, plant parts, source-name differences and test bases remain explicit. Identity and current applicability are open.</p><p>Dried juniper fruit has ${juniper.rawRows.length} FSSAI spice-article candidates. Across the Ayurveda recipes, ${juniper.coverage.withCandidate} of ${juniper.coverage.ingredientRows} ingredient entries have a candidate contaminant reference.</p><a class="source-ref" href="${esc(juniper.report)}" target="_blank" rel="noopener noreferrer">Read the juniper food-spice review ↗</a><a class="source-ref" href="${esc(lajadi.report)}" target="_blank" rel="noopener noreferrer">Read the botanical-source review ↗</a><div class="controls"><button type="button" id="openLajadiBotanicals">Open recipe 12.1 botanicals</button></div>`;
  camphorPanel.insertAdjacentElement('afterend',lajadiPanel);
  $('openLajadiBotanicals').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(lajadi.recipeProductId));
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
