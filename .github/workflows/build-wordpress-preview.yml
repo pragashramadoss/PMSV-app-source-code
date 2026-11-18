@@ -179,7 +179,7 @@ jobs:
           ! grep -q '"/bookmarks"' wordpress/plugin/routes.json
           ! grep -R -q 'Saved to Bookmarks.' wordpress/plugin/assets/assets/*.js
           grep -q '"/discussions"' wordpress/plugin/routes.json
-          grep -q 'Version: 1.0.30' wordpress/plugin/pmsv-app.php
+          grep -q 'Version: 1.0.32' wordpress/plugin/pmsv-app.php
           grep -q "discussions/report" wordpress/plugin/pmsv-app.php
           grep -q "PMSV Discussions" wordpress/plugin/includes/discussions-admin.php
           grep -R -q 'AC Tech, Anna University' wordpress/plugin/assets/assets/*.js
@@ -192,7 +192,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add wordpress/plugin
           if ! git diff --cached --quiet; then
-            git commit -m "Build WordPress production 1.0.30 [skip ci]"
+            git commit -m "Build WordPress production 1.0.32 [skip ci]"
             git push origin HEAD:wordpress-production
           fi
 
@@ -202,12 +202,12 @@ jobs:
           mkdir -p dist-wordpress/pmsv-original-app-preview
           cp -R wordpress/plugin/. dist-wordpress/pmsv-original-app-preview/
           cd dist-wordpress
-          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.30.zip pmsv-original-app-preview
+          zip -qr ../PMSV-Food-Safety-Quality-Forum-v1.0.32.zip pmsv-original-app-preview
 
       - name: Upload plugin ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: PMSV-Food-Safety-Quality-Forum-v1.0.30
-          path: PMSV-Food-Safety-Quality-Forum-v1.0.30.zip
+          name: PMSV-Food-Safety-Quality-Forum-v1.0.32
+          path: PMSV-Food-Safety-Quality-Forum-v1.0.32.zip
           if-no-files-found: error
           retention-days: 14
