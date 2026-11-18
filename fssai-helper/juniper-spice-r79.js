@@ -4,6 +4,7 @@
 
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char =>
     ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[char]));
+  const spice = typeof module === 'object' && module.exports ? require('./spice-contaminants.js') : root.PMSVSpiceContaminants;
   const same = (left, right) => JSON.stringify(left) === JSON.stringify(right);
   const supplies = {
     culinary: 'Confirmed culinary spice for food use or repackaging',
@@ -31,12 +32,7 @@
           Number.isInteger(row.serial) && row.name && !(row.recipe === '12.1' && row.serial === 3)) ||
         new Set(coverage.remainingInstances.map(row => row.recipe + '/' + row.serial)).size !== coverage.withoutCandidate) return false;
 
-    const rows = review.rawRows;
-    if (!Array.isArray(rows) || rows.some(row => !row || typeof row.article !== 'string' || !/spice/i.test(row.article)) ||
-        !same(rows.map(row => [row.name, row.maximum, row.unit, row.pdfPage, row.basis]), [
-          ['Lead', 10, 'mg/kg', 20, 'On dry matter basis.'], ['Arsenic', 5, 'mg/kg', 24, ''],
-          ['Total aflatoxins', 30, 'µg/kg', 29, ''], ['Aflatoxin B1', 15, 'µg/kg', 29, '']
-        ])) return false;
+    if (!spice?.validRows(review.rawRows)) return false;
     if (!Array.isArray(review.styleOptions) || review.styleOptions.some(style => !style?.label) ||
         !same(review.styleOptions.map(s => [s.id, s.moistureMax, s.physicalStyle]), [
           ['wholeNatural', 22, 'whole'], ['wholeDehydrated', 16, 'whole'], ['cut', 16, 'cut'], ['ground', 14, 'ground']
@@ -98,12 +94,8 @@
   function sourceMarkup(review, supply) {
     if (supply === 'industrial') return '<p>Codex section 1 excludes products intended for industrial processing. Assess the supplied material and its FSSAI article separately.</p>';
     if (supply !== 'culinary') return '<p>Confirm the species, fruit and culinary grade from the supply documents.</p>';
-    const rows = review.rawRows.map(row => '<tr class="juniper-raw-entry"><th scope="row">' + escape(row.name) +
-      '</th><td>Maximum ' + escape(row.maximum) + ' ' + escape(row.unit) + (row.basis ? ' · dry matter' : '') +
-      '<br>' + sourceLink(review.sources.gazette, 'Gazette p. ' + row.pdfPage, row.pdfPage) + '</td></tr>').join('');
     const options = review.styleOptions.map(s => '<option value="' + escape(s.id) + '">' + escape(s.label) + '</option>').join('');
-    return '<table class="methodtable juniper-table"><caption>FSSAI contaminant references for the raw spice</caption>' +
-      '<thead><tr><th scope="col">Analyte</th><th scope="col">Spice article maximum</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    return spice.table(review.rawRows, review.sources.gazette, 'juniper-table', 'juniper-raw-entry') +
       '<p>The link to juniper is inferred from the grouped spice articles and Schedule entry 37 of the Spices Board Act. Only lead specifies a dry-matter basis. The arsenic entry gives no species qualifier.</p>' +
       sourceLink(review.sources.boardArchive, 'Spices Board Act, Schedule entry 37', 19) +
       '<p>' + escape(review.scope.finishedProduct) + '</p><details id="juniperQuality"><summary>Codex quality references by supplied style</summary>' +

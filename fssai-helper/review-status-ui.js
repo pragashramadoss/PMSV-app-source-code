@@ -73,9 +73,10 @@
  fibrePanel.insertAdjacentElement('afterend',waterPanel);
  $('openVendingWater').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(water.records[0].id));
  $('openIngredientWater').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(water.records[1].id));
+ const ingredientCoverage=data.ayurvedaIngredientCoverage;
  const asafoetida=data.asafoetidaReview,asafoetidaPanel=document.createElement('section');
  asafoetidaPanel.id='asafoetidaReviewSummary';asafoetidaPanel.className='panel compact';
- asafoetidaPanel.innerHTML=`<h3>Asafoetida purity by grade</h3><p>Eleven purity limits match the original Gazette and the retrieved compendium. Hing, Hingra and compounded asafoetida remain separate; the Hingu recipe substitution question is open.</p><a class="source-ref" href="${esc(asafoetida.report)}" target="_blank" rel="noopener noreferrer">Read the asafoetida-source comparison ↗</a><div class="controls"><button type="button" id="openAsafoetida">Open asafoetida grades</button><button type="button" id="openHinguRecipe">Open Hingu recipe scope</button></div>`;
+ asafoetidaPanel.innerHTML=`<h3>Asafoetida purity by grade</h3><p>The 2025 FSSAI compendium confirms the 11 purity limits. Grade selection links to laboratory methods. Confirmed natural dried Hingu also has four candidate spice articles.</p><a class="source-ref" href="${esc(data.hinguReview.report)}" target="_blank" rel="noopener noreferrer">Read the Hingu ingredient review ↗</a><a class="source-ref" href="${esc(asafoetida.report)}" target="_blank" rel="noopener noreferrer">Read the asafoetida-source comparison ↗</a><div class="controls"><button type="button" id="openAsafoetida">Open asafoetida grades</button><button type="button" id="openHinguRecipe">Open Hingu recipe scope</button></div>`;
  waterPanel.insertAdjacentElement('afterend',asafoetidaPanel);
  $('openAsafoetida').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.productId));
  $('openHinguRecipe').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(asafoetida.recipeProductId));
@@ -88,8 +89,17 @@
  const juniper=data.juniperSpiceReview;
  const lajadi=data.lajadiBotanicalReview,lajadiPanel=document.createElement('section');
  lajadiPanel.id='lajadiReviewSummary';lajadiPanel.className='panel compact';
- lajadiPanel.innerHTML=`<h3>Lajadi Kashaya botanical references</h3><p>Three archived monographs supply 17 ingredient-purity entries. Species, plant parts, source-name differences and test bases remain explicit. Identity and current applicability are open.</p><p>Dried juniper fruit has ${juniper.rawRows.length} FSSAI spice-article candidates. Across the Ayurveda recipes, ${juniper.coverage.withCandidate} of ${juniper.coverage.ingredientRows} ingredient entries have a candidate contaminant reference.</p><a class="source-ref" href="${esc(juniper.report)}" target="_blank" rel="noopener noreferrer">Read the juniper food-spice review ↗</a><a class="source-ref" href="${esc(lajadi.report)}" target="_blank" rel="noopener noreferrer">Read the botanical-source review ↗</a><div class="controls"><button type="button" id="openLajadiBotanicals">Open recipe 12.1 botanicals</button></div>`;
+ lajadiPanel.innerHTML=`<h3>Lajadi Kashaya botanical references</h3><p>Three archived monographs supply 17 ingredient-purity entries. Species, plant parts, source-name differences and test bases remain explicit. Identity and current applicability are open.</p><p>Dried juniper fruit has ${juniper.rawRows.length} FSSAI spice-article candidates. </p><a class="source-ref" href="${esc(juniper.report)}" target="_blank" rel="noopener noreferrer">Read the juniper food-spice review ↗</a><a class="source-ref" href="${esc(lajadi.report)}" target="_blank" rel="noopener noreferrer">Read the botanical-source review ↗</a><div class="controls"><button type="button" id="openLajadiBotanicals">Open recipe 12.1 botanicals</button></div>`;
  camphorPanel.insertAdjacentElement('afterend',lajadiPanel);
+ const ingredientPanel = document.createElement('section');
+ ingredientPanel.id = 'ayurvedaIngredientCoverage';
+ ingredientPanel.className = 'panel compact';
+ const outstanding = ingredientCoverage.remainingInstances.map(row =>
+  '<li>Recipe ' + esc(row.recipe) + ' · ingredient ' + esc(row.serial) + ' · ' + esc(row.name) + '</li>').join('');
+ ingredientPanel.innerHTML = '<h3>Ayurveda ingredient contaminant references</h3><p><b>' + ingredientCoverage.withCandidate +
+  ' of ' + ingredientCoverage.ingredientRows + '</b> ingredient entries have at least one candidate raw-material reference. The supplied material and finished recipe require separate assessments.</p>' +
+  '<details><summary>' + ingredientCoverage.withoutCandidate + ' ingredient entries awaiting a candidate reference</summary><ul>' + outstanding + '</ul></details>';
+ lajadiPanel.insertAdjacentElement('afterend',ingredientPanel);
  $('openLajadiBotanicals').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(lajadi.recipeProductId));
  $('reviewFilter').options[1].textContent=`${status.focusedCount} linked source reviews`;
  $('reviewFilter').options[2].textContent=`${status.remainingFocusedCount} outside selected rounds`;

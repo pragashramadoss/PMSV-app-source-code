@@ -33,7 +33,7 @@ for(const n of ['full-catalogue-533.js','review-status-data.js'])vm.runInContext
 const data=JSON.parse(JSON.stringify(ctx.window.PMSV_REVIEW_REGISTER)),catalogue=JSON.parse(JSON.stringify(ctx.window.PMSV_CATALOGUE));
 const {validateReview}=require('../fssai-helper/review-status.js');assert.equal(validateReview(data,catalogue).ok,true);
 const recipe=data.records.find(r=>r.id===a.recipeProductId);
-assert.equal(recipe.reports[0].round,76);assert(recipe.reports.some(r=>r.round===75));
+assert(recipe.reports.some(ref=>ref.round===76&&ref.file===data.asafoetidaReview.report));assert(recipe.reports.some(r=>r.round===75));
 assert.match(recipe.sourceReviewResult,/R76/);assert.match(recipe.sourceReviewResult,/IS 10500/);
 assert.equal(data.asafoetidaReview.rows.length,11);assert.equal(data.legalProductApprovals,0);
 const changes=[d=>delete d.asafoetidaReview,d=>d.asafoetidaReview.rows.pop(),d=>d.asafoetidaReview.rows[2].limit=50,d=>d.asafoetidaReview.rows[6].limit=12,d=>d.asafoetidaReview.rows[0].dryBasisSpecified=true,d=>d.asafoetidaReview.rows[2].solventAlcoholPercent=95,d=>d.asafoetidaReview.rows[2].operator='<=',d=>d.asafoetidaReview.rows[0].autoApply=true,d=>d.asafoetidaReview.rows[0].originalSource.pdfPage=115,d=>d.asafoetidaReview.recipe.partUsed='Flower',d=>d.asafoetidaReview.recipe.automaticGrade='compounded',d=>d.asafoetidaReview.recipeSubstitutionApproved=true,d=>d.asafoetidaReview.ingredientGapsClosed=1,d=>d.asafoetidaReview.fullCurrentLawComplete=true,d=>d.asafoetidaReview.batchRelease=true,d=>d.asafoetidaReview.sources.gazette2011.url='https://example.com/source.pdf'];

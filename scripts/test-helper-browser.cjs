@@ -11,6 +11,79 @@ const server=http.createServer((req,res)=>{
   res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));
  }catch(error){res.writeHead(404).end('Not found');}
 });
+async function testHingu(page, register, base, artifacts) {
+ const review = register.hinguReview;
+ const coverage = register.ayurvedaIngredientCoverage;
+ assert.deepEqual([coverage.withCandidate, coverage.withoutCandidate, coverage.candidateLinks], [34, 12, 102]);
+ assert.equal(register.juniperSpiceReview.coverage.withCandidate, 33);
+ await page.getByRole('button', {name:'Review progress', exact:true}).click();
+ const overview = page.locator('#ayurvedaIngredientCoverage');
+ assert.match(await overview.textContent(), /34 of 46/);
+ await overview.locator('summary').click();
+ assert.equal(await overview.locator('li').count(), 12);
+ assert(!/Hingu|Hribera/.test(await overview.locator('ul').textContent()));
+ await page.locator('#openHinguRecipe').click();
+ assert.equal(await page.locator('.water-product-note').count(), 1);
+ const grade = page.locator('#asafoetidaGrade');
+ const evidence = page.locator('#hinguEvidence');
+ const checkbox = evidence.getByRole('checkbox');
+ const raw = evidence.locator('.hingu-raw-entry');
+ assert.equal(await grade.inputValue(), '');
+ assert.equal(await evidence.locator('.hingu-methods').count(), 0);
+
+ for (const id of ['hing','hingra','compounded']) {
+  await grade.selectOption(id);
+  assert.equal(await raw.count(), 0);
+  assert.equal(await evidence.locator('[data-hingu-method]').count(), 6);
+  await evidence.locator('.hingu-methods summary').click();
+  const extract = await evidence.locator('[data-hingu-method="alcoholic-extract"]').innerText();
+  assert.match(extract, /100 − \(residue % \+ moisture %\)/);
+  assert(extract.includes('nominal test portion is ' + (id === 'compounded' ? 10 : 2) + ' g'));
+  const starch = evidence.locator('[data-hingu-method="starch"]');
+  assert.equal(await starch.locator('a').getAttribute('href'), review.sources.is7807.url + '#page=12');
+  assert.equal(await checkbox.count(), id === 'compounded' ? 0 : 1);
+  if (id === 'compounded') {
+   assert.match(await starch.innerText(), /no numeric starch maximum/);
+   assert.equal(await page.locator('.asafoetida-reference-table tbody tr').count(), 3);
+   continue;
+  }
+  assert.equal(await checkbox.isChecked(), false);
+  await checkbox.check();
+  assert.equal(await raw.count(), 4);
+  for (const [i, row] of review.rawRows.entries()) {
+   assert((await raw.nth(i).innerText()).includes(row.maximum + ' ' + row.unit));
+   assert.equal(await raw.nth(i).locator('a').getAttribute('href'), review.sources.gazette.url + '#page=' + row.pdfPage);
+  }
+  assert.equal(await evidence.locator('.hingu-methods').evaluate(el => el.open), true);
+  await checkbox.uncheck();
+  assert.equal(await raw.count(), 0);
+  await checkbox.check();
+ }
+ await grade.selectOption('hing');
+ await checkbox.check();
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width, height:900});
+  if (width === 1440) await evidence.locator('.hingu-methods summary').click();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Hingu layout at ' + width);
+  if (width !== 320) await evidence.screenshot({path:path.join(artifacts,'hingu-reference-' + width + '.png'),
+    style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id), review.productId);
+ assert.equal(await grade.inputValue(), '');
+ assert.equal(await checkbox.count(), 0);
+ await grade.selectOption('hingra');
+ assert.equal(await checkbox.isChecked(), false);
+ await checkbox.check();
+ assert.equal(await raw.count(), 4);
+ await grade.selectOption('');
+ assert.equal(await evidence.textContent(), '');
+ await page.evaluate(() => PMSV_HELPER_TEST.selectProduct('purified-vending-water'));
+ assert.equal(await evidence.count(), 0);
+ const report = await page.request.get(base + review.report);
+ assert.equal(report.status(), 200);
+ assert.match(await report.text(), /34 of 46/);
+}
+
 async function testJuniperSpice(page, review, base, artifacts) {
  const scope = page.locator('.juniper-scope');
  const rawRows = scope.locator('.juniper-raw-entry');
@@ -298,6 +371,7 @@ let browser;
  assert.equal(await page.locator('.camphor-product-note').count(),0,'Camphor note must not leak to unrelated products');
  const camphorReport=await page.request.get(base+camphor.report);assert.equal(camphorReport.status(),200);
  assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
+ await testHingu(page, data, base, artifacts);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
@@ -379,6 +453,8 @@ let browser;
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
+ Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
+  ayurvedaIngredientsWithCandidate:34,ayurvedaIngredientsWithoutCandidate:12,ayurvedaCandidateLinks:102});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');

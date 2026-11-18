@@ -139,3 +139,11 @@ All 137 product-specific CTR decisions and all 14 Ayurveda ingredient applicabil
 The [juniper review](ctr-juniper-spice-r79-2026-11-18.md) links four Gazette rows to authenticated culinary-spice-grade dried fruit. The review register now identifies 33 of 46 raw ingredient instances with at least one candidate and lists the remaining 13. The original 14 ingredient applicability decisions and the 137 finished-product decisions remain open.
 
 The current audit passed **57/57 checks**. The juniper regression covers source links, units, dry-matter qualifiers, four supplied styles, 36 ingredient/material combinations and 22 altered-evidence cases. Browser verification exercises the supply and style selectors, clearing a previous selection, the distinction between an empty cell, N/A and zero, the full export and layouts at 320, 390 and 1440 pixels. Chromium verification runs on GitHub Actions. The R78 integration run (44054842646) passed its data job and all four browser jobs. Current revision and run links are recorded in draft PR #2.
+
+## R80 asafoetida in Krishara khichdi
+
+The [Hingu review](ctr-hingu-asafoetida-r80-2026-11-18.md) links four raw-spice articles to confirmed natural dried culinary-grade Ferula gum resin. Both the asafoetida product and recipe 13.1 use the existing grade selector. Grade changes clear the raw-material confirmation. Compounded Hing has separate test-portion and starch guidance. The source review includes the 2025 compendium, five FSSAI method sheets, the asafoetida-specific starch method in IS 7807, its 1976 addendum and the June 2024 reaffirmation.
+
+The review register identifies **34 of 46** ingredient instances with candidate raw contaminant articles, **102** ingredient-to-article links and **12** instances awaiting a candidate. The remaining instances can be viewed on the Review progress page and in the full export. All 137 product-specific decisions are open.
+
+The local source audit passed **58/58 checks**. The R80 regression exercises the grade and supply conditions, the 2 g and 10 g test portions, the distinct starch provisions, source pages, units and 24 altered-evidence cases. Browser checks cover both product entries, the six method links, grade and product resets, filtered export and 320, 390 and 1440 px layouts. The draft PR records the revision, GitHub browser evidence and integration runs.
