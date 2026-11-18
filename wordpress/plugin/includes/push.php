@@ -30,6 +30,7 @@ function pmsv_wp_change_push($remove) {
     if((int)$wpdb->get_var($wpdb->prepare("SELECT attempts FROM $limits WHERE id=%s",$rate))>30)return pmsv_wp_reply(['error'=>'Please try again later.'],429);
     $id=pmsv_wp_digest($d['endpoint']);$token=pmsv_wp_digest($d['token']);
     $old=$wpdb->get_row($wpdb->prepare("SELECT token_hash,refresh_required FROM $t WHERE id=%s",$id),ARRAY_A);
+    if ($wpdb->last_error) throw new RuntimeException('Notification registration could not be read');
     if($old&&!hash_equals($old['token_hash'],$token))return pmsv_wp_reply(['error'=>'Please reset notifications in your browser and try again.'],409);
     $previous=null;
     if(!$remove&&isset($d['previous'])){

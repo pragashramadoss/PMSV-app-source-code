@@ -1,9 +1,50 @@
 <?php
 if (!defined('ABSPATH')) exit;
+const PMSV_WP_SCHEMA_VERSION = 6;
 function pmsv_wp_table($suffix) { global $wpdb; return $wpdb->prefix.'pmsv_app_'.$suffix; }
 function pmsv_wp_install() {
-    global $wpdb; require_once ABSPATH.'wp-admin/includes/upgrade.php'; $charset=$wpdb->get_charset_collate();
-    $news=pmsv_wp_table('news');$devices=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');$reports=pmsv_wp_table('reports');$watchers=pmsv_wp_table('question_watchers');$alerts=pmsv_wp_table('push_alerts');
+    global $wpdb;
+    $installed = (int) get_option('pmsv_wp_schema', 0);
+    if ($installed >= PMSV_WP_SCHEMA_VERSION) return;
+
+    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+    require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+    if (!WP_Upgrader::create_lock('pmsv_wp_schema_upgrade', 5 * MINUTE_IN_SECONDS)) return;
+
+    try {
+        if ($installed < 5) pmsv_wp_install_base_tables();
+
+        $devices = pmsv_wp_table('devices');
+        $charset = $wpdb->get_charset_collate();
+        $create = "CREATE TABLE $devices (
+            id varchar(64) NOT NULL,
+            endpoint text NOT NULL,
+            token_hash varchar(64) NOT NULL,
+            seen_at bigint NOT NULL,
+            retry_at bigint NOT NULL DEFAULT 0,
+            refresh_required tinyint NOT NULL DEFAULT 0,
+            PRIMARY KEY  (id),
+            KEY seen_at (seen_at)
+        ) $charset";
+        if (!maybe_create_table($devices, $create)) return;
+
+        // Older sites may have recorded schema 5 with either notification column missing.
+        if (!maybe_add_column($devices, 'retry_at', "ALTER TABLE $devices ADD COLUMN retry_at bigint NOT NULL DEFAULT 0")) return;
+        if (!maybe_add_column($devices, 'refresh_required', "ALTER TABLE $devices ADD COLUMN refresh_required tinyint NOT NULL DEFAULT 0")) return;
+
+        // Verify every column used by registration and delivery before marking the upgrade complete.
+        if ($wpdb->query("SELECT id, endpoint, token_hash, seen_at, retry_at, refresh_required FROM $devices LIMIT 0") !== false) {
+            update_option('pmsv_wp_schema', PMSV_WP_SCHEMA_VERSION, false);
+        }
+    } finally {
+        WP_Upgrader::release_lock('pmsv_wp_schema_upgrade');
+    }
+}
+
+function pmsv_wp_install_base_tables() {
+    global $wpdb;
+    $charset=$wpdb->get_charset_collate();
+    $news=pmsv_wp_table('news');$limits=pmsv_wp_table('limits');$questions=pmsv_wp_table('questions');$answers=pmsv_wp_table('answers');$reports=pmsv_wp_table('reports');$watchers=pmsv_wp_table('question_watchers');$alerts=pmsv_wp_table('push_alerts');
     dbDelta("CREATE TABLE $news (id varchar(100) NOT NULL, url_hash char(64) NOT NULL, title_hash char(64) NOT NULL, published varchar(10) NOT NULL, first_seen varchar(32) NOT NULL, payload longtext NOT NULL, PRIMARY KEY (id), KEY url_hash (url_hash), KEY title_hash (title_hash), KEY published (published)) $charset;");
     // Preserve separate source records even when they share a document URL.
     $indexes=$wpdb->get_results("SHOW INDEX FROM $news");
@@ -11,7 +52,6 @@ function pmsv_wp_install() {
         $wpdb->query("ALTER TABLE $news DROP INDEX url_hash");
         $wpdb->query("CREATE INDEX url_hash ON $news (url_hash)");
     }
-    dbDelta("CREATE TABLE $devices (id varchar(64) NOT NULL, endpoint text NOT NULL, token_hash varchar(64) NOT NULL, seen_at bigint NOT NULL, retry_at bigint NOT NULL DEFAULT 0, refresh_required tinyint NOT NULL DEFAULT 0, PRIMARY KEY (id), KEY seen_at (seen_at)) $charset;");
     dbDelta("CREATE TABLE $limits (id varchar(64) NOT NULL, attempts int NOT NULL, expires_at bigint NOT NULL, PRIMARY KEY (id)) $charset;");
     dbDelta("CREATE TABLE $questions (id bigint unsigned NOT NULL AUTO_INCREMENT, author varchar(80) NOT NULL, title varchar(190) NOT NULL, body text NOT NULL, category varchar(32) NOT NULL, created_at bigint NOT NULL, last_activity bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY status_activity (status,last_activity), KEY category (category)) $charset;");
     dbDelta("CREATE TABLE $answers (id bigint unsigned NOT NULL AUTO_INCREMENT, question_id bigint unsigned NOT NULL, author varchar(80) NOT NULL, body text NOT NULL, created_at bigint NOT NULL, status varchar(20) NOT NULL DEFAULT 'published', fingerprint char(64) NOT NULL, PRIMARY KEY (id), KEY question_status (question_id,status), KEY created_at (created_at)) $charset;");
@@ -23,16 +63,20 @@ function pmsv_wp_install() {
     // Seed is a read-only export of real news, never sample data. Re-activation cannot overwrite newer records.
     $rows=json_decode(file_get_contents(PMSV_WP_DIR.'archive-seed.json'),true,512,JSON_THROW_ON_ERROR);
     foreach($rows as $n)pmsv_wp_insert($n);
-    update_option('pmsv_wp_schema',5,false);
 }
-// Editorial exclusions: user-confirmed off-topic reports (12–13 October 2026).
+// Editorial exclusions: confirmed off-topic reports; retain stored rows for recovery.
 // Keep the stored row for recovery, but never expose or reinsert this story.
 function pmsv_wp_news_excluded($n) {
     $u=wp_parse_url((string)($n['url']??''));
     if(!is_array($u))return false;
     $host=strtolower((string)($u['host']??''));
     return (in_array($host,['rediff.com','www.rediff.com','m.rediff.com'],true)
-        && ($u['path']??'')==='/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm')
+        && in_array(($u['path']??''),[
+            '/news/report/absurd-hypocrisy-elon-musk-escalates-attack-on-ambani/20261011.htm',
+            '/news/report/four-women-arrested-in-gurugram-for-alleged-religious-conversion/20261115.htm',
+            '/news/report/man-arrested-with-over-106-grams-of-mdma-in-kozhikode/20261115.htm',
+            '/news/report/4-held-in-delhi-for-honey-trapping-and-extortion/20261116.htm'
+        ],true))
         || (in_array($host,['ndtv.com','www.ndtv.com'],true)
         && ($u['path']??'')==='/world-news/16-year-old-girl-allegedly-groped-by-robot-in-germany-police-seize-machine-12177408')
         || (in_array($host,['hindustantimes.com','www.hindustantimes.com'],true)
@@ -86,6 +130,25 @@ function pmsv_wp_archive() {
     $news=array_merge($news,pmsv_wp_native_blogs());
     usort($news,fn($a,$b)=>strcmp($b['published'],$a['published'])?:strcmp($a['title'],$b['title']));return $news;
 }
+function pmsv_wp_updater_status() {
+    $state=get_option('pmsv_wp_updater',['active'=>false]);
+    $empty=['checked'=>0,'ok'=>0,'partial'=>0,'error'=>0];
+    $all=$empty;$india=$empty;
+    foreach(($state['checks']??[]) as $check){
+        $status=$check['status']??'error';
+        if(!in_array($status,['ok','partial','error'],true))$status='error';
+        $all['checked']++;$all[$status]++;
+        if(($check['region']??'')==='india'&&($check['tab']??'')==='general'){
+            $india['checked']++;$india[$status]++;
+        }
+    }
+    $coverage=$all['checked']===0?'unknown':(($all['partial']+$all['error'])>0?'partial':'ok');
+    $last=strtotime($state['lastAttemptAt']??'');
+    if($last!==false&&time()-$last>36*3600)$coverage='stale';
+    $state['coverage']=['status'=>$coverage,'all'=>$all,'indiaNews'=>$india];
+    return $state;
+}
+
 function pmsv_wp_valid_item($n,$sources) {
     if(!is_array($n))return false;
     foreach(['title','published','url','tab','region','source','sourceType','summary','category'] as $k)if(!is_string($n[$k]??null))return false;
