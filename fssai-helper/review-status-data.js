@@ -1709,7 +1709,7 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has one candidate lead reference. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
       "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
@@ -2938,7 +2938,7 @@ window.PMSV_REVIEW_REGISTER = {
     "ingredientRows": 46,
     "withCandidate": 35,
     "withoutCandidate": 11,
-    "candidateLinks": 103,
+    "candidateLinks": 104,
     "originalUnadjudicatedInstances": 14,
     "remainingInstances": [
       {
@@ -3033,7 +3033,16 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://www.fssai.gov.in/upload/notifications/2020/08/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
         "sha256": "5d376f55999049e7272b84294b3b5e5bfc228c3ef772754bfbd328045212c3dd",
         "pages": [
-          20
+          20,
+          24
+        ]
+      },
+      "compendium": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+        "sha256": "8300ea34f1e88680ae4bbef52e0ec49331dbbfd1d5d6aa2612852bcb8779b26d",
+        "pages": [
+          3,
+          8
         ]
       },
       "ayurveda": {
@@ -3061,6 +3070,10 @@ window.PMSV_REVIEW_REGISTER = {
       {
         "metal": "Lead",
         "coreIndex": 60
+      },
+      {
+        "metal": "Arsenic",
+        "coreIndex": 25
       }
     ],
     "oilAdditive": {
@@ -3077,7 +3090,7 @@ window.PMSV_REVIEW_REGISTER = {
         "productId": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
         "tablePage": 96,
         "methodPage": 97,
-        "sourceReviewResult": "Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has one candidate lead reference. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
+        "sourceReviewResult": "Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
         "sourceReviewNextAction": "Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
         "flowers": [
           {
@@ -3204,6 +3217,14 @@ window.PMSV_REVIEW_REGISTER = {
         "unit": "mg/kg",
         "basis": "On dry matter basis.",
         "pdfPage": 20
+      },
+      {
+        "name": "Arsenic",
+        "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+        "maximum": 5,
+        "unit": "mg/kg",
+        "basis": "",
+        "pdfPage": 24
       }
     ]
   },

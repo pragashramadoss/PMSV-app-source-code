@@ -91,20 +91,20 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  const panel = page.locator('.recipe-flower-note');
  const choice = panel.getByLabel('Recipe flower', {exact:true});
  const confirmed = panel.getByRole('checkbox');
- const lead = panel.locator('.flower-lead');
- assert.deepEqual([register.ayurvedaIngredientCoverage.withCandidate, register.ayurvedaIngredientCoverage.candidateLinks], [35,103]);
+ const metals = panel.locator('[data-flower-metal]');
+ assert.deepEqual([register.ayurvedaIngredientCoverage.withCandidate, register.ayurvedaIngredientCoverage.candidateLinks], [35,104]);
  await progress.click();
  await page.locator('#openNamedFlowers').click();
  assert.equal(await panel.getAttribute('data-flower-product'), named.productId);
  assert.equal(await choice.inputValue(), '');
  assert.equal(await choice.locator('option').count(), 5);
- assert.equal(await lead.count(), 0);
+ assert.equal(await metals.count(), 0);
  for (const flower of named.flowers) {
   await choice.selectOption(flower.key);
   const detail = panel.locator('#flowerDetail');
   assert((await detail.innerText()).includes(flower.species));
   assert((await detail.innerText()).includes(flower.stage));
-  assert.equal(await lead.count(), 0);
+  assert.equal(await metals.count(), 0);
   for (const [source, pdfPage, label] of flower.references) {
    assert.equal(await detail.getByRole('link', {name:label + ' ↗', exact:true}).getAttribute('href'),
     review.sources[source].url + (pdfPage ? '#page=' + pdfPage : ''));
@@ -118,10 +118,17 @@ async function testRecipeFlowers(page, register, base, artifacts) {
   if (flower.key === 'jati') {
    assert.equal(await confirmed.isChecked(), false);
    await confirmed.check();
-   assert.match(await lead.innerText(), /10 mg\/kg on a dry-matter basis/);
-   assert.equal(await lead.locator('a').getAttribute('href'), review.sources.gazette.url + '#page=20');
+   assert.equal(await metals.count(), 2);
+   for (const [i, row] of review.rawRows.entries()) {
+    const item = metals.nth(i);
+    assert.equal(await item.getAttribute('data-flower-metal'), row.name);
+    assert((await item.innerText()).includes(row.maximum + ' ' + row.unit));
+    assert.equal(await item.locator('a').getAttribute('href'), review.sources.gazette.url + '#page=' + row.pdfPage);
+   }
+   assert.match(await metals.nth(0).innerText(), /on a dry-matter basis/);
+   assert.match(await metals.nth(1).innerText(), /neither an arsenic species nor a dry-matter basis/);
    await confirmed.uncheck();
-   assert.equal(await lead.count(), 0);
+   assert.equal(await metals.count(), 0);
    await confirmed.check();
   }
  }
@@ -144,7 +151,7 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  assert.equal(await panel.getAttribute('data-flower-product'), aromatic.productId);
  assert.equal(await choice.count(), 0);
  assert.equal(await confirmed.count(), 0);
- assert.equal(await lead.count(), 0);
+ assert.equal(await metals.count(), 0);
  assert.match(await panel.innerText(), /Ketaki \(Pandanus tectorius\) and Jati \(Jasminum officinale\)/);
  assert.equal(await page.locator('.water-product-note').count(), 1);
  const unknownDownload = page.waitForEvent('download');
@@ -155,7 +162,7 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  assert.equal(await choice.inputValue(), '');
  await choice.selectOption('jati');
  assert.equal(await confirmed.isChecked(), false);
- assert.equal(await lead.count(), 0);
+ assert.equal(await metals.count(), 0);
  const report = await page.request.get(base + review.report);
  assert.equal(report.status(), 200);
  assert((await report.text()).includes('35 of 46'));
@@ -532,8 +539,8 @@ let browser;
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
-  ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:103});
- Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerLeadCandidates:1,flowerMaterialResets:true,flowerProductBriefs:2});
+  ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:104});
+ Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');

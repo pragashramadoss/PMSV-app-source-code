@@ -19,7 +19,7 @@ const current = register.ayurvedaIngredientCoverage;
 
 assert.equal(validateReview(register, catalogue).ok, true);
 assert.deepEqual([register.latestRound, current.ingredientRows, current.withCandidate, current.withoutCandidate, current.candidateLinks],
-  [81, 46, 35, 11, 103]);
+  [81, 46, 35, 11, 104]);
 assert.deepEqual(current.remainingInstances, earlier.remainingInstances.filter(row => row.recipe !== '14.6' || row.serial !== 9));
 assert.equal(current.originalUnadjudicatedInstances, 14);
 assert.equal(register.records.filter(row => row.legalArticleDecision === 'OPEN').length, 137);
@@ -36,10 +36,14 @@ for (const recipe of review.recipes) {
   assert(product.sourceReviewResult.includes(recipe.sourceReviewResult));
 }
 const original = JSON.parse(read('ctr-original-gazette-concordance-r70-2026-11-14.json'));
-const metal = original.metalRows.find(r => r.metal === 'Lead' && r.coreIndex === 60);
-assert.deepEqual(review.rawRows, [{name:metal.metal, article:metal.originalArticle, maximum:metal.coreLimit,
-  unit:metal.coreUnit, basis:metal.coreCondition, pdfPage:metal.sourcePdfPage}]);
+const herbRows = original.metalRows.filter(row => /\bdried herbs\b/i.test(row.originalArticle));
+assert.deepEqual(review.rawRows.map(row => row.name).sort(), herbRows.map(row => row.metal).sort());
+for (const metal of herbRows) {
+  assert.deepEqual(review.rawRows.find(row => row.name === metal.metal), {name:metal.metal, article:metal.originalArticle,
+    maximum:metal.coreLimit, unit:metal.coreUnit, basis:metal.coreCondition, pdfPage:metal.sourcePdfPage});
+}
 assert.equal(review.sources.gazette.sha256, original.sources.ctr2020.sha256);
+assert.equal(review.sources.compendium.sha256, register.juniperSpiceReview.sources.compendium.sha256);
 const pesticide = JSON.parse(read('ctr-residue-gazette-concordance-r71-2026-11-14.json'));
 const fruit = pesticide.pesticideGroups.find(row => row.serial === 64).rows.find(row =>
   row.originalArticleCell === 'Pomegranate' && row.originalSubgroup === '(d) Metiram as CS2');
@@ -56,6 +60,7 @@ for (const recipe of review.recipes) {
       const detail = flowers.rawMarkup(review, recipe, flower, confirmed);
       const eligible = recipe === named && flower === jati && confirmed === true;
       assert.equal(detail.includes('10 mg/kg on a dry-matter basis'), eligible);
+      assert.equal(detail.includes('5 mg/kg. The row specifies neither an arsenic species nor a dry-matter basis'), eligible);
       assert(!detail.includes('aflatoxin'));
     }
   }
@@ -63,7 +68,8 @@ for (const recipe of review.recipes) {
 const mutations = [
   r => {r.recipeFlowerReview.recipes.reverse();}, r => {r.recipeFlowerReview.recipes[0].flowers[1].species = 'Jasminum sambac';},
   r => {r.recipeFlowerReview.recipes[0].flowers[2].serial = 11;}, r => {r.recipeFlowerReview.recipes[1].flowers[0].species = jati.species;},
-  r => {r.recipeFlowerReview.recipes[1].flowers[0].examples.pop();}, r => {r.recipeFlowerReview.rawRows.push(r.hinguReview.rawRows[1]);},
+  r => {r.recipeFlowerReview.recipes[1].flowers[0].examples.pop();}, r => {r.recipeFlowerReview.rawRows.pop();},
+  r => {r.recipeFlowerReview.rawRows[1].basis = 'On dry matter basis.';}, r => {r.recipeFlowerReview.rawRows.push(r.hinguReview.rawRows[2]);},
   r => {r.recipeFlowerReview.rawRows[0].basis = '';}, r => {r.recipeFlowerReview.rawRows[0].maximum = 0.5;},
   r => {r.recipeFlowerReview.rawRows[0].article = {};}, r => {r.recipeFlowerReview.oilAdditive.material = 'Ketaki flower';},
   r => {r.recipeFlowerReview.oilAdditive.maximum = 2;}, r => {r.recipeFlowerReview.sources.codex.url = 'https://codex.fao.org/unrelated';},
@@ -78,4 +84,4 @@ for (const change of mutations) {
   change(copy);
   assert.equal(validateReview(copy, catalogue).ok, false);
 }
-console.log('R81 PASS: five flower entries, one conditional dry-matter lead reference, separate oil and fruit sources, 35 of 46 ingredient entries and ' + mutations.length + ' altered records.');
+console.log('R81 PASS: five flower entries, both Gazette metal rows naming dried herbs, separate oil and fruit sources, 35 of 46 ingredient entries and ' + mutations.length + ' altered records.');

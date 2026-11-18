@@ -16,7 +16,7 @@
     ]]
   ];
   const host = {recipe:'fssai.gov.in', codex:'codex.fao.org', kew:'powo.science.kew.org',
-    gazette:'www.fssai.gov.in', ayurveda:'www.fssai.gov.in', pesticides:'fssai.gov.in'};
+    gazette:'www.fssai.gov.in', compendium:'fssai.gov.in', ayurveda:'www.fssai.gov.in', pesticides:'fssai.gov.in'};
   const evidencePages = {
     ketaki:[['codex',124],['kew',null]], jati:[['codex',109],['codex',105]],
     dadima:[['codex',33],['pesticides',38]], punnaga:[['recipe',97]], aromatic:[['recipe',98]]
@@ -26,11 +26,12 @@
     if (review?.round !== 81 || review.reviewedOn !== '2026-11-18' ||
         review.report !== 'ctr-recipe-flowers-r81-2026-11-18.md' ||
         !same(review.ingredient, {recipe:'14.6', serial:9, name:'Jati'}) ||
-        !same(review.gazetteRowKeys, [{metal:'Lead', coreIndex:60}]) ||
-        review.rawRows?.length !== 1) return false;
-    const row = review.rawRows[0];
-    if (row?.name !== 'Lead' || row.maximum !== 10 || row.unit !== 'mg/kg' || row.pdfPage !== 20 ||
-        row.basis !== 'On dry matter basis.' || typeof row.article !== 'string' || !row.article.includes('dried herbs and spices')) return false;
+        !same(review.gazetteRowKeys, [{metal:'Lead', coreIndex:60},{metal:'Arsenic', coreIndex:25}]) ||
+        !Array.isArray(review.rawRows) || review.rawRows.length !== 2) return false;
+    const expectedMetals = [['Lead',10,'On dry matter basis.',20],['Arsenic',5,'',24]];
+    if (!review.rawRows.every((row, i) => row?.unit === 'mg/kg' && typeof row.article === 'string' &&
+        row.article.toLowerCase().includes('dried herbs') &&
+        same([row.name,row.maximum,row.basis,row.pdfPage], expectedMetals[i]))) return false;
     if (!same(review.oilAdditive, {schedule:'C', serial:28, material:'Kewda/Kewra (oil from Ketaki)',
       maximum:0.5, unit:'%', pdfPage:22})) return false;
     const limits = review.boundaries;
@@ -44,7 +45,8 @@
             (key !== 'kew' && (!/^[a-f0-9]{64}$/.test(source.sha256) || !Array.isArray(source.pages)))) return false;
       } catch { return false; }
     }
-    if (review.sources.codex.edition !== 'CXA 4-1989, amended 2025' ||
+    if (!same(review.sources.gazette.pages, [20,24]) || !same(review.sources.compendium.pages, [3,8]) ||
+        review.sources.codex.edition !== 'CXA 4-1989, amended 2025' ||
         review.sources.codex.url !== 'https://codex.fao.org/restapi/searchstandard/CXA_004e.pdf?lang=en&id=39' ||
         review.sources.codex.sha256 !== '5d23f32aeaef4ecc4238a0508303c0c71ea6d593a1c5a1594a97d202eb552f01' ||
         !same(review.sources.codex.pages, [33,36,105,109,110,124,218]) ||
@@ -68,7 +70,7 @@
     const remaining = previous.remainingInstances.filter(gap => gap.recipe !== '14.6' || gap.serial !== 9);
     return remaining.length === previous.withoutCandidate - 1 && same(current.remainingInstances, remaining) &&
       current.withCandidate === previous.withCandidate + 1 && current.withoutCandidate === remaining.length &&
-      current.candidateLinks === previous.candidateLinks + 1 && current.ingredientRows === previous.ingredientRows &&
+      current.candidateLinks === previous.candidateLinks + review.rawRows.length && current.ingredientRows === previous.ingredientRows &&
       current.originalUnadjudicatedInstances === previous.originalUnadjudicatedInstances;
   }
 
@@ -80,10 +82,12 @@
   function rawMarkup(review, recipe, flower, confirmed) {
     if (confirmed !== true || recipe?.productId !== identities[0][1] || flower?.key !== 'jati' ||
         flower.serial !== review?.ingredient?.serial || flower.species !== 'Jasminum officinale L.') return '';
-    const row = review.rawRows[0];
-    return '<div class="flower-lead notice"><strong>Candidate lead maximum for the dried ingredient</strong><p>' +
-      escape(row.maximum) + ' ' + escape(row.unit) + ' on a dry-matter basis. Confirm that the laboratory reports on this basis. ' +
-      'The finished milk needs its own assessment.</p>' + link(review.sources.gazette.url, 'FSSAI lead table', row.pdfPage) + '</div>';
+    const entries = review.rawRows.map(row => '<li data-flower-metal="' + escape(row.name) + '"><strong>' +
+      escape(row.name) + '</strong> · ' + escape(row.maximum) + ' ' + escape(row.unit) +
+      (row.basis ? ' on a dry-matter basis.' : '. The row specifies neither an arsenic species nor a dry-matter basis.') +
+      ' ' + link(review.sources.gazette.url, 'Gazette p. ' + row.pdfPage, row.pdfPage) + '</li>');
+    return '<div class="flower-metals notice"><strong>Candidate metal limits for the dried ingredient</strong><ul>' +
+      entries.join('') + '</ul><p>Check the reporting basis with the laboratory. The finished milk needs its own assessment.</p></div>';
   }
 
   function flowerDetail(review, recipe, flower) {
