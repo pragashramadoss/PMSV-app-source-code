@@ -71,16 +71,19 @@ fun displayDate(value: String): String = runCatching {
 data class Digest(val id: String, val title: String, val body: String, val date: String = "")
 
 object DigestCodec {
-    fun parse(o: JSONObject, today: String = LocalDate.now(java.time.ZoneId.of("Asia/Kolkata")).toString()): Digest? {
+    fun today(): String = LocalDate.now(java.time.ZoneId.of("Asia/Kolkata")).toString()
+    fun dailyId(date: String) = "pmsv-news-$date"
+
+    fun parse(o: JSONObject, today: String = DigestCodec.today()): Digest? {
         val date = o.optString("date")
         if (o.optInt("count", 0) <= 0 || date != today || o.optString("body").isBlank()) return null
         // The website reuses its tag; date is essential to avoid suppressing tomorrow's alert.
-        return Digest("pmsv-news-$date", o.optString("title", "PMSV updates"), o.getString("body"), date)
+        return Digest(dailyId(date), o.optString("title", "PMSV updates"), o.getString("body"), date)
     }
 
     // A manual preview can show the latest available day, including yesterday.
     // Keep its real publication date; automatic daily alerts still require today.
-    fun latestAvailable(items: List<NewsItem>, today: String = LocalDate.now(java.time.ZoneId.of("Asia/Kolkata")).toString()): Digest? {
+    fun latestAvailable(items: List<NewsItem>, today: String = DigestCodec.today()): Digest? {
         val eligible = items.filter { it.tab != "blogs" && it.title.isNotBlank() &&
             runCatching { !LocalDate.parse(it.published).isAfter(LocalDate.parse(today)) }.getOrDefault(false) }
         val date = eligible.maxOfOrNull { it.published } ?: return null
@@ -90,6 +93,6 @@ object DigestCodec {
         val body = headlines.mapIndexed { index, item ->
             "${index + 1}. ${item.title.replace(Regex("\\s+"), " ").trim().take(300)}"
         }.joinToString("\n")
-        return Digest("pmsv-news-$date", "News · ${displayDate(date)}", body, date)
+        return Digest(dailyId(date), "News · ${displayDate(date)}", body, date)
     }
 }

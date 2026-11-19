@@ -174,11 +174,15 @@ class ToolActivity : ComponentActivity() {
         else if (Alerts.allowed(this)) { Alerts.setEnabled(this, true); alertEnabled = true }
         else if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
             permission.launch(Manifest.permission.POST_NOTIFICATIONS)
-        else openSettings()
+        else {
+            Alerts.setEnabled(this, true)
+            openSettings()
+        }
     }
     private fun openSettings() { startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)) }
     override fun onResume() {
         super.onResume()
+        Alerts.reconcile(this)
         alertEnabled = Alerts.enabled(this); alertAllowed = Alerts.allowed(this)
     }
     override fun onSaveInstanceState(outState: Bundle) {
