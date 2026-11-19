@@ -290,8 +290,13 @@ async function testRhizomeSpices(page, register, base, artifacts) {
  for (const width of [320,390,1440]) {
   await page.setViewportSize({width,height:900});
   assert(await panel('turmeric').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
-  if (width === 390) await panel('turmeric').screenshot({path:path.join(artifacts,'turmeric-390.png'),animations:'disabled',
-   style:'header, .navtabs { visibility: hidden !important; }'});
+  if (width === 390) {
+   const sourceLinks = panel('turmeric').locator('.rhizome-reference a');
+   assert(await sourceLinks.evaluateAll(links => links.every(link => link.getBoundingClientRect().height <= 30)),
+    'Each turmeric source link fits on one line on a phone');
+   await panel('turmeric').screenshot({path:path.join(artifacts,'turmeric-390.png'),animations:'disabled',
+    style:'header, .navtabs { visibility: hidden !important; }'});
+  }
  }
  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),milk.productId);
  assert.equal(await panel('turmeric').count(),0);
