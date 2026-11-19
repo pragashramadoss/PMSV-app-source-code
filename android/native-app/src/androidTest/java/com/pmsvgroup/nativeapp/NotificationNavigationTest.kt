@@ -112,6 +112,30 @@ class NotificationNavigationTest {
         }
     }
 
+    @Test fun foregroundAndPeriodicChecksShareOneDailyPost() {
+        val context = compose.activity
+        if (Build.VERSION.SDK_INT >= 33) InstrumentationRegistry.getInstrumentation().uiAutomation
+            .grantRuntimePermission(context.packageName, Manifest.permission.POST_NOTIFICATIONS)
+        val prefs = context.getSharedPreferences("pmsv-native-alerts", android.content.Context.MODE_PRIVATE)
+        val previous = Alerts.last(context)
+        val enabled = Alerts.enabled(context)
+        val pool = java.util.concurrent.Executors.newFixedThreadPool(2)
+        val start = java.util.concurrent.CountDownLatch(1)
+        try {
+            prefs.edit().putBoolean("enabled", true).remove("lastDigest").commit()
+            val digest = Digest("test-concurrent", "Daily news", "One headline")
+            val attempts = (1..2).map {
+                pool.submit<Boolean> { start.await(); Alerts.deliverDaily(context, digest) }
+            }
+            start.countDown()
+            assertEquals(1, attempts.count { it.get(10, java.util.concurrent.TimeUnit.SECONDS) })
+        } finally {
+            pool.shutdownNow()
+            prefs.edit().putBoolean("enabled", enabled).putString("lastDigest", previous).commit()
+            context.getSystemService(NotificationManager::class.java).cancel(100)
+        }
+    }
+
     @Test fun reopeningRepairsMissingPeriodicWorkForAnOptedInDevice() {
         val context = compose.activity
         if (Build.VERSION.SDK_INT >= 33) InstrumentationRegistry.getInstrumentation().uiAutomation
