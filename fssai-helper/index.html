@@ -24,6 +24,7 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .hingu-evidence{border-top:1px solid var(--line,#d5dedc);margin-top:14px;padding-top:12px}.hingu-evidence h5{font-size:1rem;margin:0}.hingu-evidence .hingu-confirm{display:flex;align-items:flex-start;gap:.6rem;font-weight:600;cursor:pointer}.hingu-confirm input[type=checkbox]{width:1.1rem;height:1.1rem;min-width:1.1rem;margin:.16rem 0 0;padding:0}.hingu-evidence .hingu-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.hingu-table caption{text-align:left;font-weight:650;padding:5px 0}.hingu-evidence .hingu-table th,.hingu-evidence .hingu-table td{overflow-wrap:anywhere}.hingu-evidence details{margin:14px 0}.hingu-evidence summary{font-weight:650;cursor:pointer}.hingu-methods ul{list-style:none;padding:0}.hingu-methods li{margin:.8rem 0}.hingu-methods li p{margin:.25rem 0}.hingu-evidence .source-ref{max-width:100%;white-space:normal}
 .juniper-scope{margin:18px 0;padding:12px 0;border-block:1px solid var(--line,#d5dedc)}
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
+.rhizome-spice select,.rhizome-spice input{width:100%;max-width:100%;box-sizing:border-box}.rhizome-spice label{display:block;margin-top:10px}.rhizome-spice .methodtable{width:100%;min-width:0;table-layout:fixed}.rhizome-spice .methodtable th,.rhizome-spice .methodtable td{min-width:0;width:auto;overflow-wrap:anywhere}.rhizome-spice .source-ref{white-space:normal}.rhizome-spice .controls{margin-top:9px;gap:5px}
 .recipe-flower-note select,.recipe-flower-note input[type=text]{width:100%;max-width:100%;box-sizing:border-box}
 .recipe-flower-note label[for]{display:block;margin-top:12px}
 .recipe-flower-note .controls{gap:.4rem}
@@ -179,12 +180,13 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 })();
 
 </script><script src="full-catalogue-533.js?v=20261031"></script>
-<script src="spice-contaminants.js?v=20261118-r80"></script>
+<script src="spice-contaminants.js?v=20261119-r83"></script>
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
-<script src="recipe-flowers-r81.js?v=20261119-r82"></script>
-<script src="review-status.js?v=20261119-r82"></script>
-<script src="review-status-data.js?v=20261119-r82"></script>
+<script src="recipe-flowers-r81.js?v=20261119-r83"></script>
+<script src="rhizome-spices.js?v=20261119-r83"></script>
+<script src="review-status.js?v=20261119-r83"></script>
+<script src="review-status-data.js?v=20261119-r83"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -204,7 +206,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261119-r82"></script>
+<script src="review-status-ui.js?v=20261119-r83"></script>
 <script>
 'use strict';
 (()=>{
@@ -257,15 +259,19 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  function brief(c){const ck=c.sourceCheck||{};
   const register=window.PMSVReviewUI?.available ? window.PMSV_REVIEW_REGISTER : null;
   const current=register?.records.find(row=>row.id===c.id);
+  const spiceReview=register?.rhizomeSpiceReview;
+  const isStandaloneSpice=spiceReview?.spices.some(spice=>spice.productId===c.id);
+  const reports=current?.reports || (isStandaloneSpice ? [{round:spiceReview.round,file:spiceReview.report}] : []);
   const text=['PMSV FSSAI HELPER — RESEARCH BRIEF','Historical finding dated 2026-10-30',
   register?'Current review register dated '+register.latestSourceReviewDate:'Current review register unavailable','Research only — not regulatory PASS or product release','',
   'Product: '+c.product,'Catalog ID: '+c.id,'Category: '+(c.fcs||'Unconfirmed'),'FSSR: '+(c.fssr||'Unconfirmed'),
   'Review class: '+c.reviewStatus,'Source finding: '+c.finding,'Non-transfer caution: '+c.nonTransfer,
   'Next evidence: '+(ck.nextEvidence||c.nextAction),'Checkpoint analyte: '+(ck.analyte||'Not in 31–60 register'),'Checkpoint caution: '+(ck.sourceCaution||''),
-  'Current focused reviews: '+(current?.reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
-  ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction,
-   ...current.reports.slice(0,1).map(r=>'Latest source review: '+new URL(r.file,document.baseURI).href)]:[]),
+  'Current focused reviews: '+(reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
+  ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction]:[]),
+  ...reports.slice(0,1).map(r=>'Latest source review: '+new URL(r.file,document.baseURI).href),
   ...(current ? window.PMSVRecipeFlowers.briefLines(register.recipeFlowerReview, c.id, document.querySelector('.recipe-flower-note')) : []),
+  ...(spiceReview ? window.PMSVRhizomeSpices.briefLines(spiceReview, c.id, document.getElementById('productDetail')) : []),
   'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}

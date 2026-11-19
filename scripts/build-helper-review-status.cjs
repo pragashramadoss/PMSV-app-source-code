@@ -33,6 +33,8 @@ const flowerFile = 'ctr-recipe-flowers-r81-2026-11-18.json';
 const flowers = read(flowerFile);
 const flowerSupplyFile = 'ctr-flower-supply-r82-2026-11-19.json';
 const flowerSupply = read(flowerSupplyFile);
+const rhizomeFile = 'ctr-rhizome-spices-r83-2026-11-19.json';
+const rhizomes = read(rhizomeFile);
 const ingredientBaselineFile = 'ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json';
 const ingredientBaseline = read(ingredientBaselineFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
@@ -169,7 +171,7 @@ for (const id of [hingu.productId, hingu.recipeProductId]) {
  row.sourceReviewNextAction += ' ' + hingu.sourceReviewNextAction;
 }
 const flowerRows = gazetteRows(flowers.gazetteRowKeys);
-const currentCoverage = linkIngredient(hinguCoverage, flowers.ingredient, flowerRows);
+const flowerCoverage = linkIngredient(hinguCoverage, flowers.ingredient, flowerRows);
 const recipeRegister = read('ayurveda-category-a-recipe-evidence-r35-2026-11-04.json');
 for (const recipe of flowers.recipes) {
  const entry = recipeRegister.records.find(row => row.catalogue_id === recipe.productId);
@@ -185,7 +187,7 @@ for (const recipe of flowers.recipes) {
  row.sourceReviewResult += ' ' + recipe.sourceReviewResult;
  row.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
 }
-assert(currentCoverage.remainingInstances.some(item => item.recipe === flowerSupply.ingredient.recipe &&
+assert(flowerCoverage.remainingInstances.some(item => item.recipe === flowerSupply.ingredient.recipe &&
  item.serial === flowerSupply.ingredient.serial && item.name === flowerSupply.ingredient.name));
 for (const recipe of flowerSupply.recipes) {
  const row = records.find(record => record.id === recipe.productId);
@@ -194,18 +196,51 @@ for (const recipe of flowerSupply.recipes) {
  row.sourceReviewResult += ' ' + recipe.sourceReviewResult;
  row.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
 }
+const earlyCrosswalk = read('ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.json');
+const rhizomeSpices = rhizomes.spices.map(spice => ({
+ ...spice, rawRows:gazetteRows([...spice.metalKeys, ...rhizomes.toxinKeys])
+}));
+let addedLinks = 0;
+for (const recipe of rhizomes.recipes) {
+ const printed = recipeRegister.records.find(item => item.catalogue_id === recipe.productId);
+ assert.equal(printed.recipe_number, recipe.number);
+ for (const input of recipe.ingredients) {
+  const original = printed.ingredients.find(item => item.serial === input.serial);
+  assert.equal(original.source_name, input.name);
+  assert.equal(original.part_used, 'Rhizome');
+  const first = earlyCrosswalk.ingredient_source_crosswalk.find(item =>
+   item.recipe_number === recipe.number && item.source_ingredient_serial === input.serial);
+  const ginger = ingredientBaseline.conditionally_source_linked_ingredient_instances.find(item =>
+   item.recipe_number === recipe.number && item.source_ingredient_serial === input.serial);
+  const previous = [
+   ...first.possible_source_row_ids.map(id => earlyCrosswalk.source_rows.find(row => row.source_id === id).analyte),
+   ...(ginger?.conditional_dried_ginger_CTR_source_ids || []).map(id => ingredientBaseline.source_rows.find(row => row.id === id).analyte)
+  ].map(name => name.toLowerCase());
+  const rows = rhizomeSpices.find(spice => spice.key === input.key).rawRows;
+  assert(previous.length && previous.every(name => rows.some(row => row.name.toLowerCase() === name)));
+  input.addedReferences = rows.filter(row => !previous.includes(row.name.toLowerCase())).map(row => row.name);
+  addedLinks += input.addedReferences.length;
+ }
+ const record = records.find(row => row.id === recipe.productId);
+ record.reports.unshift({round:rhizomes.round, file:rhizomes.report});
+ record.sourceReviewResult += ' ' + recipe.sourceReviewResult;
+ record.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
+}
+const currentCoverage = {...flowerCoverage, candidateLinks:flowerCoverage.candidateLinks + addedLinks};
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:flowerSupply.reviewedOn,latestRound:flowerSupply.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:rhizomes.reviewedOn,latestRound:rhizomes.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
- recipeFlowerReview:{...flowers,rawRows:flowerRows},
+ recipeFlowerReview:{...flowers,rawRows:flowerRows,coverage:flowerCoverage},
+ rhizomeSpiceReview:{...rhizomes,spices:rhizomeSpices,addedLinks,
+  sources:{gazette:flowers.sources.gazette.url,compendium:flowers.sources.compendium.url,recipe:flowers.sources.recipe.url}},
  flowerSupplyReview:flowerSupply,
  hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,
   gazette:juniper.sources.gazette,spicesAct:juniper.sources.boardArchive,recipe:asafoetida.sources.recipe2025}},

@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-19",
-  "latestRound": 82,
+  "latestRound": 83,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -47,7 +47,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-juniper-spice-r79-2026-11-18.json",
     "ctr-hingu-asafoetida-r80-2026-11-18.json",
     "ctr-recipe-flowers-r81-2026-11-18.json",
-    "ctr-flower-supply-r82-2026-11-19.json"
+    "ctr-flower-supply-r82-2026-11-19.json",
+    "ctr-rhizome-spices-r83-2026-11-19.json"
   ],
   "records": [
     {
@@ -1587,6 +1588,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 83,
+          "file": "ctr-rhizome-spices-r83-2026-11-19.md"
+        },
+        {
           "round": 80,
           "file": "ctr-hingu-asafoetida-r80-2026-11-18.md"
         },
@@ -1608,8 +1613,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted. R80 links confirmed food-grade dried Ferula gum resin to four candidate FSSAI spice articles. The 2025 Chapter 2.9 compendium reproduces the 11 earlier grade-specific purity values. Five FSSAI laboratory methods and the Indian Standard starch method now have page references.",
-      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe. Confirm the grade, species, plant part, drying and composition from the supply documents. Record the laboratory method and reporting basis. The original U.S.P. 1936 comparison, actual raw-material applicability and the finished-food article require separate review.",
+      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted. R80 links confirmed food-grade dried Ferula gum resin to four candidate FSSAI spice articles. The 2025 Chapter 2.9 compendium reproduces the 11 earlier grade-specific purity values. Five FSSAI laboratory methods and the Indian Standard starch method now have page references. The Krishara brief records ginger and turmeric independently. Five metal entries explicitly name whole and powdered turmeric. Confirmed dried ginger uses separate spice entries with their own reporting bases.",
+      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe. Confirm the grade, species, plant part, drying and composition from the supply documents. Record the laboratory method and reporting basis. The original U.S.P. 1936 comparison, actual raw-material applicability and the finished-food article require separate review. Identify each rhizome and its supplied form before processing. Check the lead-chromate requirement for whole or powdered turmeric separately from total lead.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1697,6 +1702,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 83,
+          "file": "ctr-rhizome-spices-r83-2026-11-19.md"
+        },
+        {
           "round": 82,
           "file": "ctr-flower-supply-r82-2026-11-19.md"
         },
@@ -1714,8 +1723,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki. The individual brief can include the selected named flower, its confirmed or unconfirmed form and a supplier document reference.",
-      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification. Record the supplier specification or lot reference used to identify the raw material.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki. The individual brief can include the selected named flower, its confirmed or unconfirmed form and a supplier document reference. Confirmed dried ginger has four candidate raw-spice entries. The first preparation uses pieces of ginger, and that description alone leaves the supplier form open.",
+      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification. Record the supplier specification or lot reference used to identify the raw material. Document the ginger received separately from the selected flower. Assess each finished milk preparation on its own evidence.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -2947,7 +2956,7 @@ window.PMSV_REVIEW_REGISTER = {
     "ingredientRows": 46,
     "withCandidate": 35,
     "withoutCandidate": 11,
-    "candidateLinks": 104,
+    "candidateLinks": 112,
     "originalUnadjudicatedInstances": 14,
     "remainingInstances": [
       {
@@ -3235,7 +3244,334 @@ window.PMSV_REVIEW_REGISTER = {
         "basis": "",
         "pdfPage": 24
       }
-    ]
+    ],
+    "coverage": {
+      "ingredientRows": 46,
+      "withCandidate": 35,
+      "withoutCandidate": 11,
+      "candidateLinks": 104,
+      "originalUnadjudicatedInstances": 14,
+      "remainingInstances": [
+        {
+          "recipe": "12.1",
+          "serial": 1,
+          "name": "Jala"
+        },
+        {
+          "recipe": "12.1",
+          "serial": 4,
+          "name": "Chandana"
+        },
+        {
+          "recipe": "12.1",
+          "serial": 5,
+          "name": "Ushira"
+        },
+        {
+          "recipe": "13.1",
+          "serial": 1,
+          "name": "Jala"
+        },
+        {
+          "recipe": "14.5",
+          "serial": 5,
+          "name": "Karpura"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 2,
+          "name": "Ketaki"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 10,
+          "name": "Dadima"
+        },
+        {
+          "recipe": "14.6",
+          "serial": 11,
+          "name": "Punnaga"
+        },
+        {
+          "recipe": "14.7",
+          "serial": 2,
+          "name": "Sugandhita pushpa"
+        },
+        {
+          "recipe": "14.7",
+          "serial": 3,
+          "name": "Jala"
+        },
+        {
+          "recipe": "15.1",
+          "serial": 2,
+          "name": "Ushna Jala"
+        }
+      ]
+    }
+  },
+  "rhizomeSpiceReview": {
+    "round": 83,
+    "reviewedOn": "2026-11-19",
+    "report": "ctr-rhizome-spices-r83-2026-11-19.md",
+    "spiceStandard": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt%20Spices%20Condiments%20and%20related%20products.pdf",
+      "sha256": "7f7cd2a3a5efd6f114299872d45ef2b1b50260818bf695be6cefe4430547a447",
+      "pages": [
+        17,
+        18,
+        27,
+        28
+      ]
+    },
+    "spices": [
+      {
+        "key": "ginger",
+        "name": "Ginger",
+        "species": "Zingiber officinale Roscoe",
+        "productId": "12-12-2-dried-ginger-sonth-dried-adrak",
+        "clause": "2.9.11",
+        "whole": "Whole dried ginger rhizome",
+        "powder": "Single-ingredient dried ginger powder",
+        "wholePage": 17,
+        "powderPage": 18,
+        "compendiumPages": [
+          3,
+          8,
+          14,
+          14
+        ],
+        "metalKeys": [
+          {
+            "metal": "Lead",
+            "coreIndex": 60
+          },
+          {
+            "metal": "Arsenic",
+            "coreIndex": 25
+          }
+        ],
+        "scope": "The dried-spice lead entry specifies a dry-matter basis. The arsenic entry specifies neither an arsenic species nor a dry-matter basis.",
+        "rawRows": [
+          {
+            "name": "Lead",
+            "article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, alginic acid, alignates, agar, carrageen and similar products derived from seaweed",
+            "maximum": 10,
+            "unit": "mg/kg",
+            "basis": "On dry matter basis.",
+            "pdfPage": 20
+          },
+          {
+            "name": "Arsenic",
+            "article": "Dried herbs, finings and clearing agents, solid pectin all grades, spices",
+            "maximum": 5,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 24
+          },
+          {
+            "name": "Total aflatoxins",
+            "article": "Spices/Spice Mix",
+            "maximum": 30,
+            "unit": "µg/kg",
+            "basis": "",
+            "pdfPage": 29
+          },
+          {
+            "name": "Aflatoxin B1",
+            "article": "Spices/Spice Mix",
+            "maximum": 15,
+            "unit": "µg/kg",
+            "basis": "",
+            "pdfPage": 29
+          }
+        ]
+      },
+      {
+        "key": "turmeric",
+        "name": "Turmeric",
+        "species": "Curcuma longa L.",
+        "productId": "12-12-2-turmeric-haldi",
+        "clause": "2.9.18",
+        "whole": "Whole cured and dried turmeric bulbs or fingers",
+        "powder": "Single-ingredient dried turmeric powder",
+        "wholePage": 27,
+        "powderPage": 28,
+        "compendiumPages": [
+          6,
+          8,
+          10,
+          11,
+          12,
+          14,
+          14
+        ],
+        "metalKeys": [
+          {
+            "metal": "Lead",
+            "coreIndex": 158
+          },
+          {
+            "metal": "Copper",
+            "coreIndex": 28
+          },
+          {
+            "metal": "Arsenic",
+            "coreIndex": 91
+          },
+          {
+            "metal": "Tin",
+            "coreIndex": 29
+          },
+          {
+            "metal": "Cadmium",
+            "coreIndex": 23
+          }
+        ],
+        "scope": "Five metal entries explicitly name whole and powdered turmeric. The named lead row gives 10 mg/kg without a dry-matter qualifier. The named arsenic row gives 0.1 mg/kg. Both aflatoxin entries name the spice category.",
+        "identityTest": {
+          "name": "Lead chromate",
+          "result": "Negative",
+          "page": 28
+        },
+        "rawRows": [
+          {
+            "name": "Lead",
+            "article": "Turmeric whole and powder",
+            "maximum": 10,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 22
+          },
+          {
+            "name": "Copper",
+            "article": "Turmeric whole and powder",
+            "maximum": 5,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 23
+          },
+          {
+            "name": "Arsenic",
+            "article": "Turmeric whole and powder",
+            "maximum": 0.1,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 26
+          },
+          {
+            "name": "Tin",
+            "article": "Turmeric whole and powder",
+            "maximum": 0.01,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 27
+          },
+          {
+            "name": "Cadmium",
+            "article": "Turmeric whole and powder",
+            "maximum": 0.1,
+            "unit": "mg/kg",
+            "basis": "",
+            "pdfPage": 27
+          },
+          {
+            "name": "Total aflatoxins",
+            "article": "Spices/Spice Mix",
+            "maximum": 30,
+            "unit": "µg/kg",
+            "basis": "",
+            "pdfPage": 29
+          },
+          {
+            "name": "Aflatoxin B1",
+            "article": "Spices/Spice Mix",
+            "maximum": 15,
+            "unit": "µg/kg",
+            "basis": "",
+            "pdfPage": 29
+          }
+        ]
+      }
+    ],
+    "toxinKeys": [
+      {
+        "group": "total_aflatoxins",
+        "article": "Spices/Spice Mix"
+      },
+      {
+        "group": "aflatoxin_b1",
+        "article": "Spices/Spice Mix"
+      }
+    ],
+    "recipes": [
+      {
+        "number": "13.1",
+        "productId": "102-102-1-13-1-krishara-khichdi",
+        "ingredients": [
+          {
+            "key": "ginger",
+            "name": "Ardraka",
+            "serial": 4,
+            "tablePage": 88,
+            "methodPage": 88,
+            "stage": "The method adds ginger paste to heated ghee. Check whether a paste was purchased or prepared on site from an identified ingredient.",
+            "addedReferences": [
+              "Arsenic"
+            ]
+          },
+          {
+            "key": "turmeric",
+            "name": "Haridra",
+            "serial": 8,
+            "tablePage": 88,
+            "methodPage": 88,
+            "stage": "The method adds turmeric with the salt, roasted rice and pulses. It leaves the form of the supplied rhizome open.",
+            "addedReferences": [
+              "Copper",
+              "Arsenic",
+              "Tin",
+              "Cadmium",
+              "Total aflatoxins",
+              "Aflatoxin B1"
+            ]
+          }
+        ],
+        "sourceReviewResult": "The Krishara brief records ginger and turmeric independently. Five metal entries explicitly name whole and powdered turmeric. Confirmed dried ginger uses separate spice entries with their own reporting bases.",
+        "sourceReviewNextAction": "Identify each rhizome and its supplied form before processing. Check the lead-chromate requirement for whole or powdered turmeric separately from total lead."
+      },
+      {
+        "number": "14.6",
+        "productId": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+        "ingredients": [
+          {
+            "key": "ginger",
+            "name": "Ardraka",
+            "serial": 4,
+            "tablePage": 96,
+            "methodPage": 97,
+            "stage": "The first milk preparation uses small pieces of ginger. The method leaves the supplied drying status open.",
+            "addedReferences": [
+              "Arsenic"
+            ]
+          }
+        ],
+        "sourceReviewResult": "Confirmed dried ginger has four candidate raw-spice entries. The first preparation uses pieces of ginger, and that description alone leaves the supplier form open.",
+        "sourceReviewNextAction": "Document the ginger received separately from the selected flower. Assess each finished milk preparation on its own evidence."
+      }
+    ],
+    "boundaries": {
+      "recipeFormDefault": null,
+      "finishedProductLimitAssigned": false,
+      "pesticideDefaultAssigned": false,
+      "batchRelease": false
+    },
+    "addedLinks": 8,
+    "sources": {
+      "gazette": "https://www.fssai.gov.in/docs/food-law/notice-comment/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
+      "compendium": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "recipe": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+    }
   },
   "flowerSupplyReview": {
     "round": 82,

@@ -1,0 +1,28 @@
+{
+  "round":83,
+  "reviewedOn":"2026-11-19",
+  "report":"ctr-rhizome-spices-r83-2026-11-19.md",
+  "spiceStandard":{"url":"https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt%20Spices%20Condiments%20and%20related%20products.pdf","sha256":"7f7cd2a3a5efd6f114299872d45ef2b1b50260818bf695be6cefe4430547a447","pages":[17,18,27,28]},
+  "spices":[
+    {"key":"ginger","name":"Ginger","species":"Zingiber officinale Roscoe","productId":"12-12-2-dried-ginger-sonth-dried-adrak","clause":"2.9.11","whole":"Whole dried ginger rhizome","powder":"Single-ingredient dried ginger powder","wholePage":17,"powderPage":18,"compendiumPages":[3,8,14,14],
+     "metalKeys":[{"metal":"Lead","coreIndex":60},{"metal":"Arsenic","coreIndex":25}],
+     "scope":"The dried-spice lead entry specifies a dry-matter basis. The arsenic entry specifies neither an arsenic species nor a dry-matter basis."},
+    {"key":"turmeric","name":"Turmeric","species":"Curcuma longa L.","productId":"12-12-2-turmeric-haldi","clause":"2.9.18","whole":"Whole cured and dried turmeric bulbs or fingers","powder":"Single-ingredient dried turmeric powder","wholePage":27,"powderPage":28,"compendiumPages":[6,8,10,11,12,14,14],
+     "metalKeys":[{"metal":"Lead","coreIndex":158},{"metal":"Copper","coreIndex":28},{"metal":"Arsenic","coreIndex":91},{"metal":"Tin","coreIndex":29},{"metal":"Cadmium","coreIndex":23}],
+     "scope":"Five metal entries explicitly name whole and powdered turmeric. The named lead row gives 10 mg/kg without a dry-matter qualifier. The named arsenic row gives 0.1 mg/kg. Both aflatoxin entries name the spice category.",
+     "identityTest":{"name":"Lead chromate","result":"Negative","page":28}}
+  ],
+  "toxinKeys":[{"group":"total_aflatoxins","article":"Spices/Spice Mix"},{"group":"aflatoxin_b1","article":"Spices/Spice Mix"}],
+  "recipes":[
+    {"number":"13.1","productId":"102-102-1-13-1-krishara-khichdi","ingredients":[
+      {"key":"ginger","name":"Ardraka","serial":4,"tablePage":88,"methodPage":88,"stage":"The method adds ginger paste to heated ghee. Check whether a paste was purchased or prepared on site from an identified ingredient."},
+      {"key":"turmeric","name":"Haridra","serial":8,"tablePage":88,"methodPage":88,"stage":"The method adds turmeric with the salt, roasted rice and pulses. It leaves the form of the supplied rhizome open."}],
+     "sourceReviewResult":"The Krishara brief records ginger and turmeric independently. Five metal entries explicitly name whole and powdered turmeric. Confirmed dried ginger uses separate spice entries with their own reporting bases.",
+     "sourceReviewNextAction":"Identify each rhizome and its supplied form before processing. Check the lead-chromate requirement for whole or powdered turmeric separately from total lead."},
+    {"number":"14.6","productId":"102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk","ingredients":[
+      {"key":"ginger","name":"Ardraka","serial":4,"tablePage":96,"methodPage":97,"stage":"The first milk preparation uses small pieces of ginger. The method leaves the supplied drying status open."}],
+     "sourceReviewResult":"Confirmed dried ginger has four candidate raw-spice entries. The first preparation uses pieces of ginger, and that description alone leaves the supplier form open.",
+     "sourceReviewNextAction":"Document the ginger received separately from the selected flower. Assess each finished milk preparation on its own evidence."}
+  ],
+  "boundaries":{"recipeFormDefault":null,"finishedProductLimitAssigned":false,"pesticideDefaultAssigned":false,"batchRelease":false}
+}

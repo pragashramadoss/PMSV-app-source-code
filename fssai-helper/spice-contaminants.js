@@ -20,11 +20,14 @@
     });
   }
 
-  function table(rows, gazette, tableClass, rowClass) {
-    const body = rows.map(row => '<tr class="' + escape(rowClass) + '"><th scope="row">' + escape(row.name) +
+  function table(rows, gazette, tableClass, rowClass, compendium) {
+    const body = rows.map((row, index) => '<tr class="' + escape(rowClass) + '"><th scope="row">' + escape(row.name) +
       '</th><td>Maximum ' + escape(row.maximum) + ' ' + escape(row.unit) + (row.basis ? ' · dry matter' : '') +
       '<br><a class="source-ref" href="' + escape(gazette.url + '#page=' + row.pdfPage) +
-      '" target="_blank" rel="noopener noreferrer">Gazette p. ' + escape(row.pdfPage) + ' ↗</a></td></tr>').join('');
+      '" target="_blank" rel="noopener noreferrer">Gazette p. ' + escape(row.pdfPage) + ' ↗</a>' +
+      (compendium ? '<br><a class="source-ref" target="_blank" rel="noopener noreferrer" href="' +
+        escape(compendium.url + '#page=' + compendium.pages[index]) + '">Compendium p. ' + escape(compendium.pages[index]) + ' ↗</a>' : '') +
+      '</td></tr>').join('');
     return '<table class="methodtable ' + escape(tableClass) + '"><caption>FSSAI contaminant references for the raw spice</caption>' +
       '<thead><tr><th scope="col">Analyte</th><th scope="col">Spice article maximum</th></tr></thead><tbody>' + body + '</tbody></table>';
   }

@@ -15,7 +15,7 @@ const review = register.recipeFlowerReview;
 const [named, aromatic] = review.recipes;
 const [ketaki, jati, dadima, punnaga] = named.flowers;
 const earlier = register.hinguReview.coverage;
-const current = register.ayurvedaIngredientCoverage;
+const current = review.coverage;
 
 assert.equal(validateReview(register, catalogue).ok, true);
 assert.deepEqual([review.round, current.ingredientRows, current.withCandidate, current.withoutCandidate, current.candidateLinks],

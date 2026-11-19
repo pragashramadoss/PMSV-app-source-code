@@ -25,7 +25,7 @@ assert.deepEqual(current.remainingInstances, previous.remainingInstances.filter(
 assert.equal(data.records.filter(row => row.legalArticleDecision === 'OPEN').length, 137);
 for (const id of [hingu.productId, hingu.recipeProductId]) {
   const record = data.records.find(row => row.id === id);
-  assert.deepEqual(record.reports[0], {round:80, file:hingu.report});
+  assert(record.reports.some(ref => ref.round === 80 && ref.file === hingu.report));
   assert(record.sourceReviewResult.includes(hingu.sourceReviewResult));
 }
 

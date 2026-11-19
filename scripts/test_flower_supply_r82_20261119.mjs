@@ -15,16 +15,16 @@ const catalogue = context.window.PMSV_CATALOGUE;
 const review = register.recipeFlowerReview;
 const [named, aromatic] = review.recipes;
 const supply = register.flowerSupplyReview;
-const coverage = register.ayurvedaIngredientCoverage;
+const coverage = review.coverage;
 assert.equal(validateReview(register, catalogue).ok, true);
-assert.deepEqual([register.latestRound, register.latestSourceReviewDate], [82,'2026-11-19']);
+assert.deepEqual([supply.round, supply.reviewedOn], [82,'2026-11-19']);
 assert.deepEqual([coverage.ingredientRows, coverage.withCandidate, coverage.withoutCandidate, coverage.candidateLinks], [46,35,11,104]);
 assert(coverage.remainingInstances.some(item => item.recipe === '14.7' && item.serial === 2));
-assert.equal(register.records.filter(row => row.reports[0]?.round === 82).length, 2);
+assert.equal(register.records.filter(row => row.reports.some(ref => ref.round === 82)).length, 2);
 for (const recipe of supply.recipes) {
   const record = register.records.find(row => row.id === recipe.productId);
-  assert.deepEqual(record.reports[0], {round:82, file:supply.report});
-  assert(record.sourceReviewResult.endsWith(recipe.sourceReviewResult));
+  assert(record.reports.some(ref => ref.round === 82 && ref.file === supply.report));
+  assert(record.sourceReviewResult.includes(recipe.sourceReviewResult));
   assert.equal(record.legalArticleDecision, 'OPEN');
 }
 

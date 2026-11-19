@@ -23,6 +23,7 @@
   if(id===data.fibreClaimsReview.productId)sourceNote+=fibreMarkup();
   const waterNote=data.waterSourceReview.records.find(x=>x.id===id);
   sourceNote += window.PMSVRecipeFlowers.markup(data.recipeFlowerReview, id);
+  sourceNote += window.PMSVRhizomeSpices.markup(data.rhizomeSpiceReview, id);
   if(waterNote)sourceNote+=waterMarkup(waterNote);
   const asafoetida=data.asafoetidaReview;
   if(id===asafoetida.productId||id===asafoetida.recipeProductId)sourceNote+=window.PMSVAsafoetida?.markup(asafoetida,id===asafoetida.recipeProductId)||'<p>Asafoetida reference unavailable.</p>';
@@ -101,10 +102,13 @@
   ' of ' + ingredientCoverage.ingredientRows + '</b> ingredient entries have at least one candidate raw-material reference. The supplied material and finished recipe require separate assessments.</p>' +
   '<details><summary>' + ingredientCoverage.withoutCandidate + ' ingredient entries awaiting a candidate reference</summary><ul>' + outstanding + '</ul></details>' +
   '<p>Recipe 14.7 lets you record an identified flower supply separately. The printed recipe leaves the species open.</p>' +
-  '<div class="controls"><button type="button" id="openNamedFlowers">Open flowers in recipe 14.6</button>' +
+  '<p>' + ingredientCoverage.candidateLinks + ' ingredient-to-article references are recorded across the recipes.</p>' +
+  '<div class="controls"><button type="button" id="openRhizomeRecipe">Open ginger and turmeric in recipe 13.1</button>' +
+  '<button type="button" id="openNamedFlowers">Open flowers in recipe 14.6</button>' +
   '<button type="button" id="openAromaticFlower">Open aromatic flowers in recipe 14.7</button></div>';
  lajadiPanel.insertAdjacentElement('afterend',ingredientPanel);
  const [namedFlowers, aromaticFlower] = data.recipeFlowerReview.recipes;
+ $('openRhizomeRecipe').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct(data.rhizomeSpiceReview.recipes[0].productId));
  $('openNamedFlowers').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct(namedFlowers.productId));
  $('openAromaticFlower').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct(aromaticFlower.productId));
  $('openLajadiBotanicals').addEventListener('click',()=>window.PMSV_HELPER_TEST?.selectProduct(lajadi.recipeProductId));

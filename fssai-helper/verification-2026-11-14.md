@@ -159,3 +159,9 @@ The [flower supply review](ctr-flower-supply-r82-2026-11-19.md) covers the suppl
 The printed 14.7 ingredient still has no single specified species. The register records 35 of 46 entries with candidate references and 11 entries awaiting a candidate. Revision-specific test results are recorded in draft PR #2.
 
 The downloadable HTML bundles the catalogue and application scripts. The browser check opens it from a local file with network access disabled, selects the 14.7 supply, exports its brief and verifies that source notes point to the corresponding revision. Official sources and review reports open online.
+
+## R83 · 19 November 2026
+
+The [ginger and turmeric source review](ctr-rhizome-spices-r83-2026-11-19.md) links the two spice catalogue entries and their three recipe ingredient occurrences. The data regression enumerates the Gazette’s named turmeric rows and checks every reported maximum, unit, reporting qualifier and source page against the corresponding Gazette record. The historical R81 coverage remains available alongside the 112 current ingredient-to-article links.
+
+Browser verification opens both spice products and both recipes, checks the six supplied forms, and exercises independent selections and lot references within Krishara. It tests the supplier brief from the standalone file with networking disabled, as well as the separate turmeric lead chromate test, the form resets and the exclusion of ginger paste and ginger cocktail catalogue pages. Revision-specific results accompany draft PR #2.

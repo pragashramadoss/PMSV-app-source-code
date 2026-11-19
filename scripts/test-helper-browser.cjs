@@ -94,7 +94,7 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  const choice = panel.getByLabel('Recipe flower', {exact:true});
  const confirmed = panel.getByRole('checkbox');
  const metals = panel.locator('[data-flower-metal]');
- assert.deepEqual([register.ayurvedaIngredientCoverage.withCandidate, register.ayurvedaIngredientCoverage.candidateLinks], [35,104]);
+ assert.deepEqual([review.coverage.withCandidate, review.coverage.candidateLinks], [35,104]);
  await progress.click();
  await page.locator('#openNamedFlowers').click();
  assert.equal(await panel.getAttribute('data-flower-product'), named.productId);
@@ -152,7 +152,7 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  await documentRef.fill('TEST-NAMED-9');
  const brief = await downloadBrief();
  assert(brief.includes('Current review register dated ' + register.latestSourceReviewDate));
- assert(brief.includes(named.sourceReviewResult) && brief.includes(base + register.flowerSupplyReview.report));
+ assert(brief.includes(named.sourceReviewResult) && brief.includes(base + register.records.find(row => row.id === named.productId).reports[0].file));
  assert(brief.includes('Supplier document or lot reference · TEST-NAMED-9'));
  assert(brief.includes('Lead · 10 mg/kg on a dry-matter basis.') && brief.includes('Arsenic · 5 mg/kg.'));
  assert(brief.includes(review.sources.gazette.url + '#page=24'));
@@ -236,8 +236,94 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  assert((await report.text()).includes('35 of 46'));
 }
 
+async function testRhizomeSpices(page, register, base, artifacts) {
+ const review = register.rhizomeSpiceReview;
+ const [ginger,turmeric] = review.spices;
+ const [khichdi,milk] = review.recipes;
+ const panel = key => page.locator('.rhizome-spice[data-spice="' + key + '"]');
+ const form = key => panel(key).getByLabel('Form of ' + key + ' supplied');
+ const ref = key => panel(key).locator('input');
+ async function brief() {
+  const wait = page.waitForEvent('download');
+  await page.getByRole('button',{name:'Export product review brief'}).click();
+  return fs.readFileSync(await (await wait).path(),'utf8');
+ }
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ assert.match(await page.locator('#ayurvedaIngredientCoverage').textContent(),/112 ingredient-to-article references/);
+ await page.getByRole('button',{name:'Open ginger and turmeric in recipe 13.1'}).click();
+ assert.equal(await page.locator('.rhizome-spice').count(),2);
+ for (const spice of review.spices) {
+  const key = spice.key;
+  assert.equal(await form(key).inputValue(),'');
+  assert.equal(await panel(key).locator('.rhizome-reference').count(),0);
+  assert.equal(await ref(key).isVisible(),false);
+  for (const value of ['whole','fresh','paste','other','unknown','powder']) {
+   await form(key).selectOption(value);
+   const eligible = value === 'whole' || value === 'powder';
+   const rows = panel(key).locator('.rhizome-reference');
+   assert.equal(await rows.count(),eligible ? spice.rawRows.length : 0);
+   assert.equal(await ref(key).inputValue(),'');
+   if (!eligible) continue;
+   for (const [i,row] of spice.rawRows.entries()) {
+    const shown = rows.nth(i);
+    assert.equal(await shown.locator('th').textContent(),row.name);
+    assert((await shown.innerText()).includes(row.maximum + ' ' + row.unit));
+    assert.equal(await shown.locator('a').first().getAttribute('href'),review.sources.gazette + '#page=' + row.pdfPage);
+    assert.equal(await shown.locator('a').last().getAttribute('href'),review.sources.compendium + '#page=' + spice.compendiumPages[i]);
+   }
+   assert.equal((await panel(key).innerText()).includes('Lead chromate test · Negative'), key === 'turmeric');
+   await ref(key).fill('LOT-' + key);
+  }
+ }
+ const both = await brief();
+ assert(both.includes('LOT-ginger') && both.includes('LOT-turmeric'));
+ assert(both.includes('Arsenic · 5 mg/kg') && both.includes('Arsenic · 0.1 mg/kg'));
+ assert(both.includes('Lead · 10 mg/kg on a dry-matter basis') && both.includes('Lead · 10 mg/kg ·'));
+ assert(both.includes('Separate lead chromate test · Negative'));
+ assert(both.includes(base + review.report));
+ await form('ginger').selectOption('paste');
+ assert.equal(await ref('ginger').inputValue(),'');
+ assert.equal(await ref('turmeric').inputValue(),'LOT-turmeric');
+ const changed = await brief();
+ assert(!changed.includes('LOT-ginger') && !changed.includes('Arsenic · 5 mg/kg'));
+ assert(changed.includes('Arsenic · 0.1 mg/kg') && changed.includes('LOT-turmeric'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:900});
+  assert(await panel('turmeric').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
+  if (width === 390) await panel('turmeric').screenshot({path:path.join(artifacts,'turmeric-390.png'),animations:'disabled',
+   style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),milk.productId);
+ assert.equal(await panel('turmeric').count(),0);
+ assert.equal(await form('ginger').inputValue(),'');
+ assert.equal(await page.locator('.recipe-flower-note').count(),1);
+ await form('ginger').selectOption('whole');
+ await ref('ginger').fill('MILK-INPUT');
+ assert((await brief()).includes('MILK-INPUT'));
+ for (const spice of [turmeric,ginger]) {
+  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),spice.productId);
+  assert.equal(await page.locator('.rhizome-spice').count(),1);
+  assert.equal(await form(spice.key).inputValue(),'');
+  await form(spice.key).selectOption('powder');
+  const individual = await brief();
+  assert(individual.includes('Current focused reviews: R83') && individual.includes(base + review.report));
+  assert(!individual.includes('MILK-INPUT'));
+ }
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),khichdi.productId);
+ assert.equal(await form('turmeric').inputValue(),'');
+ assert.equal(await ref('ginger').inputValue(),'');
+ for (const id of ['ginger-cocktail','04-04-2-ginger-paste']) {
+  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),id);
+  assert.equal(await page.locator('.rhizome-spice').count(),0);
+  assert(!(await brief()).includes('Candidate references for the supplied raw material'));
+ }
+ const report = await page.request.get(base + review.report);
+ assert.equal(report.status(),200);
+ assert((await report.text()).includes('112 ingredient-to-article links'));
+}
+
 async function testPortableHelper(browser, register) {
- const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R82.html');
+ const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
  const context = await browser.newContext({acceptDownloads:true, offline:true, viewport:{width:390,height:844}});
  try {
@@ -264,6 +350,17 @@ async function testPortableHelper(browser, register) {
   assert(text.includes(sourceBase + register.flowerSupplyReview.report));
   const reportLink = page.getByRole('link', {name:'R82 source review ↗',exact:true});
   assert.equal(await reportLink.evaluate(link => link.href), sourceBase + register.flowerSupplyReview.report);
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  await page.getByRole('button',{name:'Open ginger and turmeric in recipe 13.1'}).click();
+  await page.getByLabel('Form of turmeric supplied').selectOption('whole');
+  await page.getByLabel('Supplier document or lot reference for turmeric (optional)').fill('OFFLINE-HALDI');
+  await page.getByLabel('Form of ginger supplied').selectOption('fresh');
+  const spiceDownload = page.waitForEvent('download');
+  await page.locator('#briefBtn').click();
+  const spiceText = fs.readFileSync(await (await spiceDownload).path(),'utf8');
+  assert(spiceText.includes('OFFLINE-HALDI') && spiceText.includes('Arsenic · 0.1 mg/kg'));
+  assert(!spiceText.includes('Arsenic · 5 mg/kg') && !spiceText.includes('OFFLINE-REFERENCE'));
+  assert(spiceText.includes(sourceBase + register.rhizomeSpiceReview.report));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -559,6 +656,7 @@ let browser;
  assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
  await testHingu(page, data, base, artifacts);
  await testRecipeFlowers(page, data, base, artifacts);
+ await testRhizomeSpices(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -642,8 +740,8 @@ let browser;
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
-  ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:104});
- Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true});
+  ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
+ Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
