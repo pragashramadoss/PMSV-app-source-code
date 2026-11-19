@@ -57,7 +57,9 @@
 
   function forms(spice) {
     return new Map([['whole',spice.whole],['powder',spice.powder],['fresh','Fresh rhizome'],
-      ['paste','Purchased paste or juice'],['other','Blend, extract or another form'],['unknown','Form unconfirmed']]);
+      ['paste',spice.key === 'ginger' ? 'Purchased ginger paste' : 'Purchased paste or juice'],
+      ...(spice.key === 'ginger' ? [['onsite','Paste ground on site'],['juice','Ginger juice']] : []),
+      ['other','Blend, extract or another form'],['unknown','Form unconfirmed']]);
   }
 
   function eligible(form) { return form === 'whole' || form === 'powder'; }
@@ -98,7 +100,7 @@
     }).join('');
   }
 
-  function briefLines(review, id, container) {
+  function briefLines(review, id, container, paste) {
     if (!container) return [];
     const lines = [];
     for (const {spice,ingredient,recipe} of entries(review,id)) {
@@ -109,10 +111,14 @@
       lines.push('',spice.name + ' · raw ingredient', 'Supplied form · ' + (label || 'Unconfirmed'));
       if (ingredient) lines.push('Recipe ' + recipe.number + ', ingredient ' + ingredient.serial + ' · ' + ingredient.name +
         '. ' + ingredient.stage + ' ' + review.sources.recipe + '#page=' + ingredient.methodPage);
-      const ref = panel.querySelector('input').value.replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g,' ').trim().slice(0,160);
+      const ref = panel.querySelector('.rhizome-lot input').value.replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g,' ').trim().slice(0,160);
       if (label && ref) lines.push('Supplier document or lot reference · ' + ref);
       if (!eligible(selected)) {
-        lines.push('The supplied form needs confirmation or separate assessment. No raw limits selected.');
+        const note = paste && root.PMSVGingerPaste.supplyNote(paste,id,spice.key,selected);
+        if (note) lines.push(note);
+        else if (!(paste && spice.key === 'ginger' && selected === 'paste' && id === paste.recipe.productId)) {
+          lines.push('The supplied form needs confirmation or separate assessment. No raw limits selected.');
+        }
         continue;
       }
       lines.push(spice.scope,'Candidate references for the supplied raw material');
@@ -137,8 +143,10 @@
     const entry = entries(review,panel.dataset.product).find(item => item.spice.key === panel.dataset.spice);
     if (!entry) return;
     const form = event.target.value;
-    panel.querySelector('input').value = '';
+    panel.querySelector('.rhizome-lot input').value = '';
     panel.querySelector('.rhizome-lot').hidden = !forms(entry.spice).has(form);
-    panel.querySelector('.rhizome-result').innerHTML = result(review,entry.spice,form);
+    const paste = root.PMSV_REVIEW_REGISTER.gingerPasteReview;
+    panel.querySelector('.rhizome-result').innerHTML = root.PMSVGingerPaste.supplyMarkup(paste,panel.dataset.product,entry.spice.key,form) ||
+      result(review,entry.spice,form);
   });
 })(typeof globalThis === 'object' ? globalThis : this);

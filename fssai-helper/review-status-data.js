@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-19",
-  "latestRound": 83,
+  "latestRound": 84,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -48,7 +48,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-hingu-asafoetida-r80-2026-11-18.json",
     "ctr-recipe-flowers-r81-2026-11-18.json",
     "ctr-flower-supply-r82-2026-11-19.json",
-    "ctr-rhizome-spices-r83-2026-11-19.json"
+    "ctr-rhizome-spices-r83-2026-11-19.json",
+    "ctr-ginger-paste-r84-2026-11-19.json"
   ],
   "records": [
     {
@@ -1588,6 +1589,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 84,
+          "file": "ctr-ginger-paste-r84-2026-11-19.md"
+        },
+        {
           "round": 83,
           "file": "ctr-rhizome-spices-r83-2026-11-19.md"
         },
@@ -1613,8 +1618,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted. R80 links confirmed food-grade dried Ferula gum resin to four candidate FSSAI spice articles. The 2025 Chapter 2.9 compendium reproduces the 11 earlier grade-specific purity values. Five FSSAI laboratory methods and the Indian Standard starch method now have page references. The Krishara brief records ginger and turmeric independently. Five metal entries explicitly name whole and powdered turmeric. Confirmed dried ginger uses separate spice entries with their own reporting bases.",
-      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe. Confirm the grade, species, plant part, drying and composition from the supply documents. Record the laboratory method and reporting basis. The original U.S.P. 1936 comparison, actual raw-material applicability and the finished-food article require separate review. Identify each rhizome and its supplied form before processing. Check the lead-chromate requirement for whole or powdered turmeric separately from total lead.",
+      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. R76 reconciles 11 grade-specific asafoetida purity limits between the 2011 original Gazette and the retrieved 2024 FSSAI compendium. Recipe 13.1 ingredient 5 is Hingu, oleoresin gum; compounded Hing is not automatically substituted. R80 links confirmed food-grade dried Ferula gum resin to four candidate FSSAI spice articles. The 2025 Chapter 2.9 compendium reproduces the 11 earlier grade-specific purity values. Five FSSAI laboratory methods and the Indian Standard starch method now have page references. The Krishara brief records ginger and turmeric independently. Five metal entries explicitly name whole and powdered turmeric. Confirmed dried ginger uses separate spice entries with their own reporting bases. The method adds ginger paste. When the supplied article is identified as purchased ginger paste, two composition checks are available for that ingredient lot.",
+      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Confirm the supplied asafoetida grade, botanical identity and composition, the purity criteria adopted under regulation 3(5), applicable analytical methods and subsequent amendments. Ingredient purity does not resolve CTR limits or approve the Khichdi recipe. Confirm the grade, species, plant part, drying and composition from the supply documents. Record the laboratory method and reporting basis. The original U.S.P. 1936 comparison, actual raw-material applicability and the finished-food article require separate review. Identify each rhizome and its supplied form before processing. Check the lead-chromate requirement for whole or powdered turmeric separately from total lead. Identify the supplied ginger and check its formulation against the printed recipe before assessing its use in Krishara.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -3571,6 +3576,66 @@ window.PMSV_REVIEW_REGISTER = {
       "gazette": "https://www.fssai.gov.in/docs/food-law/notice-comment/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
       "compendium": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "recipe": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+    }
+  },
+  "gingerPasteReview": {
+    "round": 84,
+    "reviewedOn": "2026-11-19",
+    "report": "ctr-ginger-paste-r84-2026-11-19.md",
+    "productId": "04-04-2-ginger-paste",
+    "clause": "2.3.28",
+    "tableRow": 4,
+    "recipe": {
+      "productId": "102-102-1-13-1-krishara-khichdi",
+      "number": "13.1",
+      "ingredient": "Ardraka",
+      "serial": 4,
+      "sourceReviewResult": "The method adds ginger paste. When the supplied article is identified as purchased ginger paste, two composition checks are available for that ingredient lot.",
+      "sourceReviewNextAction": "Identify the supplied ginger and check its formulation against the printed recipe before assessing its use in Krishara."
+    },
+    "criteria": [
+      {
+        "key": "solids",
+        "label": "Total soluble solids",
+        "basis": "Salt-free, % (m/m)",
+        "otherBasis": "Uncorrected °Brix or another basis",
+        "minimum": 3
+      },
+      {
+        "key": "acidity",
+        "label": "Acidity",
+        "basis": "% as acetic acid",
+        "otherBasis": "pH or another acid basis",
+        "minimum": 1
+      }
+    ],
+    "rigidFillMinimumPercent": 90,
+    "acidityProposal": {
+      "date": "2024-06-05",
+      "status": "draft",
+      "exemptionApplied": false
+    },
+    "sources": {
+      "proposal": {
+        "url": "https://www.fssai.gov.in/upload/uploadfiles/files/food%20product.pdf",
+        "page": 14,
+        "sha256": "2a01d2b18e8d01f92e496991eb67f1d77956f39b97e0994dcf6e63bb4f564d8c"
+      },
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "page": 62,
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "page": 34,
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
+      },
+      "recipe": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
+        "page": 88,
+        "sha256": "498d6f579357e7bb8e8d7b9f7741db5863f6eea8d29ffd559ff9add7d32d7edc"
+      }
     }
   },
   "flowerSupplyReview": {

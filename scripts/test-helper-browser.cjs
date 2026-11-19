@@ -242,7 +242,7 @@ async function testRhizomeSpices(page, register, base, artifacts) {
  const [khichdi,milk] = review.recipes;
  const panel = key => page.locator('.rhizome-spice[data-spice="' + key + '"]');
  const form = key => panel(key).getByLabel('Form of ' + key + ' supplied');
- const ref = key => panel(key).locator('input');
+ const ref = key => panel(key).locator('.rhizome-lot input');
  async function brief() {
   const wait = page.waitForEvent('download');
   await page.getByRole('button',{name:'Export product review brief'}).click();
@@ -333,6 +333,101 @@ async function testRhizomeSpices(page, register, base, artifacts) {
  assert((await report.text()).includes('112 ingredient-to-article links'));
 }
 
+async function readProductBrief(page) {
+ const downloading = page.waitForEvent('download');
+ await page.getByRole('button',{name:'Export product review brief'}).click();
+ return fs.readFileSync(await (await downloading).path(),'utf8');
+}
+
+async function testGingerPaste(page, register, base, artifacts) {
+ const review = register.gingerPasteReview;
+ const panel = page.locator('.ginger-paste-check');
+ const solids = panel.getByRole('group',{name:'Total soluble solids',exact:true});
+ const acidity = panel.getByRole('group',{name:'Acidity',exact:true});
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.getByRole('button',{name:'Open ginger paste product',exact:true}).click();
+ assert.equal(await panel.getAttribute('data-product'),review.productId);
+ assert.equal(await panel.getByText('Awaiting a result',{exact:true}).count(),2);
+ await page.locator('#paste-lot').fill('GP-SUPPLIER-104');
+ await solids.getByLabel('Reported result').fill('3.0');
+ assert.equal(await solids.locator('.paste-outcome').innerText(),'Confirm the reporting basis');
+ await solids.getByLabel('Laboratory reporting basis').selectOption('other');
+ assert.match(await solids.locator('.paste-outcome').innerText(),/cannot compare/);
+ await solids.getByLabel('Laboratory reporting basis').selectOption('stated');
+ assert.equal(await solids.locator('.paste-outcome').innerText(),'Meets this minimum');
+ await acidity.getByLabel('Laboratory reporting basis').selectOption('stated');
+ await acidity.getByLabel('Reported result').fill('0.99');
+ assert.equal(await acidity.locator('.paste-outcome').innerText(),'Below this minimum');
+ await acidity.locator('summary').click();
+ assert((await acidity.locator('details').innerText()).includes('A June 2024 draft proposes'));
+ assert.equal(await acidity.getByRole('link',{name:'Draft · p. 14 ↗'}).getAttribute('href'),review.sources.proposal.url + '#page=14');
+ await acidity.locator('summary').click();
+ const own = await readProductBrief(page);
+ assert(own.includes(review.sources.proposal.url + '#page=14'));
+ assert(own.includes('Reported 3.0 · Salt-free, % (m/m) · Meets this minimum'));
+ assert(own.includes('Reported 0.99 · % as acetic acid · Below this minimum'));
+ assert(own.includes('GP-SUPPLIER-104') && own.includes(base + review.report));
+ assert(own.includes(review.sources.gazette.url+'#page=62') && own.includes(review.sources.chapter.url+'#page=34'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:900});
+  assert(await panel.evaluate(el => el.scrollWidth <= el.clientWidth + 1));
+  assert(await panel.locator('select,input').evaluateAll(fields => fields.every(f => f.getBoundingClientRect().right <= f.closest('section').getBoundingClientRect().right + 1)));
+  if (width === 390) await panel.screenshot({path:path.join(artifacts,'ginger-paste-390.png'),animations:'disabled',
+   style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),review.recipe.productId);
+ assert.equal(await panel.count(),0);
+ const form=page.getByLabel('Form of ginger supplied');
+ const turmeric=page.getByLabel('Form of turmeric supplied');
+ await turmeric.selectOption('powder');
+ await form.selectOption('paste');
+ assert.equal(await panel.getAttribute('data-product'),review.recipe.productId);
+ assert.equal(await panel.locator('#paste-lot').count(),0);
+ const supplier=page.getByLabel('Supplier document or lot reference for ginger (optional)');
+ await supplier.fill('GP-KRISHARA-222');
+ await acidity.getByLabel('Laboratory reporting basis').selectOption('other');
+ await acidity.getByLabel('Reported result').fill('4.1');
+ const recipe = await readProductBrief(page);
+ assert(recipe.includes('GP-KRISHARA-222') && !recipe.includes('GP-SUPPLIER-104'));
+ assert(recipe.includes('Reported 4.1 · pH or another acid basis · Different reporting basis · cannot compare'));
+ assert(recipe.includes('Awaiting a result') && recipe.includes('Arsenic · 0.1 mg/kg') && !recipe.includes('Arsenic · 5 mg/kg'));
+ assert(recipe.includes(review.sources.recipe.url+'#page=88'));
+ for (const other of ['juice','onsite','other','fresh','unknown']) {
+  await form.selectOption(other);
+  assert.equal(await panel.count(),0);
+  const changed = await readProductBrief(page);
+  assert(!changed.includes('GP-KRISHARA-222') && !changed.includes('Ginger paste · composition'));
+  assert.equal(await turmeric.inputValue(),'powder');
+ }
+ await form.selectOption('paste');
+ assert.equal(await acidity.getByLabel('Reported result').inputValue(),'');
+ assert.equal(await acidity.getByLabel('Laboratory reporting basis').inputValue(),'');
+ for (const id of [register.rhizomeSpiceReview.spices[0].productId, register.rhizomeSpiceReview.recipes[1].productId]) {
+  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),id);
+  await form.selectOption('paste');
+  assert.equal(await panel.count(),0);
+  const ginger=page.locator('.rhizome-spice[data-spice="ginger"]');
+  if (id === register.rhizomeSpiceReview.recipes[1].productId) assert((await ginger.innerText()).includes('pieces of ginger'));
+  await ginger.getByRole('button',{name:'Open ginger paste product'}).click();
+  assert.equal(await panel.getAttribute('data-product'),review.productId);
+  assert.equal(await page.locator('#paste-lot').inputValue(),'');
+ }
+ for (const id of ['12-12-6-culinary-pastes','ginger-cocktail']) {
+  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id),id);
+  assert.equal(await panel.count(),0);
+  assert(!(await readProductBrief(page)).includes('Ginger paste · composition'));
+ }
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ const downloading = page.waitForEvent('download');
+ await page.locator('#exportReviewJSON').click();
+ const all = fs.readFileSync(await (await downloading).path(),'utf8');
+ assert(!all.includes('GP-SUPPLIER-104') && !all.includes('GP-KRISHARA-222'));
+ assert.deepEqual(JSON.parse(all).gingerPasteReview,review);
+ const response=await page.request.get(base+review.report);
+ assert.equal(response.status(),200);
+ assert((await response.text()).includes('90% of water capacity'));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -372,6 +467,16 @@ async function testPortableHelper(browser, register) {
   assert(spiceText.includes('OFFLINE-HALDI') && spiceText.includes('Arsenic · 0.1 mg/kg'));
   assert(!spiceText.includes('Arsenic · 5 mg/kg') && !spiceText.includes('OFFLINE-REFERENCE'));
   assert(spiceText.includes(sourceBase + register.rhizomeSpiceReview.report));
+  await page.getByLabel('Form of ginger supplied').selectOption('paste');
+  await page.getByLabel('Supplier document or lot reference for ginger (optional)').fill('OFFLINE-GINGER-PASTE');
+  await page.locator('#paste-solids-basis').selectOption('stated');
+  await page.locator('#paste-solids-result').fill('2.95');
+  const pasteText = await readProductBrief(page);
+  assert(pasteText.includes('OFFLINE-GINGER-PASTE') && pasteText.includes('OFFLINE-HALDI'));
+  assert(pasteText.includes('Reported 2.95 · Salt-free, % (m/m) · Below this minimum'));
+  assert(pasteText.includes('Awaiting a result') && pasteText.includes(sourceBase + register.gingerPasteReview.report));
+  assert.equal(await page.locator('.ginger-paste-check').getByRole('link',{name:'Ginger-paste source review ↗'}).evaluate(a=>a.href),
+   sourceBase + register.gingerPasteReview.report);
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -668,6 +773,7 @@ let browser;
  await testHingu(page, data, base, artifacts);
  await testRecipeFlowers(page, data, base, artifacts);
  await testRhizomeSpices(page, data, base, artifacts);
+ await testGingerPaste(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -753,6 +859,7 @@ let browser;
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
+ Object.assign(result,{gingerPasteCriteriaTested:2,gingerPasteRecipeAndCatalogueTested:true,gingerPasteOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');

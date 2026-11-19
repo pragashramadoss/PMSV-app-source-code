@@ -4,6 +4,7 @@
  const juniper = typeof module === 'object' && module.exports ? require('./juniper-spice-r79.js') : root.PMSVJuniperSpice;
  const hingu = typeof module === 'object' && module.exports ? require('./hingu-asafoetida-r80.js') : root.PMSVHingu;
  const flowers = typeof module === 'object' && module.exports ? require('./recipe-flowers-r81.js') : root.PMSVRecipeFlowers;
+ const paste = typeof module === 'object' && module.exports ? require('./ginger-paste.js') : root.PMSVGingerPaste;
  const rhizomes = typeof module === 'object' && module.exports ? require('./rhizome-spices.js') : root.PMSVRhizomeSpices;
  const denied=reason=>({ok:false,reason,legalProductApproval:false,batchRelease:false});
  function catalogueStatus(rows){
@@ -19,7 +20,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==83||data.latestSourceReviewDate!=='2026-11-19')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==84||data.latestSourceReviewDate!=='2026-11-19')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -268,6 +269,7 @@
   if (!rhizomes?.validReview(data.rhizomeSpiceReview, floral, data.ayurvedaIngredientCoverage, rows, data.records)) {
    return denied('Ginger or turmeric evidence is inconsistent.');
   }
+  if (!paste?.validReview(data.gingerPasteReview, data, rows)) return denied('Ginger-paste composition references are inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

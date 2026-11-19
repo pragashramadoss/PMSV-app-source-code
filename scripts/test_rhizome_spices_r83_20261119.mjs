@@ -17,7 +17,8 @@ const previous = register.recipeFlowerReview.coverage;
 const current = register.ayurvedaIngredientCoverage;
 const gazette = JSON.parse(read('ctr-original-gazette-concordance-r70-2026-11-14.json'));
 assert.equal(validateReview(register,catalogue).ok, true);
-assert.equal(register.latestRound, 83);
+assert.equal(review.round, 83);
+assert(register.latestRound >= review.round);
 assert.deepEqual([current.candidateLinks, current.withCandidate, current.withoutCandidate, current.ingredientRows], [112,35,11,46]);
 assert.deepEqual(current, {...previous,candidateLinks:previous.candidateLinks + 8});
 assert.deepEqual(review.recipes.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.addedReferences.length)),[1,6,1]);
@@ -56,7 +57,7 @@ for (const spice of review.spices) {
       assert.equal(html.includes(review.sources.compendium + '#page=' + spice.compendiumPages[i] + '"'),eligible);
     }
     const container = {querySelector:() => ({dataset:{product:spice.productId},
-      querySelector:selector => ({value:selector === 'input' ? 'LOT-9\nLine' : form})})};
+      querySelector:selector => ({value:selector === '.rhizome-lot input' ? 'LOT-9\nLine' : form})})};
     const lines = helper.briefLines(review,spice.productId,container);
     assert.equal(lines.some(line => line.startsWith('Arsenic · ')),eligible);
     assert.equal(lines.some(line => line.startsWith('Separate lead chromate')),eligible && spice === turmeric);

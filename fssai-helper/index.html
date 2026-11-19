@@ -25,6 +25,11 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .juniper-scope{margin:18px 0;padding:12px 0;border-block:1px solid var(--line,#d5dedc)}
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
 .rhizome-spice select,.rhizome-spice input{width:100%;max-width:100%;box-sizing:border-box}.rhizome-spice label{display:block;margin-top:10px}.rhizome-spice .methodtable{width:100%;min-width:0;table-layout:fixed}.rhizome-spice .methodtable th,.rhizome-spice .methodtable td{min-width:0;width:auto;padding:8px;overflow-wrap:normal}.rhizome-spice .methodtable th:first-child{width:38%}.rhizome-spice .methodtable .source-ref{display:inline-block;padding:3px 0;margin:1px 0;border:0;background:transparent;line-height:1.4;text-decoration:underline;text-underline-offset:2px;overflow-wrap:normal;white-space:nowrap}.rhizome-spice .source-ref{white-space:normal}.rhizome-spice .controls{margin-top:9px;gap:5px}
+.ginger-paste-check .paste-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:14px 0}
+.ginger-paste-check .paste-criterion{min-width:0;background:#f3f7fa;border:1px solid #d3dfe5;border-radius:8px;padding:12px}
+.ginger-paste-check .paste-criterion h5{font-size:1rem;margin:0}.ginger-paste-check .paste-criterion p{margin:.4rem 0}
+.ginger-paste-check label{display:block;margin-top:.65rem}.ginger-paste-check input,.ginger-paste-check select{width:100%;max-width:100%;min-width:0}
+.ginger-paste-check .paste-outcome{font-weight:650}.ginger-paste-check summary{cursor:pointer}.ginger-paste-check .controls{gap:.4rem}
 .recipe-flower-note select,.recipe-flower-note input[type=text]{width:100%;max-width:100%;box-sizing:border-box}
 .recipe-flower-note label[for]{display:block;margin-top:12px}
 .recipe-flower-note .controls{gap:.4rem}
@@ -184,9 +189,10 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
 <script src="recipe-flowers-r81.js?v=20261119-r83"></script>
-<script src="rhizome-spices.js?v=20261119-r83"></script>
-<script src="review-status.js?v=20261119-r83"></script>
-<script src="review-status-data.js?v=20261119-r83"></script>
+<script src="ginger-paste.js?v=20261119-r84"></script>
+<script src="rhizome-spices.js?v=20261119-r84"></script>
+<script src="review-status.js?v=20261119-r84"></script>
+<script src="review-status-data.js?v=20261119-r84"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -206,7 +212,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261119-r83"></script>
+<script src="review-status-ui.js?v=20261119-r84"></script>
 <script>
 'use strict';
 (()=>{
@@ -260,8 +266,9 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   const register=window.PMSVReviewUI?.available ? window.PMSV_REVIEW_REGISTER : null;
   const current=register?.records.find(row=>row.id===c.id);
   const spiceReview=register?.rhizomeSpiceReview;
-  const isStandaloneSpice=spiceReview?.spices.some(spice=>spice.productId===c.id);
-  const reports=current?.reports || (isStandaloneSpice ? [{round:spiceReview.round,file:spiceReview.report}] : []);
+  const paste=register?.gingerPasteReview;
+  const standalone=spiceReview?.spices.some(spice=>spice.productId===c.id) ? spiceReview : (paste?.productId===c.id ? paste : null);
+  const reports=current?.reports || (standalone ? [{round:standalone.round,file:standalone.report}] : []);
   const text=['PMSV FSSAI HELPER — RESEARCH BRIEF','Historical finding dated 2026-10-30',
   register?'Current review register dated '+register.latestSourceReviewDate:'Current review register unavailable','Research only — not regulatory PASS or product release','',
   'Product: '+c.product,'Catalog ID: '+c.id,'Category: '+(c.fcs||'Unconfirmed'),'FSSR: '+(c.fssr||'Unconfirmed'),
@@ -269,9 +276,10 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   'Next evidence: '+(ck.nextEvidence||c.nextAction),'Checkpoint analyte: '+(ck.analyte||'Not in 31–60 register'),'Checkpoint caution: '+(ck.sourceCaution||''),
   'Current focused reviews: '+(reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
   ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction]:[]),
-  ...reports.slice(0,1).map(r=>'Latest source review: '+new URL(r.file,document.baseURI).href),
+  ...reports.map((r,i)=>(i ? 'Earlier source review: ' : 'Latest source review: ')+new URL(r.file,document.baseURI).href),
   ...(current ? window.PMSVRecipeFlowers.briefLines(register.recipeFlowerReview, c.id, document.querySelector('.recipe-flower-note')) : []),
-  ...(spiceReview ? window.PMSVRhizomeSpices.briefLines(spiceReview, c.id, document.getElementById('productDetail')) : []),
+  ...(spiceReview ? window.PMSVRhizomeSpices.briefLines(spiceReview, c.id, document.getElementById('productDetail'), paste) : []),
+  ...(paste ? window.PMSVGingerPaste.briefLines(paste, c.id, document.getElementById('productDetail')) : []),
   'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}
