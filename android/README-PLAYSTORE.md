@@ -1,4 +1,4 @@
-# PMSV Android 2.1.0
+# PMSV Android 2.1.1
 
 The Google Play package now builds the same native PMSV interface as the website
 installer. Home, feeds, search, bookmarks, settings and notifications use Compose.
@@ -11,7 +11,7 @@ Audits and FSSAI Licence are packaged offline tools within the shared app shell.
 | Existing Google Play listing | com.pmsvgroup.foodsafety | :play-app release AAB | Existing Play upload key |
 | Website / existing preview installs | com.pmsvgroup.foodsafety.preview | :native-app release APK | Retained private preview signing key |
 
-Both are version 2.1.0, versionCode 11, target SDK 36 and minimum SDK 26.
+Both are version 2.1.1, versionCode 12, target SDK 36 and minimum SDK 26.
 Both show PMSV as the launcher name. They compile identical sources and tools.
 Debug builds add .debug and are never distributed.
 
@@ -30,7 +30,7 @@ key. Never commit passwords, private keys or CI debug-signed installers.
 
 ## Play Console handoff
 
-Upload PMSV-2.1.0-Play-Upload-Signed.aab to the existing app and testing track.
+Upload PMSV-2.1.1-Play-Upload-Signed.aab to the existing app and testing track.
 Do not create a new Play listing. Review the release and Data safety declaration,
 then submit it. Building or signing an AAB does not publish it to Google Play.
 

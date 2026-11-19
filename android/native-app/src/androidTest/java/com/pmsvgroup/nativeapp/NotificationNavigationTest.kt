@@ -112,6 +112,28 @@ class NotificationNavigationTest {
         }
     }
 
+    @Test fun reopeningRepairsMissingPeriodicWorkForAnOptedInDevice() {
+        val context = compose.activity
+        if (Build.VERSION.SDK_INT >= 33) InstrumentationRegistry.getInstrumentation().uiAutomation
+            .grantRuntimePermission(context.packageName, Manifest.permission.POST_NOTIFICATIONS)
+        val prefs = context.getSharedPreferences("pmsv-native-alerts", android.content.Context.MODE_PRIVATE)
+        val oldEnabled = Alerts.enabled(context)
+        val oldDigest = Alerts.last(context)
+        val work = androidx.work.WorkManager.getInstance(context)
+        try {
+            work.cancelUniqueWork(Alerts.WORK).result.get()
+            prefs.edit().putBoolean("enabled", true).putString("lastDigest", DigestCodec.dailyId(DigestCodec.today())).commit()
+            Alerts.reconcile(context)
+            val job = work.getWorkInfosForUniqueWork(Alerts.WORK).get().single { !it.state.isFinished }
+            Alerts.reconcile(context)
+            assertEquals(job.id, work.getWorkInfosForUniqueWork(Alerts.WORK).get().single { !it.state.isFinished }.id)
+        } finally {
+            work.cancelUniqueWork(Alerts.WORK).result.get()
+            prefs.edit().putBoolean("enabled", oldEnabled).putString("lastDigest", oldDigest).commit()
+            if (oldEnabled) Alerts.reconcile(context)
+        }
+    }
+
     private fun captureNotification() {
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val automation = instrumentation.uiAutomation

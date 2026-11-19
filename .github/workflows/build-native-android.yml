@@ -49,7 +49,7 @@ jobs:
           PLAY=android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$PLAY" > /tmp/play-badging.txt
           grep -q "name='com.pmsvgroup.foodsafety'" /tmp/play-badging.txt
-          grep -q "versionCode='11'" /tmp/play-badging.txt
+          grep -q "versionCode='12'" /tmp/play-badging.txt
           grep -q 'com.pmsvgroup.nativeapp.MainActivity' /tmp/play-badging.txt
           ! grep -qE 'application-debuggable|PmsvLauncherActivity' /tmp/play-badging.txt
           test -s android/play-app/build/outputs/bundle/release/play-app-release.aab
@@ -71,16 +71,16 @@ jobs:
         if: success()
         run: |
           mkdir -p native-release
-          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk native-release/PMSV-2.1.0-Website-unsigned.apk
-          cp android/play-app/build/outputs/bundle/release/play-app-release.aab native-release/PMSV-2.1.0-Play-unsigned.aab
-          cp android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk native-release/PMSV-2.1.0-Play-unsigned.apk
+          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk native-release/PMSV-2.1.1-Website-unsigned.apk
+          cp android/play-app/build/outputs/bundle/release/play-app-release.aab native-release/PMSV-2.1.1-Play-unsigned.aab
+          cp android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk native-release/PMSV-2.1.1-Play-unsigned.apk
           cp android/README-PLAYSTORE.md native-release/README.md
           cp -R native-qa native-release/
           sha256sum native-release/*.apk native-release/*.aab > native-release/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PMSV-Android-2.1.0-and-Test-Results
+          name: PMSV-Android-2.1.1-and-Test-Results
           path: |
             native-release/
             native-qa/
