@@ -224,7 +224,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   if(!$(name))name='overview';
   for(const v of document.querySelectorAll('.view')){let active=v.id===name;v.classList.toggle('active',active);v.setAttribute('aria-hidden',String(!active));}
   for(const b of navButtons){const active=b.dataset.view===name;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');}
-  try{history.replaceState({},'',location.pathname+location.search+'#'+encodeURIComponent(name));}catch(e){}
+  try{const viewURL=new URL(location.href);viewURL.hash=name;history.replaceState({},'',viewURL.href);}catch(e){}
   window.scrollTo({top:0,behavior:'instant'});
  }
  navButtons.forEach(b=>b.addEventListener('click',()=>view(b.dataset.view)));

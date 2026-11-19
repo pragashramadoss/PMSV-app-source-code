@@ -1,6 +1,8 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
 const {chromium}=require('playwright');
+const {pathToFileURL}=require('node:url');
+const {writeHelperDownload}=require('./build-helper-download.cjs');
 const root=path.resolve(__dirname,'..');
 const artifacts=process.env.PMSV_BROWSER_ARTIFACTS||path.join(root,'test-artifacts','helper-20261114');
 const types={'.html':'text/html','.js':'text/javascript','.json':'application/json','.md':'text/plain','.css':'text/css'};
@@ -232,6 +234,40 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  const report = await page.request.get(base + review.report);
  assert.equal(report.status(), 200);
  assert((await report.text()).includes('35 of 46'));
+}
+
+async function testPortableHelper(browser, register) {
+ const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R82.html');
+ const sourceBase = writeHelperDownload(filename);
+ const context = await browser.newContext({acceptDownloads:true, offline:true, viewport:{width:390,height:844}});
+ try {
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(pathToFileURL(filename).href);
+  assert.equal(await page.title(), 'PMSV FSSAI Helper | Product Standards & Evidence');
+  assert.equal(await page.evaluate(() => PMSV_HELPER_TEST.getCatalogue().length), 533);
+  assert.equal(await page.locator('script[src]').count(), 0);
+  await page.getByRole('button', {name:'Review progress',exact:true}).click();
+  await page.locator('#openAromaticFlower').click();
+  assert.equal(new URL(page.url()).hash, '#finder');
+  await page.getByLabel('Flower identified by the supplier').selectOption('jati');
+  await page.getByLabel('Form recorded by the supplier').selectOption('naturally-dried-culinary');
+  await page.getByLabel('Supplier document or lot reference (optional)').fill('OFFLINE-REFERENCE');
+  assert.equal(await page.locator('[data-flower-metal]').count(), 2);
+  const download = page.waitForEvent('download');
+  await page.locator('#briefBtn').click();
+  const text = fs.readFileSync(await (await download).path(), 'utf8');
+  assert(text.includes('OFFLINE-REFERENCE'));
+  assert(text.includes('Lead · 10 mg/kg on a dry-matter basis.'));
+  assert(text.includes('Arsenic · 5 mg/kg.'));
+  assert(text.includes(sourceBase + register.flowerSupplyReview.report));
+  const reportLink = page.getByRole('link', {name:'R82 source review ↗',exact:true});
+  assert.equal(await reportLink.evaluate(link => link.href), sourceBase + register.flowerSupplyReview.report);
+  assert.deepEqual(errors, []);
+ } finally {
+  await context.close();
+ }
 }
 
 async function testJuniperSpice(page, review, base, artifacts) {
@@ -523,6 +559,7 @@ let browser;
  assert.match(await camphorReport.text(),/All 137 product-specific CTR decisions remain open/);
  await testHingu(page, data, base, artifacts);
  await testRecipeFlowers(page, data, base, artifacts);
+ await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
@@ -606,7 +643,7 @@ let browser;
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:104});
- Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true});
+ Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
