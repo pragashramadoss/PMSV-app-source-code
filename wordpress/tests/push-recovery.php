@@ -20,13 +20,24 @@ function is_wp_error($r){return $r instanceof Exception;}
 function wp_remote_retrieve_body($r){return $r['body']??'';}
 function wp_remote_retrieve_response_code($r){return $r['code'];}
 function wp_safe_remote_post($url,$args){$GLOBALS['sent']++;return $GLOBALS['provider'];}
-function wp_next_scheduled($hook){return false;}
-function wp_schedule_single_event($time,$hook){return true;}
-function pmsv_wp_archive(){return [['title'=>'Today food safety headline','published'=>(new DateTimeImmutable('now',new DateTimeZone('Asia/Kolkata')))->format('Y-m-d'),'firstSeen'=>gmdate('c',time()-1),'tab'=>'fssai','url'=>'https://www.fssai.gov.in/test.pdf']];}
+function wp_next_scheduled($hook){return $GLOBALS['retry_at']??false;}
+function wp_schedule_single_event($time,$hook){$GLOBALS['retry_at']=$time;return true;}
+function pmsv_wp_current_digest($now){return pmsv_wp_daily_digest([['title'=>'Today food safety headline','published'=>(new DateTimeImmutable('now',new DateTimeZone('Asia/Kolkata')))->format('Y-m-d'),'firstSeen'=>gmdate('c',time()-1),'tab'=>'fssai','url'=>'https://www.fssai.gov.in/test.pdf']],$now);}
 class TestDB {
- public $last_error='';public $devices=[];public $queries=[];public $transfers=0;
+ public $last_error='';public $readFault=false;public $devices=[];public $queries=[];public $transfers=0;
  function prepare($sql,...$args){return [$sql,$args];}
- function get_row($q,$mode){return $this->devices[$q[1][0]]??null;}
+ function get_row($q,$mode){
+  [$sql,$args]=$q;
+  if(!str_contains($sql,'AS due'))return $this->devices[$args[0]]??null;
+  $due=$waiting=$refresh=0;
+  foreach($this->devices as $row){
+   if($row['refresh_required'])$refresh++;
+   elseif($row['seen_at']<$args[0] || ($row['seen_at']===$args[0] && $row['retry_at']>0)){
+    if($row['retry_at']>$args[2])$waiting++;else $due++;
+   }
+  }
+  return compact('due','waiting','refresh');
+ }
  function get_var($q){
   [$sql,$args]=is_array($q)?$q:[$q,[]];
   if(str_contains($sql,'SELECT attempts'))return 1;
@@ -37,27 +48,34 @@ class TestDB {
   return count(array_filter($rows,fn($r)=>str_contains($sql,'retry_at>')?$r['retry_at']>$args[1]:$r['retry_at']<=$args[1]));
  }
  function get_results($q,$mode){
+  if($this->readFault){$this->last_error='fixture';return [];}
+  $this->last_error='';
   [$sql,$args]=$q;
-  return array_values(array_filter($this->devices,fn($r)=>$r['seen_at']<$args[0]&&$r['retry_at']<=$args[1]&&(!str_contains($sql,'refresh_required=0')||$r['refresh_required']===0)));
+  return array_values(array_filter($this->devices,fn($r)=>($r['seen_at']<$args[0]||($r['seen_at']===$args[0]&&$r['retry_at']>0))&&$r['retry_at']<=$args[2]&&$r['refresh_required']===0));
  }
  function query($q){
   $this->queries[]=$q;[$sql,$args]=is_array($q)?$q:[$q,[]];
   if(str_starts_with($sql,'INSERT IGNORE INTO test_devices')){
    [$id,$endpoint,$token,$now]=$args;
    $this->devices[$id]??=['id'=>$id,'endpoint'=>$endpoint,'token_hash'=>$token,'seen_at'=>$now,'retry_at'=>0,'refresh_required'=>0];
-  }elseif(str_starts_with($sql,'UPDATE test_devices SET seen_at=')){
-   if(str_contains($sql,'retry_at=')){
-    [$seen,$retry,$id,$old,$now]=$args;
-    if($this->devices[$id]['seen_at']!==$old)return 0;
-    $this->devices[$id]['seen_at']=$seen;$this->devices[$id]['retry_at']=$retry;
-   }else{$this->devices[$args[1]]['seen_at']=$args[0];}
-  }elseif(str_starts_with($sql,'UPDATE test_devices SET retry_at=0'))$this->devices[$args[0]]['retry_at']=0;
+  }elseif(str_starts_with($sql,'UPDATE test_devices SET retry_at=%d')){
+   [$lease,$id,$seen,$now]=$args;
+   if(!isset($this->devices[$id]) || $this->devices[$id]['seen_at']!==$seen || $this->devices[$id]['retry_at']>$now || $this->devices[$id]['refresh_required'])return 0;
+   $this->devices[$id]['retry_at']=$lease;
+  }
   elseif(str_starts_with($sql,'DELETE FROM test_devices WHERE id='))unset($this->devices[$args[0]]);
   elseif(str_starts_with($sql,'INSERT IGNORE INTO test_question_watchers'))$this->transfers++;
   return 1;
  }
- function update($table,$values,$where,$formats=[],$whereFormats=[]){$this->devices[$where['id']]=array_merge($this->devices[$where['id']],$values);return 1;}
- function delete($table,$where,$formats=[]){if($table==='test_devices')unset($this->devices[$where['id']]);return 1;}
+ function update($table,$values,$where,$formats=[],$whereFormats=[]){
+  $row=$this->devices[$where['id']]??[];
+  if(array_intersect_assoc($row,$where)!=$where)return 0;
+  $this->devices[$where['id']]=array_merge($row,$values);return 1;
+ }
+ function delete($table,$where,$formats=[]){
+  if($table==='test_devices'&&array_intersect_assoc($this->devices[$where['id']]??[],$where)==$where)unset($this->devices[$where['id']]);
+  return 1;
+ }
 }
 require __DIR__.'/../plugin/includes/push.php';
 function check($value,$name){if(!$value)throw new RuntimeException($name);}
@@ -88,4 +106,17 @@ foreach([['code'=>503,'body'=>'outage'],['code'=>429,'body'=>'rate limit']] as $
 }
 check(pmsv_wp_push_failure_reason(['body'=>'Invalid JWT token expired'],401)==='vapid_expired','expired signing token is distinguished');
 check(pmsv_wp_push_failure_reason(['body'=>'Invalid signature'],403)==='vapid_signature_rejected','signature failure is distinguished');
+$wpdb=new TestDB();$old=device($oldEndpoint,$token);$id=$old['id'];$wpdb->devices[$id]=$old;
+$GLOBALS['provider']=['code'=>503,'body'=>'temporarily unavailable'];$GLOBALS['sent']=0;$GLOBALS['retry_at']=false;
+$r=pmsv_wp_dispatch();
+check($r['pendingRetries']===1 && $r['retryScheduled'] && $wpdb->devices[$id]['seen_at']===0,'provider failure preserves cursor and schedules recovery');
+pmsv_wp_dispatch();check($GLOBALS['sent']===1,'overlapping checks cannot send during a lease');
+$wpdb->devices[$id]['retry_at']=1;$GLOBALS['provider']=['code'=>201,'body'=>''];
+$r=pmsv_wp_dispatch();check($r['accepted']===1 && $r['remaining']===0 && $r['pendingRetries']===0,'expired claim can be recovered');
+pmsv_wp_dispatch();check($GLOBALS['sent']===2,'successful device skips repeated runs');
+check($wpdb->devices[$id]['seen_at']>=(int)(time()*1000),'accepted digest covers the rest of its publication day');
+$wpdb->readFault=true;$GLOBALS['retry_at']=false;
+try{pmsv_wp_dispatch();throw new LogicException('read error hidden');}catch(RuntimeException $e){check($e->getMessage()==='Push read failed','storage error is surfaced');}
+check(get_option('pmsv_wp_push_status')['state']==='service_error'&&$GLOBALS['retry_at'],'service failure before the first provider call schedules a retry');
+check(get_option('pmsv_wp_push_last_accepted')!==false,'independent provider acceptance timestamp is retained');
 echo "PASS push recovery, ownership, bounded dispatch, alert transfer and private-response redaction.\n";

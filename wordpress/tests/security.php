@@ -1,5 +1,5 @@
 <?php
-define('ABSPATH',__DIR__);function wp_parse_url($s,$component=-1){return parse_url($s,$component);}function wp_json_encode($v){return json_encode($v);}function get_option($k,$default=false){return $GLOBALS['options'][$k]??$default;}function add_option($k,$v){$GLOBALS['options'][$k]??=$v;}function get_transient($k){return false;}
+define('ABSPATH',__DIR__);function wp_parse_url($s,$component=-1){return parse_url($s,$component);}function wp_json_encode($v){return json_encode($v);}function get_option($k,$default=false){return $GLOBALS['options'][$k]??$default;}function update_option($k,$v,$autoload=false){$GLOBALS['options'][$k]=$v;return true;}function add_option($k,$v){$GLOBALS['options'][$k]??=$v;}function get_transient($k){return false;}
 require __DIR__.'/../plugin/includes/security.php';require __DIR__.'/../plugin/includes/storage.php';require __DIR__.'/../plugin/includes/push.php';
 function verify($v,$message){if(!$v)throw new Exception($message);}
 foreach(['http://fcm.googleapis.com/longlonglong','https://evil.com/longlonglong','https://user@fcm.googleapis.com/longlonglong','https://fcm.googleapis.com:444/longlonglong','https://fcm.googleapis.com/longlonglong#x','https://fcm.googleapis.com.evil.com/longlonglong'] as $u)verify(!pmsv_wp_endpoint($u),'Unsafe endpoint '.$u);
