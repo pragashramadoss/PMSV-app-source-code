@@ -2,8 +2,8 @@
 window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
-  "latestSourceReviewDate": "2026-11-18",
-  "latestRound": 81,
+  "latestSourceReviewDate": "2026-11-19",
+  "latestRound": 82,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -46,7 +46,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json",
     "ctr-juniper-spice-r79-2026-11-18.json",
     "ctr-hingu-asafoetida-r80-2026-11-18.json",
-    "ctr-recipe-flowers-r81-2026-11-18.json"
+    "ctr-recipe-flowers-r81-2026-11-18.json",
+    "ctr-flower-supply-r82-2026-11-19.json"
   ],
   "records": [
     {
@@ -1696,6 +1697,10 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
         {
+          "round": 82,
+          "file": "ctr-flower-supply-r82-2026-11-19.md"
+        },
+        {
           "round": 81,
           "file": "ctr-recipe-flowers-r81-2026-11-18.md"
         },
@@ -1709,8 +1714,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
-      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
+      "sourceReviewResult": "The printed 13-ingredient table is under Sugandhit Ksheera, but the following method describes four separately collected Ksheerapaka/Lehya/Ghatika/Sharkara preparations. Karpura and Kasturi appear only in the method. R77 adds the archived natural-camphor reference only as context: Karpura appears in the 14.6 method but not its 13-row ingredient table. This creates no new table ingredient and does not resolve the official title/table/method discrepancy. Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki. The individual brief can include the selected named flower, its confirmed or unconfirmed form and a supplier document reference.",
+      "sourceReviewNextAction": "The title/method and ingredient-table discrepancy is confirmed visually, not resolved. Obtain an authoritative correction or interpretation before choosing a variant or allowing method-only ingredients. Retain the official-recipe alignment hold for every material selection. Obtain authoritative recipe clarification before treating the method-only Karpura as an approved formula component; purity evidence does not resolve that source conflict. Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification. Record the supplier specification or lot reference used to identify the raw material.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -1721,6 +1726,10 @@ window.PMSV_REVIEW_REGISTER = {
       "priority": "P0",
       "route": "AYURVEDA_CATEGORY_A_RECIPE_SOURCE_ANCHORED",
       "reports": [
+        {
+          "round": 82,
+          "file": "ctr-flower-supply-r82-2026-11-19.md"
+        },
         {
           "round": 81,
           "file": "ctr-recipe-flowers-r81-2026-11-18.md"
@@ -1739,8 +1748,8 @@ window.PMSV_REVIEW_REGISTER = {
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. The printed footnote gives Ketaki and Jati as examples for the aromatic-flower infusion. The supplied species remains open.",
-      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Identify each flower actually supplied and the form used in the infusion. Keep the source recipe and finished milk assessment separate from the four named flower entries in recipe 14.6.",
+      "sourceReviewResult": "R75 reconciles 74 water-standard reference entries from IS 10500:2012 Tables 1–6 and relevant clauses, with all four BIS amendments. The earlier full-text retrieval gap is resolved. Conditional upper values, microbial sample volumes and the iron–manganese interpretation hold remain explicit. The printed footnote gives Ketaki and Jati as examples for the aromatic-flower infusion. The supplied species remains open. The individual brief can record the flower and form actually supplied. Separately identified Jati flowers can be compared with the two dried-herb metal entries when their naturally dried, food-grade culinary form is confirmed.",
+      "sourceReviewNextAction": "Resolve the iron–manganese combined wording, applicable FSSAI incorporation and ingredient-water FAQ exclusions, current referenced laboratory methods, and actual water-source/point-of-use evidence. No finished-recipe CTR limit or water-quality approval follows from this reference. Identify each flower actually supplied and the form used in the infusion. Keep the source recipe and finished milk assessment separate from the four named flower entries in recipe 14.6. Match the selected flower and form to the actual supply. Assess the infusion and the finished milk separately.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -3030,7 +3039,7 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A670953-1"
       },
       "gazette": {
-        "url": "https://www.fssai.gov.in/upload/notifications/2020/08/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
+        "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
         "sha256": "5d376f55999049e7272b84294b3b5e5bfc228c3ef772754bfbd328045212c3dd",
         "pages": [
           20,
@@ -3046,7 +3055,7 @@ window.PMSV_REVIEW_REGISTER = {
         ]
       },
       "ayurveda": {
-        "url": "https://www.fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
+        "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
         "sha256": "1ae8cfc632fad0a775316a84999a48adb6cf4b47d05bd4faa75f5190c511f699",
         "pages": [
           16,
@@ -3225,6 +3234,59 @@ window.PMSV_REVIEW_REGISTER = {
         "unit": "mg/kg",
         "basis": "",
         "pdfPage": 24
+      }
+    ]
+  },
+  "flowerSupplyReview": {
+    "round": 82,
+    "reviewedOn": "2026-11-19",
+    "report": "ctr-flower-supply-r82-2026-11-19.md",
+    "ingredient": {
+      "recipe": "14.7",
+      "serial": 2,
+      "name": "Sugandhita pushpa"
+    },
+    "candidateMaterial": {
+      "identity": "jati",
+      "species": "Jasminum officinale L.",
+      "part": "Flower",
+      "form": "naturally-dried-culinary",
+      "matrix": "separately supplied raw ingredient"
+    },
+    "sourcePages": {
+      "recipe": [
+        98
+      ],
+      "codex": [
+        105,
+        109
+      ],
+      "gazette": [
+        20,
+        24
+      ],
+      "compendium": [
+        3,
+        8
+      ]
+    },
+    "boundaries": {
+      "recipeSpecies": null,
+      "countAsRecipeReference": false,
+      "infusionLimitAssigned": false,
+      "finishedMilkLimitAssigned": false,
+      "productArticleDecision": "OPEN"
+    },
+    "recipes": [
+      {
+        "productId": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+        "sourceReviewResult": "The individual brief can include the selected named flower, its confirmed or unconfirmed form and a supplier document reference.",
+        "sourceReviewNextAction": "Record the supplier specification or lot reference used to identify the raw material."
+      },
+      {
+        "productId": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+        "sourceReviewResult": "The individual brief can record the flower and form actually supplied. Separately identified Jati flowers can be compared with the two dried-herb metal entries when their naturally dried, food-grade culinary form is confirmed.",
+        "sourceReviewNextAction": "Match the selected flower and form to the actual supply. Assess the infusion and the finished milk separately."
       }
     ]
   },

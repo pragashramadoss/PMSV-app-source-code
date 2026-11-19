@@ -18,7 +18,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==81||data.latestSourceReviewDate!=='2026-11-18')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==82||data.latestSourceReviewDate!=='2026-11-19')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -260,6 +260,10 @@
   if (!flowers?.validReview(floral, data.ayurvedaIngredientCoverage, resin.coverage) ||
       !floral.recipes.every(recipe => data.records.find(row => row.id === recipe.productId)?.reports.some(ref =>
         ref.round === floral.round && ref.file === floral.report))) return denied('Recipe flower references are inconsistent.');
+  const supply = data.flowerSupplyReview;
+  if (!flowers.validSupplyReview(supply, floral, data.ayurvedaIngredientCoverage) ||
+      !supply.recipes.every(recipe => data.records.find(row => row.id === recipe.productId)?.reports.some(ref =>
+        ref.round === supply.round && ref.file === supply.report))) return denied('Flower supplier evidence is inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

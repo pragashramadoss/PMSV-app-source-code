@@ -100,6 +100,7 @@
  ingredientPanel.innerHTML = '<h3>Ayurveda ingredient contaminant references</h3><p><b>' + ingredientCoverage.withCandidate +
   ' of ' + ingredientCoverage.ingredientRows + '</b> ingredient entries have at least one candidate raw-material reference. The supplied material and finished recipe require separate assessments.</p>' +
   '<details><summary>' + ingredientCoverage.withoutCandidate + ' ingredient entries awaiting a candidate reference</summary><ul>' + outstanding + '</ul></details>' +
+  '<p>Recipe 14.7 lets you record an identified flower supply separately. The printed recipe leaves the species open.</p>' +
   '<div class="controls"><button type="button" id="openNamedFlowers">Open flowers in recipe 14.6</button>' +
   '<button type="button" id="openAromaticFlower">Open aromatic flowers in recipe 14.7</button></div>';
  lajadiPanel.insertAdjacentElement('afterend',ingredientPanel);

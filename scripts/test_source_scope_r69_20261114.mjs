@@ -65,6 +65,7 @@ const lajadi=JSON.parse(read('ctr-lajadi-botanicals-r78-2026-11-17.json'));
 const juniper=JSON.parse(read('ctr-juniper-spice-r79-2026-11-18.json'));
 const hingu=JSON.parse(read('ctr-hingu-asafoetida-r80-2026-11-18.json'));
 const floral=JSON.parse(read('ctr-recipe-flowers-r81-2026-11-18.json'));
+const flowerSupply=JSON.parse(read('ctr-flower-supply-r82-2026-11-19.json'));
 for(const record of r.records){
  const current=record.id===fibreFollowup.productId?fibreFollowup:record;
  const linked=register.records.find(x=>x.id===record.id);
@@ -75,7 +76,7 @@ for(const record of r.records){
  const additions = [
   record.id === asafoetida.recipeProductId && asafoetida, camphorNote,
   record.id === lajadi.recipeProductId && lajadi, record.id === lajadi.recipeProductId && juniper,
-  [hingu.productId, hingu.recipeProductId].includes(record.id) && hingu, flowerNote
+  [hingu.productId, hingu.recipeProductId].includes(record.id) && hingu, flowerNote, flowerSupply.recipes.find(x => x.productId === record.id)
  ].filter(Boolean);
  for (const field of ['sourceReviewResult','sourceReviewNextAction']) {
   const prior = latestWater?.[field] ?? [current[field], water?.[field]].filter(Boolean).join(' ');

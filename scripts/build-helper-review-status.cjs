@@ -31,6 +31,8 @@ const hinguFile = 'ctr-hingu-asafoetida-r80-2026-11-18.json';
 const hingu = read(hinguFile);
 const flowerFile = 'ctr-recipe-flowers-r81-2026-11-18.json';
 const flowers = read(flowerFile);
+const flowerSupplyFile = 'ctr-flower-supply-r82-2026-11-19.json';
+const flowerSupply = read(flowerSupplyFile);
 const ingredientBaselineFile = 'ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json';
 const ingredientBaseline = read(ingredientBaselineFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
@@ -183,18 +185,28 @@ for (const recipe of flowers.recipes) {
  row.sourceReviewResult += ' ' + recipe.sourceReviewResult;
  row.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
 }
+assert(currentCoverage.remainingInstances.some(item => item.recipe === flowerSupply.ingredient.recipe &&
+ item.serial === flowerSupply.ingredient.serial && item.name === flowerSupply.ingredient.name));
+for (const recipe of flowerSupply.recipes) {
+ const row = records.find(record => record.id === recipe.productId);
+ assert(flowers.recipes.some(item => item.productId === row?.id));
+ row.reports.unshift({round:flowerSupply.round, file:flowerSupply.report});
+ row.sourceReviewResult += ' ' + recipe.sourceReviewResult;
+ row.sourceReviewNextAction += ' ' + recipe.sourceReviewNextAction;
+}
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:flowers.reviewedOn,latestRound:flowers.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:flowerSupply.reviewedOn,latestRound:flowerSupply.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
  recipeFlowerReview:{...flowers,rawRows:flowerRows},
+ flowerSupplyReview:flowerSupply,
  hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,
   gazette:juniper.sources.gazette,spicesAct:juniper.sources.boardArchive,recipe:asafoetida.sources.recipe2025}},
  lajadiBotanicalReview:lajadi,

@@ -18,7 +18,7 @@ const earlier = register.hinguReview.coverage;
 const current = register.ayurvedaIngredientCoverage;
 
 assert.equal(validateReview(register, catalogue).ok, true);
-assert.deepEqual([register.latestRound, current.ingredientRows, current.withCandidate, current.withoutCandidate, current.candidateLinks],
+assert.deepEqual([review.round, current.ingredientRows, current.withCandidate, current.withoutCandidate, current.candidateLinks],
   [81, 46, 35, 11, 104]);
 assert.deepEqual(current.remainingInstances, earlier.remainingInstances.filter(row => row.recipe !== '14.6' || row.serial !== 9));
 assert.equal(current.originalUnadjudicatedInstances, 14);
@@ -32,7 +32,7 @@ assert.equal(aromatic.flowers[0].species, null);
 assert(dadima.references.some(ref => ref[0] === 'pesticides' && ref[1] === 38));
 for (const recipe of review.recipes) {
   const product = register.records.find(row => row.id === recipe.productId);
-  assert.deepEqual(product.reports[0], {round:81, file:review.report});
+  assert(product.reports.some(ref => ref.round === 81 && ref.file === review.report));
   assert(product.sourceReviewResult.includes(recipe.sourceReviewResult));
 }
 const original = JSON.parse(read('ctr-original-gazette-concordance-r70-2026-11-14.json'));
@@ -77,7 +77,7 @@ const mutations = [
   r => {r.recipeFlowerReview.boundaries.batchRelease = true;}, r => {r.recipeFlowerReview.boundaries.autoApplyLimits = true;},
   r => {r.recipeFlowerReview.ingredient.recipe = '14.7';}, r => {r.ayurvedaIngredientCoverage.candidateLinks = 106;},
   r => {r.ayurvedaIngredientCoverage.remainingInstances[0] = {recipe:'14.6', serial:9, name:'Jati'};},
-  r => {r.records.find(record => record.id === aromatic.productId).reports.shift();}
+  r => {const row = r.records.find(record => record.id === aromatic.productId); row.reports = row.reports.filter(ref => ref.round !== 81);}
 ];
 for (const change of mutations) {
   const copy = structuredClone(register);

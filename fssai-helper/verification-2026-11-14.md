@@ -151,3 +151,9 @@ The review register identifies **34 of 46** ingredient instances with candidate 
 The [flower review](ctr-recipe-flowers-r81-2026-11-18.md) covers four named entries in Sugandhit Ksheera and the aromatic-flower entry in Ksheerapaka. Two metal references are available after confirmation of naturally dried culinary Jati. Both Gazette rows explicitly name dried herbs. Only the lead row specifies a dry-matter basis. The Ketaki species comparison, separate Schedule C oil figure, Dadima fruit exclusion and the 14.7 footnote are accessible from each recipe. The register now records 35 of 46 ingredient entries with at least one candidate, 104 links and 11 entries awaiting a candidate.
 
 The local source audit passed **58/58 checks**. The R80 regression exercises the grade and supply conditions, the 2 g and 10 g test portions, the distinct starch provisions, source pages, units and 24 altered-evidence cases. Browser checks cover both product entries, the six method links, grade and product resets, filtered export and 320, 390 and 1440 px layouts. The draft PR records the revision, GitHub browser evidence and integration runs.
+
+## R82 · 19 November 2026
+
+The [flower supply review](ctr-flower-supply-r82-2026-11-19.md) covers the supplier identity and form in recipe 14.7 and the individual briefs for recipes 14.6 and 14.7. The regression tests 64 identity/form combinations, 13 altered records, product isolation and plain-text export. The browser suite also exercises all 25 selectable combinations, changes a qualified selection to fresh and mixed material, downloads the resulting briefs, checks three viewport widths and compares the full register exported after entering supplier evidence with the original register.
+
+The printed 14.7 ingredient still has no single specified species. The register records 35 of 46 entries with candidate references and 11 entries awaiting a candidate. Revision-specific test results are recorded in draft PR #2.

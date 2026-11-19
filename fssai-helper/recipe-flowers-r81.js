@@ -79,15 +79,130 @@
       '" target="_blank" rel="noopener noreferrer">' + escape(label) + ' ↗</a>';
   }
 
-  function rawMarkup(review, recipe, flower, confirmed) {
-    if (confirmed !== true || recipe?.productId !== identities[0][1] || flower?.key !== 'jati' ||
-        flower.serial !== review?.ingredient?.serial || flower.species !== 'Jasminum officinale L.') return '';
-    const entries = review.rawRows.map(row => '<li data-flower-metal="' + escape(row.name) + '"><strong>' +
-      escape(row.name) + '</strong> · ' + escape(row.maximum) + ' ' + escape(row.unit) +
-      (row.basis ? ' on a dry-matter basis.' : '. The row specifies neither an arsenic species nor a dry-matter basis.') +
-      ' ' + link(review.sources.gazette.url, 'Gazette p. ' + row.pdfPage, row.pdfPage) + '</li>');
+  const suppliedIdentities = new Map([
+    ['jati', 'Jati · Jasminum officinale, identified separately'],
+    ['ketaki', 'Ketaki · Pandanus tectorius, identified separately'],
+    ['other', 'Other individually identified flower'],
+    ['mixed', 'Mixed flowers supplied together'],
+    ['unknown', 'Unidentified flower supply']
+  ]);
+  const suppliedForms = new Map([
+    ['naturally-dried-culinary', 'Naturally dried, food-grade culinary flowers'],
+    ['fresh', 'Fresh flowers'],
+    ['oil-extract', 'Oil or extract'],
+    ['other', 'Other supplied form'],
+    ['unknown', 'Form unconfirmed']
+  ]);
+
+  function validSupplyReview(supply, review, coverage) {
+    if (supply?.round !== 82 || supply.reviewedOn !== '2026-11-19' ||
+        supply.report !== 'ctr-flower-supply-r82-2026-11-19.md' ||
+        !same(supply.ingredient, {recipe:'14.7', serial:2, name:'Sugandhita pushpa'}) ||
+        !same(supply.candidateMaterial, {identity:'jati', species:'Jasminum officinale L.', part:'Flower',
+          form:'naturally-dried-culinary', matrix:'separately supplied raw ingredient'}) ||
+        !same(supply.boundaries, {recipeSpecies:null, countAsRecipeReference:false, infusionLimitAssigned:false,
+          finishedMilkLimitAssigned:false, productArticleDecision:'OPEN'}) ||
+        !same(supply.sourcePages, {recipe:[98], codex:[105,109], gazette:[20,24], compendium:[3,8]})) return false;
+    return Object.entries(supply.sourcePages).every(([key, pages]) =>
+      pages.every(page => review.sources[key].pages.includes(page))) &&
+      Array.isArray(supply.recipes) && supply.recipes.length === review.recipes.length &&
+      supply.recipes.every((recipe, i) => recipe?.productId === review.recipes[i].productId &&
+        typeof recipe.sourceReviewResult === 'string' && !!recipe.sourceReviewResult.trim() &&
+        typeof recipe.sourceReviewNextAction === 'string' && !!recipe.sourceReviewNextAction.trim()) &&
+      coverage.remainingInstances.some(row => row.recipe === supply.ingredient.recipe &&
+        row.serial === supply.ingredient.serial && row.name === supply.ingredient.name);
+  }
+
+  function options(choices, placeholder) {
+    return '<option value="">' + placeholder + '</option>' + [...choices].map(([key, label]) =>
+      '<option value="' + escape(key) + '">' + escape(label) + '</option>').join('');
+  }
+
+  function referenceInput() {
+    return '<label for="flowerEvidenceRef">Supplier document or lot reference (optional)</label>' +
+      '<input type="text" id="flowerEvidenceRef" maxlength="160" autocomplete="off">';
+  }
+
+  function supplyFields(identity) {
+    if (!suppliedIdentities.has(identity)) return '';
+    const botanical = identity === 'other' ? '<label for="flowerOtherSpecies">Botanical name on the supplier record</label>' +
+      '<input type="text" id="flowerOtherSpecies" maxlength="100" autocomplete="off">' : '';
+    return botanical + '<label for="flowerSupplyForm">Form recorded by the supplier</label>' +
+      '<select id="flowerSupplyForm" aria-controls="flowerRawResult">' + options(suppliedForms, 'Select form') + '</select>' +
+      referenceInput() + '<div id="flowerRawResult" aria-live="polite"></div>';
+  }
+
+  function assessment(review, productId, selection) {
+    const recipe = review.recipes.find(item => item.productId === productId);
+    if (!recipe) return null;
+    const named = recipe.productId === identities[0][1];
+    const flower = named ? recipe.flowers.find(item => item.key === selection.flower) : recipe.flowers[0];
+    const identity = named ? flower?.key : selection.identity;
+    const form = named ? (identity === 'jati' && selection.confirmed === true ? 'naturally-dried-culinary' : '') :
+      (suppliedIdentities.has(identity) && suppliedForms.has(selection.form) ? selection.form : '');
+    const eligible = identity === 'jati' && form === 'naturally-dried-culinary' && (named ?
+      flower?.serial === review.ingredient.serial && flower?.species === 'Jasminum officinale L.' :
+      recipe.productId === identities[1][1] && flower?.key === 'aromatic' && flower?.species === null);
+    return {recipe, named, flower, identity, form, rows:eligible ? review.rawRows : []};
+  }
+
+  function metalText(row) {
+    return row.maximum + ' ' + row.unit + (row.basis ? ' on a dry-matter basis.' :
+      '. The row specifies neither an arsenic species nor a dry-matter basis.');
+  }
+
+  function metalMarkup(review, rows) {
+    if (!rows.length) return '';
+    const entries = rows.map(row => '<li data-flower-metal="' + escape(row.name) + '"><strong>' +
+      escape(row.name) + '</strong> · ' + escape(metalText(row)) + ' ' +
+      link(review.sources.gazette.url, 'Gazette p. ' + row.pdfPage, row.pdfPage) + '</li>');
     return '<div class="flower-metals notice"><strong>Candidate metal limits for the dried ingredient</strong><ul>' +
-      entries.join('') + '</ul><p>Check the reporting basis with the laboratory. The finished milk needs its own assessment.</p></div>';
+      entries.join('') + '</ul><p>Check the reporting basis with the laboratory. Assess the infusion and the finished milk separately.</p></div>';
+  }
+
+  function rawMarkup(review, recipe, flower, confirmed) {
+    if (recipe?.productId !== identities[0][1] || flower?.key !== 'jati' ||
+        flower.serial !== review.ingredient.serial || flower.species !== 'Jasminum officinale L.') return '';
+    return metalMarkup(review, assessment(review, recipe.productId, {flower:flower.key, confirmed}).rows);
+  }
+
+  function selectionFromPanel(panel) {
+    const value = id => panel.querySelector('#' + id)?.value || '';
+    return {flower:value('recipeFlower'), confirmed:panel.querySelector('#flowerDriedJati')?.checked === true,
+      identity:value('flowerSupplyIdentity'), form:value('flowerSupplyForm'), species:value('flowerOtherSpecies'),
+      reference:value('flowerEvidenceRef')};
+  }
+
+  function evidenceText(text, max) {
+    return String(text || '').replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029]/g, ' ').trim().slice(0, max);
+  }
+
+  function briefLines(review, productId, panel) {
+    if (!panel || panel.dataset.flowerProduct !== productId) return [];
+    const selection = selectionFromPanel(panel);
+    const material = assessment(review, productId, selection);
+    if (!material) return [];
+    const {recipe, named, flower, identity, form, rows} = material;
+    const lines = ['', 'Flower evidence for recipe ' + recipe.number];
+    if (named) {
+      if (!flower) return lines.concat('No recipe flower selected.', '');
+      lines.push('Selected recipe ingredient ' + flower.serial + ' · ' + flower.name + ' · ' + flower.species);
+    } else {
+      lines.push('Printed ingredient 2 · Sugandhita pushpa (aromatic flowers).');
+      if (!suppliedIdentities.has(identity)) return lines.concat('Supplier identity and form have not been recorded.', '');
+      lines.push('Supplier identity · ' + suppliedIdentities.get(identity));
+      if (identity === 'other' && selection.species.trim()) lines.push('Supplier botanical name · ' + evidenceText(selection.species, 100));
+    }
+    lines.push('Supplier form · ' + (suppliedForms.get(form) || 'Unconfirmed'));
+    const ref = evidenceText(selection.reference, 160);
+    if (ref) lines.push('Supplier document or lot reference · ' + ref);
+    lines.push('FSSAI recipe · ' + review.sources.recipe.url + '#page=' + recipe.tablePage);
+    if (rows.length) {
+      lines.push('Candidate references for this raw flower supply');
+      for (const row of rows) lines.push(row.name + ' · ' + metalText(row) + ' ' + review.sources.gazette.url + '#page=' + row.pdfPage);
+      lines.push('Codex jasmine identity HH 3231 · ' + review.sources.codex.url + '#page=109');
+    } else lines.push('A candidate metal reference has not been assigned to this supply.');
+    return lines.concat('The infusion and finished milk require separate assessment.', '');
   }
 
   function flowerDetail(review, recipe, flower) {
@@ -102,6 +217,10 @@
         '<span>The supplier confirms naturally dried, food-grade flowers of <i>Jasminum officinale</i> supplied as a culinary herb.</span></label>' +
         '<p class="muted">Fresh flowers, oil, extracts and mixed or unidentified material need a separate review.</p>' +
         '<div id="flowerRawResult" aria-live="polite"></div>';
+    } else if (flower.key === 'aromatic') {
+      material = '<label for="flowerSupplyIdentity">Flower identified by the supplier</label>' +
+        '<select id="flowerSupplyIdentity" aria-controls="flowerSupplyDetail">' +
+        options(suppliedIdentities, 'Select supplier identity') + '</select><div id="flowerSupplyDetail"></div>';
     } else if (flower.key === 'ketaki') {
       const oil = review.oilAdditive;
       material = '<details><summary>Kewda oil as an additive</summary><p>Schedule C, entry ' + oil.serial +
@@ -109,6 +228,7 @@
         '. The recipe lists the flower at Q.S. Any proposed oil substitution needs separate assessment.</p>' +
         link(review.sources.ayurveda.url, 'FSSAI Schedule C', oil.pdfPage) + '</details>';
     }
+    if (flower.key !== 'aromatic') material += referenceInput();
     return '<p><strong>Ingredient ' + escape(flower.serial) + ' · ' + escape(flower.name) + '</strong>' +
       (flower.species ? ' · <i>' + escape(flower.species) + '</i>' : '') + ' · Flower · Q.S.</p><p>' + escape(flower.stage) + '</p>' +
       (flower.examples ? '<p>Footnote examples include ' + flower.examples.map(escape).join(' and ') + '.</p>' : '') +
@@ -129,19 +249,42 @@
       link(review.sources.recipe.url, 'FSSAI ingredient table', recipe.tablePage) + link(review.report, 'Flower source review') + '</div></section>';
   }
 
-  const api = Object.freeze({validReview, markup, rawMarkup});
+  function supplierResult(review, productId, panel) {
+    const material = assessment(review, productId, selectionFromPanel(panel));
+    if (material.rows.length) return metalMarkup(review, material.rows);
+    const messages = {
+      jati:material.form ? 'This form requires a separate raw-material review.' : 'Select the documented form to check the raw flower references.',
+      ketaki:'Ketaki requires its own raw-flower review. The common name kewra can refer to a different species.',
+      other:'Record the botanical name and assess this species and plant part separately.',
+      mixed:'The blend needs its own assessment. A separately supplied Jati reference cannot be assigned to the mixture.',
+      unknown:'Obtain the botanical identity and plant part from the supplier before selecting a raw-material reference.'
+    };
+    return '<p class="muted">' + escape(messages[material.identity] || '') + '</p>';
+  }
+
+  const api = Object.freeze({validReview, validSupplyReview, markup, rawMarkup, assessment, briefLines});
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.PMSVRecipeFlowers = api;
   if (typeof document === 'undefined') return;
   document.addEventListener('change', event => {
     const target = event.target;
-    if (target.id !== 'recipeFlower' && target.id !== 'flowerDriedJati') return;
     const panel = target.closest('.recipe-flower-note');
     if (!panel) return;
     const review = root.PMSV_REVIEW_REGISTER.recipeFlowerReview;
-    const recipe = review.recipes.find(item => item.productId === panel.dataset.flowerProduct);
-    const flower = recipe.flowers.find(item => item.key === panel.querySelector('#recipeFlower')?.value);
-    if (target.id === 'recipeFlower') panel.querySelector('#flowerDetail').innerHTML = flowerDetail(review, recipe, flower);
-    else panel.querySelector('#flowerRawResult').innerHTML = rawMarkup(review, recipe, flower, target.checked);
+    const productId = panel.dataset.flowerProduct;
+    const recipe = review.recipes.find(item => item.productId === productId);
+    if (!recipe) return;
+    if (target.id === 'recipeFlower') {
+      const flower = recipe.flowers.find(item => item.key === target.value);
+      panel.querySelector('#flowerDetail').innerHTML = flowerDetail(review, recipe, flower);
+    } else if (target.id === 'flowerDriedJati') {
+      const selection = selectionFromPanel(panel);
+      const flower = recipe.flowers.find(item => item.key === selection.flower);
+      panel.querySelector('#flowerRawResult').innerHTML = rawMarkup(review, recipe, flower, selection.confirmed);
+    } else if (target.id === 'flowerSupplyIdentity' || target.id === 'flowerSupplyForm') {
+      if (target.id === 'flowerSupplyIdentity') panel.querySelector('#flowerSupplyDetail').innerHTML = supplyFields(target.value);
+      const result = panel.querySelector('#flowerRawResult');
+      if (result) result.innerHTML = supplierResult(review, productId, panel);
+    }
   });
 })(typeof globalThis === 'object' ? globalThis : this);

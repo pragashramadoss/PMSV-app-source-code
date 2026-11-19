@@ -24,7 +24,8 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .hingu-evidence{border-top:1px solid var(--line,#d5dedc);margin-top:14px;padding-top:12px}.hingu-evidence h5{font-size:1rem;margin:0}.hingu-evidence .hingu-confirm{display:flex;align-items:flex-start;gap:.6rem;font-weight:600;cursor:pointer}.hingu-confirm input[type=checkbox]{width:1.1rem;height:1.1rem;min-width:1.1rem;margin:.16rem 0 0;padding:0}.hingu-evidence .hingu-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.hingu-table caption{text-align:left;font-weight:650;padding:5px 0}.hingu-evidence .hingu-table th,.hingu-evidence .hingu-table td{overflow-wrap:anywhere}.hingu-evidence details{margin:14px 0}.hingu-evidence summary{font-weight:650;cursor:pointer}.hingu-methods ul{list-style:none;padding:0}.hingu-methods li{margin:.8rem 0}.hingu-methods li p{margin:.25rem 0}.hingu-evidence .source-ref{max-width:100%;white-space:normal}
 .juniper-scope{margin:18px 0;padding:12px 0;border-block:1px solid var(--line,#d5dedc)}
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
-.recipe-flower-note select{max-width:100%}
+.recipe-flower-note select,.recipe-flower-note input[type=text]{width:100%;max-width:100%;box-sizing:border-box}
+.recipe-flower-note label[for]{display:block;margin-top:12px}
 .recipe-flower-note .controls{gap:.4rem}
 .recipe-flower-note .source-ref{white-space:normal;max-width:100%}
 .recipe-flower-note details{margin:12px 0}
@@ -181,9 +182,9 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="spice-contaminants.js?v=20261118-r80"></script>
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
-<script src="recipe-flowers-r81.js?v=20261118-r81b"></script>
-<script src="review-status.js?v=20261118-r81"></script>
-<script src="review-status-data.js?v=20261118-r81b"></script>
+<script src="recipe-flowers-r81.js?v=20261119-r82"></script>
+<script src="review-status.js?v=20261119-r82"></script>
+<script src="review-status-data.js?v=20261119-r82"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -203,7 +204,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261118-r81"></script>
+<script src="review-status-ui.js?v=20261119-r82"></script>
 <script>
 'use strict';
 (()=>{
@@ -264,6 +265,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   'Current focused reviews: '+(current?.reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
   ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction,
    ...current.reports.slice(0,1).map(r=>'Latest source review: '+new URL(r.file,document.baseURI).href)]:[]),
+  ...(current ? window.PMSVRecipeFlowers.briefLines(register.recipeFlowerReview, c.id, document.querySelector('.recipe-flower-note')) : []),
   'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}

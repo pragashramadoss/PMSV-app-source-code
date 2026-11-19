@@ -141,11 +141,19 @@ async function testRecipeFlowers(page, register, base, artifacts) {
   if (width !== 320) await panel.screenshot({path:path.join(artifacts,'flower-reference-' + width + '.png'),animations:'disabled',
    style:'header, .navtabs { visibility: hidden !important; }'});
  }
- const namedDownload = page.waitForEvent('download');
- await page.locator('#briefBtn').click();
- const brief = fs.readFileSync(await (await namedDownload).path(), 'utf8');
- assert.match(brief, /Current review register dated 2026-11-18/);
- assert(brief.includes(named.sourceReviewResult) && brief.includes(base + review.report));
+ async function downloadBrief() {
+  const next = page.waitForEvent('download');
+  await page.locator('#briefBtn').click();
+  return fs.readFileSync(await (await next).path(), 'utf8');
+ }
+ const documentRef = panel.getByLabel('Supplier document or lot reference (optional)');
+ await documentRef.fill('TEST-NAMED-9');
+ const brief = await downloadBrief();
+ assert(brief.includes('Current review register dated ' + register.latestSourceReviewDate));
+ assert(brief.includes(named.sourceReviewResult) && brief.includes(base + register.flowerSupplyReview.report));
+ assert(brief.includes('Supplier document or lot reference · TEST-NAMED-9'));
+ assert(brief.includes('Lead · 10 mg/kg on a dry-matter basis.') && brief.includes('Arsenic · 5 mg/kg.'));
+ assert(brief.includes(review.sources.gazette.url + '#page=24'));
  await progress.click();
  await page.locator('#openAromaticFlower').click();
  assert.equal(await panel.getAttribute('data-flower-product'), aromatic.productId);
@@ -154,15 +162,73 @@ async function testRecipeFlowers(page, register, base, artifacts) {
  assert.equal(await metals.count(), 0);
  assert.match(await panel.innerText(), /Ketaki \(Pandanus tectorius\) and Jati \(Jasminum officinale\)/);
  assert.equal(await page.locator('.water-product-note').count(), 1);
- const unknownDownload = page.waitForEvent('download');
- await page.locator('#briefBtn').click();
- const unknownBrief = fs.readFileSync(await (await unknownDownload).path(), 'utf8');
+ const supplied = panel.getByLabel('Flower identified by the supplier');
+ const form = panel.getByLabel('Form recorded by the supplier');
+ assert.equal(await supplied.inputValue(), '');
+ assert.equal(await form.count(), 0);
+ const unknownBrief = await downloadBrief();
  assert(unknownBrief.includes(aromatic.sourceReviewResult) && !unknownBrief.includes(named.sourceReviewResult));
+ assert(unknownBrief.includes('Supplier identity and form have not been recorded.') && !unknownBrief.includes('TEST-NAMED-9'));
+ for (const identity of ['ketaki','other','mixed','unknown','jati']) {
+  await supplied.selectOption(identity);
+  assert.equal(await form.inputValue(), '');
+  assert.equal(await documentRef.inputValue(), '');
+  assert.equal(await metals.count(), 0);
+  const otherName = panel.getByLabel('Botanical name on the supplier record');
+  assert.equal(await otherName.count(), identity === 'other' ? 1 : 0);
+  if (identity === 'other') await otherName.fill('Jasminum sambac');
+  for (const value of ['fresh','oil-extract','other','unknown','naturally-dried-culinary']) {
+   await form.selectOption(value);
+   const eligible = identity === 'jati' && value === 'naturally-dried-culinary';
+   assert.equal(await metals.count(), eligible ? 2 : 0);
+  }
+  await documentRef.fill('TEST-SUPPLY-' + identity);
+  const actual = await downloadBrief();
+  assert(actual.includes('Supplier document or lot reference · TEST-SUPPLY-' + identity));
+  assert.equal(actual.includes('Supplier botanical name · Jasminum sambac'), identity === 'other');
+  assert.equal(actual.includes('Lead · 10 mg/kg on a dry-matter basis.'), identity === 'jati');
+  assert.equal(actual.includes('Arsenic · 5 mg/kg.'), identity === 'jati');
+  if (identity === 'jati') {
+   assert(actual.includes('The infusion and finished milk require separate assessment.'));
+   for (const width of [320,390,1440]) {
+    await page.setViewportSize({width,height:900});
+    assert(await panel.evaluate(el => el.scrollWidth <= el.clientWidth + 1));
+    if (width === 390) await panel.screenshot({path:path.join(artifacts,'flower-supply-390.png'),animations:'disabled',
+     style:'header, .navtabs { visibility: hidden !important; }'});
+   }
+   await form.selectOption('fresh');
+   assert.equal(await metals.count(), 0);
+   assert(!(await downloadBrief()).includes('Lead · 10 mg/kg'));
+   await form.selectOption('naturally-dried-culinary');
+  }
+ }
+ await supplied.selectOption('mixed');
+ assert.equal(await form.inputValue(), '');
+ assert.equal(await documentRef.inputValue(), '');
+ assert.equal(await metals.count(), 0);
+ await supplied.selectOption('');
+ assert.equal(await form.count(), 0);
  await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id), named.productId);
  assert.equal(await choice.inputValue(), '');
  await choice.selectOption('jati');
  assert.equal(await confirmed.isChecked(), false);
+ assert.equal(await documentRef.inputValue(), '');
  assert.equal(await metals.count(), 0);
+ await page.evaluate(id => PMSV_HELPER_TEST.selectProduct(id), aromatic.productId);
+ assert.equal(await supplied.inputValue(), '');
+ await page.evaluate(() => PMSV_HELPER_TEST.selectProduct('purified-vending-water'));
+ assert.equal(await panel.count(), 0);
+ assert(!(await downloadBrief()).includes('Flower evidence for recipe'));
+ await progress.click();
+ const entire = page.waitForEvent('download');
+ await page.locator('#exportReviewJSON').click();
+ const exported = JSON.parse(fs.readFileSync(await (await entire).path(), 'utf8'));
+ assert.deepEqual(exported.ayurvedaIngredientCoverage, register.ayurvedaIngredientCoverage);
+ assert.deepEqual(exported.flowerSupplyReview, register.flowerSupplyReview);
+ assert(!JSON.stringify(exported).includes('TEST-SUPPLY'));
+ const supplyReport = await page.request.get(base + register.flowerSupplyReview.report);
+ assert.equal(supplyReport.status(), 200);
+ assert((await supplyReport.text()).includes('35 of 46'));
  const report = await page.request.get(base + review.report);
  assert.equal(report.status(), 200);
  assert((await report.text()).includes('35 of 46'));
@@ -540,7 +606,7 @@ let browser;
  Object.assign(result,{camphorSourceEntries:5,camphorSourceYear:2008,camphorRecipeNotes:2,camphorMaterialChoicesTested:4,camphorOpticalLiteralPreserved:true,camphorRecipeHoldPreserved:true,camphorScopeResetTested:true});
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:104});
- Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2});
+ Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});
  fs.writeFileSync(path.join(artifacts,'results.json'),JSON.stringify(result,null,2)+'\n');
