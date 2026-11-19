@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PMSV Food Safety & Quality Forum
  * Description: PMSV Food Safety & Quality Forum production application.
- * Version: 1.0.32
+ * Version: 1.0.33
  * Requires PHP: 8.1
  * Author: PMSV Group
  */
@@ -184,7 +184,7 @@ function pmsv_wp_api($route) {
         if ($route==='updater' && $method==='GET') return pmsv_wp_reply(pmsv_wp_updater_status());
         if ($route==='push/inbox' && $method==='GET') return pmsv_wp_forum_push_inbox();
         if ($route==='push/latest' && $method==='GET') {
-            return pmsv_wp_reply(pmsv_wp_daily_digest(pmsv_wp_archive()));
+            return pmsv_wp_reply(pmsv_wp_current_digest());
         }
         if ($route === 'push' && in_array($method, ['GET', 'POST', 'DELETE'], true)) {
             if ((int) get_option('pmsv_wp_schema', 0) < PMSV_WP_SCHEMA_VERSION) {

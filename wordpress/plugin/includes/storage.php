@@ -130,6 +130,20 @@ function pmsv_wp_archive() {
     $news=array_merge($news,pmsv_wp_native_blogs());
     usort($news,fn($a,$b)=>strcmp($b['published'],$a['published'])?:strcmp($a['title'],$b['title']));return $news;
 }
+function pmsv_wp_current_digest($now = null) {
+    global $wpdb;
+    $now = ($now ?? new DateTimeImmutable('now'))->setTimezone(new DateTimeZone('Asia/Kolkata'));
+    $table = pmsv_wp_table('news');
+    $rows = $wpdb->get_col($wpdb->prepare("SELECT payload FROM $table WHERE published=%s", $now->format('Y-m-d')));
+    if ($wpdb->last_error) throw new RuntimeException('Daily headlines could not be read');
+    $news = [];
+    foreach ($rows as $row) {
+        $item = json_decode($row, true, 512, JSON_THROW_ON_ERROR);
+        if (!pmsv_wp_news_excluded($item)) $news[] = $item;
+    }
+    return pmsv_wp_daily_digest($news, $now);
+}
+
 function pmsv_wp_updater_status() {
     $state=get_option('pmsv_wp_updater',['active'=>false]);
     $empty=['checked'=>0,'ok'=>0,'partial'=>0,'error'=>0];
@@ -146,6 +160,8 @@ function pmsv_wp_updater_status() {
     $last=strtotime($state['lastAttemptAt']??'');
     if($last!==false&&time()-$last>36*3600)$coverage='stale';
     $state['coverage']=['status'=>$coverage,'all'=>$all,'indiaNews'=>$india];
+    $state['notifications'] = get_option('pmsv_wp_push_status', ['state' => 'awaiting_first_check']);
+    $state['notifications']['lastProviderAcceptanceAt'] = get_option('pmsv_wp_push_last_accepted', null);
     return $state;
 }
 

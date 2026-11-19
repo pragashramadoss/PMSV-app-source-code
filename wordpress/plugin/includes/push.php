@@ -185,7 +185,7 @@ function pmsv_wp_daily_digest($news, $now=null) {
 }
 
 function pmsv_wp_retryable_push_status($code) {
-    return $code===0 || $code===429 || ($code>=500 && $code<=599);
+    return in_array($code,[0,408,429],true) || ($code>=500 && $code<=599);
 }
 
 /** Schedule a bounded follow-up only for transient provider errors. WP-Cron requires site traffic. */
@@ -193,62 +193,121 @@ function pmsv_wp_schedule_push_retry() {
     $day=(new DateTimeImmutable('now',new DateTimeZone('Asia/Kolkata')))->format('Y-m-d');
     $state=get_option('pmsv_wp_push_retry_state',[]);
     $attempts=is_array($state)&&($state['day']??'')===$day?(int)($state['attempts']??0):0;
-    if($attempts>=2)return false;
     if(wp_next_scheduled('pmsv_wp_retry_push'))return true;
+    if($attempts>=2)return false;
     $scheduled=wp_schedule_single_event(time()+660,'pmsv_wp_retry_push');
     if($scheduled)update_option('pmsv_wp_push_retry_state',['day'=>$day,'attempts'=>$attempts+1],false);
     return (bool)$scheduled;
 }
 
-function pmsv_wp_dispatch() {
-    global $wpdb;$t=pmsv_wp_table('devices');
-    $digest=pmsv_wp_daily_digest(pmsv_wp_archive());
-    if(!$digest['count'])return ['accepted'=>0,'failed'=>0,'remaining'=>0,'reason'=>'No headlines published today'];
-    $cutoff=$digest['cutoff'];$now=(int)floor(microtime(true)*1000);
-    $rows=$wpdb->get_results($wpdb->prepare("SELECT id,endpoint,seen_at FROM $t WHERE seen_at < %d AND retry_at <= %d AND refresh_required=0 LIMIT 20",$cutoff,$now),ARRAY_A);
-    if($wpdb->last_error)throw new RuntimeException('Push read failed');
-    $accepted=0;$failed=0;$expired=0;$retryable=0;$failureCodes=[];$failureReasons=[];$keys=$rows?pmsv_wp_keys():null;
-    foreach($rows as $row){
-        // Atomic claim prevents the main updater and a WordPress retry from sending twice.
-        // An unsuccessful claim is eligible again after ten minutes, not immediately.
-        $claim=$wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d,retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d",$cutoff,$now+600000,$row['id'],$row['seen_at'],$now));
-        if(!$claim)continue;
-        $reason='internal';$detail='internal';$canRetry=false;
-        try{
-            if(!pmsv_wp_endpoint($row['endpoint'])){$reason='invalid_endpoint';throw new RuntimeException('Invalid endpoint');}
-            $r=wp_safe_remote_post($row['endpoint'],[
-                'timeout'=>10,'redirection'=>0,
-                'headers'=>['Authorization'=>pmsv_wp_vapid($row['endpoint'],$keys),
-                    'TTL'=>(string)$digest['ttl'],'Urgency'=>'normal','Content-Length'=>'0'],
-                'body'=>''
+/** Deliver one bounded batch. A claim expires even if PHP stops before contacting the provider. */
+function pmsv_wp_dispatch_batch($digest) {
+    global $wpdb;
+    $table = pmsv_wp_table('devices');
+    $cutoff = $digest['cutoff'];
+    $dayEnd = (new DateTimeImmutable($digest['date'], new DateTimeZone('Asia/Kolkata')))->modify('+1 day')->getTimestamp();
+    $cutoff = min($cutoff, $dayEnd * 1000 - 1);
+    $now = (int) floor(microtime(true) * 1000);
+    // Before 1.0.33, an interrupted send could leave the current cutoff and an uncleared lease together.
+    $eligible = '(seen_at < %d OR (seen_at = %d AND retry_at > 0)) AND refresh_required=0';
+    $rows = $wpdb->get_results($wpdb->prepare(
+        "SELECT id,endpoint,seen_at FROM $table WHERE $eligible AND retry_at <= %d ORDER BY seen_at,id LIMIT 20",
+        $cutoff, $cutoff, $now
+    ), ARRAY_A);
+    if ($wpdb->last_error) throw new RuntimeException('Push read failed');
+    $keys = $rows ? pmsv_wp_keys() : null;
+    $deadline = microtime(true) + 15;
+    $accepted = $failed = $expired = 0;
+    $failureCodes = $failureReasons = [];
+    foreach ($rows as $row) {
+        if (microtime(true) >= $deadline || time() >= $dayEnd) break;
+        $now = (int) floor(microtime(true) * 1000);
+        $lease = $now + 600000;
+        $claim = $wpdb->query($wpdb->prepare(
+            "UPDATE $table SET retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d AND refresh_required=0",
+            $lease, $row['id'], $row['seen_at'], $now
+        ));
+        if ($claim === false) throw new RuntimeException('Push claim failed');
+        if (!$claim) continue;
+
+        $code = 0;
+        $reason = 'invalid_endpoint';
+        if (pmsv_wp_endpoint($row['endpoint'])) {
+            $response = wp_safe_remote_post($row['endpoint'], [
+                'timeout' => 8, 'redirection' => 0,
+                'headers' => [
+                    'Authorization' => pmsv_wp_vapid($row['endpoint'], $keys),
+                    'TTL' => (string) max(1, $dayEnd - time()),
+                    'Topic' => 'pmsv-news-' . str_replace('-', '', $digest['date']),
+                    'Urgency' => 'normal', 'Content-Length' => '0'
+                ],
+                'body' => ''
             ]);
-            $code=is_wp_error($r)?0:(int)wp_remote_retrieve_response_code($r);
-            if(in_array($code,[404,410],true)){$wpdb->delete($t,['id'=>$row['id']]);$expired++;continue;}
-            if($code<200||$code>=300){
-                $reason=$code?'http_'.$code:'transport_error';
-                $detail=pmsv_wp_push_failure_reason($r,$code);
-                if(pmsv_wp_push_requires_refresh($code,$detail))pmsv_wp_mark_push_refresh($row['id']);
-                $canRetry=pmsv_wp_retryable_push_status($code);
-                throw new RuntimeException('Provider declined');
-            }
-            $wpdb->query($wpdb->prepare("UPDATE $t SET retry_at=0 WHERE id=%s AND seen_at=%d",$row['id'],$cutoff));
+            $code = is_wp_error($response) ? 0 : (int) wp_remote_retrieve_response_code($response);
+            $reason = $code >= 200 && $code < 300 ? '' : pmsv_wp_push_failure_reason($response, $code);
+        }
+
+        // Every state transition belongs to this claim. Unsubscribes and newer claims win.
+        $owner = ['id' => $row['id'], 'retry_at' => $lease, 'seen_at' => $row['seen_at']];
+        if ($reason === '') {
+            // This is a daily digest. A later collection or recovery run must skip this device today.
+            $saved = $wpdb->update($table, ['seen_at' => $dayEnd * 1000 - 1, 'retry_at' => 0], $owner, ['%d','%d'], ['%s','%d','%d']);
+            if ($saved === false) throw new RuntimeException('Push acceptance could not be recorded');
+            if ($accepted === 0) update_option('pmsv_wp_push_last_accepted', gmdate('c'), false);
             $accepted++;
-        }catch(Throwable $e){
+        } elseif (in_array($code, [404,410], true)) {
+            if ($wpdb->delete($table, $owner, ['%s','%d','%d']) === false) throw new RuntimeException('Expired subscription could not be removed');
+            $expired++;
+        } else {
             $failed++;
-            $failureCodes[$reason]=($failureCodes[$reason]??0)+1;
-            $failureReasons[$detail]=($failureReasons[$detail]??0)+1;
-            if($canRetry)$retryable++;
-            // Restore only the unsent cursor; the retry clock stays in place.
-            $wpdb->query($wpdb->prepare("UPDATE $t SET seen_at=%d WHERE id=%s AND seen_at=%d",$row['seen_at'],$row['id'],$cutoff));
+            $status = $code ? 'http_' . $code : ($reason === 'invalid_endpoint' ? $reason : 'transport_error');
+            $failureCodes[$status] = ($failureCodes[$status] ?? 0) + 1;
+            $failureReasons[$reason] = ($failureReasons[$reason] ?? 0) + 1;
+            if ($reason === 'invalid_endpoint' || !pmsv_wp_retryable_push_status($code)) {
+                if ($wpdb->update($table, ['refresh_required' => 1], $owner, ['%d'], ['%s','%d','%d']) === false) {
+                    throw new RuntimeException('Subscription refresh could not be recorded');
+                }
+            }
+            // For transient failures, leave the cursor untouched and retry after the lease.
         }
     }
-    $checkedAt=(int)floor(microtime(true)*1000);
-    $remaining=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at<=%d AND refresh_required=0",$cutoff,$checkedAt));
-    $pendingRetries=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $t WHERE seen_at<%d AND retry_at>%d AND refresh_required=0",$cutoff,$checkedAt));
-    $refreshRequired=(int)$wpdb->get_var("SELECT COUNT(*) FROM $t WHERE refresh_required=1");
-    $retryScheduled=$retryable>0?pmsv_wp_schedule_push_retry():false;
-    // Aggregate codes only: never return endpoints, device IDs, tokens or signing keys.
-    return compact('accepted','failed','remaining','expired','pendingRetries','failureCodes','failureReasons','refreshRequired','retryScheduled');
+    $now = (int) floor(microtime(true) * 1000);
+    $counts = $wpdb->get_row($wpdb->prepare(
+        "SELECT COUNT(CASE WHEN $eligible AND retry_at<=%d THEN 1 END) AS due,
+                COUNT(CASE WHEN $eligible AND retry_at>%d THEN 1 END) AS waiting,
+                COUNT(CASE WHEN refresh_required=1 THEN 1 END) AS refresh
+           FROM $table", $cutoff, $cutoff, $now, $cutoff, $cutoff, $now
+    ), ARRAY_A);
+    if (!is_array($counts) || $wpdb->last_error) throw new RuntimeException('Push backlog could not be read');
+    $remaining = (int) $counts['due'];
+    $pendingRetries = (int) $counts['waiting'];
+    $refreshRequired = (int) $counts['refresh'];
+    return compact('accepted','failed','expired','remaining','pendingRetries','refreshRequired','failureCodes','failureReasons');
+}
+
+function pmsv_wp_dispatch() {
+    $now = new DateTimeImmutable('now', new DateTimeZone('Asia/Kolkata'));
+    $status = ['date' => $now->format('Y-m-d'), 'lastAttemptAt' => gmdate('c')];
+    try {
+        $digest = pmsv_wp_current_digest($now);
+        $result = ['accepted'=>0, 'failed'=>0, 'remaining'=>0, 'pendingRetries'=>0, 'refreshRequired'=>0, 'retryScheduled'=>false];
+        if (!$digest['count']) {
+            $status['state'] = 'waiting_for_headlines';
+            $result['reason'] = 'No headlines published today';
+        } else {
+            $result = pmsv_wp_dispatch_batch($digest);
+            $pending = $result['remaining'] || $result['pendingRetries'];
+            $result['retryScheduled'] = $pending && pmsv_wp_schedule_push_retry();
+            $status['state'] = $pending ? 'retry_pending' : ($result['refreshRequired'] ? 'subscriptions_need_refresh' : 'caught_up');
+        }
+        update_option('pmsv_wp_push_status', $status, false);
+        return $result;
+    } catch (Throwable $error) {
+        $status['state'] = 'service_error';
+        update_option('pmsv_wp_push_status', $status, false);
+        pmsv_wp_schedule_push_retry();
+        throw $error;
+    }
 }
 
 /**
