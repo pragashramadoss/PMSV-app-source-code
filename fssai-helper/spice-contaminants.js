@@ -26,9 +26,10 @@
       '<br><a class="source-ref" href="' + escape(gazette.url + '#page=' + row.pdfPage) +
       '" target="_blank" rel="noopener noreferrer">Gazette p. ' + escape(row.pdfPage) + ' ↗</a>' +
       (compendium ? '<br><a class="source-ref" target="_blank" rel="noopener noreferrer" href="' +
-        escape(compendium.url + '#page=' + compendium.pages[index]) + '">Compendium p. ' + escape(compendium.pages[index]) + ' ↗</a>' : '') +
+        escape(compendium.url + '#page=' + compendium.pages[index]) + '" title="FSSAI contaminant compendium">FSSAI p. ' + escape(compendium.pages[index]) + ' ↗</a>' : '') +
       '</td></tr>').join('');
-    return '<table class="methodtable ' + escape(tableClass) + '"><caption>FSSAI contaminant references for the raw spice</caption>' +
+    const caption = compendium ? 'Raw-spice limits · Gazette and FSSAI compendium' : 'FSSAI contaminant references for the raw spice';
+    return '<table class="methodtable ' + escape(tableClass) + '"><caption>' + caption + '</caption>' +
       '<thead><tr><th scope="col">Analyte</th><th scope="col">Spice article maximum</th></tr></thead><tbody>' + body + '</tbody></table>';
   }
 

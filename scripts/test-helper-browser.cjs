@@ -292,8 +292,14 @@ async function testRhizomeSpices(page, register, base, artifacts) {
   assert(await panel('turmeric').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
   if (width === 390) {
    const sourceLinks = panel('turmeric').locator('.rhizome-reference a');
-   assert(await sourceLinks.evaluateAll(links => links.every(link => link.getBoundingClientRect().height <= 30)),
-    'Each turmeric source link fits on one line on a phone');
+   const wrapped = await sourceLinks.evaluateAll(links => links.filter(link => {
+    const text = document.createRange();
+    text.selectNodeContents(link);
+    const boxes = [...text.getClientRects()];
+    const middle = (boxes[0].top + boxes[0].bottom) / 2;
+    return boxes.some(box => box.top >= middle || box.bottom <= middle) || link.scrollWidth > link.clientWidth + 1;
+   }).map(link => ({label:link.textContent,width:link.clientWidth,contentWidth:link.scrollWidth})));
+   assert.deepEqual(wrapped, [], 'Source link text fits on one line in its mobile table cell');
    await panel('turmeric').screenshot({path:path.join(artifacts,'turmeric-390.png'),animations:'disabled',
     style:'header, .navtabs { visibility: hidden !important; }'});
   }
