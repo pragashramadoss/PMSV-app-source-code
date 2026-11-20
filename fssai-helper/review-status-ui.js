@@ -26,6 +26,7 @@
   sourceNote += window.PMSVRhizomeSpices.markup(data.rhizomeSpiceReview, id);
   const culinary = window.PMSVCulinarySauces.article(data,id);
   if (culinary && !culinary.ingredient) sourceNote += window.PMSVCulinarySauces.markup(culinary);
+  if (id===data.cannedTomatoReview.id) sourceNote += window.PMSVCannedTomatoes.markup(data.cannedTomatoReview);
   if (id===data.tomatoJuiceReview.id) sourceNote += window.PMSVTomatoJuice.markup(data.tomatoJuiceReview);
   if(waterNote)sourceNote+=waterMarkup(waterNote);
   const asafoetida=data.asafoetidaReview;
@@ -64,7 +65,8 @@
  const sauceOptions = products => products.map(p => '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('');
  const [tomato,soybean] = data.tomatoSoybeanReview.products;
  saucePanel.innerHTML = '<h3>Tomato products, sauces and pastes</h3><label for="culinary-product">Choose a product standard</label>' +
-  '<div class="controls"><select id="culinary-product"><optgroup label="FSSAI ' + esc(data.tomatoJuiceReview.clause) + '">' +
+  '<div class="controls"><select id="culinary-product"><optgroup label="FSSAI ' + esc(data.cannedTomatoReview.clause) + '">' +
+  sauceOptions([data.cannedTomatoReview]) + '</optgroup><optgroup label="FSSAI ' + esc(data.tomatoJuiceReview.clause) + '">' +
   sauceOptions([data.tomatoJuiceReview]) + '</optgroup><optgroup label="FSSAI ' + esc(data.tomatoConcentrateReview.clause) + '">' +
   sauceOptions([data.tomatoConcentrateReview]) + '</optgroup><optgroup label="FSSAI ' + esc(tomato.clause) + '">' + sauceOptions([tomato]) +
   '</optgroup><optgroup label="FSSAI ' + esc(data.culinarySauceReview.clause) + '">' +

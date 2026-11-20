@@ -139,7 +139,7 @@
     const negativePH = criterion.unit === 'pH' && raw.startsWith('-');
     const value = decimal(negativePH ? raw.slice(1) : raw);
     if (!value) {
-      if (criterion.unit === 'mm') return 'Enter a non-negative measurement in mm';
+      if (criterion.unit === 'mm' || criterion.unit === 'cm²/kg') return 'Enter a non-negative measurement in ' + criterion.unit;
       if (criterion.unit === 'pH') return 'Enter a numeric pH result';
       return 'Enter a percentage from 0 to 100';
     }
@@ -190,7 +190,8 @@
 
   function limitText(c) {
     const value = c.maximum ?? c.minimum;
-    return c.unit === 'mm' ? value + ' mm' : value.toFixed(1) + (c.unit === 'pH' ? '' : '%');
+    if (c.unit === 'mm' || c.unit === 'cm²/kg') return value + ' ' + c.unit;
+    return value.toFixed(c.precision ?? 1) + (c.unit === 'pH' ? '' : '%');
   }
 
   function criterionCard(c,prefix,proposalSource,reference) {

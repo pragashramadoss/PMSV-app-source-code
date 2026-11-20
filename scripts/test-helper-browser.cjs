@@ -743,6 +743,94 @@ async function testTomatoJuice(page,register,base,artifacts) {
  assert((await response.text()).includes(r.amendment.sha256));
 }
 
+async function testCannedTomatoes(page,register,base,artifacts) {
+ const r=register.cannedTomatoReview,panel=page.locator('.canned-tomatoes');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.getByLabel('Choose a product standard').selectOption(r.id);
+ await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+ assert.equal(await panel.getAttribute('data-product'),r.id);
+ for (const alias of r.aliases) {
+  await page.locator('#productSearch').fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),r.id);
+ }
+ const field=id=>panel.locator('#ct-'+id);
+ const testResult=async(key,value,expected,basis='stated')=>{
+  await field(key+'-basis').selectOption(basis);
+  await field(key+'-result').fill(value);
+  assert.equal(await panel.locator('[data-criterion="'+key+'"] .paste-outcome').innerText(),expected);
+ };
+ await field('lot').fill('CAN-186');
+ await field('pack').selectOption('can');
+ await field('net').fill('400'); await field('drained').fill('224');
+ assert.equal(await field('drained-outcome').innerText(),'56.0% · Meets this minimum');
+ await field('drained').fill('223.99');
+ assert.match(await field('drained-outcome').innerText(),/Below/);
+ await field('drained').fill('224');
+ await field('vacuum').selectOption('unknown');
+ assert.match(await field('vacuum-outcome').innerText(),/Confirm the gauge/);
+ await field('vacuum').selectOption('negative');
+ await testResult('headspace','7','Meets this maximum');
+ await field('capacity-basis').selectOption('stated');
+ await field('capacity').fill('300');await field('volume').fill('270');
+ await field('style').selectOption('whole');await field('peel-state').selectOption('peeled');
+ await testResult('blemish','3.5','Meets this maximum');
+ await testResult('peel','50','Above this maximum');
+ await field('medium').selectOption('water');
+ await testResult('salt','3','Different reporting basis · cannot compare','other');
+ await testResult('salt','3','Meets this maximum');
+ await testResult('ph','4.6','Above this maximum');
+ await field('firming').selectOption('yes');
+ await testResult('calcium','0.060','Above this maximum');
+ const whole=await readProductBrief(page);
+ for (const item of ['CAN-186','Current focused reviews: R89','Peel present on peeled tomatoes','maximum 0.045%',
+  'Actual net contents · 400 g','56.0% · Meets this minimum','Minimum product volume · 270 mL','Negative gauge pressure confirmed',
+  'Reported 4.6 · Measured pH of the covering liquid · Above this maximum',base+r.report]) assert(whole.includes(item),item);
+ await field('style').selectOption('diced');
+ assert.equal(await field('peel-result').inputValue(),'');
+ assert.equal(await field('calcium-result').inputValue(),'');
+ assert.equal(await field('ph-result').inputValue(),'4.6');
+ await testResult('calcium','0.060','Meets this maximum');
+ await testResult('peel','50','Meets this maximum');
+ await field('peel-state').selectOption('unpeeled');
+ assert.equal(await field('peel-result').inputValue(),'');
+ assert.equal(await field('calcium-result').inputValue(),'0.060');
+ await testResult('peel','125','Meets this maximum');
+ const diced=await readProductBrief(page);
+ assert(diced.includes('Peel missing from unpeeled tomatoes · maximum 125 cm²/kg') && diced.includes('maximum 0.080%'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:840});
+  assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1 && el.getBoundingClientRect().right<=innerWidth+1));
+  if (width===390) await panel.locator('[data-criterion="calcium"]').screenshot({path:path.join(artifacts,'canned-tomato-calcium-390.png')});
+ }
+ await field('firming').selectOption('no');
+ assert.equal(await field('calcium-result').count(),0);
+ await field('medium').selectOption('solid');
+ assert.equal(await field('ph-result').count(),0);
+ const solid=await readProductBrief(page);
+ assert(solid.includes('Solid pack, no added liquid') && !solid.includes('Reported 4.6') && !solid.includes('Total calcium ions · maximum'));
+ await field('pack').selectOption('glass');
+ assert.equal(await field('net').count(),0);
+ assert.equal(await field('capacity').inputValue(),'');
+ assert.equal(await field('peel-result').inputValue(),'125');
+ await field('capacity').fill('300');await field('volume').fill('252');
+ await field('capacity-basis').selectOption('other');
+ assert.match(await field('fill-outcome').innerText(),/Confirm.*27 °C/);
+ await field('capacity-basis').selectOption('stated');
+ const glass=await readProductBrief(page);
+ assert(glass.includes('Reference capacity · 280 mL') && glass.includes('Minimum product volume · 252 mL'));
+ assert(!glass.includes('Actual net contents · 400 g') && !glass.includes('Negative gauge pressure confirmed'));
+ await field('medium').selectOption('other');
+ assert(!(await readProductBrief(page)).includes('Covering-liquid pH · maximum'));
+ const report=await page.request.get(base+r.report);
+ assert.equal(report.status(),200);
+ assert((await report.text()).includes(r.sources.amendment.sha256));
+ await page.locator('#productSearch').fill('tomato juice');
+ await page.locator('#productList [data-id="'+register.tomatoJuiceReview.id+'"]').click();
+ assert.equal(await panel.count(),0);
+ assert(!(await readProductBrief(page)).includes('CAN-186'));
+ await page.locator('#productSearch').fill('');
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -859,6 +947,23 @@ async function testPortableHelper(browser, register) {
   assert(juiceBrief.includes('Minimum juice volume · 252 mL') && juiceBrief.includes('90.0% · Meets this minimum'));
   assert(juiceBrief.includes(juice.amendment.url+'#page=11') && juiceBrief.includes(sourceBase+juice.report));
   assert(!juiceBrief.includes('OFFLINE-PASTE-189') && !juiceBrief.includes('Can headspace · maximum'));
+  const canned=register.cannedTomatoReview;
+  await page.locator('#productSearch').fill('tinned tomatoes');
+  await page.locator('#productList [data-id="'+canned.id+'"]').click();
+  const ct=page.locator('.canned-tomatoes');
+  await ct.locator('#ct-lot').fill('OFFLINE-CAN-186');
+  await ct.locator('#ct-pack').selectOption('can');
+  await ct.locator('#ct-drained').fill('224');await ct.locator('#ct-net').fill('400');
+  await ct.locator('#ct-style').selectOption('whole');await ct.locator('#ct-peel-state').selectOption('peeled');
+  await ct.locator('#ct-medium').selectOption('juice');
+  await ct.locator('#ct-firming').selectOption('yes');
+  await ct.locator('#ct-calcium-basis').selectOption('stated');
+  await ct.locator('#ct-calcium-result').fill('0.060');
+  const cannedBrief=await readProductBrief(page);
+  for (const line of ['OFFLINE-CAN-186','Tomato style · Whole','Drained tomato solids · 224 g','Actual net contents · 400 g',
+    '56.0% · Meets this minimum','Total calcium ions · maximum 0.045%','Reported 0.060 · Total calcium-ion content, % · Above this maximum',
+    canned.sources.amendment.url+'#page=9',canned.sources.method.url+'#page=5',sourceBase+canned.report]) assert(cannedBrief.includes(line),line);
+  assert(!cannedBrief.includes('OFFLINE-JUICE-7') && !cannedBrief.includes('Soluble-solids method'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -1160,6 +1265,7 @@ let browser;
  await testNamedSauces(page, data, base, artifacts);
  await testTomatoConcentrates(page, data, base, artifacts);
  await testTomatoJuice(page, data, base, artifacts);
+ await testCannedTomatoes(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1246,6 +1352,7 @@ let browser;
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
+ Object.assign(result,{cannedTomatoDrainedWeightTested:true,cannedTomatoStyleAndCalciumTested:true,cannedTomatoOfflineExportTested:true});
  Object.assign(result,{tomatoJuiceLabChecks:7,tomatoJuiceCanChecks:2,tomatoJuiceGlassFillTested:true,tomatoJuiceOfflineBriefTested:true});
  Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});
  Object.assign(result,{namedSauceArticles:2,soybeanNitrogenTested:true,namedSauceOfflineBriefTested:true,filteredProductLinkTested:true});

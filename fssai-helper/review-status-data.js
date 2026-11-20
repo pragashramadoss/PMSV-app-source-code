@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 88,
+  "latestRound": 89,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -53,7 +53,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-culinary-sauces-r85-2026-11-20.json",
     "ctr-tomato-soybean-sauces-r86-2026-11-20.json",
     "ctr-thermally-processed-tomato-r87-2026-11-20.json",
-    "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json"
+    "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json",
+    "ctr-canned-tomatoes-r89-2026-11-20.json"
   ],
   "records": [
     {
@@ -3930,6 +3931,100 @@ window.PMSV_REVIEW_REGISTER = {
       "method": {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
         "page": 35,
+        "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
+      }
+    }
+  },
+  "cannedTomatoReview": {
+    "round": 89,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-canned-tomatoes-r89-2026-11-20.md",
+    "id": "04-04-2-canned-tomatoes",
+    "label": "Canned tomatoes",
+    "clause": "2.3.3A",
+    "aliases": [
+      "tinned tomatoes",
+      "whole peeled tomatoes",
+      "canned diced tomatoes",
+      "canned chopped tomatoes"
+    ],
+    "salt": {
+      "key": "salt",
+      "label": "Added common salt",
+      "maximum": 3,
+      "basis": "Added salt, % of net weight, corrected for natural chlorides",
+      "otherBasis": "Total salt, sodium or another basis",
+      "provision": "(5)(1)"
+    },
+    "naturalChloridesPercentOfDryWeight": 2,
+    "ph": {
+      "key": "ph",
+      "label": "Covering-liquid pH",
+      "maximum": 4.5,
+      "unit": "pH",
+      "basis": "Measured pH of the covering liquid",
+      "otherBasis": "Whole product, acidity or another basis",
+      "provision": "(5)(3)"
+    },
+    "calcium": {
+      "key": "calcium",
+      "label": "Total calcium ions",
+      "whole": 0.045,
+      "nonwhole": 0.08,
+      "precision": 3,
+      "basis": "Total calcium-ion content, %",
+      "otherBasis": "Calcium chloride dose or another basis",
+      "provision": "(5)(2)"
+    },
+    "blemish": {
+      "key": "blemish",
+      "label": "Aggregate blemish area",
+      "maximum": 3.5,
+      "unit": "cm²/kg",
+      "basis": "Aggregate area in cm² per 1 kg net weight",
+      "otherBasis": "Individual spot, count or unconfirmed net-weight basis",
+      "provision": "(7)(1)"
+    },
+    "peel": {
+      "key": "peel",
+      "whole": 30,
+      "nonwhole": 125,
+      "unit": "cm²/kg",
+      "basis": "Aggregate area in cm² per 1 kg net weight",
+      "otherBasis": "Area per can or another unconfirmed basis",
+      "peeledProvision": "(7)(2)",
+      "unpeeledProvision": "(7)(3)"
+    },
+    "can": {
+      "drainedMinimumPercent": 56,
+      "headspaceMaximumMm": 7,
+      "vacuum": "Negative"
+    },
+    "fill": {
+      "minimumPercent": 90,
+      "waterTemperatureC": 27,
+      "glassDeductionMl": 20,
+      "volumeUnit": "mL"
+    },
+    "sourcePages": {
+      "amendment": 9,
+      "chapter": 9,
+      "method": 5
+    },
+    "sources": {
+      "amendment": {
+        "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/Gazette_Notification_Fruits_Vegetables_28_11_2017.pdf",
+        "sha256": "a70e28574d44f6e105b83da6c2f52442eac1db3b66f1805b862458c8e82911a9",
+        "page": 9
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c",
+        "page": 9
+      },
+      "method": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
+        "page": 5,
         "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
       }
     }
