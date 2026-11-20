@@ -24,7 +24,8 @@
   const waterNote=data.waterSourceReview.records.find(x=>x.id===id);
   sourceNote += window.PMSVRecipeFlowers.markup(data.recipeFlowerReview, id);
   sourceNote += window.PMSVRhizomeSpices.markup(data.rhizomeSpiceReview, id);
-  if (id === data.gingerPasteReview.productId) sourceNote += window.PMSVGingerPaste.markup(data.gingerPasteReview, id);
+  const culinary = window.PMSVCulinarySauces.article(data,id);
+  if (culinary && !culinary.ingredient) sourceNote += window.PMSVCulinarySauces.markup(culinary);
   if(waterNote)sourceNote+=waterMarkup(waterNote);
   const asafoetida=data.asafoetidaReview;
   if(id===asafoetida.productId||id===asafoetida.recipeProductId)sourceNote+=window.PMSVAsafoetida?.markup(asafoetida,id===asafoetida.recipeProductId)||'<p>Asafoetida reference unavailable.</p>';
@@ -57,6 +58,14 @@
  sourcePanel.id='gazetteReviewSummary';sourcePanel.className='panel compact';
  sourcePanel.innerHTML=`<h3>Original Gazette checks</h3><p>${esc(gazette.summary)}</p><a class="source-ref" href="${esc(gazette.report)}" target="_blank" rel="noopener noreferrer">Read the original-source comparison ↗</a><details><summary>9 changes scheduled for 1 December 2026</summary><p>Future on the review date. These entries have not been activated in the current rules.</p><ul>${gazette.futureChanges.map(change=>`<li><b>${esc(change.title)}:</b> ${esc(change.scopeNote)}</li>`).join('')}</ul></details>`;
  $('verificationSoftware').insertAdjacentElement('afterend',sourcePanel);
+ const saucePanel = document.createElement('section');
+ saucePanel.className = 'panel compact';
+ saucePanel.innerHTML = '<h3>Sauce and paste standards</h3><label for="culinary-product">Product under FSSAI 2.3.28</label>' +
+  '<div class="controls"><select id="culinary-product">' + data.culinarySauceReview.rows.flatMap(row => row.products).map(p =>
+   '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('') +
+  '</select><button type="button" id="open-culinary-product">Open product standard</button></div>';
+ sourcePanel.insertAdjacentElement('beforebegin',saucePanel);
+ $('open-culinary-product').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct($('culinary-product').value));
  const residue=data.residueGazetteReview,residuePanel=document.createElement('section');
  residuePanel.id='residueReviewSummary';residuePanel.className='panel compact';
  residuePanel.innerHTML=`<h3>Pesticide and veterinary source checks</h3><p>${esc(residue.summary)}</p><a class="source-ref" href="${esc(residue.report)}" target="_blank" rel="noopener noreferrer">Read the residue-source comparison ↗</a><details><summary>8 source findings and safeguards</summary><ul>${residue.findings.map(finding=>`<li><b>${esc(finding.title)}:</b> ${esc(finding.detail)}</li>`).join('')}</ul></details>`;

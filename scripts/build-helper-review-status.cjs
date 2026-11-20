@@ -37,6 +37,8 @@ const rhizomeFile = 'ctr-rhizome-spices-r83-2026-11-19.json';
 const rhizomes = read(rhizomeFile);
 const pasteFile = 'ctr-ginger-paste-r84-2026-11-19.json';
 const paste = read(pasteFile);
+const sauceFile = 'ctr-culinary-sauces-r85-2026-11-20.json';
+const sauces = read(sauceFile);
 const ingredientBaselineFile = 'ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json';
 const ingredientBaseline = read(ingredientBaselineFile);
 const vm=require('node:vm'),catalogueContext={window:{}};
@@ -235,18 +237,19 @@ pasteRecipe.sourceReviewResult += ' ' + paste.recipe.sourceReviewResult;
 pasteRecipe.sourceReviewNextAction += ' ' + paste.recipe.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:paste.reviewedOn,latestRound:paste.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:sauces.reviewedOn,latestRound:sauces.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
  recipeFlowerReview:{...flowers,rawRows:flowerRows,coverage:flowerCoverage},
  rhizomeSpiceReview:{...rhizomes,spices:rhizomeSpices,addedLinks,
   sources:{gazette:flowers.sources.gazette.url,compendium:flowers.sources.compendium.url,recipe:flowers.sources.recipe.url}},
+ culinarySauceReview:{...sauces,sources:{gazette:paste.sources.gazette,chapter:paste.sources.chapter,proposal:paste.sources.proposal}},
  gingerPasteReview:paste,
  flowerSupplyReview:flowerSupply,
  hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,

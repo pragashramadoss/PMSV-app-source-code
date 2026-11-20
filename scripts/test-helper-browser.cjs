@@ -428,6 +428,81 @@ async function testGingerPaste(page, register, base, artifacts) {
  assert((await response.text()).includes('90% of water capacity'));
 }
 
+async function testCulinarySauces(page,register,base,artifacts) {
+ const review = register.culinarySauceReview, panel = page.locator('.culinary-composition');
+ const fill = panel.locator('.culinary-fill');
+ const records = review.rows.flatMap(row => row.products.map(product => ({row,product})));
+ for (const {row,product} of records) {
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  await page.getByLabel('Product under FSSAI 2.3.28').selectOption(product.id);
+  await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+  assert.equal(await panel.getAttribute('data-product'),product.id);
+  assert.equal(await panel.locator('#paste-lot').inputValue(),'');
+  assert.equal(await panel.locator('#paste-acidity-result').inputValue(),'');
+  assert.equal(await panel.locator('#fill-pack').inputValue(),'');
+  assert((await panel.innerText()).includes('FSSAI 2.3.28(2), row '+row.number));
+  for (const key of ['solids','acidity']) {
+   await panel.locator('#paste-'+key+'-basis').selectOption('stated');
+   await panel.locator('#paste-'+key+'-result').fill(row[key].toFixed(1));
+   assert.equal(await panel.locator('[data-criterion="'+key+'"] .paste-outcome').innerText(),'Meets this minimum');
+  }
+  await panel.locator('#paste-lot').fill('FILL-LOT-'+product.id);
+  await fill.locator('summary').click();
+  await fill.locator('#fill-pack').selectOption('rigid');
+  await fill.locator('#fill-product').fill('270');
+  await fill.locator('#fill-capacity').fill('300');
+  assert.equal(await fill.locator('.fill-outcome').innerText(),'90.0% · Meets this minimum');
+  const brief = await readProductBrief(page);
+  assert(brief.includes('Current focused reviews: R85') && brief.includes(base+review.report));
+  assert(brief.includes('FILL-LOT-'+product.id) && brief.includes('Water capacity at 20 °C · 300 mL'));
+  assert(brief.includes('Acidity · minimum '+row.acidity.toFixed(1)+'%'));
+  assert(brief.includes('90.0% · Meets this minimum'));
+  if (row.number !== 2) continue;
+  await panel.locator('#paste-acidity-result').fill('1.19999999999999999');
+  assert.equal(await panel.locator('[data-criterion="acidity"] .paste-outcome').innerText(),'Below this minimum');
+  await fill.locator('#fill-product').fill('269.99999999999999999');
+  assert.equal(await fill.locator('.fill-outcome').innerText(),'89.99…% · Below this minimum');
+  await panel.locator('#paste-acidity-result').fill('1.19');
+  await fill.locator('#fill-product').fill('269');
+  for (const width of [320,390,1440]) {
+   await page.setViewportSize({width,height:900});
+   assert(await panel.evaluate(el=>el.scrollWidth <= el.clientWidth+1));
+   assert(await fill.locator('select,input').evaluateAll(fields=>fields.every(f=>f.getBoundingClientRect().right <= f.closest('section').getBoundingClientRect().right+1)));
+   if(width===390) await fill.screenshot({path:path.join(artifacts,'rigid-fill-390.png'),animations:'disabled',
+    style:'header, .navtabs { visibility: hidden !important; }'});
+  }
+  await fill.locator('#fill-pack').selectOption('flexible');
+  assert.equal(await fill.locator('#fill-product').isVisible(),false);
+  assert.equal(await fill.locator('#fill-capacity').inputValue(),'');
+  const flexible = await readProductBrief(page);
+  assert(flexible.includes('Container type · Flexible pack') && flexible.includes('does not apply to this pack'));
+  assert(!flexible.includes('Volume occupied by product ·') && !flexible.includes('Water capacity at 20 °C · 300 mL'));
+  assert(flexible.includes('Reported 1.19 · % as acetic acid · Below this minimum'));
+  await fill.locator('#fill-pack').selectOption('rigid');
+  assert.equal(await fill.locator('#fill-product').inputValue(),'');
+  await fill.locator('#fill-product').fill('0');
+  await fill.locator('#fill-capacity').fill('300');
+  assert.equal(await fill.locator('.fill-outcome').innerText(),'0.0% · Below this minimum');
+ }
+ await page.getByRole('button',{name:'Product finder',exact:true}).click();
+ const search=page.locator('#productSearch');
+ for (const id of ['12-12-6-tomato-ketchup-and-tomato-sauce','12-12-9-soybean-sauce','12-12-6-chilli-sauce']) {
+  await search.fill(id);
+  await page.locator('#productList [data-id="'+id+'"]').click();
+  assert.equal(await panel.count(),id===records[0].product.id ? 1 : 0);
+ }
+ await search.fill('');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ const downloading=page.waitForEvent('download');
+ await page.locator('#exportReviewJSON').click();
+ const json=fs.readFileSync(await (await downloading).path(),'utf8');
+ assert.deepEqual(JSON.parse(json).culinarySauceReview,review);
+ assert(!json.includes('FILL-LOT-'));
+ const report=await page.request.get(base+review.report);
+ assert.equal(report.status(),200);
+ assert((await report.text()).includes('Five product-finder entries'));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -477,6 +552,21 @@ async function testPortableHelper(browser, register) {
   assert(pasteText.includes('Awaiting a result') && pasteText.includes(sourceBase + register.gingerPasteReview.report));
   assert.equal(await page.locator('.ginger-paste-check').getByRole('link',{name:'Ginger-paste source review ↗'}).evaluate(a=>a.href),
    sourceBase + register.gingerPasteReview.report);
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  await page.getByLabel('Product under FSSAI 2.3.28').selectOption('12-12-6-fruits-vegetable-sauces');
+  await page.getByRole('button',{name:'Open product standard'}).click();
+  const sauce=page.locator('.culinary-composition');
+  await sauce.locator('#paste-lot').fill('OFFLINE-FRUIT-SAUCE');
+  await sauce.locator('#paste-acidity-basis').selectOption('stated');
+  await sauce.locator('#paste-acidity-result').fill('1.19');
+  await sauce.locator('.culinary-fill summary').click();
+  await sauce.locator('#fill-pack').selectOption('rigid');
+  await sauce.locator('#fill-product').fill('270');
+  await sauce.locator('#fill-capacity').fill('300');
+  const sauceBrief=await readProductBrief(page);
+  assert(sauceBrief.includes('OFFLINE-FRUIT-SAUCE') && sauceBrief.includes('Reported 1.19 · % as acetic acid · Below this minimum'));
+  assert(sauceBrief.includes('90.0% · Meets this minimum') && sauceBrief.includes(sourceBase+register.culinarySauceReview.report));
+  assert(!sauceBrief.includes('OFFLINE-GINGER-PASTE') && !sauceBrief.includes('OFFLINE-HALDI'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -774,6 +864,7 @@ let browser;
  await testRecipeFlowers(page, data, base, artifacts);
  await testRhizomeSpices(page, data, base, artifacts);
  await testGingerPaste(page, data, base, artifacts);
+ await testCulinarySauces(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -859,6 +950,7 @@ let browser;
  Object.assign(result,{hinguRawReferences:4,hinguGradesTested:3,hinguLabReferences:6,hinguScopeResetsVerified:true,
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
+ Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
  Object.assign(result,{gingerPasteCriteriaTested:2,gingerPasteRecipeAndCatalogueTested:true,gingerPasteOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});

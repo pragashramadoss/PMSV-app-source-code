@@ -2,8 +2,8 @@
 window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
-  "latestSourceReviewDate": "2026-11-19",
-  "latestRound": 84,
+  "latestSourceReviewDate": "2026-11-20",
+  "latestRound": 85,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -49,7 +49,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-recipe-flowers-r81-2026-11-18.json",
     "ctr-flower-supply-r82-2026-11-19.json",
     "ctr-rhizome-spices-r83-2026-11-19.json",
-    "ctr-ginger-paste-r84-2026-11-19.json"
+    "ctr-ginger-paste-r84-2026-11-19.json",
+    "ctr-culinary-sauces-r85-2026-11-20.json"
   ],
   "records": [
     {
@@ -3576,6 +3577,89 @@ window.PMSV_REVIEW_REGISTER = {
       "gazette": "https://www.fssai.gov.in/docs/food-law/notice-comment/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
       "compendium": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
       "recipe": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf"
+    }
+  },
+  "culinarySauceReview": {
+    "round": 85,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-culinary-sauces-r85-2026-11-20.md",
+    "clause": "2.3.28",
+    "rows": [
+      {
+        "number": 1,
+        "name": "Chilli sauce",
+        "solids": 8,
+        "acidity": 1,
+        "products": [
+          {
+            "id": "12-12-6-chilli-sauce",
+            "label": "Chilli sauce"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "name": "Fruit or vegetable sauces",
+        "solids": 15,
+        "acidity": 1.2,
+        "products": [
+          {
+            "id": "12-12-6-fruits-vegetable-sauces",
+            "label": "Fruit or vegetable sauce"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "name": "Culinary paste or sauce",
+        "solids": 8,
+        "acidity": 1,
+        "products": [
+          {
+            "id": "12-12-6-culinary-sauce",
+            "label": "Culinary sauce"
+          },
+          {
+            "id": "12-12-6-culinary-pastes",
+            "label": "Culinary paste"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "name": "Ginger paste",
+        "solids": 3,
+        "acidity": 1,
+        "products": [
+          {
+            "id": "04-04-2-ginger-paste",
+            "label": "Ginger paste"
+          }
+        ]
+      }
+    ],
+    "fill": {
+      "pack": "rigid",
+      "minimumPercent": 90,
+      "waterTemperatureC": 20,
+      "volumeUnit": "mL"
+    },
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "page": 62,
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "page": 34,
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
+      },
+      "proposal": {
+        "url": "https://www.fssai.gov.in/upload/uploadfiles/files/food%20product.pdf",
+        "page": 14,
+        "sha256": "2a01d2b18e8d01f92e496991eb67f1d77956f39b97e0994dcf6e63bb4f564d8c"
+      }
     }
   },
   "gingerPasteReview": {
