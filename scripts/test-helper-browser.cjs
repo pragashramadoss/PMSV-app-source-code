@@ -935,10 +935,10 @@ async function testFruitCocktail(page,register,base,artifacts) {
  for (const key of ['sugarWater','sugarJuice']) {
   await f('medium').selectOption(key);assert.equal(await f('brix').inputValue(),'');
   await f('brix-basis').selectOption('stated');
-  if (key==='sugarJuice') await f('names').fill('pineapple');
+  if (key==='sugarJuice') await f('names').fill('pineapple R91');
   for (const b of r.bands) {
    await f('brix').fill(b.min);
-   assert.equal(await f('medium-result').innerText(),key==='sugarJuice'?b.juice+' pineapple juice':b.syrup);
+   assert.equal(await f('medium-result').innerText(),key==='sugarJuice'?b.juice+' pineapple R91 juice':b.syrup);
   }
  }
  await f('brix').fill('13.95');
@@ -954,7 +954,7 @@ async function testFruitCocktail(page,register,base,artifacts) {
  for (const s of ['FRUIT-R91','Flexible pack','Full water mass · 500 g','Measured drained fruit · 240 g','Minimum drained fruit · 250 g',
    'Shortfall · 10 g','Occupied volume including medium · 450 mL','90.0% · Meets this minimum','Juice by volume · 50%',
    'pear and mango juice and water','Current focused reviews: R91, R66',r.sources.chapter.url+'#page=4',base+r.report]) assert(mixture.includes(s),s);
- assert(!mixture.includes('Reported liquid strength') && !mixture.includes('pineapple'));
+ assert(!mixture.includes('Reported liquid strength') && !mixture.includes('pineapple R91'));
  await f('pack').selectOption('Canned');
  await panel.getByText('Canned tropical fruit salad defects',{exact:true}).click();
  await f('identity').selectOption('tropical');
