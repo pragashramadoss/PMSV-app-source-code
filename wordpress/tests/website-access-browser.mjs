@@ -81,7 +81,7 @@ try{
   const sub={endpoint:'https://fcm.googleapis.com/fcm/send/fixture-browser'};
   Object.defineProperty(navigator.serviceWorker,'getRegistration',{value:async()=>({pushManager:{getSubscription:async()=>sub}})});
  });
- await android.goto(base+'/#notifications');
+ await android.goto(base+'/?existing-subscription#notifications');
  const settings=android.getByRole('dialog',{name:'Website notifications'});
  await settings.getByRole('button',{name:'Use PMSV app only'}).click();
  await settings.getByRole('status').filter({hasText:'This browser will skip the daily news alert.'}).waitFor();

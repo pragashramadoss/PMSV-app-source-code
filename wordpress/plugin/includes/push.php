@@ -49,7 +49,10 @@ function pmsv_wp_change_push($remove, $preferenceOnly = false) {
     }
     if ($preferenceOnly) {
         // A subscription may have already expired. A delivery choice must never create it.
-        if ($old) pmsv_wp_save_daily_choice($t, $id, $token, $dailyNews);
+        if ($old) {
+            pmsv_wp_save_daily_choice($t, $id, $token, $dailyNews);
+            pmsv_wp_push_device_cookie($id.'.'.pmsv_wp_device_signature($id,$token),time()+90*DAY_IN_SECONDS);
+        }
         return pmsv_wp_reply(['dailyNews' => $dailyNews]);
     }
     $previous=null;

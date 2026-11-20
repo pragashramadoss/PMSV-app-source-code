@@ -317,12 +317,26 @@ export default function AppNotifications(){
    <DialogTrigger asChild><button type="button" aria-label={enabled||appDaily?'Manage website notifications':'Turn on website notifications'} title="Website notifications">{enabled||appDaily?<BellRing size={19} aria-hidden="true"/>:<Bell size={19} aria-hidden="true"/>}<span>{appDaily?'Notifications':enabled?'Notifications on':'Notifications'}</span></button></DialogTrigger>
   </div>
   <DialogContent className="subscription-dialog">
-   <DialogHeader><DialogTitle>Website notifications</DialogTitle><DialogDescription>{appDaily?'Your PMSV app is selected for daily news on this phone.':'Get alerts for new PMSV updates in this browser.'}</DialogDescription></DialogHeader>
+   <DialogHeader>
+    <DialogTitle>Website notifications</DialogTitle>
+    <DialogDescription>{appDaily?'Your PMSV app is selected for daily news on this phone.':'Get alerts for new PMSV updates in this browser.'}</DialogDescription>
+   </DialogHeader>
    {supported?<>
-    {android&&!appDaily&&<><p className="push-status">Already receiving daily news in the PMSV Android app?</p><button className="subscription-submit" disabled={busy} onClick={()=>{void chooseApp()}}>Use PMSV app only</button></>}
-    {appDaily?<><p className="push-status">To move daily news back here, first turn off daily news in the app.</p><button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void enable(true)}}>Use this browser for daily news</button>
-    {enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void disable()}}>Turn off browser reply alerts</button>}</>:
-    <><button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>}{enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>}</>}
+    {android&&!appDaily&&<>
+     <p className="push-status">Already receiving daily news in the PMSV Android app?</p>
+     <button className="subscription-submit" disabled={busy} onClick={()=>{void chooseApp()}}>Use PMSV app only</button>
+    </>}
+    {appDaily?<>
+     <p className="push-status">To move daily news back here, first turn off daily news in the app.</p>
+     <button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void enable(true)}}>Use this browser for daily news</button>
+     {enabled&&<button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void disable()}}>Turn off browser reply alerts</button>}
+    </>:<>
+     <button className="subscription-submit" disabled={busy} onClick={()=>{void (enabled?disable():enable())}}>{busy?'Saving…':enabled?'Turn off notifications':'Allow notifications'}</button>
+     {enabled&&<>
+      <button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification()}}>Send test notification</button>
+      <button className="subscription-submit notification-test" disabled={busy} onClick={()=>{void testNotification(true)}}>Repair and test notifications</button>
+     </>}
+    </>}
    </>:<p className="push-status">{appleMobile?'Notifications are unavailable in an iPhone or iPad browser tab. You can still visit PMSV for updates.':'Notifications are not supported by this browser. You can still visit PMSV for updates.'}</p>}
    <p role="status" className="push-status">{message}</p>
    <button className="subscription-submit notification-test" disabled={busy||checking} onClick={()=>{void checkNotificationStatus()}}>{checking?'Checking…':'Check notification status'}</button>
