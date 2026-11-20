@@ -2,7 +2,7 @@
 (function (root) {
   'use strict';
   const measures=typeof module==='object' && module.exports ? require('./culinary-sauces.js') : root.PMSVCulinarySauces;
-  const {decimal,fillPercentText}=measures;
+  const {decimal,decimalText,fillPercentText}=measures;
   const packLabels = {can:'Metal can',glass:'Glass container',other:'Other non-glass container (including flexible)'};
   const capacityLabels = {stated:'Full capacity, distilled water at 27 °C',other:'Another temperature, adjusted or unconfirmed capacity'};
   const vacuumLabels = {negative:'Negative gauge pressure confirmed',nonnegative:'Zero or positive gauge pressure confirmed',unknown:'Magnitude only or sign convention unclear'};
@@ -12,11 +12,6 @@
     if (sign==='nonnegative') return 'Does not meet the negative-vacuum requirement';
     if (sign==='unknown') return 'Confirm the gauge sign convention';
     return 'Awaiting a vacuum observation';
-  }
-
-  function millilitres(n,scale) {
-    const digits=(n%scale).toString().padStart(scale.toString().length-1,'0').replace(/0+$/,'');
-    return (n/scale).toString() + (digits ? '.'+digits : '');
   }
 
   function fillAssessment(rule,pack,basis,productVolume,fullCapacity,contents='juice') {
@@ -29,8 +24,8 @@
     const deduction=pack==='glass' ? BigInt(rule.glassDeductionMl)*water.scale : 0n;
     const reference=water.n-deduction;
     if (reference<=0n) return {outcome:'Glass water capacity must exceed the '+rule.glassDeductionMl+' mL deduction'};
-    const amounts={referenceMl:millilitres(reference,water.scale),
-      minimumMl:millilitres(reference*BigInt(rule.minimumPercent),100n*water.scale)};
+    const amounts={referenceMl:decimalText(reference,water.scale),
+      minimumMl:decimalText(reference*BigInt(rule.minimumPercent),100n*water.scale)};
     if (!product) return {...amounts,outcome:'Enter the volume occupied by '+contents};
     const volume=decimal(product);
     if (!volume) return {...amounts,outcome:'Enter a non-negative '+contents+' volume in mL'};

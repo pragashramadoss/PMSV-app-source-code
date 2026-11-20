@@ -3,7 +3,7 @@
   'use strict';
   const measures=typeof module==='object' && module.exports ? require('./culinary-sauces.js') : root.PMSVCulinarySauces;
   const containers=typeof module==='object' && module.exports ? require('./tomato-containers.js') : root.PMSVTomatoContainers;
-  const {esc,clean,link,sourceURL,criterionCard,criterionLines,compare,decimal,fillPercentText}=measures;
+  const {esc,clean,link,sourceURL,criterionCard,criterionLines,compare,drainedOutcome}=measures;
   const {packLabels,capacityLabels,vacuumLabels,fillAssessment,fillLines,vacuumOutcome}=containers;
   const styles={whole:'Whole',diced:'Diced',sliced:'Sliced',wedges:'Wedges',pulp:'Pulp',crushed:'Crushed',chopped:'Chopped'};
   const peeling={peeled:'Peeled',unpeeled:'Unpeeled'};
@@ -51,16 +51,6 @@
     }
     if (regularMedium(medium) && agent==='yes') rules.calcium={...r.calcium,maximum:r.calcium[form]};
     return rules;
-  }
-
-  function drainedOutcome(minimum,drainedG,netG) {
-    const d=clean(drainedG),n=clean(netG);
-    if (!d || !n) return 'Enter the drained weight and actual net weight in grams.';
-    const drained=decimal(d),net=decimal(n);
-    if (!drained || !net || net.n===0n) return 'Use a non-negative drained weight and a positive net weight.';
-    const numerator=drained.n*net.scale,denominator=net.n*drained.scale;
-    if (numerator>denominator) return 'Drained weight exceeds net weight. Check the two weights.';
-    return fillPercentText(numerator,denominator,minimum);
   }
 
   const headspace=r=>({key:'headspace',label:'Can headspace',maximum:r.can.headspaceMaximumMm,unit:'mm',

@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 89,
+  "latestRound": 90,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -54,7 +54,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-tomato-soybean-sauces-r86-2026-11-20.json",
     "ctr-thermally-processed-tomato-r87-2026-11-20.json",
     "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json",
-    "ctr-canned-tomatoes-r89-2026-11-20.json"
+    "ctr-canned-tomatoes-r89-2026-11-20.json",
+    "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.json"
   ],
   "records": [
     {
@@ -516,13 +517,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
       "reports": [
         {
+          "round": 90,
+          "file": "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.md"
+        },
+        {
           "round": 66,
           "file": "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The original standard and 2020 cherry amendment are reconciled for drained weight and rigid-container fill. Cherries supplied with stems are weighed after the stems are removed.",
+      "sourceReviewNextAction": "Identify the actual fruit and packing style. Check the net contents, drained solids, cherry preparation where applicable, and the full water capacity of a rigid container. Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -912,13 +917,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
       "reports": [
         {
+          "round": 90,
+          "file": "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.md"
+        },
+        {
           "round": 66,
           "file": "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "The original standard and 2021 amendment are reconciled for drained weight and rigid-container fill. The 25% row covers edible fungi and vegetables, including baked beans, packed in sauce.",
+      "sourceReviewNextAction": "Confirm the vegetable, liquid or solid pack, and any sauce. Check actual net contents and drained solids from the same sample, and the water capacity for a rigid container. Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -4021,6 +4030,131 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
         "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c",
         "page": 9
+      },
+      "method": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
+        "page": 5,
+        "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
+      }
+    }
+  },
+  "thermalPackReview": {
+    "round": 90,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.md",
+    "fill": {
+      "pack": "rigid",
+      "minimumPercent": 90,
+      "waterTemperatureC": 20,
+      "volumeUnit": "mL"
+    },
+    "products": [
+      {
+        "kind": "fruit",
+        "id": "04-04-1-thermally-processed-fruits",
+        "priority": 146,
+        "fcs": "04.1.2.4",
+        "clause": "2.3.1",
+        "label": "Thermally processed fruits",
+        "aliases": [
+          "canned fruit",
+          "canned cherries",
+          "cherries with stems",
+          "thermally processed cherries"
+        ],
+        "rows": [
+          {
+            "key": "liquid",
+            "label": "Liquid pack",
+            "provision": "(2)(i)",
+            "minimumPercent": 50
+          },
+          {
+            "key": "solid",
+            "label": "Solid pack",
+            "provision": "(2)(ii)",
+            "minimumPercent": 70
+          }
+        ],
+        "fillParagraph": 3,
+        "gazettePage": 52,
+        "chapterPage": 1,
+        "amendment": {
+          "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5fedb66ac1b15Gazette_Notification_FPS_Tenth_amendment_31_12_2020.pdf",
+          "page": 29,
+          "date": "2020-12-29",
+          "sha256": "3d9e51265f851a4edbd174b4c0fbdc68ac52e371996652f114a7ce2921e4b51b"
+        },
+        "sourceReviewResult": "The original standard and 2020 cherry amendment are reconciled for drained weight and rigid-container fill. Cherries supplied with stems are weighed after the stems are removed.",
+        "sourceReviewNextAction": "Identify the actual fruit and packing style. Check the net contents, drained solids, cherry preparation where applicable, and the full water capacity of a rigid container."
+      },
+      {
+        "kind": "vegetable",
+        "id": "04-04-2-thermally-processed-vegetables",
+        "priority": 185,
+        "fcs": "04.2.2.4",
+        "clause": "2.3.3",
+        "label": "Thermally processed vegetables",
+        "aliases": [
+          "canned vegetables",
+          "baked beans in sauce",
+          "canned peas",
+          "green beans in brine",
+          "vegetables packed in sauce"
+        ],
+        "rows": [
+          {
+            "key": "mushroom",
+            "label": "Liquid pack · mushrooms without sauce",
+            "provision": "(1)(i)(a)",
+            "minimumPercent": 50
+          },
+          {
+            "key": "listed",
+            "label": "Liquid pack · green beans, carrots, peas, sweet corn or baby corn without sauce",
+            "provision": "(1)(i)(b)",
+            "minimumPercent": 50
+          },
+          {
+            "key": "sauce",
+            "label": "Liquid pack · edible fungi or vegetables, including baked beans, packed in sauce",
+            "provision": "(1)(i)(c)",
+            "minimumPercent": 25
+          },
+          {
+            "key": "other",
+            "label": "Liquid pack · other vegetables without sauce",
+            "provision": "(1)(i)(d)",
+            "minimumPercent": 50
+          },
+          {
+            "key": "solid",
+            "label": "Solid pack",
+            "provision": "(1)(ii)",
+            "minimumPercent": 70
+          }
+        ],
+        "fillParagraph": 2,
+        "gazettePage": 53,
+        "chapterPage": 6,
+        "amendment": {
+          "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/619b553646e10Gazette_Notification_Oil_Flour_22_11_2021.pdf",
+          "page": 19,
+          "date": "2021-11-15",
+          "sha256": "bfd0d2b1e7cd3ab9d40f8edcf83c2e4cd540b4036d8d628085924b8e87393d7b"
+        },
+        "sourceReviewResult": "The original standard and 2021 amendment are reconciled for drained weight and rigid-container fill. The 25% row covers edible fungi and vegetables, including baked beans, packed in sauce.",
+        "sourceReviewNextAction": "Confirm the vegetable, liquid or solid pack, and any sauce. Check actual net contents and drained solids from the same sample, and the water capacity for a rigid container."
+      }
+    ],
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
       },
       "method": {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",

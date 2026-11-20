@@ -5,6 +5,7 @@
  const hingu = typeof module === 'object' && module.exports ? require('./hingu-asafoetida-r80.js') : root.PMSVHingu;
  const flowers = typeof module === 'object' && module.exports ? require('./recipe-flowers-r81.js') : root.PMSVRecipeFlowers;
  const sauces = typeof module === 'object' && module.exports ? require('./culinary-sauces.js') : root.PMSVCulinarySauces;
+ const thermalPacks = typeof module === 'object' && module.exports ? require('./thermal-packs.js') : root.PMSVThermalPacks;
  const canned = typeof module === 'object' && module.exports ? require('./canned-tomatoes.js') : root.PMSVCannedTomatoes;
  const juice = typeof module === 'object' && module.exports ? require('./tomato-juice.js') : root.PMSVTomatoJuice;
  const paste = typeof module === 'object' && module.exports ? require('./ginger-paste.js') : root.PMSVGingerPaste;
@@ -23,7 +24,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==89||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==90||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -278,6 +279,7 @@
   if (!sauces.validConcentrateReview(data.tomatoConcentrateReview, data.tomatoSoybeanReview, rows)) return denied('Tomato purée or paste evidence is inconsistent.');
   if (!juice?.validReview(data.tomatoJuiceReview, data.tomatoConcentrateReview, rows)) return denied('Tomato juice evidence is inconsistent.');
   if (!canned?.validReview(data.cannedTomatoReview, data.tomatoJuiceReview, rows)) return denied('Canned tomato evidence is inconsistent.');
+  if (!thermalPacks?.validReview(data.thermalPackReview, data.cannedTomatoReview, rows, data.records)) return denied('Thermal pack evidence is inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

@@ -831,6 +831,85 @@ async function testCannedTomatoes(page,register,base,artifacts) {
  await page.locator('#productSearch').fill('');
 }
 
+async function testThermalPacks(page,register,base,artifacts) {
+ const r=register.thermalPackReview,[fruit,veg]=r.products;
+ const panel=page.locator('.thermal-packs'),field=key=>panel.locator('#tp-'+key);
+ async function selectProduct(p) {
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  await page.getByLabel('Choose a product standard').selectOption(p.id);
+  await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+  for (const alias of p.aliases) {
+   await page.locator('#productSearch').fill(alias);
+   assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),p.id);
+  }
+  assert.equal(await panel.getAttribute('data-product'),p.id);
+ }
+ await selectProduct(veg);
+ await field('lot').fill('VEG-R90');await field('food').fill('Baked beans in tomato sauce');
+ await field('net').fill('400');
+ for (const row of veg.rows) {
+  await field('style').selectOption(row.key);
+  assert.equal(await field('drained').inputValue(),'');
+  await field('drained').fill(String(row.minimumPercent*4));
+  const result=await field('drain-status').innerText();
+  assert(result.includes('FSSAI '+veg.clause+row.provision) && result.includes(row.minimumPercent+'.0% · Meets this minimum'));
+ }
+ await field('style').selectOption('sauce');await field('drained').fill('99.99');
+ assert.match(await field('drain-status').innerText(),/Below this minimum/);
+ await field('drained').fill('100');
+ assert.match(await field('method').innerText(),/0.3 mm.*five minutes/);
+ await panel.getByText('Container fill',{exact:true}).click();
+ await field('container').selectOption('rigid');
+ await field('water-basis').selectOption('other');await field('capacity').fill('300');await field('volume').fill('270');
+ assert.match(await field('fill-status').innerText(),/Confirm.*20 °C/);
+ await field('water-basis').selectOption('stated');
+ assert.equal(await field('capacity').inputValue(),'');
+ await field('capacity').fill('300');
+ assert.match(await field('fill-status').innerText(),/Minimum occupied volume · 270 mL/);
+ await panel.getByText('Label observations',{exact:true}).click();
+ await field('medium-check').selectOption('seen');await field('vegetable-check').selectOption('missing');
+ const lot=await readProductBrief(page);
+ for (const t of ['Current focused reviews: R90, R66','VEG-R90','Baked beans in tomato sauce','25.0% · Meets this minimum',
+   '90.0% · Meets this minimum','Vegetable names and percentage range of each · Declaration missing or incomplete',
+   base+r.report,veg.amendment.url+'#page=19']) assert(lot.includes(t),t);
+ await field('container').selectOption('flexible');
+ const flexible=await readProductBrief(page);
+ assert(flexible.includes('25.0% · Meets this minimum') && !flexible.includes('Full water capacity · 300 mL'));
+ assert(!flexible.includes('90.0% · Meets this minimum'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:840});
+  assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1 && el.getBoundingClientRect().right<=innerWidth+1));
+  if (width===390) await panel.locator('details').first().screenshot({path:path.join(artifacts,'thermal-vegetable-drain-390.png')});
+ }
+ await selectProduct(fruit);
+ assert.equal(await field('lot').inputValue(),'');assert.equal(await field('net').inputValue(),'');
+ await field('lot').fill('CHERRY-R90');await field('style').selectOption('liquid');
+ await field('net').fill('400');await field('drained').fill('205');
+ assert.match(await field('drain-status').innerText(),/Confirm the fruit/);
+ await field('fruit').selectOption('cherries');await field('stem').selectOption('included');
+ await field('drained').fill('205');
+ const uncorrected=await readProductBrief(page);
+ assert(uncorrected.includes('Stems included in the drained weight') && !uncorrected.includes('Meets this minimum'));
+ await field('stem').selectOption('removed');
+ assert.equal(await field('drained').inputValue(),'');
+ await field('drained').fill('195');
+ const cherries=await readProductBrief(page);
+ assert(cherries.includes('Minimum drained solids · 200 g') && cherries.includes('48.75% · Below this minimum'));
+ assert(cherries.includes(fruit.amendment.url+'#page=29') && !cherries.includes('VEG-R90') && !cherries.includes('baked beans packed in sauce'));
+ await panel.getByText('Label observations',{exact:true}).click();
+ await field('cherry-check').selectOption('seen');
+ await field('fruit').selectOption('ordinary');assert.equal(await field('drained').inputValue(),'');
+ await field('style').selectOption('solid');await field('drained').fill('280');
+ const solid=await readProductBrief(page);
+ assert(solid.includes('70.0% · Meets this minimum') && !solid.includes('Cherry preparation ·') && !solid.includes('Declaration for cherries packed with stems ·'));
+ await page.locator('#productSearch').fill('canned tomatoes');
+ await page.locator('#productList [data-id="'+register.cannedTomatoReview.id+'"]').click();
+ assert.equal(await panel.count(),0);
+ assert(!(await readProductBrief(page)).includes('CHERRY-R90'));
+ await page.locator('#productSearch').fill('');
+ const src=await page.request.get(base+r.report);assert.equal(src.status(),200);assert((await src.text()).includes(veg.amendment.sha256));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -964,6 +1043,28 @@ async function testPortableHelper(browser, register) {
     '56.0% · Meets this minimum','Total calcium ions · maximum 0.045%','Reported 0.060 · Total calcium-ion content, % · Above this maximum',
     canned.sources.amendment.url+'#page=9',canned.sources.method.url+'#page=5',sourceBase+canned.report]) assert(cannedBrief.includes(line),line);
   assert(!cannedBrief.includes('OFFLINE-JUICE-7') && !cannedBrief.includes('Soluble-solids method'));
+  const thermal=register.thermalPackReview,[fruitPack,vegPack]=thermal.products;
+  await page.locator('#productSearch').fill('baked beans in sauce');
+  await page.locator('#productList [data-id="'+vegPack.id+'"]').click();
+  const tp=page.locator('.thermal-packs'),measure=key=>tp.locator('#tp-'+key);
+  await measure('lot').fill('OFFLINE-BEANS-185');
+  await measure('style').selectOption('sauce');
+  await measure('net').fill('400');await measure('drained').fill('100');
+  const beansBrief=await readProductBrief(page);
+  for (const t of ['OFFLINE-BEANS-185','Current focused reviews: R90, R66','FSSAI 2.3.3(1)(i)(c)',
+   'Minimum drained solids · 100 g','25.0% · Meets this minimum',sourceBase+thermal.report,vegPack.amendment.url+'#page=19']) assert(beansBrief.includes(t),t);
+  await page.locator('#productSearch').fill('canned cherries');
+  await page.locator('#productList [data-id="'+fruitPack.id+'"]').click();
+  await measure('lot').fill('OFFLINE-CHERRIES-146');await measure('style').selectOption('liquid');
+  await measure('fruit').selectOption('cherries');await measure('stem').selectOption('removed');
+  await measure('net').fill('400');await measure('drained').fill('195');
+  await tp.getByText('Container fill',{exact:true}).click();
+  await measure('container').selectOption('rigid');await measure('water-basis').selectOption('stated');
+  await measure('capacity').fill('300');await measure('volume').fill('270');
+  const cherriesBrief=await readProductBrief(page);
+  for (const t of ['OFFLINE-CHERRIES-146','Stems removed before the drained weight was determined','48.75% · Below this minimum',
+    '90.0% · Meets this minimum','Minimum occupied volume · 270 mL',fruitPack.amendment.url+'#page=29',sourceBase+thermal.report]) assert(cherriesBrief.includes(t),t);
+  assert(!cherriesBrief.includes('OFFLINE-BEANS-185') && !cherriesBrief.includes('OFFLINE-CAN-186'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -1266,6 +1367,7 @@ let browser;
  await testTomatoConcentrates(page, data, base, artifacts);
  await testTomatoJuice(page, data, base, artifacts);
  await testCannedTomatoes(page, data, base, artifacts);
+ await testThermalPacks(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1352,6 +1454,7 @@ let browser;
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
+ Object.assign(result,{thermalPackRowsTested:7,thermalCherryPreparationTested:true,thermalPackOfflineLots:2});
  Object.assign(result,{cannedTomatoDrainedWeightTested:true,cannedTomatoStyleAndCalciumTested:true,cannedTomatoOfflineExportTested:true});
  Object.assign(result,{tomatoJuiceLabChecks:7,tomatoJuiceCanChecks:2,tomatoJuiceGlassFillTested:true,tomatoJuiceOfflineBriefTested:true});
  Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});

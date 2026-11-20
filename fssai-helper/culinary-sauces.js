@@ -151,6 +151,27 @@
     return measured >= boundary ? 'Meets this minimum' : 'Below this minimum';
   }
 
+  function decimalText(n,scale) {
+    const digits=(n%scale).toString().padStart(scale.toString().length-1,'0').replace(/0+$/,'');
+    return (n/scale).toString() + (digits ? '.'+digits : '');
+  }
+
+  function minimumQuantity(raw,minimumPercent) {
+    const baseline=decimal(clean(raw));
+    if (!baseline || baseline.n===0n) return null;
+    return decimalText(baseline.n*BigInt(minimumPercent),baseline.scale*100n);
+  }
+
+  function drainedOutcome(minimum,drainedG,netG) {
+    const d=clean(drainedG),n=clean(netG);
+    if (!d || !n) return 'Enter the drained weight and actual net weight in grams.';
+    const drained=decimal(d),net=decimal(n);
+    if (!drained || !net || net.n===0n) return 'Use a non-negative drained weight and a positive net weight.';
+    const numerator=drained.n*net.scale,denominator=net.n*drained.scale;
+    if (numerator>denominator) return 'Drained weight exceeds net weight. Check the two weights.';
+    return fillPercentText(numerator,denominator,minimum);
+  }
+
   function fillOutcome(rule,pack,productVolume,waterCapacity) {
     if (pack === 'flexible') return 'The rigid-container provision does not apply to this pack.';
     if (pack !== 'rigid') return 'Confirm the container type.';
@@ -296,7 +317,7 @@
     return lines;
   }
 
-  const api = Object.freeze({validReview,validNamedReview,validConcentrateReview,article,gingerArticle,compare,fillOutcome,markup,briefLines,decimal,fillPercentText,criterionCard,criterionLines,esc,clean,sourceURL,link});
+  const api = Object.freeze({validReview,validNamedReview,validConcentrateReview,article,gingerArticle,compare,fillOutcome,markup,briefLines,decimal,decimalText,minimumQuantity,drainedOutcome,fillPercentText,criterionCard,criterionLines,esc,clean,sourceURL,link});
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.PMSVCulinarySauces = api;
   if (typeof document === 'undefined') return;
