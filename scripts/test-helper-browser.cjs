@@ -1068,7 +1068,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1135,9 +1135,39 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await open('99-99-1-baking-powder');await page.locator('.broad-ctr>summary').click();
  assert((await page.locator('[data-broad-result]').innerText()).includes('2.5 mg/kg'));
  assert.equal(await f('broadForm').count(),0);assert(!(await readProductBrief(page)).includes('Composite recipe and label 16'));
+ await open('05-05-2-sugar-boiled-confectionery-hard-candy');
+ await page.locator('.crop-scope>summary').click();
+ const toxin=k=>page.locator('[data-crop-result="'+k+'"]');
+ assert((await toxin('hcn').innerText()).includes('Confectionery · 5 ppm'));
+ await page.locator('.crop-inputs>summary').click();
+ await f('crop_af').selectOption('composite');
+ assert((await toxin('total').innerText()).includes('Awaiting evidence'));
+ await f('crop_afRef').fill('Recipe C96 lists toasted almond');
+ assert((await toxin('total').innerText()).includes('20 µg/kg'));
+ assert((await toxin('b1').innerText()).includes('10 µg/kg'));
+ await page.locator('.ws-body [data-ws-save]').click();
+ assert((await readProductBrief(page)).includes('Recipe C96 lists toasted almond'));
+ await open('01-01-5-milk-powders-and-cream-powder');await page.locator('.crop-scope>summary').click();
+ await page.locator('.crop-inputs>summary').click();
+ await f('crop_milk').selectOption('skim');await f('crop_milkRef').fill('Grade S96');
+ assert((await toxin('m1').innerText()).includes('6 µg/kg'));
+ await f('crop_milk').selectOption('whole');assert.equal(await f('crop_milkRef').inputValue(),'');
+ await f('crop_milkRef').fill('Grade W96');
+ assert((await toxin('m1').innerText()).includes('4 µg/kg'));
+ await open('09-09-2-smoked-fishery-products');await page.locator('.crop-scope>summary').click();
+ assert((await toxin('pah').innerText()).includes('5 ppb'));
+ await page.locator('.crop-inputs>summary').click();await f('crop_fish').selectOption('inland');await f('crop_fishRef').fill('Species and waterbody S96');
+ assert((await toxin('pcb').innerText()).includes('2 ppm'));
+ await open('12-12-6-tomato-ketchup-and-tomato-sauce');await page.locator('.crop-scope>summary').click();
+ assert((await toxin('saf').innerText()).includes('Soups and sauces · 10 ppm'));
+ await page.locator('.crop-future>summary').click();await f('crop_dec').selectOption('absent');await f('crop_decRef').fill('Ketchup formula K96');
+ assert((await page.locator('[data-crop-future]').innerText()).includes('no match'));
+ assert((await toxin('saf').innerText()).includes('Soups and sauces · 10 ppm'));
+ await open('05-05-2-sugar-boiled-confectionery-hard-candy');await page.locator('.crop-scope>summary').click();
+ await page.locator('.crop-inputs>summary').click();assert.equal(await f('crop_afRef').inputValue(),'Recipe C96 lists toasted almond');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R95.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R96.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1419,6 +1449,9 @@ let browser;
  assert.equal(await page.locator('#remainingFocusedTotal').textContent(),'0');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
  assert.equal(await page.locator('#reviewResults article').count(),137);
+ const priorityCrop=await page.evaluate(()=>PMSV_REVIEW_REGISTER.cropArticleReview.priorityNamed);
+ await page.locator('#reviewFilter').selectOption('named22');assert.equal(await page.locator('#reviewResults article').count(),priorityCrop);
+ await page.locator('#reviewFilter').selectOption('other22');assert.equal(await page.locator('#reviewResults article').count(),137-priorityCrop);
  await page.locator('#reviewFilter').selectOption('remaining');
  assert.equal(await page.locator('#reviewResults article').count(),0);
  const download=page.waitForEvent('download');await page.locator('#exportReviewJSON').click();
@@ -1430,7 +1463,7 @@ let browser;
  await page.locator('[data-review-product]').click();
  assert.equal(await page.locator('#finder').isVisible(),true);
  assert.match(await page.locator('#productDetail').textContent(),/R68/);
- assert.match(await page.locator('#productDetail').textContent(),/Exact CTR article decision: OPEN/);
+ assert.match(await page.locator('#productDetail').textContent(),/Wider CTR article decision: OPEN/);
  await page.evaluate(()=>PMSV_HELPER_TEST.selectProduct('102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk'));
  assert.match(await page.locator('#productDetail').textContent(),/R69/);
  assert.match(await page.locator('#productDetail').textContent(),/discrepancy is confirmed visually, not resolved/);
@@ -1716,7 +1749,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

@@ -26,7 +26,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==95||data.metalArticleReview?.products!==533||data.broadContaminantReview?.products!==533||data.worksheetReview?.pageLocated!==533||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==96||data.cropArticleReview?.products!==533||data.cropArticleReview?.sourceRows!==45||data.metalArticleReview?.products!==533||data.broadContaminantReview?.products!==533||data.worksheetReview?.pageLocated!==533||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||

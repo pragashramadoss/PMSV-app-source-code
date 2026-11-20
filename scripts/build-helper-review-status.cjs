@@ -285,10 +285,16 @@ const worksheetReview={round:93,reviewedOn:sourceRows.date,products:allWorksheet
 assert.deepEqual([worksheetReview.products,worksheetReview.standards,worksheetReview.categoryRoutes,worksheetReview.pageLocated,worksheetReview.openContaminantArticleDecisions],[533,475,58,533,137]);
 const broadContaminantReview={round:94,reviewedOn:sourceRows.date,products:allWorksheets.length,analytes:["Melamine","Mercury","Methyl mercury"],report:"broad-contaminants-r94.md",fullProductApprovals:0};
 const metalArticleReview={round:95,reviewedOn:sourceRows.date,products:allWorksheets.length,metals:["Chromium","Nickel","Selenium","Antimony"],confectioneryProducts:11,report:"catalogue-metal-review-r95.md",fullProductApprovals:0};
-const data={metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:metalArticleReview.round,
+const cropContext=vm.createContext({PMSVCatalogueEvidence:sourceRows});
+for(const file of ['catalogue-metal-scope-data.js','catalogue-crop-scope-data.js','catalogue-crop-scope.js']){
+ vm.runInContext(fs.readFileSync(path.join(dir,file),'utf8'),cropContext);
+}
+const cropArticleReview={round:96,reviewedOn:sourceRows.date,...cropContext.PMSVCropScope.stats(),report:'catalogue-crop-review-r96.md',fullProductApprovals:0};
+assert.equal(cropArticleReview.products,533);assert.equal(cropArticleReview.sourceRows,45);assert.equal(cropArticleReview.analytes,12);
+const data={cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:cropArticleReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
- scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
+ scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
  sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile,cocktailFile,vegetableMealsFile],records,

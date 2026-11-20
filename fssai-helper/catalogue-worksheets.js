@@ -2,10 +2,10 @@
 (function (root) {
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
-  const registry = root.PMSV_REVIEW_REGISTER;
+  const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 95 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 96 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -24,7 +24,7 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef'];
+  const fields = ['reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -199,9 +199,13 @@
     const a=E.commodityRows[Number(key)];
     return 'Candidate recorded for review · '+a[0]+' · '+a[1]+' · '+E.documents[a[5]].url.split('#')[0]+'#page='+a[6];
   }
+  function contaminantEvidence(id) {
+    if(E.products[id].directCTR)return 'Partial direct evidence';
+    return C.positive(id).length?'Named finished-article evidence in CTR 2.2.1; wider review open':'Exact finished-product decision open';
+  }
   function contaminants(id) {
     const p=E.products[id],r=R.products[id],caseRow=priority.get(id),named=p.namedGazette||[];
-    let body='<p><b>'+esc(p.directCTR?'Existing product-specific partial evidence':'Exact finished-product contaminant decision open')+'</b></p>';
+    let body='<p><b>'+esc(contaminantEvidence(id))+'</b></p>';
     if (caseRow)body+='<p>'+esc(caseRow.sourceReviewResult)+'</p>';
     body+='<p>'+esc(caseRow?.sourceReviewNextAction||p.ctrAction)+'</p>';
     if (r.ctrProfiles?.length) body+=section('Recorded direct article evidence',r.ctrProfiles.map(k=>'<h5>'+esc(R.ctr[k].name)+'</h5>'+table(['Analyte','Named article','Reference level','Scope','Gazette concordance'],R.ctr[k].rows.map((v,i)=>[esc(v.contaminant),esc(v.article),esc(v.limit+' '+v.unit),esc([v.condition,v.source_note,v.source_basis].filter(Boolean).join(' · ')),(E.profileGazette?.[k]?.[i]||[]).map(a=>documentLink(a[5],a[6],'Article, analyte and number · PDF p. '+a[6])+(a[4]?' '+esc(a[4]):'')).join(' ')||'—']))).join(''));
@@ -248,7 +252,7 @@
       const body=node.querySelector('.ws-body');
       if(!node.open || body.hasChildNodes())return;
       const p=E.products[id];
-      body.innerHTML=productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
+      body.innerHTML=productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
     });
     node.addEventListener('input',e=>{
       const el=e.target,k=el.dataset.wsField;
@@ -270,6 +274,7 @@
         node.querySelector('[data-hg-value]').textContent=result.article+(result.level?' · '+result.level:'');
         node.querySelector('[data-hg-basis]').textContent=result.why;
       }
+      if(C.fields.includes(k))C.update(node,id,k,state);
       if(k==='pack')node.querySelector('[data-ws-pack]').innerHTML=packRules(state.pack);
       const out=node.querySelector('[data-ws-outcome]');if(out)out.textContent=resultText(id);
       const feedback=node.querySelector('[data-ws-saved]');if(feedback)feedback.textContent='Unsaved changes';
@@ -297,25 +302,25 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
-      'Product-specific contaminant evidence: '+(p.directCTR?'Partial named evidence':'Exact decision open'),'Remaining action: '+(priority.get(id)?.sourceReviewNextAction||p.ctrAction),
+      'Product-specific contaminant evidence: '+(contaminantEvidence(id)),'Remaining action: '+(priority.get(id)?.sourceReviewNextAction||p.ctrAction),
       ...(p.routeAnchors||[]).map(([doc,pp,note])=>note+' · '+E.documents[doc].url+'#page='+pp[0]),
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
       'Original Gazette rows matching the catalogue name: '+(p.namedGazette||[]).length,'Product reference: '+(s.reference||'—'),'Variant or article: '+(s.article||'—'),'Primary pack: '+(s.pack?human(s.pack):'—'),
-      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...root.PMSVMetalScope.brief(id,s),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
+      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...root.PMSVMetalScope.brief(id,s),...C.brief(id,s),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
   }
   function registerRows(includeDeviceEntries=false) {
     if(!valid)return [];
-    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack'], ...list.map(({id})=>{
+    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack',...C.columns()], ...list.map(({id})=>{
       const p=E.products[id],r=R.products[id],std=R.standards[p.standard],a=E.standards[p.standard],route=p.routeAnchors?.[0];
       const s=includeDeviceEntries?getState(id):{};
       const M=root.PMSVMetalScope,B=root.PMSVBroadContaminants;
       const mel=B.scope(id,s.broadForm,s.broadRef,s),hg=M.documentedMercury(id,s);
       const documented=field=>M.documentedChoice(id,field,s);
-      return [id,r.name,human(p.scope),p.standard.split('#')[1]||'',std?.name||r.routeFinding,a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url,(a?.p||route?.[1]||[]).join(', '),a?.basis||route?.[2]||'Regulatory category or licensing route',r.category,p.micro.map(([k,v])=>[k,v.note||v.reason||v.route||v.profile_key].filter(Boolean).join(' · ')).join(' | '),p.directCTR?'Partial direct evidence':'Exact finished-product decision open',(p.namedGazette||[]).length,p.monographs.length,priority.get(id)?.sourceReviewNextAction||p.ctrAction,p.future,'No', (a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url).split('#')[0]+'#page='+(a?.p?.[0]||route?.[1]?.[0]||1),(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='same numerical value').length,(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='different numerical values').length,s.reference||'',s.article||'',s.note||'',(p.gazetteFindings||[]).map(z=>z.parameter+' '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]).join(' | '),...root.PMSVBroadContaminants.values(id),...M.values(id),
+      return [id,r.name,human(p.scope),p.standard.split('#')[1]||'',std?.name||r.routeFinding,a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url,(a?.p||route?.[1]||[]).join(', '),a?.basis||route?.[2]||'Regulatory category or licensing route',r.category,p.micro.map(([k,v])=>[k,v.note||v.reason||v.route||v.profile_key].filter(Boolean).join(' · ')).join(' | '),contaminantEvidence(id),(p.namedGazette||[]).length,p.monographs.length,priority.get(id)?.sourceReviewNextAction||p.ctrAction,p.future,'No', (a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url).split('#')[0]+'#page='+(a?.p?.[0]||route?.[1]?.[0]||1),(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='same numerical value').length,(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='different numerical values').length,s.reference||'',s.article||'',s.note||'',(p.gazetteFindings||[]).map(z=>z.parameter+' '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]).join(' | '),...root.PMSVBroadContaminants.values(id),...M.values(id),
         M.mercuryGuide(id)?.reason||B.scope(id).h.why,
         mel.m.options.length && mel.applied ? B.resolution(id,s.broadForm,s.broadRef)+' · '+s.broadRef:'',
         hg?hg.article+' · '+hg.level+' · '+hg.why:'',documented('metalForm'),documented('metalPack'),
-        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):''];
+        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s)];
     })];
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,

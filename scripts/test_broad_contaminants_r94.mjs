@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);globalThis.window=globalThis;
-for(const f of ['catalogue-source-evidence','catalogue-rule-data','review-status-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','catalogue-worksheets'])require('../fssai-helper/'+f+'.js');
+for(const f of ['catalogue-source-evidence','catalogue-rule-data','review-status-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-worksheets'])require('../fssai-helper/'+f+'.js');
 const B=PMSVBroadContaminants,ids=Object.keys(PMSVCatalogueEvidence.products), as=(id,kind,ref)=>B.scope(id,kind,ref);
 assert.equal(ids.length,533);assert(PMSVCatalogueWorksheets.available);assert.equal(B.scope('unknown'),null);
 for(const id of ids){

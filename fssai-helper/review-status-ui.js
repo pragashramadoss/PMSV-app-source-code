@@ -16,6 +16,11 @@
   return `<section class="panel compact water-product-note"><h4>${isIngredient?'Ingredient water · evidence checklist':'Vending water · source scope'}</h4><p>${esc(ws.sourceReviewResult)}</p>${isIngredient?`<p>Recipe ${esc(note.recipeNumber)} · ingredient ${note.ingredientSerial}: ${esc(note.ingredientName)} · ${esc(note.ratio)}. ${note.recipeTitleMethodHold?'Recipe title/method discrepancy remains open.':''}</p>`:''}<p>The original water standard and all four amendments are now available. The source table below keeps acceptable values, conditional upper values, units and sample volumes separate. Product applicability and the iron–manganese interpretation remain open.</p>${isIngredient?`<details><summary>Find the water documents to check</summary><p>Based on the dated FoSCoS FAQ, page 18. Confirm current requirements for the applicable kind of business (KOB). Supplier bills do not establish water quality.</p><form id="waterEvidenceForm" data-water-use="ingredient"><label for="waterSupplier">Ingredient-water supply</label><select id="waterSupplier" name="supplier"><option value="">Select supplier</option><option value="municipal">Municipal Corporation / government body</option><option value="private">Mall / commercial hub / private authority</option><option value="own">Own or another supply</option><option value="mixed">Mixed or unknown supply</option></select><div class="controls"><button type="submit">Show evidence checklist</button></div><p role="status" aria-live="polite">No supply selected. No water-quality approval.</p></form></details>`:'<p>The original vending definition excludes packaged drinking water, natural mineral water and captive-consumption installations. Ingredient-water FAQ concessions cannot establish compliance with the vending-water standard. The retrieved June 2025 replacement tables are draft text and have not been activated.</p>'}<a class="source-ref" href="${esc(isIngredient?w.sources.ingredient:w.sources.vending)}" target="_blank" rel="noopener noreferrer">${isIngredient?'FoSCoS FAQs 121–123 · page 18':'2019 original notification · page 4'} ↗</a><a class="source-ref" href="${esc(w.sources.bis)}" target="_blank" rel="noopener noreferrer">BIS standard details ↗</a><a class="source-ref" href="${esc(w.report)}" target="_blank" rel="noopener noreferrer">R74 water-source review ↗</a>${window.PMSVWaterStandard?.markup(ws)||'<p>Water-standard reference unavailable.</p>'}</section>`;
  }
  function reportLinks(row){return row.reports.map(r=>`<a class="source-ref" href="${esc(r.file)}" target="_blank" rel="noopener noreferrer">R${r.round} source review ↗</a>`).join('');}
+ const priorityNamed=new Map((data?.records||[]).map(row=>[row.id,(window.PMSVCropScope?.positive(row.id)||[]).map(d=>d.name)]));
+ function cropFinding(id){
+  const names=priorityNamed.get(id)||[];
+  return names.length?'Named finished-article evidence in CTR 2.2.1 · '+names.join(', '):'No named finished-article limit established in CTR 2.2.1 for this identity.';
+ }
  function productMarkup(id){
   if(!available)return '<div class="notice">Current review progress is unavailable. No verification is inferred.</div>';
   const toxin=data.toxinGazetteReview;
@@ -44,7 +49,7 @@
   if(!row && meal) return sourceNote+'<section class="panel compact"><h4>Current source review · '+esc(data.vegetableMealReview.reviewedOn)+'</h4><p>'+esc(meal.sourceReviewResult)+'</p><p>'+esc(meal.sourceReviewNextAction)+'</p><p>This product is outside the 137-product contaminants review queue.</p></section>';
   if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
   const reviewDate = row.reports[0]?.file.match(/(\d{4}-\d{2}-\d{2})\.md$/)?.[1] || data.checkpointDate;
-  return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(reviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
+  return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(reviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Wider CTR article decision: <strong>OPEN</strong>.</p><p>${esc(cropFinding(id))}</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
  }
  window.PMSVReviewUI=Object.freeze({productMarkup, available});
  if(!$('verificationStatus'))return;
@@ -55,7 +60,7 @@
  }
  $('focusedTotal').textContent=String(status.focusedCount);
  $('remainingFocusedTotal').textContent=String(status.remainingFocusedCount);
- $('verificationStatus').textContent=`Source review through ${data.latestSourceReviewDate} · ${data.queueCount} open CTR article decisions · ${data.focusedCount} focused source reviews · ${data.remainingFocusedCount} outside the selected rounds`;
+ $('verificationStatus').textContent=`Source review through ${data.latestSourceReviewDate} · ${data.queueCount} original priority products · ${data.focusedCount} focused source reviews · ${data.remainingFocusedCount} outside the selected rounds`;
  $('verificationScope').textContent=data.scope;
  $('verificationSoftware').textContent=data.softwareVerification;
  const evidenceLink=document.createElement('a');
@@ -147,10 +152,10 @@
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');
  function render(){
   const query=$('reviewSearch').value.toLowerCase().trim(),filter=$('reviewFilter').value;
-  const rows=data.records.filter(x=>(filter==='all'||(filter==='focused'?x.reports.length>0:x.reports.length===0))&&
+  const rows=data.records.filter(x=>(filter==='all'||(filter==='named22'?(priorityNamed.get(x.id)||[]).length>0:filter==='other22'?(priorityNamed.get(x.id)||[]).length===0:filter==='focused'?x.reports.length>0:x.reports.length===0))&&
    [x.name,x.id,x.fssr,x.fcs].some(v=>String(v||'').toLowerCase().includes(query)));
-  $('reviewResultsCount').textContent=`${rows.length} of ${data.records.length} open cases`;
-  $('reviewResults').innerHTML=rows.map(x=>`<article class="source-card"><h3>${esc(x.name)}</h3><p class="muted">${esc(x.fssr||'Special/category route')} · ${esc(x.fcs||'Category requires review')}</p><p>${x.reports.length?'Focused review: R'+x.reports[0].round:'Outside selected focused rounds'} · Exact article decision OPEN</p><p>${esc(x.sourceReviewNextAction)}</p>${reportLinks(x)}<button type="button" data-review-product="${esc(x.id)}">Open product</button></article>`).join('')||'<p>No cases match this search.</p>';
+  $('reviewResultsCount').textContent=`${rows.length} of ${data.records.length} original priority products`;
+  $('reviewResults').innerHTML=rows.map(x=>`<article class="source-card"><h3>${esc(x.name)}</h3><p class="muted">${esc(x.fssr||'Special/category route')} · ${esc(x.fcs||'Category requires review')}</p><p>${x.reports.length?'Focused review: R'+x.reports[0].round:'Outside selected focused rounds'} · ${esc(cropFinding(x.id))}</p><p>${esc(x.sourceReviewNextAction)}</p>${reportLinks(x)}<button type="button" data-review-product="${esc(x.id)}">Open product</button></article>`).join('')||'<p>No cases match this search.</p>';
  }
  $('reviewSearch').addEventListener('input',render);
  $('reviewFilter').addEventListener('change',render);
