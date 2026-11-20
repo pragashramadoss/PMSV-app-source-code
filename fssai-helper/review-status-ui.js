@@ -27,6 +27,8 @@
   const culinary = window.PMSVCulinarySauces.article(data,id);
   if (culinary && !culinary.ingredient) sourceNote += window.PMSVCulinarySauces.markup(culinary);
   if (id===data.fruitCocktailReview.id) sourceNote+=window.PMSVFruitCocktail.markup(data.fruitCocktailReview);
+  const meal=data.vegetableMealReview.products.find(p=>p.id===id);
+  if (meal) sourceNote+=window.PMSVVegetableMeals.markup(data.vegetableMealReview,meal);
   const thermalProduct=data.thermalPackReview.products.find(product=>product.id===id);
   if (thermalProduct) sourceNote+=window.PMSVThermalPacks.markup(data.thermalPackReview,thermalProduct);
   if (id===data.cannedTomatoReview.id) sourceNote += window.PMSVCannedTomatoes.markup(data.cannedTomatoReview);
@@ -39,6 +41,7 @@
   const lajadi=data.lajadiBotanicalReview;
   if(id===lajadi.recipeProductId)sourceNote+=window.PMSVLajadiBotanicals?.markup(lajadi)||'<p>Botanical source reference unavailable.</p>';
   const row=byId.get(id);
+  if(!row && meal) return sourceNote+'<section class="panel compact"><h4>Current source review · '+esc(data.vegetableMealReview.reviewedOn)+'</h4><p>'+esc(meal.sourceReviewResult)+'</p><p>'+esc(meal.sourceReviewNextAction)+'</p><p>This product is outside the 137-product contaminants review queue.</p></section>';
   if(!row)return sourceNote+'<section class="panel compact"><h4>Current review progress</h4><p>This product is outside the 137-case CTR work queue. That does not establish complete regulatory verification.</p></section>';
   const reviewDate = row.reports[0]?.file.match(/(\d{4}-\d{2}-\d{2})\.md$/)?.[1] || data.checkpointDate;
   return sourceNote+`<section class="panel compact"><h4>Current source review · ${esc(reviewDate)}</h4><p>${row.reports.length?'Focused review recorded through R'+row.reports[0].round:'Awaiting a focused review in the selected rounds.'} Exact CTR article decision: <strong>OPEN</strong>.</p>${reportLinks(row)}<p><b>Source finding:</b> ${esc(row.sourceReviewResult)}</p><p><b>Remaining source/application question:</b> ${esc(row.sourceReviewNextAction)}</p><p class="muted"><b>Separate lot-release evidence:</b> ${esc(row.lotReleaseEvidence)}</p></section>`;
@@ -67,9 +70,10 @@
  saucePanel.className = 'panel compact';
  const sauceOptions = products => products.map(p => '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('');
  const [tomato,soybean] = data.tomatoSoybeanReview.products;
- saucePanel.innerHTML = '<h3>Processed fruit, vegetables, sauces and pastes</h3><label for="culinary-product">Choose a product standard</label>' +
+ saucePanel.innerHTML = '<h3>Processed fruit, vegetables, sauces and pastes</h3><p id="culinary-count"></p><label for="culinary-product">Choose a product standard</label>' +
   '<div class="controls"><select id="culinary-product"><optgroup label="Processed fruit and vegetable packs">' +
-  sauceOptions([data.thermalPackReview.products[0],data.fruitCocktailReview,data.thermalPackReview.products[1]]) + '</optgroup><optgroup label="FSSAI ' + esc(data.cannedTomatoReview.clause) + '">' +
+  sauceOptions([data.thermalPackReview.products[0],data.fruitCocktailReview,data.thermalPackReview.products[1]]) + '</optgroup><optgroup label="Vegetable meals and soups">' +
+  sauceOptions(data.vegetableMealReview.products) + '</optgroup><optgroup label="FSSAI ' + esc(data.cannedTomatoReview.clause) + '">' +
   sauceOptions([data.cannedTomatoReview]) + '</optgroup><optgroup label="FSSAI ' + esc(data.tomatoJuiceReview.clause) + '">' +
   sauceOptions([data.tomatoJuiceReview]) + '</optgroup><optgroup label="FSSAI ' + esc(data.tomatoConcentrateReview.clause) + '">' +
   sauceOptions([data.tomatoConcentrateReview]) + '</optgroup><optgroup label="FSSAI ' + esc(tomato.clause) + '">' + sauceOptions([tomato]) +
@@ -77,6 +81,8 @@
   sauceOptions(data.culinarySauceReview.rows.flatMap(row => row.products)) +
   '</optgroup><optgroup label="FSSAI ' + esc(soybean.clause) + '">' + sauceOptions([soybean]) +
   '</optgroup></select><button type="button" id="open-culinary-product">Open product standard</button></div>';
+ const selectableProducts=new Set(Array.from(saucePanel.querySelectorAll('option'),option=>option.value));
+ saucePanel.querySelector('#culinary-count').textContent='This section has interactive checks for '+selectableProducts.size+' catalogue products.';
  sourcePanel.insertAdjacentElement('beforebegin',saucePanel);
  $('open-culinary-product').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct($('culinary-product').value));
  const residue=data.residueGazetteReview,residuePanel=document.createElement('section');

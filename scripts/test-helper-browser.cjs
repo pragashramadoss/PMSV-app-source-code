@@ -988,6 +988,72 @@ async function testFruitCocktail(page,register,base,artifacts) {
  assert.equal(source.status(),200);assert((await source.text()).includes(r.sources.amendment.sha256));
 }
 
+async function testVegetableMeals(page,register,base,artifacts) {
+ const r=register.vegetableMealReview,[curry,soup]=r.products;
+ const panel=page.locator('.vegetable-meals'),f=key=>panel.locator('#vm-'+key);
+ async function open(product) {
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  const picker=page.getByLabel('Choose a product standard');
+  const ids=await picker.locator('option').evaluateAll(nodes=>nodes.map(n=>n.value));
+  assert.equal(ids.length,new Set(ids).size);assert(ids.length>=15);
+  assert.equal(await page.locator('#culinary-count').innerText(),'This section has interactive checks for '+ids.length+' catalogue products.');
+  await picker.selectOption(product.id);await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+  for (const alias of product.aliases) {
+   await page.locator('#productSearch').fill(alias);
+   assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),product.id);
+  }
+  assert.equal(await panel.getAttribute('data-product'),product.id);
+ }
+ await open(curry);await f('lot').fill('CURRY-R92');await f('food').fill('Vegetable and lentil curry');
+ assert.equal(await f('solids').count(),0);
+ await f('identity').selectOption('ready');
+ await f('pack').selectOption('rigid');await f('water-basis').selectOption('other');
+ await f('capacity').fill('400');await f('volume').fill('360');assert.match(await f('fill-result').innerText(),/Confirm full distilled-water/);
+ await f('water-basis').selectOption('stated');assert.equal(await f('capacity').inputValue(),'');
+ await f('capacity').fill('400');assert.match(await f('fill-result').innerText(),/90.0% · Meets this minimum/);
+ await panel.getByText('Supporting records',{exact:true}).click();
+ await f('appendix').fill('MB-CURRY-17');await f('additives').fill('AD-17');
+ const curryBrief=await readProductBrief(page);
+ for(const t of ['Current focused reviews: R92, R67','CURRY-R92','Vegetable and lentil curry','FSSAI 2.3.4(3)',
+  'Minimum occupied volume · 360 mL','90.0% · Meets this minimum','Appendix B report · MB-CURRY-17','Additive assessment · AD-17',base+r.report]) assert(curryBrief.includes(t),t);
+ await f('pack').selectOption('flexible');const flexible=await readProductBrief(page);
+ assert(!flexible.includes('Recorded capacity ·') && !flexible.includes('90.0% · Meets this minimum'));
+ await f('identity').selectOption('other');assert(!(await f('pack').isVisible()));
+ assert(!(await readProductBrief(page)).includes('MB-CURRY-17'));
+ await open(soup);assert.equal(await f('lot').inputValue(),'');
+ await f('lot').fill('SOUP-R92');await f('food').fill('Prepared vegetable soup');
+ await f('identity').selectOption('vegetable');
+ await f('solids-basis').selectOption('other');await f('solids').fill('6');
+ assert.match(await f('solids-result').innerText(),/Different reporting basis/);
+ const wrong=await readProductBrief(page);assert(wrong.includes('Entered reading (basis unconfirmed) · 6') && !wrong.includes('Meets this minimum'));
+ await f('solids-basis').selectOption('stated');assert.equal(await f('solids').inputValue(),'');await f('solids').fill('6.0');
+ assert.match(await f('solids-result').innerText(),/5.0%.*\nMeets this minimum/);
+ await f('identity').selectOption('tomato');
+ assert.equal(await f('solids').inputValue(),'');assert.equal(await f('solids-basis').inputValue(),'');
+ await f('solids-basis').selectOption('stated');await f('solids').fill('6.0');
+ await panel.getByText('Rigid-container fill',{exact:true}).click();
+ await f('pack').selectOption('flexible');
+ const tomato=await readProductBrief(page);
+ for(const t of ['Current focused reviews: R92','SOUP-R92','Finished soup total soluble solids · 6.0% by mass',
+  'Minimum 7.0% total soluble solids by mass.','Below this minimum','Container · Flexible pack','outside the 137-product queue',
+  r.sources.gazette.url+'#page=54',r.sources.chapter.url+'#page=11',base+r.report]) assert(tomato.includes(t),t);
+ assert(!tomato.includes('R92, R67') && !tomato.includes('CURRY-R92'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:840});
+  assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1 && el.getBoundingClientRect().right<=innerWidth+1));
+  if(width===390) await panel.locator('details').first().screenshot({path:path.join(artifacts,'vegetable-soup-390.png')});
+ }
+ await f('identity').selectOption('reconstitute');
+ assert(!(await f('solids').isVisible()) && !(await f('pack').isVisible()));
+ const dry=await readProductBrief(page);
+ assert(dry.includes('Review the product as sold') && !dry.includes('Finished soup total soluble solids ·') && !dry.includes('Below this minimum'));
+ await page.locator('#productSearch').fill('fruit cocktail');
+ await page.locator('#productList [data-id="'+register.fruitCocktailReview.id+'"]').click();
+ assert.equal(await panel.count(),0);assert(!(await readProductBrief(page)).includes('SOUP-R92'));
+ await page.locator('#productSearch').fill('');
+ const source=await page.request.get(base+r.report);assert.equal(source.status(),200);assert((await source.text()).includes(r.sources.gazette.sha256));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -1161,6 +1227,25 @@ async function testPortableHelper(browser, register) {
     '6.5 cm² per 500 g of total contents, averaged','Within this maximum',sourceBase+cocktail.report,cocktail.sources.chapter.url+'#page=4'])
    assert(cocktailBrief.includes(s),s);
   assert(!cocktailBrief.includes('OFFLINE-CHERRIES-146'));
+  const meals=register.vegetableMealReview,[curry,soup]=meals.products;
+  await page.locator('#productSearch').fill('canned tomato soup');
+  await page.locator('#productList [data-id="'+soup.id+'"]').click();
+  const vm=page.locator('.vegetable-meals'),mf=key=>vm.locator('#vm-'+key);
+  await mf('lot').fill('OFFLINE-SOUP-421');await mf('identity').selectOption('tomato');
+  await mf('solids-basis').selectOption('stated');await mf('solids').fill('6.0');
+  await vm.getByText('Rigid-container fill',{exact:true}).click();
+  await mf('pack').selectOption('flexible');
+  const soupLot=await readProductBrief(page);
+  for(const t of ['OFFLINE-SOUP-421','Finished soup total soluble solids · 6.0% by mass','Minimum 7.0% total soluble solids by mass.',
+   'Below this minimum','outside the 137-product queue',sourceBase+meals.report]) assert(soupLot.includes(t),t);
+  await page.locator('#productSearch').fill('curried vegetables');
+  await page.locator('#productList [data-id="'+curry.id+'"]').click();
+  await mf('lot').fill('OFFLINE-CURRY-187');await mf('identity').selectOption('ready');await mf('pack').selectOption('rigid');
+  await mf('water-basis').selectOption('stated');await mf('capacity').fill('400');await mf('volume').fill('360');
+  const curryLot=await readProductBrief(page);
+  for(const t of ['OFFLINE-CURRY-187','Current focused reviews: R92, R67','Minimum occupied volume · 360 mL','90.0% · Meets this minimum',
+    meals.sources.gazette.url+'#page=53',sourceBase+meals.report]) assert(curryLot.includes(t),t);
+  assert(!curryLot.includes('OFFLINE-SOUP-421') && !curryLot.includes('Minimum 7.0%'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -1465,6 +1550,7 @@ let browser;
  await testCannedTomatoes(page, data, base, artifacts);
  await testThermalPacks(page, data, base, artifacts);
  await testFruitCocktail(page, data, base, artifacts);
+ await testVegetableMeals(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1553,6 +1639,7 @@ let browser;
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
  Object.assign(result,{thermalPackRowsTested:7,thermalCherryPreparationTested:true,thermalPackOfflineLots:2});
  Object.assign(result,{fruitCocktailOfflineTested:true,fruitCocktailBrixBands:8,fruitCocktailDefects:3,fruitCocktailMassAndVolume:true});
+ Object.assign(result,{vegetableMealOfflineLots:2,vegetableSoupSolidsTested:true,vegetableMealRigidFillTested:true,culinaryPickerProducts:await page.locator('#culinary-product option').count()});
  Object.assign(result,{cannedTomatoDrainedWeightTested:true,cannedTomatoStyleAndCalciumTested:true,cannedTomatoOfflineExportTested:true});
  Object.assign(result,{tomatoJuiceLabChecks:7,tomatoJuiceCanChecks:2,tomatoJuiceGlassFillTested:true,tomatoJuiceOfflineBriefTested:true});
  Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});

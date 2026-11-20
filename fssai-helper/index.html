@@ -26,13 +26,13 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
 .rhizome-spice select,.rhizome-spice input{width:100%;max-width:100%;box-sizing:border-box}.rhizome-spice label{display:block;margin-top:10px}.rhizome-spice .methodtable{width:100%;min-width:0;table-layout:fixed}.rhizome-spice .methodtable th,.rhizome-spice .methodtable td{min-width:0;width:auto;padding:8px;overflow-wrap:normal}.rhizome-spice .methodtable th:first-child{width:38%}.rhizome-spice .methodtable .source-ref{display:inline-block;padding:3px 0;margin:1px 0;border:0;background:transparent;line-height:1.4;text-decoration:underline;text-underline-offset:2px;overflow-wrap:normal;white-space:nowrap}.rhizome-spice .source-ref{white-space:normal}.rhizome-spice .controls{margin-top:9px;gap:5px}
 #culinary-product{max-width:100%;min-width:0}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .paste-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:14px 0}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .paste-criterion{min-width:0;background:#f3f7fa;border:1px solid #d3dfe5;border-radius:8px;padding:12px}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .paste-criterion h5{font-size:1rem;margin:0}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .paste-criterion p{margin:.4rem 0}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) label{display:block;margin-top:.65rem}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) input,:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) select{width:100%;max-width:100%;min-width:0}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .paste-outcome{font-weight:650}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) summary{cursor:pointer}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .controls{gap:.4rem}
-:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .culinary-fill{margin:10px 0}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .fill-volumes[hidden]{display:none}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .fill-outcome{font-weight:650}
-:is(.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail)>details{margin:.8rem 0}:is(.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail) .fill-outcome{white-space:pre-line}.tomato-juice .juice-packaging .paste-criterion{margin-top:.75rem}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .paste-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:14px 0}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .paste-criterion{min-width:0;background:#f3f7fa;border:1px solid #d3dfe5;border-radius:8px;padding:12px}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .paste-criterion h5{font-size:1rem;margin:0}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .paste-criterion p{margin:.4rem 0}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) label{display:block;margin-top:.65rem}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) input,:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) select{width:100%;max-width:100%;min-width:0}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .paste-outcome{font-weight:650}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) summary{cursor:pointer}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .controls{gap:.4rem}
+:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .culinary-fill{margin:10px 0}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .fill-volumes[hidden]{display:none}:is(.culinary-composition,.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .fill-outcome{font-weight:650}
+:is(.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals)>details{margin:.8rem 0}:is(.tomato-juice,.canned-tomatoes,.thermal-packs,.fruit-cocktail,.vegetable-meals) .fill-outcome{white-space:pre-line}.vegetable-meals #vm-checks>details{margin:.8rem 0}.tomato-juice .juice-packaging .paste-criterion{margin-top:.75rem}
 .recipe-flower-note select,.recipe-flower-note input[type=text]{width:100%;max-width:100%;box-sizing:border-box}
 .recipe-flower-note label[for]{display:block;margin-top:12px}
 .recipe-flower-note .controls{gap:.4rem}
@@ -196,12 +196,13 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="tomato-containers.js?v=20261120-r90"></script>
 <script src="fruit-cocktail.js?v=20261120-r91"></script>
 <script src="thermal-packs.js?v=20261120-r90"></script>
+<script src="vegetable-meals.js?v=20261120-r92"></script>
 <script src="canned-tomatoes.js?v=20261120-r90"></script>
 <script src="tomato-juice.js?v=20261120-r90"></script>
 <script src="ginger-paste.js?v=20261120-r85"></script>
 <script src="rhizome-spices.js?v=20261119-r84"></script>
-<script src="review-status.js?v=20261120-r91"></script>
-<script src="review-status-data.js?v=20261120-r91"></script>
+<script src="review-status.js?v=20261120-r92"></script>
+<script src="review-status-data.js?v=20261120-r92"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -221,14 +222,14 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261120-r91"></script>
+<script src="review-status-ui.js?v=20261120-r92"></script>
 <script>
 'use strict';
 (()=>{
  const all=Array.isArray(window.PMSV_CATALOGUE)?window.PMSV_CATALOGUE:[];
  const methods=window.FSSAI_METHODS||[];
  const aliases = new Map(window.PMSVReviewUI?.available
-  ? [...window.PMSV_REVIEW_REGISTER.tomatoSoybeanReview.products,window.PMSV_REVIEW_REGISTER.tomatoConcentrateReview,window.PMSV_REVIEW_REGISTER.tomatoJuiceReview,window.PMSV_REVIEW_REGISTER.cannedTomatoReview,...window.PMSV_REVIEW_REGISTER.thermalPackReview.products,window.PMSV_REVIEW_REGISTER.fruitCocktailReview].map(p => [p.id,p.aliases]) : []);
+  ? [...window.PMSV_REVIEW_REGISTER.tomatoSoybeanReview.products,window.PMSV_REVIEW_REGISTER.tomatoConcentrateReview,window.PMSV_REVIEW_REGISTER.tomatoJuiceReview,window.PMSV_REVIEW_REGISTER.cannedTomatoReview,...window.PMSV_REVIEW_REGISTER.thermalPackReview.products,window.PMSV_REVIEW_REGISTER.fruitCocktailReview,...window.PMSV_REVIEW_REGISTER.vegetableMealReview.products].map(p => [p.id,p.aliases]) : []);
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const sourceLink=(url,title)=>{
@@ -294,10 +295,11 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   const paste=register?.gingerPasteReview;
   const culinary=register ? window.PMSVCulinarySauces.article(register,c.id) : null;
   const juice=register?.tomatoJuiceReview?.id===c.id ? register.tomatoJuiceReview : null;
+  const meal=register?.vegetableMealReview?.products.find(p=>p.id===c.id);
   const cocktail=register?.fruitCocktailReview?.id===c.id ? register.fruitCocktailReview : null;
   const thermal=register?.thermalPackReview?.products.find(product=>product.id===c.id);
   const canned=register?.cannedTomatoReview?.id===c.id ? register.cannedTomatoReview : null;
-  const focused=[canned, juice, culinary, spiceReview?.spices.some(s=>s.productId===c.id) && spiceReview, paste?.productId===c.id && paste].filter(Boolean);
+  const focused=[meal && register.vegetableMealReview, canned, juice, culinary, spiceReview?.spices.some(s=>s.productId===c.id) && spiceReview, paste?.productId===c.id && paste].filter(Boolean);
   const reports=current?.reports || focused.map(r=>({round:r.round,file:r.report}));
   const text=['PMSV FSSAI HELPER — RESEARCH BRIEF','Historical finding dated 2026-10-30',
   register?'Current review register dated '+register.latestSourceReviewDate:'Current review register unavailable','Research only — not regulatory PASS or product release','',
@@ -305,16 +307,17 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   'Review class: '+c.reviewStatus,'Source finding: '+c.finding,'Non-transfer caution: '+c.nonTransfer,
   'Next evidence: '+(ck.nextEvidence||c.nextAction),'Checkpoint analyte: '+(ck.analyte||'Not in 31–60 register'),'Checkpoint caution: '+(ck.sourceCaution||''),
   'Current focused reviews: '+(reports.map(r=>'R'+r.round).join(', ')||'Not recorded in selected rounds'),
-  ...(current?['Current source finding: '+current.sourceReviewResult,'Remaining evidence: '+current.sourceReviewNextAction]:[]),
+  ...(current||meal?['Current source finding: '+(current||meal).sourceReviewResult,'Remaining evidence: '+(current||meal).sourceReviewNextAction]:[]),
   ...reports.map((r,i)=>(i ? 'Earlier source review: ' : 'Latest source review: ')+new URL(r.file,document.baseURI).href),
   ...(current ? window.PMSVRecipeFlowers.briefLines(register.recipeFlowerReview, c.id, document.querySelector('.recipe-flower-note')) : []),
   ...(spiceReview ? window.PMSVRhizomeSpices.briefLines(spiceReview, c.id, document.getElementById('productDetail'), paste) : []),
   ...(culinary ? window.PMSVCulinarySauces.briefLines(culinary, document.getElementById('productDetail')) : []),
+  ...(meal ? window.PMSVVegetableMeals.briefLines(register.vegetableMealReview,meal,document.getElementById('productDetail')) : []),
   ...(cocktail ? window.PMSVFruitCocktail.briefLines(cocktail,document.getElementById('productDetail')) : []),
   ...(thermal ? window.PMSVThermalPacks.briefLines(register.thermalPackReview,thermal,document.getElementById('productDetail')) : []),
   ...(canned ? window.PMSVCannedTomatoes.briefLines(canned, document.getElementById('productDetail')) : []),
   ...(juice ? window.PMSVTomatoJuice.briefLines(juice, document.getElementById('productDetail')) : []),
-  'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
+  meal && !current ? 'Contaminants review queue: outside the 137-product queue' : 'Current CTR article decision: not approved','Original reference: '+(c.primaryUrl||''),'Secondary reference: '+(c.secondaryUrl||''),
   '','Evidence requirements: identity and formula; operative legal article; verified method with matrix and LOQ; traceable finished lot report; authorized QA record.'];
   download('PMSV_FSSAI_Review_'+c.priority+'.txt','text/plain;charset=utf-8',text.join('\n'));}
  function catalogueCSV(){let head=['catalogue_row','catalog_id','product','fssr','foscos_category','canonical_source_status','detailed_review_status','evidence_level','source_checkpoint_analyte','finding','non_transfer_warning','next_action','official_source','approval_status'];

@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 91,
+  "latestRound": 92,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -56,7 +56,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json",
     "ctr-canned-tomatoes-r89-2026-11-20.json",
     "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.json",
-    "ctr-fruit-cocktail-r91-2026-11-20.json"
+    "ctr-fruit-cocktail-r91-2026-11-20.json",
+    "ctr-vegetable-meals-soups-r92-2026-11-20.json"
   ],
   "records": [
     {
@@ -904,13 +905,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
       "reports": [
         {
+          "round": 92,
+          "file": "ctr-vegetable-meals-soups-r92-2026-11-20.md"
+        },
+        {
           "round": 67,
           "file": "ctr-rte-curried-vegetables-r67-2026-11-11.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "Sections 2.3.4(1)–(3) cover the heat-processed preparation, additives, Appendix B and rigid-container fill. The product standard gives a 90% minimum by occupied volume for a rigid container. Its text specifies no drained-weight or soluble-solids minimum.",
+      "sourceReviewNextAction": "Identify the prepared food and pack. For a rigid container, record the occupied volume and full distilled-water capacity at 20 °C. Match Appendix B and any additives to the recipe and process. Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -4272,6 +4277,88 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
         "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63",
         "page": 52
+      }
+    }
+  },
+  "vegetableMealReview": {
+    "round": 92,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-vegetable-meals-soups-r92-2026-11-20.md",
+    "fill": {
+      "pack": "rigid",
+      "minimumPercent": 90,
+      "waterTemperatureC": 20,
+      "volumeUnit": "mL"
+    },
+    "products": [
+      {
+        "id": "04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables",
+        "priority": 187,
+        "kind": "curry",
+        "label": "Curried and ready-to-eat vegetables",
+        "clause": "2.3.4",
+        "fcs": "04.2.2.8",
+        "gazettePage": 53,
+        "chapterPage": 10,
+        "fillParagraph": 3,
+        "appendixParagraph": 2,
+        "aliases": [
+          "curried vegetables",
+          "ready to eat vegetables",
+          "ready-to-eat vegetables",
+          "retort vegetable curry"
+        ],
+        "identity": "Heat-processed culinary preparation of vegetables, legumes, cereals or pulses. The recipe may include oils, spices or milk fat.",
+        "sourceReviewResult": "Sections 2.3.4(1)–(3) cover the heat-processed preparation, additives, Appendix B and rigid-container fill. The product standard gives a 90% minimum by occupied volume for a rigid container. Its text specifies no drained-weight or soluble-solids minimum.",
+        "sourceReviewNextAction": "Identify the prepared food and pack. For a rigid container, record the occupied volume and full distilled-water capacity at 20 °C. Match Appendix B and any additives to the recipe and process."
+      },
+      {
+        "id": "12-12-5-thermally-processed-vegetable-soups",
+        "priority": 421,
+        "kind": "soup",
+        "label": "Thermally processed vegetable soups",
+        "clause": "2.3.5",
+        "fcs": "12.5.1",
+        "gazettePage": 54,
+        "chapterPage": 11,
+        "fillParagraph": 4,
+        "appendixParagraph": 3,
+        "aliases": [
+          "vegetable soup",
+          "tomato soup",
+          "ready to eat soup",
+          "canned vegetable soup",
+          "canned tomato soup"
+        ],
+        "identity": "Heat-processed vegetable soup supplied for direct consumption, prepared from vegetable juice, pulp or purée. It may be clear or cloudy.",
+        "solids": {
+          "provision": "(2)",
+          "basis": "Finished soup, total soluble solids as % by mass (m/m)",
+          "types": [
+            {
+              "key": "vegetable",
+              "label": "Direct-consumption vegetable soup, other than tomato soup",
+              "minimum": 5
+            },
+            {
+              "key": "tomato",
+              "label": "Direct-consumption tomato soup",
+              "minimum": 7
+            }
+          ]
+        },
+        "sourceReviewResult": "Section 2.3.5(2) gives a minimum of 5.0% total soluble solids by mass for vegetable soup and 7.0% for tomato soup. Section 2.3.5(4) gives 90% minimum occupied volume for a rigid container measured by full distilled-water capacity at 20 °C.",
+        "sourceReviewNextAction": "Identify the soup as supplied and its tomato or other vegetable identity. Record the reporting basis of the finished-soup result, the container type and any rigid-pack measurements."
+      }
+    ],
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
       }
     }
   },
