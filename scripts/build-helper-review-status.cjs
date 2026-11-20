@@ -296,10 +296,34 @@ for(const file of ['catalogue-rule-data.js','catalogue-metal-scope.js','broad-co
 }
 const metalPanelReview={round:97,reviewedOn:sourceRows.date,...cropContext.PMSVMetalPanel.stats(),report:'catalogue-metal-panel-review-r97.md',fullProductApprovals:0};
 assert.equal(metalPanelReview.products,533);assert.equal(metalPanelReview.rows,382);assert.equal(metalPanelReview.headings,11);
-const data={metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:metalPanelReview.round,
+// Reuse the original Gazette concordance so the printed units and the two
+// ambiguous species headings stay identical in both review entry points.
+const veterinaryReview = {
+ round:98, reviewedOn:sourceRows.date, report:'catalogue-veterinary-review-r98.md',
+ sources:{
+  seafood:'https://www.fssai.gov.in/upload/uploadfiles/files/Contaminants_Regulations.pdf',
+  veterinary:residue.sources.ctr2024.url,
+  december:sourceRows.documents['ctr-1'].url.split('#')[0]
+ },
+ seafood:[['Tetracycline','0.1'],['Oxytetracycline','0.1'],['Trimethoprim','0.05'],['Oxolinic acid','0.3']],
+ prohibited:residue.prohibitedClasses.map(r=>({serial:r.serial,drug:r.originalName,
+  limit:r.serial===2?'0.0003':'0.001',page:r.sourcePdfPage})),
+ honey:residue.honeyRows.map(({coreRow:r,sourcePdfPage})=>({serial:r.serial,drug:r.name,
+  limit:r.mrpl,condition:r.condition||'',page:sourcePdfPage})),
+ groups:residue.veterinaryGroups.map(g=>({serial:g.serial,drug:g.coreName,printed:g.originalName,
+  rows:g.rows.map(r=>({index:r.coreIndex,article:r.coreArticle,limit:r.sourceLimit,unit:r.sourceUnit,
+   page:r.sourcePdfPage,override:r.originalDrugOverride,locked:r.lockedSourceAlignment}))})),
+ fullProductApprovals:0
+};
+cropContext.PMSV_REVIEW_REGISTER={veterinaryReview};
+vm.runInContext(fs.readFileSync(path.join(dir,'catalogue-veterinary.js'),'utf8'),cropContext);
+Object.assign(veterinaryReview,cropContext.PMSVVeterinary.stats([...ids]));
+assert.equal(veterinaryReview.products,533);
+assert.equal(veterinaryReview.toleranceRows,358);
+const data={veterinaryReview,metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:veterinaryReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
- scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. R97 establishes all 11 metal outcomes for '+metalPanelReview.priorityOutcomes+' original priority products. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
+ scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. R97 establishes all 11 metal outcomes for '+metalPanelReview.priorityOutcomes+' original priority products. R98 identifies a current veterinary-residue provision for the marketed article of '+veterinaryReview.directProducts+' catalogue products. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
  sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile,cocktailFile,vegetableMealsFile],records,

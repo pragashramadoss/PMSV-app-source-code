@@ -1068,7 +1068,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1194,9 +1194,42 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await metals('04-04-2-yellow-pea-powder');await page.locator('.metal-change>summary').click();assert((await page.locator('.metal-change').innerText()).includes('lead 0.2 ppm and cadmium 0.1 ppm'));
  assert((await metalRow('Pb').innerText()).includes('2.5 ppm'));
  await metals('05-05-1-cocoa-powder');await page.locator('.metal-analysis>summary').click();assert.equal(await f('panelLabRef').inputValue(),'Cocoa dry fat-free COA 97');
+ const vet=async id=>{
+  await open(id);await page.locator('.vet-scope>summary').click();await page.locator('[data-vet-assessment]>summary').click();
+ };
+ const vetOutcome=page.locator('[data-vet-comparison]');
+ await vet('05-05-1-chocolate');
+ assert.equal(await f('vetRow').count(),0);
+ await f('vetRole').selectOption('ingredient');await f('vetMatrix').selectOption('cow');
+ await f('vetSource').fill('Physically sampled incoming cow milk 98');
+ const cattleMilk=await f('vetRow').locator('option').evaluateAll(opts=>opts.find(o=>o.textContent.includes('Ceftiofur · Cattle — Milk'))?.value);
+ assert(cattleMilk);await f('vetRow').selectOption(cattleMilk);
+ await f('vetValue').fill('0.100000000000001');await f('vetUnit').selectOption('mg/kg');
+ await f('vetBasis').check();await f('vetReport').fill('Milk report 98');
+ assert((await vetOutcome.innerText()).startsWith('Confirm'));
+ await f('vetUnit').selectOption('mg/L');assert((await vetOutcome.innerText()).startsWith('Above'));
+ await f('vetValue').fill('0.1');assert((await vetOutcome.innerText()).startsWith('At or below'));
+ await f('vetDate').fill('2026-12-01');assert((await vetOutcome.innerText()).includes('edition effective'));
+ await f('vetDate').fill('2026-11-20');
+ await page.locator('.ws-body [data-ws-save]').click();
+ const vetBrief=await readProductBrief(page);assert(vetBrief.includes('Separately sampled ingredient')&&vetBrief.includes('Physically sampled incoming cow milk 98')&&vetBrief.includes('Milk report 98'));
+ await vet('11-11-5-honey');assert.equal(await f('vetRow').locator('option').count(),13);
+ await f('vetRow').selectOption('honey-3');assert((await page.locator('[data-vet-controls]').innerText()).includes('Either individually or collectively'));
+ await page.locator('.vet-scope').getByText('Browse all four Gazette provisions',{exact:true}).click();
+ await page.locator('[data-vet-index]').selectOption('g5');assert((await page.locator('[data-vet-found]').innerText()).includes('Species heading unresolved'));
+ await vet('09-09-2-frozen-finfish');await f('vetOrigin').selectOption('farmed');
+ await f('vetSource').fill('Fish farm record 98');await f('vetRow').selectOption('ban-2');
+ await f('vetOrigin').selectOption('wild');assert.equal(await f('vetSource').inputValue(),'');assert.equal(await f('vetRow').inputValue(),'');
+ assert.equal(await f('vetRow').locator('option[value="ban-2"]').count(),0);await f('vetRow').selectOption('sea-1');
+ assert((await vetOutcome.innerText()).includes('Source interpretation required'));
+ await vet('05-05-1-chocolate');assert.equal(await f('vetSource').inputValue(),'Physically sampled incoming cow milk 98');
+ assert.equal(await f('vetUnit').inputValue(),'mg/L');
+ await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('vetDirect');
+ assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
+ await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R97.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R98.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1480,6 +1513,7 @@ let browser;
  assert.equal(await page.locator('#reviewResults article').count(),137);
  const priorityCrop=await page.evaluate(()=>PMSV_REVIEW_REGISTER.cropArticleReview.priorityNamed);
  await page.locator('#reviewFilter').selectOption('named22');assert.equal(await page.locator('#reviewResults article').count(),priorityCrop);
+ await page.locator('#reviewFilter').selectOption('vetDirect');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.priorityDirect));
  await page.locator('#reviewFilter').selectOption('metals11');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.metalPanelReview.priorityOutcomes));
  await page.locator('#reviewFilter').selectOption('other22');assert.equal(await page.locator('#reviewResults article').count(),137-priorityCrop);
  await page.locator('#reviewFilter').selectOption('remaining');
