@@ -25,6 +25,7 @@ main{max-width:1240px;padding:22px 18px 50px}.hero{position:relative;overflow:hi
 .juniper-scope{margin:18px 0;padding:12px 0;border-block:1px solid var(--line,#d5dedc)}
 .juniper-scope h5{font-size:1rem;margin:0}.juniper-scope .juniper-table{width:100%;min-width:0;table-layout:fixed;margin-top:12px}.juniper-table caption{text-align:left;font-weight:650;padding:6px 0}.juniper-scope .juniper-table th,.juniper-scope .juniper-table td{overflow-wrap:anywhere}.juniper-scope .source-ref{max-width:100%;white-space:normal}
 .rhizome-spice select,.rhizome-spice input{width:100%;max-width:100%;box-sizing:border-box}.rhizome-spice label{display:block;margin-top:10px}.rhizome-spice .methodtable{width:100%;min-width:0;table-layout:fixed}.rhizome-spice .methodtable th,.rhizome-spice .methodtable td{min-width:0;width:auto;padding:8px;overflow-wrap:normal}.rhizome-spice .methodtable th:first-child{width:38%}.rhizome-spice .methodtable .source-ref{display:inline-block;padding:3px 0;margin:1px 0;border:0;background:transparent;line-height:1.4;text-decoration:underline;text-underline-offset:2px;overflow-wrap:normal;white-space:nowrap}.rhizome-spice .source-ref{white-space:normal}.rhizome-spice .controls{margin-top:9px;gap:5px}
+#culinary-product{max-width:100%;min-width:0}
 .culinary-composition .paste-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:14px 0}
 .culinary-composition .paste-criterion{min-width:0;background:#f3f7fa;border:1px solid #d3dfe5;border-radius:8px;padding:12px}
 .culinary-composition .paste-criterion h5{font-size:1rem;margin:0}.culinary-composition .paste-criterion p{margin:.4rem 0}
@@ -190,11 +191,11 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
 <script src="recipe-flowers-r81.js?v=20261119-r83"></script>
-<script src="culinary-sauces.js?v=20261120-r85"></script>
+<script src="culinary-sauces.js?v=20261120-r86"></script>
 <script src="ginger-paste.js?v=20261120-r85"></script>
 <script src="rhizome-spices.js?v=20261119-r84"></script>
-<script src="review-status.js?v=20261120-r85"></script>
-<script src="review-status-data.js?v=20261120-r85"></script>
+<script src="review-status.js?v=20261120-r86"></script>
+<script src="review-status-data.js?v=20261120-r86"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -214,12 +215,14 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261120-r85"></script>
+<script src="review-status-ui.js?v=20261120-r86"></script>
 <script>
 'use strict';
 (()=>{
  const all=Array.isArray(window.PMSV_CATALOGUE)?window.PMSV_CATALOGUE:[];
  const methods=window.FSSAI_METHODS||[];
+ const aliases = new Map(window.PMSVReviewUI?.available
+  ? window.PMSV_REVIEW_REGISTER.tomatoSoybeanReview.products.map(p => [p.id,p.aliases]) : []);
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const sourceLink=(url,title)=>{
@@ -240,13 +243,27 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  navButtons.forEach(b=>b.addEventListener('click',()=>view(b.dataset.view)));
  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>view(b.dataset.go)));
  function classOf(c){if(c.evidenceLevel==='MASTER BASELINE ONLY')return 'MASTER BASELINE ONLY';let a=c.reviewStatus||'';return ['EXPLICIT_NONMATCH','CONDITIONAL_NAMED_ARTICLE','NEEDS_EXACT_COMMODITY'].includes(a)?a:'other';}
+ function matchesClass(c,status){return status==='all'||classOf(c)===status||c.sourceStatus===status;}
+ function matchesQuery(c,q){return !q||[c.product,c.fssr,c.fcs,c.id,c.finding,c.nextAction,c.sourceCheck?.analyte,...(aliases.get(c.id)||[])].join(' ').toLowerCase().includes(q);}
  function filterList(){const q=$('productSearch').value.toLowerCase().trim(),status=$('productClass').value,order=$('productSort').value;
-  let filtered=all.filter(c=>(status==='all'||classOf(c)===status||c.sourceStatus===status)&&(!q||[c.product,c.fssr,c.fcs,c.id,c.finding,c.nextAction,c.sourceCheck?.analyte||''].join(' ').toLowerCase().includes(q)));
-  filtered.sort((a,b)=>order==='alpha'?a.product.localeCompare(b.product):a.priority-b.priority);
+  const filtered=all.filter(c=>matchesClass(c,status)&&matchesQuery(c,q));
+  const exactAlias=c=>Number(Boolean(q&&aliases.get(c.id)?.includes(q)));
+  filtered.sort((a,b)=>order==='alpha'?a.product.localeCompare(b.product):(exactAlias(b)-exactAlias(a)||a.priority-b.priority));
+  if(!filtered.some(c=>c.id===selected)){selected=filtered[0]?.id||'';$('productDetail').innerHTML=selected?'':'<p>Search returned no products.</p>';}
   $('productResultsCount').textContent=`${filtered.length} of ${all.length} products · Research entries, not verified compliance approvals`;
   $('productList').innerHTML=filtered.map(c=>`<button type="button" class="catalog-row ${c.id===selected?'selected':''}" role="option" aria-selected="${c.id===selected}" data-id="${esc(c.id)}"><b>${esc(c.product)}</b><small>Record ${c.priority} · ${esc(c.fcs||'Category unconfirmed')} · ${esc((c.sourceStatus||classOf(c)).replaceAll('_',' ').toLowerCase())}</small></button>`).join('')||'<p class="empty">No articles match your search. Try a broader keyword.</p>';
-  if(!filtered.some(c=>c.id===selected)){selected=filtered[0]?.id||'';$('productDetail').innerHTML=selected?'':'<p>Search returned no products.</p>';}
   if(selected)renderDetail();
+ }
+ function selectProduct(id){
+  const product = all.find(c=>c.id===id);
+  if(!product)return false;
+  const search=$('productSearch'),category=$('productClass');
+  if(!matchesQuery(product,search.value.toLowerCase().trim()))search.value='';
+  if(!matchesClass(product,category.value))category.value='all';
+  selected=id;
+  filterList();
+  view('finder');
+  return true;
  }
  function listString(v){return String(v??'').replaceAll('|','\n• ').replace(/^\s*• /,'');}
  function renderDetail(){const c=all.find(x=>x.id===selected);if(!c)return;const ck=c.sourceCheck||{};
@@ -302,7 +319,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  filterList();methodResult();
  function routeFromHash(){let requested='';try{requested=decodeURIComponent(location.hash.slice(1));}catch(e){requested='overview';}view(['overview','finder','verification','cases','methods','sources'].includes(requested)?requested:'overview');}
  window.addEventListener('hashchange',routeFromHash);routeFromHash();
- window.PMSV_HELPER_TEST={getCatalogue:()=>all.map(c=>({id:c.id,priority:c.priority,reviewStatus:c.reviewStatus,sourceStatus:c.sourceStatus,sourceCheck:!!c.sourceCheck?.analyte})),setView:view,getProduct:()=>selected,selectProduct:id=>{if(!all.some(c=>c.id===id))return false;selected=id;filterList();view('finder');return true;}};
+ window.PMSV_HELPER_TEST={getCatalogue:()=>all.map(c=>({id:c.id,priority:c.priority,reviewStatus:c.reviewStatus,sourceStatus:c.sourceStatus,sourceCheck:!!c.sourceCheck?.analyte})),setView:view,getProduct:()=>selected,selectProduct};
 })();
 
 </script></body></html>

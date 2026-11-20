@@ -24,6 +24,12 @@ const eligible = new Set(catalogue.filter(p=>p.fssr==='2.3.28').map(p=>p.id));
 assert.deepEqual([...eligible].sort(),rows.flatMap(r=>r.products.map(p=>p.id)).sort());
 for (const p of catalogue) {
  const a = helper.article(register,p.id);
+ if (['2.3.27','2.3.29'].includes(p.fssr)) {
+  assert.equal(a.clause,p.fssr);
+  assert.equal(a.tableRow,undefined);
+  assert(a.round > review.round);
+  continue;
+ }
  if (!eligible.has(p.id) && p.id !== ginger.recipe.productId) {
   assert.equal(a,null);
   assert.equal(helper.markup(a),'');

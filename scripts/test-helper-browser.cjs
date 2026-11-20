@@ -434,7 +434,7 @@ async function testCulinarySauces(page,register,base,artifacts) {
  const records = review.rows.flatMap(row => row.products.map(product => ({row,product})));
  for (const {row,product} of records) {
   await page.getByRole('button',{name:'Review progress',exact:true}).click();
-  await page.getByLabel('Product under FSSAI 2.3.28').selectOption(product.id);
+  await page.getByLabel('Sauce or paste standard').selectOption(product.id);
   await page.getByRole('button',{name:'Open product standard',exact:true}).click();
   assert.equal(await panel.getAttribute('data-product'),product.id);
   assert.equal(await panel.locator('#paste-lot').inputValue(),'');
@@ -489,7 +489,10 @@ async function testCulinarySauces(page,register,base,artifacts) {
  for (const id of ['12-12-6-tomato-ketchup-and-tomato-sauce','12-12-9-soybean-sauce','12-12-6-chilli-sauce']) {
   await search.fill(id);
   await page.locator('#productList [data-id="'+id+'"]').click();
-  assert.equal(await panel.count(),id===records[0].product.id ? 1 : 0);
+  const article = register.tomatoSoybeanReview.products.find(p=>p.id===id);
+  assert.equal(await panel.getAttribute('data-product'),id);
+  assert((await panel.innerText()).includes('FSSAI '+(article?.clause||review.clause)+'(2)'));
+  assert.equal(await panel.locator('.paste-proposal').count(),article ? 0 : 1);
  }
  await search.fill('');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
@@ -501,6 +504,87 @@ async function testCulinarySauces(page,register,base,artifacts) {
  const report=await page.request.get(base+review.report);
  assert.equal(report.status(),200);
  assert((await report.text()).includes('Five product-finder entries'));
+}
+
+async function testNamedSauces(page,register,base,artifacts) {
+ const review = register.tomatoSoybeanReview;
+ const [tomato,soybean] = review.products;
+ const panel = page.locator('.culinary-composition');
+ const search = page.locator('#productSearch'), category = page.locator('#productClass');
+ const open = async product => {
+  await page.getByRole('button',{name:'Review progress',exact:true}).click();
+  await page.getByLabel('Sauce or paste standard').selectOption(product.id);
+  await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+  assert.equal(await panel.getAttribute('data-product'),product.id);
+  assert.equal(await page.locator('#productList [aria-selected="true"]').getAttribute('data-id'),product.id);
+ };
+ await page.getByRole('button',{name:'Product finder',exact:true}).click();
+ await search.fill('cocoa');
+ await category.selectOption('EXPLICIT_NONMATCH');
+ await open(tomato);
+ assert.equal(await search.inputValue(),'');
+ assert.equal(await category.inputValue(),'all');
+ await page.locator('#productSort').selectOption('priority');
+ for (const product of [tomato,soybean]) {
+  const alias = product===tomato ? 'tomato ketchup' : 'soya sauce';
+  await search.fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),product.id);
+  await category.selectOption('PARTIAL_EXACT_SOURCE_MATCH');
+  await open(product);
+  assert.equal(await search.inputValue(),alias);
+  assert.equal(await category.inputValue(),'PARTIAL_EXACT_SOURCE_MATCH');
+  assert.equal(await panel.locator('#paste-lot').inputValue(),'');
+  assert.equal(await panel.locator('.paste-criterion').count(),Object.keys(product.minima).length);
+  assert.equal(await panel.locator('.paste-proposal').count(),0);
+  assert.equal(await panel.locator('#paste-nitrogen-basis').count(),product===soybean?1:0);
+  await panel.locator('.sauce-amendment summary').click();
+  assert((await panel.innerText()).includes(product.change));
+  assert.equal(await panel.getByRole('link',{name:product.amendment.date.slice(0,4)+' amendment',exact:false}).getAttribute('href'),
+   product.amendment.url+'#page='+product.amendment.page);
+  await panel.locator('#paste-lot').fill('QA-'+product.id);
+  for (const [key,value] of Object.entries(product.minima)) {
+   await panel.locator('#paste-'+key+'-basis').selectOption('stated');
+   await panel.locator('#paste-'+key+'-result').fill(value.toFixed(1));
+   assert.equal(await panel.locator('[data-criterion="'+key+'"] .paste-outcome').innerText(),'Meets this minimum');
+  }
+  const fill = panel.locator('.culinary-fill');
+  await fill.locator('summary').click();
+  await fill.locator('#fill-pack').selectOption('rigid');
+  await fill.locator('#fill-product').fill('270');
+  await fill.locator('#fill-capacity').fill('300');
+  const outcome = product===soybean ? 'nitrogen' : 'acidity';
+  const criterion = panel.locator('[data-criterion="'+outcome+'"]');
+  await criterion.locator('.paste-basis').selectOption('other');
+  assert.match(await criterion.locator('.paste-outcome').innerText(),/Different reporting basis/);
+  await criterion.locator('.paste-basis').selectOption('stated');
+  await criterion.locator('.paste-value').fill(product===soybean?'0.99':'0.199');
+  assert.equal(await criterion.locator('.paste-outcome').innerText(),'Below this minimum');
+  const brief = await readProductBrief(page);
+  assert(brief.includes('QA-'+product.id) && brief.includes('Current focused reviews: R86'));
+  assert(brief.includes('FSSAI '+product.clause+'(2)') && brief.includes('Container fill · FSSAI '+product.clause+'(3)'));
+  assert(brief.includes('90.0% · Meets this minimum') && brief.includes(base+review.report));
+  assert(brief.includes(product.amendment.url+'#page='+product.amendment.page) && brief.includes(product.change));
+  assert(!brief.includes('2024 draft') && !brief.includes('QA-'+(product===tomato?soybean.id:tomato.id)));
+  assert.equal(brief.includes('Total nitrogen · minimum 1.0%'),product===soybean);
+  if (product===soybean) {
+   assert(brief.includes('Reported 0.99 · % (m/m) as nitrogen · Below this minimum'));
+   for (const width of [320,390,1440]) {
+    await page.setViewportSize({width,height:900});
+    assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    if(width===390) await criterion.screenshot({path:path.join(artifacts,'soybean-nitrogen-390.png'),
+     animations:'disabled',style:'header, .navtabs { visibility: hidden !important; }'});
+   }
+  }
+ }
+ for (const alias of soybean.aliases) {
+  await search.fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),soybean.id);
+ }
+ await search.fill('');
+ await category.selectOption('all');
+ const response = await page.request.get(base+review.report);
+ assert.equal(response.status(),200);
+ assert((await response.text()).includes(soybean.amendment.sha256));
 }
 
 async function testPortableHelper(browser, register) {
@@ -553,7 +637,7 @@ async function testPortableHelper(browser, register) {
   assert.equal(await page.locator('.ginger-paste-check').getByRole('link',{name:'Ginger-paste source review ↗'}).evaluate(a=>a.href),
    sourceBase + register.gingerPasteReview.report);
   await page.getByRole('button',{name:'Review progress',exact:true}).click();
-  await page.getByLabel('Product under FSSAI 2.3.28').selectOption('12-12-6-fruits-vegetable-sauces');
+  await page.getByLabel('Sauce or paste standard').selectOption('12-12-6-fruits-vegetable-sauces');
   await page.getByRole('button',{name:'Open product standard'}).click();
   const sauce=page.locator('.culinary-composition');
   await sauce.locator('#paste-lot').fill('OFFLINE-FRUIT-SAUCE');
@@ -567,6 +651,23 @@ async function testPortableHelper(browser, register) {
   assert(sauceBrief.includes('OFFLINE-FRUIT-SAUCE') && sauceBrief.includes('Reported 1.19 · % as acetic acid · Below this minimum'));
   assert(sauceBrief.includes('90.0% · Meets this minimum') && sauceBrief.includes(sourceBase+register.culinarySauceReview.report));
   assert(!sauceBrief.includes('OFFLINE-GINGER-PASTE') && !sauceBrief.includes('OFFLINE-HALDI'));
+  const named = register.tomatoSoybeanReview, soybean = named.products[1];
+  await page.locator('#productSearch').fill('soy sauce');
+  await page.locator('#productList [data-id="'+soybean.id+'"]').click();
+  assert.equal(await sauce.getAttribute('data-product'),soybean.id);
+  await sauce.locator('#paste-lot').fill('OFFLINE-SOY-429');
+  for (const [key,value] of [['solids','15.0'],['acidity','0.6'],['nitrogen','0.99']]) {
+   await sauce.locator('#paste-'+key+'-basis').selectOption('stated');
+   await sauce.locator('#paste-'+key+'-result').fill(value);
+  }
+  await sauce.locator('.culinary-fill summary').click();
+  await sauce.locator('#fill-pack').selectOption('flexible');
+  const soybeanBrief = await readProductBrief(page);
+  assert(soybeanBrief.includes('OFFLINE-SOY-429') && soybeanBrief.includes('FSSAI 2.3.29(2)'));
+  assert(soybeanBrief.includes('Reported 0.99 · % (m/m) as nitrogen · Below this minimum'));
+  assert(soybeanBrief.includes('Container type · Flexible pack') && soybeanBrief.includes('FSSAI 2.3.29(3)'));
+  assert(soybeanBrief.includes(soybean.amendment.url+'#page=24') && soybeanBrief.includes(sourceBase+named.report));
+  assert(!soybeanBrief.includes('OFFLINE-FRUIT-SAUCE') && !soybeanBrief.includes('2024 draft'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -865,6 +966,7 @@ let browser;
  await testRhizomeSpices(page, data, base, artifacts);
  await testGingerPaste(page, data, base, artifacts);
  await testCulinarySauces(page, data, base, artifacts);
+ await testNamedSauces(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -951,6 +1053,7 @@ let browser;
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
+ Object.assign(result,{namedSauceArticles:2,soybeanNitrogenTested:true,namedSauceOfflineBriefTested:true,filteredProductLinkTested:true});
  Object.assign(result,{gingerPasteCriteriaTested:2,gingerPasteRecipeAndCatalogueTested:true,gingerPasteOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
  Object.assign(result,{lajadiBotanicalEntries:17,lajadiIngredientsTested:3,lajadiFormBranchesTested:12,lajadiMethodBasesPreserved:true,lajadiWaterNotePreserved:true,lajadiScopeResetTested:true,lajadiSourceSpellingsPreserved:true});

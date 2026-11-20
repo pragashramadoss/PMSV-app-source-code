@@ -1,4 +1,4 @@
-/* Product-specific composition and rigid-container checks for FSSR 2.3.28. */
+/* Composition and rigid-container checks for FSSR 2.3.27, 2.3.28 and 2.3.29. */
 (function (root) {
   'use strict';
   const esc = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,6 +30,39 @@
       review.sources?.[k]?.[field] === ginger.sources[k][field]));
   }
 
+  function validNamedReview(review,culinary,catalogue) {
+    if (review?.round !== 86 || review.reviewedOn !== '2026-11-20' ||
+        review.report !== 'ctr-tomato-soybean-sauces-r86-2026-11-20.md' || !Array.isArray(review.products) ||
+        review.products.length !== 2 || !['pack','minimumPercent','waterTemperatureC','volumeUnit'].every(k =>
+          review.fill?.[k] === culinary.fill[k])) return false;
+    const n = review.nitrogenBasis;
+    if (n?.key !== 'nitrogen' || n.label !== 'Total nitrogen' || n.basis !== '% (m/m) as nitrogen' ||
+        n.otherBasis !== 'Protein, amino nitrogen, g/100 mL or another basis') return false;
+    if (!['gazette','chapter'].every(k => ['url','sha256'].every(field =>
+        review.sources?.[k]?.[field] === culinary.sources[k][field]))) return false;
+    const expected = [
+      {id:'12-12-6-tomato-ketchup-and-tomato-sauce',label:'Tomato ketchup and tomato sauce',clause:'2.3.27',aliases:['tomato ketchup','tomato sauce'],
+       minima:{solids:25,acidity:0.2},original:{solids:25,acidity:1},pages:[61,33,29],date:'2018-11-19',
+       file:'5bfd0937e84e3Gazette_Notification_DatePasta_27_11_2018.pdf',hash:'bb57f6240992c08792f0fe8b24132df751cb1205fa078bcd9dbdbd6a72ad72d5'},
+      {id:'12-12-9-soybean-sauce',label:'Soybean sauce',clause:'2.3.29',aliases:['soy sauce','soya sauce','soyabean sauce'],
+       minima:{solids:15,acidity:0.6,nitrogen:1},original:{solids:25,acidity:0.6},pages:[62,35,24],date:'2021-07-26',
+       file:'6103dc2e5287aGazette_Notification_Oil_30_07_2021.pdf',hash:'4c96b941b48c16e1445e834d09a0bddbe8d06178dbea8b4abea49caf9556ef67'}
+    ];
+    const base = 'https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/';
+    const matchingLimits = (actual,required) => actual && Object.keys(actual).length === Object.keys(required).length &&
+      Object.keys(required).every(key => actual[key] === required[key]);
+    return review.products.every((p,i) => {
+      const e = expected[i];
+      return p?.id === e.id && p.label === e.label && p.clause === e.clause &&
+        catalogue.some(c => c.id === p.id && c.fssr === p.clause) && Array.isArray(p.aliases) &&
+        p.aliases.length === e.aliases.length && p.aliases.every((alias,j) => alias === e.aliases[j]) &&
+        matchingLimits(p.minima,e.minima) && matchingLimits(p.originalMinima,e.original) &&
+        p.originalPage === e.pages[0] && p.chapterPage === e.pages[1] && p.amendment?.page === e.pages[2] &&
+        p.amendment.date === e.date && p.amendment.url === base + e.file && p.amendment.sha256 === e.hash &&
+        typeof p.identity === 'string' && p.identity.trim() && typeof p.change === 'string' && p.change.trim();
+    });
+  }
+
   function gingerArticle(ginger,id) {
     if (id !== ginger.productId && id !== ginger.recipe.productId) return null;
     return {...ginger, id, label:'Ginger paste', ginger:true, ingredient:id === ginger.recipe.productId,
@@ -40,6 +73,16 @@
     if (!register) return null;
     const review = register.culinarySauceReview;
     const ginger = register.gingerPasteReview;
+    const named = register.tomatoSoybeanReview;
+    const product = named?.products.find(p => p.id === id);
+    if (product) {
+      const criteria = ginger.criteria.map(c => ({...c,minimum:product.minima[c.key]}));
+      if (Object.hasOwn(product.minima,'nitrogen')) criteria.push({...named.nitrogenBasis,minimum:product.minima.nitrogen});
+      return {id, label:product.label, clause:product.clause, criteria, fill:named.fill,
+        identity:product.identity, change:product.change, round:named.round, report:named.report, reportLabel:'Tomato and soybean sauce review',
+        sources:{gazette:{...named.sources.gazette,page:product.originalPage},chapter:{...named.sources.chapter,page:product.chapterPage},
+          amendment:product.amendment}};
+    }
     for (const row of review.rows) {
       const p = row.products.find(item => item.id === id);
       if (p) return {id, label:p.label, clause:review.clause, tableRow:row.number, rowName:row.name,
@@ -87,8 +130,12 @@
     return display + '% · ' + (percent >= BigInt(rule.minimumPercent) * denominator ? 'Meets this minimum' : 'Below this minimum');
   }
 
-  function fillMarkup(rule) {
-    return '<details class="culinary-fill"><summary>Check container fill</summary><p>FSSAI 2.3.28(3) · Rigid containers must be at least ' +
+  function compositionReference(a) {
+    return 'FSSAI ' + a.clause + '(2)' + (a.tableRow ? ', row ' + a.tableRow : '');
+  }
+
+  function fillMarkup(rule,clause) {
+    return '<details class="culinary-fill"><summary>Check container fill</summary><p>FSSAI ' + esc(clause) + '(3) · Rigid containers must be at least ' +
       rule.minimumPercent.toFixed(1) + '% full by water capacity.</p><label for="fill-pack">Container type</label><select id="fill-pack">' +
       '<option value="">Select pack type</option><option value="rigid">Rigid container</option><option value="flexible">Flexible pack</option>' +
       '<option value="unknown">Unconfirmed or other</option></select><div class="fill-volumes" hidden>' +
@@ -110,19 +157,24 @@
         '<label for="' + name + '-result">Reported result</label><input class="paste-value" id="' + name +
         '-result" type="text" inputmode="decimal" maxlength="32" autocomplete="off">' +
         '<p class="paste-outcome" aria-live="polite">Awaiting a result</p>' +
-        (c.key === 'acidity' ? '<details class="paste-proposal"><summary>Retort or aseptic process?</summary><p>' + esc(proposal) + '</p>' +
+        (c.key === 'acidity' && a.sources.proposal ? '<details class="paste-proposal"><summary>Retort or aseptic process?</summary><p>' + esc(proposal) + '</p>' +
           link(sourceURL(a.sources.proposal),'Draft · p. ' + a.sources.proposal.page) + '</details>' : '') + '</div>';
     }).join('');
-    const other = a.fill ? 'The clause also covers' : 'For rigid containers the paste must occupy at least ' +
-      a.rigidFillMinimumPercent + '% of water capacity, measured with distilled water at 20 °C. The clause also covers';
+    const other = a.identity ? a.identity + ' The standard also refers to permitted additives and Appendix B microbiological requirements.' :
+      (a.fill ? '' : 'For rigid containers the paste must occupy at least ' + a.rigidFillMinimumPercent +
+        '% of water capacity, measured with distilled water at 20 °C. ') +
+      'The clause also covers added colour, permitted additives and Appendix B microbiological requirements.';
+    const amendment = a.sources.amendment;
     return '<section class="culinary-composition' + (a.ginger ? ' ginger-paste-check' : '') + (a.ingredient ? '' : ' panel compact') +
-      '" data-product="' + esc(a.id) + '"><h4>' + esc(a.label) + ' · composition</h4><p>FSSAI ' + esc(a.clause) + '(2), row ' + a.tableRow +
+      '" data-product="' + esc(a.id) + '"><h4>' + esc(a.label) + ' · composition</h4><p>' + esc(compositionReference(a)) +
       (a.ingredient ? ' · These values apply to the purchased paste. Check its ingredients separately against recipe 13.1.' :
         (a.rowName && a.rowName !== a.label ? ' · ' + esc(a.rowName) : '')) + '</p>' + (a.ingredient ? '' :
         '<label for="paste-lot">Supplier document or lot reference (optional)</label><input type="text" id="paste-lot" maxlength="160" autocomplete="off">') +
-      '<div class="paste-grid">' + cards + '</div>' + (a.fill ? fillMarkup(a.fill) : '') +
-      '<details><summary>Other requirements in this clause</summary><p>' + other + ' added colour, permitted additives and Appendix B microbiological requirements.</p></details>' +
-      '<div class="controls">' + link(sourceURL(a.sources.gazette),'Gazette · p. ' + a.sources.gazette.page) +
+      '<div class="paste-grid">' + cards + '</div>' + (a.fill ? fillMarkup(a.fill,a.clause) : '') +
+      (amendment ? '<details class="sauce-amendment"><summary>How the standard changed</summary><p>' + esc(a.change) + '</p></details>' : '') +
+      '<details><summary>Other requirements in this clause</summary><p>' + esc(other) + '</p></details>' +
+      '<div class="controls">' + (amendment ? link(sourceURL(amendment),amendment.date.slice(0,4) + ' amendment · p. ' + amendment.page) : '') +
+      link(sourceURL(a.sources.gazette),(amendment ? '2011 Gazette · p. ' : 'Gazette · p. ') + a.sources.gazette.page) +
       link(sourceURL(a.sources.chapter),'FSSAI chapter · p. ' + a.sources.chapter.page) + link(a.report,a.reportLabel) +
       (a.previousReport ? link(a.previousReport,'Ginger-paste source review') : '') + '</div></section>';
   }
@@ -131,7 +183,7 @@
     if (!a || !container) return [];
     const panel = container.querySelector('.culinary-composition');
     if (panel?.dataset.product !== a.id) return [];
-    const lines = ['',a.label + ' · composition', 'FSSAI ' + a.clause + '(2), row ' + a.tableRow +
+    const lines = ['',a.label + ' · composition', compositionReference(a) +
       (a.ingredient ? ' · purchased ingredient for recipe 13.1' : ' · ' + (a.rowName || a.label))];
     const lot = panel.querySelector('#paste-lot');
     if (lot && clean(lot.value)) lines.push('Supplier document or lot reference · ' + clean(lot.value).slice(0,160));
@@ -147,7 +199,7 @@
       const pack = panel.querySelector('#fill-pack');
       const volume = clean(panel.querySelector('#fill-product').value);
       const capacity = clean(panel.querySelector('#fill-capacity').value);
-      lines.push('','Container fill · FSSAI 2.3.28(3) · ' + a.fill.minimumPercent.toFixed(1) + '% minimum for rigid containers',
+      lines.push('','Container fill · FSSAI ' + a.clause + '(3) · ' + a.fill.minimumPercent.toFixed(1) + '% minimum for rigid containers',
         'Container type · ' + (pack.value ? pack.selectedOptions[0].textContent : 'Unconfirmed'));
       if (pack.value === 'rigid') {
         if (volume) lines.push('Volume occupied by product · ' + volume + ' mL');
@@ -155,13 +207,14 @@
       }
       lines.push(fillOutcome(a.fill,pack.value,volume,capacity));
     }
-    lines.push('Gazette · ' + sourceURL(a.sources.gazette),'FSSAI chapter · ' + sourceURL(a.sources.chapter),
-      proposal + ' ' + sourceURL(a.sources.proposal));
+    if (a.sources.amendment) lines.push(a.change,'Amendment dated ' + a.sources.amendment.date + ' · ' + sourceURL(a.sources.amendment));
+    lines.push((a.sources.amendment ? '2011 Gazette · ' : 'Gazette · ') + sourceURL(a.sources.gazette),'FSSAI chapter · ' + sourceURL(a.sources.chapter));
+    if (a.sources.proposal) lines.push(proposal + ' ' + sourceURL(a.sources.proposal));
     if (a.ingredient) lines.push('Check the supplied formula and its suitability for Krishara separately. ' + sourceURL(a.sources.recipe));
     return lines;
   }
 
-  const api = Object.freeze({validReview,article,gingerArticle,compare,fillOutcome,markup,briefLines});
+  const api = Object.freeze({validReview,validNamedReview,article,gingerArticle,compare,fillOutcome,markup,briefLines});
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.PMSVCulinarySauces = api;
   if (typeof document === 'undefined') return;

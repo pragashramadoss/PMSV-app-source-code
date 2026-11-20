@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 85,
+  "latestRound": 86,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -50,7 +50,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-flower-supply-r82-2026-11-19.json",
     "ctr-rhizome-spices-r83-2026-11-19.json",
     "ctr-ginger-paste-r84-2026-11-19.json",
-    "ctr-culinary-sauces-r85-2026-11-20.json"
+    "ctr-culinary-sauces-r85-2026-11-20.json",
+    "ctr-tomato-soybean-sauces-r86-2026-11-20.json"
   ],
   "records": [
     {
@@ -3659,6 +3660,91 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://www.fssai.gov.in/upload/uploadfiles/files/food%20product.pdf",
         "page": 14,
         "sha256": "2a01d2b18e8d01f92e496991eb67f1d77956f39b97e0994dcf6e63bb4f564d8c"
+      }
+    }
+  },
+  "tomatoSoybeanReview": {
+    "round": 86,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-tomato-soybean-sauces-r86-2026-11-20.md",
+    "fill": {
+      "pack": "rigid",
+      "minimumPercent": 90,
+      "waterTemperatureC": 20,
+      "volumeUnit": "mL"
+    },
+    "nitrogenBasis": {
+      "key": "nitrogen",
+      "label": "Total nitrogen",
+      "basis": "% (m/m) as nitrogen",
+      "otherBasis": "Protein, amino nitrogen, g/100 mL or another basis"
+    },
+    "products": [
+      {
+        "id": "12-12-6-tomato-ketchup-and-tomato-sauce",
+        "label": "Tomato ketchup and tomato sauce",
+        "clause": "2.3.27",
+        "aliases": [
+          "tomato ketchup",
+          "tomato sauce"
+        ],
+        "minima": {
+          "solids": 25,
+          "acidity": 0.2
+        },
+        "originalMinima": {
+          "solids": 25,
+          "acidity": 1
+        },
+        "originalPage": 61,
+        "chapterPage": 33,
+        "identity": "This standard covers tomato ketchup and sauce prepared from tomato juice, purée or paste.",
+        "change": "The 2018 amendment lowered the minimum acidity from 1.0% to 0.2% as acetic acid.",
+        "amendment": {
+          "date": "2018-11-19",
+          "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5bfd0937e84e3Gazette_Notification_DatePasta_27_11_2018.pdf",
+          "page": 29,
+          "sha256": "bb57f6240992c08792f0fe8b24132df751cb1205fa078bcd9dbdbd6a72ad72d5"
+        }
+      },
+      {
+        "id": "12-12-9-soybean-sauce",
+        "label": "Soybean sauce",
+        "clause": "2.3.29",
+        "aliases": [
+          "soy sauce",
+          "soya sauce",
+          "soyabean sauce"
+        ],
+        "minima": {
+          "solids": 15,
+          "acidity": 0.6,
+          "nitrogen": 1
+        },
+        "originalMinima": {
+          "solids": 25,
+          "acidity": 0.6
+        },
+        "originalPage": 62,
+        "chapterPage": 35,
+        "identity": "This standard covers sauce made by fermenting soybean paste after complete inactivation of trypsin inhibitors.",
+        "change": "The 2021 replacement lowered the salt-free soluble-solids minimum from 25.0% to 15.0% and added a 1.0% total-nitrogen minimum by mass.",
+        "amendment": {
+          "date": "2021-07-26",
+          "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/6103dc2e5287aGazette_Notification_Oil_30_07_2021.pdf",
+          "page": 24,
+          "sha256": "4c96b941b48c16e1445e834d09a0bddbe8d06178dbea8b4abea49caf9556ef67"
+        }
+      }
+    ],
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
       }
     }
   },

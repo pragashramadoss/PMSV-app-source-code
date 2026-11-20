@@ -60,10 +60,14 @@
  $('verificationSoftware').insertAdjacentElement('afterend',sourcePanel);
  const saucePanel = document.createElement('section');
  saucePanel.className = 'panel compact';
- saucePanel.innerHTML = '<h3>Sauce and paste standards</h3><label for="culinary-product">Product under FSSAI 2.3.28</label>' +
-  '<div class="controls"><select id="culinary-product">' + data.culinarySauceReview.rows.flatMap(row => row.products).map(p =>
-   '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('') +
-  '</select><button type="button" id="open-culinary-product">Open product standard</button></div>';
+ const sauceOptions = products => products.map(p => '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('');
+ const [tomato,soybean] = data.tomatoSoybeanReview.products;
+ saucePanel.innerHTML = '<h3>Sauce and paste standards</h3><label for="culinary-product">Sauce or paste standard</label>' +
+  '<div class="controls"><select id="culinary-product"><optgroup label="FSSAI ' + esc(tomato.clause) + '">' + sauceOptions([tomato]) +
+  '</optgroup><optgroup label="FSSAI ' + esc(data.culinarySauceReview.clause) + '">' +
+  sauceOptions(data.culinarySauceReview.rows.flatMap(row => row.products)) +
+  '</optgroup><optgroup label="FSSAI ' + esc(soybean.clause) + '">' + sauceOptions([soybean]) +
+  '</optgroup></select><button type="button" id="open-culinary-product">Open product standard</button></div>';
  sourcePanel.insertAdjacentElement('beforebegin',saucePanel);
  $('open-culinary-product').addEventListener('click', () => window.PMSV_HELPER_TEST?.selectProduct($('culinary-product').value));
  const residue=data.residueGazetteReview,residuePanel=document.createElement('section');
