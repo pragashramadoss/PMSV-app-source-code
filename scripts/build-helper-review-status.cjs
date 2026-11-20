@@ -43,6 +43,8 @@ const namedSauceFile = 'ctr-tomato-soybean-sauces-r86-2026-11-20.json';
 const namedSauces = read(namedSauceFile);
 const concentrateFile = 'ctr-thermally-processed-tomato-r87-2026-11-20.json';
 const concentrate = read(concentrateFile);
+const tomatoJuiceFile = 'ctr-thermally-processed-tomato-juice-r88-2026-11-20.json';
+const tomatoJuice = read(tomatoJuiceFile);
 const sauceSources = Object.fromEntries(['gazette','chapter'].map(key => {
  const {url,sha256} = paste.sources[key];
  return [key,{url,sha256}];
@@ -245,13 +247,13 @@ pasteRecipe.sourceReviewResult += ' ' + paste.recipe.sourceReviewResult;
 pasteRecipe.sourceReviewNextAction += ' ' + paste.recipe.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:concentrate.reviewedOn,latestRound:concentrate.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:tomatoJuice.reviewedOn,latestRound:tomatoJuice.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
  recipeFlowerReview:{...flowers,rawRows:flowerRows,coverage:flowerCoverage},
@@ -262,6 +264,8 @@ const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:c
  tomatoConcentrateReview:{...concentrate,sources:{
   gazette:{...sauceSources.gazette,page:concentrate.sourcePages.gazette},
   chapter:{...sauceSources.chapter,page:concentrate.sourcePages.chapter},method:concentrate.method}},
+ tomatoJuiceReview:{...tomatoJuice,sources:{gazette:{...sauceSources.gazette,page:55},chapter:{...sauceSources.chapter,page:20},
+  method:{...concentrate.method,page:35}}},
  gingerPasteReview:paste,
  flowerSupplyReview:flowerSupply,
  hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,

@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 87,
+  "latestRound": 88,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -52,7 +52,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-ginger-paste-r84-2026-11-19.json",
     "ctr-culinary-sauces-r85-2026-11-20.json",
     "ctr-tomato-soybean-sauces-r86-2026-11-20.json",
-    "ctr-thermally-processed-tomato-r87-2026-11-20.json"
+    "ctr-thermally-processed-tomato-r87-2026-11-20.json",
+    "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json"
   ],
   "records": [
     {
@@ -3811,6 +3812,124 @@ window.PMSV_REVIEW_REGISTER = {
       "method": {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
         "page": 9,
+        "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
+      }
+    }
+  },
+  "tomatoJuiceReview": {
+    "round": 88,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-thermally-processed-tomato-juice-r88-2026-11-20.md",
+    "id": "tomato-juice",
+    "label": "Thermally processed tomato juice",
+    "clause": "2.3.8",
+    "aliases": [
+      "tomato juice",
+      "heat-treated tomato juice"
+    ],
+    "criteria": [
+      {
+        "key": "solids",
+        "label": "Total soluble solids",
+        "minimum": 5,
+        "basis": "Salt-excluded, % by weight",
+        "otherBasis": "Uncorrected °Brix or another basis",
+        "row": 3
+      },
+      {
+        "key": "salt",
+        "label": "Sodium chloride",
+        "maximum": 3,
+        "basis": "NaCl, % by weight",
+        "otherBasis": "Sodium alone or another basis",
+        "row": 4
+      },
+      {
+        "key": "titratable",
+        "label": "Total titratable acidity",
+        "maximum": 10,
+        "basis": "As citric acid, % by weight",
+        "otherBasis": "Another acid, unit or basis",
+        "row": 5
+      },
+      {
+        "key": "volatile",
+        "label": "Volatile acidity",
+        "maximum": 0.4,
+        "basis": "As acetic acid, % by weight",
+        "otherBasis": "Total acidity or another basis",
+        "row": 6
+      },
+      {
+        "key": "ph",
+        "label": "pH",
+        "maximum": 4.5,
+        "unit": "pH",
+        "basis": "Measured pH",
+        "otherBasis": "Acidity percentage or another basis",
+        "row": 7
+      },
+      {
+        "key": "sugar",
+        "label": "Sugar content",
+        "maximum": 42,
+        "basis": "As invert sugar, % by weight",
+        "otherBasis": "Added sugar, °Brix or another basis",
+        "row": 8
+      },
+      {
+        "key": "impurities",
+        "label": "Mineral impurities",
+        "maximum": 0.1,
+        "basis": "% of dry weight less common salt",
+        "otherBasis": "As-sold, total ash or another basis",
+        "paragraph": 2
+      }
+    ],
+    "can": {
+      "vacuum": {
+        "row": 1,
+        "requirement": "Negative"
+      },
+      "headspace": {
+        "key": "headspace",
+        "label": "Can headspace",
+        "maximum": 7,
+        "unit": "mm",
+        "basis": "Measured in millimetres",
+        "otherBasis": "Another or unconfirmed unit",
+        "row": 2
+      }
+    },
+    "fill": {
+      "minimumPercent": 90,
+      "waterTemperatureC": 27,
+      "glassDeductionMl": 20,
+      "volumeUnit": "mL"
+    },
+    "amendment": {
+      "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/Gazette_Notification_Fruits_Vegetables_28_11_2017.pdf",
+      "page": 10,
+      "fillPage": 11,
+      "date": "2017-11-17",
+      "published": "2017-11-21",
+      "complyBy": "2018-07-01",
+      "sha256": "a70e28574d44f6e105b83da6c2f52442eac1db3b66f1805b862458c8e82911a9"
+    },
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63",
+        "page": 55
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c",
+        "page": 20
+      },
+      "method": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
+        "page": 35,
         "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
       }
     }

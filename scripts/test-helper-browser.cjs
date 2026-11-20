@@ -434,7 +434,7 @@ async function testCulinarySauces(page,register,base,artifacts) {
  const records = review.rows.flatMap(row => row.products.map(product => ({row,product})));
  for (const {row,product} of records) {
   await page.getByRole('button',{name:'Review progress',exact:true}).click();
-  await page.getByLabel('Sauce or paste standard').selectOption(product.id);
+  await page.getByLabel('Choose a product standard').selectOption(product.id);
   await page.getByRole('button',{name:'Open product standard',exact:true}).click();
   assert.equal(await panel.getAttribute('data-product'),product.id);
   assert.equal(await panel.locator('#paste-lot').inputValue(),'');
@@ -513,7 +513,7 @@ async function testNamedSauces(page,register,base,artifacts) {
  const search = page.locator('#productSearch'), category = page.locator('#productClass');
  const open = async product => {
   await page.getByRole('button',{name:'Review progress',exact:true}).click();
-  await page.getByLabel('Sauce or paste standard').selectOption(product.id);
+  await page.getByLabel('Choose a product standard').selectOption(product.id);
   await page.getByRole('button',{name:'Open product standard',exact:true}).click();
   assert.equal(await panel.getAttribute('data-product'),product.id);
   assert.equal(await page.locator('#productList [aria-selected="true"]').getAttribute('data-id'),product.id);
@@ -593,7 +593,7 @@ async function testTomatoConcentrates(page,register,base,artifacts) {
  const form = panel.getByLabel('Product declared on the label or specification');
  const search = page.locator('#productSearch');
  await page.getByRole('button',{name:'Review progress',exact:true}).click();
- await page.getByLabel('Sauce or paste standard').selectOption(review.id);
+ await page.getByLabel('Choose a product standard').selectOption(review.id);
  await page.getByRole('button',{name:'Open product standard',exact:true}).click();
  assert.equal(await panel.getAttribute('data-product'),review.id);
  for (const alias of review.aliases) {
@@ -660,6 +660,89 @@ async function testTomatoConcentrates(page,register,base,artifacts) {
  assert((await response.text()).includes(review.method.sha256));
 }
 
+async function testTomatoJuice(page,register,base,artifacts) {
+ const r=register.tomatoJuiceReview, panel=page.locator('.tomato-juice');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.getByLabel('Choose a product standard').selectOption(r.id);
+ await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+ assert.equal(await panel.getAttribute('data-product'),r.id);
+ assert.equal(await panel.locator('.juice-lab .paste-criterion').count(),7);
+ assert.equal(await panel.locator('#juice-headspace-result').count(),0);
+ assert.equal(await page.locator('.culinary-composition').count(),0);
+ for (const alias of r.aliases) {
+  await page.locator('#productSearch').fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),r.id);
+ }
+ await panel.locator('#juice-lot').fill('JUICE-7-LAB');
+ for (const c of r.criteria) {
+  const card=panel.getByRole('group',{name:c.label,exact:true}), maximum=c.maximum!==undefined;
+  await card.locator('.paste-basis').selectOption('stated');
+  await card.locator('.paste-value').fill(String(c.maximum??c.minimum));
+  assert.equal(await card.locator('.paste-outcome').innerText(),maximum?'Meets this maximum':'Meets this minimum');
+ }
+ await panel.locator('#juice-ph-result').fill('4.6');
+ assert.equal(await panel.locator('[data-criterion="ph"] .paste-outcome').innerText(),'Above this maximum');
+ await panel.locator('#juice-solids-basis').selectOption('other');
+ assert.match(await panel.locator('[data-criterion="solids"] .paste-outcome').innerText(),/Different reporting basis/);
+ await panel.locator('.juice-packaging summary').click();
+ const pack=panel.getByLabel('Container material');
+ const basis=panel.getByLabel('Water-capacity measurement basis');
+ const volume=panel.locator('#juice-volume'), water=panel.locator('#juice-capacity'), result=panel.locator('#juice-fill-outcome');
+ await pack.selectOption('glass');
+ await water.fill('300'); await volume.fill('252');
+ await basis.selectOption('other');
+ assert.match(await result.innerText(),/Confirm.*27 °C/);
+ assert(!(await result.innerText()).includes('Meets'));
+ await basis.selectOption('stated');
+ assert.match(await result.innerText(),/Reference capacity · 280 mL/);
+ assert.match(await result.innerText(),/Minimum juice volume · 252 mL/);
+ assert.match(await result.innerText(),/90.0% · Meets this minimum/);
+ const glass=await readProductBrief(page);
+ assert(glass.includes('JUICE-7-LAB') && glass.includes('Current focused reviews: R88') && glass.includes('Container type · Glass container'));
+ assert(glass.includes('Reported 4.6 · Measured pH · Above this maximum') && glass.includes('Different reporting basis · cannot compare'));
+ assert(glass.includes('FSSAI 2.3.8(2)') && glass.includes(r.amendment.url+'#page=11') && glass.includes(base+r.report));
+ assert(!glass.includes('Vacuum in the can ·') && !glass.includes('Can headspace · maximum'));
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:900});
+  assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+  if (width===390) await panel.locator('.juice-packaging').screenshot({path:path.join(artifacts,'tomato-juice-glass-390.png'),
+   animations:'disabled',style:'header, .navtabs { visibility: hidden !important; }'});
+ }
+ await pack.selectOption('can');
+ assert.equal(await basis.inputValue(),''); assert.equal(await volume.inputValue(),''); assert.equal(await water.inputValue(),'');
+ assert.equal(await panel.locator('#juice-lot').inputValue(),'JUICE-7-LAB');
+ assert.equal(await panel.locator('#juice-ph-result').inputValue(),'4.6');
+ await water.fill('300'); await volume.fill('252'); await basis.selectOption('stated');
+ assert.match(await result.innerText(),/Minimum juice volume · 270 mL/);
+ assert.match(await result.innerText(),/84.0% · Below this minimum/);
+ await panel.locator('#juice-vacuum').selectOption('unknown');
+ assert.match(await panel.locator('#juice-vacuum-outcome').innerText(),/Confirm the gauge sign convention/);
+ await panel.locator('#juice-vacuum').selectOption('negative');
+ await panel.locator('#juice-headspace-basis').selectOption('stated');
+ await panel.locator('#juice-headspace-result').fill('7.1');
+ const can=await readProductBrief(page);
+ assert(can.includes('Vacuum in the can · Negative gauge pressure confirmed') && can.includes('Meets the negative-vacuum requirement'));
+ assert(can.includes('Can headspace · maximum 7 mm') && can.includes('Reported 7.1 · Measured in millimetres · Above this maximum'));
+ assert(!can.includes('Reference capacity · 280 mL'));
+ await pack.selectOption('other');
+ assert.equal(await panel.locator('#juice-headspace-result').count(),0);
+ await water.fill('300'); await volume.fill('270'); await basis.selectOption('stated');
+ assert.match(await result.innerText(),/90.0% · Meets this minimum/);
+ await pack.selectOption('unknown');
+ const unknown=await readProductBrief(page);
+ assert(unknown.includes('Confirm the container material') && !unknown.includes('Full measured water capacity ·') && !unknown.includes('Negative gauge pressure confirmed'));
+ assert.equal(await panel.getByRole('link',{name:'2017 Gazette · composition',exact:false}).getAttribute('href'),r.amendment.url+'#page=10');
+ await page.locator('#productSearch').fill('tomato puree');
+ await page.locator('#productList [data-id="'+register.tomatoConcentrateReview.id+'"]').click();
+ assert.equal(await panel.count(),0);
+ const next=await readProductBrief(page);
+ assert(!next.includes('JUICE-7-LAB') && !next.includes('Water-capacity basis ·'));
+ await page.locator('#productSearch').fill('');
+ const response=await page.request.get(base+r.report);
+ assert.equal(response.status(),200);
+ assert((await response.text()).includes(r.amendment.sha256));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -710,7 +793,7 @@ async function testPortableHelper(browser, register) {
   assert.equal(await page.locator('.ginger-paste-check').getByRole('link',{name:'Ginger-paste source review ↗'}).evaluate(a=>a.href),
    sourceBase + register.gingerPasteReview.report);
   await page.getByRole('button',{name:'Review progress',exact:true}).click();
-  await page.getByLabel('Sauce or paste standard').selectOption('12-12-6-fruits-vegetable-sauces');
+  await page.getByLabel('Choose a product standard').selectOption('12-12-6-fruits-vegetable-sauces');
   await page.getByRole('button',{name:'Open product standard'}).click();
   const sauce=page.locator('.culinary-composition');
   await sauce.locator('#paste-lot').fill('OFFLINE-FRUIT-SAUCE');
@@ -756,6 +839,26 @@ async function testPortableHelper(browser, register) {
   assert(concentrateBrief.includes('Reported 24.9 · Finished product, % (w/w) · Below this minimum'));
   assert(concentrateBrief.includes('Container type · Flexible pack') && concentrateBrief.includes(sourceBase+concentrate.report));
   assert(concentrateBrief.includes(concentrate.method.url+'#page=9') && !concentrateBrief.includes('OFFLINE-SOY-429'));
+  const juice=register.tomatoJuiceReview;
+  await page.locator('#productSearch').fill('tomato juice');
+  await page.locator('#productList [data-id="'+juice.id+'"]').click();
+  const juicePanel=page.locator('.tomato-juice');
+  await juicePanel.locator('#juice-lot').fill('OFFLINE-JUICE-7');
+  await juicePanel.locator('#juice-solids-basis').selectOption('stated');
+  await juicePanel.locator('#juice-solids-result').fill('5.0');
+  await juicePanel.locator('#juice-ph-basis').selectOption('stated');
+  await juicePanel.locator('#juice-ph-result').fill('4.6');
+  await juicePanel.locator('.juice-packaging summary').click();
+  await juicePanel.getByLabel('Container material').selectOption('glass');
+  await juicePanel.locator('#juice-capacity-basis').selectOption('stated');
+  await juicePanel.locator('#juice-capacity').fill('300');
+  await juicePanel.locator('#juice-volume').fill('252');
+  const juiceBrief=await readProductBrief(page);
+  assert(juiceBrief.includes('OFFLINE-JUICE-7') && juiceBrief.includes('Reported 4.6 · Measured pH · Above this maximum'));
+  assert(juiceBrief.includes('Reported 5.0 · Salt-excluded, % by weight · Meets this minimum'));
+  assert(juiceBrief.includes('Minimum juice volume · 252 mL') && juiceBrief.includes('90.0% · Meets this minimum'));
+  assert(juiceBrief.includes(juice.amendment.url+'#page=11') && juiceBrief.includes(sourceBase+juice.report));
+  assert(!juiceBrief.includes('OFFLINE-PASTE-189') && !juiceBrief.includes('Can headspace · maximum'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -1056,6 +1159,7 @@ let browser;
  await testCulinarySauces(page, data, base, artifacts);
  await testNamedSauces(page, data, base, artifacts);
  await testTomatoConcentrates(page, data, base, artifacts);
+ await testTomatoJuice(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1142,6 +1246,7 @@ let browser;
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
+ Object.assign(result,{tomatoJuiceLabChecks:7,tomatoJuiceCanChecks:2,tomatoJuiceGlassFillTested:true,tomatoJuiceOfflineBriefTested:true});
  Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});
  Object.assign(result,{namedSauceArticles:2,soybeanNitrogenTested:true,namedSauceOfflineBriefTested:true,filteredProductLinkTested:true});
  Object.assign(result,{gingerPasteCriteriaTested:2,gingerPasteRecipeAndCatalogueTested:true,gingerPasteOfflineBriefTested:true});

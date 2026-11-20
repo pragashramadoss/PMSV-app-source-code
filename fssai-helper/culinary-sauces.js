@@ -124,7 +124,7 @@
     return gingerArticle(ginger,id);
   }
 
-  // Preserve decimal precision when a measured result is just below a minimum.
+  // Keep the reported decimal precision at inclusive regulatory limits.
   function decimal(raw) {
     if (raw.length > 32 || !/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(raw)) return null;
     const [whole,fraction = ''] = raw.split('.');
@@ -136,10 +136,19 @@
     if (!raw) return 'Awaiting a result';
     if (basis === 'other') return 'Different reporting basis · cannot compare';
     if (basis !== 'stated') return 'Confirm the reporting basis';
-    const value = decimal(raw);
-    if (!value || value.n > 100n * value.scale) return 'Enter a percentage from 0 to 100';
-    const limit = decimal(String(criterion.minimum));
-    return value.n * limit.scale >= limit.n * value.scale ? 'Meets this minimum' : 'Below this minimum';
+    const negativePH = criterion.unit === 'pH' && raw.startsWith('-');
+    const value = decimal(negativePH ? raw.slice(1) : raw);
+    if (!value) {
+      if (criterion.unit === 'mm') return 'Enter a non-negative measurement in mm';
+      if (criterion.unit === 'pH') return 'Enter a numeric pH result';
+      return 'Enter a percentage from 0 to 100';
+    }
+    if (!criterion.unit && value.n > 100n * value.scale) return 'Enter a percentage from 0 to 100';
+    const limit = decimal(String(criterion.maximum ?? criterion.minimum));
+    const measured = (negativePH ? -value.n : value.n) * limit.scale;
+    const boundary = limit.n * value.scale;
+    if (criterion.maximum !== undefined) return measured <= boundary ? 'Meets this maximum' : 'Above this maximum';
+    return measured >= boundary ? 'Meets this minimum' : 'Below this minimum';
   }
 
   function fillOutcome(rule,pack,productVolume,waterCapacity) {
@@ -152,12 +161,16 @@
     if (!volume || !water || water.n === 0n) return 'Enter valid volumes and a water capacity greater than zero.';
     const numerator = volume.n * water.scale, denominator = water.n * volume.scale;
     if (numerator > denominator) return 'The product volume exceeds the stated water capacity. Check both measurements.';
+    return fillPercentText(numerator,denominator,rule.minimumPercent);
+  }
+
+  function fillPercentText(numerator,denominator,minimumPercent) {
     const percent = numerator * 100n;
     const hundredths = percent * 100n / denominator;
     const trailing = percent * 100n % denominator !== 0n;
     const digits = String(hundredths % 100n).padStart(2,'0');
     const display = String(hundredths / 100n) + '.' + (trailing ? digits + '…' : digits.replace(/0$/,''));
-    return display + '% · ' + (percent >= BigInt(rule.minimumPercent) * denominator ? 'Meets this minimum' : 'Below this minimum');
+    return display + '% · ' + (percent >= BigInt(minimumPercent) * denominator ? 'Meets this minimum' : 'Below this minimum');
   }
 
   function compositionReference(a) {
@@ -175,20 +188,28 @@
       '<p class="fill-outcome" aria-live="polite">Confirm the container type.</p></details>';
   }
 
+  function limitText(c) {
+    const value = c.maximum ?? c.minimum;
+    return c.unit === 'mm' ? value + ' mm' : value.toFixed(1) + (c.unit === 'pH' ? '' : '%');
+  }
+
+  function criterionCard(c,prefix,proposalSource,reference) {
+    const name = prefix + '-' + c.key;
+    return '<div class="paste-criterion" data-criterion="' + esc(c.key) + '" role="group" aria-labelledby="' + name + '-title"><h5 id="' + name + '-title">' + esc(c.label) + '</h5>' +
+      (reference ? '<small>' + esc(reference) + '</small>' : '') + '<p>' + (c.maximum === undefined ? 'Minimum' : 'Maximum') + ' <strong>' + esc(limitText(c)) + '</strong>' +
+      (c.unit ? '' : ' · ' + esc(c.basis.replace('% (m/m)','mass by mass').replace('% as','as'))) + '</p>' +
+      '<label for="' + name + '-basis">Laboratory reporting basis</label><select class="paste-basis" id="' + name +
+      '-basis"><option value="">Select basis from report</option><option value="stated">' + esc(c.basis) +
+      '</option><option value="other">' + esc(c.otherBasis) + '</option></select>' +
+      '<label for="' + name + '-result">Reported result</label><input class="paste-value" id="' + name +
+      '-result" type="text" inputmode="decimal" maxlength="32" autocomplete="off">' +
+      '<p class="paste-outcome" aria-live="polite">Awaiting a result</p>' +
+      (c.key === 'acidity' && proposalSource ? '<details class="paste-proposal"><summary>Retort or aseptic process?</summary><p>' + esc(proposal) + '</p>' +
+        link(sourceURL(proposalSource),'Draft · p. ' + proposalSource.page) + '</details>' : '') + '</div>';
+  }
+
   function resultFields(a) {
-    const cards = a.criteria.map(c => {
-      const name = 'paste-' + c.key;
-      return '<div class="paste-criterion" data-criterion="' + esc(c.key) + '" role="group" aria-labelledby="' + name + '-title"><h5 id="' + name + '-title">' + esc(c.label) + '</h5>' +
-        '<p>Minimum <strong>' + c.minimum.toFixed(1) + '%</strong> · ' + esc(c.basis.replace('% (m/m)','mass by mass').replace('% as','as')) + '</p>' +
-        '<label for="' + name + '-basis">Laboratory reporting basis</label><select class="paste-basis" id="' + name +
-        '-basis"><option value="">Select basis from report</option><option value="stated">' + esc(c.basis) +
-        '</option><option value="other">' + esc(c.otherBasis) + '</option></select>' +
-        '<label for="' + name + '-result">Reported result</label><input class="paste-value" id="' + name +
-        '-result" type="text" inputmode="decimal" maxlength="32" autocomplete="off">' +
-        '<p class="paste-outcome" aria-live="polite">Awaiting a result</p>' +
-        (c.key === 'acidity' && a.sources.proposal ? '<details class="paste-proposal"><summary>Retort or aseptic process?</summary><p>' + esc(proposal) + '</p>' +
-          link(sourceURL(a.sources.proposal),'Draft · p. ' + a.sources.proposal.page) + '</details>' : '') + '</div>';
-    }).join('');
+    const cards = a.criteria.map(c => criterionCard(c,'paste',a.sources.proposal)).join('');
     const lot = a.ingredient ? '' : '<label for="paste-lot">Supplier document or lot reference (optional)</label>' +
       '<input type="text" id="paste-lot" maxlength="160" autocomplete="off">';
     return lot + '<div class="paste-grid">' + cards + '</div>' + (a.fill ? fillMarkup(a.fill,a.clause) : '');
@@ -231,6 +252,15 @@
       (a.previousReport ? link(a.previousReport,'Ginger-paste source review') : '') + '</div></section>';
   }
 
+  function criterionLines(c,card) {
+    const basis = card.querySelector('.paste-basis').value;
+    const raw = clean(card.querySelector('.paste-value').value).slice(0,32);
+    const reported = basis === 'stated' ? c.basis : basis === 'other' ? c.otherBasis : 'Basis unconfirmed';
+    const direction = c.maximum === undefined ? 'minimum' : 'maximum';
+    return [c.label + ' · ' + direction + ' ' + limitText(c) + ' · ' + c.basis,
+      (raw ? 'Reported ' + raw + ' · ' + reported + ' · ' : '') + compare(c,basis,raw)];
+  }
+
   function briefLines(a,container) {
     if (!a || !container) return [];
     const panel = container.querySelector('.culinary-composition');
@@ -243,11 +273,7 @@
     if (lot && clean(lot.value)) lines.push('Supplier document or lot reference · ' + clean(lot.value).slice(0,160));
     for (const c of a.criteria) {
       const card = panel.querySelector('[data-criterion="' + c.key + '"]');
-      const basis = card.querySelector('.paste-basis').value;
-      const raw = clean(card.querySelector('.paste-value').value).slice(0,32);
-      const reported = basis === 'stated' ? c.basis : basis === 'other' ? c.otherBasis : 'Basis unconfirmed';
-      lines.push(c.label + ' · minimum ' + c.minimum.toFixed(1) + '% · ' + c.basis);
-      lines.push((raw ? 'Reported ' + raw + ' · ' + reported + ' · ' : '') + compare(c,basis,raw));
+      lines.push(...criterionLines(c,card));
     }
     if (a.fill && (!a.forms || a.form)) {
       const pack = panel.querySelector('#fill-pack');
@@ -269,7 +295,7 @@
     return lines;
   }
 
-  const api = Object.freeze({validReview,validNamedReview,validConcentrateReview,article,gingerArticle,compare,fillOutcome,markup,briefLines});
+  const api = Object.freeze({validReview,validNamedReview,validConcentrateReview,article,gingerArticle,compare,fillOutcome,markup,briefLines,decimal,fillPercentText,criterionCard,criterionLines,esc,clean,sourceURL,link});
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.PMSVCulinarySauces = api;
   if (typeof document === 'undefined') return;
@@ -277,6 +303,7 @@
     const field = event.target;
     if (!field.matches('.paste-value,.paste-basis,#fill-pack,#fill-product,#fill-capacity,#tomato-form')) return;
     const panel = field.closest('.culinary-composition');
+    if (!panel) return;
     const a = article(root.PMSV_REVIEW_REGISTER,panel.dataset.product,panel.querySelector('#tomato-form')?.value);
     if (field.id === 'tomato-form') {
       if (event.type === 'change') panel.querySelector('#tomato-form-fields').innerHTML = declaredFields(a);
