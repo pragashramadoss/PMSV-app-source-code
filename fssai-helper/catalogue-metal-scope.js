@@ -51,6 +51,16 @@
   }
   function mercuryGuide(id) { return mercuryGuides.get(id); }
   function documentedMercury(id,state={}) {
+    if(root.PMSVMetalPanelData?.groups.fpc.includes(id)&&qualified(state,'panelFpc',['yes','no'])){
+      const yes=state.panelFpc==='yes';
+      return {key:yes?'documented':'review',article:yes?'Foods not specified':'Reclassify the supplied product',level:yes?'1.0 ppm':'',page:27,
+        why:(yes?'FPC 18 direction, paragraph 4(f). ':'The documented food is outside the FPC 18 direction. ')+state.panelFpcRef.trim()};
+    }
+    const singleGuide=mercuryGuide(id);
+    if(isMouth(id)&&qualified(state,'metalForm',['commodity'])&&singleGuide&&qualified(state,'panel_Hg',singleGuide.keys)){
+      const key=state.panel_Hg;
+      return {key:'documented',article:data.rows[key][1],level:valueText(key),page:data.rows[key][3],why:'Documented single-commodity sample · '+state.panel_HgRef.trim()};
+    }
     if (hasBlend(id,state)) return {key:'documented',article:data.rows.Hg6[1],level:valueText('Hg6'),page:27,
       why:'The documented composite review selected the residual article. Evidence · '+state.metalFormRef};
     const guide=mercuryGuide(id);
@@ -155,6 +165,7 @@
     return '<label>'+label+'<select data-ws-field="'+field+'"><option value="">Choose after checking the product</option>'+opts+'</select></label><label>Supporting document<input data-ws-field="'+field+'Ref" value="'+escape(state[field+'Ref'])+'" maxlength="320" placeholder="Label, pack drawing or product specification"></label>';
   }
   function results(id,state) {
+    if(root.PMSVMetalPanel)return root.PMSVMetalPanel.renderRows(id,state);
     const product = confection(id,state);
     let body = product ? table(Object.fromEntries(data.metalOrder.map(m=>[m,product[m]]))) : table(narrowRows(id));
     const extra = frozenRows(id,state);
@@ -165,12 +176,13 @@
   }
   function markup(id,state) {
     if (!products.has(id)) return '';
-    const subject = name(id) ? 'All 11 metals in the CTR table' : 'Chromium, nickel, selenium and antimony';
+    const subject = root.PMSVMetalPanel || name(id) ? 'All 11 metals in the CTR table' : 'Chromium, nickel, selenium and antimony';
     let body = '<p>CTR 2.1.1(2) · Apply each row to the article and sample named. A listed maximum alone does not set a sampling frequency.</p>';
     const opts = sampleOptions(id);
     if (opts) body+=controls('metalForm','Form as supplied',opts,state);
     if (name(id)) body+=controls('metalPack','Canning status',{can:'Canned finished food',other:'Finished food supplied without canning'},state);
     body+='<div data-metal-results>'+results(id,state)+'</div>';
+    if(root.PMSVMetalPanel)body+=root.PMSVMetalPanel.controls(id,state);
     if (name(id)) body+='<p>The operative metal table has 11 headings. It has no zinc heading. Separate nutrient, fortification or claim requirements depend on the product.</p>';
     if (data.ingredients[id]) body+='<p>For food-use chemicals also check the applicable Indian Pharmacopoeia monograph under CTR 2.1.1(1) and the FSSAI product or purity standard.</p>';
     return '<details class="ws-section metal-scope"><summary>'+subject+'</summary><div>'+body+link(gazette+'#page=18','Original table and units')+' · '+link(gazette+'#page=28','Original short metal tables')+' · '+link(current+'#page=12','Consolidated table')+'</div></details>';

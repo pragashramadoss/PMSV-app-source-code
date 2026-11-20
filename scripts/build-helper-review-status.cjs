@@ -291,10 +291,15 @@ for(const file of ['catalogue-metal-scope-data.js','catalogue-crop-scope-data.js
 }
 const cropArticleReview={round:96,reviewedOn:sourceRows.date,...cropContext.PMSVCropScope.stats(),report:'catalogue-crop-review-r96.md',fullProductApprovals:0};
 assert.equal(cropArticleReview.products,533);assert.equal(cropArticleReview.sourceRows,45);assert.equal(cropArticleReview.analytes,12);
-const data={cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:cropArticleReview.round,
+for(const file of ['catalogue-rule-data.js','catalogue-metal-scope.js','broad-contaminants.js','catalogue-metal-panel-data.js','catalogue-metal-panel.js']){
+ vm.runInContext(fs.readFileSync(path.join(dir,file),'utf8'),cropContext);
+}
+const metalPanelReview={round:97,reviewedOn:sourceRows.date,...cropContext.PMSVMetalPanel.stats(),report:'catalogue-metal-panel-review-r97.md',fullProductApprovals:0};
+assert.equal(metalPanelReview.products,533);assert.equal(metalPanelReview.rows,382);assert.equal(metalPanelReview.headings,11);
+const data={metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:metalPanelReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
- scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
+ scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. R97 establishes all 11 metal outcomes for '+metalPanelReview.priorityOutcomes+' original priority products. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
  sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile,cocktailFile,vegetableMealsFile],records,

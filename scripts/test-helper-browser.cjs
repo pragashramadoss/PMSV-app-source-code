@@ -1068,7 +1068,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1165,9 +1165,38 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert((await toxin('saf').innerText()).includes('Soups and sauces · 10 ppm'));
  await open('05-05-2-sugar-boiled-confectionery-hard-candy');await page.locator('.crop-scope>summary').click();
  await page.locator('.crop-inputs>summary').click();assert.equal(await f('crop_afRef').inputValue(),'Recipe C96 lists toasted almond');
+ const metals=async id=>{await open(id);await page.locator('.metal-scope>summary').click();};
+ const metalRow=m=>page.locator('[data-panel-metal="'+m+'"]');
+ const report=page.locator('[data-panel-lab]');
+ await metals('05-05-1-cocoa-powder');
+ assert.equal(await page.locator('[data-panel-metal]').count(),11);
+ assert((await metalRow('Pb').innerText()).includes('5.0 ppm on dry fat free'));
+ await page.locator('.metal-lookup>summary').click();
+ await page.locator('[data-panel-search-metal]').selectOption('Cu');await page.locator('[data-panel-search]').fill('cocoa powder');
+ assert((await page.locator('[data-panel-found]').innerText()).includes('70 ppm on fat free'));
+ await page.locator('.metal-analysis>summary').click();await f('panelLabMetal').selectOption('Pb');
+ await f('panelLabNumber').fill('5.00000000000001');await f('panelLabUnit').selectOption('mg/L');await f('panelLabBasis').check();
+ await f('panelLabRef').fill('Cocoa dry fat-free COA 97');assert((await report.innerText()).includes('Confirm the matching unit'));
+ await f('panelLabUnit').selectOption('mg/kg');assert((await report.innerText()).startsWith('Outside'));
+ await f('panelLabNumber').fill('5.0');assert((await report.innerText()).startsWith('Within'));
+ await page.locator('.ws-body [data-ws-save]').click();
+ assert((await readProductBrief(page)).includes('Cocoa dry fat-free COA 97'));
+ await metals('13-13-1-infant-milk-food');await page.locator('.metal-analysis>summary').click();await f('panelLabMetal').selectOption('Cu');
+ await f('panelLabNumber').fill('2.79');await f('panelLabUnit').selectOption('mg/kg');await f('panelLabBasis').check();await f('panelLabRef').fill('Infant-food copper COA 97');
+ assert((await report.innerText()).startsWith('Outside'));await f('panelLabNumber').fill('2.8');assert((await report.innerText()).startsWith('Within'));
+ await metals(khoa);await f('panelFpc').selectOption('yes');assert((await metalRow('Pb').innerText()).includes('Confirm FPC 18 eligibility'));
+ await f('panelFpcRef').fill('FPC18 eligibility dossier 97');assert((await page.locator('[data-panel-progress]').innerText()).startsWith('11 of 11'));
+ assert((await page.locator('[data-hg-basis]').textContent()).includes('FPC18 eligibility dossier 97'));
+ await metals('07-07-1-bread-and-bread-type-products');assert((await metalRow('Sn').innerText()).includes('Common maximum'));
+ await f('panelContainer').selectOption('other');await f('panelContainerRef').fill('Non-canned bakery pack 97');assert((await metalRow('Sn').innerText()).includes('Foods not specified'));
+ await f('panelContainer').selectOption('can');assert.equal(await f('panelContainerRef').inputValue(),'');
+ await f('panelContainerRef').fill('Canned bakery process 97');assert((await metalRow('Sn').innerText()).includes('Canned foods other than beverages'));
+ await metals('04-04-2-yellow-pea-powder');await page.locator('.metal-change>summary').click();assert((await page.locator('.metal-change').innerText()).includes('lead 0.2 ppm and cadmium 0.1 ppm'));
+ assert((await metalRow('Pb').innerText()).includes('2.5 ppm'));
+ await metals('05-05-1-cocoa-powder');await page.locator('.metal-analysis>summary').click();assert.equal(await f('panelLabRef').inputValue(),'Cocoa dry fat-free COA 97');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R96.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R97.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1451,6 +1480,7 @@ let browser;
  assert.equal(await page.locator('#reviewResults article').count(),137);
  const priorityCrop=await page.evaluate(()=>PMSV_REVIEW_REGISTER.cropArticleReview.priorityNamed);
  await page.locator('#reviewFilter').selectOption('named22');assert.equal(await page.locator('#reviewResults article').count(),priorityCrop);
+ await page.locator('#reviewFilter').selectOption('metals11');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.metalPanelReview.priorityOutcomes));
  await page.locator('#reviewFilter').selectOption('other22');assert.equal(await page.locator('#reviewResults article').count(),137-priorityCrop);
  await page.locator('#reviewFilter').selectOption('remaining');
  assert.equal(await page.locator('#reviewResults article').count(),0);
@@ -1749,7 +1779,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

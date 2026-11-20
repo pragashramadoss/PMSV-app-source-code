@@ -17,6 +17,7 @@
  }
  function reportLinks(row){return row.reports.map(r=>`<a class="source-ref" href="${esc(r.file)}" target="_blank" rel="noopener noreferrer">R${r.round} source review ↗</a>`).join('');}
  const priorityNamed=new Map((data?.records||[]).map(row=>[row.id,(window.PMSVCropScope?.positive(row.id)||[]).map(d=>d.name)]));
+ const priorityMetals=new Set((data?.records||[]).filter(row=>{const s=window.PMSVMetalPanel?.status(row.id);return s&&s.exact+s.common===11;}).map(row=>row.id));
  function cropFinding(id){
   const names=priorityNamed.get(id)||[];
   return names.length?'Named finished-article evidence in CTR 2.2.1 · '+names.join(', '):'No named finished-article limit established in CTR 2.2.1 for this identity.';
@@ -152,10 +153,10 @@
  $('currencyWatch').innerHTML=data.currencyWatch.map(x=>`<article class="source-card"><h3>${esc(x.title)}</h3><p>${esc(x.status)}</p><p class="muted">Checked ${esc(x.checked)}${x.effectiveFrom?' · Effective from '+esc(x.effectiveFrom):''}</p><a class="source-ref" href="${esc(x.source)}" target="_blank" rel="noopener noreferrer">Official source ↗</a></article>`).join('');
  function render(){
   const query=$('reviewSearch').value.toLowerCase().trim(),filter=$('reviewFilter').value;
-  const rows=data.records.filter(x=>(filter==='all'||(filter==='named22'?(priorityNamed.get(x.id)||[]).length>0:filter==='other22'?(priorityNamed.get(x.id)||[]).length===0:filter==='focused'?x.reports.length>0:x.reports.length===0))&&
+  const rows=data.records.filter(x=>(filter==='all'||(filter==='metals11'?priorityMetals.has(x.id):filter==='named22'?(priorityNamed.get(x.id)||[]).length>0:filter==='other22'?(priorityNamed.get(x.id)||[]).length===0:filter==='focused'?x.reports.length>0:x.reports.length===0))&&
    [x.name,x.id,x.fssr,x.fcs].some(v=>String(v||'').toLowerCase().includes(query)));
   $('reviewResultsCount').textContent=`${rows.length} of ${data.records.length} original priority products`;
-  $('reviewResults').innerHTML=rows.map(x=>`<article class="source-card"><h3>${esc(x.name)}</h3><p class="muted">${esc(x.fssr||'Special/category route')} · ${esc(x.fcs||'Category requires review')}</p><p>${x.reports.length?'Focused review: R'+x.reports[0].round:'Outside selected focused rounds'} · ${esc(cropFinding(x.id))}</p><p>${esc(x.sourceReviewNextAction)}</p>${reportLinks(x)}<button type="button" data-review-product="${esc(x.id)}">Open product</button></article>`).join('')||'<p>No cases match this search.</p>';
+  $('reviewResults').innerHTML=rows.map(x=>`<article class="source-card"><h3>${esc(x.name)}</h3><p class="muted">${esc(x.fssr||'Special/category route')} · ${esc(x.fcs||'Category requires review')}</p><p>${x.reports.length?'Focused review: R'+x.reports[0].round:'Outside selected focused rounds'} · ${esc(cropFinding(x.id))}${priorityMetals.has(x.id)?' All 11 metal outcomes established.':''}</p><p>${esc(x.sourceReviewNextAction)}</p>${reportLinks(x)}<button type="button" data-review-product="${esc(x.id)}">Open product</button></article>`).join('')||'<p>No cases match this search.</p>';
  }
  $('reviewSearch').addEventListener('input',render);
  $('reviewFilter').addEventListener('change',render);
