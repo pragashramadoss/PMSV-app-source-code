@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 86,
+  "latestRound": 87,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -51,7 +51,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-rhizome-spices-r83-2026-11-19.json",
     "ctr-ginger-paste-r84-2026-11-19.json",
     "ctr-culinary-sauces-r85-2026-11-20.json",
-    "ctr-tomato-soybean-sauces-r86-2026-11-20.json"
+    "ctr-tomato-soybean-sauces-r86-2026-11-20.json",
+    "ctr-thermally-processed-tomato-r87-2026-11-20.json"
   ],
   "records": [
     {
@@ -3745,6 +3746,72 @@ window.PMSV_REVIEW_REGISTER = {
       "chapter": {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
         "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c"
+      }
+    }
+  },
+  "tomatoConcentrateReview": {
+    "round": 87,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-thermally-processed-tomato-r87-2026-11-20.md",
+    "id": "04-04-2-thermally-processed-tomato-puree-and-paste",
+    "label": "Thermally processed tomato purée and paste",
+    "clause": "2.3.14",
+    "identity": "The standard covers unfermented concentrates made from the juice of sound, ripe tomatoes. It allows salt and other suitable ingredients.",
+    "aliases": [
+      "tomato puree",
+      "tomato purée",
+      "tomato paste"
+    ],
+    "forms": [
+      {
+        "key": "puree",
+        "label": "Tomato purée",
+        "row": 1,
+        "minimum": 9
+      },
+      {
+        "key": "paste",
+        "label": "Tomato paste",
+        "row": 2,
+        "minimum": 25
+      }
+    ],
+    "criterion": {
+      "key": "solids",
+      "label": "Total soluble solids",
+      "basis": "Finished product, % (w/w)",
+      "otherBasis": "Salt-free result, uncorrected reading or another basis"
+    },
+    "fill": {
+      "pack": "rigid",
+      "minimumPercent": 90,
+      "waterTemperatureC": 20,
+      "volumeUnit": "mL"
+    },
+    "sourcePages": {
+      "gazette": 58,
+      "chapter": 25
+    },
+    "method": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
+      "page": 9,
+      "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
+    },
+    "sources": {
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63",
+        "page": 58
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c",
+        "page": 25
+      },
+      "method": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
+        "page": 9,
+        "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
       }
     }
   },

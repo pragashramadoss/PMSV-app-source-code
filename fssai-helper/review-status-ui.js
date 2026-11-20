@@ -63,7 +63,8 @@
  const sauceOptions = products => products.map(p => '<option value="' + esc(p.id) + '">' + esc(p.label) + '</option>').join('');
  const [tomato,soybean] = data.tomatoSoybeanReview.products;
  saucePanel.innerHTML = '<h3>Sauce and paste standards</h3><label for="culinary-product">Sauce or paste standard</label>' +
-  '<div class="controls"><select id="culinary-product"><optgroup label="FSSAI ' + esc(tomato.clause) + '">' + sauceOptions([tomato]) +
+  '<div class="controls"><select id="culinary-product"><optgroup label="FSSAI ' + esc(data.tomatoConcentrateReview.clause) + '">' +
+  sauceOptions([data.tomatoConcentrateReview]) + '</optgroup><optgroup label="FSSAI ' + esc(tomato.clause) + '">' + sauceOptions([tomato]) +
   '</optgroup><optgroup label="FSSAI ' + esc(data.culinarySauceReview.clause) + '">' +
   sauceOptions(data.culinarySauceReview.rows.flatMap(row => row.products)) +
   '</optgroup><optgroup label="FSSAI ' + esc(soybean.clause) + '">' + sauceOptions([soybean]) +

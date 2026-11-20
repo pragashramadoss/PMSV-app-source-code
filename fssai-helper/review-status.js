@@ -21,7 +21,7 @@
   const base=catalogueStatus(rows);if(!base.ok)return base;
   if(!data||data.schemaVersion!==1||!Array.isArray(data.records)||data.records.length!==137||
     data.catalogueCount!==533||data.queueCount!==137||data.legalProductApprovals!==0||data.batchReleases!==0||
-    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==86||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
+    data.sourceVerificationRequiresLotReport!==false||data.latestRound!==87||data.latestSourceReviewDate!=='2026-11-20')return denied('Review register is incomplete.');
   const ids=new Set(rows.map(x=>x.id)),seen=new Set();let focused=0;
   for(const row of data.records){
    if(!row||!ids.has(row.id)||seen.has(row.id)||typeof row.name!=='string'||!Array.isArray(row.reports)||
@@ -273,6 +273,7 @@
   if (!paste?.validReview(data.gingerPasteReview, data, rows)) return denied('Ginger-paste composition references are inconsistent.');
   if (!sauces?.validReview(data.culinarySauceReview, data.gingerPasteReview, rows)) return denied('Culinary sauce or paste evidence is inconsistent.');
   if (!sauces.validNamedReview(data.tomatoSoybeanReview, data.culinarySauceReview, rows)) return denied('Tomato or soybean sauce evidence is inconsistent.');
+  if (!sauces.validConcentrateReview(data.tomatoConcentrateReview, data.tomatoSoybeanReview, rows)) return denied('Tomato purée or paste evidence is inconsistent.');
   for(const source of data.currencyWatch){
    try{const url=new URL(source?.source);if(url.protocol!=='https:'||!/(^|\.)fssai\.gov\.in$/i.test(url.hostname))return denied('Official-source URL is invalid.');}
    catch(error){return denied('Official-source URL is invalid.');}

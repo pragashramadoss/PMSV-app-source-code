@@ -1,4 +1,4 @@
-/* Composition and rigid-container checks for FSSR 2.3.27, 2.3.28 and 2.3.29. */
+/* Composition and container-fill checks for tomato concentrates and culinary sauces. */
 (function (root) {
   'use strict';
   const esc = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -63,14 +63,44 @@
     });
   }
 
+  function validConcentrateReview(review,previous,catalogue) {
+    if (review?.round !== 87 || review.reviewedOn !== '2026-11-20' || review.clause !== '2.3.14' ||
+        review.report !== 'ctr-thermally-processed-tomato-r87-2026-11-20.md' ||
+        review.id !== '04-04-2-thermally-processed-tomato-puree-and-paste' || review.label !== 'Thermally processed tomato purée and paste' ||
+        !catalogue.some(c => c.id === review.id && c.fssr === review.clause && c.priority === 189) ||
+        !['pack','minimumPercent','waterTemperatureC','volumeUnit'].every(k => review.fill?.[k] === previous.fill[k])) return false;
+    const rows = [['puree','Tomato purée',9],['paste','Tomato paste',25]];
+    if (!Array.isArray(review.forms) || review.forms.length !== rows.length ||
+        !review.forms.every((form,i) => form?.key === rows[i][0] && form.label === rows[i][1] && form.row === i+1 && form.minimum === rows[i][2])) return false;
+    const c = review.criterion, method = review.sources?.method;
+    return c?.key === 'solids' && c.label === 'Total soluble solids' && c.basis === 'Finished product, % (w/w)' &&
+      c.otherBasis === 'Salt-free result, uncorrected reading or another basis' &&
+      JSON.stringify(review.aliases) === '["tomato puree","tomato purée","tomato paste"]' &&
+      typeof review.identity === 'string' && Boolean(review.identity.trim()) &&
+      [['gazette',58],['chapter',25]].every(([key,page]) => review.sources?.[key]?.page === page && review.sourcePages?.[key] === page &&
+        ['url','sha256'].every(field => review.sources[key][field] === previous.sources[key][field])) &&
+      method?.url === 'https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf' && method.page === 9 &&
+      method.sha256 === 'd078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c' &&
+      ['url','sha256','page'].every(key => review.method?.[key] === method[key]);
+  }
+
+  function forDeclaredForm(article,key) {
+    const form = article.forms.find(item => item.key === key);
+    return {...article, form, tableRow:form?.row, criteria:form ? [{...article.criterion,minimum:form.minimum}] : []};
+  }
+
   function gingerArticle(ginger,id) {
     if (id !== ginger.productId && id !== ginger.recipe.productId) return null;
     return {...ginger, id, label:'Ginger paste', ginger:true, ingredient:id === ginger.recipe.productId,
       reportLabel:'Ginger-paste source review'};
   }
 
-  function article(register,id) {
+  function article(register,id,formKey) {
     if (!register) return null;
+    const concentrate = register.tomatoConcentrateReview;
+    if (concentrate && id === concentrate.id) {
+      return forDeclaredForm({...concentrate,reportLabel:'Tomato purée and paste source review'},formKey);
+    }
     const review = register.culinarySauceReview;
     const ginger = register.gingerPasteReview;
     const named = register.tomatoSoybeanReview;
@@ -145,8 +175,7 @@
       '<p class="fill-outcome" aria-live="polite">Confirm the container type.</p></details>';
   }
 
-  function markup(a) {
-    if (!a) return '';
+  function resultFields(a) {
     const cards = a.criteria.map(c => {
       const name = 'paste-' + c.key;
       return '<div class="paste-criterion" data-criterion="' + esc(c.key) + '" role="group" aria-labelledby="' + name + '-title"><h5 id="' + name + '-title">' + esc(c.label) + '</h5>' +
@@ -160,6 +189,27 @@
         (c.key === 'acidity' && a.sources.proposal ? '<details class="paste-proposal"><summary>Retort or aseptic process?</summary><p>' + esc(proposal) + '</p>' +
           link(sourceURL(a.sources.proposal),'Draft · p. ' + a.sources.proposal.page) + '</details>' : '') + '</div>';
     }).join('');
+    const lot = a.ingredient ? '' : '<label for="paste-lot">Supplier document or lot reference (optional)</label>' +
+      '<input type="text" id="paste-lot" maxlength="160" autocomplete="off">';
+    return lot + '<div class="paste-grid">' + cards + '</div>' + (a.fill ? fillMarkup(a.fill,a.clause) : '');
+  }
+
+  function declaredFields(a) {
+    if (a.form) return '<p role="status">' + esc(compositionReference(a)) + ' · ' + esc(a.form.label) + '</p>' + resultFields(a);
+    const values = a.forms.map(f => esc(f.label) + ' ' + f.minimum.toFixed(1) + '%').join(' · ');
+    return '<p>Minimum total soluble solids by weight</p><p>' + values + '</p>';
+  }
+
+  function formPicker(a) {
+    const options = a.forms.map(f => '<option value="' + esc(f.key) + '"' +
+      (a.form?.key === f.key ? ' selected' : '') + '>' + esc(f.label) + '</option>').join('');
+    return '<label for="tomato-form">Product declared on the label or specification</label>' +
+      '<select id="tomato-form" aria-controls="tomato-form-fields"><option value="">Choose the declared product</option>' + options + '</select>' +
+      '<div id="tomato-form-fields">' + declaredFields(a) + '</div>';
+  }
+
+  function markup(a) {
+    if (!a) return '';
     const other = a.identity ? a.identity + ' The standard also refers to permitted additives and Appendix B microbiological requirements.' :
       (a.fill ? '' : 'For rigid containers the paste must occupy at least ' + a.rigidFillMinimumPercent +
         '% of water capacity, measured with distilled water at 20 °C. ') +
@@ -168,9 +218,11 @@
     return '<section class="culinary-composition' + (a.ginger ? ' ginger-paste-check' : '') + (a.ingredient ? '' : ' panel compact') +
       '" data-product="' + esc(a.id) + '"><h4>' + esc(a.label) + ' · composition</h4><p>' + esc(compositionReference(a)) +
       (a.ingredient ? ' · These values apply to the purchased paste. Check its ingredients separately against recipe 13.1.' :
-        (a.rowName && a.rowName !== a.label ? ' · ' + esc(a.rowName) : '')) + '</p>' + (a.ingredient ? '' :
-        '<label for="paste-lot">Supplier document or lot reference (optional)</label><input type="text" id="paste-lot" maxlength="160" autocomplete="off">') +
-      '<div class="paste-grid">' + cards + '</div>' + (a.fill ? fillMarkup(a.fill,a.clause) : '') +
+        (a.rowName && a.rowName !== a.label ? ' · ' + esc(a.rowName) : '')) + '</p>' + (a.forms ? formPicker(a) : resultFields(a)) +
+      (a.sources.method ? '<details class="solids-method"><summary>Which laboratory result should I enter?</summary>' +
+        '<p>Use the final total soluble solids as a percentage by weight of the product as supplied. ' +
+        'If the laboratory diluted the sample or corrected its refractometer reading for temperature, use the reported result after those corrections.</p>' +
+        link(sourceURL(a.sources.method),'FSSAI fruit and vegetable methods · § 1.6') + '</details>' : '') +
       (amendment ? '<details class="sauce-amendment"><summary>How the standard changed</summary><p>' + esc(a.change) + '</p></details>' : '') +
       '<details><summary>Other requirements in this clause</summary><p>' + esc(other) + '</p></details>' +
       '<div class="controls">' + (amendment ? link(sourceURL(amendment),amendment.date.slice(0,4) + ' amendment · p. ' + amendment.page) : '') +
@@ -183,8 +235,10 @@
     if (!a || !container) return [];
     const panel = container.querySelector('.culinary-composition');
     if (panel?.dataset.product !== a.id) return [];
+    if (a.forms) a = forDeclaredForm(a,panel.querySelector('#tomato-form')?.value);
     const lines = ['',a.label + ' · composition', compositionReference(a) +
-      (a.ingredient ? ' · purchased ingredient for recipe 13.1' : ' · ' + (a.rowName || a.label))];
+      (a.ingredient ? ' · purchased ingredient for recipe 13.1' : ' · ' + (a.form?.label || a.rowName || a.label))];
+    if (a.forms) lines.push('Declared product · ' + (a.form?.label || 'Awaiting label or specification'));
     const lot = panel.querySelector('#paste-lot');
     if (lot && clean(lot.value)) lines.push('Supplier document or lot reference · ' + clean(lot.value).slice(0,160));
     for (const c of a.criteria) {
@@ -195,7 +249,7 @@
       lines.push(c.label + ' · minimum ' + c.minimum.toFixed(1) + '% · ' + c.basis);
       lines.push((raw ? 'Reported ' + raw + ' · ' + reported + ' · ' : '') + compare(c,basis,raw));
     }
-    if (a.fill) {
+    if (a.fill && (!a.forms || a.form)) {
       const pack = panel.querySelector('#fill-pack');
       const volume = clean(panel.querySelector('#fill-product').value);
       const capacity = clean(panel.querySelector('#fill-capacity').value);
@@ -209,20 +263,25 @@
     }
     if (a.sources.amendment) lines.push(a.change,'Amendment dated ' + a.sources.amendment.date + ' · ' + sourceURL(a.sources.amendment));
     lines.push((a.sources.amendment ? '2011 Gazette · ' : 'Gazette · ') + sourceURL(a.sources.gazette),'FSSAI chapter · ' + sourceURL(a.sources.chapter));
+    if (a.sources.method) lines.push('Laboratory guidance · FSSAI fruit and vegetable methods, section 1.6 · ' + sourceURL(a.sources.method));
     if (a.sources.proposal) lines.push(proposal + ' ' + sourceURL(a.sources.proposal));
     if (a.ingredient) lines.push('Check the supplied formula and its suitability for Krishara separately. ' + sourceURL(a.sources.recipe));
     return lines;
   }
 
-  const api = Object.freeze({validReview,validNamedReview,article,gingerArticle,compare,fillOutcome,markup,briefLines});
+  const api = Object.freeze({validReview,validNamedReview,validConcentrateReview,article,gingerArticle,compare,fillOutcome,markup,briefLines});
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.PMSVCulinarySauces = api;
   if (typeof document === 'undefined') return;
   function update(event) {
     const field = event.target;
-    if (!field.matches('.paste-value,.paste-basis,#fill-pack,#fill-product,#fill-capacity')) return;
+    if (!field.matches('.paste-value,.paste-basis,#fill-pack,#fill-product,#fill-capacity,#tomato-form')) return;
     const panel = field.closest('.culinary-composition');
-    const a = article(root.PMSV_REVIEW_REGISTER,panel.dataset.product);
+    const a = article(root.PMSV_REVIEW_REGISTER,panel.dataset.product,panel.querySelector('#tomato-form')?.value);
+    if (field.id === 'tomato-form') {
+      if (event.type === 'change') panel.querySelector('#tomato-form-fields').innerHTML = declaredFields(a);
+      return;
+    }
     const card = field.closest('.paste-criterion');
     if (card) {
       const c = a.criteria.find(item => item.key === card.dataset.criterion);

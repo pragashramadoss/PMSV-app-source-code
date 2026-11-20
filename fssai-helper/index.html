@@ -191,11 +191,11 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="juniper-spice-r79.js?v=20261118-r80"></script>
 <script src="hingu-asafoetida-r80.js?v=20261118-r80"></script>
 <script src="recipe-flowers-r81.js?v=20261119-r83"></script>
-<script src="culinary-sauces.js?v=20261120-r86"></script>
+<script src="culinary-sauces.js?v=20261120-r87"></script>
 <script src="ginger-paste.js?v=20261120-r85"></script>
 <script src="rhizome-spices.js?v=20261119-r84"></script>
-<script src="review-status.js?v=20261120-r86"></script>
-<script src="review-status-data.js?v=20261120-r86"></script>
+<script src="review-status.js?v=20261120-r87"></script>
+<script src="review-status-data.js?v=20261120-r87"></script>
 <script>
 (function(){
  const state=window.PMSVReviewStatus?.catalogueStatus(window.PMSV_CATALOGUE);
@@ -215,14 +215,14 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
 <script src="asafoetida-purity-r76.js?v=20261118-r80"></script>
 <script src="camphor-source-r77.js?v=20261117"></script>
 <script src="lajadi-botanicals-r78.js?v=20261118-r79"></script>
-<script src="review-status-ui.js?v=20261120-r86"></script>
+<script src="review-status-ui.js?v=20261120-r87"></script>
 <script>
 'use strict';
 (()=>{
  const all=Array.isArray(window.PMSV_CATALOGUE)?window.PMSV_CATALOGUE:[];
  const methods=window.FSSAI_METHODS||[];
  const aliases = new Map(window.PMSVReviewUI?.available
-  ? window.PMSV_REVIEW_REGISTER.tomatoSoybeanReview.products.map(p => [p.id,p.aliases]) : []);
+  ? [...window.PMSV_REVIEW_REGISTER.tomatoSoybeanReview.products,window.PMSV_REVIEW_REGISTER.tomatoConcentrateReview].map(p => [p.id,p.aliases]) : []);
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const sourceLink=(url,title)=>{

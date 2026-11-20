@@ -587,6 +587,79 @@ async function testNamedSauces(page,register,base,artifacts) {
  assert((await response.text()).includes(soybean.amendment.sha256));
 }
 
+async function testTomatoConcentrates(page,register,base,artifacts) {
+ const review = register.tomatoConcentrateReview;
+ const panel = page.locator('.culinary-composition');
+ const form = panel.getByLabel('Product declared on the label or specification');
+ const search = page.locator('#productSearch');
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.getByLabel('Sauce or paste standard').selectOption(review.id);
+ await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+ assert.equal(await panel.getAttribute('data-product'),review.id);
+ for (const alias of review.aliases) {
+  await search.fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),review.id);
+ }
+ assert.equal(await form.inputValue(),'');
+ assert.equal(await panel.locator('.paste-criterion').count(),0);
+ const undecided = await readProductBrief(page);
+ assert(undecided.includes('Declared product · Awaiting label or specification'));
+ assert(!undecided.includes('Meets this minimum') && !undecided.includes('Below this minimum'));
+ assert(undecided.includes(base+review.report) && undecided.includes(review.method.url+'#page=9'));
+ for (const [key,row,verdict] of [['puree',1,'Meets this minimum'],['paste',2,'Below this minimum']]) {
+  await form.selectOption(key);
+  assert.equal(await panel.locator('#paste-lot').inputValue(),'');
+  assert.equal(await panel.locator('#paste-solids-result').inputValue(),'');
+  assert.equal(await panel.locator('#paste-solids-basis').inputValue(),'');
+  assert.equal(await panel.locator('#fill-pack').inputValue(),'');
+  assert.equal(await panel.locator('#fill-product').inputValue(),'');
+  assert.equal(await panel.locator('.paste-criterion').count(),1);
+  assert((await panel.innerText()).includes('FSSAI 2.3.14(2), row '+row));
+  await panel.locator('#paste-lot').fill('TOMATO-'+key);
+  await panel.locator('#paste-solids-result').fill('12.0');
+  assert.equal(await panel.locator('.paste-outcome').innerText(),'Confirm the reporting basis');
+  await panel.locator('#paste-solids-basis').selectOption('other');
+  assert.match(await panel.locator('.paste-outcome').innerText(),/Different reporting basis/);
+  await panel.locator('#paste-solids-basis').selectOption('stated');
+  assert.equal(await panel.locator('.paste-outcome').innerText(),verdict);
+  const fill = panel.locator('.culinary-fill');
+  await fill.locator('summary').click();
+  await fill.locator('#fill-pack').selectOption('rigid');
+  await fill.locator('#fill-product').fill('270');
+  await fill.locator('#fill-capacity').fill('300');
+  const text = await readProductBrief(page);
+  assert(text.includes('Current focused reviews: R87') && text.includes('TOMATO-'+key));
+  assert(text.includes('Declared product · '+review.forms[row-1].label));
+  assert(text.includes('FSSAI 2.3.14(2), row '+row) && text.includes('Container fill · FSSAI 2.3.14(3)'));
+  assert(text.includes('Reported 12.0 · Finished product, % (w/w) · '+verdict) && text.includes('90.0% · Meets this minimum'));
+  assert(!text.includes('Acidity · minimum') && !text.includes('TOMATO-'+(key==='paste'?'puree':'paste')));
+  if (key==='paste') {
+   assert.equal(await panel.getByRole('link',{name:'FSSAI chapter',exact:false}).getAttribute('href'),review.sources.chapter.url+'#page=25');
+   await panel.locator('.solids-method summary').click();
+   assert.equal(await panel.getByRole('link',{name:'FSSAI fruit and vegetable methods',exact:false}).getAttribute('href'),review.method.url+'#page=9');
+   for (const width of [320,390,1440]) {
+    await page.setViewportSize({width,height:900});
+    assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    if (width===390) await panel.locator('#tomato-form-fields .paste-criterion').screenshot({
+     path:path.join(artifacts,'tomato-paste-solids-390.png'),animations:'disabled',
+     style:'header, .navtabs { visibility: hidden !important; }'});
+   }
+  }
+ }
+ await form.selectOption('');
+ assert.equal(await panel.locator('#paste-lot').count(),0);
+ assert(!(await readProductBrief(page)).includes('TOMATO-paste'));
+ await search.fill('tomato ketchup');
+ await page.locator('#productList [data-id="'+register.tomatoSoybeanReview.products[0].id+'"]').click();
+ assert.equal(await form.count(),0);
+ assert.equal(await panel.locator('#paste-acidity-result').count(),1);
+ assert(!(await readProductBrief(page)).includes(review.report));
+ await search.fill('');
+ const response = await page.request.get(base+review.report);
+ assert.equal(response.status(),200);
+ assert((await response.text()).includes(review.method.sha256));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -668,6 +741,21 @@ async function testPortableHelper(browser, register) {
   assert(soybeanBrief.includes('Container type · Flexible pack') && soybeanBrief.includes('FSSAI 2.3.29(3)'));
   assert(soybeanBrief.includes(soybean.amendment.url+'#page=24') && soybeanBrief.includes(sourceBase+named.report));
   assert(!soybeanBrief.includes('OFFLINE-FRUIT-SAUCE') && !soybeanBrief.includes('2024 draft'));
+  const concentrate = register.tomatoConcentrateReview;
+  await page.locator('#productSearch').fill('tomato paste');
+  await page.locator('#productList [data-id="'+concentrate.id+'"]').click();
+  await page.getByLabel('Product declared on the label or specification').selectOption('paste');
+  await sauce.locator('#paste-lot').fill('OFFLINE-PASTE-189');
+  await sauce.locator('#paste-solids-basis').selectOption('stated');
+  await sauce.locator('#paste-solids-result').fill('24.9');
+  await sauce.locator('.culinary-fill summary').click();
+  await sauce.locator('#fill-pack').selectOption('flexible');
+  const concentrateBrief = await readProductBrief(page);
+  assert(concentrateBrief.includes('Declared product · Tomato paste') && concentrateBrief.includes('OFFLINE-PASTE-189'));
+  assert(concentrateBrief.includes('FSSAI 2.3.14(2), row 2') && concentrateBrief.includes('minimum 25.0%'));
+  assert(concentrateBrief.includes('Reported 24.9 · Finished product, % (w/w) · Below this minimum'));
+  assert(concentrateBrief.includes('Container type · Flexible pack') && concentrateBrief.includes(sourceBase+concentrate.report));
+  assert(concentrateBrief.includes(concentrate.method.url+'#page=9') && !concentrateBrief.includes('OFFLINE-SOY-429'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -967,6 +1055,7 @@ let browser;
  await testGingerPaste(page, data, base, artifacts);
  await testCulinarySauces(page, data, base, artifacts);
  await testNamedSauces(page, data, base, artifacts);
+ await testTomatoConcentrates(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1053,6 +1142,7 @@ let browser;
   ayurvedaIngredientsWithCandidate:35,ayurvedaIngredientsWithoutCandidate:11,ayurvedaCandidateLinks:data.ayurvedaIngredientCoverage.candidateLinks});
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
+ Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});
  Object.assign(result,{namedSauceArticles:2,soybeanNitrogenTested:true,namedSauceOfflineBriefTested:true,filteredProductLinkTested:true});
  Object.assign(result,{gingerPasteCriteriaTested:2,gingerPasteRecipeAndCatalogueTested:true,gingerPasteOfflineBriefTested:true});
  Object.assign(result,{juniperRawReferences:4,juniperSuppliedStyles:4,juniperScopeResetsVerified:true,juniperBlankNaZeroVerified:true});
