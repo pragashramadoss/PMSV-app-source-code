@@ -273,7 +273,17 @@ curryRecord.sourceReviewResult = curry.sourceReviewResult;
 curryRecord.sourceReviewNextAction = curry.sourceReviewNextAction+' '+curryRecord.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:vegetableMeals.round,
+const sourceRowsText=fs.readFileSync(path.join(dir,'catalogue-source-evidence.js'),'utf8');
+const sourceRows=JSON.parse(sourceRowsText.slice(sourceRowsText.indexOf('=')+1).trim().replace(/;$/,''));
+const allWorksheets=Object.values(sourceRows.products);
+const worksheetReview={round:93,reviewedOn:sourceRows.date,products:allWorksheets.length,
+  standards:allWorksheets.filter(p=>p.scope==='product_standard').length,categoryRoutes:allWorksheets.filter(p=>p.scope!=='product_standard').length,
+  pageLocated:allWorksheets.filter(p=>sourceRows.standards[p.standard]?.p.length||p.routeAnchors?.length).length,
+  partialContaminantEvidence:allWorksheets.filter(p=>p.directCTR).length,openContaminantArticleDecisions:allWorksheets.filter(p=>!p.directCTR).length,
+  primaryPDFs:sourceRows.capturedPDFs,monographsRead:sourceRows.portalRead,commodityRows:sourceRows.commodityRows.length,
+  allApplicableProvisionsConfirmed:0,report:'catalogue-worksheet-review-r93.md'};
+assert.deepEqual([worksheetReview.products,worksheetReview.standards,worksheetReview.categoryRoutes,worksheetReview.pageLocated,worksheetReview.openContaminantArticleDecisions],[533,475,58,533,137]);
+const data={worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:worksheetReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',

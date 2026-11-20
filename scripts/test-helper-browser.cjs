@@ -1054,6 +1054,55 @@ async function testVegetableMeals(page,register,base,artifacts) {
  const source=await page.request.get(base+r.report);assert.equal(source.status(),200);assert((await source.text()).includes(r.sources.gazette.sha256));
 }
 
+
+async function testCatalogueWorksheets(page, exhaustive) {
+ const oil='02-02-1-refined-grapeseed-oil', khoa='18-18-1-khoa-based-sweets';
+ const open=async id=>{
+  assert(await page.evaluate(v=>PMSV_HELPER_TEST.selectProduct(v),id));
+  await page.locator('.catalogue-worksheet > summary').click();
+  await page.locator('.ws-inputs').waitFor();
+ };
+ if(exhaustive) {
+  const count=await page.evaluate(()=>{
+   const all=PMSV_HELPER_TEST.getCatalogue(),host=document.createElement('div');
+   for(const {id} of all){
+    host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
+    const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
+    if(!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+   }
+   return all.length;
+  });assert.equal(count,533);
+ }
+ await open(oil);
+ const f=k=>page.locator('.ws-body [data-ws-field="'+k+'"]');
+ await f('reference').fill('R93-SOURCE-SAMPLE');
+ const criterion=await f('criterion').locator('option').evaluateAll(x=>x.find(e=>e.textContent.startsWith('Moisture'))?.value);
+ assert(criterion);await f('criterion').selectOption(criterion);await f('result').fill('0.10000000000000001');
+ await f('unitConfirmed').check();assert((await page.locator('[data-ws-outcome]').textContent()).includes('Outside'));
+ await f('result').fill('0.10');assert((await page.locator('[data-ws-outcome]').textContent()).includes('Within'));
+ await f('note').fill('Certificate 410, moisture in the stated unit.');
+ await page.locator('.ws-body [data-ws-save]').click();assert((await page.locator('[data-ws-saved]').textContent()).includes('Saved'));
+ const txt=await readProductBrief(page);assert(txt.includes('R93-SOURCE-SAMPLE')&&txt.includes('Within the cited source-edition criterion')&&txt.includes('Certificate 410'));
+ await open(khoa);assert.equal(await f('reference').inputValue(),'');assert.equal(await f('criterion').count(),0);
+ await page.getByText('Classification, identity and applicable route',{exact:true}).click();
+ assert((await page.locator('.ws-body').textContent()).includes('Annexure II'));
+ await page.getByText('Food additives and processing aids',{exact:true}).click();
+ await page.locator('[data-ws-add]').fill('202');assert(await page.locator('[data-ws-add-results]').isVisible());
+ await page.getByText('Contaminants, toxins and residues',{exact:true}).click();
+ await page.getByText('Search original Gazette commodity rows',{exact:true}).click();
+ await page.locator('[data-ws-commodity]').fill('sugarcane');
+ const candidate=page.locator('[data-ws-candidate]').first();await candidate.click();
+ assert((await page.locator('[data-ws-recorded]').innerText()).toLowerCase().includes('sugarcane'));
+ assert((await readProductBrief(page)).includes('Candidate recorded for review'));
+ await page.getByText('Packaging, labelling and claims',{exact:true}).click();await f('pack').selectOption('glass');
+ assert((await page.locator('[data-ws-pack]').textContent()).includes('Reg. 4(2)'));
+ assert(!(await readProductBrief(page)).includes('R93-SOURCE-SAMPLE'));
+ await open(oil);assert.equal(await f('reference').inputValue(),'R93-SOURCE-SAMPLE');
+ const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open'));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -1066,6 +1115,7 @@ async function testPortableHelper(browser, register) {
   assert.equal(await page.title(), 'PMSV FSSAI Helper | Product Standards & Evidence');
   assert.equal(await page.evaluate(() => PMSV_HELPER_TEST.getCatalogue().length), 533);
   assert.equal(await page.locator('script[src]').count(), 0);
+  await testCatalogueWorksheets(page,false);
   await page.getByRole('button', {name:'Review progress',exact:true}).click();
   await page.locator('#openAromaticFlower').click();
   assert.equal(new URL(page.url()).hash, '#finder');
@@ -1551,6 +1601,7 @@ let browser;
  await testThermalPacks(page, data, base, artifacts);
  await testFruitCocktail(page, data, base, artifacts);
  await testVegetableMeals(page, data, base, artifacts);
+ await testCatalogueWorksheets(page,true);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1628,7 +1679,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
