@@ -3,7 +3,7 @@ window.PMSV_REVIEW_REGISTER = {
   "schemaVersion": 1,
   "checkpointDate": "2026-11-14",
   "latestSourceReviewDate": "2026-11-20",
-  "latestRound": 90,
+  "latestRound": 91,
   "catalogueCount": 533,
   "queueCount": 137,
   "focusedCount": 137,
@@ -55,7 +55,8 @@ window.PMSV_REVIEW_REGISTER = {
     "ctr-thermally-processed-tomato-r87-2026-11-20.json",
     "ctr-thermally-processed-tomato-juice-r88-2026-11-20.json",
     "ctr-canned-tomatoes-r89-2026-11-20.json",
-    "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.json"
+    "ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.json",
+    "ctr-fruit-cocktail-r91-2026-11-20.json"
   ],
   "records": [
     {
@@ -499,13 +500,17 @@ window.PMSV_REVIEW_REGISTER = {
       "route": "CONDITIONAL_CTR_SOURCE_CANDIDATE",
       "reports": [
         {
+          "round": 91,
+          "file": "ctr-fruit-cocktail-r91-2026-11-20.md"
+        },
+        {
           "round": 66,
           "file": "ctr-thermally-processed-fruit-vegetable-r66-2026-11-11.md"
         }
       ],
       "legalArticleDecision": "OPEN",
-      "sourceReviewResult": "See the linked focused source review for confirmed wording and scope conditions.",
-      "sourceReviewNextAction": "Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
+      "sourceReviewResult": "FSSAI 2.3.2 sets separate water-capacity references for drained fruit in grams and occupied volume in millilitres. The 2018 replacement also defines packing-medium names, cut-out strengths and three defect limits for canned tropical fruit salad.",
+      "sourceReviewNextAction": "Record the two container measurements, the recipe and any cut-out °Brix report. For canned tropical fruit salad, check the drained-fruit and total-content samples on their specified bases. Reconcile the exact applicable article, original Gazette and effective amendments, qualifiers, units and analytical-method scope. Keep product-form and competing-article conditions explicit.",
       "lotReleaseEvidence": "Actual SKU identity and recipe, process and pack, traceable lot reports and authorized QA assessment are separate from source-text verification."
     },
     {
@@ -4160,6 +4165,113 @@ window.PMSV_REVIEW_REGISTER = {
         "url": "https://fssai.gov.in/upload/uploadfiles/files/Manual_Fruits_Veg_25_05_2016.pdf",
         "page": 5,
         "sha256": "d078501e51dbaac5ce017bba37de0ca0f524e0fa174e9a971f710c63b7d9fb6c"
+      }
+    }
+  },
+  "fruitCocktailReview": {
+    "round": 91,
+    "reviewedOn": "2026-11-20",
+    "report": "ctr-fruit-cocktail-r91-2026-11-20.md",
+    "id": "04-04-1-thermally-processed-fruit-salad-cocktail-mix",
+    "priority": 147,
+    "clause": "2.3.2",
+    "fcs": "04.1.2.4",
+    "label": "Thermally processed fruit salad, cocktail and mix",
+    "aliases": [
+      "fruit cocktail",
+      "canned fruit cocktail",
+      "fruit salad",
+      "thermally processed fruit mix",
+      "canned tropical fruit salad"
+    ],
+    "packForms": [
+      "Canned",
+      "Bottled",
+      "Flexible pack",
+      "Aseptically packed"
+    ],
+    "temperatureC": 20,
+    "drained": {
+      "provision": "(2)(B)(vi)",
+      "minimumPercent": 50,
+      "unit": "g",
+      "basis": "mass of distilled water at 20 °C that completely fills the sealed container"
+    },
+    "fill": {
+      "provision": "(2)(B)(v)",
+      "minimumPercent": 90,
+      "unit": "mL",
+      "basis": "volume of distilled water at 20 °C that completely fills the sealed container"
+    },
+    "bands": [
+      {
+        "min": "10",
+        "max": "13.9",
+        "juice": "Extra light sweetened",
+        "syrup": "Slightly sweetened water / Extra light syrup"
+      },
+      {
+        "min": "14",
+        "max": "17.9",
+        "juice": "Lightly sweetened",
+        "syrup": "Light syrup"
+      },
+      {
+        "min": "18",
+        "max": "21.9",
+        "juice": "Heavily sweetened",
+        "syrup": "Heavy syrup"
+      },
+      {
+        "min": "22",
+        "max": null,
+        "juice": "Extra heavy sweetened",
+        "syrup": "Extra heavy syrup"
+      }
+    ],
+    "juiceSharePercent": 50,
+    "defects": [
+      {
+        "key": "blemishes",
+        "label": "Blemished fruit pieces",
+        "limit": "2",
+        "basis": "pieces per 100 g of drained fruit",
+        "reportLabel": "Blemished pieces counted in 100 g of drained fruit",
+        "wholeCount": true
+      },
+      {
+        "key": "peel",
+        "label": "Peel from fruit prepared as peeled",
+        "limit": "6.5",
+        "basis": "cm² per 500 g of total contents, averaged",
+        "reportLabel": "Average peel area from peeled fruits per 500 g of total contents (cm²)"
+      },
+      {
+        "key": "seeds",
+        "label": "Seed material and extraneous vegetative matter combined",
+        "limit": "2",
+        "basis": "g per 500 g of total contents",
+        "reportLabel": "Combined mass of seed and extraneous vegetative matter in 500 g of total contents (g)"
+      }
+    ],
+    "sourceReviewResult": "FSSAI 2.3.2 sets separate water-capacity references for drained fruit in grams and occupied volume in millilitres. The 2018 replacement also defines packing-medium names, cut-out strengths and three defect limits for canned tropical fruit salad.",
+    "sourceReviewNextAction": "Record the two container measurements, the recipe and any cut-out °Brix report. For canned tropical fruit salad, check the drained-fruit and total-content samples on their specified bases.",
+    "sources": {
+      "amendment": {
+        "date": "2018-11-19",
+        "url": "https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5bfd0937e84e3Gazette_Notification_DatePasta_27_11_2018.pdf",
+        "page": 18,
+        "sha256": "bb57f6240992c08792f0fe8b24132df751cb1205fa078bcd9dbdbd6a72ad72d5"
+      },
+      "chapter": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf",
+        "sha256": "570ffd048b59a8197be2877a68cb44209d16b6d6730ad3192b87fa44cccd357c",
+        "page": 4
+      },
+      "gazette": {
+        "url": "https://fssai.gov.in/upload/uploadfiles/files/Food_Additives_Regulations.pdf",
+        "sha256": "bd31da71e3a3ea438d53e095187b72c337d89a0089bcfcc862ce252979e94f63",
+        "page": 52
       }
     }
   },

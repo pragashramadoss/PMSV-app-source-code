@@ -49,6 +49,8 @@ const cannedTomatoFile = 'ctr-canned-tomatoes-r89-2026-11-20.json';
 const cannedTomato = read(cannedTomatoFile);
 const thermalPacksFile = 'ctr-thermal-fruit-vegetable-packs-r90-2026-11-20.json';
 const thermalPacks = read(thermalPacksFile);
+const cocktailFile = 'ctr-fruit-cocktail-r91-2026-11-20.json';
+const cocktail = read(cocktailFile);
 const sauceSources = Object.fromEntries(['gazette','chapter'].map(key => {
  const {url,sha256} = paste.sources[key];
  return [key,{url,sha256}];
@@ -256,15 +258,20 @@ for (const product of thermalPacks.products) {
  record.sourceReviewResult=product.sourceReviewResult;
  record.sourceReviewNextAction=product.sourceReviewNextAction+' '+record.sourceReviewNextAction;
 }
+const cocktailRecord = records.find(row => row.id === cocktail.id);
+assert(cocktailRecord?.reports.some(ref => ref.round === 66),'Fruit cocktail must match the R66 catalogue record');
+cocktailRecord.reports.unshift({round:cocktail.round,file:cocktail.report});
+cocktailRecord.sourceReviewResult = cocktail.sourceReviewResult;
+cocktailRecord.sourceReviewNextAction = cocktail.sourceReviewNextAction+' '+cocktailRecord.sourceReviewNextAction;
 const focusedCount=records.filter(x=>x.reports.length).length;
 assert.equal(focusedCount,137,'Selected R45–R69 coverage must be derived from original IDs.');
-const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:thermalPacks.reviewedOn,latestRound:thermalPacks.round,
+const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:cocktail.reviewedOn,latestRound:cocktail.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
- sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile],records,
+ sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile,cocktailFile],records,
  juniperSpiceReview:{...juniper,rawRows,coverage},
  ayurvedaIngredientCoverage:currentCoverage,
  recipeFlowerReview:{...flowers,rawRows:flowerRows,coverage:flowerCoverage},
@@ -282,6 +289,8 @@ const data={schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:t
   chapter:{...sauceSources.chapter,page:cannedTomato.sourcePages.chapter},
   method:{...concentrate.method,page:cannedTomato.sourcePages.method}}},
  thermalPackReview:{...thermalPacks,sources:{gazette:sauceSources.gazette,chapter:sauceSources.chapter,method:{...concentrate.method,page:5}}},
+ fruitCocktailReview:{...cocktail,sources:{
+  amendment:{...namedSauces.products[0].amendment,page:18},chapter:{...sauceSources.chapter,page:4},gazette:{...sauceSources.gazette,page:52}}},
  gingerPasteReview:paste,
  flowerSupplyReview:flowerSupply,
  hinguReview:{...hingu,coverage:hinguCoverage,rawRows:hinguRows,sources:{...hingu.sources,

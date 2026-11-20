@@ -910,6 +910,84 @@ async function testThermalPacks(page,register,base,artifacts) {
  const src=await page.request.get(base+r.report);assert.equal(src.status(),200);assert((await src.text()).includes(veg.amendment.sha256));
 }
 
+async function testFruitCocktail(page,register,base,artifacts) {
+ const r=register.fruitCocktailReview;
+ await page.getByRole('button',{name:'Review progress',exact:true}).click();
+ await page.getByLabel('Choose a product standard').selectOption(r.id);
+ await page.getByRole('button',{name:'Open product standard',exact:true}).click();
+ const panel=page.locator('.fruit-cocktail'),f=key=>panel.locator('#fc-'+key);
+ for (const alias of r.aliases) {
+  await page.locator('#productSearch').fill(alias);
+  assert.equal(await page.locator('#productList [data-id]').first().getAttribute('data-id'),r.id);
+ }
+ await f('pack').selectOption('Flexible pack');await f('lot').fill('FRUIT-R91');
+ await f('drained-basis').selectOption('other');
+ await f('drained-capacity').fill('400');await f('drained-actual').fill('240');
+ assert.match(await f('drained-result').innerText(),/Confirm the mass/);
+ await f('drained-basis').selectOption('stated');
+ assert.equal(await f('drained-capacity').inputValue(),'');
+ await f('drained-capacity').fill('500');
+ assert.match(await f('drained-result').innerText(),/48\.0% · Below this minimum/);
+ await panel.getByText('Container fill',{exact:true}).click();
+ await f('fill-basis').selectOption('stated');await f('fill-capacity').fill('500');await f('fill-actual').fill('450');
+ assert.match(await f('fill-result').innerText(),/90\.0% · Meets this minimum/);
+ await panel.getByText('Packing medium and label',{exact:true}).click();
+ for (const key of ['sugarWater','sugarJuice']) {
+  await f('medium').selectOption(key);assert.equal(await f('brix').inputValue(),'');
+  await f('brix-basis').selectOption('stated');
+  if (key==='sugarJuice') await f('names').fill('pineapple');
+  for (const b of r.bands) {
+   await f('brix').fill(b.min);
+   assert.equal(await f('medium-result').innerText(),key==='sugarJuice'?b.juice+' pineapple juice':b.syrup);
+  }
+ }
+ await f('brix').fill('13.95');
+ assert.match(await f('medium-result').innerText(),/Between the published bands/);
+ await f('brix-basis').selectOption('other');assert.equal(await f('brix').inputValue(),'');
+ await f('brix').fill('14');assert.match(await f('medium-result').innerText(),/Confirm the cut-out/);
+ await f('medium').selectOption('blend');assert(!(await f('brix').isVisible()));
+ await f('names').fill('pear and mango');await f('share').fill('49.99');
+ assert.match(await f('medium-result').innerText(),/In water/);
+ await f('share').fill('50');
+ assert.equal(await f('medium-result').innerText(),'pear and mango juice and water');
+ const mixture=await readProductBrief(page);
+ for (const s of ['FRUIT-R91','Flexible pack','Full water mass · 500 g','Measured drained fruit · 240 g','Minimum drained fruit · 250 g',
+   'Shortfall · 10 g','Occupied volume including medium · 450 mL','90.0% · Meets this minimum','Juice by volume · 50%',
+   'pear and mango juice and water','Current focused reviews: R91, R66',r.sources.chapter.url+'#page=4',base+r.report]) assert(mixture.includes(s),s);
+ assert(!mixture.includes('Reported liquid strength') && !mixture.includes('pineapple'));
+ await f('pack').selectOption('Canned');
+ await panel.getByText('Canned tropical fruit salad defects',{exact:true}).click();
+ await f('identity').selectOption('tropical');
+ for (const d of r.defects) {
+  await f(d.key+'-basis').selectOption('other');await f(d.key).fill(d.limit);
+  assert.match(await f(d.key+'-result').innerText(),/Confirm the reporting basis/);
+  await f(d.key+'-basis').selectOption('stated');assert.equal(await f(d.key).inputValue(),'');
+  await f(d.key).fill(d.limit);assert.equal(await f(d.key+'-result').innerText(),'Within this maximum');
+ }
+ await f('seeds').fill('2.01');assert.equal(await f('seeds-result').innerText(),'Above this maximum');
+ const inspected=await readProductBrief(page);
+ for (const s of ['2 pieces per 100 g of drained fruit','6.5 cm² per 500 g of total contents, averaged','Reported result · 2.01','Above this maximum']) assert(inspected.includes(s),s);
+ for (const width of [320,390,1440]) {
+  await page.setViewportSize({width,height:840});
+  assert(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+1 && el.getBoundingClientRect().right<=innerWidth+1));
+  if (width===390) await panel.locator('details').first().screenshot({path:path.join(artifacts,'fruit-cocktail-390.png')});
+ }
+ await f('pack').selectOption('Flexible pack');
+ const conflicting=await readProductBrief(page);
+ assert(conflicting.includes('Reconcile the recorded flexible pack') && !conflicting.includes('Reported result · 2.01'));
+ assert(!(await f('seeds').isVisible()));
+ await f('pack').selectOption('Canned');assert.equal(await f('seeds').inputValue(),'');
+ await f('identity').selectOption('other');
+ assert(!(await readProductBrief(page)).includes('Reported result · 2.01'));
+ await f('identity').selectOption('tropical');assert.equal(await f('seeds').inputValue(),'');
+ await page.locator('#productSearch').fill('canned cherries');
+ await page.locator('#productList [data-id="'+register.thermalPackReview.products[0].id+'"]').click();
+ assert.equal(await panel.count(),0);assert(!(await readProductBrief(page)).includes('FRUIT-R91'));
+ await page.locator('#productSearch').fill('');
+ const source=await page.request.get(base+r.report);
+ assert.equal(source.status(),200);assert((await source.text()).includes(r.sources.amendment.sha256));
+}
+
 async function testPortableHelper(browser, register) {
  const filename = path.join(artifacts, 'PMSV-FSSAI-Product-Helper-R' + register.latestRound + '.html');
  const sourceBase = writeHelperDownload(filename);
@@ -1065,6 +1143,24 @@ async function testPortableHelper(browser, register) {
   for (const t of ['OFFLINE-CHERRIES-146','Stems removed before the drained weight was determined','48.75% · Below this minimum',
     '90.0% · Meets this minimum','Minimum occupied volume · 270 mL',fruitPack.amendment.url+'#page=29',sourceBase+thermal.report]) assert(cherriesBrief.includes(t),t);
   assert(!cherriesBrief.includes('OFFLINE-BEANS-185') && !cherriesBrief.includes('OFFLINE-CAN-186'));
+  const cocktail=register.fruitCocktailReview;
+  await page.locator('#productSearch').fill('fruit cocktail');
+  await page.locator('#productList [data-id="'+cocktail.id+'"]').click();
+  const fc=page.locator('.fruit-cocktail'),cf=key=>fc.locator('#fc-'+key);
+  await cf('lot').fill('OFFLINE-COCKTAIL-147');
+  await cf('drained-basis').selectOption('stated');await cf('drained-capacity').fill('500');await cf('drained-actual').fill('240');
+  await fc.getByText('Container fill',{exact:true}).click();
+  await cf('fill-basis').selectOption('stated');await cf('fill-capacity').fill('500');await cf('fill-actual').fill('450');
+  await fc.getByText('Packing medium and label',{exact:true}).click();
+  await cf('medium').selectOption('sugarBlend');await cf('brix-basis').selectOption('stated');await cf('brix').fill('18');
+  await fc.getByText('Canned tropical fruit salad defects',{exact:true}).click();
+  await cf('identity').selectOption('tropical');await cf('peel-basis').selectOption('stated');await cf('peel').fill('6.5');
+  const cocktailBrief=await readProductBrief(page);
+  for (const s of ['OFFLINE-COCKTAIL-147','Current focused reviews: R91, R66','48.0% · Below this minimum','Shortfall · 10 g',
+    '90.0% · Meets this minimum','Reported liquid strength · 18 °Brix','Packing-medium declaration · Heavy syrup',
+    '6.5 cm² per 500 g of total contents, averaged','Within this maximum',sourceBase+cocktail.report,cocktail.sources.chapter.url+'#page=4'])
+   assert(cocktailBrief.includes(s),s);
+  assert(!cocktailBrief.includes('OFFLINE-CHERRIES-146'));
   assert.deepEqual(errors, []);
  } finally {
   await context.close();
@@ -1368,6 +1464,7 @@ let browser;
  await testTomatoJuice(page, data, base, artifacts);
  await testCannedTomatoes(page, data, base, artifacts);
  await testThermalPacks(page, data, base, artifacts);
+ await testFruitCocktail(page, data, base, artifacts);
  await testPortableHelper(browser, data);
  const lajadi=data.lajadiBotanicalReview;
  assert.equal(lajadi.rows.length,17,'Full filtered export retains all botanical references');
@@ -1455,6 +1552,7 @@ let browser;
  Object.assign(result,{flowerIngredientEntries:5,flowerRecipePages:2,flowerMetalCandidates:2,flowerMaterialResets:true,flowerProductBriefs:2,flowerSupplierScenarios:25,flowerSupplyBriefExportTested:true,flowerSupplyRegisterIsolationTested:true,portableHelperOfflineBriefTested:true,rhizomeProductsTested:4,rhizomeSupplierFormsTested:6,rhizomeOfflineBriefTested:true});
  Object.assign(result,{culinarySourceRows:4,culinaryCatalogueProducts:5,rigidFillBoundaryTested:true,culinaryOfflineBriefTested:true});
  Object.assign(result,{thermalPackRowsTested:7,thermalCherryPreparationTested:true,thermalPackOfflineLots:2});
+ Object.assign(result,{fruitCocktailOfflineTested:true,fruitCocktailBrixBands:8,fruitCocktailDefects:3,fruitCocktailMassAndVolume:true});
  Object.assign(result,{cannedTomatoDrainedWeightTested:true,cannedTomatoStyleAndCalciumTested:true,cannedTomatoOfflineExportTested:true});
  Object.assign(result,{tomatoJuiceLabChecks:7,tomatoJuiceCanChecks:2,tomatoJuiceGlassFillTested:true,tomatoJuiceOfflineBriefTested:true});
  Object.assign(result,{tomatoConcentrateForms:2,declaredTomatoFormResetTested:true,concentrateReportingBasisTested:true,tomatoConcentrateOfflineBriefTested:true});
