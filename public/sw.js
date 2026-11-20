@@ -11,9 +11,9 @@ function pmsvTarget(raw){
 self.addEventListener('push',event=>{event.waitUntil((async()=>{
  let alert={title:'PMSV Food Safety & Quality Forum',body:'New food safety updates are available.',url:'/updates',tag:'pmsv-news'};
  try{
-  const latest=new URL('/api/push/latest',self.location.origin);latest.searchParams.set('t',Date.now().toString());
+  const latest=new URL('/api/push/latest',self.location.origin);latest.searchParams.set('delivery','1');latest.searchParams.set('t',Date.now().toString());
   const response=await fetch(latest.href,{cache:'no-store',credentials:'same-origin',signal:AbortSignal.timeout(10000)});
-  if(response.ok){const data=await response.json();if(data&&typeof data==='object')alert={...alert,...data}}
+  if(response.ok){const data=await response.json();if(data?.skip===true)return;if(data&&typeof data==='object')alert={...alert,...data}}
  }catch{}
  const target=pmsvTarget(alert.url);
  await self.registration.showNotification(alert.title||'PMSV Food Safety & Quality Forum',{

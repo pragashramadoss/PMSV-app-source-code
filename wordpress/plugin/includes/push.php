@@ -17,10 +17,21 @@ function pmsv_wp_keys() {
     update_option('pmsv_wp_vapid',$keys,false);
     return $keys;
 }
-function pmsv_wp_change_push($remove) {
+function pmsv_wp_change_push($remove, $preferenceOnly = false) {
     if(!pmsv_wp_origin())return pmsv_wp_reply(['error'=>'Use this app to manage notifications.'],403);
-    try{$d=pmsv_wp_body(4096);if(!pmsv_wp_endpoint($d['endpoint']??null)||!is_string($d['token']??null)||strlen($d['token'])<32||strlen($d['token'])>150)throw new RuntimeException();}
+    try{
+        $d=pmsv_wp_body(4096);
+        $proof=$d['token']??null;
+        $validToken=is_string($proof)&&strlen($proof)>=32&&strlen($proof)<=150;
+        if(!pmsv_wp_endpoint($d['endpoint']??null)||(!$validToken&&!($preferenceOnly&&$proof===null)))throw new RuntimeException();
+    }
     catch(Throwable $e){return pmsv_wp_reply(['error'=>'Invalid notification subscription'],400);}
+    if ((array_key_exists('dailyNews', $d) && !is_bool($d['dailyNews']))
+        || (array_key_exists('newDailyNews', $d) && !is_bool($d['newDailyNews']))
+        || ($preferenceOnly && !isset($d['dailyNews']))) {
+        return pmsv_wp_reply(['error' => 'Choose a daily news delivery option.'], 400);
+    }
+    $dailyNews = $d['dailyNews'] ?? null;
     global $wpdb;$now=(int)floor(microtime(true)*1000);$t=pmsv_wp_table('devices');$limits=pmsv_wp_table('limits');
     // REMOTE_ADDR is server supplied. Never trust a browser supplied forwarding header.
     $rate=hash_hmac('sha256','push:'.floor($now/3600000).':'.($_SERVER['REMOTE_ADDR']??'shared'),wp_salt('auth'));
@@ -28,27 +39,43 @@ function pmsv_wp_change_push($remove) {
     $wpdb->query($wpdb->prepare("INSERT INTO $limits (id,attempts,expires_at) VALUES (%s,1,%d) ON DUPLICATE KEY UPDATE attempts=attempts+1",$rate,$now+7200000));
     if($wpdb->last_error)throw new RuntimeException('Rate limit unavailable');
     if((int)$wpdb->get_var($wpdb->prepare("SELECT attempts FROM $limits WHERE id=%s",$rate))>30)return pmsv_wp_reply(['error'=>'Please try again later.'],429);
-    $id=pmsv_wp_digest($d['endpoint']);$token=pmsv_wp_digest($d['token']);
-    $old=$wpdb->get_row($wpdb->prepare("SELECT token_hash,refresh_required FROM $t WHERE id=%s",$id),ARRAY_A);
+    $id=pmsv_wp_digest($d['endpoint']);$token=$validToken?pmsv_wp_digest($proof):null;
+    $old=$wpdb->get_row($wpdb->prepare("SELECT token_hash,refresh_required,daily_news FROM $t WHERE id=%s",$id),ARRAY_A);
     if ($wpdb->last_error) throw new RuntimeException('Notification registration could not be read');
-    if($old&&!hash_equals($old['token_hash'],$token))return pmsv_wp_reply(['error'=>'Please reset notifications in your browser and try again.'],409);
+    if($old&&($token===null||!hash_equals($old['token_hash'],$token))){
+        // A signed cookie can still identify this exact browser after local storage is cleared.
+        if(!$preferenceOnly||pmsv_wp_push_cookie_device()!==$id)return pmsv_wp_reply(['error'=>'Please reset notifications in your browser and try again.'],409);
+        $token=$old['token_hash'];
+    }
+    if ($preferenceOnly) {
+        // A subscription may have already expired. A delivery choice must never create it.
+        if ($old) {
+            pmsv_wp_save_daily_choice($t, $id, $token, $dailyNews);
+            pmsv_wp_push_device_cookie($id.'.'.pmsv_wp_device_signature($id,$token),time()+90*DAY_IN_SECONDS);
+        }
+        return pmsv_wp_reply(['dailyNews' => $dailyNews]);
+    }
     $previous=null;
+    $inheritedDaily = $d['newDailyNews'] ?? true;
     if(!$remove&&isset($d['previous'])){
         $p=$d['previous'];
         if(!is_array($p)||!pmsv_wp_endpoint($p['endpoint']??null)||!is_string($p['token']??null)||strlen($p['token'])<32||strlen($p['token'])>150)return pmsv_wp_reply(['error'=>'Invalid previous subscription'],400);
         $previous=pmsv_wp_digest($p['endpoint']);
         if($previous===$id)return pmsv_wp_reply(['error'=>'Replacement subscription must be new'],409);
-        $owner=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM $t WHERE id=%s",$previous));
-        if($owner&&!hash_equals($owner,pmsv_wp_digest($p['token'])))return pmsv_wp_reply(['error'=>'Previous subscription could not be verified'],409);
-        if(!$owner)$previous=null;
+        $owner=$wpdb->get_row($wpdb->prepare("SELECT token_hash,daily_news FROM $t WHERE id=%s",$previous),ARRAY_A);
+        if ($wpdb->last_error) throw new RuntimeException('Previous subscription could not be read');
+        if($owner&&!hash_equals($owner['token_hash'],pmsv_wp_digest($p['token'])))return pmsv_wp_reply(['error'=>'Previous subscription could not be verified'],409);
+        if($owner)$inheritedDaily=(bool)$owner['daily_news'];else $previous=null;
     }
     if($remove)$result=$wpdb->query($wpdb->prepare("DELETE FROM $t WHERE id=%s AND token_hash=%s",$id,$token));
-    else $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,endpoint,token_hash,seen_at,retry_at) VALUES (%s,%s,%s,%d,0)",$id,$d['endpoint'],$token,$now));
+    else $result=$wpdb->query($wpdb->prepare("INSERT IGNORE INTO $t (id,endpoint,token_hash,seen_at,retry_at,daily_news) VALUES (%s,%s,%s,%d,0,%d)",$id,$d['endpoint'],$token,$now,(int)($dailyNews??$inheritedDaily)));
     if($result===false)throw new RuntimeException('Subscription write failed');
     // INSERT IGNORE can race another registration: recheck ownership before transfer.
     if(!$remove){
-        $stored=$wpdb->get_var($wpdb->prepare("SELECT token_hash FROM $t WHERE id=%s",$id));
-        if(!is_string($stored)||!hash_equals($stored,$token))return pmsv_wp_reply(['error'=>'Notification subscription needs to be refreshed.'],409);
+        $stored=$wpdb->get_row($wpdb->prepare("SELECT token_hash,daily_news FROM $t WHERE id=%s",$id),ARRAY_A);
+        if(!$stored||!hash_equals($stored['token_hash'],$token))return pmsv_wp_reply(['error'=>'Notification subscription needs to be refreshed.'],409);
+        if ($dailyNews !== null && (bool)$stored['daily_news'] !== $dailyNews) pmsv_wp_save_daily_choice($t, $id, $token, $dailyNews);
+        $dailyNews ??= (bool)$stored['daily_news'];
     }
     if($previous)pmsv_wp_transfer_push_device($previous,$id);
     // Same-origin, HttpOnly cookie lets the service worker retrieve only this browser's
@@ -59,7 +86,17 @@ function pmsv_wp_change_push($remove) {
         pmsv_wp_push_device_cookie('',0);
     }else pmsv_wp_push_device_cookie($id.'.'.pmsv_wp_device_signature($id,$token),time()+90*DAY_IN_SECONDS);
     $refreshRequired=!$remove&&!empty($old['refresh_required']);
-    return pmsv_wp_reply(['enabled'=>!$remove&&!$refreshRequired,'refreshRequired'=>$refreshRequired]);
+    return pmsv_wp_reply(['enabled'=>!$remove&&!$refreshRequired,'refreshRequired'=>$refreshRequired,'dailyNews'=>$dailyNews]);
+}
+
+function pmsv_wp_save_daily_choice($table, $id, $token, $dailyNews) {
+    global $wpdb;
+    // Clear any pending news retry when the user hands daily delivery to the app.
+    $values = ['daily_news' => (int) $dailyNews];
+    if (!$dailyNews) $values['retry_at'] = 0;
+    if ($wpdb->update($table, $values, ['id'=>$id, 'token_hash'=>$token]) === false) {
+        throw new RuntimeException('Daily news preference could not be saved');
+    }
 }
 
 /** Called only after both old and replacement device ownership have been verified. */
@@ -209,7 +246,7 @@ function pmsv_wp_dispatch_batch($digest) {
     $cutoff = min($cutoff, $dayEnd * 1000 - 1);
     $now = (int) floor(microtime(true) * 1000);
     // Before 1.0.33, an interrupted send could leave the current cutoff and an uncleared lease together.
-    $eligible = '(seen_at < %d OR (seen_at = %d AND retry_at > 0)) AND refresh_required=0';
+    $eligible = '(seen_at < %d OR (seen_at = %d AND retry_at > 0)) AND refresh_required=0 AND daily_news=1';
     $rows = $wpdb->get_results($wpdb->prepare(
         "SELECT id,endpoint,seen_at FROM $table WHERE $eligible AND retry_at <= %d ORDER BY seen_at,id LIMIT 20",
         $cutoff, $cutoff, $now
@@ -224,7 +261,7 @@ function pmsv_wp_dispatch_batch($digest) {
         $now = (int) floor(microtime(true) * 1000);
         $lease = $now + 600000;
         $claim = $wpdb->query($wpdb->prepare(
-            "UPDATE $table SET retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d AND refresh_required=0",
+            "UPDATE $table SET retry_at=%d WHERE id=%s AND seen_at=%d AND retry_at<=%d AND refresh_required=0 AND daily_news=1",
             $lease, $row['id'], $row['seen_at'], $now
         ));
         if ($claim === false) throw new RuntimeException('Push claim failed');
@@ -275,7 +312,7 @@ function pmsv_wp_dispatch_batch($digest) {
     $counts = $wpdb->get_row($wpdb->prepare(
         "SELECT COUNT(CASE WHEN $eligible AND retry_at<=%d THEN 1 END) AS due,
                 COUNT(CASE WHEN $eligible AND retry_at>%d THEN 1 END) AS waiting,
-                COUNT(CASE WHEN refresh_required=1 THEN 1 END) AS refresh
+                COUNT(CASE WHEN refresh_required=1 AND daily_news=1 THEN 1 END) AS refresh
            FROM $table", $cutoff, $cutoff, $now, $cutoff, $cutoff, $now
     ), ARRAY_A);
     if (!is_array($counts) || $wpdb->last_error) throw new RuntimeException('Push backlog could not be read');
@@ -340,9 +377,7 @@ function pmsv_wp_push_cookie_device() {
     if(!is_string($token_hash))return null;
     return hash_equals(pmsv_wp_device_signature($id,$token_hash),$parts[2])?$id:null;
 }
-function pmsv_wp_forum_push_inbox() {
-    $id=pmsv_wp_push_cookie_device();
-    if(!$id)return pmsv_wp_reply(['alert'=>null]);
+function pmsv_wp_take_forum_alert($id) {
     global $wpdb;
     $alerts=pmsv_wp_table('push_alerts');$q=pmsv_wp_table('questions');
     // Old failed deliveries should not turn a later daily news push into an old alert.
@@ -351,15 +386,34 @@ function pmsv_wp_forum_push_inbox() {
         "SELECT a.id,a.question_id,a.answer_id,q.title FROM $alerts a JOIN $q q ON q.id=a.question_id WHERE a.device_id=%s AND q.status='published' ORDER BY a.id ASC LIMIT 1",$id
     ),ARRAY_A);
     if($wpdb->last_error)throw new RuntimeException('Discussion inbox unavailable');
-    if(!$row)return pmsv_wp_reply(['alert'=>null]);
-    $wpdb->delete($alerts,['id'=>(int)$row['id'],'device_id'=>$id],['%d','%s']);
+    if(!$row)return null;
+    $taken=$wpdb->delete($alerts,['id'=>(int)$row['id'],'device_id'=>$id],['%d','%s']);
+    if($taken===false)throw new RuntimeException('Discussion alert could not be read');
+    if(!$taken)return null;
     $title=wp_strip_all_tags($row['title']);
-    return pmsv_wp_reply(['alert'=>[
+    return [
         'title'=>'PMSV Discussions — New answer',
         'body'=>'Someone answered: '.mb_substr($title,0,110),
         'url'=>pmsv_wp_base().'/discussions/'.(int)$row['question_id'].'#answer-'.(int)$row['answer_id'],
         'tag'=>'pmsv-answer-'.(int)$row['answer_id']
-    ]]);
+    ];
+}
+function pmsv_wp_forum_push_inbox() {
+    $id=pmsv_wp_push_cookie_device();
+    return pmsv_wp_reply(['alert'=>$id?pmsv_wp_take_forum_alert($id):null]);
+}
+function pmsv_wp_browser_push_message() {
+    global $wpdb;
+    $id=pmsv_wp_push_cookie_device();
+    if ($id) {
+        $answer=pmsv_wp_take_forum_alert($id);
+        if ($answer) return $answer;
+        $daily=$wpdb->get_var($wpdb->prepare('SELECT daily_news FROM '.pmsv_wp_table('devices').' WHERE id=%s',$id));
+        if ($wpdb->last_error) throw new RuntimeException('Daily news preference unavailable');
+        // A news push may already have been queued when this browser chose the app.
+        if ($daily!==null && !(bool)$daily) return ['skip'=>true];
+    }
+    return pmsv_wp_current_digest();
 }
 function pmsv_wp_forum_push_answer($question_id,$answer_id) {
     global $wpdb;
