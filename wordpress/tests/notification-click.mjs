@@ -45,6 +45,21 @@ test('packaged WordPress service worker matches the canonical public worker',asy
  assert.equal(await read(paths[0]),await read(paths[1]));
 });
 
+test('a queued browser push yields to the app; requested replies and browser news still display',async()=>{
+ const source=await read(paths[0]);
+ for(const [message,expected] of [[{skip:true},null],[{title:'New discussion reply',tag:'pmsv-answer-1'},'New discussion reply'],[{title:'Daily headlines'},'Daily headlines']]){
+  const handlers=new Map(),shown=[];
+  const self={location:{origin},addEventListener:(name,handler)=>handlers.set(name,handler),registration:{showNotification:async title=>shown.push(title)}};
+  async function fetch(url){
+   assert.equal(new URL(url).searchParams.get('delivery'),'1');
+   return {ok:true,json:async()=>message};
+  }
+  runInNewContext(source,{self,fetch,URL,AbortSignal,Date});
+  let task;handlers.get('push')({waitUntil(promise){task=promise}});await task;
+  assert.deepEqual(shown,expected?[expected]:[]);
+ }
+});
+
 for(const file of paths){
  test(file+': focus existing PMSV app instead of opening Chrome',async()=>{
   const calls=await click(await read(file),{existing:['/'],url:'/updates'});

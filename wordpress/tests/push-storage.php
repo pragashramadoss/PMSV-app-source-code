@@ -32,6 +32,7 @@ try {
         storage_check((int) get_option('pmsv_wp_schema') === PMSV_WP_SCHEMA_VERSION, "verified $state upgrade");
         $row = $wpdb->get_row("SELECT * FROM $table WHERE id='test'", ARRAY_A);
         storage_check($row && $row['token_hash'] === 'saved' && (int)$row['seen_at'] === 17, 'retain existing registration');
+        storage_check((int)$row['daily_news'] === 1, 'legacy website subscribers retain their daily news');
         storage_check((int)$row['retry_at'] === (in_array($state, ['refresh_required','complete'], true) ? 99 : 0), 'preserve retry or use default');
         storage_check((int)$row['refresh_required'] === (in_array($state, ['retry_at','complete'], true) ? 1 : 0), 'preserve refresh flag or use default');
         pmsv_wp_install();

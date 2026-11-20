@@ -8,23 +8,25 @@ const text=await readFile(new URL('../../app/app-notifications.tsx',import.meta.
 const start=text.indexOf('type PMSVWindow='),end=text.indexOf('// Called only');
 assert(start>=0&&end>start,'Push helper extraction boundaries must exist');
 const helpers=stripTypeScriptTypes(text.slice(start,end));
-function environment({refresh=false,off=false,mismatch=false,permission='granted',renewalFails=false,postFails=false}={}){
+function environment({refresh=false,off=false,mismatch=false,permission='granted',renewalFails=false,postFails=false,noSubscription=false,missingProof=false}={}){
  const entries=new Map([['pmsv-push-token','t'.repeat(64)]]);
+ if(missingProof)entries.delete('pmsv-push-token');
  if(off)entries.set('pmsv-push-preference','off');
  const calls=[];let number=0;
  const key=new Uint8Array([4,1,2]);
  function subscription(endpoint,serverKey=key){return {endpoint,options:{applicationServerKey:serverKey.buffer},async unsubscribe(){calls.push('unsubscribe');current=null;return true}}}
- let current=subscription('https://fcm.googleapis.com/fcm/send/old',mismatch?new Uint8Array([4,9,9]):key);
+ let current=noSubscription?null:subscription('https://fcm.googleapis.com/fcm/send/old',mismatch?new Uint8Array([4,9,9]):key);
  const reg={pushManager:{async getSubscription(){return current},async subscribe(){calls.push('subscribe');if(renewalFails)throw Error('offline');return current=subscription('https://fcm.googleapis.com/fcm/send/new'+(++number))}}};
  const storage={getItem:k=>entries.get(k)??null,setItem:(k,v)=>entries.set(k,v),removeItem:k=>entries.delete(k)};
  let locked=Promise.resolve();
- const navigator={serviceWorker:{register:async()=>reg,ready:Promise.resolve(reg)},locks:{request(name,fn){calls.push('lock');const result=locked.then(fn);locked=result.catch(()=>{});return result}}};
+ const navigator={serviceWorker:{register:async()=>reg,getRegistration:async()=>reg,ready:Promise.resolve(reg)},locks:{request(name,fn){calls.push('lock');const result=locked.then(fn);locked=result.catch(()=>{});return result}}};
  const context={window:{isSecureContext:true,Notification:{},PushManager:{}},Notification:{permission},navigator,localStorage:storage,atob:s=>Buffer.from(s,'base64').toString('binary'),crypto:{randomUUID:()=>String(++number).padStart(36,'0')},Uint8Array,AbortSignal,Date,JSON,Error,
   async fetch(url,options={}){
    if(!options.method)return {ok:true,json:async()=>({publicKey:Buffer.from(key).toString('base64url')})};
    const body=JSON.parse(options.body);calls.push(body);
    if(postFails)throw Error('server unavailable');
-   return {ok:true,json:async()=>({enabled:true,refreshRequired:refresh&&body.endpoint.endsWith('/old')})};
+   if(url.endsWith('/delivery')&&missingProof)return {ok:false,status:409,json:async()=>({})};
+   return {ok:true,json:async()=>({enabled:true,dailyNews:body.dailyNews??body.newDailyNews,refreshRequired:refresh&&body.endpoint.endsWith('/old')})};
   }};
  runInNewContext(helpers,context);
  return {context,calls,entries,run:force=>context.prepareGrantedSubscription(force)};
@@ -65,4 +67,30 @@ test('failed server save keeps previous-device proof and does not loop',async()=
  const e=environment({postFails:true});await assert.rejects(e.run(true),/unavailable/);
  assert(e.entries.has('pmsv-push-replacement'));
  assert.equal(e.calls.filter(x=>x==='subscribe').length,1);
+});
+test('app selection mutes the current and interrupted replacement endpoints, without renewing either',async()=>{
+ const e=environment();
+ e.entries.set('pmsv-push-replacement',JSON.stringify({endpoint:'https://fcm.googleapis.com/fcm/send/previous',token:'p'.repeat(64)}));
+ await e.context.useAppForDailyNews();
+ const saved=e.calls.filter(x=>typeof x==='object');
+ assert.deepEqual(saved.map(x=>x.endpoint.split('/').pop()),['previous','old']);
+ assert(saved.every(x=>x.dailyNews===false));
+ assert.equal(e.entries.get('pmsv-daily-delivery'),'app');
+ assert(!e.calls.includes('unsubscribe'));assert(!e.calls.includes('subscribe'));
+});
+test('app selection with no subscription stays silent; a later discussion subscription is replies-only',async()=>{
+ const e=environment({noSubscription:true});
+ await e.context.useAppForDailyNews();
+ assert.equal(await e.run(false),null);
+ assert(!e.calls.includes('subscribe'));
+ await e.context.prepareGrantedSubscription(false,undefined,true);
+ assert.equal(e.calls.filter(x=>typeof x==='object').at(-1).newDailyNews,false);
+ await e.context.prepareGrantedSubscription(false,true);
+ assert.equal(e.entries.get('pmsv-daily-delivery'),'browser');
+});
+test('app handoff only reports success after confirmation, or after revoking an unmanageable local endpoint',async()=>{
+ const failing=environment({postFails:true});await assert.rejects(failing.context.useAppForDailyNews(),/server unavailable/);
+ assert.notEqual(failing.entries.get('pmsv-daily-delivery'),'app');
+ const legacy=environment({missingProof:true});await legacy.context.useAppForDailyNews();
+ assert(legacy.calls.includes('unsubscribe'));assert.equal(legacy.entries.get('pmsv-daily-delivery'),'app');
 });

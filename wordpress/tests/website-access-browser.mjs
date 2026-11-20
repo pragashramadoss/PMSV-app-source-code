@@ -56,7 +56,7 @@ try{
  await page.getByRole('button',{name:'Allow notifications',exact:true}).click();
  await page.getByRole('status').filter({hasText:'Notifications are blocked for this website.'}).waitFor();
  assert.equal(await page.evaluate(()=>window.permissionRequests),1);
- await page.getByText('1.0.30',{exact:true}).waitFor();
+ await page.getByText('1.0.34',{exact:true}).waitFor();
  await page.keyboard.press('Escape');
  for(const route of ['/downloads','/downloads/','/bookmarks','/bookmarks/']){
   await page.goto(base+route+'?old=1#saved');
@@ -71,6 +71,26 @@ try{
  await noInternalBookmarks(android);await checkLayout(android);
  await android.screenshot({path:'wordpress/test-results/website-android.png',fullPage:true});
  await android.setViewportSize({width:320,height:700});await checkLayout(android);
+ const deliveryRequests=[];
+ await android.route('**/api/push/delivery',async route=>{
+  deliveryRequests.push(route.request().postDataJSON());
+  await route.fulfill({json:{dailyNews:false}});
+ });
+ await android.addInitScript(()=>{
+  localStorage.setItem('pmsv-push-token','fixture-browser-token'.repeat(3));
+  const sub={endpoint:'https://fcm.googleapis.com/fcm/send/fixture-browser'};
+  Object.defineProperty(navigator.serviceWorker,'getRegistration',{value:async()=>({pushManager:{getSubscription:async()=>sub}})});
+ });
+ await android.goto(base+'/#notifications');
+ const settings=android.getByRole('dialog',{name:'Website notifications'});
+ await settings.getByRole('button',{name:'Use PMSV app only'}).click();
+ await settings.getByRole('status').filter({hasText:'This browser will skip the daily news alert.'}).waitFor();
+ assert.equal(deliveryRequests.length,1);assert.equal(deliveryRequests[0].dailyNews,false);
+ assert.equal(await android.evaluate(()=>localStorage.getItem('pmsv-daily-delivery')),'app');
+ await android.reload();
+ await settings.getByText('Your PMSV app is selected for daily news on this phone.').waitFor();
+ assert.equal(await settings.getByRole('button',{name:'Send test notification'}).count(),0);
+ assert.equal(await page.evaluate(()=>localStorage.getItem('pmsv-daily-delivery')),null);
  const iphone=await newPage({viewport:{width:390,height:844},userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 Version/18.0 Mobile/15E148 Safari/604.1'});
  await iphone.addInitScript(()=>{delete window.Notification;delete window.PushManager;});
  await iphone.goto(base+'/');await iphone.getByRole('heading',{name:'Welcome to the Forum',exact:true}).waitFor();await noInternalBookmarks(iphone);

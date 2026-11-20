@@ -1,6 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
-const PMSV_WP_SCHEMA_VERSION = 6;
+const PMSV_WP_SCHEMA_VERSION = 7;
 function pmsv_wp_table($suffix) { global $wpdb; return $wpdb->prefix.'pmsv_app_'.$suffix; }
 function pmsv_wp_install() {
     global $wpdb;
@@ -23,6 +23,7 @@ function pmsv_wp_install() {
             seen_at bigint NOT NULL,
             retry_at bigint NOT NULL DEFAULT 0,
             refresh_required tinyint NOT NULL DEFAULT 0,
+            daily_news tinyint NOT NULL DEFAULT 1,
             PRIMARY KEY  (id),
             KEY seen_at (seen_at)
         ) $charset";
@@ -31,9 +32,10 @@ function pmsv_wp_install() {
         // Older sites may have recorded schema 5 with either notification column missing.
         if (!maybe_add_column($devices, 'retry_at', "ALTER TABLE $devices ADD COLUMN retry_at bigint NOT NULL DEFAULT 0")) return;
         if (!maybe_add_column($devices, 'refresh_required', "ALTER TABLE $devices ADD COLUMN refresh_required tinyint NOT NULL DEFAULT 0")) return;
+        if (!maybe_add_column($devices, 'daily_news', "ALTER TABLE $devices ADD COLUMN daily_news tinyint NOT NULL DEFAULT 1")) return;
 
         // Verify every column used by registration and delivery before marking the upgrade complete.
-        if ($wpdb->query("SELECT id, endpoint, token_hash, seen_at, retry_at, refresh_required FROM $devices LIMIT 0") !== false) {
+        if ($wpdb->query("SELECT id, endpoint, token_hash, seen_at, retry_at, refresh_required, daily_news FROM $devices LIMIT 0") !== false) {
             update_option('pmsv_wp_schema', PMSV_WP_SCHEMA_VERSION, false);
         }
     } finally {

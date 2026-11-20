@@ -1,4 +1,4 @@
-export const NOTIFICATION_VERSION='1.0.30';
+export const NOTIFICATION_VERSION='1.0.34';
 export type NotificationCheck={label:string;value:string};
 
 export function installedNotificationContext(){
@@ -29,7 +29,10 @@ export async function readNotificationStatus(base:string):Promise<NotificationCh
  ];
  try{checks.push({label:'Permission service',value:navigator.permissions?(await bounded(navigator.permissions.query({name:'notifications'}))).state:'Unavailable'})}
  catch{checks.push({label:'Permission service',value:'Unavailable'})}
- try{checks.push({label:'PMSV alerts preference',value:localStorage.getItem('pmsv-push-preference')==='off'?'Off':'Not switched off'})}
+ try{
+  checks.push({label:'PMSV alerts preference',value:localStorage.getItem('pmsv-push-preference')==='off'?'Off':'Not switched off'});
+  if(localStorage.getItem('pmsv-daily-delivery')==='app')checks.push({label:'Daily news delivery',value:'PMSV Android app'});
+ }
  catch{checks.push({label:'PMSV alerts preference',value:'Storage unavailable'})}
  let reg:ServiceWorkerRegistration|undefined;
  try{reg='serviceWorker' in navigator?await bounded(navigator.serviceWorker.getRegistration(base+'/')):undefined;
