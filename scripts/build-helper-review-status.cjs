@@ -284,7 +284,8 @@ const worksheetReview={round:93,reviewedOn:sourceRows.date,products:allWorksheet
   allApplicableProvisionsConfirmed:0,report:'catalogue-worksheet-review-r93.md'};
 assert.deepEqual([worksheetReview.products,worksheetReview.standards,worksheetReview.categoryRoutes,worksheetReview.pageLocated,worksheetReview.openContaminantArticleDecisions],[533,475,58,533,137]);
 const broadContaminantReview={round:94,reviewedOn:sourceRows.date,products:allWorksheets.length,analytes:["Melamine","Mercury","Methyl mercury"],report:"broad-contaminants-r94.md",fullProductApprovals:0};
-const data={broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:broadContaminantReview.round,
+const metalArticleReview={round:95,reviewedOn:sourceRows.date,products:allWorksheets.length,metals:["Chromium","Nickel","Selenium","Antimony"],confectioneryProducts:11,report:"catalogue-metal-review-r95.md",fullProductApprovals:0};
+const data={metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:metalArticleReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
  scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 queue identities have a linked review, while all 137 exact CTR article decisions remain OPEN. This is not complete regulatory verification of the 533 products.',

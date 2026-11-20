@@ -1110,9 +1110,34 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await open('13-13-1-infant-milk-food');await page.locator('.broad-ctr>summary').click();
  assert((await page.locator('[data-broad-result]').textContent()).includes('1.0 mg/kg'));
  assert.equal(await f('broadForm').count(),0);assert(!(await readProductBrief(page)).includes('Label confirms liquid as supplied'));
+ await open('05-05-2-sugar-boiled-confectionery-hard-candy');
+ await page.locator('.metal-scope>summary').click();
+ assert.equal(await page.locator('[data-metal-results] tbody tr').count(),11);
+ await f('metalPack').selectOption('other');
+ assert((await page.locator('[data-metal-results]').innerText()).includes('Confirm canning status'));
+ await f('metalPackRef').fill('Wrapped hard candy · pack drawing 14');
+ assert((await readProductBrief(page)).includes('Hard boiled sugar confectionery · 5.0 ppm'));
+ await f('metalPack').selectOption('can');assert.equal(await f('metalPackRef').inputValue(),'');
+ await f('metalPackRef').fill('Canned finished article · specification 15');
+ assert((await page.locator('[data-metal-results]').innerText()).includes('Both the hard-boiled and canned descriptions'));
+ await open('05-05-2-spice-based-mouth-fresheners');await page.locator('.metal-scope>summary').click();
+ await f('metalForm').selectOption('composite');
+ assert((await page.locator('[data-metal-results]').innerText()).includes('Determine if the article'));
+ await f('metalFormRef').fill('Composite recipe and label 16');
+ assert(!(await page.locator('[data-metal-results]').innerText()).includes('Determine if the article'));
+ assert((await page.locator('[data-hg-value]').textContent()).includes('1.0 ppm'));
+ await open('09-09-2-frozen-finfish');await page.locator('.broad-ctr>summary').click();
+ await f('mercuryArticle').selectOption('Hg10');
+ assert(!(await page.locator('[data-hg-value]').textContent()).includes('1.0 ppm'));
+ await f('mercuryArticleRef').fill('Species specification · swordfish');
+ assert((await page.locator('[data-hg-value]').textContent()).includes('1.0 ppm'));
+ assert((await readProductBrief(page)).includes('Species specification · swordfish'));
+ await open('99-99-1-baking-powder');await page.locator('.broad-ctr>summary').click();
+ assert((await page.locator('[data-broad-result]').innerText()).includes('2.5 mg/kg'));
+ assert.equal(await f('broadForm').count(),0);assert(!(await readProductBrief(page)).includes('Composite recipe and label 16'));
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R94.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R95.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1691,7 +1716,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
