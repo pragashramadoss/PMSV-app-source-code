@@ -1098,8 +1098,20 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert((await page.locator('[data-ws-pack]').textContent()).includes('Reg. 4(2)'));
  assert(!(await readProductBrief(page)).includes('R93-SOURCE-SAMPLE'));
  await open(oil);assert.equal(await f('reference').inputValue(),'R93-SOURCE-SAMPLE');
+ await open('13-13-1-infant-formula');
+ await page.locator('.broad-ctr>summary').click();
+ await f('broadForm').selectOption('liquid');
+ assert((await page.locator('[data-broad-result]').textContent()).includes('Awaiting'));
+ await f('broadRef').fill('Label confirms liquid as supplied');
+ assert((await page.locator('[data-broad-result]').textContent()).includes('0.15 mg/kg'));
+ assert((await readProductBrief(page)).includes('Liquid infant formula · 0.15 mg/kg'));
+ await f('broadForm').selectOption('powder');assert.equal(await f('broadRef').inputValue(),'');
+ assert((await page.locator('[data-broad-result]').textContent()).includes('Awaiting'));
+ await open('13-13-1-infant-milk-food');await page.locator('.broad-ctr>summary').click();
+ assert((await page.locator('[data-broad-result]').textContent()).includes('1.0 mg/kg'));
+ assert.equal(await f('broadForm').count(),0);assert(!(await readProductBrief(page)).includes('Label confirms liquid as supplied'));
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R94.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open'));
 }
 
@@ -1679,7 +1691,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
