@@ -1330,6 +1330,39 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await q('pack').selectOption('inner');await q('area').fill('100');await q('outer').fill('Jar art R102 v1');
  assert.equal(await q('observation').inputValue(),'');assert((await findings.innerText()).includes('regulation 8(1)')||(await findings.innerText()).includes('Regulation 8(1)'));
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Artwork form overflows the screen');
+ const rd=page.locator('#rdRequests');
+ await rd.locator('summary').click();
+ const rdExport=rd.locator('[data-rd-export]');
+ await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
+ assert(await rdExport.isDisabled());
+ await q('rdRequest').fill('Confirm the emulsifier sequence.');
+ assert(await rdExport.isDisabled(),'Only saved checks enter the R&D request');
+ await art.locator('[data-quid-save]').click();await rd.getByText('1 open request.',{exact:true}).waitFor();
+ await q('art').fill('Folding carton R103 v2');assert.equal(await q('rdRequest').inputValue(),'');
+ await q('nature').selectOption('unknown');await q('name').selectOption('emphasis');
+ await q('rdRequest').fill('Confirm the emulsifier sequence.');await art.locator('[data-quid-save]').click();
+ await rd.locator('tbody').getByText('Folding carton R103 v2',{exact:false}).waitFor();
+ assert.equal(await rd.locator('tbody tr').count(),1);
+ const details=await rd.locator('tbody td').nth(2).innerText();
+ assert.equal(details.split('Confirm the emulsifier sequence.').length-1,1);assert(details.includes('only a corresponding flavour'));
+ assert.equal(await rd.locator('thead th').nth(2).textContent(),'Recipe information required from R&D');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'R&D request overflows the screen');
+ const rdDownload=page.waitForEvent('download');await rdExport.click();
+ const attachment=await rdDownload;assert.equal(attachment.suggestedFilename(),'PMSV-RD-Recipe-Requests.csv');
+ const rdCsv=fs.readFileSync(await attachment.path(),'utf8');
+ assert(rdCsv.startsWith('\uFEFF"SKU or variant and recipe","Artwork revisions and packs","Recipe information required from R&D"'));
+ assert(rdCsv.includes('Folding carton R103 v2')&&rdCsv.includes('Confirm the emulsifier sequence.')&&!rdCsv.includes('2.4%'));
+ await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{async writeText(text){window.rdCopiedText=text;}}});});
+ await rd.locator('[data-rd-copy]').click();await rd.getByText('Copied the R&D recipe request.',{exact:true}).waitFor();
+ const copied=await page.evaluate(()=>window.rdCopiedText);assert(copied.includes('• Mango pulp')&&copied.includes('Folding carton R103 v2'));
+ await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{async writeText(){throw Error('Clipboard unavailable');}}});});
+ await rd.locator('[data-rd-copy]').click();await rd.locator('[data-rd-fallback]').waitFor();
+ assert.equal(await rd.locator('[data-rd-fallback]').inputValue(),copied);
+ await page.evaluate(()=>{delete navigator.clipboard;delete window.rdCopiedText;});
+ await art.locator('li').filter({hasText:'Folding carton R103 v2'}).getByRole('button',{name:'Remove'}).click();
+ await art.locator('li').filter({hasText:'Individual inner pack'}).getByRole('button',{name:'Remove'}).click();
+ await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
+ assert(await rdExport.isDisabled());await rd.locator('summary').click();
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
  assert.equal(await page.locator('#productList [data-id]').count(),36);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
@@ -1338,7 +1371,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R102.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R103.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
@@ -1924,7 +1957,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={rdRecipeRequestCopyAndCsvTested:true,ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

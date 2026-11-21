@@ -5,7 +5,8 @@
   const sources={trigger:gazette+'#page=31',exceptions:gazette+'#page=32',presentation:gazette+'#page=29',
     flavour:gazette+'#page=35',pack:gazette+'#page=38',nonretail:gazette+'#page=40'};
   const columns=['Ingredient percentage legal sources','Artwork, variant and ingredient under review','Ingredient percentage declaration finding',
-    'Artwork pack and placement review','Ingoing recipe calculation and basis','Comparison with printed percentage','Saved artwork check count','Saved ingredient-percentage checks'];
+    'Artwork pack and placement review','Ingoing recipe calculation and basis','Comparison with printed percentage','Saved artwork check count','Saved ingredient-percentage checks',
+    'Open R&D recipe request groups','Recipe information required from R&D by SKU and artwork'];
   const labels={
     pack:{retail:'Retail pack',outer:'Retail multi-unit outer',inner:'Individual inner pack',nonretail:'Non-retail container'},
     food:{mixture:'Mixture or combination',single:'Single ingredient',unknown:'Composition unconfirmed'},
@@ -40,6 +41,7 @@
       for(const k of lineKeys)if(typeof row?.[k]==='string')line[k]=row[k];
       return line;
     });
+    if(str(data.rdRequest))output.rdRequest=data.rdRequest;
     return output;
   }
   function draft(state) {
@@ -221,6 +223,7 @@
     let message=previous?(raw===previous.raw?'This check is already saved.':'Updated this artwork check.'):'Saved this artwork check.';
     try{root.localStorage.setItem(key,raw);session.delete(key);}
     catch(_){session.set(key,raw);message='Kept in this session. Export the artwork checks to retain them.';}
+    notifyRequestChange();
     return {key,raw,message};
   }
   function remove(id,record) {
@@ -230,8 +233,9 @@
     catch(_){
       if(!session.has(record.key))return 'Device storage is unavailable. The saved check was retained.';
       // A failed update may overlay an earlier device record. Do not claim its removal.
-      session.delete(record.key);return 'Removed the session copy. Recheck any earlier device copy when storage is available.';
+      session.delete(record.key);notifyRequestChange();return 'Removed the session copy. Recheck any earlier device copy when storage is available.';
     }
+    notifyRequestChange();
     return 'Removed this artwork check.';
   }
   async function withArtworkLock(id,callback) {
@@ -247,6 +251,7 @@
   }
   root.addEventListener?.('storage',event=>{
     if(event.key!==null&&!event.key?.startsWith(prefix))return;
+    notifyRequestChange();
     for(const element of root.document?.querySelectorAll('.quid-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
   });
   function detail(m) {
@@ -258,23 +263,145 @@
     const calculation=join([inputSummary(m),math.error||math.text+' '+math.basis]);
     return [join([ref,facts]),legal.text,pack,calculation,compare(m,legal,math)];
   }
+  const requestColumns=['SKU or variant and recipe','Artwork revisions and packs','Recipe information required from R&D'];
+  function recipeQuestions(m) {
+    const issues=new Set();
+    const ask=text=>issues.add(str(m.target)+' — '+text);
+    const extra=str(m.rdRequest).split(/\r?\n/).map(str).filter(Boolean);
+    for(const note of extra)ask(note);
+    if(m.pack==='nonretail')return [...issues];
+
+    if(!str(m.recipe))issues.add('Provide the approved formula reference and revision used for this artwork.');
+    const unknown=!entry('nature',m.nature)||m.nature==='unknown';
+    const highlighted=m.name==='emphasis'||m.words==='yes'||m.picture==='yes';
+    const outsideName=m.name==='absent'&&m.character==='yes'&&m.exception!=='drained';
+    const labelPointsToIngredient=highlighted||outsideName;
+    const printedAmount=m.print==='value'||m.print==='other';
+    if(unknown){
+      ask('Confirm whether the formula contains the named ingredient, only a corresponding flavour, both, or neither.');
+      if(printedAmount||(labelPointsToIngredient&&m.food!=='single'&&!['specific','nutrient'].includes(m.exception)))
+        ask('If present as an ingredient, provide the total ingoing batch and units, each direct or compound addition and its quantity, and the share and supplier reference for each preparation.');
+      return [...issues];
+    }
+    if(m.nature==='absent'||m.nature==='flavourOnly')return [...issues];
+    if(m.nature==='agent'&&!str(m.contextRef))ask('Provide the formulation or specification reference confirming its flavouring function.');
+    if(m.nature!=='agent'&&(!entry('food',m.food)||m.food==='unknown'))
+      issues.add('Confirm whether the SKU is a mixture or a single-ingredient food.');
+    const recordsInputs=m.lines.some(l=>[l.source,l.amount,l.share,l.spec].some(str));
+    const decision=decide(m).kind;
+    const potential=decision==='required'||(decision==='pending'&&labelPointsToIngredient&&m.food!=='single'&&m.nature!=='agent'&&!['specific','nutrient'].includes(m.exception));
+    if(!printedAmount&&!recordsInputs&&!str(m.total)&&!potential)return [...issues];
+
+    const total=quantity(m.total,m.unit);
+    if(!total)issues.add('Provide the total ingoing batch quantity and its mass or volume unit.');
+    if(!recordsInputs){
+      ask('List each direct addition or contributing preparation with its quantity and unit. For each preparation, include the named share and supplier composition reference.');
+      return [...issues];
+    }
+    let sum={n:0n,scale:0},comparable=!!total;
+    m.lines.forEach((line,i)=>{
+      const name=str(line.source)||'Addition '+(i+1);
+      const qty=quantity(line.amount,line.unit);
+      if(!str(line.source))ask(name+' — identify the ingredient or preparation.');
+      if(!entry('kind',line.kind))ask(name+' — confirm whether the addition is direct or part of a preparation.');
+      if(!qty)ask(name+' — provide a positive ingoing quantity and its unit.');
+      if(qty&&total&&unitFamily[m.unit]!==unitFamily[line.unit])
+        ask(name+' — provide the quantity on the same mass or volume basis as the batch, with the conversion basis if needed.');
+      if(!qty||unitFamily[m.unit]!==unitFamily[line.unit])comparable=false;
+      else sum=add(sum,qty);
+      if(line.kind!=='compound')return;
+      const share=decimal(line.share);
+      if(!share||!share.n||lt({n:100n,scale:0},share))
+        ask(name+' — confirm the named ingredient’s percentage in the preparation on the same basis.');
+      if(!str(line.spec))ask(name+' — provide the supplier composition specification or formula reference.');
+    });
+    if(comparable&&lt(total,sum))ask('Reconcile the listed additions with the total ingoing batch. Check the quantities, units and any double counting.');
+    return [...issues];
+  }
+  function requestRows(groups=savedByProduct()) {
+    const requests=new Map();
+    for(const [id,records] of groups){
+      for(const {m} of records){
+        const questions=recipeQuestions(m);
+        if(!questions.length)continue;
+        const sku=str(m.sku),recipe=str(m.recipe),art=str(m.art),pack=entry('pack',m.pack);
+        // With no approved revision, two pack artworks can refer to different formulas.
+        const key=JSON.stringify(recipe?[id,sku,recipe]:[id,sku,null,art,m.pack]);
+        if(!requests.has(key)){
+          const label=[sku,root.PMSVCatalogueRules.products[id].name,recipe?'Recipe '+recipe:'Recipe revision pending'].join('\n');
+          requests.set(key,{label,artworks:new Set(),questions:new Set()});
+        }
+        const item=requests.get(key);
+        item.artworks.add(art+' · '+pack);
+        for(const question of questions)item.questions.add(question);
+      }
+    }
+    const lines=set=>[...set].sort((a,b)=>a.localeCompare(b,'en')).join('\n');
+    const rows=[...requests.values()].map(r=>[r.label,lines(r.artworks),lines(r.questions)]);
+    rows.sort((a,b)=>a[0].localeCompare(b[0],'en')||a[1].localeCompare(b[1],'en'));
+    return [requestColumns,...rows];
+  }
+  function requestText(rows) {
+    return rows.slice(1).map(([name,art,questions])=>name.split('\n').join(' · ')+'\n'+art.split('\n').join(' / ')+'\n'+
+      questions.split('\n').map(s=>'• '+s).join('\n')).join('\n\n');
+  }
+  function attachRequests(panel,writeCSV) {
+    const preview=panel.querySelector('[data-rd-preview]'),status=panel.querySelector('[data-rd-status]');
+    const copy=panel.querySelector('[data-rd-copy]'),exportButton=panel.querySelector('[data-rd-export]');
+    const fallback=panel.querySelector('[data-rd-fallback]');
+    let generation=0;
+    function refresh(){
+      generation++;
+      const rows=requestRows(),count=rows.length-1;
+      status.textContent=count?count+' open '+(count===1?'request':'requests')+'.':'No open recipe requests in saved artwork checks.';
+      preview.innerHTML=count?'<table><thead><tr>'+requestColumns.map(h=>'<th scope="col">'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+
+        rows.slice(1).map(row=>'<tr>'+row.map((v,i)=>'<td><span class="rd-mobile-label" aria-hidden="true">'+esc(requestColumns[i])+'</span>'+
+          esc(v).replace(/\n/g,'<br>')+'</td>').join('')+'</tr>').join('')+'</tbody></table>':'';
+      copy.disabled=exportButton.disabled=!count;
+      fallback.hidden=true;fallback.value='';
+      return rows;
+    }
+    panel.addEventListener('toggle',()=>{if(panel.open)refresh();});
+    root.addEventListener?.('pmsv-artwork-updated',()=>{if(panel.open)refresh();});
+    exportButton.addEventListener('click',()=>{
+      const rows=refresh();
+      if(rows.length>1)writeCSV(rows,'PMSV-RD-Recipe-Requests.csv');
+    });
+    copy.addEventListener('click',async()=>{
+      const rows=refresh();
+      if(rows.length===1)return;
+      const text=requestText(rows),current=generation;
+      try{
+        await root.navigator.clipboard.writeText(text);
+        if(current===generation)status.textContent='Copied the R&D recipe request.';
+      }catch(_){
+        if(current!==generation)return;
+        fallback.hidden=false;fallback.value=text;fallback.focus();fallback.select();
+        status.textContent='Select and copy the recipe request below.';
+      }
+    });
+  }
+  function notifyRequestChange(){
+    if(typeof root.dispatchEvent==='function')root.dispatchEvent(new root.Event('pmsv-artwork-updated'));
+  }
   const sourceText=Object.values(sources).join(' | ');
   const describe=m=>detail(m).join(' | ');
   const hasData=m=>scalarKeys.some(k=>str(m[k]))||m.lines.some(r=>r.source||r.amount||r.share||r.spec);
   function values(id,state,groups) {
     const m=draft(state),saved=groups?.get(id)||[];
-    return [sourceText,...(hasData(m)?detail(m):['','','','','']),saved.length,saved.map(r=>describe(r.m)).join('\n')];
+    const requests=requestRows(new Map([[id,saved]]));
+    return [sourceText,...(hasData(m)?detail(m):['','','','','']),saved.length,saved.map(r=>describe(r.m)).join('\n'),requests.length-1,requestText(requests)];
   }
   function brief(id,state) {
     const v=values(id,state,savedByProduct());
     if(!v[1]&&!v[6])return [];
-    return ['Ingredient percentage on artwork',...v.slice(1,6).filter(Boolean),v[6]?'Saved artwork checks ('+v[6]+')':'',v[7],sourceText].filter(Boolean);
+    return ['Ingredient percentage on artwork',...v.slice(1,6).filter(Boolean),v[6]?'Saved artwork checks ('+v[6]+')':'',v[7],v[8]?'R&D recipe requests':null,v[9],sourceText].filter(Boolean);
   }
   function exportRows(id){
     const rows=savedByProduct().get(id)||[];
     return [['Catalogue ID','SKU or variant','Artwork revision','Pack','Reviewed ingredient','Artwork and evidence','Declaration finding',
-      'Pack and placement','Recipe calculation','Printed percentage comparison','Legal sources'],
-      ...rows.map(({m})=>[id,m.sku,m.art,entry('pack',m.pack),m.target,...detail(m),sourceText])];
+      'Pack and placement','Recipe calculation','Printed percentage comparison','Legal sources',requestColumns[2]],
+      ...rows.map(({m})=>[id,m.sku,m.art,entry('pack',m.pack),m.target,...detail(m),sourceText,recipeQuestions(m).join('\n')])];
   }
 
   const select=(key,title,value,options,attr='data-quid')=>'<label>'+esc(title)+'<select '+attr+'="'+key+'"><option value="">Choose</option>'+
@@ -284,9 +411,10 @@
   function form(m) {
     const field=(key,title,numeric=false)=>input(key,title,m[key],numeric);
     const choice=(key,title)=>select(key,title,m[key],labels[key]);
+    const extra='<label>Other recipe details needed from R&amp;D (optional, one per line)<textarea data-quid="rdRequest" maxlength="1600" rows="2">'+esc(m.rdRequest)+'</textarea></label>';
     let html='<h5>Artwork and recipe</h5>'+field('sku','SKU or variant')+field('art','Artwork code and revision')+field('target','Ingredient or category being assessed')+
       choice('pack','Pack being reviewed')+field('observation','Wording, picture or ingredient statement on this artwork');
-    if(m.pack==='nonretail')return html+'<p>'+labelLink(sources.nonretail,'Non-retail containers, regulation 10')+'</p>';
+    if(m.pack==='nonretail')return html+'<p>'+labelLink(sources.nonretail,'Non-retail containers, regulation 10')+'</p>'+extra;
     if(m.pack)html+=field('area','Total package surface area in cm², if checking small-pack relief',true);
     const area=decimal(m.area);
     if(m.pack==='inner'||(area&&area.n&&!lt({n:100n,scale:0},area)))html+=field('outer','Corresponding retail multi-unit artwork revision');
@@ -313,7 +441,7 @@
     }
     html+=choice('print','Percentage on this artwork');
     if(m.print==='value')html+=field('printed','Printed percentage, retaining decimal places',true);
-    return html;
+    return html+extra;
   }
   function findings(m) {
     const legal=decide(m),calc=calculate(m);
@@ -351,7 +479,7 @@
     });
     sectionNode.addEventListener('input',e=>{
       const el=e.target,key=el.dataset.quid,lineKey=el.dataset.quidLine;
-      if(!scalarKeys.includes(key)&&!lineKeys.includes(lineKey))return;
+      if(key!=='rdRequest'&&!scalarKeys.includes(key)&&!lineKeys.includes(lineKey))return;
       if(lineKey){
         const line=m.lines[Number(el.closest('[data-quid-index]').dataset.quidIndex)];
         line[lineKey]=el.value;
@@ -361,6 +489,7 @@
         m[key]=el.value;
         if(['sku','art','pack'].includes(key)&&str(previous)&&previous!==m[key]){
           for(const field of ['area','outer','observation','name','words','picture','character','contextRef','exception','exceptionRef','print','printed'])m[field]='';
+          m.rdRequest='';
           if(key==='sku'){m.recipe='';m.nature='';m.food='';m.lines=[emptyLine()];m.total='';m.unit='';}
         }
         if(key==='food'&&m.food!=='mixture'){m.exception='';m.exceptionRef='';}
@@ -371,6 +500,7 @@
         if(['name','picture','nature'].includes(key))m.contextRef='';
         if(key==='nature'&&(str(previous)||!['actual','both','agent'].includes(m.nature))){m.lines=[emptyLine()];m.total='';m.unit='';}
         if(key==='target'||key==='recipe'){
+          if(key==='target')m.rdRequest='';
           // A new ingredient or recipe must not inherit a previously calculated percentage.
           m.lines=[emptyLine()];m.total='';m.unit='';m.nature='';m.contextRef='';m.exception='';m.exceptionRef='';
           if(key==='target'){m.name='';m.words='';m.picture='';m.character='';m.observation='';m.print='';m.printed='';}
@@ -412,5 +542,5 @@
       }
     });
   }
-  root.PMSVIngredientPercentage=Object.freeze({sources,columns,model,draft,calculate,placement,decide,compare,save,remove,savedByProduct,exportRows,values,brief,section,attach});
+  root.PMSVIngredientPercentage=Object.freeze({sources,columns,model,draft,calculate,placement,decide,compare,save,remove,savedByProduct,requestRows,requestText,requestColumns,recipeQuestions,attachRequests,exportRows,values,brief,section,attach});
 })(globalThis);
