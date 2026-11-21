@@ -1055,6 +1055,48 @@ async function testVegetableMeals(page,register,base,artifacts) {
 }
 
 
+async function testSmallPackArtwork(page) {
+ const panel=page.locator('.small-pack-section');
+ const f=k=>panel.locator('[data-small-field="'+k+'"]');
+ const row=k=>panel.locator('[data-small-row="'+k+'"]');
+ const seen=(k,v)=>row(k).locator('select').selectOption(v);
+ const result=k=>row(k).locator('[data-small-finding]').innerText();
+ await panel.locator(':scope > summary').click();
+ await f('sku').fill('Example R105');await f('art').fill('Wrapper R105 v1');await f('pack').selectOption('inner');
+ await f('origin').selectOption('domestic');await f('operator').selectOption('different');
+ await f('method').selectOption('panel');await f('area').fill('10000');await f('unit').selectOption('mm2');
+ await f('outerType').selectOption('multi');await seen('ownerLic','outer');
+ assert((await result('ownerLic')).includes('Confirm visible package area'));
+ await f('method').selectOption('visible');assert((await panel.locator('[data-small-status]').innerText()).includes('100 cm²'));
+ await f('measureRef').fill('Formed wrapper R105');assert((await result('ownerLic')).includes('outer revision'));
+ await f('outerRef').fill('Retail pouch R105 v2');assert((await result('ownerLic')).includes('Recorded on the matching'));
+ await seen('made','outer');await seen('expiry','outer');assert((await result('expiry')).includes('lacks a size route'));
+ await f('area').fill('2999.99');assert((await result('made')).includes('Recorded on the matching'));
+ await f('area').fill('3000');assert((await result('made')).includes('lacks a size route'));
+ await seen('address','code');assert((await result('address')).includes('Record a scan'));
+ await f('scanRef').fill('Decoded address R105');assert((await result('address')).includes('under 8(5)'));
+ await seen('siteLic','code');await seen('owner','code');assert((await result('owner')).includes('does not cover'));
+ await seen('food','pack');await seen('irradiated','na');await row('irradiated').locator('input').fill('Process declaration R105');
+ assert((await result('irradiated')).includes('Process declaration R105'));
+ assert(await row('importer').locator('select').isDisabled());await f('origin').selectOption('repacked');
+ await seen('premises','outer');assert((await result('premises')).includes('lacks a size route'));
+ await panel.locator('[data-small-save]').click();await panel.getByText('Saved small-pack checks (1)',{exact:true}).waitFor();
+ const expected=await page.evaluate(()=>PMSVIngredientPercentage.requestRows().length);
+ await panel.locator('[data-small-new]').click();assert.equal(await f('sku').inputValue(),'Example R105');assert.equal(await f('art').inputValue(),'');
+ await f('art').fill('Nonretail R105');await f('pack').selectOption('nonretail');
+ assert((await panel.locator('[data-small-status]').innerText()).includes('regulation 10'));
+ await panel.locator('[data-small-save]').click();await panel.getByText('Saved small-pack checks (2)',{exact:true}).waitFor();
+ const saved=panel.locator('[data-small-saved] li').filter({hasText:'Wrapper R105 v1'});
+ await saved.getByRole('button',{name:'Open',exact:true}).click();assert.equal(await f('outerRef').inputValue(),'Retail pouch R105 v2');
+ const dl=page.waitForEvent('download');await panel.locator('[data-small-export]').click();const file=await dl;
+ assert(file.suggestedFilename().startsWith('PMSV-Small-Pack-Declarations-'));
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Decoded address R105')&&csv.includes('Process declaration R105')&&csv.includes('Nonretail R105'));
+ assert((await readProductBrief(page)).includes('Saved small-pack checks (2)'));
+ const extra=panel.locator('[data-small-saved] li').filter({hasText:'Nonretail R105'});await extra.getByRole('button',{name:'Remove',exact:true}).click();await extra.waitFor({state:'detached'});
+ assert.equal(await page.evaluate(()=>PMSVIngredientPercentage.requestRows().length),expected);
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Small-pack declaration fields overflow viewport');
+}
+
 async function testArtworkIngredientOrder(page) {
  const panel=page.locator('.order-section'),f=k=>panel.locator('[data-order-field="'+k+'"]');
  const entry=(i,k)=>panel.locator('[data-order-index="'+i+'"] [data-order-line="'+k+'"]');
@@ -1103,7 +1145,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(!detail.querySelector('.order-section>summary')||!detail.querySelector('.quid-section>summary')||!detail.querySelector('[data-residue-list]')||!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(!detail.querySelector('.small-pack-section>summary')||!detail.querySelector('.order-section>summary')||!detail.querySelector('.quid-section>summary')||!detail.querySelector('[data-residue-list]')||!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1403,6 +1445,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
  assert(await rdExport.isDisabled());await rd.locator('summary').click();
  await testArtworkIngredientOrder(page);
+ await testSmallPackArtwork(page);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
  assert.equal(await page.locator('#productList [data-id]').count(),36);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
@@ -1411,8 +1454,8 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R104.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R105.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1997,7 +2040,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={ingredientOrderWorksheets:533,ingredientOrderAndRequestsTested:true,rdRecipeRequestCopyAndCsvTested:true,ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={smallPackPlacementTested:true,smallPackWorksheets:533,ingredientOrderWorksheets:533,ingredientOrderAndRequestsTested:true,rdRecipeRequestCopyAndCsvTested:true,ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

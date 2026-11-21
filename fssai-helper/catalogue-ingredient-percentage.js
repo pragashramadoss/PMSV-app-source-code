@@ -181,17 +181,18 @@
     if(rounded(calc.n,calc.d,print.scale)===print.n)return tag+'Matches only after rounding. Confirm the declaration precision and applicable rule.';
     return tag+'Printed percentage differs from the recipe.';
   }
-  const O=root.PMSVIngredientOrder;
+  const O=root.PMSVIngredientOrder, S=root.PMSVSmallPack;
+  const handler=m=>m?.type==='order'?O:m?.type==='smallPack'?S:null;
   const prefix='pmsv-fssai-artwork-percentage-r102:';
   const session=new Map();
-  const identity=(id,m)=>prefix+JSON.stringify([id,...(m.type==='order'?O.identityParts(m):[m.sku,m.art,m.pack,m.target].map(str))]);
+  const identity=(id,m)=>prefix+JSON.stringify([id,...(handler(m)?.identityParts(m)||[m.sku,m.art,m.pack,m.target].map(str))]);
   function decode(key,json) {
     try{
       const parts=JSON.parse(key.slice(prefix.length)),v=JSON.parse(json),id=parts[0];
-      const isOrder=v.review?.type==='order';
-      if(!Array.isArray(parts)||parts.length!==(isOrder?7:5)||v.version!==1||!v.review||!Object.hasOwn(root.PMSVCatalogueRules.products,id))return null;
-      if(isOrder&&(!O||!Object.hasOwn(O.scopes,v.review.scope)))return null;
-      const m=isOrder?O.model(v.review):model(v.review);
+      const adapter=handler(v.review);
+      if(!Array.isArray(parts)||v.version!==1||!v.review||(v.review.type&&!adapter)||!Object.hasOwn(root.PMSVCatalogueRules.products,id))return null;
+      if(v.review.type==='order'&&!Object.hasOwn(O.scopes,v.review.scope))return null;
+      const m=(adapter?.model||model)(v.review);
       return identity(id,m)===key&&entry('pack',m.pack)?{id,key,raw:json,m}:null;
     }catch(_){return null;}
   }
@@ -215,12 +216,14 @@
     return groups;
   }
   function save(id,m,opened) {
-    const isOrder=m.type==='order';
+    const isOrder=m.type==='order',adapter=handler(m);
+    if(m.type==='smallPack'&&(!S||![m.sku,m.art,entry('pack',m.pack)].every(str)))
+      return {message:'Enter the SKU, artwork revision and pack being reviewed.'};
     if(isOrder&&(!O||!Object.hasOwn(O.scopes,m.scope)||(O.namedScope(m.scope)&&!str(m.listName))||![m.sku,m.art,entry('pack',m.pack)].every(str)))
       return {message:'Enter the SKU, artwork revision, pack and list being reviewed. Identify any compound ingredient or functional class.'};
-    if(!Object.hasOwn(root.PMSVCatalogueRules.products,id)||(!isOrder&&![m.sku,m.art,m.target,entry('pack',m.pack)].every(str)))
+    if(!Object.hasOwn(root.PMSVCatalogueRules.products,id)||(m.type&&!adapter)||(!adapter&&![m.sku,m.art,m.target,entry('pack',m.pack)].every(str)))
       return {message:'Enter the SKU or variant, artwork revision, pack and ingredient to save this check.'};
-    const key=identity(id,m),raw=JSON.stringify({version:1,review:isOrder?O.model(m):model(m)});
+    const key=identity(id,m),raw=JSON.stringify({version:1,review:(adapter?.model||model)(m)});
     const previous=(savedByProduct().get(id)||[]).find(r=>r.key===key);
     if(opened?.key===key&&previous?.raw!==opened.raw&&previous?.raw!==raw)
       return {message:'This saved check changed. Reopen its current version before editing it.'};
@@ -258,7 +261,7 @@
   root.addEventListener?.('storage',event=>{
     if(event.key!==null&&!event.key?.startsWith(prefix))return;
     notifyRequestChange();
-    for(const element of root.document?.querySelectorAll('.quid-section[open], .order-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
+    for(const element of root.document?.querySelectorAll('.quid-section[open], .order-section[open], .small-pack-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
   });
   function detail(m) {
     const legal=decide(m),math=calculate(m);
@@ -328,6 +331,7 @@
     const requests=new Map();
     for(const [id,records] of groups){
       for(const {m} of records){
+        if(m.type==='smallPack')continue;
         const questions=m.type==='order'?O.analyse(m).rd:recipeQuestions(m);
         if(!questions.length)continue;
         const sku=str(m.sku),recipe=str(m.recipe),art=str(m.art),pack=entry('pack',m.pack);
@@ -394,7 +398,7 @@
   const describe=m=>detail(m).join(' | ');
   const hasData=m=>scalarKeys.some(k=>str(m[k]))||m.lines.some(r=>r.source||r.amount||r.share||r.spec);
   function values(id,state,groups) {
-    const m=draft(state),all=groups?.get(id)||[],saved=all.filter(r=>r.m.type!=='order');
+    const m=draft(state),all=groups?.get(id)||[],saved=all.filter(r=>!r.m.type);
     const requests=requestRows(new Map([[id,all]]));
     return [sourceText,...(hasData(m)?detail(m):['','','','','']),saved.length,saved.map(r=>describe(r.m)).join('\n'),requests.length-1,requestText(requests)];
   }
@@ -404,7 +408,7 @@
     return ['Ingredient percentage on artwork',...v.slice(1,6).filter(Boolean),v[6]?'Saved artwork checks ('+v[6]+')':'',v[7],v[8]?'R&D recipe requests':null,v[9],sourceText].filter(Boolean);
   }
   function exportRows(id){
-    const rows=(savedByProduct().get(id)||[]).filter(r=>r.m.type!=='order');
+    const rows=(savedByProduct().get(id)||[]).filter(r=>!r.m.type);
     return [['Catalogue ID','SKU or variant','Artwork revision','Pack','Reviewed ingredient','Artwork and evidence','Declaration finding',
       'Pack and placement','Recipe calculation','Printed percentage comparison','Legal sources',requestColumns[2]],
       ...rows.map(({m})=>[id,m.sku,m.art,entry('pack',m.pack),m.target,...detail(m),sourceText,recipeQuestions(m).join('\n')])];
@@ -465,7 +469,7 @@
     const target=k=>sectionNode.querySelector('[data-quid-'+k+']');
     const status=text=>{target('status').textContent=text;};
     function refreshSaved(){
-      visible=(savedByProduct().get(id)||[]).filter(r=>r.m.type!=='order');
+      visible=(savedByProduct().get(id)||[]).filter(r=>!r.m.type);
       target('saved').innerHTML=visible.length?'<h5>Saved artwork checks ('+visible.length+')</h5><ul>'+visible.map(({m},i)=>
         '<li>'+esc(join([m.sku,m.art,entry('pack',m.pack),m.target]))+' <button type="button" data-quid-open="'+i+'">Open</button> '+
         '<button type="button" data-quid-delete="'+i+'">Remove</button></li>').join('')+'</ul><button type="button" data-quid-export>Export artwork checks as CSV</button>':'';

@@ -5,7 +5,7 @@ import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
 const files=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope',
   'broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary',
-  'catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets'];
+  'catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets'];
 const scripts=files.map(f=>fs.readFileSync(new URL(f+'.js',dir),'utf8'));
 const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
 function open(localStorage){
@@ -21,7 +21,7 @@ const candy={sku:'Example candy',art:'Jar A',pack:'outer',target:'Mango pulp',re
 const form=(changes={})=>Q.model({...candy,...changes});
 const requests=changes=>Array.from(Q.recipeQuestions(form(changes))).join('\n');
 const save=(changes={},pid=id)=>{const r=Q.save(pid,form(changes));assert(r.key,r.message);return r;};
-assert(W.available);assert.equal(R.latestRound,104);assert.equal(R.recipeRequestReview.products,533);
+assert(W.available);assert.equal(R.latestRound,105);assert.equal(R.recipeRequestReview.products,533);
 assert.equal(Q.requestRows().length,1);assert.equal(Q.requestColumns[2],'Recipe information required from R&D');
 assert.equal(requests({}),''); // Percentage missing on artwork; all recipe information is known.
 assert.equal(requests({printed:'8',print:'value'}),''); // Fully documented numerical mismatch.
@@ -59,8 +59,8 @@ const exportOne=Q.exportRows(id);assert.equal(exportOne[0].at(-1),Q.requestColum
 assert(exportOne.some(row=>row.at(-1).includes('supplier composition specification')));
 const full=W.registerRows(true),product=full.find(r=>r[0]===id);assert.equal(product[128],6);
 assert(product[129].includes('Confirm the emulsifier sequence.')&&product[129].includes('Wrap B'));
-const pristine=W.registerRows(false);assert.equal(pristine.length,534);assert.equal(new Set(pristine[0]).size,134);
-assert(pristine.slice(1).every(row=>row.length===134&&row[128]===0&&row[129]===''));
+const pristine=W.registerRows(false);assert.equal(pristine.length,534);assert.equal(new Set(pristine[0]).size,138);
+assert(pristine.slice(1).every(row=>row.length===138&&row[128]===0&&row[129]===''));
 
 // Multiple tabs read the same saved data; filling or deleting a review recomputes only its outstanding questions.
 const tab=open(storage);
