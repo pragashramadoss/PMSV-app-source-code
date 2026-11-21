@@ -1238,6 +1238,29 @@ async function testCatalogueWorksheets(page, exhaustive) {
   await page.locator('.catalogue-worksheet > summary').click();
   await page.locator('.ws-inputs').waitFor();
  };
+ await open('05-05-3-chewing-gum-and-bubble-gum');
+ const comp=page.locator('[data-variant-composition]');
+ const selector=field=>comp.locator('[data-ws-field="'+field+'"]');
+ await selector('compVariant').selectOption('Bubble Gum');
+ assert.equal(await selector('criterion').locator('option').count(),5);
+ await selector('compSweetener').selectOption('only');
+ assert((await comp.textContent()).includes('Does not apply under the artificial-sweetener-only proviso'));
+ await selector('compSweetener').selectOption('other');
+ assert.equal(await selector('criterion').locator('option').count(),7);
+ await selector('criterion').selectOption('5');
+ await selector('result').fill('60.001');await selector('unitConfirmed').check();
+ assert((await comp.locator('[data-ws-outcome]').textContent()).includes('Outside'));
+ await selector('compVariant').selectOption('Chewing Gum');
+ assert.equal(await selector('result').inputValue(),'');
+ assert.equal(await selector('criterion').inputValue(),'');
+ await open('05-05-1-cocoa-powder');
+ await selector('compVariant').selectOption({label:'Fat Reduced Cocoa Powder (Medium Fat)'});
+ await selector('criterion').selectOption('1');
+ await selector('result').fill('20.00');await selector('unitConfirmed').check();
+ assert((await comp.locator('[data-ws-outcome]').textContent()).includes('Within'));
+ await page.locator('[data-ws-save]').click();
+ const report=await page.evaluate(()=>PMSVCatalogueWorksheets.registerRows(true).find(r=>r[0]==='05-05-1-cocoa-powder').slice(-2));
+ assert(report[0].includes('Medium Fat')&&report[1].includes('20.00%')&&report[1].includes('dry basis'));
  if(exhaustive) {
   const count=await page.evaluate(()=>{
    const all=PMSV_HELPER_TEST.getCatalogue(),host=document.createElement('div');
@@ -1556,7 +1579,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R109.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R110.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 

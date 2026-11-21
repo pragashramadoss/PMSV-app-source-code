@@ -14,7 +14,7 @@ const master='01\tExample North\t'+n+'\tapproved\nA2 | Example West | '+w+' | re
 const base={sku:'Example SKU',art:'Wrapper 106 A',pack:'inner',batch:'01X27',width:'2',masterRef:'Site register 106 revision A',master,role:'different',recordRef:'Batch record 106',recordLicence:n,printState:'list',printList:n};
 const m=(patch={})=>T.model({...base,...patch}),analyse=(patch={},records=[])=>T.analyse(m(patch),records);
 const has=(a,key,kind)=>a.findings.some(f=>f.text.includes(key)&&(!kind||f.kind===kind));
-assert(W.available);assert.equal(R.latestRound,109);assert.equal(R.batchSiteReview.products,533);
+assert(W.available);assert.equal(R.latestRound,110);assert.equal(R.batchSiteReview.products,533);
 assert.equal(analyse().status,'Batch, site and operator licence agree');assert.equal(analyse().prefix,'01');assert.equal(analyse().site,'Example North');
 assert.equal(analyse({master:master.replace('01\t','01 | ').replace('North\t','North | ').replace(n+'\t',n+' | ')}).status,analyse().status);
 for(const width of ['0','-2','2.0','1e1','+2','2characters','10000000000000000000000',''])assert(!analyse({width}).prefix);
@@ -56,7 +56,7 @@ assert(Q.save(id,small).key);
 const after=T.exportRows(id);assert(after.every(r=>r.length===after[0].length));assert(after.some(r=>r.includes(linked.placement)));assert(after.some(r=>r.includes(base.master)));
 assert(Q.save(id,m({...qr,batch:'01Z21'})).key);let reg=W.registerRows(true).find(r=>r[0]===id);
 assert.equal(reg[126],1);assert.equal(reg[136],1);assert.equal(reg[140],2);assert(reg[141].includes('01Z21'));assert(W.briefLines(id).join('\n').includes('Saved batch/site checks (2)'));
-const blank=W.registerRows(false);assert.equal(blank.length,534);assert.equal(blank[0].length,150);assert.equal(new Set(blank[0]).size,150);assert(blank.slice(1).every(r=>r.length===150&&r[138].includes('advance-fbo-search')&&r[139]===''&&r[140]===0&&r[141]===''));
+const blank=W.registerRows(false);assert.equal(blank.length,534);assert.equal(blank[0].length,154);assert.equal(new Set(blank[0]).size,154);assert(blank.slice(1).every(r=>r.length===154&&r[138].includes('advance-fbo-search')&&r[139]===''&&r[140]===0&&r[141]===''));
 const tab=open(),updated=tab.Q.save(id,m({...outer,recordRef:'Different batch reference'}),save);assert(updated.key);assert(!Q.save(id,m(outer),save).key);
 const record=Q.savedByProduct().get(id).find(r=>r.m.type==='batchSite'&&r.m.batch===base.batch);assert(Q.remove(id,record).includes('Removed'));assert.equal(S.exportRows(id).length,21);
 const blocked=open({get length(){throw Error();},setItem(){throw Error();}});assert(blocked.Q.save(id,m()).message.includes('session'));assert(blocked.T.exportRows(id).length>1);

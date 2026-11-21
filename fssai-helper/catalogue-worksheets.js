@@ -3,9 +3,10 @@
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
   const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel, Q = root.PMSVIngredientPercentage, O = root.PMSVIngredientOrder, S = root.PMSVSmallPack, T = root.PMSVBatchSite, L = root.PMSVLotDates;
+  const composition = root.PMSVVariantComposition;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 109 && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 110 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -24,7 +25,7 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
+  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -102,6 +103,7 @@
   function enabledCriteria(id) {
     const p=E.products[id];
     if (!p) return [];
+    if (composition.profiles.has(id)) return composition.enabled(id,getState(id));
     const s=R.standards[p.standard];
     if (focused.has(id) || p.scope!=='product_standard' || !s) return [];
     const differences=new Set((p.qualityCrosschecks||[]).filter(([,row])=>row[5]==='different numerical values').map(([,row])=>row[0]));
@@ -241,10 +243,28 @@
       S.section()+L.section()+T.section()+Q.section()+O.section()+section('Prepackaged label declarations',table(['Provision','Declaration'],R.label.map(([k,v])=>[esc(k),esc(v)]))+'<p>Cross-check pack size, retail or non-retail presentation, ingredients, allergens, product-specific declarations and applicable exemptions.</p>')+
       section('Claims review',ul(R.claims.map(c=>esc(c.clause+' · '+c.text))))+documentLink('baser16-1')+' '+documentLink('baser20-1')+' '+documentLink('baser15-1'));
   }
-  function inputs(id) {
+  function measurement(id) {
     const s=getState(id), rows=enabledCriteria(id);
     let calc='';
     if(rows.length)calc='<label>Source-edition criterion<select data-ws-field="criterion"><option value="">Select a criterion</option>'+rows.map(({v,i})=>'<option value="'+i+'"'+(String(i)===s.criterion?' selected':'')+'>'+esc(v.spec.parameter+' · '+threshold(v.spec)+' · '+(v.spec.analytical_basis||''))+'</option>').join('')+'</select></label><label>Measured result in the cited unit<input inputmode="decimal" data-ws-field="result" value="'+esc(s.result)+'"></label><label class="ws-check"><input type="checkbox" data-ws-field="unitConfirmed"'+(s.unitConfirmed==='yes'?' checked':'')+'> Product variant, analytical basis and unit match the selected criterion</label><p data-ws-outcome role="status">'+esc(resultText(id))+'</p>';
+    return calc;
+  }
+  function variantTable(id) {
+    const profile = composition.profiles.get(id);
+    if (!profile) return '';
+    const state = getState(id), form = composition.selected(id,state);
+    const option = (key,label,current) => '<option value="'+esc(key)+'"'+(key===current?' selected':'')+'>'+esc(label)+'</option>';
+    const variant = '<label>Product variant<select data-ws-field="compVariant"><option value="">Select the declared variant</option>'+
+      profile.forms.map(f=>option(f.name,f.name,state.compVariant)).join('')+'</select></label>';
+    const sweetener = profile.kind==='gum' && form ? '<label>Sweeteners in this formulation<select data-ws-field="compSweetener"><option value="">Not confirmed</option>'+
+      Object.entries(composition.sweeteners).map(([k,v])=>option(k,v,state.compSweetener)).join('')+'</select></label>' : '';
+    const rows = (form?.rows || []).map(row => [esc(row.parameter),esc(composition.limit(row)),esc(composition.applicability(row,state.compSweetener)||'Applies')]);
+    return '<h4>Compare a lab result with the product standard</h4><p>FSSAI '+esc(profile.article)+' · '+
+      profile.pages.map(n=>href(profile.source+'#page='+n,'PDF p. '+n)).join(' ')+'</p>'+variant+sweetener+
+      '<p>'+esc(composition.note(profile.kind))+'</p>'+table(['Parameter','Limit and reporting basis','Applicability'],rows)+measurement(id);
+  }
+  function inputs(id) {
+    const s=getState(id), calc=composition.profiles.has(id)?'':measurement(id);
     return '<div class="ws-inputs"><h5>My product review</h5><label>SKU, recipe or sample reference<input maxlength="180" data-ws-field="reference" value="'+esc(s.reference)+'"></label><label>Declared variant, process or article<input maxlength="320" data-ws-field="article" value="'+esc(s.article)+'"></label>'+calc+'<label>Evidence and open actions<textarea maxlength="5000" data-ws-field="note">'+esc(s.note)+'</textarea></label><button type="button" data-ws-save>Save worksheet on this device</button> <span data-ws-saved role="status"></span></div>';
   }
   function markup(id) {
@@ -258,7 +278,7 @@
       const body=node.querySelector('.ws-body');
       if(!node.open || body.hasChildNodes())return;
       const p=E.products[id];
-      body.innerHTML=productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
+      body.innerHTML=(composition.profiles.has(id)?'<section class="panel compact" data-variant-composition>'+variantTable(id)+'</section>':'')+productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
       Q.attach(node,id,getState(id));
       O.attach(node,id,getState(id));
       S.attach(node,id,getState(id));
@@ -275,6 +295,13 @@
       if(!fields.includes(k))return;
       const state=getState(id), previous=state[k];
       state[k]=el.type==='checkbox'?(el.checked?'yes':''):el.value;
+      if(k==='compVariant' || k==='compSweetener'){
+        if(k==='compVariant')state.compSweetener='';
+        state.criterion='';state.result='';state.unitConfirmed='';
+        const panel=node.querySelector('[data-variant-composition]');
+        panel.innerHTML=variantTable(id);
+        panel.querySelector('[data-ws-field="'+k+'"]').focus();
+      }
       if(k==='criterion'){state.unitConfirmed='';state.result='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;node.querySelector('[data-ws-field="result"]').value='';}
       if(k==='broadForm'){state.broadRef='';node.querySelector('[data-ws-field="broadRef"]').value='';}
       if(k==='broadForm' || k==='broadRef')node.querySelector('[data-broad-result]').textContent=root.PMSVBroadContaminants.resolution(id,state.broadForm,state.broadRef);
@@ -332,12 +359,13 @@
       ...(p.routeAnchors||[]).map(([doc,pp,note])=>note+' · '+E.documents[doc].url+'#page='+pp[0]),
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
       'Original Gazette rows matching the catalogue name: '+(p.namedGazette||[]).length,'Product reference: '+(s.reference||'—'),'Variant or article: '+(s.article||'—'),'Primary pack: '+(s.pack?human(s.pack):'—'),
+      ...composition.values(id,s,s.result?resultText(id):'').map((v,i)=>v?composition.columns[i]+': '+v:'').filter(Boolean),
       ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...P.brief(id,s),...['metalForm','metalPack'].map(k=>root.PMSVMetalScope.documentedChoice(id,k,s)).filter(Boolean),...C.brief(id,s),...V.brief(id,s),...X.brief(id,s),...Y.brief(id,s),...Q.brief(id,s,artworkChecks),...O.brief(id,s,artworkChecks),...S.brief(id,s,artworkChecks),...T.brief(id,s,artworkChecks),...L.brief(id,s,artworkChecks),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
   }
   function registerRows(includeDeviceEntries=false) {
     if(!valid)return [];
     const artworkChecks=includeDeviceEntries?Q.savedByProduct():null;
-    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack',...C.columns(),...P.columns(),...V.columns,...X.columns,...Y.columns,...Q.columns,...O.columns,...S.columns,...T.columns,...root.PMSVDateMarking.columns,...L.columns], ...list.map(({id})=>{
+    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack',...C.columns(),...P.columns(),...V.columns,...X.columns,...Y.columns,...Q.columns,...O.columns,...S.columns,...T.columns,...root.PMSVDateMarking.columns,...L.columns,...composition.columns], ...list.map(({id})=>{
       const p=E.products[id],r=R.products[id],std=R.standards[p.standard],a=E.standards[p.standard],route=p.routeAnchors?.[0];
       const s=includeDeviceEntries?getState(id):{};
       const M=root.PMSVMetalScope,B=root.PMSVBroadContaminants;
@@ -347,7 +375,7 @@
         M.mercuryGuide(id)?.reason||B.scope(id).h.why,
         mel.m.options.length && mel.applied ? B.resolution(id,s.broadForm,s.broadRef)+' · '+s.broadRef:'',
         hg?hg.article+' · '+hg.level+' · '+hg.why:'',documented('metalForm'),documented('metalPack'),
-        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s),...Y.values(id,s,includeDeviceEntries),...Q.values(id,s,artworkChecks),...O.values(id,s,artworkChecks),...S.values(id,s,artworkChecks),...T.values(id,s,artworkChecks),...S.dateValues(id,s,artworkChecks),...L.values(id,s,artworkChecks)];
+        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s),...Y.values(id,s,includeDeviceEntries),...Q.values(id,s,artworkChecks),...O.values(id,s,artworkChecks),...S.values(id,s,artworkChecks),...T.values(id,s,artworkChecks),...S.dateValues(id,s,artworkChecks),...L.values(id,s,artworkChecks),...composition.values(id,s,s.result?resultText(id):'')];
     })];
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,

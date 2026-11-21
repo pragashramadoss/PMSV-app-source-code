@@ -6,7 +6,7 @@ const require=createRequire(import.meta.url);
 global.window=global;
 const directory=path.resolve(import.meta.dirname,'../fssai-helper');
 const read=name=>JSON.parse(fs.readFileSync(path.join(directory,name),'utf8'));
-for(const name of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','full-catalogue-533','review-status-data','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets']){
+for(const name of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','full-catalogue-533','review-status-data','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-worksheets']){
   require(path.join(directory,name+'.js'));
 }
 const C=global.PMSVCropScope, D=global.PMSVCropScopeData, R=global.PMSVCatalogueRules, E=global.PMSVCatalogueEvidence;
@@ -81,7 +81,7 @@ assert(C.markup(idFor('Bean')).includes('20 ppm'));assert(!C.positive(idFor('Bea
 assert(C.brief(idFor(candy),candyFormula).some(v=>v.includes('20 µg/kg')&&v.includes('Formula B17')));
 assert(C.markup(idFor(candy),{...candyFormula,crop_afRef:'<img onerror=x>'}).includes('&lt;img onerror=x&gt;'));
 const csv=PMSVCatalogueWorksheets.registerRows(false);
-assert.equal(csv.length,534);assert.equal(csv[0].length,72+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length);assert.equal(csv[0].length,new Set(csv[0]).size);
+assert.equal(csv.length,534);assert.equal(csv[0].length,72+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);assert.equal(csv[0].length,new Set(csv[0]).size);
 assert.equal(csv.slice(1).filter(r=>r[10].includes('Named finished-article')).length,priorityNamed);
 assert(csv.slice(1).every(r=>r[15]==='No'&&r.at(-1)===''));assert.deepEqual(csv,PMSVCatalogueWorksheets.registerRows(true));
 console.log(JSON.stringify({products:533,analytes:12,sourceRows:45,namedProducts,priorityNamed,finished,unknown,unmatched}));

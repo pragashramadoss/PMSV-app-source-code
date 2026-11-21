@@ -15,7 +15,7 @@ const {S,Q,O,W,R}=open(),id='05-05-2-sugar-boiled-confectionery-hard-candy';
 const base={sku:'Example R105',art:'Inner A1',pack:'inner',method:'visible',area:'10000',unit:'mm2',measureRef:'Spec M1',outerType:'multi',outerRef:'Retail outer A2',origin:'domestic',operator:'different',scanRef:'Decoded evidence A1'};
 const m=(patch={})=>S.model({...base,...patch});
 const row=(key,seen,patch={})=>S.analyse(m({seen:{[key]:seen},...patch})).rows.find(r=>r.key===key);
-assert(W.available);assert.equal(R.latestRound,109);assert.equal(R.smallPackReview.products,533);assert.equal(Object.keys(S.titles).length,20);
+assert(W.available);assert.equal(R.latestRound,110);assert.equal(R.smallPackReview.products,533);assert.equal(Object.keys(S.titles).length,20);
 for(const [area,unit,small,below30,text] of [['10000','mm2',true,false,'100 cm²'],['100.000000000000000001','cm2',false,false,'100.000000000000000001 cm²'],['2999.999999999999999999','mm2',true,true,'29.99999999999999999999 cm²'],['30.00','cm2',true,false,'30 cm²'],['.1','mm2',true,true,'0.001 cm²']]){
   const v=S.measurement(m({area,unit}));assert.equal(v.small,small);assert.equal(v.below30,below30);assert.equal(v.text,text);
 }
@@ -60,8 +60,8 @@ assert(!Q.save(id,check,save).key);assert(Q.remove(id,{key:save.key,raw:save.raw
 const record=Q.savedByProduct().get(id).find(r=>r.m.type==='smallPack');
 assert.equal(record.m.scanRef,'Scanned second time');
 const full=W.registerRows(true),product=full.find(r=>r[0]===id);
-assert.equal(full[0].length,150);assert.equal(product[126],1);assert.equal(product[132],0);assert.equal(product[136],1);assert(product[137].includes('Scanned second time'));assert(W.briefLines(id).join('\n').includes('Saved small-pack checks (1)'));
-const blank=W.registerRows(false);assert.equal(blank.length,534);assert(blank.slice(1).every(r=>r.length===150&&r[134].includes('#page=21')&&r[135]===''&&r[136]===0&&r[137]===''));
+assert.equal(full[0].length,154);assert.equal(product[126],1);assert.equal(product[132],0);assert.equal(product[136],1);assert(product[137].includes('Scanned second time'));assert(W.briefLines(id).join('\n').includes('Saved small-pack checks (1)'));
+const blank=W.registerRows(false);assert.equal(blank.length,534);assert(blank.slice(1).every(r=>r.length===154&&r[134].includes('#page=21')&&r[135]===''&&r[136]===0&&r[137]===''));
 assert(Q.save(id,m({art:'Other artwork',pack:'nonretail'})).key);const nc=S.exportRows(id).find(r=>r.includes('Non-retail container'));assert.equal(nc.length,exp[0].length);assert(nc.includes(S.sources.nonretail));
 assert(Q.remove(id,record).includes('Removed'));assert.equal(S.exportRows(id).length,2);assert.equal(Q.exportRows(id).length,2);
 const blocked=open({get length(){throw Error();},setItem(){throw Error();}});assert(blocked.Q.save(id,check).message.includes('session'));assert.equal(blocked.S.exportRows(id).length,21);
