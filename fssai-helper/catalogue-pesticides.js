@@ -296,6 +296,55 @@
     return {products:keys.length,scopeCounts:counts,mappedProducts:keys.filter(mapped).length,
       priorityMapped:priority.filter(mapped).length,gazetteRows:rowIndex.length,directionRows:directed.length};
   }
-  root.PMSVPesticides=Object.freeze({profile,current,compare,comparison,reading,matrixName:key=>matrices[key]?.[0],fields,columns,values,brief,markup,update,indexPage,stats,
+  // Annexure 1 of the 29 November 2023 direction. The note on its final page
+  // sets an extraneous residue limit and a separate exception for DDT.
+  const bannedTea=[
+    ['Aldicarb','Sum with its sulphoxide and sulphone'],['Aldrin and dieldrin','Paired entry'],
+    ['Chlordane','Total α- and β-chlordane'],['Heptachlor','Include heptachlor epoxide'],
+    ['Lindane and HCH isomers','Identify γ-, α-, β- and δ-HCH'],['Endosulfan','Sum of α, β and sulphate'],
+    ['Carbofuran'],['Methomyl'],['Phosphamidon'],['Captafol'],['Ferbam'],['Formothion'],['Simazine'],
+    ['Diazinon'],['DDT','Confirm the isomers and metabolites against Annexure 1 before interpreting the sum'],
+    ['Fenitrothion'],['Fenthion','Sum with oxygen analogue and their sulphoxides and sulphones'],
+    ['Methyl parathion','Include methyl paraoxon'],['Ethyl parathion','Include ethyl paraoxon'],['Monocrotophos']
+  ];
+  const tableTea=rowIndex.filter(r=>norm(r.article)==='tea'&&!directionSerials.has(r.serial));
+  function planRows(id) {
+    const p=profile(id);
+    if(!p)return [];
+    const rows=[{article:'CTR 2.3.1',form:'Marketed article',parameter:'Identify the sampled commodity and process',
+      status:routes[p.grade],notes:p.note,source:sources.gazette+'#page=31 | '+sources.scope+'#page=1'}];
+    for(const matrix of p.choices){
+      const options=matrix==='tea'?[...tableTea,...directed]:byMatrix.get(matrix)||[];
+      for(const r of options){
+        const held=lock(r,matrix,options);
+        const fieldUnit=r.serial===64?'mg CS₂/kg':'mg/kg';
+        const value=r.limit.replace(/\*$/,'');
+        const basis=portions[portion(r)];
+        const status=r.source==='tea2024'?'Additional notified-laboratory test and tolerance':
+          r.source==='tea2023'?'Tea MRL under the April 2023 direction':'Confirm named commodity and reporting basis';
+        rows.push({article:r.source==='gazette'?'CTR 2.3.1 · serial '+r.serial:r.source==='tea2024'?'4 March 2024 · points 1–3':'April 2023 tea direction · MRL table',
+          form:matrices[matrix][0]+' · '+r.article,parameter:r.drug+(r.subgroup?' · '+r.subgroup:''),
+          status:held?'Resolve source before comparison':status,limit:held?'':value,unit:held?'':fieldUnit,
+          notes:[held,held&&'Printed entry: '+r.limit+(r.limit==='$'?'':' '+fieldUnit),r.condition,basis,
+            r.limit.endsWith('*')&&'Starred value at quantification limit. Confirm the validated method LOQ.',
+            matrix==='tea'||matrix==='greenTea'?'Confirm the tea form and residue definition.':'Confirm the specific commodity and sample. The January 2021 clarification limits this table to agricultural commodities and their physically processed forms.'].filter(Boolean).join(' · '),
+          source:r.url});
+      }
+      if(matrix==='tea'){
+        bannedTea.forEach(([parameter,scope],i)=>rows.push({article:'29 November 2023 · Annexure 1, item '+(i+1),
+          form:'Plain tea',parameter,status:'Banned insecticide · extraneous MRL',limit:parameter==='DDT'?'0.05':'0.01',unit:'mg/kg',
+          notes:[scope,'FSSAI directs notified laboratories to test for this residue. The limit addresses extraneous residues of a banned insecticide.'].filter(Boolean).join(' · '),
+          source:[...new Set([sources.teaTesting+'#page='+(i<17?'2':'3'),sources.teaTesting+'#page=3'])].join(' | ')}));
+      }
+    }
+    if(root.PMSVResiduePanel?.marketed(id)){
+      rows.push({article:'8 April 2024 spice and culinary-herb order',parameter:'Pesticide-specific MRL selection',
+        form:'Identified spice or culinary herb',status:'Document the applicable branch of the order',
+        notes:'Check the FSSAI commodity MRL first. Where CIB&RC registration and an MRL for another food are established, consult Codex for this spice. If Codex has no such MRL, the order sets 0.1 mg/kg. The unregistered-pesticide branch also sets 0.1 mg/kg. Record the evidence for the selected branch.',
+        source:sources.spice+'#page=1'});
+    }
+    return rows;
+  }
+  root.PMSVPesticides=Object.freeze({planRows,profile,current,compare,comparison,reading,matrixName:key=>matrices[key]?.[0],fields,columns,values,brief,markup,update,indexPage,stats,
     mapped:id=>!!profile(id)?.choices.some(k=>byMatrix.get(k)?.length)});
 })(globalThis);

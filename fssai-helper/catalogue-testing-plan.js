@@ -5,7 +5,7 @@
   const V=root.PMSVVariantComposition, P=root.PMSVMetalPanel, C=root.PMSVCropScope;
   const sourceRows=root.PMSVTestingSources;
   const headers=['Catalogue ID','Product','Review area','Article or table','Product form or sample','Parameter or decision','Applicability','Requirement or reported limit','Unit','Reporting basis, condition or next action','n','c','m','M','Official source pages'];
-  const areas=['Composition and identity','Microbiology','Metals','Toxins and other contaminants'];
+  const areas=['Composition and identity','Microbiology','Metals','Toxins and other contaminants','Pesticide residues','Veterinary drug residues'];
   const label=k=>String(k).replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
   const join=items=>[...new Set(items.filter(v=>v!==''&&v!==null&&v!==undefined))].join(' · ');
   function detail(v) {
@@ -311,6 +311,8 @@
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add);microbiology(id,add);contaminants(id,add);
+    for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
+    for(const r of root.PMSVVeterinary.planRows(id))add({...r,area:areas[5]});
     return result;
   }
   function exportRows(id) {
@@ -321,5 +323,5 @@
     }
     return out;
   }
-  root.PMSVTestingPlan=Object.freeze({available:!!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,microCriteria,relevantForm});
 })(globalThis);

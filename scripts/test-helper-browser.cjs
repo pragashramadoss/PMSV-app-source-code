@@ -1245,14 +1245,23 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const microTable=planSection.locator('[data-plan-results]');
  assert((await microTable.textContent()).includes('Salmonella'));
  assert.equal(await microTable.getByRole('cell',{name:'Yeast & mold count',exact:true}).count(),0);
+ await planSection.locator('[data-plan-area]').selectOption('Veterinary drug residues');
+ assert((await microTable.textContent()).includes('Chloramphenicol'));
+ assert((await microTable.textContent()).includes('Prohibited use · EMRL'));
+ assert(!(await microTable.textContent()).includes('Food and tissue tolerance'));
+ assert(await microTable.locator('a[href*="17_10_2024"]').count()>0);
+ await planSection.locator('[data-plan-area]').selectOption('Pesticide residues');
+ assert((await microTable.textContent()).includes('Identify the sampled commodity and process'));
  const onePlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
- const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R111.csv');
+ const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R112.csv');
  const oneText=fs.readFileSync(await oneFile.path(),'utf8');
  assert(oneText.includes('Milk Powders and Cream Powder')&&!oneText.includes('01-01-1-cow-milk'));
+ assert(oneText.includes('Veterinary drug residues')&&oneText.includes('Pesticide residues')&&oneText.includes('Chloramphenicol'));
  const allPlan=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R111.csv');
+ const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R112.csv');
  const allPlanText=fs.readFileSync(await planFile.path(),'utf8');
  assert(allPlanText.includes('01-01-1-cow-milk')&&allPlanText.includes('05-05-1-cocoa-powder')&&allPlanText.includes('Thermal-centre temperature'));
+ assert(allPlanText.includes('Banned insecticide · extraneous MRL')&&allPlanText.includes('Honey misuse · MRPL')&&allPlanText.includes('farmed aquaculture only'));
  await open('05-05-3-chewing-gum-and-bubble-gum');
  const comp=page.locator('[data-variant-composition]');
  const selector=field=>comp.locator('[data-ws-field="'+field+'"]');
@@ -1594,7 +1603,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R111.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R112.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 

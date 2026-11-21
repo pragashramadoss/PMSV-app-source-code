@@ -293,5 +293,45 @@
       if (out) out.textContent=current(id,s).comparison;
     }
   }
-  root.PMSVVeterinary=Object.freeze({fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
+  function planRows(id) {
+    const p=profile(id);
+    if(!p)return [];
+    const rows=[{article:'CTR 2.3.2',form:'Marketed article',parameter:'Identify the animal source, product and sampled portion',
+      status:grades[p.grade],notes:p.note,source:refs.veterinary+'#page=17 | '+refs.seafood+'#page=19'}];
+    const found=new Map();
+    let seafood=false;
+    for(const matrix of p.choices){
+      const b=basis(id,{vetMatrix:matrix,vetOrigin:'farmed'});
+      seafood ||= b.family==='seafood';
+      for(const r of candidates(b)){
+        const qualifier=qualification(r,b);
+        const held=qualifier && qualifier!==r.condition;
+        const farmed=r.clause===2 && b.family==='seafood';
+        const key=JSON.stringify([r.key,qualifier,farmed]);
+        let match=found.get(key);
+        if(!match){
+          const explanation=r.clause===3?'Antibiotic use is prohibited during honey production. MRPL is a misuse-detection threshold.':
+            r.clause===2?'Prohibited in production. EMRL is the extraneous maximum residue limit.':
+            'Apply only to the indicated article and sample portion, in the unit printed.';
+          const article='CTR 2.3.2('+r.clause+')'+(r.serial?' · serial '+r.serial:'');
+          const notes=[qualifier,held&&'Printed reference: '+r.limit+' '+r.unit,explanation,
+            p.grade==='conditional'&&p.note,r.clause===1&&'Clause (1) applies in this edition through 30 November 2026.'].filter(Boolean).join(' · ');
+          match={forms:new Set(),row:{article,parameter:r.drug,status:held?'Resolve overlapping source entries':rowType[r.clause],
+            limit:held?'':r.limit,unit:held?'':r.unit,notes,source:getUrl(r)}};
+          found.set(key,match);
+        }
+        match.forms.add(b.label+(farmed?' · farmed aquaculture only':''));
+        match.article=r.article;
+      }
+    }
+    for(const {forms,article,row} of found.values()){
+      rows.push({...row,form:[...forms].join(' / ')+' · '+article});
+    }
+    if(seafood)rows.push({article:'May 2026 Gazette · amendment 4',form:'Seafood and fishery products',
+      parameter:'Check the assessment date',status:'Change effective 1 December 2026',
+      notes:'For a sample assessed from 1 December, use the amended seafood provisions. The clause (1) rows in this export represent the edition through 30 November 2026.',
+      source:refs.december+'#page=4 | '+refs.december+'#page=6'});
+    return rows;
+  }
+  root.PMSVVeterinary=Object.freeze({planRows,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
 })(globalThis);
