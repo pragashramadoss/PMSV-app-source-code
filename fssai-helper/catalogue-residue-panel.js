@@ -2,7 +2,8 @@
 (function(root){
   'use strict';
   const database=root.PMSV_REVIEW_REGISTER?.pesticideReview, X=root.PMSVPesticides, products=root.PMSVCatalogueRules?.products;
-  if(!database||!X||!products) return;
+  const EO=root.PMSVEthyleneOxide;
+  if(!database||!X||!products||!EO) return;
   const sources={
     order:database.sources.spice+'#page=1',gazette:database.sources.gazette,processing:database.sources.scope+'#page=1',
     registration:'https://ppqs.gov.in/divisions/cib-rc/registered-products',
@@ -17,7 +18,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const link=(url,label)=>'<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+esc(label)+'</a>';
   const roleLabel={product:'Marketed product',ingredient:'Separately sampled ingredient'};
-  const processLabel={raw:'Raw single commodity',physical:'Physical processing only',other:'Heat, chemical treatment, mixture or unresolved process',tea:'Plain tea under the cited direction',thermal:'Thermal or chemical processing',unknown:'Process under review'};
+  const processLabel={raw:'Raw single commodity',physical:'Physical processing only',singleHeat:'Heat-treated single spice or herb',other:'Heat, chemical treatment, mixture or unresolved process',tea:'Plain tea under the cited direction',thermal:'Thermal or chemical processing',unknown:'Process under review'};
   const targets=new Map(), articles=new Map();
   // These commodity codes are lookup aids. An adopted CXL must also cover the
   // sample form and residue definition. Additional plausible Indian wordings
@@ -83,7 +84,7 @@
   const codexFields=['spCodex','spCodexRef','spLimit','spMark'];
   const registrationFields=['spReg','spRegRef','spOtherFood','spOtherRef',...codexFields];
   const indiaFields=['spIndia','spIndiaRef','spDate',...registrationFields];
-  const fields=['spRole','spArticle','spProcess','spSample','spAnalyte','spOther','spNamedRow',...indiaFields,...labFields];
+  const fields=['spRole','spArticle','spProcess','spSample','spAnalyte','spOther','spNamedRow',...indiaFields,...labFields,...EO.fields];
   function context(id,s={}) {
     if(!Object.hasOwn(products,id)) return null;
     const choices=targets.get(id)||[];
@@ -92,7 +93,7 @@
     const a=allowed.includes(s.spArticle)?articles.get(s.spArticle):null;
     const g=bySerial.get(s.spAnalyte);
     const other=s.spAnalyte==='other'?clean(s.spOther):'';
-    const analyte=g?.printed||other;
+    const analyte=EO.selected(s)?EO.named:g?.printed||other;
     const mapped=a?.matrix?X.current(id,{pestRole:'ingredient',pestMatrix:a.matrix}).options.filter(r=>r.serial===g?.serial):[];
     const flagged=a&&g?g.rows.filter(r=>a.check.some(t=>norm(t)===norm(r[0]))):[];
     const otherRow=g&&!database.nameHolds.includes(g.serial)?g.rows.find(r=>otherFoods.has(norm(r[0]))&&/^\d+(\.\d+)?\*?$/.test(r[1])):null;
@@ -113,11 +114,11 @@
     const c=context(id,s);
     if(!c?.a) return pending('Select the single spice or culinary herb that was sampled.');
     if(!c.analyte) return pending('Identify the reported pesticide and residue definition.');
+    if(EO.selected(s))return pending('Use the dedicated ethylene oxide assessment and the Food Authority decision on spices.');
     if(c.other) {
       const name=fold(c.other);
       if(!name)return pending('Enter the pesticide identity and residue definition as reported.');
-      if(/\b(ethylene oxide|ethyleneoxide|oxirane|eto|eo|75 21 8|2 chloroethanol|2 chloro ethanol|2ce|2 ce|ethylene chlorohydrin|107 07 3)\b/.test(name))
-        return pending('Ethylene oxide and its marker require a specific review. See FSSAI Food Authority meeting 43, item 3.3.');
+      if(name==='ech'||name==='chloroethanol')return pending('Confirm the marker identity from the laboratory report before choosing the EO or another pesticide assessment.');
       const alias=aliases.get(name);
       if(alias) return pending('Select FSSAI serial '+alias+' from the pesticide list to check its Indian entries.');
       if(/dithiocarbamat|mancozeb|metiram|\b(zineb|maneb)\b/.test(name))return pending('Use the dithiocarbamate heading and verify the subgroup and residue expression.');
@@ -178,10 +179,11 @@
       choose(s,'spArticle','Single spice or culinary herb',c.allowed.map(k=>[k,articles.get(k).label]));
     if(!c.a) return html;
     html+='<p>'+esc(c.a.codes?'Codex lookup codes · '+c.a.codes+'. Check the exact form, subgroup and group.':'Search Codex using the exact plant part, form, subgroup and group.')+' '+link(sources.hierarchy,'Codex commodities')+'</p>'+
-      choose(s,'spProcess','Spice processing route',['raw','physical','other'].map(k=>[k,processLabel[k]]))+
+      choose(s,'spProcess','Spice processing route',['raw','physical','singleHeat','other'].map(k=>[k,processLabel[k]]))+
       field(s,'spSample','Spice lot or sample and process reference')+
-      choose(s,'spAnalyte','Reported pesticide',[[ 'other','Other pesticide or marker'],...database.groups.map(g=>[String(g.serial),g.serial+' · '+g.printed])]);
+      choose(s,'spAnalyte','Reported pesticide',[['eto',EO.named],['other','Other pesticide or marker'],...database.groups.map(g=>[String(g.serial),g.serial+' · '+g.printed])]);
     if(s.spAnalyte==='other')html+=field(s,'spOther','Other pesticide or marker name');
+    if(EO.selected(s))return html+EO.form(s,{choose,field,link});
     if(!s.spAnalyte) return html;
     if(c.mapped.length){
       html+='<ul>'+c.mapped.map(r=>'<li>'+esc(r.drug+' · '+r.article+' · '+(r.limit==='$'?'see copper':r.limit+' mg/kg'))+' '+link(r.url,'Gazette p. '+r.page)+'</li>').join('')+'</ul>';
@@ -214,6 +216,11 @@
     return html;
   }
   function decisionText(id,s) {
+    const c=context(id,s);
+    if(c?.a&&EO.selected(s)){
+      const {lab,note}=EO.review(c,s);
+      return [lab.sum&&s.eoConfirmed!=='yes'?'Transcription pending.':'',lab.sum?lab.sum+(lab.complete?' mg/kg as EO.':'.'):lab.error,note].filter(Boolean).join(' ');
+    }
     const d=decide(id,s);
     if(d.kind==='domestic')return d.text+(d.row?' '+spiceComparison(id,s).text:' Select the printed row.');
     if(!d.limit) return d.text;
@@ -221,6 +228,11 @@
     return d.text+' · '+d.limit+' mg/kg. '+r.text;
   }
   function snapshot(id,s,mode) {
+    if(mode==='eo'){
+      const c=context(id,s);
+      const process=['raw','physical','singleHeat','other'].includes(s.spProcess)?processLabel[s.spProcess]:'';
+      return EO.snapshot(c,s,process,roleLabel[c?.role]);
+    }
     let row,role,matrixKey,matrix,analyteKey,analyte,limit,source,reference,sample,report,process,reading,kind,value,loq,basis;
     if(mode==='gazette'){
       const c=X.current(id,s);reading=X.comparison(id,s);
@@ -263,8 +275,11 @@
       if(!Array.isArray(parts)||parts.length!==6||!Object.hasOwn(products,id))return '';
       if(value===null){cache.get(id)?.delete(key);return id;}
       const r=JSON.parse(value);
-      const required=['matrixKey','matrix','analyteKey','analyte','sample','report','process','result','limit','source','reference','basis','decision'];
-      if(r.version!==1||!Object.hasOwn(roleLabel,r.role)||r.unit!=='mg/kg'||!['above','within','inconclusive'].includes(r.outcome)||
+      const required=['matrixKey','matrix','analyteKey','analyte','sample','report','process','result','source','reference','basis','decision'];
+      const eo=r.version===2&&r.type==='eo'&&r.outcome==='review'&&r.limit===''&&
+        r.analyteKey?.startsWith('eo-pair-')&&[r.raw,r.market,r.treatment].every(v=>clean(v));
+      const numeric=r.version===1&&['above','within','inconclusive'].includes(r.outcome)&&clean(r.limit);
+      if((!eo&&!numeric)||!Object.hasOwn(roleLabel,r.role)||r.unit!=='mg/kg'||
         required.some(k=>!clean(r[k]))||typeof r.loq!=='string'||recordKey(id,r)!==key)return '';
       if(!cache.has(id))cache.set(id,new Map());
       cache.get(id).set(key,r);return id;
@@ -301,22 +316,26 @@
     applyStored(key,null);return 'Removed this result.';
   }
   const columns=['Single-spice sample choices','Codex commodity lookup codes for the marketed spice','Spice order and lookup sources',
-    'Recorded spice decision and evidence','Spice laboratory comparison','Saved pesticide result count','Saved pesticide results by sample and report'];
-  const reportHeaders=['Sample role','Sample article','Sample or lot reference','Process','Laboratory report','Pesticide or residue definition','Reported result','Unit','Method LOQ (mg/kg)','Analytical basis','Source limit (mg/kg)','Source URL','Source provision and evidence','Result assessment'];
-  const toRow=r=>[roleLabel[r.role],r.matrix,r.sample,r.process,r.report,r.analyte,r.result,r.unit,r.loq,r.basis,r.limit,r.source,r.reference,r.decision];
+    'Recorded spice decision and evidence','Spice laboratory comparison','Saved pesticide result count','Saved pesticide results by sample and report',...EO.columns];
+  const reportHeaders=['Sample role','Sample article','Sample or lot reference','Process','Laboratory report','Pesticide or residue definition','Reported result','Unit','Method LOQ (mg/kg)','Analytical basis','Source limit (mg/kg)','Source URL','Source provision and evidence','Result assessment','EO report as issued','EO assessment market','EO treatment evidence'];
+  const toRow=r=>[roleLabel[r.role],r.matrix,r.sample,r.process,r.report,r.analyte,r.result,r.unit,r.loq,r.basis,r.limit,r.source,r.reference,r.decision,r.raw||'',r.market||'',r.treatment||''];
   function exportRows(id){
     return [['Catalogue ID','Product',...reportHeaders],...records(id).map(([,r])=>[id,products[id].name,...toRow(r)])];
   }
   function description(r){
-    return [roleLabel[r.role],r.matrix,r.sample,r.process,r.report,r.analyte,r.result+' '+r.unit,r.loq?'LOQ '+r.loq+' mg/kg':'',
-      r.basis,'Limit '+r.limit+' mg/kg',r.decision,r.reference,r.source].filter(Boolean).join(' · ');
+    return [roleLabel[r.role],r.matrix,r.sample,r.process,r.report,r.analyte,r.result.startsWith('Total unavailable')?r.result:r.result+' '+r.unit,r.loq?'LOQ '+r.loq+' mg/kg':'',
+      r.basis,r.limit?'Limit '+r.limit+' mg/kg':'',r.decision,r.reference,r.source].filter(Boolean).join(' · ');
   }
   function values(id,s={},includeSaved=false) {
     const c=context(id,s);
     const names=targets.get(id)||[];
     const d=decide(id,s),lines=includeSaved?records(id):[];
     let evidenceText='',lab='';
-    if(c.a&&c.analyte){
+    if(c.a&&EO.selected(s)){
+      const reviewed=EO.review(c,s);
+      evidenceText=reviewed.note;
+      lab=[clean(s.spReport),reviewed.lab.raw,reviewed.lab.sum].filter(Boolean).join(' · ');
+    }else if(c.a&&c.analyte){
       evidenceText=[roleLabel[c.role],c.a.label,clean(s.spSample),processLabel[s.spProcess],c.analyte,d.text,
         ...[s.spDate,s.spIndiaRef,s.spReg,s.spRegRef,s.spOtherRef,s.spCodex,s.spCodexRef].map(clean),d.limit?d.limit+' mg/kg':'',d.url,
         ...(d.rows||[]).map(r=>r.article+' '+r.limit+(r.limit==='$'?'':' mg/kg')+' '+r.url)].filter(Boolean).join(' · ');
@@ -324,25 +343,28 @@
     }
     return [names.map(k=>articles.get(k).label).join(' | ')||'Separately sampled spice only',
       names.map(k=>articles.get(k)).filter(a=>a.codes).map(a=>a.label+' · '+a.codes).join(' | '),
-      [sources.order,sources.registration,sources.codex,sources.hierarchy].join(' | '),evidenceText,lab,lines.length,lines.map(([,r])=>description(r)).join('\n')];
+      [sources.order,sources.registration,sources.codex,sources.hierarchy].join(' | '),evidenceText,lab,lines.length,lines.map(([,r])=>description(r)).join('\n'),
+      ...EO.values(names.map(k=>articles.get(k).label),c,s,roleLabel[c.role],processLabel[s.spProcess])];
   }
   function brief(id,s){
     const v=values(id,s,true);
     return [v[3]?'Spice source decision · '+v[3]:'',v[4]?'Spice laboratory comparison · '+v[4]:'',
+      ...(v[9]?['EO sample and method · '+v[9],v[10],v[11]?(v[11].startsWith('Total unavailable')?v[11]:v[11]+' mg/kg as EO'):'',v[12]]:[]),
       ...(v[5]?['Saved pesticide results ('+v[5]+')',...records(id).map(([,r])=>description(r))]:[])].filter(Boolean);
   }
   function panel(id){
     const lines=records(id);
     if(!lines.length)return '<p>No saved pesticide results for this product.</p>';
     return '<p>'+lines.length+' saved '+(lines.length===1?'result':'results')+'.</p><div class="ws-scroll"><table><thead><tr><th>Sample and report</th><th>Pesticide</th><th>Result / limit (mg/kg)</th><th>Assessment</th><th></th></tr></thead><tbody>'+
-      lines.map(([k,r])=>'<tr><td>'+esc([roleLabel[r.role],r.matrix,r.sample,r.report].join(' · '))+'</td><td>'+esc(r.analyte)+'</td><td>'+esc(r.result+' / '+r.limit)+'</td><td>'+esc(r.decision)+'</td><td><button type="button" data-residue-delete="'+esc(k)+'" aria-label="Remove '+esc(r.analyte+' for '+r.sample)+'">Remove</button></td></tr>').join('')+
+      lines.map(([k,r])=>'<tr><td>'+esc([roleLabel[r.role],r.matrix,r.sample,r.report].join(' · '))+'</td><td>'+esc(r.analyte)+'</td><td>'+esc(r.limit?r.result+' / '+r.limit:r.result)+'</td><td>'+esc(r.decision)+'</td><td><button type="button" data-residue-delete="'+esc(k)+'" aria-label="Remove '+esc(r.analyte+' for '+r.sample)+'">Remove</button></td></tr>').join('')+
       '</tbody></table></div><button type="button" data-residue-csv>Export these results as CSV</button>';
   }
   function markup(id,s){
-    return '<details class="ws-section spice-decision"><summary>'+esc(targets.has(id)?'Check the spice or culinary herb order':'Check a separately sampled spice or culinary herb')+'</summary><div>'+
+    return '<details class="ws-section spice-decision"><summary>'+esc(targets.has(id)?'Check spice residue limits or ethylene oxide':'Check residues or ethylene oxide in a separately sampled spice')+'</summary><div>'+
       '<p>Review the first page of the April 2024 order. Confirm the plant part, residue definition and any specific Indian provision. '+link(sources.order,'FSSAI spice order')+' · '+link(sources.processing,'Process clarification')+' · '+link(sources.eto,'Ethylene oxide, item 3.3')+'</p>'+
+      '<p>For an EO or 2-CE laboratory report, choose the sampled spice and select <strong>Ethylene oxide and 2-chloroethanol</strong> under Reported pesticide.</p>'+
       '<div data-spice-controls>'+spiceForm(id,s)+'</div><p role="status" data-spice-outcome>'+esc(decisionText(id,s))+'</p></div></details>'+
-      '<section class="residue-panel"><h5>Saved pesticide results</h5><p>Save each report line here. Saving the same sample, report and pesticide updates that line.</p>'+
+      '<section class="residue-panel"><h5>Saved pesticide results</h5><p>Save each report line here. Saving the same sample, report and pesticide updates that line. EO assessments also retain the intended market.</p>'+
       '<p role="status" data-residue-status></p><div data-residue-list>'+panel(id)+'</div></section>';
   }
   function update(node,id,k,s,previous){
@@ -360,9 +382,11 @@
     if(!['spRole','spArticle','spProcess','spSample'].includes(k))clear=clear.filter(f=>f!=='spReport');
     if(k==='spSample'&&!clean(previous))clear=[];
     if(['spDate','spIndiaRef','spRegRef','spOtherRef','spCodexRef','spLimit','spMark'].includes(k)&&clean(previous)&&previous!==s[k])clear=['spBasis'];
+    clear=[...clear,...EO.resetFields(k,previous)];
+    const changedRoute=k==='spOther'&&EO.selected(s)!==EO.selected({...s,spOther:previous});
     const had=clear.some(f=>s[f]);clear.forEach(f=>{s[f]='';});
     const active=node.querySelector('[data-ws-field="'+k+'"]');
-    if(active?.tagName==='SELECT'||(had&&clear.length)){
+    if(active?.tagName==='SELECT'||changedRoute||(had&&clear.length)){
       const position=active?.tagName==='INPUT'&&active.type==='text'?active.selectionStart:null;
       node.querySelector('[data-spice-controls]').innerHTML=spiceForm(id,s);
       const next=node.querySelector('[data-ws-field="'+k+'"]');next?.focus();

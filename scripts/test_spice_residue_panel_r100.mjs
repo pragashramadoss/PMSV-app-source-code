@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
-const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-residue-panel','catalogue-worksheets'];
+const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-worksheets'];
 const codes=modules.map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
 const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
 function open(store=storage) {
@@ -11,9 +11,9 @@ function open(store=storage) {
   x.window=x;codes.forEach(code=>vm.runInContext(code,x));return {x,Y:x.PMSVResiduePanel,W:x.PMSVCatalogueWorksheets,events};
 }
 const {x,Y,W,events}=open(),r=x.PMSV_REVIEW_REGISTER.spicePanelReview;
-assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,100);
+assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,101);
 assert.equal(r.marketedProducts,36);assert.equal(r.sampleChoices,36);assert.equal(r.codedChoices,32);
-const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,114);assert.equal(new Set(baseline[0]).size,114);
+const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,120);assert.equal(new Set(baseline[0]).size,120);
 assert(baseline.slice(1).every(row=>row[15]==='No'&&row[112]===0&&row[113]===''));
 const pepper='12-12-2-black-white-and-green-bwg-peppers',coriander='12-12-2-coriander-dhania',chocolate='05-05-1-chocolate';
 const mint='12-12-2-dried-mint',curry='12-12-2-curry-powder',candy='05-05-2-sugar-boiled-confectionery-hard-candy';
@@ -61,7 +61,7 @@ Y.save(candy,sample,'gazette');assert.equal(Y.records(candy)[0][1].outcome,'inco
 Y.save(pepper,named,'spice');assert.equal(Y.records(pepper)[0][1].reference.includes('1(a)'),true);
 const same={pestRole:'product',pestMatrix:'pepper',pestProcess:named.spProcess,pestSample:named.spSample,pestRow:'120-2',pestReport:named.spReport,pestValue:'0.6',pestKind:'quantified',pestUnit:'mg/kg',pestBasis:'yes'};
 Y.save(pepper,same,'gazette');assert.equal(Y.records(pepper).length,1);
-assert.equal(Y.exportRows(chocolate).length,5);assert.equal(Y.exportRows(chocolate)[0].length,16);
+assert.equal(Y.exportRows(chocolate).length,5);assert.equal(Y.exportRows(chocolate)[0].length,19);
 assert(W.briefLines(chocolate).some(t=>t.includes('Saved pesticide results (4)')));
 assert.equal(W.registerRows(true).find(row=>row[0]===chocolate)[112],4);assert.equal(W.registerRows(false).find(row=>row[0]===chocolate)[112],0);
 assert(W.registerRows(true).find(row=>row[0]===chocolate)[113].includes('reviewer-entered adopted Codex'));

@@ -6,7 +6,7 @@ const require=createRequire(import.meta.url);
 global.window=global;
 const directory=path.resolve(import.meta.dirname,'../fssai-helper');
 const read=name=>JSON.parse(fs.readFileSync(path.join(directory,name),'utf8'));
-for(const name of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','full-catalogue-533','review-status-data','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-residue-panel','catalogue-worksheets']){
+for(const name of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','full-catalogue-533','review-status-data','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-worksheets']){
   require(path.join(directory,name+'.js'));
 }
 const C=global.PMSVCropScope, D=global.PMSVCropScopeData, R=global.PMSVCatalogueRules, E=global.PMSVCatalogueEvidence;

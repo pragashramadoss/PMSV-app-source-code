@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 globalThis.window=globalThis;
-for (const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','review-status-data','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-residue-panel','catalogue-worksheets']) {
+for (const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','review-status-data','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-worksheets']) {
   require('../fssai-helper/'+f+'.js');
 }
 const D=PMSVMetalScopeData,M=PMSVMetalScope,B=PMSVBroadContaminants,W=PMSVCatalogueWorksheets;

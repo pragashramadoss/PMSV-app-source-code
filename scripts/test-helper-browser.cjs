@@ -1279,6 +1279,27 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await f('spKind').selectOption('quantified');await f('spValue').fill('0.3');await f('spUnit').selectOption('mg/kg');await f('spBasis').check();
  await page.locator('[data-residue-save="spice"]').click();assert((await savedPanel.innerText()).includes('1 saved result'));
  assert((await readProductBrief(page)).includes('reviewer-entered adopted Codex MRL'));
+ await pesticide('12-12-2-black-white-and-green-bwg-peppers');await page.locator('.spice-decision>summary').click();
+ await f('spAnalyte').selectOption('eto');await f('spSample').fill('EO pepper lot 101');await f('spReport').fill('EO lab 101');
+ assert.equal(await f('spReg').count(),0);
+ await f('eoMarket').selectOption('india');await f('eoTreatment').selectOption('used');await f('eoTreatmentRef').fill('Process record 101');
+ await f('eoMethod').fill('GC-MS/MS, pepper, method reference 101');await f('eoFormat').selectOption('separate');
+ await f('eoFreeKind').selectOption('nd');await f('eoFreeValue').fill('10');await f('eoFreeUnit').selectOption('µg/kg');
+ await f('eoCeKind').selectOption('quantified');await f('eoCeBasis').selectOption('native');
+ await f('eoCeValue').fill('40');await f('eoCeUnit').selectOption('µg/kg');await f('eoConfirmed').check();
+ const eoOutcome=page.locator('[data-spice-outcome]');
+ assert((await eoOutcome.innerText()).includes('0.022 ≤ EO sum < 0.032'));
+ assert((await eoOutcome.innerText()).includes('conflicts with the Food Authority decision'));
+ await page.locator('[data-residue-save="eo"]').click();assert((await savedPanel.innerText()).includes('2 saved results'));
+ await f('eoMarket').selectOption('export');await f('eoDestination').fill('Example market');await f('eoMarketRef').fill('Example provision 101');
+ await f('eoFormat').selectOption('combined');assert.equal(await f('eoFreeKind').count(),0);assert.equal(await f('eoConfirmed').isChecked(),false);
+ await f('eoSumKind').selectOption('quantified');await f('eoSumValue').fill('32');await f('eoSumUnit').selectOption('µg/kg');
+ await f('eoConfirmed').check();assert((await eoOutcome.innerText()).includes('EO sum = 0.032'));
+ await page.locator('[data-residue-save="eo"]').click();assert((await savedPanel.innerText()).includes('3 saved results'));
+ const eoDownload=page.waitForEvent('download');await page.locator('[data-residue-csv]').click();
+ const eoResult=fs.readFileSync(await (await eoDownload).path(),'utf8');
+ assert(eoResult.includes('0.022 ≤ EO sum < 0.032')&&eoResult.includes('Example provision 101')&&eoResult.includes('40 µg/kg as 2-CE'));
+ assert((await readProductBrief(page)).includes('Process record 101'));
  await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');assert((await savedPanel.innerText()).includes('2 saved results'));
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
  assert.equal(await page.locator('#productList [data-id]').count(),36);
@@ -1288,8 +1309,8 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R100.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R101.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1874,7 +1895,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
