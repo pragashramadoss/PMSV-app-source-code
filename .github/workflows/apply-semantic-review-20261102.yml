@@ -1,0 +1,71 @@
+name: Apply reviewed numeric source corrections
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-semantic-review-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply preimage-checked corrections and validate results
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import base64,gzip,json,pathlib,hashlib,subprocess
+          # Compressed JSON patch operations, not executable payload. Hash and exact paths checked.
+          encoded='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'
+          raw=gzip.decompress(base64.b64decode(encoded,validate=True))
+          assert hashlib.sha256(raw).hexdigest()=='dabf9cff071733e6e0e8206de581fca7236e5f7961cc7b0db7fbf74b0d26facb'
+          patches=json.loads(raw)
+          allowed={'fssai-product-helper-preview-01/data/rules/chapter-2-7-sweets-confectionery-v1.json','fssai-product-helper-preview-01/data/rules/chapter-2-8-sweetening-honey-v1.json'}
+          assert len(patches)==2 and {p['path'] for p in patches}==allowed
+          out=pathlib.Path('semantic-application-results');out.mkdir()
+          manifest=[]
+          for patch in patches:
+              p=pathlib.Path(patch['path'])
+              assert subprocess.check_output(['git','hash-object',str(p)],text=True).strip()==patch['before_git_blob'],'Source changed; reconcile before applying'
+              d=json.loads(p.read_text())
+              for op in patch['operations']:
+                  target=d
+                  for k in op['path'][:-1]:target=target[k]
+                  key=op['path'][-1]
+                  if op['op']=='set':target[key]=op['value']
+                  elif op['op']=='remove':del target[key]
+                  else:raise ValueError('unsupported operation')
+              content=(json.dumps(d,ensure_ascii=False,indent=2)+'\n').encode()
+              assert hashlib.sha256(content).hexdigest()==patch['after_sha256'],'Generated module differs from locally tested content'
+              assert all(s['source_content_review']['current_law_complete'] is False and s['source_content_review']['commercial_release_authorized'] is False for s in d['standards'])
+              p.write_bytes(content);(out/p.name).write_bytes(content)
+              manifest.append({'path':str(p),'sha256':patch['after_sha256'],'standards':len(d['standards'])})
+          assert sum(x['standards'] for x in manifest)==28
+          master=json.loads(pathlib.Path('fssai-product-helper-preview-01/data/product-master-v1.json').read_text())
+          assert len(master['catalog_products'])==533
+          assert len({p['id'] for p in master['catalog_products']})==533
+          standards={s['key']:s for p in allowed for s in json.loads(pathlib.Path(p).read_text())['standards']}
+          assert all(v['crude_fibre_max_pct_moisture_fat_free']==7 for v in standards['2.7.7']['variants'])
+          assert all(t['acid_insoluble_ash_basis']=='moisture-, fat- and sugar-free' for t in standards['2.7.4']['chocolate_types'] if 'acid_insoluble_ash_max_pct' in t)
+          assert sum(bool(s['source_content_review']['source_questions']) for s in standards.values())==4
+          (out/'application-manifest.json').write_text(json.dumps({'scope':'Applied content is byte-identical to locally tested modules; source-edition review only, no full-law or lot approval.','modules':manifest,'catalogue':533,'standards':28,'source_question_standards':4},indent=2))
+          print(json.dumps(manifest,indent=2))
+          PY
+      - name: Commit reviewed modules to audit branch only
+        shell: bash
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-7-sweets-confectionery-v1.json fssai-product-helper-preview-01/data/rules/chapter-2-8-sweetening-honey-v1.json
+          git diff --cached --check
+          git commit -m 'Reconcile 28 source standards: cocoa fibre, analytical bases and explicit subtype conditions'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: semantic-review-applied-20261102
+          path: semantic-application-results/
+          retention-days: 3
+          if-no-files-found: error

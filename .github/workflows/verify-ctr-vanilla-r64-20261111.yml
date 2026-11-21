@@ -1,0 +1,30 @@
+name: PMSV R64 vanilla source and fail-closed audit gate
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-vanilla-three-source-review-r64-2026-11-11.json'
+      - 'fssai-helper/ctr-vanilla-source-gate-r64-20261111.mjs'
+      - 'scripts/test_ctr_vanilla_r64_20261111.mjs'
+      - '.github/workflows/verify-ctr-vanilla-r64-20261111.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-vanilla-three-source-review-r64-2026-11-11.json'
+      - 'fssai-helper/ctr-vanilla-source-gate-r64-20261111.mjs'
+      - 'scripts/test_ctr_vanilla_r64_20261111.mjs'
+  workflow_dispatch:
+jobs:
+  verify-vanilla-source-only:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify three source identities, analytical bases, 137 original legal holds and zero approvals
+        run: node scripts/test_ctr_vanilla_r64_20261111.mjs

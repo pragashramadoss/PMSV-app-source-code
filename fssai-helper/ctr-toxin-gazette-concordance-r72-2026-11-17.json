@@ -1,0 +1,1667 @@
+{
+  "schemaVersion": 1,
+  "round": 72,
+  "reviewedOn": "2026-11-17",
+  "coreSnapshot": {
+    "path": "fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json",
+    "sha256": "acc284f0e99407cc133983b551a6dff533fccd731b559ecf4340ce4f6de2e2f8"
+  },
+  "sources": {
+    "nots2015": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Crop_Contaminants_Natural_Toxic.pdf",
+      "sha256": "f04847d031248eda95d94fed9ee88d3d01f8a944ea6fd5af60aaa96be74ee867",
+      "bytes": 92179,
+      "notificationDate": "2015-11-04",
+      "gazetteIssueDate": "2015-11-04",
+      "visuallyCheckedPdfPages": [
+        4
+      ]
+    },
+    "hcn2017": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Second_Amendment_FSS_Contaminants_01_08_2017.pdf",
+      "sha256": "0a8c179dba52d7b9eafa71f09b5357cb2895087760a91ec6029382678e6ca960",
+      "bytes": 1156776,
+      "notificationDate": "2017-07-21",
+      "gazetteIssueDate": "2017-07-25",
+      "visuallyCheckedPdfPages": [
+        4
+      ]
+    },
+    "fish2016": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Biotoxins_Limits.pdf",
+      "sha256": "93aec9bde66ce1ce4a0ed508e8c8ee470b7eccb6aa08e27252bb7231dfdcc7fe",
+      "bytes": 218481,
+      "notificationDate": "2016-01-04",
+      "gazetteIssueDate": "2016-01-06",
+      "visuallyCheckedPdfPages": [
+        4
+      ]
+    },
+    "melamine2016": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Melamine_Milk.pdf",
+      "sha256": "7f9a28864e6706d6ee53fbbb6650dfaec095b1a7ccdd8317126a29ad9be3055b",
+      "bytes": 145143,
+      "notificationDate": "2016-01-05",
+      "gazetteIssueDate": "2016-01-06",
+      "visuallyCheckedPdfPages": [
+        3
+      ]
+    },
+    "melamineCorrigendum": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Corrigenda_Amendment_Melamine_09_05_2016.pdf",
+      "sha256": "91cedad2c5b061eb64de528c9f16161ef0cc6752536019a02837715749c5a831",
+      "bytes": 53539,
+      "notificationDate": "2016-03-31",
+      "gazetteIssueDate": "2016-04-04",
+      "visuallyCheckedPdfPages": [
+        1
+      ]
+    },
+    "histamine2017": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notificaton_Histamine_Level_25_01_2017.pdf",
+      "sha256": "6e226ced185a0d72203b791788806c1b03aaf2d62478a506f82456ef303fff69",
+      "bytes": 1211503,
+      "notificationDate": "2017-01-18",
+      "gazetteIssueDate": "2017-01-20",
+      "visuallyCheckedPdfPages": [
+        12,
+        13
+      ],
+      "effectiveFrom": "2017-07-01"
+    },
+    "ctr2026": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/272840.pdf",
+      "sha256": "f625a2629d2eb28a6dcc9e1035920228f4592be5589232cdcbd2bab22bc573ea",
+      "bytes": 830685,
+      "notificationDate": "2026-05-14",
+      "gazetteIssueDate": "2026-05-19",
+      "visuallyCheckedPdfPages": [
+        5
+      ],
+      "effectiveFrom": "2026-12-01"
+    }
+  },
+  "counts": {
+    "notsRows": 15,
+    "fishPcbPahRows": 3,
+    "biotoxinRows": 5,
+    "melamineRows": 3,
+    "histaminePlans": 11,
+    "histamineSpeciesEntries": 119,
+    "totalLimitOrPlanRows": 37,
+    "numericMismatches": 0
+  },
+  "notsRows": [
+    {
+      "layer": "nots",
+      "coreIndex": 0,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "agaric_acid",
+      "originalArticle": "Food containing mushrooms",
+      "storedArticle": "Food containing mushrooms",
+      "originalLimit": 100.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 1,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "agaric_acid",
+      "originalArticle": "Alcoholic beverages",
+      "storedArticle": "Alcoholic beverages",
+      "originalLimit": 100.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 0,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Nougat, marzipan or its substitutes or similar products",
+      "storedArticle": "Nougat, marzipan or substitutes/similar products",
+      "originalLimit": 5.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 1,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Canned stone fruits",
+      "storedArticle": "Canned stone fruits",
+      "originalLimit": 5.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 2,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Alcoholic beverages",
+      "storedArticle": "Alcoholic beverages",
+      "originalLimit": 5.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 3,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Confectionery",
+      "storedArticle": "Confectionery",
+      "originalLimit": 5.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 4,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Stone fruit juices",
+      "storedArticle": "Stone fruit juices",
+      "originalLimit": 5.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 0,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hypericine",
+      "originalArticle": "Alcoholic beverages",
+      "storedArticle": "Alcoholic beverages",
+      "originalLimit": 1.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 0,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Meat preparations and meat products, including poultry and game",
+      "storedArticle": "Meat preparations and meat products, including poultry and game",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 1,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Fish preparations and fish products",
+      "storedArticle": "Fish preparations and fish products",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 2,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Soups and sauces",
+      "storedArticle": "Soups and sauces",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 3,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Non-alcoholic beverages",
+      "storedArticle": "Non-alcoholic beverages",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 4,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Food containing mace and nutmeg",
+      "storedArticle": "Food containing mace and nutmeg",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 5,
+      "sourceId": "nots2015",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "saffrole",
+      "originalArticle": "Alcoholic beverages",
+      "storedArticle": "Alcoholic beverages",
+      "originalLimit": 10.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "nots",
+      "coreIndex": 5,
+      "sourceId": "hcn2017",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "group": "hydrocyanic_acid",
+      "originalArticle": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+      "storedArticle": "Sago, Cassava flour, Tapioca flour, Manihot flour and their products",
+      "originalLimit": 10,
+      "originalUnit": "ppm",
+      "printedPageLabel": "3"
+    }
+  ],
+  "fishPcbPahRows": [
+    {
+      "layer": "fish_pcb_pah",
+      "coreIndex": 0,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Polychlorinated biphenyls (Sum of PCB28, PCB52, PCB101, PCB138, PCB153 and PCB180)",
+      "originalArticle": "Inland and Migratory Fish",
+      "originalLimit": 2.0,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "fish_pcb_pah",
+      "coreIndex": 1,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Polychlorinated biphenyls (Sum of PCB28, PCB52, PCB101, PCB138, PCB153 and PCB180)",
+      "originalArticle": "Marine Fish, Crustaceans and molluscs",
+      "originalLimit": 0.5,
+      "originalUnit": "ppm"
+    },
+    {
+      "layer": "fish_pcb_pah",
+      "coreIndex": 2,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Benzo(a)pyrene",
+      "originalArticle": "Smoked Fishery Products",
+      "originalLimit": 5.0,
+      "originalUnit": "ppb"
+    }
+  ],
+  "biotoxinRows": [
+    {
+      "layer": "fish_biotoxins",
+      "coreIndex": 0,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Paralytic Shellfish Poison (PSP)",
+      "originalArticle": "Bivalve Molluscs",
+      "originalLimitText": "80 µg/100g (Saxitoxin Equivalent)",
+      "columnHeading": "Limit (µg/kg)",
+      "rowUnitOverridesColumnHeading": true
+    },
+    {
+      "layer": "fish_biotoxins",
+      "coreIndex": 1,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Amnesic Shellfish Poison (ASP)",
+      "originalArticle": "Bivalve Molluscs",
+      "originalLimitText": "20 µg/g (Domoic acid equivalent)",
+      "columnHeading": "Limit (µg/kg)",
+      "rowUnitOverridesColumnHeading": true
+    },
+    {
+      "layer": "fish_biotoxins",
+      "coreIndex": 2,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Diarrhetic shellfish poison (DSP)",
+      "originalArticle": "Bivalve Molluscs",
+      "originalLimitText": "160 µg of Okadaic acid equivalent/Kg",
+      "columnHeading": "Limit (µg/kg)",
+      "rowUnitOverridesColumnHeading": true
+    },
+    {
+      "layer": "fish_biotoxins",
+      "coreIndex": 3,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Azaspiracid poison (AZP)",
+      "originalArticle": "Bivalve Molluscs",
+      "originalLimitText": "160 µg of azaspiracid equivalent/Kg",
+      "columnHeading": "Limit (µg/kg)",
+      "rowUnitOverridesColumnHeading": true
+    },
+    {
+      "layer": "fish_biotoxins",
+      "coreIndex": 4,
+      "sourceId": "fish2016",
+      "sourcePdfPage": 4,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalContaminant": "Brevetoxin (BTX)",
+      "originalArticle": "Bivalve Molluscs",
+      "originalLimitText": "200 mouse units or equivalent/Kg",
+      "columnHeading": "Limit (µg/kg)",
+      "rowUnitOverridesColumnHeading": true
+    }
+  ],
+  "melamineRows": [
+    {
+      "layer": "melamine",
+      "coreIndex": 0,
+      "sourceId": "melamine2016",
+      "sourcePdfPage": 3,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalArticle": "Powdered infant formula",
+      "originalLimit": 1.0,
+      "originalUnit": "mg/kg",
+      "originalClause": "2.4.1",
+      "correctedClause": "2.5.1",
+      "corrigendumSourceId": "melamineCorrigendum"
+    },
+    {
+      "layer": "melamine",
+      "coreIndex": 1,
+      "sourceId": "melamine2016",
+      "sourcePdfPage": 3,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalArticle": "Liquid infant formula",
+      "originalLimit": 0.15,
+      "originalUnit": "mg/kg",
+      "originalClause": "2.4.1",
+      "correctedClause": "2.5.1",
+      "corrigendumSourceId": "melamineCorrigendum"
+    },
+    {
+      "layer": "melamine",
+      "coreIndex": 2,
+      "sourceId": "melamine2016",
+      "sourcePdfPage": 3,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "originalArticle": "Other foods",
+      "originalLimit": 2.5,
+      "originalUnit": "mg/kg",
+      "originalClause": "2.4.1",
+      "correctedClause": "2.5.1",
+      "corrigendumSourceId": "melamineCorrigendum"
+    }
+  ],
+  "histaminePlans": [
+    {
+      "layer": "histamine",
+      "coreIndex": 0,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 1,
+      "originalArticle": "Raw/Chilled/Frozen Finfish",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": true,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 1,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 2,
+      "originalArticle": "Thermally Processed Fishery Products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 2,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 3,
+      "originalArticle": "Smoked fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 3,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 4,
+      "originalArticle": "Fish Mince/Surimi and analogues",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 4,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 5,
+      "originalArticle": "Battered and breaded fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 5,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 6,
+      "originalArticle": "Other Ready to Eat fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 6,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 7,
+      "originalArticle": "Other value added fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 7,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 8,
+      "originalArticle": "Other fish based products",
+      "n": 9,
+      "c": 2,
+      "m": 100,
+      "M": 200,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 8,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 9,
+      "originalArticle": "Dried/ Salted and Dried fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 200,
+      "M": 400,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 9,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 10,
+      "originalArticle": "Fermented Fishery products",
+      "n": 9,
+      "c": 2,
+      "m": 200,
+      "M": 400,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Merged original cell spans rows 1–10.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    },
+    {
+      "layer": "histamine",
+      "coreIndex": 10,
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 13,
+      "numericRuleChanged": false,
+      "automaticProductApplication": false,
+      "serial": 11,
+      "originalArticle": "Fish Pickle",
+      "n": 9,
+      "c": 2,
+      "m": 200,
+      "M": 400,
+      "originalUnit": "mg/kg",
+      "originalApplicableToCell": "",
+      "requiredSpeciesScope": "Species with high amount of free histidine (Listed fish species with potential to cause histamine fish poisoning)",
+      "scopeBasis": "Continuation row has a blank applicability cell; no species exemption inferred. Explicit scope confirmation required.",
+      "storedApplicabilityPresent": false,
+      "guardRequiresSpecies": true
+    }
+  ],
+  "histamineSpeciesEntries": [
+    {
+      "coreFlatIndex": 0,
+      "family": "Carangidae",
+      "scientificName": "Alectis indica",
+      "commonName": "Indian Threadfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 1,
+      "family": "Carangidae",
+      "scientificName": "Alepes spp.",
+      "commonName": "Scad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 2,
+      "family": "Carangidae",
+      "scientificName": "Atropus atropos",
+      "commonName": "Cleftbelly trevally",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 3,
+      "family": "Carangidae",
+      "scientificName": "Carangoides bartholomaei",
+      "commonName": "Yellow Jack",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 4,
+      "family": "Carangidae",
+      "scientificName": "Carangoides spp.",
+      "commonName": "Trevally",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 5,
+      "family": "Carangidae",
+      "scientificName": "Caranx crysos",
+      "commonName": "Blue runner",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 6,
+      "family": "Carangidae",
+      "scientificName": "Caranx spp.",
+      "commonName": "Jack/Trevally",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 7,
+      "family": "Carangidae",
+      "scientificName": "Decapterus koheru",
+      "commonName": "Koheru",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 8,
+      "family": "Carangidae",
+      "scientificName": "Decapterus russelli",
+      "commonName": "Indian scad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 9,
+      "family": "Carangidae",
+      "scientificName": "Decapterus spp.",
+      "commonName": "Scad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 10,
+      "family": "Carangidae",
+      "scientificName": "Elagatis bipinnulata",
+      "commonName": "Rainbow Runner",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 11,
+      "family": "Carangidae",
+      "scientificName": "Megalaspis cordyla",
+      "commonName": "Horse Mackerel/Torpedo Scad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 12,
+      "family": "Carangidae",
+      "scientificName": "Nematistius pectoralis",
+      "commonName": "Roosterfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 13,
+      "family": "Carangidae",
+      "scientificName": "Oligoplites saurus",
+      "commonName": "Leather Jacket",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 14,
+      "family": "Carangidae",
+      "scientificName": "Pseudocaranx dentex",
+      "commonName": "White trevally",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 15,
+      "family": "Carangidae",
+      "scientificName": "Scomberoides commersonnianus",
+      "commonName": "Talang queenfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 16,
+      "family": "Carangidae",
+      "scientificName": "Scomberoides spp.",
+      "commonName": "Leather Jacket/Queen Fish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 17,
+      "family": "Carangidae",
+      "scientificName": "Selene spp.",
+      "commonName": "Moonfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 18,
+      "family": "Carangidae",
+      "scientificName": "Seriola dumerili",
+      "commonName": "Greater/Japanese Amberjack or Rudder Fish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 19,
+      "family": "Carangidae",
+      "scientificName": "Seriola lalandi",
+      "commonName": "Yellowtail Amberjack",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 20,
+      "family": "Carangidae",
+      "scientificName": "Seriola quinqueradiata",
+      "commonName": "Japanese Amberjack",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 21,
+      "family": "Carangidae",
+      "scientificName": "Seriola rivoliana",
+      "commonName": "Longfin Yellowtail",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 22,
+      "family": "Carangidae",
+      "scientificName": "Seriola spp.",
+      "commonName": "Amberjack or Yellowtail",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 23,
+      "family": "Carangidae",
+      "scientificName": "Trachurus capensis",
+      "commonName": "Cape Horse Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 24,
+      "family": "Carangidae",
+      "scientificName": "Trachurus japonicas",
+      "commonName": "Japanese Jack Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 25,
+      "family": "Carangidae",
+      "scientificName": "Trachurus murphyi",
+      "commonName": "Chilean Jack Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 26,
+      "family": "Carangidae",
+      "scientificName": "Trachurus novaezelandiae",
+      "commonName": "Yellowtail Horse Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 27,
+      "family": "Carangidae",
+      "scientificName": "Trachurus spp.",
+      "commonName": "Jack Mackerel/Horse Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 28,
+      "family": "Carangidae",
+      "scientificName": "Trachurus trachurus",
+      "commonName": "Atlantic Horse Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 29,
+      "family": "Carangidae",
+      "scientificName": "Uraspis secunda",
+      "commonName": "Cottonmouth jack",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 30,
+      "family": "Chanidae",
+      "scientificName": "Chanos chanos",
+      "commonName": "Milkfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 31,
+      "family": "Clupeidae",
+      "scientificName": "Alosa pseudoharengus",
+      "commonName": "Alewife",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 32,
+      "family": "Clupeidae",
+      "scientificName": "Alosa spp.",
+      "commonName": "Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 33,
+      "family": "Clupeidae",
+      "scientificName": "Amblygaster sirm",
+      "commonName": "Spotted Sardinella",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 34,
+      "family": "Clupeidae",
+      "scientificName": "Anodontostoma chacunda",
+      "commonName": "Chacunda gizzard shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 35,
+      "family": "Clupeidae",
+      "scientificName": "Brevoortia patronus",
+      "commonName": "Gulf Menhaden",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 36,
+      "family": "Clupeidae",
+      "scientificName": "Brevoortia spp.",
+      "commonName": "Menhaden",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 37,
+      "family": "Clupeidae",
+      "scientificName": "Brevoortia tyrannus",
+      "commonName": "Atlantic Menhaden",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 38,
+      "family": "Clupeidae",
+      "scientificName": "Clupea bentincki",
+      "commonName": "Araucanian Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 39,
+      "family": "Clupeidae",
+      "scientificName": "Clupea harengus",
+      "commonName": "Atlantic Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 40,
+      "family": "Clupeidae",
+      "scientificName": "Clupea pallasii pallasii",
+      "commonName": "Pacific Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 41,
+      "family": "Clupeidae",
+      "scientificName": "Clupea spp.",
+      "commonName": "Pichard/Shad/Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 42,
+      "family": "Clupeidae",
+      "scientificName": "Dorosoma spp.",
+      "commonName": "Gizaard Shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 43,
+      "family": "Clupeidae",
+      "scientificName": "Ethmalosa fimbriata",
+      "commonName": "Bonga Shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 44,
+      "family": "Clupeidae",
+      "scientificName": "Ethmidium maculatum",
+      "commonName": "Pacific Menhaden",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 45,
+      "family": "Clupeidae",
+      "scientificName": "Etrumeus sadina",
+      "commonName": "Red-eye round Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 46,
+      "family": "Clupeidae",
+      "scientificName": "Harengula spp.",
+      "commonName": "Sprat/Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 47,
+      "family": "Clupeidae",
+      "scientificName": "Harengula thrissina",
+      "commonName": "Pacific flatiron Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 10
+    },
+    {
+      "coreFlatIndex": 48,
+      "family": "Clupeidae",
+      "scientificName": "Hilsa spp.",
+      "commonName": "Shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 49,
+      "family": "Clupeidae",
+      "scientificName": "Nematolosa spp.",
+      "commonName": "Gizzard Shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 50,
+      "family": "Clupeidae",
+      "scientificName": "Opisthonema libertate",
+      "commonName": "Pacific thread Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 51,
+      "family": "Clupeidae",
+      "scientificName": "Opisthonema spp",
+      "commonName": "Thread Herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 52,
+      "family": "Clupeidae",
+      "scientificName": "Opisthopterus tardoore",
+      "commonName": "Tardoore",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 53,
+      "family": "Clupeidae",
+      "scientificName": "Sardina pilchardus",
+      "commonName": "European Pilchard",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 54,
+      "family": "Clupeidae",
+      "scientificName": "Sardinella aurita",
+      "commonName": "Round Sardinella",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 55,
+      "family": "Clupeidae",
+      "scientificName": "Sardinella gibbosa",
+      "commonName": "Gold stripe Sardinella",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 56,
+      "family": "Clupeidae",
+      "scientificName": "Sardinella longiceps",
+      "commonName": "Indian Oil Sardine",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 57,
+      "family": "Clupeidae",
+      "scientificName": "Sardinella maderensis",
+      "commonName": "Madeiran Sardinella",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 58,
+      "family": "Clupeidae",
+      "scientificName": "Sardinella spp.",
+      "commonName": "Sardine",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 59,
+      "family": "Clupeidae",
+      "scientificName": "Sardinops sagax",
+      "commonName": "South American Pilchard",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 60,
+      "family": "Clupeidae",
+      "scientificName": "Sardinops spp.",
+      "commonName": "South American Pilchard",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 61,
+      "family": "Clupeidae",
+      "scientificName": "Spratelloides gracilis",
+      "commonName": "Silver-stripe round herring",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 62,
+      "family": "Clupeidae",
+      "scientificName": "Tenualosa ilisha",
+      "commonName": "Hilsa shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 63,
+      "family": "Clupeidae",
+      "scientificName": "Tenualosa spp.",
+      "commonName": "Shad",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 64,
+      "family": "Coryphaenidae",
+      "scientificName": "Coryphaena hippurus",
+      "commonName": "Mahi-Mahi /Dolphin fish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 65,
+      "family": "Engraulidae",
+      "scientificName": "Anchoa spp.",
+      "commonName": "Anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 66,
+      "family": "Engraulidae",
+      "scientificName": "Anchoviella spp.",
+      "commonName": "Anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 67,
+      "family": "Engraulidae",
+      "scientificName": "Cetengraulis mysticetus",
+      "commonName": "Pacific anchoveta",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 68,
+      "family": "Engraulidae",
+      "scientificName": "Engraulis capensis",
+      "commonName": "Southern African anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 69,
+      "family": "Engraulidae",
+      "scientificName": "Engraulis encrasicolus",
+      "commonName": "European anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 70,
+      "family": "Engraulidae",
+      "scientificName": "Engraulis japonicus",
+      "commonName": "Japanese anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 71,
+      "family": "Engraulidae",
+      "scientificName": "Engraulis ringens",
+      "commonName": "Peruvian anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 72,
+      "family": "Engraulidae",
+      "scientificName": "Engraulis spp.",
+      "commonName": "Anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 73,
+      "family": "Engraulidae",
+      "scientificName": "Stolephorus spp.",
+      "commonName": "Anchovy",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 74,
+      "family": "Istiophoridae",
+      "scientificName": "Istiompax indica",
+      "commonName": "Black Marlin",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 75,
+      "family": "Istiophoridae",
+      "scientificName": "Istiophorus albicans",
+      "commonName": "Atlantic sailfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 76,
+      "family": "Istiophoridae",
+      "scientificName": "Istiophorus platypterus",
+      "commonName": "Indo-Pacific sailfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 77,
+      "family": "Istiophoridae",
+      "scientificName": "Kajikia albida",
+      "commonName": "Atlantic white Marlin",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 78,
+      "family": "Istiophoridae",
+      "scientificName": "Kajikia audax",
+      "commonName": "Striped Marlin",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 79,
+      "family": "Istiophoridae",
+      "scientificName": "Makaira mazara",
+      "commonName": "Indo-Pacific blue marlin",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 80,
+      "family": "Istiophoridae",
+      "scientificName": "Makaira spp.",
+      "commonName": "Marlin/Sailfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 81,
+      "family": "Istiophoridae",
+      "scientificName": "Tetrapturus spp.",
+      "commonName": "Marlin/Spearfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 82,
+      "family": "Istiophoridae",
+      "scientificName": "Tetrapturus spp.",
+      "commonName": "Spearfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 83,
+      "family": "Mugilidae",
+      "scientificName": "Mugil cephalus",
+      "commonName": "Flathead Grey Mullet",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 84,
+      "family": "Pristigasteridae",
+      "scientificName": "Ilisha spp.",
+      "commonName": "Ilisha/Pellona",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 85,
+      "family": "Pristigasteridae",
+      "scientificName": "Pellona ditchella",
+      "commonName": "Indian pellona",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 86,
+      "family": "Scombridae",
+      "scientificName": "Acanthocybium solandri",
+      "commonName": "Wahoo",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 87,
+      "family": "Scombridae",
+      "scientificName": "Auxis spp.",
+      "commonName": "Bullet Tuna/Frigate Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 88,
+      "family": "Scombridae",
+      "scientificName": "Cybiosarda elegans",
+      "commonName": "Leaping Bonito",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 89,
+      "family": "Scombridae",
+      "scientificName": "Euthynnus affinis",
+      "commonName": "Little tuna or Kawakawa",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 90,
+      "family": "Scombridae",
+      "scientificName": "Euthynnus spp.",
+      "commonName": "Bonito",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 91,
+      "family": "Scombridae",
+      "scientificName": "Gasterochisma melampus",
+      "commonName": "Butterfly kingfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 92,
+      "family": "Scombridae",
+      "scientificName": "Grammatorcynus spp.",
+      "commonName": "Short Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 93,
+      "family": "Scombridae",
+      "scientificName": "Gymnosarda unicolor",
+      "commonName": "Dogtooth Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 94,
+      "family": "Scombridae",
+      "scientificName": "Katsuwonus pelamis",
+      "commonName": "Skipjack Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 95,
+      "family": "Scombridae",
+      "scientificName": "Orcynopsis unicolor",
+      "commonName": "Plain Bonito",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 11
+    },
+    {
+      "coreFlatIndex": 96,
+      "family": "Scombridae",
+      "scientificName": "Rastrelliger brachysoma",
+      "commonName": "Short Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 97,
+      "family": "Scombridae",
+      "scientificName": "Rastrelliger kanagurta",
+      "commonName": "Indian Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 98,
+      "family": "Scombridae",
+      "scientificName": "Sarda spp",
+      "commonName": "Bonito",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 99,
+      "family": "Scombridae",
+      "scientificName": "Scomber australasicus",
+      "commonName": "Blue Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 100,
+      "family": "Scombridae",
+      "scientificName": "Scomber japonicas",
+      "commonName": "Chub Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 101,
+      "family": "Scombridae",
+      "scientificName": "Scomber scombrus",
+      "commonName": "Atlantic Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 102,
+      "family": "Scombridae",
+      "scientificName": "Scomber spp.",
+      "commonName": "Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 103,
+      "family": "Scombridae",
+      "scientificName": "Scomberomorus cavalla",
+      "commonName": "King Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 104,
+      "family": "Scombridae",
+      "scientificName": "Scomberomorus commerson",
+      "commonName": "Narrow-barred Spanish Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 105,
+      "family": "Scombridae",
+      "scientificName": "Scomberomorus guttatus",
+      "commonName": "Indo-Pacific king mackerel/Spotted Spanish Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 106,
+      "family": "Scombridae",
+      "scientificName": "Scomberomorus niphonius",
+      "commonName": "Japanese Spanish mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 107,
+      "family": "Scombridae",
+      "scientificName": "Scomberomorus spp.",
+      "commonName": "Spanish Mackerel",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 108,
+      "family": "Scombridae",
+      "scientificName": "Scomeromorus lineolatus",
+      "commonName": "Streaked Seerfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 109,
+      "family": "Scombridae",
+      "scientificName": "Thunnus alalunga",
+      "commonName": "Albacore Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 110,
+      "family": "Scombridae",
+      "scientificName": "Thunnus albacares",
+      "commonName": "Yellowfin Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 111,
+      "family": "Scombridae",
+      "scientificName": "Thunnus atlanticus",
+      "commonName": "Blackfin Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 112,
+      "family": "Scombridae",
+      "scientificName": "Thunnus maccoyi",
+      "commonName": "Southern bluefin Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 113,
+      "family": "Scombridae",
+      "scientificName": "Thunnus obesus",
+      "commonName": "Bigeye Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 114,
+      "family": "Scombridae",
+      "scientificName": "Thunnus orientalis",
+      "commonName": "Pacific bluefin Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 115,
+      "family": "Scombridae",
+      "scientificName": "Thunnus spp.",
+      "commonName": "Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 116,
+      "family": "Scombridae",
+      "scientificName": "Thunnus thynnus",
+      "commonName": "Atlantic bluefin Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 117,
+      "family": "Scombridae",
+      "scientificName": "Thunnus tonggol",
+      "commonName": "Longtail Tuna",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    },
+    {
+      "coreFlatIndex": 118,
+      "family": "Xiphiidae",
+      "scientificName": "Xiphias gladius",
+      "commonName": "Swordfish",
+      "sourceId": "histamine2017",
+      "sourcePdfPage": 12
+    }
+  ],
+  "findings": [
+    {
+      "id": "histamine-merged-species",
+      "title": "Histamine species condition spans processed products",
+      "detail": "The original page 12 applicability cell spans rows 1–10, while the stored core attaches it only to row 1. Fish Pickle continues on page 13 with a blank cell; the draft conservatively requires explicit species/scope confirmation there too. No species exemption is inferred from a processed-product name."
+    },
+    {
+      "id": "histamine-sampling",
+      "title": "Histamine needs all nine individual results",
+      "detail": "The mean must not exceed m, no more than two results may exceed m, and none may exceed M. A mean alone or a single result cannot establish that the source sampling plan is satisfied."
+    },
+    {
+      "id": "fish-unit-basis",
+      "title": "Fish contaminant units and analyte groups stay distinct",
+      "detail": "PCB limits use ppm and the sum of six specified congeners; Benzo(a)pyrene in smoked fishery products uses ppb. Biotoxin row-specific units and toxin-equivalent expressions override the generic column heading; Brevetoxin mouse units are not silently converted to mass units."
+    },
+    {
+      "id": "melamine-corrigendum",
+      "title": "Melamine clause numbering resolved by original corrigendum",
+      "detail": "The 31 March 2016 corrigendum changes 2.4/2.4.1 to 2.5/2.5.1 and names the Second Amendment Regulations. Powdered infant formula, liquid infant formula and other foods retain distinct values; the broader other-foods value cannot replace an infant-formula value."
+    },
+    {
+      "id": "saffrole-future-scope",
+      "title": "Saffrole replacement remains future until 1 December",
+      "detail": "The 2026 notification replaces the whole serial-number-4 entry with an ingredient-qualified article. The existing six 2015 articles are not carried forward automatically or replaced early. The draft source comparison refuses assessment dates on or after 1 December pending reconciliation."
+    },
+    {
+      "id": "hcn-sago-insertion",
+      "title": "Sago/cassava hydrocyanic-acid row has its own source",
+      "detail": "The 21 July 2017 notification inserts a 10 ppm row for the named sago/flour articles and their products. It is separate from the five 5 ppm articles in the 2015 table; the higher value cannot be selected solely because a confectionery recipe contains starch."
+    }
+  ],
+  "melamineCorrigendum": {
+    "sourceId": "melamineCorrigendum",
+    "sourcePdfPage": 1,
+    "changes": {
+      "2.4": "2.5",
+      "2.4.1": "2.5.1"
+    },
+    "amendmentTitle": "Second Amendment Regulations, 2016"
+  },
+  "reviewBoundary": {
+    "fullCurrentLawComplete": false,
+    "numericRulesChanged": false,
+    "productApprovals": 0,
+    "openExactArticleDecisions": 137,
+    "futureProvisionsActivated": false,
+    "legacyCoreChanged": false,
+    "scope": "Original-source concordance for these layers and a separate draft histamine comparison gate. Not exhaustive current-law, product or lot approval. Species names are source literals, not a taxonomic correction; genus and common-name aliases are not invented."
+  }
+}

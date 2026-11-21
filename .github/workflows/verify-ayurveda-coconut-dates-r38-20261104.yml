@@ -1,0 +1,25 @@
+name: PMSV R38 coconut-date source scope checks
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ayurveda-coconut-dates-copper-malathion-r38-2026-11-04.json'
+      - 'scripts/test_ayurveda_coconut_dates_r38_20261104.py'
+      - '.github/workflows/verify-ayurveda-coconut-dates-r38-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ayurveda-coconut-dates-copper-malathion-r38-2026-11-04.json'
+      - 'scripts/test_ayurveda_coconut_dates_r38_20261104.py'
+  workflow_dispatch:
+jobs:
+  source-scope-and-no-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 46-ingredient baseline, 22 to 20 candidate rows and 137 held articles
+        run: python scripts/test_ayurveda_coconut_dates_r38_20261104.py

@@ -1,0 +1,23 @@
+name: PMSV R68 pulp puree industrial and concentrate source gate
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-pulp-puree-industrial-concentrates-r68-2026-11-11.json'
+      - 'fssai-helper/ctr-pulp-puree-source-gate-r68-20261111.mjs'
+      - 'scripts/test_ctr_pulp_puree_r68_20261111.mjs'
+      - '.github/workflows/verify-ctr-pulp-puree-r68-20261111.yml'
+  pull_request:
+    branches: [gh-pages]
+  workflow_dispatch:
+jobs:
+  source-only:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/test_ctr_pulp_puree_r68_20261111.mjs

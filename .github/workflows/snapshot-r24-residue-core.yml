@@ -1,0 +1,30 @@
+name: Snapshot R24 residue core
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/snapshot-r24-residue-core.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check completeness and preserve source bytes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          p=Path("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json")
+          x=json.loads(p.read_text())
+          print("SHA256",hashlib.sha256(p.read_bytes()).hexdigest())
+          print("Pesticides",len(x["residue_mrls"]["pesticides"]))
+          print("Veterinary",len(x["antibiotic_and_pharmacological_substances"]["veterinary_tolerance_limits"]["rows"]))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r24-residue-core-preimage
+          retention-days: 2
+          path: fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json

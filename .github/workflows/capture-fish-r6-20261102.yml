@@ -1,0 +1,47 @@
+name: Capture fish R6 primary sources
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/capture-fish-r6-20261102.yml']
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture PDFs and source baselines
+        run: |
+          python3 - <<'PY'
+          import pathlib, urllib.request, urllib.parse, json, hashlib, concurrent.futures, shutil
+          out=pathlib.Path('fish-r6-capture');out.mkdir()
+          urls={
+            'Chapter_2_6_V3.pdf':'https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_6_Fish_and_Fish_products.pdf',
+            'Fish_Manual_2023.pdf':'https://www.fssai.gov.in/upload/advisories/2023/07/64b655b00a2b9Manual%20of%20Methods%20of%20Analysis%20for%20Fish%20%26%20Fish%20Products.pdf',
+            'Amendment_21Oct2024.pdf':'https://fssai.gov.in/upload/notifications/2024/10/671b28f9586dfGAZETTE%20NOTIFICATION%20DATED%2021.10.2024.pdf',
+            'Amendment_21Oct2024_alt.pdf':'https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf'
+          }
+          def get(item):
+            name,url=item;r={'name':name,'requested_url':url,'verified':False}
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
+              with urllib.request.urlopen(req,timeout=40) as res:
+                data=res.read(30000001);host=urllib.parse.urlsplit(res.geturl()).hostname or ''
+                assert host=='fssai.gov.in' or host.endswith('.fssai.gov.in')
+                assert len(data)<=30000000 and data.startswith(b'%PDF-'),'not a bounded PDF'
+                r['resolved_url']=res.geturl()
+              (out/name).write_bytes(data);r.update(status='CAPTURED_PDF',sha256=hashlib.sha256(data).hexdigest(),bytes=len(data))
+            except Exception as e:r.update(status='FETCH_FAILED',error=str(e))
+            return r
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:rows=list(pool.map(get,urls.items()))
+          for path in ['fssai-product-helper-preview-01/data/product-master-v1.json','fssai-product-helper-preview-01/data/rules/chapter-2-6-fish-v1.json','fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json','fssai-product-helper-preview-01/data/rules/chapter-2-1-dairy-v1.json']:
+            shutil.copyfile(path,out/pathlib.Path(path).name)
+          (out/'capture-manifest.json').write_text(json.dumps(rows,indent=2));print(json.dumps(rows,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fish-r6-primary-capture
+          path: fish-r6-capture/
+          retention-days: 3
+          if-no-files-found: error

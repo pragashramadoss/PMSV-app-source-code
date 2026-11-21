@@ -1,0 +1,25 @@
+name: PMSV R48 frozen fruit, tamarind and potato source checks
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ctr-frozen-fruit-tamarind-potato-r48-2026-11-04.json'
+      - 'fssai-helper/ctr-frozen-fruit-tamarind-potato-guard-r48-20261104.mjs'
+      - 'scripts/test_ctr_frozen_fruit_tamarind_potato_r48_20261104.mjs'
+      - '.github/workflows/verify-ctr-frozen-fruit-tamarind-potato-r48-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ctr-frozen-fruit-tamarind-potato-r48-2026-11-04.json'
+      - 'fssai-helper/ctr-frozen-fruit-tamarind-potato-guard-r48-20261104.mjs'
+      - 'scripts/test_ctr_frozen_fruit_tamarind_potato_r48_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  test-source-evidence-and-no-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 2025 FSSR fruit, tamarind and potatoes with 137 legal holds
+        run: node scripts/test_ctr_frozen_fruit_tamarind_potato_r48_20261104.mjs

@@ -1,0 +1,28 @@
+name: R29 close 137 source-screening cases without false legal approvals
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/close-ctr-137-source-screening-r29-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconcile all original 137 catalogue IDs and verify safe evidence holds
+        run: python3 scripts/build_ctr_137_screening_close_r29_20261104.py
+      - name: Check nonmutation of original source master and CTR numeric rules
+        shell: bash
+        run: |
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ctr-137-evidence-queue-r27-2026-11-04.json
+          git diff --exit-code -- fssai-helper/ctr-55-source-identity-r28-2026-11-04.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.md
+          git diff --cached --check
+          git commit -m 'R29: close 137 desk-source screenings, retain 137 legal applicability holds'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02

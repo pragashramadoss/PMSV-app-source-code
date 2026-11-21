@@ -1,0 +1,33 @@
+name: Apply R15 contaminant layer scope review
+# rerun after exact local hash reproduction
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-contaminants-r15-core-20261103.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply exact-preimage and output-hash checked review metadata
+        run: python3 scripts/apply_contaminants_r15_core_20261103.py
+      - name: Commit only contaminant review metadata on audit branch
+        shell: bash
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json fssai-product-helper-preview-01/data/rules/contaminants-2026-deferred-amendment-v1.json
+          git diff --cached --check
+          git commit -m 'Complete R15 contaminant layer scope coverage for all 533 products'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: contaminants-r15-core-applied-20261103
+          path: contaminants-r15-core-applied/
+          retention-days: 3
+          if-no-files-found: error

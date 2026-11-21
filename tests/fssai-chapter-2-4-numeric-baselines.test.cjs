@@ -21,7 +21,8 @@ test("all nine numerical baselines are source-pinned and remain fail-closed",()=
   for(const line of r.composition){
    assert.ok(line.parameter && line.unit);
    if(line.operator==="range")assert.ok(Number.isFinite(line.min)&&Number.isFinite(line.max)&&line.max>=line.min);
-   else {assert.ok(["<=",">="].includes(line.operator));assert.ok(Number.isFinite(line.value));}
+   else if(["<=",">=","<",">","="].includes(line.operator)){assert.ok(Number.isFinite(line.value));}
+   else {assert.equal(line.automatic_comparison_allowed,false);assert.ok(line.value !== undefined || line.source_question || line.interpretation_status);}
   }
  }
 });
@@ -34,7 +35,7 @@ test("solvent extracted oilseed flour compositions are distinct; microbiology an
  ["2.4.13(5)",8,5,0.35,47,5,1.5]
  ];
  for(const [key,mo,ash,ins,protein,fibre,fat] of expectations){
-  assert.deepEqual(["Moisture","Total ash","Acid insoluble ash in dilute HCl","Protein (N × 6.25)","Crude fibre","Fat"].map(k=>find(key,k).value),[mo,ash,ins,protein,fibre,fat],key);
+  assert.deepEqual(["Moisture","Total ash","Ash insoluble in dilute HCl","Protein (N x 6.25)","Crude fibre","Fat"].map(k=>find(key,k).value),[mo,ash,ins,protein,fibre,fat],key);
   const rec=get(key);
   assert.equal(rec.residual_solvent_limits[0].value,10);
   assert.equal(rec.chapter_specific_microbiology[0].value,50000);
@@ -49,7 +50,7 @@ test("solvent extracted oilseed flour compositions are distinct; microbiology an
 });
 test("groundnut expeller pressed is not classified as solvent extracted",()=>{
  const exp=get("2.4.16(2)");
- assert.equal(find("2.4.16(2)","Protein (N × 6.25)").value,45);
+ assert.equal(find("2.4.16(2)","Protein (N x 6.25)").value,45);
  assert.equal(find("2.4.16(2)","Fat").value,9);
  assert.equal(exp.residual_solvent_limits,undefined);
  assert.equal(exp.chapter_specific_microbiology,undefined);
@@ -81,26 +82,26 @@ test("Gari acidity and sieve variants not misapplied to cassava flour",()=>{
 test("six Chapter 2.4 grain identities resolve to exact source-verified subclauses without changing FoSCoS FSSR",()=>{
  const index=JSON.parse(fs.readFileSync(path.join(__dirname,"../fssai-product-helper-preview-01/data/standard-search-index-v1.json"),"utf8")).products;
  const expectations=[
-  ["06-06-1-oats","Oats","2.4.6","2.4.6(17)",[["Moisture","<=",14,"% by weight"],["Minimum test weight",">=",46,"kg/hl"],["Ergot (Claviceps purpurea)","<=",0.05,"% m/m"]]],
-  ["06-06-1-quinoa","Quinoa","2.4.6","2.4.6(18)",[["Moisture","<=",12,"% by mass"],["Saponin content","<=",0.1,"% by mass"],["Other edible grains","<=",0.5,"% by mass"]]],
-  ["06-06-1-durum-wheat","Durum Wheat","2.4.6","2.4.6(19)",[["Moisture","<=",13,"% by mass"],["Protein (dry matter basis)",">=",11,"%"],["Beta carotene (yellow pigment)",">=",5,"ppm"],["Minimum test weight",">=",70,"kg/hl"]]],
-  ["06-06-1-pulses","Pulses","2.4.6(22)","2.4.6(22)",[["Extraneous matter","<=",1,"% by mass"]]],
-  ["06-06-1-millets","Millets","2.4.6(23)","2.4.6(23)",[["Moisture — whole or dehulled millets","<=",13,"% by mass"]]],
+  ["06-06-1-oats","Oats","2.4.6","2.4.6(17)",[["Moisture","<=",14,"%"],["Test weight",">=",46,"kg/hl"],["Ergot (Claviceps purpurea)","<=",0.05,"%"]]],
+  ["06-06-1-quinoa","Quinoa","2.4.6","2.4.6(18)",[["Moisture","<=",12,"%"],["Saponin","<=",0.1,"%"],["Other edible grains","<=",0.5,"%"]]],
+  ["06-06-1-durum-wheat","Durum Wheat","2.4.6","2.4.6(19)",[["Moisture","<=",13,"%"],["Protein",">=",11,"%"],["Beta carotene",">=",5,"ppm"],["Test weight",">=",70,"kg/hl"]]],
+  ["06-06-1-pulses","Pulses","2.4.6(22)","2.4.6(22)",[["Foreign / extraneous matter","<=",1,"%"]]],
+  ["06-06-1-millets","Millets","2.4.6(23)","2.4.6(23)",[["Moisture","<=",13,"%"]]],
   ["06-06-1-rice","Rice","2.4.6","2.4.6(24)",[]]
  ];
  for(const [id,name,fssr,key,checks] of expectations){
   const product=index.find(x=>x.id===id);assert.ok(product,id);
   assert.equal(product.name,name);assert.equal(product.fssr,fssr,"Do not rewrite the original FoSCoS FSSR");
-  assert.equal(product.rule_key,key,id);assert.equal(product.chapter_rule_route_status,"specific_subclause_verified_from_fssai");
-  assert.ok(product.linked_rule_keys.includes("2.4.6"),"Keep general foodgrain reference");
+  assert.equal(product.rule_key,key,id);assert.equal(product.source_content_review_batch,"CEREALS_R3_2026_11_02");
+  assert.equal(get("2.4.6").composition.length,0,"Parent must not supply blanket numeric limits");
   const standard=get(key);assert.ok(standard && standard.status==="structured_core"||standard && standard.status==="source_exact_specific_clause_linked_parent_fssr");
   for(const [parameter,operator,value,unit] of checks){
-   const item=standard.general_limits.find(x=>x.parameter===parameter);
+   const item=standard.composition.find(x=>x.parameter===parameter);
    assert.ok(item,id+": "+parameter);assert.deepEqual([item.operator,item.value,item.unit],[operator,value,unit]);
   }
  }
  for(const id of ["06-06-1-chia-seeds","06-06-1-triticale"]){
-  assert.equal(index.find(x=>x.id===id)?.rule_key,"2.4.6","Do not assign an unsupported specific foodgrain subclause "+id);
+  assert.equal(index.find(x=>x.id===id)?.rule_key,id.includes("chia")?"2.4.6(25)":"2.4.6(28)","Use the reviewed exact foodgrain subclause "+id);
  }
  for(const k of ["2.4.6(17)","2.4.6(18)","2.4.6(19)"]){
   const st=get(k);assert.equal(st.full_compliance_assessment_enabled,false);
@@ -108,9 +109,9 @@ test("six Chapter 2.4 grain identities resolve to exact source-verified subclaus
   assert.match(st.numeric_evidence.review_status,/amendments_not_fully_reconciled/);
   assert.equal(st.official_source_url,"https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf");
  }
- const oats=get("2.4.6(17)");assert.equal(oats.general_limits.length,12);
- const quinoa=get("2.4.6(18)");assert.equal(quinoa.general_limits.length,8);
- const durum=get("2.4.6(19)");assert.equal(durum.general_limits.length,13);
+ const oats=get("2.4.6(17)");assert.equal(oats.composition.length,12);
+ const quinoa=get("2.4.6(18)");assert.equal(quinoa.composition.length,8);
+ const durum=get("2.4.6(19)");assert.equal(durum.composition.length,13);
  const raw=get("2.4.6(16)");assert.equal(index.find(x=>x.id==="06-06-1-unprocessed-whole-raw-pulses-not-for-direct-human-consumption")?.rule_key,raw.key);
 });
 
@@ -119,18 +120,18 @@ test("residual Any other foodgrains uses exact 2.4.6(15) source limits without c
  const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,"../fssai-product-helper-preview-01/data/standard-search-index-v1.json"),"utf8")).products;
  const p=catalog.find(x=>x.id==="06-06-1-any-other-foodgrains");
  assert.equal(p.fssr,"2.4.6");assert.equal(p.rule_key,"2.4.6(15)");
- assert.equal(p.chapter_rule_route_status,"specific_subclause_verified_from_fssai");
- assert.deepEqual(p.linked_rule_keys,["2.4.6"]);
+ assert.equal(p.source_content_review_batch,"CEREALS_R3_2026_11_02");
+ assert.equal(p.linked_rule_keys,undefined);
  const st=get("2.4.6(15)");
  assert.equal(st.full_compliance_assessment_enabled,false);
  assert.equal(st.numeric_evidence.compliance_assessment_enabled,false);
  assert.equal(st.official_source_url,"https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf");
  assert.deepEqual(st.numeric_evidence.source_pdf_pages,[10]);
- assert.deepEqual(st.general_limits.map(x=>[x.parameter,x.value,x.operator]),[
-  ["Moisture",16,"<="],["Foreign matter (extraneous matter)",1,"<="],
+ assert.deepEqual(st.composition.map(x=>[x.parameter,x.value,x.operator]),[
+  ["Moisture",16,"<="],["Foreign / extraneous matter",1,"<="],
   ["Mineral matter within foreign matter",0.25,"<="],["Animal-origin impurities within foreign matter",0.1,"<="],
-  ["Other edible grains",6,"<="],["Weevilled grains",10,"<="],["Damaged grains",5,"<="],
-  ["Uric acid",100,"<="],["Total foreign matter, other edible grains and damaged grains",12,"<="]
+  ["Other edible grains",6,"<="],["Damaged grains",5,"<="],["Weevilled grains",10,"<="],
+  ["Uric acid",100,"<="],["Combined foreign matter + other edible grains + damaged grains",12,"<="]
  ]);
  for(const id of ["06-06-1-chia-seeds","06-06-1-triticale","06-06-1-wheat","06-06-1-maize","06-06-1-rice","06-06-1-quinoa","06-06-1-oats","06-06-1-durum-wheat"]){
   const r=catalog.find(x=>x.id===id);

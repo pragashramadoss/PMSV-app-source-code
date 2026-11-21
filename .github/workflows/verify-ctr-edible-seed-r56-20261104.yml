@@ -1,0 +1,30 @@
+name: PMSV R56 edible seed official 2024 source and no-PASS check
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-edible-seeds-2024-direction-r56-2026-11-04.json'
+      - 'fssai-helper/ctr-edible-seed-source-gate-r56-20261104.mjs'
+      - 'scripts/test_ctr_edible_seed_r56_20261104.mjs'
+      - '.github/workflows/verify-ctr-edible-seed-r56-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-edible-seeds-2024-direction-r56-2026-11-04.json'
+      - 'fssai-helper/ctr-edible-seed-source-gate-r56-20261104.mjs'
+      - 'scripts/test_ctr_edible_seed_r56_20261104.mjs'
+  workflow_dispatch:
+jobs:
+  validate-source-not-product-approval:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assert original seed identities and CTR evidence holds
+        run: node scripts/test_ctr_edible_seed_r56_20261104.mjs

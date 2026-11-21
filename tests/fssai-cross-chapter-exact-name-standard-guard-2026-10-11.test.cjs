@@ -40,11 +40,7 @@ test("Rule-key consistency: all 533 search-index products retain the same direct
  for(const p of index.products){
   const row=ms.get(p.id);assert.ok(row,p.id);
   for(const key of ["name","fssr","rule_file","microbiology_status"])assert.equal(row[key],p[key],p.id+" "+key);
-  if(row.rule_key!==p.rule_key){
-   assert.equal(row.rule_key,"2.4.6","Unapproved parent/subclause divergence "+p.id);
-   assert.match(p.rule_key,/^2\.4\.6\(\d+\)$/,"Invalid special 2.4.6 subclause "+p.id);
-   exactParentKeys++;
-  }
+  assert.equal(row.rule_key,p.rule_key,p.id+" exact rule key");
  }
- assert.equal(exactParentKeys,8,"Only eight source-verified 2.4.6 parent/subclause variants are permitted");
+ assert.equal(exactParentKeys,0,"Generated index must match the reviewed source master exactly");
 });

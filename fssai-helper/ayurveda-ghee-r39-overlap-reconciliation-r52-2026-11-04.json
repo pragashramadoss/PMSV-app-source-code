@@ -1,0 +1,78 @@
+{
+  "review_id": "PMSV_R52_2026_11_04",
+  "date_reviewed": "2026-11-04",
+  "scope": "Parallel R39 ghee source-reference duplication reconciliation. Read-only no-legal-PASS audit.",
+  "canonical_ghee_R39_file": "fssai-helper/ayurveda-ghee-dairy-ctr-fat-basis-r39-2026-11-04.json",
+  "supplemental_ghee_R39_file": "fssai-helper/ayurveda-ghee-fat-basis-source-review-r39-2026-11-04.json",
+  "ghee_original_ingredient_rows_unique": 4,
+  "ghee_recipe_keys": [
+    "13.1|7",
+    "14.4|3",
+    "14.5|2",
+    "14.6|7"
+  ],
+  "canonical_pesticides": [
+    "Carbendazim",
+    "Carbofuran"
+  ],
+  "supplemental_pesticides": [
+    "Carbofuran",
+    "Phorate"
+  ],
+  "cross_file_duplicate_pesticide": "Carbofuran",
+  "unique_pesticide_source_rows_in_union": 3,
+  "naive_combined_ingredient_source_links": 16,
+  "duplicate_ingredient_source_links": 4,
+  "deduplicated_ghee_ingredient_source_links": 12,
+  "extra_unique_research_citation_links_over_canonical_r39": 4,
+  "current_canonical_r40_links": 94,
+  "potential_merged_unique_research_citation_links_if_explicitly_integrated": 98,
+  "current_canonical_r40_ingredients_without_source_candidate": 14,
+  "current_canonical_r40_ingredients_with_source_candidate": 32,
+  "original_product_CTR_article_holds": 137,
+  "fully_legally_approved_products": 0,
+  "CTR_source_url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+  "CTR_source_pdf_pages_verified_one_based": [
+    19,
+    33,
+    39
+  ],
+  "source_examples": [
+    {
+      "analyte": "Carbendazim",
+      "article": "Milk and Milk products",
+      "limit_mg_kg": 0.1,
+      "fat_basis": "F",
+      "pdf_page_one_based": 19,
+      "source_from": "canonical R39"
+    },
+    {
+      "analyte": "Carbofuran",
+      "residue_definition": "Carbofuran and 3-hydroxy carbofuran sum expressed as carbofuran",
+      "article": "Milk and Milk products",
+      "limit_mg_kg": 0.05,
+      "fat_basis": "explicit fat basis",
+      "pdf_page_one_based": 19,
+      "source_from": "both R39 reports; count once"
+    },
+    {
+      "analyte": "Phorate",
+      "residue_definition": "Phorate, oxygen analogue, sulphoxides and sulphones summed expressed as phorate",
+      "article": "Milk and Milk products",
+      "limit_mg_kg": 0.05,
+      "fat_basis": "F",
+      "pdf_page_one_based": 33,
+      "source_from": "supplemental R39 only"
+    }
+  ],
+  "F_footnote": "Maximum Residue Limit Calculation on Fat Basis",
+  "source_footnote_pdf_page_one_based": 39,
+  "actual_ghee_legally_applicable_CTR_article_and_method_verified": false,
+  "full_current_panel_verified": false,
+  "no_operational_limit_changed": true,
+  "no_live_helper_updated": true,
+  "no_new_product_approval": true,
+  "recipe_14_6_source_alignment_hold": true,
+  "PR_2_remains_draft": true,
+  "warning": "The canonical R40 total 94 does not include four Phorate example research citation links. Potential 98 is an explanatory union only, not a new canonical count or an MRL auto-application."
+}

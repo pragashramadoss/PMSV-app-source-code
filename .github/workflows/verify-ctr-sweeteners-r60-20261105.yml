@@ -1,0 +1,30 @@
+name: PMSV R60 six sweetener standards and CTR ash qualifier guards
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-sweeteners-six-source-review-r60-2026-11-05.json'
+      - 'fssai-helper/ctr-sweeteners-source-gate-r60-20261105.mjs'
+      - 'scripts/test_ctr_sweeteners_r60_20261105.mjs'
+      - '.github/workflows/verify-ctr-sweeteners-r60-20261105.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-sweeteners-six-source-review-r60-2026-11-05.json'
+      - 'fssai-helper/ctr-sweeteners-source-gate-r60-20261105.mjs'
+      - 'scripts/test_ctr_sweeteners_r60_20261105.mjs'
+  workflow_dispatch:
+jobs:
+  verify-6-original-sweetener-cases:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 2023 cane jaggery lower bound and no product PASS
+        run: node scripts/test_ctr_sweeteners_r60_20261105.mjs

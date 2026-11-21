@@ -1,0 +1,34 @@
+name: Apply and verify R25 residue source ambiguity locks
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-ctr-residue-r25-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  verify_and_apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply preimage/output SHA locked FSSAI source-footnote corrections
+        run: python3 scripts/apply_ctr_residue_source_ambiguities_r25_20261104.py
+      - name: Run 40 source-anchored residue and no-product-PASS regression cases
+        run: node scripts/test_ctr_residue_source_r25_20261104.mjs
+      - name: Commit only source-note metadata to draft audit branch
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          git diff --cached --check
+          git commit -m 'Lock ambiguous pesticide source rows and clarify copper metal footnote'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ctr-r25-verified-source-summary
+          path: fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          retention-days: 2
+          if-no-files-found: error

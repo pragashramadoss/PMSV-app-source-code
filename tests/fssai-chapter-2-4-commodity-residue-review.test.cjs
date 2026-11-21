@@ -255,7 +255,7 @@ test("unprocessed raw pulses source 2.4.6(16) has exact aflatoxins and quality l
  const rules=JSON.parse(fs.readFileSync(path.join(root,"data/rules/chapter-2-4-cereals-v1.json"),"utf8"));
  const exact=rules.standards.find(x=>x.key===m.specific_source_clause);
  assert.ok(exact);
- assert.deepEqual(exact.general_limits.map(x=>x.value),[3,0.5]);
+ assert.deepEqual(exact.composition.map(x=>x.value),[3,0.5]);
  assert.equal(exact.full_compliance_assessment_enabled,false);
  const idx=catalog.find(x=>x.id===m.catalog_id);assert.ok(idx);
  assert.equal(idx.fssr,m.existing_catalogue_fssr);

@@ -1,0 +1,34 @@
+name: R37 verify 24 Ayurveda unmapped botanical ingredients
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ayurveda-source-gaps-r37-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  check:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build 24-row remaining source queue and nine conditional raw-fruit source articles
+        run: python3 scripts/build_ayurveda_source_gaps_r37_20261104.py
+      - name: Independently verify source identity, 24 rows, 9 candidate articles and 137 no-PASS holds
+        run: python3 scripts/test_ayurveda_source_gaps_r37_20261104.py
+      - name: Verify original catalogue and operative contaminant rules unchanged
+        shell: bash
+        run: |
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.json
+          test -s fssai-helper/ayurveda-unmapped-ingredient-source-review-r37-2026-11-04.json
+          test -s fssai-helper/ayurveda-unmapped-ingredient-source-review-r37-2026-11-04.md
+      - name: Commit only R37 audit records to draft source branch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/ayurveda-unmapped-ingredient-source-review-r37-2026-11-04.json fssai-helper/ayurveda-unmapped-ingredient-source-review-r37-2026-11-04.md
+          git diff --cached --check
+          git commit -m 'R37: review 24 Ayurveda unmapped ingredients; add 9 conditional raw fruit pesticide rows'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02

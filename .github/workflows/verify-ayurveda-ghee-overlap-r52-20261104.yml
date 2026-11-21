@@ -1,0 +1,22 @@
+name: PMSV R52 reconcile duplicate ghee source citations
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ayurveda-ghee-r39-overlap-reconciliation-r52-2026-11-04.json'
+      - 'scripts/test_ayurveda_ghee_overlap_r52_20261104.py'
+      - '.github/workflows/verify-ayurveda-ghee-overlap-r52-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+  workflow_dispatch:
+jobs:
+  duplicate-citation-and-no-pass-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate raw source deduplication and no product PASS
+        run: python scripts/test_ayurveda_ghee_overlap_r52_20261104.py

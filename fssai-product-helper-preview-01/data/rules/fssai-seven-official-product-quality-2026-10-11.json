@@ -60,6 +60,8 @@
           "operator": "<=",
           "value": 0.5,
           "unit": "%",
+          "applies_to_r12": "ordinary catechu, excluding Bhatti Katha",
+          "requires_actual_subtype": true,
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -68,6 +70,9 @@
           "operator": "<=",
           "value": 1.5,
           "unit": "% dry basis",
+          "applies_to_r12": "Bhatti Katha only",
+          "replaces_general_acid_insoluble_ash_limit": true,
+          "requires_actual_subtype": true,
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         }
@@ -277,6 +282,9 @@
           "max": 68.5,
           "unit": "% by mass",
           "applies_to": "Type 1 and Type 2",
+          "source_heading": "Moisture, per cent. by mass, Max.",
+          "interpretation_status": "SOURCE_OPERATOR_REQUIRES_CLARIFICATION",
+          "automatic_comparison_allowed": false,
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -335,6 +343,9 @@
           "value": 3,
           "unit": "% by mass",
           "applies_to": "Type 1",
+          "when": {
+            "royal_jelly_type": "Type 1"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -344,6 +355,9 @@
           "value": 0.5,
           "unit": "% by mass",
           "applies_to": "Type 1",
+          "when": {
+            "royal_jelly_type": "Type 1"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -353,6 +367,9 @@
           "value": 1.5,
           "unit": "% by mass",
           "applies_to": "Type 1",
+          "when": {
+            "royal_jelly_type": "Type 1"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -362,6 +379,9 @@
           "value": 0.5,
           "unit": "% by mass",
           "applies_to": "Type 1",
+          "when": {
+            "royal_jelly_type": "Type 1"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -391,6 +411,9 @@
           "min": -29,
           "max": -20,
           "unit": "‰",
+          "when": {
+            "royal_jelly_type": "Type 1"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         },
@@ -400,6 +423,9 @@
           "min": -29,
           "max": -14,
           "unit": "‰",
+          "when": {
+            "royal_jelly_type": "Type 2"
+          },
           "finished_product_contaminant_mrl": false,
           "compliance_pass": false
         }

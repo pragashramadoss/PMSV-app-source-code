@@ -1,0 +1,318 @@
+{
+  "review_id": "PMSV_R54_2026_11_04",
+  "review_date": "2026-11-04",
+  "branch": "audit/all-533-2026-11-02",
+  "review_type": "Source-level category-99 actual-data check, not product regulatory approval",
+  "input_registers": [
+    "fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json",
+    "fssai-helper/ctr-137-evidence-readiness-r50-2026-11-04.json",
+    "fssai-helper/ctr-missing-fssr-fcs-source-reconciliation-r51-2026-11-04.json"
+  ],
+  "official_sources": [
+    {
+      "name": "FoSCoS current standardized-product directory",
+      "url": "https://fcstraining.fssai.gov.in/standard-product",
+      "kind": "official live catalogue listing",
+      "category_99_named_rows_checked": true
+    },
+    {
+      "name": "FSSAI compiled FPC for FoSCoS",
+      "url": "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+      "kind": "official licensing reference",
+      "pdf_page_one_based": 9,
+      "pdf_page_image_verified": true,
+      "category_99_1_99_2_99_3_99_7_explicit": true
+    },
+    {
+      "name": "28 May 2020 FoSCoS order copied within 31 March 2022 SOP",
+      "url": "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf",
+      "kind": "official licensing order and attachment",
+      "pdf_page_one_based": 5,
+      "pdf_page_image_verified": true,
+      "category_99_residual_licensing_text_confirmed": true
+    },
+    {
+      "name": "FPSFA Chapter 3 Version 3 (07.05.2025)",
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%203_Substances_added_to_food.pdf",
+      "kind": "compendium reference (original notifications prevail)",
+      "flavouring_3_3_1_pdf_page_one_based": 87,
+      "flavour_prohibitions_page_image_verified": true,
+      "processing_aids_section_3_4_source_text_checked": true,
+      "processing_aids_page_image_confirmed": false
+    },
+    {
+      "name": "Official source law, directions and amendments registry",
+      "url": "https://fssai.gov.in/food-law/regulations",
+      "kind": "Gazette/notification effective source lookup",
+      "full_current_2026_amendment_reconciliation_completed": false
+    }
+  ],
+  "prior_R51_source_field_gaps": {
+    "missing_fssr": 33,
+    "missing_fcs": 9,
+    "both_missing": 8,
+    "distinct": 34
+  },
+  "category_99_blank_FSSR_source_records": 7,
+  "category_99_source_only_route_checks_completed": 7,
+  "category_99_FCS_counts": {
+    "99.1": 3,
+    "99.2": 1,
+    "99.3": 1,
+    "99.7": 2
+  },
+  "actual_finished_product_FSSR_clause_adjudications_closed": 0,
+  "exact_CTR_product_article_applicability_holds_still_open": 137,
+  "original_catalogue_product_records": 533,
+  "verified_whole_product_compliance_PASS_count": 0,
+  "original_R51_source_fields_repaired_in_place": false,
+  "source_classification_is_not_finished_product_article": true,
+  "original_gazette_reconciliation_and_actual_sku_evidence_pending": true,
+  "seven_records": [
+    {
+      "catalogue_id": "99-99-1-acidity-regulators-l-tartaric-acid",
+      "product_name": "Acidity Regulators L(+/-)tartaric Acid",
+      "original_fcs": "99.1",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.1 and FPSFA 3.1.1 + legally applicable additive permission/specification",
+      "required_identity_and_use_evidence": [
+        "Exact chemical name, optical stereoisomer and CAS/INS identifiers as used",
+        "Grade, purity/impurity specification, supplier and batch documentation",
+        "Intended food use and dosage; correct Appendix A/other operative amendment by FPC",
+        "Applicable actual food additive permission, residual limits and accredited testing method"
+      ],
+      "evidence_route": "FOOD_ADDITIVE_SPECIFIC_IDENTITY",
+      "hard_stop_during_matching": "The 'L(+/-)' catalogue label does not prove which tartaric-acid stereoisomer or grade is used; never automatically assign a specific INS, purity/MRL or food-product category.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised",
+      "product_name": "Additives VA-VF of Nutraceutical Regulations excluding those already standardised",
+      "original_fcs": "99.1",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.1, original Nutraceutical Regulations and current legally effective directions/schedules",
+      "required_identity_and_use_evidence": [
+        "Identify each additive's INS/CAS and technological function",
+        "Confirm which specific VA/VE/VF schedule entry and edition legally applies to the intended nutraceutical category",
+        "Reconcile 2016 schedules with later notified directions and amendments; do not transfer old numbering automatically",
+        "Purity, maximum levels and final product composition"
+      ],
+      "evidence_route": "NUTRACEUTICAL_ADDITIVE_VERSION_GATED",
+      "hard_stop_during_matching": "The historic category title naming VA–VF does not itself prove the substance is permitted under all 2026 nutraceutical product routes or standard foods.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-1-sajji-khar",
+      "product_name": "Sajji Khar",
+      "original_fcs": "99.1",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.1 category listing only until the exact legal chemical identity and source permission are established",
+      "required_identity_and_use_evidence": [
+        "Supplier identity and complete chemical composition; any mixed alkali and salts",
+        "Exact INS/CAS where applicable, manufacturing process and food-grade purity",
+        "Explicit permission and intended technological function under legally effective standard",
+        "Laboratory COA, use level and applicable food-category limitations"
+      ],
+      "evidence_route": "NAMED_BUT_UNIDENTIFIED_COMPOSITION",
+      "hard_stop_during_matching": "Do not guess that 'Sajji Khar' always equals one salt (e.g., sodium carbonate) or inherit a single salt's additive limits by name.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc",
+      "product_name": "Permitted enzymes and their preparations excluding those already listed under Processing Aids and Nutraceutical Regulations",
+      "original_fcs": "99.2",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.2 distinct from 99.4 processing aids; FPSFA relevant enzyme/processing-aid permission",
+      "required_identity_and_use_evidence": [
+        "Exact enzyme and EC number, production species and source (including GMM status if relevant)",
+        "Fermentation/manufacture, carrier and total organic solids; food-grade specification",
+        "Is it a direct enzyme preparation or processing aid under 99.4? Resolve actual use category and residues",
+        "Permitted application, intended target food and method to demonstrate applicable purity/safety"
+      ],
+      "evidence_route": "ENZYME_VS_PROCESSING_AID_SPECIATION",
+      "hard_stop_during_matching": "99.2 listing excludes enzymes already covered under processing aids/nutraceutical routes. Do not treat 99.2 and 99.4 as interchangeable or infer use approval.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-3-mixture-preparations-premix-of-flavouring-substances",
+      "product_name": "Mixture/preparations/premix of flavouring substances",
+      "original_fcs": "99.3",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.3; FPSFA 3.3.1 flavouring agents and prohibited flavours",
+      "required_identity_and_use_evidence": [
+        "Full component and carrier/solvent disclosure, natural/nature-identical/artificial route and identity",
+        "Screen every component against current 3.3.1 prohibited flavour substances and solvent restrictions",
+        "Food category, max levels/GMP conditions, powder anti-caking use, allergen/label requirements",
+        "Actual blend specification, batch COA and substance-specific traceability"
+      ],
+      "evidence_route": "FLAVOUR_MIXTURE_PROHIBITED_COMPONENT_SCREEN",
+      "hard_stop_during_matching": "A FoSCoS 99.3 premix cannot be treated as automatically permissible; Chapter 3.3.1 excludes explicitly prohibited flavour substances, and additive/solvent conditions apply.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica",
+      "product_name": "Ingredients listed under Schedule IV, Schedule VI and Schedule VIII of Nutraceutical Regulations",
+      "original_fcs": "99.7",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.7 functional ingredients; current Nutraceuticals Regulation/directions with schedule identity reconciliation",
+      "required_identity_and_use_evidence": [
+        "Actual ingredient name, botanical species or chemical identity, extract/plant part and active marker",
+        "Which applicable schedule, issue date, any amended/new numbered schedule and conditions",
+        "Permitted product category, usage limits, botanical processing/standardization and restrictions",
+        "Supplier purity and safety evidence, correct Food Product Category and license route"
+      ],
+      "evidence_route": "NUTRACEUTICAL_SCHEDULE_IDENTITY_VERSION_GATED",
+      "hard_stop_during_matching": "The legacy category name lists Schedules IV, VI and VIII; never assume those schedule numbers or permissions are unmodified in newer nutraceutical directions.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    },
+    {
+      "catalogue_id": "99-99-7-mixtures-preparations-premix-of-functional-ingredients",
+      "product_name": "Mixtures/preparations/premix of functional ingredients",
+      "original_fcs": "99.7",
+      "source_foscos_category_confirmed": true,
+      "original_r29_fssr_field": "",
+      "source_FSSR_blank_remains": true,
+      "official_category_99_name_aligned": true,
+      "official_source_links": [
+        "https://fcstraining.fssai.gov.in/standard-product",
+        "https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf",
+        "https://www.fssai.gov.in/upload/advisories/2022/03/624561f927c4aSOP_License_Nutra_31_03_2022.pdf"
+      ],
+      "candidate_legislative_area": "FoSCoS 99.7; each component's operative functional-ingredient/nutraceutical regulation",
+      "required_identity_and_use_evidence": [
+        "Full component list, potency and ratio, excipients, carriers, color/flavour additives",
+        "Each active's notified legal entry/edition and maximum use in intended finished food",
+        "Extract part/source, purity markers, microbial/contaminant sampling and applicable claims",
+        "Actual manufacturer registered product and whether mixture is an ingredient vs final consumer product"
+      ],
+      "evidence_route": "FUNCTIONAL_PREMIX_COMPONENT_BY_COMPONENT",
+      "hard_stop_during_matching": "Premix or blending does not create blanket permission. Every active, carrier, use and final category must be independently permitted.",
+      "must_review_current_original_Gazette_and_effective_amendments": true,
+      "exact_substance_identity_known_from_category_label": false,
+      "actual_manufacturer_and_SKU_license_verified": false,
+      "finished_product_FSSR_clause_legally_decided": false,
+      "current_CTR_finished_article_legally_decided": false,
+      "full_applicable_contaminant_additive_micro_and_label_panels_verified": false,
+      "compliance_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "auto_assign_numeric_CTR_limit": false,
+      "status": "OFFICIAL_FOSCOS_UMBRELLA_SOURCE_CONFIRMED__ACTUAL_SUBSTANCE_FSSR_AND_CTR_HOLD"
+    }
+  ],
+  "guards": [
+    "Category 99 is a FoSCoS licensing umbrella, not a universal single FSSR purity and finished-food contaminant standard.",
+    "For every 99.1 additive, verify exact chemical/INS/grade and the right target food permission; do not infer a compound from product label.",
+    "For 99.2 enzymes distinguish true enzyme ingredients from 99.4 processing aids and verify EC/source/target food.",
+    "For 99.3 flavour mixtures the Chapter 3.3.1 prohibited flavours and solvent restrictions must be screened component by component.",
+    "For 99.7 functional ingredient mixtures check each active, its relevant effective nutraceutical/functional-ingredient schedule and grade.",
+    "Never map a blank FSSR field to 2.12 proprietary status or to a generic Chapter 3 number and call it legally confirmed.",
+    "None of these research findings changes the original R50 product CTR legal article hold, or supplies actual lab/spec/label evidence."
+  ],
+  "current_original_regulatory_notifications_and_all_amendments_reconciled": false,
+  "product_master_modified": false,
+  "production_engine_modified": false,
+  "numeric_CTR_rules_modified": false,
+  "draft_pr_still_unmerged": true
+}
