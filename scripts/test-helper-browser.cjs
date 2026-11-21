@@ -1062,6 +1062,9 @@ async function testDateMarkingArtwork(page) {
  const field=k=>panel.locator('[data-small-field="'+k+'"]');
  await field('sku').fill('Date review SKU');await field('art').fill('Date artwork R107');await field('pack').selectOption('retail');
  await field('dateArticle').selectOption('candy');await field('dateRef').fill('Finished candy spec R107');await field('dateLife').selectOption('long');
+ assert.equal(await field('sku').inputValue(),'Date review SKU');
+ assert.equal(await field('art').inputValue(),'Date artwork R107');
+ assert.equal(await field('pack').inputValue(),'retail');
  const row=k=>panel.locator('[data-small-row="'+k+'"]');
  await row('made').locator('select').selectOption('missing');await row('expiry').locator('select').selectOption('bestBefore');
  assert((await row('expiry').innerText()).includes('5(10)(d)(v)'));

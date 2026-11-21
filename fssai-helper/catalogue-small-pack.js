@@ -171,11 +171,12 @@
   const link=(key,label)=>'<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+sources[key]+'">'+esc(label)+'</a>';
   const option=(k,label,val)=>'<option value="'+esc(k)+'"'+(k===val?' selected':'')+'>'+esc(label)+'</option>';
   const options=(items,val,empty)=>option('',empty||'Choose',val)+Object.entries(items).map(([k,l])=>option(k,l,val)).join('');
-  function form(m,id){
+  function form(m,id,identityOnly=false){
     const field=(k,label,numeric=false)=>'<label>'+esc(label)+'<input data-small-field="'+k+'" value="'+esc(m[k])+'" maxlength="'+(numeric?48:320)+'"'+(numeric?' inputmode="decimal"':'')+'></label>';
     const choice=(k,label,items)=>'<label>'+esc(label)+'<select data-small-field="'+k+'" data-small-original="'+esc(m[k])+'">'+options(items,m[k])+'</select></label>';
-    let html=field('sku','SKU or variant')+field('art','Artwork code and revision')+choice('pack','Pack being reviewed',root.PMSVIngredientPercentage.packLabels);
-    if(!m.pack||m.pack==='nonretail')return html;
+    if(identityOnly)return field('sku','SKU or variant')+field('art','Artwork code and revision')+choice('pack','Pack being reviewed',root.PMSVIngredientPercentage.packLabels);
+    if(!m.pack||m.pack==='nonretail')return '';
+    let html='';
     if(m.pack==='inner')html+=choice('method','What was measured?',methods)+field('area','Measured area',true)+choice('unit','Area unit',units)+field('measureRef','Measurement or approved drawing reference')+
       choice('outerType','How is this food presented for retail sale?',outers)+field('outerRef','Corresponding retail outer artwork and revision');
     return html+date.form(m,id,field,choice)+choice('origin','Origin and packing location',origins)+choice('operator','Who manufactures, markets, packs or bottles this SKU?',operators)+field('scanRef','Code scan or decoded content reference, if used');
@@ -185,7 +186,7 @@
       '<p>'+[link('measurement','How to measure · FAQ 24'),link('size','Size and dates · reg. 8'),link('english','Gazette in English · p. 38'),link('hindi','Gazette in Hindi · p. 16'),link('faq34','FAQ 34 · first page'),link('faq34end','FAQ 34 · continuation'),link('barcode','Code route · reg. 8(5)'),link('faq43','FAQ 43'),link('metrology','Legal Metrology · rule 6')].join(' · ')+'</p>'+
       '<p>FAQ 34 identifies the brand owner for the name and address declaration. A different operator’s licence is a separate field. The FAQ also refers to Legal Metrology. For food, explanation III to rule 6(1)(a) directs the name and address question to food law.</p>'+
       '<p>For outer-only licence numbers and the FSSAI logo, the English text of 8(1) lists the items before the importer’s details. The Hindi list on Gazette p. 16 omits those words. The finding records the English basis and flags the wording difference.</p>'+
-      '<div data-small-form></div><p data-small-status role="status"></p><div data-small-rows></div><button type="button" data-small-save>Save small-pack check</button> '+
+      '<div data-small-form><div data-small-identity></div><div data-small-details></div></div><p data-small-status role="status"></p><div data-small-rows></div><button type="button" data-small-save>Save small-pack check</button> '+
       '<button type="button" data-small-new>Start another artwork</button><p data-small-message role="status"></p><div data-small-saved></div></div></details>';
   }
   function attach(node,id,state){
@@ -216,7 +217,18 @@
         el.querySelector('[data-small-finding]').textContent=r.text;
       }
     }
-    function paint(){part('form').innerHTML=form(m,id);part('rows').replaceChildren();showRows();}
+    function paint(){
+      const identity=part('identity');
+      if(!identity.firstChild)identity.innerHTML=form(m,id,true);
+      // Keep the next identity control attached when the previous field commits on blur.
+      for(const input of identity.querySelectorAll('[data-small-field]')){
+        const value=m[input.dataset.smallField]||'';
+        if(input.value!==value)input.value=value;
+        input.dataset.smallOriginal=value;
+      }
+      part('details').innerHTML=form(m,id);
+      part('rows').replaceChildren();showRows();
+    }
     function changed(){
       state.smallPackDraft=JSON.stringify(m);
       const hint=node.querySelector('[data-ws-saved]');if(hint)hint.textContent='Unsaved worksheet changes';
