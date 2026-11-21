@@ -1259,8 +1259,8 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await selector('result').fill('20.00');await selector('unitConfirmed').check();
  assert((await comp.locator('[data-ws-outcome]').textContent()).includes('Within'));
  await page.locator('[data-ws-save]').click();
- const report=await page.evaluate(()=>PMSVCatalogueWorksheets.registerRows(true).find(r=>r[0]==='05-05-1-cocoa-powder').slice(-2));
- assert(report[0].includes('Medium Fat')&&report[1].includes('20.00%')&&report[1].includes('dry basis'));
+ const cocoaExport=await page.evaluate(()=>PMSVCatalogueWorksheets.registerRows(true).find(r=>r[0]==='05-05-1-cocoa-powder').slice(-2));
+ assert(cocoaExport[0].includes('Medium Fat')&&cocoaExport[1].includes('20.00%')&&cocoaExport[1].includes('dry basis'));
  if(exhaustive) {
   const count=await page.evaluate(()=>{
    const all=PMSV_HELPER_TEST.getCatalogue(),host=document.createElement('div');
