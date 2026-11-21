@@ -1359,8 +1359,12 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await rd.locator('[data-rd-copy]').click();await rd.locator('[data-rd-fallback]').waitFor();
  assert.equal(await rd.locator('[data-rd-fallback]').inputValue(),copied);
  await page.evaluate(()=>{delete navigator.clipboard;delete window.rdCopiedText;});
- await art.locator('li').filter({hasText:'Folding carton R103 v2'}).getByRole('button',{name:'Remove'}).click();
- await art.locator('li').filter({hasText:'Individual inner pack'}).getByRole('button',{name:'Remove'}).click();
+ const cartonCheck=art.locator('[data-quid-saved] li').filter({hasText:'Folding carton R103 v2'});
+ await cartonCheck.getByRole('button',{name:'Remove',exact:true}).click();
+ await cartonCheck.waitFor({state:'detached'});
+ const innerCheck=art.locator('[data-quid-saved] li').filter({hasText:'Jar art R102 v1'}).filter({hasText:'Individual inner pack'});
+ await innerCheck.getByRole('button',{name:'Remove',exact:true}).click();
+ await innerCheck.waitFor({state:'detached'});
  await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
  assert(await rdExport.isDisabled());await rd.locator('summary').click();
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
