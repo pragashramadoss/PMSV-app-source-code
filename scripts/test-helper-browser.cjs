@@ -1055,6 +1055,41 @@ async function testVegetableMeals(page,register,base,artifacts) {
 }
 
 
+async function testArtworkIngredientOrder(page) {
+ const panel=page.locator('.order-section'),f=k=>panel.locator('[data-order-field="'+k+'"]');
+ const entry=(i,k)=>panel.locator('[data-order-index="'+i+'"] [data-order-line="'+k+'"]');
+ const outcome=panel.locator('[data-order-result]'),rd=page.locator('#rdRequests');
+ await panel.locator(':scope > summary').click();
+ await f('sku').fill('Example R104');await f('art').fill('Outer R104 v1');await f('pack').selectOption('outer');
+ await f('scope').selectOption('group');await f('listName').fill('Emulsifiers');await f('coverage').selectOption('selected');await f('presentation').selectOption('named');
+ await entry(0,'name').fill('Additive A');await entry(0,'alias').fill('A');await entry(0,'amount').fill('300');await entry(0,'unit').selectOption('g');
+ await entry(1,'name').fill('Additive B');await entry(1,'alias').fill('B');await entry(1,'unit').selectOption('kg');
+ await f('printed').fill('B\nA');await panel.locator('[data-order-save]').click();
+ await panel.getByText('Saved ingredient-order checks (1)',{exact:true}).waitFor();
+ await rd.locator('summary').click();await rd.getByText('1 open request.',{exact:true}).waitFor();
+ const questions=await rd.locator('tbody td').nth(2).textContent();
+ assert(questions.includes('approved formula reference')&&questions.includes('Additive B')&&!questions.includes('Printed'));
+ await f('recipe').fill('Approved R104 recipe v3');await entry(1,'amount').fill('0.2');
+ assert.equal(await entry(0,'amount').inputValue(),'300');assert.equal(await f('printed').inputValue(),'B\nA');
+ assert((await outcome.innerText()).includes('Printed B before A. The recorded quantity of A is higher.'));
+ await panel.locator('[data-order-save]').click();await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
+ await rd.locator('summary').click();
+ await entry(0,'amount').fill('200');assert((await outcome.innerText()).includes('A = B'));
+ await panel.locator('[data-order-new]').click();assert.equal(await f('recipe').inputValue(),'Approved R104 recipe v3');
+ await f('scope').selectOption('relief');await f('listName').fill('Preparation R104');await f('sourceRef').fill('Supplier breakdown R104');
+ await f('share').fill('5.00');assert((await outcome.innerText()).includes('5% or more'));
+ await f('share').fill('4.999');await f('function').selectOption('yes');
+ assert((await outcome.innerText()).includes('Check its declaration')||(await outcome.innerText()).includes('check its declaration'));
+ await panel.locator('[data-order-save]').click();await panel.getByText('Saved ingredient-order checks (2)',{exact:true}).waitFor();
+ const old=panel.locator('[data-order-saved] li').filter({hasText:'Emulsifiers'});
+ await old.getByRole('button',{name:'Open',exact:true}).click();assert.equal(await entry(0,'amount').inputValue(),'300');
+ const dl=page.waitForEvent('download');await panel.locator('[data-order-export]').click();const file=await dl;
+ assert(file.suggestedFilename().startsWith('PMSV-Artwork-Ingredient-Order-'));
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('0.2 kg'));
+ assert((await readProductBrief(page)).includes('Saved ingredient-order checks (2)'));
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Ingredient-order form overflows viewport');
+}
+
 async function testCatalogueWorksheets(page, exhaustive) {
  const oil='02-02-1-refined-grapeseed-oil', khoa='18-18-1-khoa-based-sweets';
  const open=async id=>{
@@ -1068,7 +1103,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(!detail.querySelector('.quid-section>summary')||!detail.querySelector('[data-residue-list]')||!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(!detail.querySelector('.order-section>summary')||!detail.querySelector('.quid-section>summary')||!detail.querySelector('[data-residue-list]')||!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1367,6 +1402,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await innerCheck.waitFor({state:'detached'});
  await rd.getByText('No open recipe requests in saved artwork checks.',{exact:true}).waitFor();
  assert(await rdExport.isDisabled());await rd.locator('summary').click();
+ await testArtworkIngredientOrder(page);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
  assert.equal(await page.locator('#productList [data-id]').count(),36);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
@@ -1375,8 +1411,8 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R103.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R104.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1961,7 +1997,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={rdRecipeRequestCopyAndCsvTested:true,ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={ingredientOrderWorksheets:533,ingredientOrderAndRequestsTested:true,rdRecipeRequestCopyAndCsvTested:true,ingredientPercentageWorksheets:533,artworkChecksAndExportsTested:true,ethyleneOxideReportsTested:true,ethyleneOxideSampleProducts:36,spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

@@ -181,14 +181,17 @@
     if(rounded(calc.n,calc.d,print.scale)===print.n)return tag+'Matches only after rounding. Confirm the declaration precision and applicable rule.';
     return tag+'Printed percentage differs from the recipe.';
   }
+  const O=root.PMSVIngredientOrder;
   const prefix='pmsv-fssai-artwork-percentage-r102:';
   const session=new Map();
-  const identity=(id,m)=>prefix+JSON.stringify([id,...[m.sku,m.art,m.pack,m.target].map(str)]);
+  const identity=(id,m)=>prefix+JSON.stringify([id,...(m.type==='order'?O.identityParts(m):[m.sku,m.art,m.pack,m.target].map(str))]);
   function decode(key,json) {
     try{
       const parts=JSON.parse(key.slice(prefix.length)),v=JSON.parse(json),id=parts[0];
-      if(!Array.isArray(parts)||parts.length!==5||v.version!==1||!v.review||!Object.hasOwn(root.PMSVCatalogueRules.products,id))return null;
-      const m=model(v.review);
+      const isOrder=v.review?.type==='order';
+      if(!Array.isArray(parts)||parts.length!==(isOrder?7:5)||v.version!==1||!v.review||!Object.hasOwn(root.PMSVCatalogueRules.products,id))return null;
+      if(isOrder&&(!O||!Object.hasOwn(O.scopes,v.review.scope)))return null;
+      const m=isOrder?O.model(v.review):model(v.review);
       return identity(id,m)===key&&entry('pack',m.pack)?{id,key,raw:json,m}:null;
     }catch(_){return null;}
   }
@@ -212,14 +215,17 @@
     return groups;
   }
   function save(id,m,opened) {
-    if(!Object.hasOwn(root.PMSVCatalogueRules.products,id)||![m.sku,m.art,m.target,entry('pack',m.pack)].every(str))
+    const isOrder=m.type==='order';
+    if(isOrder&&(!O||!Object.hasOwn(O.scopes,m.scope)||(O.namedScope(m.scope)&&!str(m.listName))||![m.sku,m.art,entry('pack',m.pack)].every(str)))
+      return {message:'Enter the SKU, artwork revision, pack and list being reviewed. Identify any compound ingredient or functional class.'};
+    if(!Object.hasOwn(root.PMSVCatalogueRules.products,id)||(!isOrder&&![m.sku,m.art,m.target,entry('pack',m.pack)].every(str)))
       return {message:'Enter the SKU or variant, artwork revision, pack and ingredient to save this check.'};
-    const key=identity(id,m),raw=JSON.stringify({version:1,review:model(m)});
+    const key=identity(id,m),raw=JSON.stringify({version:1,review:isOrder?O.model(m):model(m)});
     const previous=(savedByProduct().get(id)||[]).find(r=>r.key===key);
     if(opened?.key===key&&previous?.raw!==opened.raw&&previous?.raw!==raw)
       return {message:'This saved check changed. Reopen its current version before editing it.'};
     if(previous&&previous.raw!==raw&&opened?.key!==key)
-      return {message:'A check already exists for this artwork and ingredient. Open it to edit, or use a different revision.'};
+      return {message:'A check already exists for this artwork. Open it to edit, or use a different revision.'};
     let message=previous?(raw===previous.raw?'This check is already saved.':'Updated this artwork check.'):'Saved this artwork check.';
     try{root.localStorage.setItem(key,raw);session.delete(key);}
     catch(_){session.set(key,raw);message='Kept in this session. Export the artwork checks to retain them.';}
@@ -252,7 +258,7 @@
   root.addEventListener?.('storage',event=>{
     if(event.key!==null&&!event.key?.startsWith(prefix))return;
     notifyRequestChange();
-    for(const element of root.document?.querySelectorAll('.quid-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
+    for(const element of root.document?.querySelectorAll('.quid-section[open], .order-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
   });
   function detail(m) {
     const legal=decide(m),math=calculate(m);
@@ -322,7 +328,7 @@
     const requests=new Map();
     for(const [id,records] of groups){
       for(const {m} of records){
-        const questions=recipeQuestions(m);
+        const questions=m.type==='order'?O.analyse(m).rd:recipeQuestions(m);
         if(!questions.length)continue;
         const sku=str(m.sku),recipe=str(m.recipe),art=str(m.art),pack=entry('pack',m.pack);
         // With no approved revision, two pack artworks can refer to different formulas.
@@ -388,17 +394,17 @@
   const describe=m=>detail(m).join(' | ');
   const hasData=m=>scalarKeys.some(k=>str(m[k]))||m.lines.some(r=>r.source||r.amount||r.share||r.spec);
   function values(id,state,groups) {
-    const m=draft(state),saved=groups?.get(id)||[];
-    const requests=requestRows(new Map([[id,saved]]));
+    const m=draft(state),all=groups?.get(id)||[],saved=all.filter(r=>r.m.type!=='order');
+    const requests=requestRows(new Map([[id,all]]));
     return [sourceText,...(hasData(m)?detail(m):['','','','','']),saved.length,saved.map(r=>describe(r.m)).join('\n'),requests.length-1,requestText(requests)];
   }
-  function brief(id,state) {
-    const v=values(id,state,savedByProduct());
-    if(!v[1]&&!v[6])return [];
+  function brief(id,state,groups=savedByProduct()) {
+    const v=values(id,state,groups);
+    if(!v[1]&&!v[6])return v[8]?['R&D recipe requests',v[9]]:[];
     return ['Ingredient percentage on artwork',...v.slice(1,6).filter(Boolean),v[6]?'Saved artwork checks ('+v[6]+')':'',v[7],v[8]?'R&D recipe requests':null,v[9],sourceText].filter(Boolean);
   }
   function exportRows(id){
-    const rows=savedByProduct().get(id)||[];
+    const rows=(savedByProduct().get(id)||[]).filter(r=>r.m.type!=='order');
     return [['Catalogue ID','SKU or variant','Artwork revision','Pack','Reviewed ingredient','Artwork and evidence','Declaration finding',
       'Pack and placement','Recipe calculation','Printed percentage comparison','Legal sources',requestColumns[2]],
       ...rows.map(({m})=>[id,m.sku,m.art,entry('pack',m.pack),m.target,...detail(m),sourceText,recipeQuestions(m).join('\n')])];
@@ -459,7 +465,7 @@
     const target=k=>sectionNode.querySelector('[data-quid-'+k+']');
     const status=text=>{target('status').textContent=text;};
     function refreshSaved(){
-      visible=savedByProduct().get(id)||[];
+      visible=(savedByProduct().get(id)||[]).filter(r=>r.m.type!=='order');
       target('saved').innerHTML=visible.length?'<h5>Saved artwork checks ('+visible.length+')</h5><ul>'+visible.map(({m},i)=>
         '<li>'+esc(join([m.sku,m.art,entry('pack',m.pack),m.target]))+' <button type="button" data-quid-open="'+i+'">Open</button> '+
         '<button type="button" data-quid-delete="'+i+'">Remove</button></li>').join('')+'</ul><button type="button" data-quid-export>Export artwork checks as CSV</button>':'';
@@ -542,5 +548,5 @@
       }
     });
   }
-  root.PMSVIngredientPercentage=Object.freeze({sources,columns,model,draft,calculate,placement,decide,compare,save,remove,savedByProduct,requestRows,requestText,requestColumns,recipeQuestions,attachRequests,exportRows,values,brief,section,attach});
+  root.PMSVIngredientPercentage=Object.freeze({sources,columns,arithmetic:Object.freeze({decimal,lt,add}),packLabels:labels.pack,identity,withArtworkLock,model,draft,calculate,placement,decide,compare,save,remove,savedByProduct,requestRows,requestText,requestColumns,recipeQuestions,attachRequests,exportRows,values,brief,section,attach});
 })(globalThis);
