@@ -300,5 +300,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(lab(id,s)?['Metal result · '+lab(id,s)]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({fields,metals,panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,lab,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,lab,update,brief,columns,values,nextEdition});
 })(globalThis);

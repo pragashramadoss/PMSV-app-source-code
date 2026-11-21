@@ -73,7 +73,16 @@ def linked_profile(rule, anchor):
                 for item in v.get(q, []) or []:
                     if item not in issues:
                         issues.append(item)
-    return {"name": rule["name"], "criteria": controls, "sections": sections, "issues": tidy(issues)}
+    # Preserve named tables that are outside the generic composition key. Keep their form boundaries.
+    test_tables = {}
+    for field in ("chocolate_types", "roasted_ground", "decaffeinated_roasted_ground", "soluble_coffee",
+                  "decaffeinated_soluble", "regular_roasted_ground", "instant", "decaffeinated_instant",
+                  "fruit_juice_table_r9", "mozzarella_table", "relative_composition", "essential_requirements_r13",
+                  "conditional_requirements", "core_composition", "composition_rules"):
+        if rule.get(field):
+            test_tables[field] = tidy(rule[field])
+    return {"name": rule["name"], "criteria": controls, "sections": sections, "issues": tidy(issues),
+            **({"testTables": test_tables} if test_tables else {})}
 
 
 def build():

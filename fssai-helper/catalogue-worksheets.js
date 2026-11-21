@@ -3,10 +3,10 @@
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
   const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel, Q = root.PMSVIngredientPercentage, O = root.PMSVIngredientOrder, S = root.PMSVSmallPack, T = root.PMSVBatchSite, L = root.PMSVLotDates;
-  const composition = root.PMSVVariantComposition;
+  const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 110 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 111 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -103,6 +103,7 @@
   function enabledCriteria(id) {
     const p=E.products[id];
     if (!p) return [];
+    if (id.startsWith('102-')) return [];
     if (composition.profiles.has(id)) return composition.enabled(id,getState(id));
     const s=R.standards[p.standard];
     if (focused.has(id) || p.scope!=='product_standard' || !s) return [];
@@ -125,11 +126,16 @@
       const key=p.standard.split('#')[1];
       body+='<p><b>'+esc(std.name)+'</b> · '+esc(p.scope==='product_standard'?'Article / regulation ':'Ingredient identity and purity article ')+esc(key)+'</p><p>'+esc(anchor.basis)+' · '+officialLinks(anchor.doc,anchor.p)+'</p>';
       if (std.issues.length) body+='<p><b>Source questions</b></p>'+entries(std.issues);
-      if (focused.has(id)) body+='<p>Use the product-specific calculator in this product view for the current worked limits and pack conditions.</p>';
+      if(id.startsWith('102-'))body+='<p>'+esc(list.find(v=>v.id===id)?.nonTransfer||'Confirm the documented recipe and ingredient scope.')+'</p>';
+      else if (focused.has(id)) body+='<p>Use the product-specific calculator in this product view for the current worked limits and pack conditions.</p>';
       else {
         const srows=std.criteria.map(({spec:s,compare:auto})=>[esc(s.parameter),esc(threshold(s)),esc([s.analytical_basis,conditions(s)].filter(Boolean).join(' · ') || 'See cited article'),esc(auto?'Source-edition row':'Inspect article and variant')]);
         if (srows.length) body+=section('Composition and quality criteria ('+srows.length+')',table(['Parameter','Cited criterion','Basis and conditions','Review'],srows));
-        if (Object.keys(std.sections).length) body+=section('Identity, process and variant provisions',Object.entries(std.sections).map(([k,v])=>'<h5>'+esc(human(k))+'</h5>'+entries(v)).join(''));
+        if (Object.keys(std.sections).length) body+=section('Identity, process and variant provisions',Object.entries(std.sections).map(([k,v])=>{
+          const scoped=['variants','composition_by_form'].includes(k) && Array.isArray(v)
+            ?v.filter(item=>typeof item!=='object'||!item||plan.relevantForm(key,r.name,item.variant||item.name||r.name)):v;
+          return Array.isArray(scoped)&&!scoped.length?'':'<h5>'+esc(human(k))+'</h5>'+entries(scoped);
+        }).join(''));
       }
       if (anchor.gaz.length) body+=section('Original Gazette article and amendment references', '<p>The printed article number occurs on these pages. Read the operative wording, product scope and commencement before using a change.</p>'+ul(anchor.gaz.map(([doc,pp])=>esc(E.documents[doc].label+' '+(E.documents[doc].date||''))+' '+officialLinks(doc,pp))));
     }
@@ -171,16 +177,32 @@
     return section('Food additives and processing aids','<p>Appendix A category '+esc(r.category||'requires product-specific review')+'. Match the intended additive, food and function. Check the most specific entry, group total, notes and any stricter product rule. Annexure II categories for FPC 18 depend on the recipe.</p>'+
       (alias?'<p>'+esc(alias.reason)+'</p>':'')+'<label>Find an additive by name or INS<input type="search" data-ws-add placeholder="e.g. sorbate or 202"></label><div data-ws-add-results>'+addResults(id,'')+'</div>'+documentLink('chapter-19')+' '+documentLink('chapter-21',null,'Appendix C · processing aids'));
   }
+  function testingPlanSection() {
+    return '<details class="ws-section" data-testing-plan><summary>Testing plan and source decisions</summary><div>'+
+      '<label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
+      '<button type="button" data-plan-export>Download this product’s testing plan</button><div data-plan-results></div></div></details>';
+  }
+  function showPlan(node,id) {
+    const area=node.querySelector('[data-plan-area]').value;
+    const rows=plan.entries(id).filter(r=>r.area===area);
+    const cells=rows.map(r=>{
+      const sampling=[['n',r.n],['c',r.c],['m',r.m],['M',r.M]].filter(([,v])=>v!=null).map(([k,v])=>k+' = '+v).join(', ');
+      const urls=(r.source||'').split(' | ').filter(Boolean);
+      return [esc(r.parameter),esc([r.form,r.status].filter(Boolean).join(' · ')),esc([r.limit,r.unit,sampling].filter(Boolean).join(' · ')),esc(r.notes),
+        esc(r.article)+' '+urls.map(u=>href(u,u.includes('#page=')?'p. '+u.split('#page=')[1]:'Source')).join(' ')];
+    });
+    node.querySelector('[data-plan-results]').innerHTML=table(['Parameter or decision','Form and applicability','Criterion or sampling plan','Basis or next action','FSSAI source'],cells);
+  }
   function microSection(p) {
     const sections=[];
-    function profile(key) {
+    function profile(key,route) {
       const m=R.micro[key];if(!m)return '';
-      return section(m.name,'<p>Appendix B · '+esc(human(m.group))+' · '+esc(display(m.pages))+'</p>'+entries(m.criteria));
+      return section(m.name,'<p>Appendix B · '+esc(human(m.group))+' · '+esc(display(m.pages))+'</p>'+entries(plan.microCriteria(m,route)));
     }
     for (const [type,info] of p.micro) {
       sections.push('<p><b>'+esc(human(type))+'</b> · '+esc(info.note||info.reason||info.route||human(info.status))+'</p>');
-      if(info.profile_key)sections.push(profile(info.profile_key));
-      for(const opt of info.options||[])sections.push('<p>'+esc(opt.condition||opt.note||'Process or variant condition')+'</p>'+profile(opt.profile_key));
+      if(info.profile_key)sections.push(profile(info.profile_key,info));
+      for(const opt of info.options||[])sections.push('<p>'+esc(opt.condition||opt.note||'Process or variant condition')+'</p>'+profile(opt.profile_key,opt));
     }
     return section('Microbiological criteria and sampling',(sections.length?sections.join(''):'<p>Establish the named food and process against Appendix B and the specific product regulation. Record the applicable table, sampling stage and plan.</p>')+documentLink('chapter-20'));
   }
@@ -278,7 +300,10 @@
       const body=node.querySelector('.ws-body');
       if(!node.open || body.hasChildNodes())return;
       const p=E.products[id];
-      body.innerHTML=(composition.profiles.has(id)?'<section class="panel compact" data-variant-composition>'+variantTable(id)+'</section>':'')+productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
+      body.innerHTML=(composition.profiles.has(id)?'<section class="panel compact" data-variant-composition>'+variantTable(id)+'</section>':'')+testingPlanSection()+productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
+      const testing=node.querySelector('[data-testing-plan]');
+      testing.addEventListener('toggle',()=>{if(testing.open)showPlan(testing,id);});
+      testing.querySelector('[data-plan-area]').addEventListener('change',()=>showPlan(testing,id));
       Q.attach(node,id,getState(id));
       O.attach(node,id,getState(id));
       S.attach(node,id,getState(id));
@@ -380,5 +405,5 @@
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,
     partial:[...ids].filter(id=>E.products[id].directCTR).length,portal:[...ids].filter(id=>E.products[id].monographs.length).length}:null;
-  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,compare,enabledCriteria});
+  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,compare,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
 })(globalThis);

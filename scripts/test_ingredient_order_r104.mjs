@@ -18,7 +18,7 @@ const row=(name,amount,unit,alias='',source='')=>({name,amount,unit,alias,source
 const a=row('Additive A','300','g','A'),b=row('Additive B','0.20','kg','B');
 const base={sku:'Example A',art:'Outer v1',pack:'outer',recipe:'Q104 v1',scope:'group',listName:'Emulsifiers',coverage:'selected',presentation:'named',rows:[a,b],printed:'B\nA'};
 const m=(patch={})=>O.model({...base,...patch}),check=(p={})=>O.analyse(m(p));
-assert(W.available);assert.equal(R.latestRound,110);assert.equal(R.ingredientOrderReview.products,533);assert.equal(Object.keys(O.scopes).length,6);
+assert(W.available);assert.equal(R.latestRound,111);assert.equal(R.ingredientOrderReview.products,533);assert.equal(Object.keys(O.scopes).length,6);
 assert(check().issues[0].includes('quantity of A is higher'));assert.equal(check().expected,'A → B');
 assert.equal(check({printed:'A\nB'}).status,'Selected entries match the recorded order');
 const tie=check({rows:[row('Additive A','200000','mg','A'),b]});assert(tie.expected.includes('A = B'));assert(tie.notes.some(n=>n.includes('same rank')));
