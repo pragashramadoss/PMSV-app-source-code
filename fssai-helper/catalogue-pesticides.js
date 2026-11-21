@@ -146,36 +146,40 @@
     return '';
   }
   const clean=v=>typeof v==='string'?v.trim():'';
-  function compare(id,s={}) {
-    const ctx=current(id,s);if(!ctx?.row) return '';
-    const {row,matrix,options,role}=ctx;
-    const sourceLock=lock(row,matrix,options);if(sourceLock) return sourceLock;
-    if (row.source==='gazette'?!['raw','physical'].includes(s.pestProcess):s.pestProcess!=='tea')
-      return 'Document an eligible processing route for the selected source.';
-    if (!clean(s.pestSample)||!clean(s.pestReport)||s.pestBasis!=='yes'||s.pestUnit!=='mg/kg')
-      return 'Confirm the sample and report references, mg/kg, residue definition and printed analytical basis.';
-    if(portion(row)&&s.pestPortion!==portion(row)) return 'The printed row requires the '+portions[portion(row)].toLowerCase()+'. Confirm the portion or basis on the report.';
-    const criterion=row.limit.replace(/\*$/,'');
+  function reading(limit,s) {
+    const criterion=limit.replace(/\*$/,'');
     const decimal=root.PMSVCatalogueWorksheets?.compare;
-    if (!decimal) return '';
+    if (!decimal) return {kind:'hold',text:''};
     const against=(a,op,b)=>decimal({operator:op,value:b},a);
     const value=clean(s.pestValue),loq=clean(s.pestLoq);
     if (!['quantified','less'].includes(s.pestKind)||against(value,'>=','0')!==true)
-      return 'Enter a decimal value and choose quantified or less-than. A report giving ND alone needs a reporting threshold.';
-    if (row.limit.endsWith('*')||loq) {
-      if (against(loq,'>','0')!==true||row.limit.endsWith('*')&&against(loq,'<=',criterion)!==true)
-        return 'Enter a positive validated method LOQ. For a starred MRL the method LOQ must be at or below the printed limit.';
-      if (against(value,'<',loq)) return 'The reported value or threshold is below the stated method LOQ. Review the laboratory report.';
+      return {kind:'hold',text:'Enter a decimal value and choose quantified or less-than. A report giving ND alone needs a reporting threshold.'};
+    if (limit.endsWith('*')||loq) {
+      if (against(loq,'>','0')!==true||limit.endsWith('*')&&against(loq,'<=',criterion)!==true)
+        return {kind:'hold',text:'Enter a positive validated method LOQ. For a starred MRL the method LOQ must be at or below the printed limit.'};
+      if (against(value,'<',loq)) return {kind:'hold',text:'The reported value or threshold is below the stated method LOQ. Review the laboratory report.'};
     }
     const within=against(value,'<=',criterion);
-    if (within===null) return 'This printed limit needs source interpretation.';
-    const suffix=' for '+roleNames[role].toLowerCase()+' · '+matrices[matrix][0]+' · '+row.drug+' · '+row.limit+' mg/kg.';
-    if (s.pestKind==='less') {
-      if(against(value,'>','0')!==true) return 'Enter a positive less-than reporting threshold.';
-      return (within?'Reported upper bound is within the cited limit':'Inconclusive because the reporting threshold exceeds the cited limit')+suffix;
-    }
-    return (within?'At or below the cited limit':'Above the cited limit')+suffix;
+    if (within===null) return {kind:'hold',text:'This printed limit needs source interpretation.'};
+    if(s.pestKind==='less'&&against(value,'>','0')!==true) return {kind:'hold',text:'Enter a positive less-than reporting threshold.'};
+    if(s.pestKind==='less') return within?{kind:'within',text:'Reported upper bound is within the cited limit'}:
+      {kind:'inconclusive',text:'Inconclusive because the reporting threshold exceeds the cited limit'};
+    return within?{kind:'within',text:'At or below the cited limit'}:{kind:'above',text:'Above the cited limit'};
   }
+  function comparison(id,s={}) {
+    const ctx=current(id,s);if(!ctx?.row) return {kind:'hold',text:''};
+    const {row,matrix,options,role}=ctx;
+    const sourceLock=lock(row,matrix,options);if(sourceLock) return {kind:'hold',text:sourceLock};
+    if (row.source==='gazette'?!['raw','physical'].includes(s.pestProcess):s.pestProcess!=='tea')
+      return {kind:'hold',text:'Document an eligible processing route for the selected source.'};
+    if (!clean(s.pestSample)||!clean(s.pestReport)||s.pestBasis!=='yes'||s.pestUnit!=='mg/kg')
+      return {kind:'hold',text:'Confirm the sample and report references, mg/kg, residue definition and printed analytical basis.'};
+    if(portion(row)&&s.pestPortion!==portion(row)) return {kind:'hold',text:'The printed row requires the '+portions[portion(row)].toLowerCase()+'. Confirm the portion or basis on the report.'};
+    const result=reading(row.limit,s);
+    if(result.kind==='hold') return result;
+    return {...result,text:result.text+' for '+roleNames[role].toLowerCase()+' · '+matrices[matrix][0]+' · '+row.drug+' · '+row.limit+' mg/kg.'};
+  }
+  function compare(id,s) {return comparison(id,s).text;}
   function sourceList(p) {
     const list=[sources.gazette+'#page=31',sources.scope+'#page=1'];
     if (p.grade==='spice'||p.choices.some(k=>spiceMatrices.has(k))) list.push(sources.spice+'#page=1');
@@ -223,7 +227,7 @@
         +input('pestLoq','Validated method LOQ in mg/kg (required for *)',s.pestLoq,true)
         +'<label class="ws-check"><input type="checkbox" data-ws-field="pestBasis"'+(s.pestBasis==='yes'?' checked':'')+'> I matched the legal article, sampled portion, residue definition, method and printed basis.</label>';
     }
-    return body+'<p data-pest-outcome role="status">'+esc(compare(id,s))+'</p>';
+    return body+'<p data-pest-outcome role="status">'+esc(compare(id,s))+'</p>'+(!held?'<button type="button" data-residue-save="gazette">Save this result to the panel</button>':'');
   }
   function indexTable(query) {
     const terms=norm(query).split(/\s+/).filter(Boolean);
@@ -258,6 +262,7 @@
     const p=profile(id);if(!p) return '';
     return '<details class="ws-section pest-scope"><summary>Pesticide residues · CTR 2.3.1</summary><div><p><strong>'+esc(routes[p.grade])+'</strong> · '+esc(p.note)+'</p>'+
       '<div data-pest-controls>'+assessment(id,s)+'</div>'+
+      (root.PMSVResiduePanel?.markup(id,s)||'')+
       details('Processing and fallback rules','<p>The 213-entry table and the general 0.01 mg/kg note concern agricultural commodities and resulting physically processed foods. The clarification excludes thermally or chemically processed foods from that table and note. Check any separate product standard or direction. '+ref(sources.scope+'#page=1','FSSAI clarification, paragraph 3')+' · '+ref(sources.gazette+'#page=51','Gazette note and symbols')+'</p><p>'+esc(spiceText)+' '+ref(sources.spice+'#page=1','April 2024 spice order')+'</p>')+
       details('Search the pesticide tables','<label>Search pesticide or commodity<input type="search" data-pest-search placeholder="e.g. rice carbendazim, tea, 64"></label><div data-pest-found>'+indexPage('')+'</div>')+'</div></details>';
   }
@@ -275,7 +280,7 @@
     if(['pestRole','pestMatrix','pestProcess'].includes(field)) {
       if(field!=='pestProcess') reset('pestProcess');
       ['pestSample','pestRow',...fieldsAfterRow].forEach(reset);
-    } else if(field==='pestRow') fieldsAfterRow.forEach(reset);
+    } else if(field==='pestRow') fieldsAfterRow.filter(k=>k!=='pestReport').forEach(reset);
     if(['pestRole','pestMatrix','pestProcess','pestRow'].includes(field)){
       node.querySelector('[data-pest-controls]').innerHTML=assessment(id,s);
       node.querySelector('[data-ws-field="'+field+'"]')?.focus();
@@ -291,6 +296,6 @@
     return {products:keys.length,scopeCounts:counts,mappedProducts:keys.filter(mapped).length,
       priorityMapped:priority.filter(mapped).length,gazetteRows:rowIndex.length,directionRows:directed.length};
   }
-  root.PMSVPesticides=Object.freeze({profile,current,compare,fields,columns,values,brief,markup,update,indexPage,stats,
+  root.PMSVPesticides=Object.freeze({profile,current,compare,comparison,reading,matrixName:key=>matrices[key]?.[0],fields,columns,values,brief,markup,update,indexPage,stats,
     mapped:id=>!!profile(id)?.choices.some(k=>byMatrix.get(k)?.length)});
 })(globalThis);

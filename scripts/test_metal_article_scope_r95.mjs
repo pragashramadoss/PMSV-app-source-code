@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 globalThis.window=globalThis;
-for (const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','review-status-data','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-worksheets']) {
+for (const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','full-catalogue-533','review-status-data','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-residue-panel','catalogue-worksheets']) {
   require('../fssai-helper/'+f+'.js');
 }
 const D=PMSVMetalScopeData,M=PMSVMetalScope,B=PMSVBroadContaminants,W=PMSVCatalogueWorksheets;
@@ -76,6 +76,6 @@ const ice=D.frozen[0];assert.equal(M.frozenRows(ice).Lead.kind,'check');
 assert.equal(M.frozenRows(ice,{metalForm:'frozen',metalFormRef:'pack'}).Lead.kind,'named');
 assert.equal(M.frozenRows(ice,{metalForm:'dry',metalFormRef:'spec'}).Lead.keys.length,0);
 const csv=W.registerRows();
-assert.equal(csv.length,534);assert.equal(csv[0].length,55+PMSVCropScope.columns().length+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length);
+assert.equal(csv.length,534);assert.equal(csv[0].length,55+PMSVCropScope.columns().length+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length);
 assert(csv.every(r=>r.length===csv[0].length));assert.deepEqual(csv,W.registerRows(true));
 console.log('533 product identities, 22 complete short-table rows, 11 metals across category 05, 31 ingredient decisions and documented sample boundaries passed.');

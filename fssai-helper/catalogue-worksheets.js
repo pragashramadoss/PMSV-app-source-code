@@ -2,10 +2,10 @@
 (function (root) {
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
-  const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides;
+  const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 99 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 100 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -24,7 +24,7 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[])];
+  const fields = ['reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -286,11 +286,13 @@
       if(C.fields.includes(k))C.update(node,id,k,state);
       if(V.fields.includes(k))V.update(node,id,k,state);
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
+      if(Y.fields.includes(k))Y.update(node,id,k,state,previous);
       if(k==='pack')node.querySelector('[data-ws-pack]').innerHTML=packRules(state.pack);
       const out=node.querySelector('[data-ws-outcome]');if(out)out.textContent=resultText(id);
       const feedback=node.querySelector('[data-ws-saved]');if(feedback)feedback.textContent='Unsaved changes';
     });
     node.addEventListener('click',e=>{
+      if(Y.handle(node,id,getState(id),e.target))return;
       const pageButton=e.target.closest('[data-pest-page]');
       if(pageButton){
         const result=node.querySelector('[data-pest-found]');
@@ -324,11 +326,11 @@
       ...(p.routeAnchors||[]).map(([doc,pp,note])=>note+' · '+E.documents[doc].url+'#page='+pp[0]),
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
       'Original Gazette rows matching the catalogue name: '+(p.namedGazette||[]).length,'Product reference: '+(s.reference||'—'),'Variant or article: '+(s.article||'—'),'Primary pack: '+(s.pack?human(s.pack):'—'),
-      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...P.brief(id,s),...['metalForm','metalPack'].map(k=>root.PMSVMetalScope.documentedChoice(id,k,s)).filter(Boolean),...C.brief(id,s),...V.brief(id,s),...X.brief(id,s),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
+      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...P.brief(id,s),...['metalForm','metalPack'].map(k=>root.PMSVMetalScope.documentedChoice(id,k,s)).filter(Boolean),...C.brief(id,s),...V.brief(id,s),...X.brief(id,s),...Y.brief(id,s),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
   }
   function registerRows(includeDeviceEntries=false) {
     if(!valid)return [];
-    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack',...C.columns(),...P.columns(),...V.columns,...X.columns], ...list.map(({id})=>{
+    return [['Catalogue ID','Product','Route','Article / regulation','Source standard or route','Official identity source','PDF pages','Page evidence','Appendix A category','Microbiology route','Contaminant evidence','Exact named Gazette references','Monograph matches','Next evidence or legal check','Recheck 1 Dec 2026','All applicable provisions verified','Open cited PDF page','Chapter and monograph numerical agreements','Chapter and monograph numerical differences','SKU or formula reference','Process, commodity or variant','Evidence document reference','Adjudicated Gazette criterion',...root.PMSVBroadContaminants.columns(),...root.PMSVMetalScope.columns(),'Mercury source decision or missing evidence','Documented melamine decision','Documented mercury decision','Documented product form','Documented canning status','Metal decisions for the documented form or pack',...C.columns(),...P.columns(),...V.columns,...X.columns,...Y.columns], ...list.map(({id})=>{
       const p=E.products[id],r=R.products[id],std=R.standards[p.standard],a=E.standards[p.standard],route=p.routeAnchors?.[0];
       const s=includeDeviceEntries?getState(id):{};
       const M=root.PMSVMetalScope,B=root.PMSVBroadContaminants;
@@ -338,7 +340,7 @@
         M.mercuryGuide(id)?.reason||B.scope(id).h.why,
         mel.m.options.length && mel.applied ? B.resolution(id,s.broadForm,s.broadRef)+' · '+s.broadRef:'',
         hg?hg.article+' · '+hg.level+' · '+hg.why:'',documented('metalForm'),documented('metalPack'),
-        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s)];
+        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s),...Y.values(id,s,includeDeviceEntries)];
     })];
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,

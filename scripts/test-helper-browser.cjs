@@ -1068,7 +1068,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(!detail.querySelector('[data-residue-list]')||!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1248,14 +1248,48 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await f('pestRole').selectOption('ingredient');assert.equal(await f('pestMatrix').inputValue(),'');assert.equal(await f('pestRow').count(),0);
  await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');
  assert.equal(await f('pestSample').inputValue(),'Incoming sugarcane lot R99');assert.equal(await f('pestUnit').inputValue(),'mg/kg');
+ const savedPanel=page.locator('[data-residue-list]');
+ await page.locator('[data-residue-save="gazette"]').click();
+ assert((await savedPanel.innerText()).includes('1 saved result'));await page.locator('[data-residue-save="gazette"]').click();
+ assert((await page.locator('[data-residue-status]').innerText()).includes('already saved'));
+ await f('pestRow').selectOption('96-0');assert.equal(await f('pestReport').inputValue(),'Sugarcane laboratory report R99');
+ assert.equal(await f('pestValue').inputValue(),'');await f('pestKind').selectOption('quantified');await f('pestValue').fill('0.031');
+ await f('pestUnit').selectOption('mg/kg');await f('pestLoq').fill('0.02');await f('pestBasis').check();await page.locator('[data-residue-save="gazette"]').click();
+ assert((await savedPanel.innerText()).includes('2 saved results'));assert((await savedPanel.innerText()).includes('Above the cited limit'));
+ const bySample=page.waitForEvent('download');await page.locator('[data-residue-csv]').click();
+ const lineFile=await bySample;assert(lineFile.suggestedFilename().startsWith('PMSV-Pesticide-Results-'));
+ const reportCsv=fs.readFileSync(await lineFile.path(),'utf8');assert(reportCsv.includes('Sugarcane laboratory report R99')&&reportCsv.includes('Reported upper bound')&&reportCsv.includes('0.031'));
+ assert((await readProductBrief(page)).includes('Saved pesticide results (2)'));
+ await pesticide('12-12-2-black-white-and-green-bwg-peppers');await page.locator('.spice-decision>summary').click();
+ await f('spArticle').selectOption('pepper');await f('spProcess').selectOption('physical');await f('spSample').fill('Pepper R100 A');await f('spAnalyte').selectOption('120');
+ assert((await page.locator('[data-spice-controls]').innerText()).includes('0.5 mg/kg'));assert.equal(await f('spReg').count(),0);
+ await f('spReport').fill('LCMS report R100');await f('spKind').selectOption('quantified');await f('spValue').fill('0.5000000000001');await f('spUnit').selectOption('mg/kg');await f('spBasis').check();
+ assert((await page.locator('[data-spice-outcome]').innerText()).includes('Above the cited limit'));
+ await page.locator('[data-residue-save="spice"]').click();assert((await savedPanel.innerText()).includes('Pepper R100 A'));
+ await pesticide('12-12-2-coriander-dhania');await page.locator('.spice-decision>summary').click();
+ await f('spArticle').selectOption('coriander');await f('spProcess').selectOption('physical');await f('spSample').fill('Coriander R100');
+ await f('spAnalyte').selectOption('3');await f('spIndia').selectOption('none');await f('spIndiaRef').fill('Test Indian-scope review R100');
+ await f('spDate').fill('2026-11-21');await f('spReg').selectOption('registered');await f('spRegRef').fill('Test registration R100');
+ await f('spCodex').selectOption('none');await f('spCodexRef').fill('Test commodity, subgroup and group search R100');
+ await f('spReport').fill('Coriander report R100');await f('spKind').selectOption('less');await f('spValue').fill('0.12');await f('spUnit').selectOption('mg/kg');await f('spBasis').check();
+ assert((await page.locator('[data-spice-outcome]').innerText()).includes('Inconclusive'));await page.locator('[data-residue-save="spice"]').click();
+ assert((await savedPanel.innerText()).includes('Coriander R100'));await f('spCodex').selectOption('adopted');
+ assert.equal(await f('spCodexRef').inputValue(),'');assert.equal(await f('spValue').inputValue(),'');assert.equal(await f('spBasis').isChecked(),false);
+ await f('spCodexRef').fill('Synthetic adopted-record reference R100');await f('spLimit').fill('0.3');await f('spMark').selectOption('numeric');
+ await f('spKind').selectOption('quantified');await f('spValue').fill('0.3');await f('spUnit').selectOption('mg/kg');await f('spBasis').check();
+ await page.locator('[data-residue-save="spice"]').click();assert((await savedPanel.innerText()).includes('1 saved result'));
+ assert((await readProductBrief(page)).includes('reviewer-entered adopted Codex MRL'));
+ await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');assert((await savedPanel.innerText()).includes('2 saved results'));
+ await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
+ assert.equal(await page.locator('#productList [data-id]').count(),36);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.pesticideReview.mappedProducts));
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('vetDirect');
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R99.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R100.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1840,7 +1874,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={spiceDecisionProducts:36,multiResultReportsTested:true,pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});

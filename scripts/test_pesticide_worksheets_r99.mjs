@@ -5,12 +5,12 @@ const require=createRequire(import.meta.url);
 global.window=global;
 for(const name of ['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data',
   'catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel',
-  'catalogue-veterinary','catalogue-pesticides','catalogue-worksheets']) require('../fssai-helper/'+name+'.js');
+  'catalogue-veterinary','catalogue-pesticides','catalogue-residue-panel','catalogue-worksheets']) require('../fssai-helper/'+name+'.js');
 const X=PMSVPesticides, W=PMSVCatalogueWorksheets, r=PMSV_REVIEW_REGISTER.pesticideReview;
 const concordance=JSON.parse(readFileSync(new URL('../fssai-helper/ctr-residue-gazette-concordance-r71-2026-11-14.json',import.meta.url)));
 const registry=W.registerRows(false);
-assert(W.available);assert.equal(registry.length,534);assert.equal(registry[0].length,107);assert.equal(new Set(registry[0]).size,107);
-assert.deepEqual(registry,W.registerRows(true));assert(registry.slice(1).every(row=>row.length===107&&row[15]==='No'&&row.slice(103).every(v=>v==='')));
+assert(W.available);assert.equal(registry.length,534);assert.equal(registry[0].length,107+PMSVResiduePanel.columns.length);assert.equal(new Set(registry[0]).size,registry[0].length);
+assert.deepEqual(registry,W.registerRows(true));assert(registry.slice(1).every(row=>row.length===registry[0].length&&row[15]==='No'&&row.slice(103,107).every(v=>v==='')));
 const ids=PMSV_CATALOGUE.map(p=>p.id);
 const stats=X.stats(PMSV_REVIEW_REGISTER.records.map(v=>v.id));
 assert.equal(Object.values(r.scopeCounts).reduce((a,b)=>a+b,0),533);
