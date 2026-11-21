@@ -1064,15 +1064,22 @@ async function testPrintedLotDates(page) {
  await f('firstKind').selectOption('packed');await f('lastKind').selectOption('useBy');
  await f('first').fill('01/Apr/26');await f('firstYear').fill('2026');await f('last').fill('31/03/2026');
  assert((await panel.locator('[data-lot-result]').innerText()).includes('Use by precedes packaging'));
+ await panel.locator('[data-shelf-panel]>summary').click();
+ await f('basisKind').selectOption('packed');await f('targetKind').selectOption('expiry');await f('duration').fill('30');
+ await f('durationUnit').selectOption('days');await f('countRule').selectOption('inclusive');
+ assert((await panel.locator('[data-lot-result]').innerText()).includes('Expected end date · 30/04/2026'));
+ assert((await panel.locator('[data-lot-result]').innerText()).includes('earlier than the expected date'));
  await panel.locator('[data-lot-save]').click();
  const entry=panel.locator('[data-lot-saved] li').filter({hasText:'00108'});await entry.waitFor();
  await panel.locator('[data-lot-next]').click();assert.equal(await f('last').inputValue(),'');assert.equal(await f('sample').inputValue(),'');
+ assert.equal(await f('duration').inputValue(),'30');assert.equal(await f('basisDate').inputValue(),'');
  await f('batch').fill('00208');await f('last').fill('APR 2027');assert((await panel.locator('[data-lot-result]').innerText()).includes('Day required'));
  await entry.getByRole('button',{name:'Open',exact:true}).click();assert.equal(await f('firstYear').inputValue(),'2026');assert.equal(await f('batch').inputValue(),'00108');
  const download=page.waitForEvent('download');await panel.locator('[data-lot-export]').click();const file=await download;
  assert(file.suggestedFilename().startsWith('PMSV-Printed-Lot-Dates-'));
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('31/03/2026')&&csv.includes('Use by precedes packaging')&&csv.includes('Coding instruction R108'));
- assert((await readProductBrief(page)).includes('Lot image 108'));
+ assert(csv.includes('30/04/2026')&&csv.includes('earlier than the expected date'));
+ assert((await readProductBrief(page)).includes('Expected 30/04/2026'));
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 }
 
@@ -1549,7 +1556,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R108.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R109.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 

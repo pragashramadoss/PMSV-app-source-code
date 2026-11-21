@@ -18,7 +18,7 @@ const row=(name,amount,unit,alias='',source='')=>({name,amount,unit,alias,source
 const a=row('Additive A','300','g','A'),b=row('Additive B','0.20','kg','B');
 const base={sku:'Example A',art:'Outer v1',pack:'outer',recipe:'Q104 v1',scope:'group',listName:'Emulsifiers',coverage:'selected',presentation:'named',rows:[a,b],printed:'B\nA'};
 const m=(patch={})=>O.model({...base,...patch}),check=(p={})=>O.analyse(m(p));
-assert(W.available);assert.equal(R.latestRound,108);assert.equal(R.ingredientOrderReview.products,533);assert.equal(Object.keys(O.scopes).length,6);
+assert(W.available);assert.equal(R.latestRound,109);assert.equal(R.ingredientOrderReview.products,533);assert.equal(Object.keys(O.scopes).length,6);
 assert(check().issues[0].includes('quantity of A is higher'));assert.equal(check().expected,'A → B');
 assert.equal(check({printed:'A\nB'}).status,'Selected entries match the recorded order');
 const tie=check({rows:[row('Additive A','200000','mg','A'),b]});assert(tie.expected.includes('A = B'));assert(tie.notes.some(n=>n.includes('same rank')));
@@ -68,8 +68,8 @@ assert(!Q.requestRows()[1][2].includes('Additive A'));assert(O.exportRows(id)[1]
 assert(Q.save(id,m({...flat}),null).key);
 const full=W.registerRows(true),product=full.find(r=>r[0]===id);
 assert.equal(product[126],1);assert.equal(product[132],2);assert(product[133].includes('Breakdown S'));assert(W.briefLines(id).join('\n').includes('Saved ingredient-order checks (2)'));
-assert.equal(full[0].length,148);const blank=W.registerRows(false);assert.equal(blank.length,534);
-assert(blank.slice(1).every(r=>r.length===148&&r[130].includes('#page=30')&&r[131]===''&&r[132]===0&&r[133]===''));
+assert.equal(full[0].length,150);const blank=W.registerRows(false);assert.equal(blank.length,534);
+assert(blank.slice(1).every(r=>r.length===150&&r[130].includes('#page=30')&&r[131]===''&&r[132]===0&&r[133]===''));
 const blocked=open({get length(){throw Error();},setItem(){throw Error();}});
 assert(blocked.Q.save(id,missing).message.includes('session'));assert.equal(blocked.O.exportRows(id).length,2);
 const savedRecord=tab.Q.savedByProduct().get(id).find(r=>r.m.type==='order'&&r.m.scope==='group');

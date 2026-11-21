@@ -10,9 +10,81 @@
   const bands={short:'Up to and including three months',long:'More than three months'};
   const rules={general:'General retail date marking',alcohol:'Non-wine alcoholic beverage below 10% ABV',special:'Other product-specific provision under review'};
   const kinds={first:{made:'Manufacture',packed:'Packaging'},last:{expiry:'Expiry',useBy:'Use by',best:'Best before'}};
-  const keys=['sku','art','pack','batch','sample','spec','band','rule','firstKind','first','firstYear','lastKind','last','lastYear'];
+  const units={days:'Days',months:'Calendar months'};
+  const countRules={elapsed:'Add the full duration',inclusive:'Add the full duration, then subtract one day'};
+  const monthRules={last:'Use the last day of the target month',carry:'Carry excess days into the following month',manual:'Refer to the coding instruction'};
+  const targetKinds={expiry:'Expiry or use-by',best:'Best before'};
+  const shelfKeys=['duration','durationUnit','basisKind','targetKind','countRule','monthRule','basisDate','basisRef'];
+  function utcDay(year,month,day){
+    const d=new Date(0);
+    d.setUTCFullYear(year,month-1,day);
+    return d;
+  }
+  const stamp=date=>date.getUTCFullYear()*10000+(date.getUTCMonth()+1)*100+date.getUTCDate();
+  const dateText=date=>[date.getUTCDate(),date.getUTCMonth()+1,date.getUTCFullYear()].map((n,i)=>String(n).padStart(i===2?4:2,'0')).join('/');
+  function shelfComparison(m){
+    const outcome=(status,text,expected='')=>({status,text,expected});
+    if(!shelfKeys.some(k=>m[k]))return outcome('unused','');
+    if(!['retail','inner','outer'].includes(m.pack))return outcome('open','Select the retail pack whose coding instruction is being checked.');
+    if(!m.spec||!m.duration||!Object.hasOwn(units,m.durationUnit)||!Object.hasOwn(countRules,m.countRule)||
+        !Object.hasOwn(kinds.first,m.basisKind)||!Object.hasOwn(targetKinds,m.targetKind))
+      return outcome('open','Enter the instruction reference, start and end types, duration, unit and counting convention.');
+    const n=Number(m.duration);
+    if(!/^\d+$/.test(m.duration)||!Number.isSafeInteger(n)||n<=0||n>3652059)
+      return outcome('open','Use a positive whole-number duration within the supported calendar.');
+    if(m.durationUnit==='months'&&Object.hasOwn(bands,m.band)&&(n<=3)!==(m.band==='short'))
+      return outcome('conflict','The duration in calendar months and the selected shelf-life band disagree. Check the specification.');
+    const printedStart=readDate(m.first,m.firstYear);
+    let basis=printedStart;
+    if(m.basisDate||m.basisRef){
+      basis=readDate(m.basisDate,'');
+      if(!m.basisRef||basis.min===null||basis.precision!=='day')
+        return outcome('open','Enter the complete four-digit-year start date and its lot-record reference.');
+      if(m.firstKind===m.basisKind&&m.first){
+        const recordedYear=String(Math.floor(basis.min/10000));
+        const printed=readDate(m.first,m.firstYear||recordedYear);
+        if(printed.min===null||basis.min<printed.min||basis.min>printed.max)
+          return outcome('conflict','The printed start marking cannot be reconciled with the lot-record start date. Check both sources before calculating.');
+      }
+    }else if(m.basisKind!==m.firstKind||basis.min===null||basis.precision!=='day'){
+      return outcome('open','Enter the dated lot record for the specified start type, or confirm a complete printed start date of that type.');
+    }
+    const y=Math.floor(basis.min/10000),mo=Math.floor(basis.min/100)%100,day=basis.min%100;
+    let end;
+    if(m.durationUnit==='days'){
+      end=utcDay(y,mo,day+n);
+    }else{
+      const index=y*12+mo-1+n,year=Math.floor(index/12),month=index%12+1;
+      if(year>9999)return outcome('open','The duration exceeds the supported four-digit calendar.');
+      const limit=daysInMonth(year,month);
+      if(day>limit&&!['carry','last'].includes(m.monthRule))
+        return outcome('open','The target month lacks this day. Select the month-end rule documented in the instruction.');
+      end=utcDay(year,month,day>limit&&m.monthRule==='last'?limit:day);
+    }
+    if(m.countRule==='inclusive')end.setUTCDate(end.getUTCDate()-1);
+    if(!Number.isFinite(end.getTime())||end.getUTCFullYear()>9999||end.getUTCFullYear()<1)
+      return outcome('open','The duration exceeds the supported four-digit calendar.');
+    const expected=dateText(end),endValue=stamp(end);
+    if(!Object.hasOwn(kinds.last,m.lastKind)||((m.targetKind==='best')!==(m.lastKind==='best')))
+      return outcome('target','Select the printed end marking corresponding to the instruction.',expected);
+    const printed=readDate(m.last,m.lastYear);
+    if(printed.min===null)return outcome('open','Enter a calendar end date and resolve its year to compare it with the expected date.',expected);
+    const timing=printed.max<endValue?'earlier':printed.min>endValue?'later':'';
+    if(timing){
+      const message=printed.precision==='day'?'The printed end date is '+timing+' than the expected date.':'The printed end month lies entirely '+timing+' than the expected date.';
+      return outcome(timing,message,expected);
+    }
+    if(printed.precision==='month')return outcome('month','The expected day falls in the printed month. The exact printed day cannot be verified.',expected);
+    return outcome('match','The printed end date agrees with the calculation in the recorded instruction.',expected);
+  }
+  function shelfDescription(m){
+    const c=shelfComparison(m);if(!c.text)return '';
+    return [m.sku,m.art,m.pack,m.batch,m.spec,kinds.first[m.basisKind],targetKinds[m.targetKind],m.duration,units[m.durationUnit],countRules[m.countRule],
+      m.durationUnit==='months'&&monthRules[m.monthRule],m.basisDate,m.basisRef,c.expected&&'Expected '+c.expected,c.text].filter(Boolean).join(' · ');
+  }
+  const keys=['sku','art','pack','batch','sample','spec','band','rule','firstKind','first','firstYear','lastKind','last','lastYear',...shelfKeys];
   const months='JANUARY FEBRUARY MARCH APRIL MAY JUNE JULY AUGUST SEPTEMBER OCTOBER NOVEMBER DECEMBER'.split(' ');
-  const columns=['Printed lot date sources','Current printed lot dates and findings','Saved printed-date checks by lot'];
+  const columns=['Printed lot date sources','Current printed lot dates and findings','Saved printed-date checks by lot','Current shelf-life calculation against the coding instruction','Saved shelf-life calculations by lot'];
   const sourceText=Object.values(sources).join(' | ');
   const clean=v=>typeof v==='string'?v.trim():'';
   function model(raw){
@@ -103,15 +175,15 @@
   const saved=(groups,id)=>(groups?.get(id)||[]).filter(r=>r.m.type==='lotDate');
   function values(id,state,groups){
     const m=draft(state);
-    return [sourceText,keys.some(k=>m[k])?describe(m):'',saved(groups,id).map(r=>describe(r.m)).join('\n\n')];
+    return [sourceText,keys.some(k=>m[k])?describe(m):'',saved(groups,id).map(r=>describe(r.m)).join('\n\n'),shelfDescription(m),saved(groups,id).map(r=>shelfDescription(r.m)).filter(Boolean).join('\n\n')];
   }
-  function brief(id,state,groups){const [,active,records]=values(id,state,groups);return active||records?['Printed dates on the lot',active,records].filter(Boolean):[];}
+  function brief(id,state,groups){const [,active,records,currentShelf,savedShelf]=values(id,state,groups);return active||records?['Printed dates on the lot',active,records,currentShelf,savedShelf].filter(Boolean):[];}
   function exportRows(id){
-    const rows=[['Catalogue ID','SKU','Artwork','Pack','Batch','Sample evidence','Specification','Approved shelf-life band','Product rule','Start wording','Printed start','Documented start year','Start finding','End wording','Printed end','Documented end year','End finding','Chronology','Evidence outstanding','Sources']];
+    const rows=[['Catalogue ID','SKU','Artwork','Pack','Batch','Sample evidence','Specification','Approved shelf-life band','Product rule','Start wording','Printed start','Documented start year','Start finding','End wording','Printed end','Documented end year','End finding','Chronology','Evidence outstanding','Sources','Instruction start','Instruction end','Duration','Unit','Counting convention','Month-end rule','Lot-record start date','Start date evidence','Calculated end date','Shelf-life comparison']];
     for(const {m} of saved(root.PMSVIngredientPercentage.savedByProduct(),id)){
-      const a=analyse(m);
+      const a=analyse(m),calc=shelfComparison(m);
       rows.push([id,m.sku,m.art,root.PMSVIngredientPercentage.packLabels[m.pack],m.batch,m.sample,m.spec,bands[m.band],rules[m.rule],
-        kinds.first[m.firstKind],m.first,m.firstYear,a.first.join(' '),kinds.last[m.lastKind],m.last,m.lastYear,a.last.join(' '),a.order,a.evidence,sourceText]);
+        kinds.first[m.firstKind],m.first,m.firstYear,a.first.join(' '),kinds.last[m.lastKind],m.last,m.lastYear,a.last.join(' '),a.order,a.evidence,sourceText,kinds.first[m.basisKind],targetKinds[m.targetKind],m.duration,units[m.durationUnit],countRules[m.countRule],m.durationUnit==='months'?monthRules[m.monthRule]:'',m.basisDate,m.basisRef,calc.expected,calc.text]);
     }
     return rows;
   }
@@ -127,18 +199,25 @@
       part('form').innerHTML=field('sku','SKU or variant')+field('art','Artwork revision')+field('pack','Pack inspected',{retail:'Retail pack',inner:'Individual inner',outer:'Retail multi-unit outer'})+field('batch','Lot or batch code')+
         field('sample','Sample or code-image reference')+field('spec','Specification or coding instruction')+field('band','Approved shelf life',bands)+field('rule','Applicable date-marking rule',rules)+
         field('firstKind','Start marking',kinds.first)+field('first','Printed manufacture or packaging date')+field('firstYear','Full start year if two digits were printed')+
-        field('lastKind','End marking',kinds.last)+field('last','Printed expiry, use-by or best-before date')+field('lastYear','Full end year if two digits were printed');
+        field('lastKind','End marking',kinds.last)+field('last','Printed expiry, use-by or best-before date')+field('lastYear','Full end year if two digits were printed')+
+        '<details data-shelf-panel><summary>Compare with the approved shelf life</summary><p>Use the counting convention in the SKU coding instruction. An independent lot-record date can supply a day missing from the label or a different starting event.</p>'+
+        field('basisKind','Instruction starts from',kinds.first)+field('targetKind','Instruction gives the date of',targetKinds)+
+        field('duration','Approved duration (whole number)')+field('durationUnit','Duration unit',units)+field('countRule','Counting convention',countRules)+
+        field('monthRule','If the target month lacks the start day',monthRules)+field('basisDate','Lot-record start date, if used (DD/MM/YYYY)')+field('basisRef','Reference for the lot-record date')+'</details>';
     }
     function paint(){
       for(const input of panel.querySelectorAll('[data-lot-field]')){
         const k=input.dataset.lotField;input.value=m[k];
         if(['sku','art','pack','batch'].includes(k))input.disabled=!!opened;
       }
+      if(shelfKeys.some(k=>m[k]))panel.querySelector('[data-shelf-panel]').open=true;
       result();
     }
     function result(){
-      const a=analyse(m);
-      part('result').innerHTML=[...a.first.map(s=>'Start marking · '+s),...a.last.map(s=>'End marking · '+s),a.order,a.evidence].filter(Boolean).map(s=>'<p>'+esc(s)+'</p>').join('');
+      const a=analyse(m),calc=shelfComparison(m);
+      const monthRule=panel.querySelector('[data-lot-field="monthRule"]');
+      if(monthRule)monthRule.closest('label').hidden=m.durationUnit!=='months';
+      part('result').innerHTML=[...a.first.map(s=>'Start marking · '+s),...a.last.map(s=>'End marking · '+s),a.order,a.evidence,calc.expected&&'Expected end date · '+calc.expected,calc.text].filter(Boolean).map(s=>'<p>'+esc(s)+'</p>').join('');
     }
     function changed(){state.lotDateDraft=JSON.stringify(m);part('message').textContent='';const hint=node.querySelector('[data-ws-saved]');if(hint)hint.textContent='Unsaved worksheet changes';}
     function refresh(){
@@ -150,6 +229,7 @@
     panel.addEventListener('input',e=>{
       const k=e.target.dataset.lotField;if(!keys.includes(k))return;
       m[k]=e.target.value;
+      if(k==='durationUnit'&&m.durationUnit!=='months'){m.monthRule='';panel.querySelector('[data-lot-field="monthRule"]').value='';}
       if(k==='first'||k==='last'){
         const year=k+'Year';m[year]='';panel.querySelector('[data-lot-field="'+year+'"]').value='';
       }
@@ -163,7 +243,7 @@
         part('message').textContent=receipt.message;refresh();
       }else if(b.hasAttribute('data-lot-next')||b.hasAttribute('data-lot-new')){
         const next=b.hasAttribute('data-lot-next');
-        m=next?model({sku:m.sku,art:m.art,pack:m.pack,spec:m.spec,band:m.band,rule:m.rule,firstKind:m.firstKind,lastKind:m.lastKind}):model();
+        m=next?model({sku:m.sku,art:m.art,pack:m.pack,spec:m.spec,band:m.band,rule:m.rule,firstKind:m.firstKind,lastKind:m.lastKind,basisKind:m.basisKind,targetKind:m.targetKind,duration:m.duration,durationUnit:m.durationUnit,countRule:m.countRule,monthRule:m.monthRule}):model();
         opened=null;changed();paint();panel.querySelector('[data-lot-field="'+(next?'batch':'sku')+'"]').focus();
       }else if(b.hasAttribute('data-lot-open')){
         const entry=records[Number(b.dataset.lotOpen)];if(!entry)return;
@@ -175,5 +255,5 @@
       }
     });
   }
-  root.PMSVLotDates=Object.freeze({sources,columns,model,draft,identityParts,analyse,values,brief,exportRows,section,attach});
+  root.PMSVLotDates=Object.freeze({sources,columns,model,draft,identityParts,analyse,shelfComparison,values,brief,exportRows,section,attach});
 })(globalThis);
