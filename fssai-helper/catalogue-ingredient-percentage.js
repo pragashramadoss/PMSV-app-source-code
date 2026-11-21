@@ -182,7 +182,7 @@
     return tag+'Printed percentage differs from the recipe.';
   }
   const O=root.PMSVIngredientOrder, S=root.PMSVSmallPack, T=root.PMSVBatchSite;
-  const artworkTypes={order:O,smallPack:S,batchSite:T};
+  const artworkTypes={order:O,smallPack:S,batchSite:T,lotDate:root.PMSVLotDates};
   const handler=m=>Object.hasOwn(artworkTypes,m?.type)?artworkTypes[m.type]:null;
   const prefix='pmsv-fssai-artwork-percentage-r102:';
   const session=new Map();
@@ -192,7 +192,7 @@
       const parts=JSON.parse(key.slice(prefix.length)),v=JSON.parse(json),id=parts[0];
       const adapter=handler(v.review);
       if(!Array.isArray(parts)||v.version!==1||!v.review||(v.review.type&&!adapter)||!Object.hasOwn(root.PMSVCatalogueRules.products,id))return null;
-      if(v.review.type==='batchSite'&&!str(v.review.batch))return null;
+      if(['batchSite','lotDate'].includes(v.review.type)&&!str(v.review.batch))return null;
       if(v.review.type==='order'&&!Object.hasOwn(O.scopes,v.review.scope))return null;
       const m=(adapter?.model||model)(v.review);
       return identity(id,m)===key&&entry('pack',m.pack)?{id,key,raw:json,m}:null;
@@ -219,6 +219,8 @@
   }
   function save(id,m,opened) {
     const isOrder=m.type==='order',adapter=handler(m);
+    if(m.type==='lotDate'&&(!['retail','inner','outer'].includes(m.pack)||![m.sku,m.art,m.batch].every(str)))
+      return {message:'Enter the SKU, artwork revision, retail pack and lot code to save this check.'};
     if(m.type==='batchSite'&&(!T||![m.sku,m.art,entry('pack',m.pack),m.batch].every(str)))
       return {message:'Enter the SKU, artwork revision, pack and batch code to save this check.'};
     if(m.type==='smallPack'&&(!S||![m.sku,m.art,entry('pack',m.pack)].every(str)))
@@ -265,7 +267,7 @@
   root.addEventListener?.('storage',event=>{
     if(event.key!==null&&!event.key?.startsWith(prefix))return;
     notifyRequestChange();
-    for(const element of root.document?.querySelectorAll('.quid-section[open], .order-section[open], .small-pack-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
+    for(const element of root.document?.querySelectorAll('.quid-section[open], .order-section[open], .small-pack-section[open], .lot-date-section[open]')||[])element.dispatchEvent(new Event('pmsv-artwork-storage'));
   });
   function detail(m) {
     const legal=decide(m),math=calculate(m);

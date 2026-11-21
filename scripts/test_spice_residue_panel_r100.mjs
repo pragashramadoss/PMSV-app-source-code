@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
-const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets'];
+const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets'];
 const codes=modules.map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
 const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
 function open(store=storage) {
@@ -11,9 +11,9 @@ function open(store=storage) {
   x.window=x;codes.forEach(code=>vm.runInContext(code,x));return {x,Y:x.PMSVResiduePanel,W:x.PMSVCatalogueWorksheets,events};
 }
 const {x,Y,W,events}=open(),r=x.PMSV_REVIEW_REGISTER.spicePanelReview;
-assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,107);
+assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,108);
 assert.equal(r.marketedProducts,36);assert.equal(r.sampleChoices,36);assert.equal(r.codedChoices,32);
-const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,145);assert.equal(new Set(baseline[0]).size,145);
+const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,148);assert.equal(new Set(baseline[0]).size,148);
 assert(baseline.slice(1).every(row=>row[15]==='No'&&row[112]===0&&row[113]===''));
 const pepper='12-12-2-black-white-and-green-bwg-peppers',coriander='12-12-2-coriander-dhania',chocolate='05-05-1-chocolate';
 const mint='12-12-2-dried-mint',curry='12-12-2-curry-powder',candy='05-05-2-sugar-boiled-confectionery-hard-candy';

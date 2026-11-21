@@ -16,7 +16,7 @@ const base={sku:'Example',art:'A107',pack:'retail',dateArticle:'candy',dateRef:'
 const model=(patch={})=>S.model({...base,...patch});
 const row=(key,patch={},id=candy)=>S.analyse(model(patch),id).rows.find(r=>r.key===key);
 assert(W.available);
-assert.equal(context.PMSV_REVIEW_REGISTER.latestRound,107);
+assert.equal(context.PMSV_REVIEW_REGISTER.latestRound,108);
 for(const group of ['wine','produce','alcohol','vinegar','candy','salt','sugar','gum'])
   assert.equal(D.expiryScope(model({dateArticle:group,dateAbv:'10'})).kind,'exempt');
 assert.equal(D.expiryScope(model({dateArticle:'alcohol',dateAbv:'9.999999999999999999'})).kind,'alcoholRequired');
@@ -47,8 +47,8 @@ const group=Q.savedByProduct(),entry=S.dateValues(candy,{},group);
 assert(entry[2].includes('5(10)(d)(v)'));assert(!entry[2].includes('R105'));
 assert(W.briefLines(candy).join('\n').includes('Spec version 1'));
 const full=W.registerRows(true),empty=W.registerRows(false);
-assert.equal(full.length,534);assert.equal(full[0].length,145);
-assert(empty.slice(1).every(r=>r.length===145&&r[142].includes('#page=36')&&!r[143]&&!r[144]));
+assert.equal(full.length,534);assert.equal(full[0].length,148);
+assert(empty.slice(1).every(r=>r.length===148&&r[142].includes('#page=36')&&!r[143]&&!r[144]));
 assert(full.find(r=>r[0]===candy)[144].includes('Spec version 1'));
 assert(S.exportRows(candy).some(r=>r.at(-1).includes('5(10)(d)(v)')));
 assert.equal(Q.requestRows().length,1);
