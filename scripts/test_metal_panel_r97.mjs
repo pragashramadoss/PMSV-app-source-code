@@ -5,7 +5,7 @@ import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 global.window=global;
 const dir=path.resolve(import.meta.dirname,'../fssai-helper');
-for(const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','full-catalogue-533','review-status-data','catalogue-veterinary','catalogue-worksheets'])require(path.join(dir,f+'.js'));
+for(const f of ['catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','full-catalogue-533','review-status-data','catalogue-veterinary','catalogue-pesticides','catalogue-worksheets'])require(path.join(dir,f+'.js'));
 const P=PMSVMetalPanel,D=PMSVMetalPanelData,W=PMSVCatalogueWorksheets;
 const ids=PMSV_CATALOGUE.map(p=>p.id),original=JSON.parse(fs.readFileSync(path.join(dir,'ctr-original-gazette-concordance-r70-2026-11-14.json'))).metalRows;
 assert.deepEqual(new Set(ids),new Set(Object.keys(D.products)));
@@ -100,7 +100,7 @@ assert(P.nextEdition(ids[121])[0].includes('equality'));assert.equal(run(121,'As
 const unknown={panel_Pb:'Pb140',panel_PbRef:'Spec',panelIdentity:'',panelIdentityRef:''};
 assert.equal(run(474,'Pb',unknown).kind,'unidentified');
 assert.equal(run(474,'Pb',{...unknown,panelIdentity:'Sodium metabisulphite',panelIdentityRef:'Food-grade material identity'}).kind,'named');
-const rows=W.registerRows();assert.equal(rows.length,534);assert.equal(rows[0].length,89+PMSVVeterinary.columns.length);assert.equal(rows[0].length,new Set(rows[0]).size);
+const rows=W.registerRows();assert.equal(rows.length,534);assert.equal(rows[0].length,89+PMSVVeterinary.columns.length+PMSVPesticides.columns.length);assert.equal(rows[0].length,new Set(rows[0]).size);
 assert(rows.slice(1).every(r=>r.length===rows[0].length&&r[15]==='No'));assert.deepEqual(W.registerRows(true),rows);
 assert(P.findRows('Cu','cocoa powder').includes('1 of 1'));assert(P.findRows('???','milk')==='');
 assert(!P.controls(ids[290],{panelContainerRef:'<svg onload=alert(1)>'}).includes('<svg'));

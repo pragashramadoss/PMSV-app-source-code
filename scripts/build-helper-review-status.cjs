@@ -320,10 +320,41 @@ vm.runInContext(fs.readFileSync(path.join(dir,'catalogue-veterinary.js'),'utf8')
 Object.assign(veterinaryReview,cropContext.PMSVVeterinary.stats([...ids]));
 assert.equal(veterinaryReview.products,533);
 assert.equal(veterinaryReview.toleranceRows,358);
-const data={veterinaryReview,metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:vegetableMeals.reviewedOn,latestRound:veterinaryReview.round,
+// Rows retain their index and source wording in the R71 concordance. Compact
+// tuples keep the full Gazette table usable in the offline download.
+const pesticideReview={
+ round:99, reviewedOn:'2026-11-21', report:'catalogue-pesticide-review-r99.md',
+ sources:{
+  gazette:residue.sources.ctr2018.url, scope:residue.sources.scope2021.url, spice:residue.sources.spices2024.url,
+  tea2023:'https://fssai.gov.in/upload/advisories/2023/04/644b6627e7923Direction_Fixation%20of%20MRL%20of%20Pesticides%20in%20Tea.pdf',
+  teaTesting:'https://fssai.gov.in/upload/advisories/2023/12/656dbd1d58845Order%20for%20testing%20banned%20pesticides.pdf',
+  tea2024:'https://fssai.gov.in/upload/advisories/2024/03/65e6f53962cfbDirection_04.03.2024.pdf',
+  teaDraft:'https://www.pib.gov.in/PressReleasePage.aspx?PRID=2324656',
+  amendments:'https://fssai.gov.in/food-law/regulations/amendments/contaminants-toxins'
+ },
+ teaDirections:[
+  [68,'Emamectin Benzoate','0.06','tea2023'],[82,'Fenpyroximate','6.0','tea2023'],
+  [97,'Hexaconazole','5.0','tea2023'],[155,'Propiconazole','6.0','tea2023'],[163,'Quinalphos','0.7','tea2023'],
+  [50,'Cypermethrin','0.01','tea2024'],[2,'Acephate','0.01','tea2024'],[103,'Imidacloprid','0.01','tea2024'],
+  [3,'Acetamiprid','0.01','tea2024'],[62,'Dinotefuran','0.01','tea2024'],[84,'Fipronil','0.01','tea2024']
+ ],
+ nameHolds:residue.chemicalNameDifferences.map(d=>d.serial),
+ groups:residue.pesticideGroups.map(g=>({serial:g.serial,printed:g.originalName,name:g.coreName,
+  rows:g.rows.map(r=>[r.sourceArticle,r.sourceLimit,r.sourcePdfPage,r.coreCondition,r.originalSubgroup,
+   r.originalArticleCell===r.sourceArticle?'':r.originalArticleCell,
+   r.originalLimitCell===r.sourceLimit?'':r.originalLimitCell])})),
+ fullProductApprovals:0
+};
+cropContext.PMSV_REVIEW_REGISTER.pesticideReview=pesticideReview;
+vm.runInContext(fs.readFileSync(path.join(dir,'catalogue-pesticides.js'),'utf8'),cropContext);
+Object.assign(pesticideReview,cropContext.PMSVPesticides.stats([...ids]));
+assert.equal(pesticideReview.products,533);
+assert.equal(pesticideReview.gazetteRows,1098);
+assert.equal(pesticideReview.groups.length,213);
+const data={pesticideReview,veterinaryReview,metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:pesticideReview.reviewedOn,latestRound:pesticideReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
- scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. R97 establishes all 11 metal outcomes for '+metalPanelReview.priorityOutcomes+' original priority products. R98 identifies a current veterinary-residue provision for the marketed article of '+veterinaryReview.directProducts+' catalogue products. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
+ scope:'Selected earlier focused reviews cover 67 identities; R69 adds source-wording and scope checks for the remaining 70. All 137 original queue products have a linked review. R96 identifies at least one named finished-article limit under CTR 2.2.1 for '+cropArticleReview.priorityNamed+' of them. R97 establishes all 11 metal outcomes for '+metalPanelReview.priorityOutcomes+' original priority products. R98 identifies a current veterinary-residue provision for the marketed article of '+veterinaryReview.directProducts+' catalogue products. R99 links pesticide sources and processing decisions to all 533 worksheets, with named sample choices for '+pesticideReview.mappedProducts+' marketed articles. Wider contaminant review continues. This is not complete regulatory verification of the 533 products.',
  sourceVerificationRequiresLotReport:false,
  softwareVerification:'Automated data, browser and audit results are documented in verification-2026-11-14.md. These software checks are separate from complete current-law verification, which remains open.',
  sourceFiles:[...sourceFiles,gazetteFile,residueFile,toxinFile,fibreFile,waterFile,waterStandardFile,asafoetidaFile,camphorFile,lajadiFile,ingredientBaselineFile,juniperFile,hinguFile,flowerFile,flowerSupplyFile,rhizomeFile,pasteFile,sauceFile,namedSauceFile,concentrateFile,tomatoJuiceFile,cannedTomatoFile,thermalPacksFile,cocktailFile,vegetableMealsFile],records,

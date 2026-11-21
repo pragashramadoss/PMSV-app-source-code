@@ -1224,12 +1224,37 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert((await vetOutcome.innerText()).includes('Source interpretation required'));
  await vet('05-05-1-chocolate');assert.equal(await f('vetSource').inputValue(),'Physically sampled incoming cow milk 98');
  assert.equal(await f('vetUnit').inputValue(),'mg/L');
+ const pesticide=async id=>{await open(id);await page.locator('.pest-scope>summary').click();};
+ const pesticideResult=page.locator('[data-pest-outcome]');
+ await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');
+ assert.equal(await f('pestRow').count(),0);
+ await f('pestRole').selectOption('ingredient');await f('pestMatrix').selectOption('cane');
+ await f('pestProcess').selectOption('raw');await f('pestSample').fill('Incoming sugarcane lot R99');
+ await f('pestRow').selectOption('1-0');await f('pestReport').fill('Sugarcane laboratory report R99');
+ await f('pestKind').selectOption('quantified');await f('pestUnit').selectOption('mg/kg');await f('pestBasis').check();
+ await f('pestValue').fill('0.05000000000000001');assert((await pesticideResult.innerText()).startsWith('Above'));
+ await f('pestKind').selectOption('less');assert((await pesticideResult.innerText()).startsWith('Inconclusive'));
+ await f('pestValue').fill('0.05');assert((await pesticideResult.innerText()).startsWith('Reported upper bound'));
+ await page.locator('.ws-body [data-ws-save]').click();
+ const caneBrief=await readProductBrief(page);assert(caneBrief.includes('Incoming sugarcane lot R99')&&caneBrief.includes('Separately sampled ingredient')&&caneBrief.includes('Reported upper bound'));
+ await page.locator('.pest-scope').getByText('Search the pesticide tables',{exact:true}).click();
+ await page.locator('[data-pest-search]').fill('64');await page.locator('[data-pest-found]').getByRole('button',{name:'Next results'}).click();
+ assert((await page.locator('[data-pest-found]').innerText()).includes('Page 2'));
+ await pesticide('tea');await f('pestMatrix').selectOption('tea');await f('pestProcess').selectOption('tea');
+ await f('pestSample').fill('Plain tea R99');await f('pestRow').selectOption('tea2024-3');await f('pestReport').fill('Tea test R99');
+ await f('pestKind').selectOption('quantified');await f('pestUnit').selectOption('mg/kg');await f('pestBasis').check();await f('pestValue').fill('0.02');
+ assert((await pesticideResult.innerText()).startsWith('Above'));
+ await f('pestRole').selectOption('ingredient');assert.equal(await f('pestMatrix').inputValue(),'');assert.equal(await f('pestRow').count(),0);
+ await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');
+ assert.equal(await f('pestSample').inputValue(),'Incoming sugarcane lot R99');assert.equal(await f('pestUnit').inputValue(),'mg/kg');
+ await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
+ assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.pesticideReview.mappedProducts));
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('vetDirect');
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R98.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R99.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
@@ -1513,6 +1538,7 @@ let browser;
  assert.equal(await page.locator('#reviewResults article').count(),137);
  const priorityCrop=await page.evaluate(()=>PMSV_REVIEW_REGISTER.cropArticleReview.priorityNamed);
  await page.locator('#reviewFilter').selectOption('named22');assert.equal(await page.locator('#reviewResults article').count(),priorityCrop);
+ await page.locator('#reviewFilter').selectOption('pestNamed');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.pesticideReview.priorityMapped));
  await page.locator('#reviewFilter').selectOption('vetDirect');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.priorityDirect));
  await page.locator('#reviewFilter').selectOption('metals11');assert.equal(await page.locator('#reviewResults article').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.metalPanelReview.priorityOutcomes));
  await page.locator('#reviewFilter').selectOption('other22');assert.equal(await page.locator('#reviewResults article').count(),137-priorityCrop);
@@ -1813,7 +1839,7 @@ let browser;
   await damaged.close();
  }
  assert.deepEqual(errors,[]);
- const result={fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
+ const result={pesticideWorksheets:533,pesticideGazetteRows:1098,pesticideTeaDirections:11,pesticideIngredientBoundariesAndExportTested:true,fullMetalPanelProducts:533,metalGazetteRows:382,metalHeadingsPerProduct:11,metalResultBoundariesTested:true,fpc18AndCanningVerified:true,datedPulseFloursVerified:true,cropScopeProducts:533,cropTableRows:45,cropAnalytes:12,cropArticleAndIngredientDecisionsTested:true,decemberSaffroleBoundaryTested:true,metalTableProducts:533,confectioneryMetalHeadings:11,ingredientAndPackDecisionsTested:true,broadContaminantProducts:533,infantLiquidAndPowderTested:true,allProductWorksheetsRendered:533,sourceEditionComparisonTested:true,allProductOfflineRegisterExported:true,passed:true,catalogueRowsRendered:533,reviewCases:137,focused:137,remaining:0,originalGazetteMetalRows:382,originalGazetteCropRows:27,futureChangesVisibleAndExported:9,sourceReportReachable:true,residuePesticideRows:1098,residueVeterinaryRows:358,residueFindingsVisibleAndExported:8,residueReportReachable:true,widths:[320,390,1440],views:6,partialCatalogueRejected:true,duplicateCatalogueRejected:true,malformedHashHandled:true,fullFilteredExport:137,pageErrors:errors,nativeAndroidTested:false};
  Object.assign(result,{fibreThresholds:6,fibreArithmeticFormTested:true,fibreSourceConflictOpen:true,toxinLimitOrPlanRows:37,histamineSpeciesEntries:119,toxinFindingsVisibleAndExported:6,seafoodProductNotes:24,toxinReportReachable:true});
  Object.assign(result,{waterStandardReferenceRows:74,waterStandardSearchAndGroupTested:true,waterAmendmentsReconciled:4,waterSourceNotes:5,recipeWaterMappings:4,waterDocumentFormTested:true,waterDraftInactive:true,waterGapsClosed:0,waterReportReachable:true});
  Object.assign(result,{asafoetidaPurityRows:11,asafoetidaGradesTested:3,asafoetidaDefaultGrade:null,hinguSubstitutionOpen:true,asafoetidaProductResetAndScopeTested:true});
