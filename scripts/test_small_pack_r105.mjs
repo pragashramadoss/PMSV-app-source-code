@@ -21,7 +21,7 @@ for(const [area,unit,small,below30,text] of [['10000','mm2',true,false,'100 cm²
 }
 for(const area of ['','0','-3','1e2','1,000','4 cm²','9'.repeat(49)])assert.equal(S.measurement(m({area})),null);
 for(const method of ['panel','drawing','unknown',''])assert.equal(row('ingredients','outer',{method}).state,'open');
-for(const field of ['batch','ingredients','directions','irradiated','nutrition','additives','logo','ownerLic','siteLic'])assert.equal(row(field,'outer').state,'seen');
+for(const field of ['batch','ingredients','directions','irradiated','nutrition','additives'])assert.equal(row(field,'outer').state,'seen');
 for(const field of ['owner','address','expiry','made','food','allergen'])assert.equal(row(field,'outer').state,'difference');
 for(const field of ['made','expiry']){
   assert.equal(row(field,'outer',{area:'2999.99'}).state,'seen');
@@ -39,7 +39,11 @@ for(const field of ['owner','ownerLic','logo','importer','importLic','country','
 assert.equal(row('siteLic','missing',{operator:'same'}).state,'info');assert.equal(row('siteLic','code',{operator:'unknown'}).state,'open');
 assert.equal(row('site','missing').state,'info');assert.equal(row('address','outer').state,'difference');
 for(const field of ['importer','importLic','country','premises'])assert.equal(row(field,'outer').state,'info');
-for(const field of ['importer','importLic'])assert.equal(row(field,'outer',{origin:'imported'}).state,'seen');
+assert.equal(row('importer','outer',{origin:'imported'}).state,'seen');
+for(const field of ['logo','ownerLic','siteLic','importLic']){
+  const r=row(field,'outer',{origin:'imported'});assert.equal(r.state,'review');assert(r.text.includes('Hindi list'));
+}
+assert(S.sources.english.endsWith('#page=38'));assert(S.sources.hindi.endsWith('#page=16'));
 assert.equal(row('country','outer',{origin:'imported'}).state,'difference');assert.equal(row('premises','outer',{origin:'imported'}).state,'info');
 assert.equal(row('premises','outer',{origin:'repacked'}).state,'difference');assert.equal(row('importer','outer',{origin:''}).state,'open');
 assert.equal(row('nutrition','na').state,'open');assert.equal(row('nutrition','na',{reasons:{nutrition:'Documented product provision'}}).state,'review');

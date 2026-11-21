@@ -1069,7 +1069,7 @@ async function testSmallPackArtwork(page) {
  assert((await result('ownerLic')).includes('Confirm visible package area'));
  await f('method').selectOption('visible');assert((await panel.locator('[data-small-status]').innerText()).includes('100 cm²'));
  await f('measureRef').fill('Formed wrapper R105');assert((await result('ownerLic')).includes('outer revision'));
- await f('outerRef').fill('Retail pouch R105 v2');assert((await result('ownerLic')).includes('Recorded on the matching'));
+ await f('outerRef').fill('Retail pouch R105 v2');assert((await result('ownerLic')).includes('Hindi list omits'));
  await seen('made','outer');await seen('expiry','outer');assert((await result('expiry')).includes('lacks a size route'));
  await f('area').fill('2999.99');assert((await result('made')).includes('Recorded on the matching'));
  await f('area').fill('3000');assert((await result('made')).includes('lacks a size route'));

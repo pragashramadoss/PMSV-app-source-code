@@ -3,7 +3,9 @@
   'use strict';
   const comp='https://www.fssai.gov.in/docs/food-law/regulations/Comp_Labelling%20Display_Version%20VIII_09_09_2025.pdf';
   const faq='https://www.fssai.gov.in/upload/uploadfiles/files/FAQ_Labelling_Display_01_11_2023.pdf';
+  const gazette='https://stg-old.fssai.gov.in/upload/notifications/2020/12/5fd87c6a0f6adGazette_Notification_Labelling_Display_14_12_2020.pdf';
   const sources={
+    english:gazette+'#page=38',hindi:gazette+'#page=16',
     size:comp+'#page=21',barcode:comp+'#page=22',owner:comp+'#page=15',licence:comp+'#page=16',
     multi:comp+'#page=2',outer:comp+'#page=5',imports:comp+'#page=17',allergens:comp+'#page=18',nonretail:comp+'#page=24',
     measurement:faq+'#page=4',faq34:faq+'#page=5',faq34end:faq+'#page=6',faq43:faq+'#page=7',
@@ -22,6 +24,7 @@
     made:'Manufacture date',expiry:'Expiry or use-by date',food:'Food name',allergen:'Separate allergen declaration'};
   const listed=new Set(['logo','ownerLic','siteLic','importer','importLic','ingredients','batch','nutrition','additives','irradiated','directions']);
   const dates=new Set(['made','expiry']);
+  const licenceLogo=new Set(['logo','ownerLic','siteLic','importLic']);
   const codeFields=new Set(['address','siteLic']);
   const importFields=new Set(['importer','importLic','country','premises']);
   const notes={
@@ -105,6 +108,7 @@
     if(route==='area'||route==='configuration')return {state:'open',text:ruleLabel[route]+'. Check the corresponding artwork if claiming transfer.'};
     if(choice==='outer'&&route==='transfer'){
       if(!m.measureRef||!m.outerRef)return {state:'open',text:'Record the measurement reference and matching retail outer revision.'};
+      if(licenceLogo.has(key))return {state:'review',text:'Recorded on the matching retail multi-unit pack under the English text of 8(1). Review the wording on Gazette pp. 38 and 16. The Hindi list omits the licence and logo entry.'};
       return {state:'seen',text:'Recorded on the matching retail multi-unit pack.'};
     }
     if(choice==='code')return {state:'difference',text:'The 8(5) code route does not cover this field. Check the required printed location.'};
@@ -123,7 +127,7 @@
     return {area,rows,status};
   }
   const columns=['Small-pack placement sources','Current small-pack artwork review','Saved small-pack review count','Saved declaration placements and evidence'];
-  const sourceText=[sources.size,sources.barcode,sources.measurement,sources.faq34,sources.faq34end,sources.metrology].join(' | ');
+  const sourceText=[sources.english,sources.hindi,sources.size,sources.barcode,sources.measurement,sources.faq34,sources.faq34end,sources.metrology].join(' | ');
   const saved=(groups,id)=>(groups?.get(id)||[]).filter(r=>r.m.type==='smallPack');
   const packTitle=m=>root.PMSVIngredientPercentage.packLabels[m.pack]||'';
   function facts(m,a){
@@ -166,8 +170,9 @@
   }
   function section(){
     return '<details class="ws-section small-pack-section"><summary>Small-pack declarations</summary><div><p>Check one artwork against its retail presentation. For a wrapper, count every visible surface after forming and exclude horizontal and vertical seals. Record each declaration where you found it.</p>'+
-      '<p>'+[link('measurement','How to measure · FAQ 24'),link('size','Size and dates · reg. 8'),link('faq34','FAQ 34 · first page'),link('faq34end','FAQ 34 · continuation'),link('barcode','Code route · reg. 8(5)'),link('faq43','FAQ 43'),link('metrology','Legal Metrology · rule 6')].join(' · ')+'</p>'+
+      '<p>'+[link('measurement','How to measure · FAQ 24'),link('size','Size and dates · reg. 8'),link('english','Gazette in English · p. 38'),link('hindi','Gazette in Hindi · p. 16'),link('faq34','FAQ 34 · first page'),link('faq34end','FAQ 34 · continuation'),link('barcode','Code route · reg. 8(5)'),link('faq43','FAQ 43'),link('metrology','Legal Metrology · rule 6')].join(' · ')+'</p>'+
       '<p>FAQ 34 identifies the brand owner for the name and address declaration. A different operator’s licence is a separate field. The FAQ also refers to Legal Metrology. For food, explanation III to rule 6(1)(a) directs the name and address question to food law.</p>'+
+      '<p>For outer-only licence numbers and the FSSAI logo, the English text of 8(1) lists the items before the importer’s details. The Hindi list on Gazette p. 16 omits those words. The finding records the English basis and flags the wording difference.</p>'+
       '<div data-small-form></div><p data-small-status role="status"></p><div data-small-rows></div><button type="button" data-small-save>Save small-pack check</button> '+
       '<button type="button" data-small-new>Start another artwork</button><p data-small-message role="status"></p><div data-small-saved></div></div></details>';
   }
