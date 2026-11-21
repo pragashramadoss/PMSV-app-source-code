@@ -11,6 +11,7 @@
     measurement:faq+'#page=4',faq34:faq+'#page=5',faq34end:faq+'#page=6',faq43:faq+'#page=7',
     metrology:'https://consumeraffairs.gov.in/public/upload/admin/cmsfiles/whatsnews/Book_on_Legal_Metrology_Packaged_Commodities_Rules%2C2011_with_all_amendments_whatsnews.pdf'
   };
+  const date=root.PMSVDateMarking;
   const units={cm2:'cm²',mm2:'mm²'};
   const methods={visible:'All visible surfaces of the formed pack, seals excluded',panel:'Principal display panel or one face only',drawing:'Unadjusted wrapper or film dimensions',unknown:'Measurement basis unconfirmed'};
   const outers={multi:'Retail outer with two or more units of the same food',assorted:'Assortment of different foods',shipper:'Transport or non-retail outer',none:'Sold without a retail outer',unknown:'Retail configuration unconfirmed'};
@@ -44,7 +45,7 @@
     expiry:'Check the applicable expiry or use-by marking under 5(10). Other date exceptions need their own basis.',
     food:'Check the name describing the food under 5(1).',allergen:'If an allergen declaration applies, review it independently under 5(14).'
   };
-  const keys=['sku','art','pack','area','unit','method','measureRef','outerType','outerRef','origin','operator','scanRef'];
+  const keys=['sku','art','pack','area','unit','method','measureRef','outerType','outerRef','origin','operator','scanRef',...date.keys];
   const clean=x=>typeof x==='string'?x.trim():'';
   const owns=(o,k)=>Object.hasOwn(o,k);
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
@@ -52,7 +53,7 @@
     const m={type:'smallPack',seen:{},reasons:{}};
     for(const key of keys)m[key]=clean(input?.[key]);
     for(const key of Object.keys(titles)){
-      if(owns(observed,input?.seen?.[key]))m.seen[key]=input.seen[key];
+      if(owns(observed,input?.seen?.[key])||(key==='expiry'&&input?.seen?.expiry==='bestBefore'))m.seen[key]=input.seen[key];
       if(clean(input?.reasons?.[key]))m.reasons[key]=clean(input.reasons[key]);
     }
     return m;
@@ -115,11 +116,17 @@
     if(choice==='outer')return {state:'difference',text:'Outer-only placement lacks a size route for this declaration and presentation.'};
     return {state:'difference',text:route==='transfer'?'Check the missing declaration on the matching retail outer.':'Check the missing declaration on this pack.'};
   }
-  function analyse(m){
+  function analyse(m,id){
     const area=measurement(m);
-    const rows=Object.keys(titles).map(key=>{
+    const names=Object.keys(titles);
+    const ordered=m.dateArticle?['made','expiry',...names.filter(k=>!dates.has(k))]:names;
+    const rows=ordered.map(key=>{
       const route=rule(m,key,area);
-      return {key,field:titles[key],route,where:ruleLabel[route],observed:observed[m.seen[key]]||'Unchecked',...assess(m,key,route)};
+      const observation=key==='expiry'&&m.seen[key]==='bestBefore'?'Best before only':observed[m.seen[key]]||'Unchecked';
+      const field=key==='made'&&m.dateArticle?'Manufacture or packaging date':titles[key];
+      const row={key,field,route,where:ruleLabel[route],observed:observation,...assess(m,key,route)};
+      if(dates.has(key))Object.assign(row,date.finding(m,id,key,route));
+      return row;
     });
     const count=state=>rows.filter(row=>row.state===state).length;
     const status=m.pack==='nonretail'?'Use regulation 10 for this non-retail container':!owns(root.PMSVIngredientPercentage.packLabels,m.pack)?'Choose a pack to review':
@@ -134,42 +141,47 @@
     return [m.sku,m.art,packTitle(m),[m.area,units[m.unit]].filter(Boolean).join(' '),methods[m.method]||'',a.area?.text||'',m.measureRef,
       outers[m.outerType]||'',m.outerRef,origins[m.origin]||'',operators[m.operator]||'',m.scanRef];
   }
-  const describe=m=>{
-    const a=analyse(m);
-    return [facts(m,a).filter(Boolean).join(' · '),a.status,...(m.pack==='nonretail'?[]:a.rows.map(r=>[r.field,r.where,r.observed,r.text].join(' | ')))].join('\n');
+  const describe=(m,id)=>{
+    const a=analyse(m,id);
+    return [facts(m,a).filter(Boolean).join(' · '),a.status,...(m.dateArticle?[date.summary(m,id,a.rows)]:[]),...(m.pack==='nonretail'?[]:a.rows.map(r=>[r.field,r.where,r.observed,r.text].join(' | ')))].join('\n');
   };
   function values(id,state,groups){
     const m=draft(state),records=saved(groups,id);
-    return [sourceText,keys.some(k=>m[k])||Object.keys(m.seen).length?describe(m):'',records.length,records.map(r=>describe(r.m)).join('\n\n')];
+    return [sourceText,keys.some(k=>m[k])||Object.keys(m.seen).length?describe(m,id):'',records.length,records.map(r=>describe(r.m,id)).join('\n\n')];
+  }
+  function dateValues(id,state,groups){
+    const describeDate=m=>date.summary(m,id,analyse(m,id).rows);
+    const current=draft(state);
+    return [date.sourceText,current.dateArticle?describeDate(current):'',saved(groups,id).filter(r=>r.m.dateArticle).map(r=>describeDate(r.m)).filter(Boolean).join('\n\n')];
   }
   function brief(id,state,groups){
     const v=values(id,state,groups);
     return v[1]||v[2]?['Small-pack declarations',v[1],v[2]?'Saved small-pack checks ('+v[2]+')':'',v[3]].filter(Boolean):[];
   }
   function exportRows(id){
-    const head=['Catalogue ID','SKU or variant','Artwork revision','Reviewed pack','Area entered','Measurement basis','Applicable area in cm²','Measurement reference','Retail configuration','Outer artwork revision','Origin','Operator','Code scan evidence','Declaration','Placement route','Observed location','Finding','Regulatory note','Sources'];
+    const head=['Catalogue ID','SKU or variant','Artwork revision','Reviewed pack','Area entered','Measurement basis','Applicable area in cm²','Measurement reference','Retail configuration','Outer artwork revision','Origin','Operator','Code scan evidence','Declaration','Placement route','Observed location','Finding','Regulatory note','Sources','Date-marking assessment'];
     const rows=[head];
     for(const {m} of saved(root.PMSVIngredientPercentage.savedByProduct(),id)){
-      const a=analyse(m),prefix=[id,...facts(m,a)];
-      if(m.pack==='nonretail')rows.push([...prefix,'Non-retail container',a.status,'','Review separately','Regulation 10',sources.nonretail]);
-      else for(const r of a.rows)rows.push([...prefix,r.field,r.where,r.observed,r.text,notes[r.key],sourceText]);
+      const a=analyse(m,id),prefix=[id,...facts(m,a)];
+      if(m.pack==='nonretail')rows.push([...prefix,'Non-retail container',a.status,'','Review separately','Regulation 10',sources.nonretail,'']);
+      else for(const r of a.rows)rows.push([...prefix,r.field,r.where,r.observed,r.text,notes[r.key],m.dateArticle&&dates.has(r.key)?date.sourceText:sourceText,m.dateArticle&&dates.has(r.key)?date.summary(m,id,a.rows):'']);
     }
     return rows;
   }
   const link=(key,label)=>'<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+sources[key]+'">'+esc(label)+'</a>';
   const option=(k,label,val)=>'<option value="'+esc(k)+'"'+(k===val?' selected':'')+'>'+esc(label)+'</option>';
   const options=(items,val,empty)=>option('',empty||'Choose',val)+Object.entries(items).map(([k,l])=>option(k,l,val)).join('');
-  function form(m){
+  function form(m,id){
     const field=(k,label,numeric=false)=>'<label>'+esc(label)+'<input data-small-field="'+k+'" value="'+esc(m[k])+'" maxlength="'+(numeric?48:320)+'"'+(numeric?' inputmode="decimal"':'')+'></label>';
     const choice=(k,label,items)=>'<label>'+esc(label)+'<select data-small-field="'+k+'" data-small-original="'+esc(m[k])+'">'+options(items,m[k])+'</select></label>';
     let html=field('sku','SKU or variant')+field('art','Artwork code and revision')+choice('pack','Pack being reviewed',root.PMSVIngredientPercentage.packLabels);
     if(!m.pack||m.pack==='nonretail')return html;
     if(m.pack==='inner')html+=choice('method','What was measured?',methods)+field('area','Measured area',true)+choice('unit','Area unit',units)+field('measureRef','Measurement or approved drawing reference')+
       choice('outerType','How is this food presented for retail sale?',outers)+field('outerRef','Corresponding retail outer artwork and revision');
-    return html+choice('origin','Origin and packing location',origins)+choice('operator','Who manufactures, markets, packs or bottles this SKU?',operators)+field('scanRef','Code scan or decoded content reference, if used');
+    return html+date.form(m,id,field,choice)+choice('origin','Origin and packing location',origins)+choice('operator','Who manufactures, markets, packs or bottles this SKU?',operators)+field('scanRef','Code scan or decoded content reference, if used');
   }
   function section(){
-    return '<details class="ws-section small-pack-section"><summary>Small-pack declarations</summary><div><p>Check one artwork against its retail presentation. For a wrapper, count every visible surface after forming and exclude horizontal and vertical seals. Record each declaration where you found it.</p>'+
+    return '<details class="ws-section small-pack-section"><summary>Small-pack declarations and date marking</summary><div><p>Check one artwork against its retail presentation. For a wrapper, count every visible surface after forming and exclude horizontal and vertical seals. Record each declaration where you found it.</p>'+
       '<p>'+[link('measurement','How to measure · FAQ 24'),link('size','Size and dates · reg. 8'),link('english','Gazette in English · p. 38'),link('hindi','Gazette in Hindi · p. 16'),link('faq34','FAQ 34 · first page'),link('faq34end','FAQ 34 · continuation'),link('barcode','Code route · reg. 8(5)'),link('faq43','FAQ 43'),link('metrology','Legal Metrology · rule 6')].join(' · ')+'</p>'+
       '<p>FAQ 34 identifies the brand owner for the name and address declaration. A different operator’s licence is a separate field. The FAQ also refers to Legal Metrology. For food, explanation III to rule 6(1)(a) directs the name and address question to food law.</p>'+
       '<p>For outer-only licence numbers and the FSSAI logo, the English text of 8(1) lists the items before the importer’s details. The Hindi list on Gazette p. 16 omits those words. The finding records the English basis and flags the wording difference.</p>'+
@@ -182,7 +194,7 @@
     const part=k=>panel.querySelector('[data-small-'+k+']');
     let m=draft(state),opened=null,records=[],ready=false;
     function showRows(){
-      const a=analyse(m);
+      const a=analyse(m,id);
       const hint=a.area?a.area.text+' · '+(a.area.small?'within the 100 cm² limit':'above 100 cm²')+' · '+(a.area.below30?'below the date threshold':'outside the below-30 cm² date rule')+'. ':'';
       part('status').textContent=hint+a.status;
       if(!m.pack){part('rows').replaceChildren();return;}
@@ -190,21 +202,21 @@
       const matrix=part('rows');
       if(!matrix.querySelector('[data-small-row]')){
         matrix.innerHTML='<p>When checking the retail outer, also verify required declarations under regulation 4(8), including legibility through a transparent outer. Record the underlying product rule wherever a field is inapplicable.</p>'+a.rows.map(r=>
-          '<fieldset class="quid-line" data-small-row="'+r.key+'"><legend>'+esc(r.field)+'</legend><p data-small-route></p><label>Observed location<select data-small-seen="'+r.key+'">'+options(observed,m.seen[r.key],'Unchecked')+
+          '<fieldset class="quid-line" data-small-row="'+r.key+'"><legend>'+esc(r.field)+'</legend><p data-small-route></p><label>Observed location<select data-small-seen="'+r.key+'">'+options(r.key==='expiry'&&m.dateArticle?{...observed,bestBefore:'Best before only'}:observed,m.seen[r.key],'Unchecked')+
           '</select></label><label data-small-reason-label>Reason and legal reference<input maxlength="320" data-small-reason="'+r.key+'" value="'+esc(m.reasons[r.key])+'"></label><p data-small-finding></p></fieldset>').join('');
       }
       for(const r of a.rows){
         const el=matrix.querySelector('[data-small-row="'+r.key+'"]');
         el.querySelector('[data-small-route]').textContent=r.where+'. '+notes[r.key];
         el.querySelector('[data-small-seen]').value=m.seen[r.key]||'';
-        el.querySelector('[data-small-seen]').disabled=r.state==='info';
+        el.querySelector('[data-small-seen]').disabled=r.state==='info'&&!(m.dateArticle&&dates.has(r.key));
         const reason=el.querySelector('[data-small-reason]');
         if(reason.value!==(m.reasons[r.key]||''))reason.value=m.reasons[r.key]||'';
         el.querySelector('[data-small-reason-label]').hidden=m.seen[r.key]!=='na';
         el.querySelector('[data-small-finding]').textContent=r.text;
       }
     }
-    function paint(){part('form').innerHTML=form(m);part('rows').replaceChildren();showRows();}
+    function paint(){part('form').innerHTML=form(m,id);part('rows').replaceChildren();showRows();}
     function changed(){
       state.smallPackDraft=JSON.stringify(m);
       const hint=node.querySelector('[data-ws-saved]');if(hint)hint.textContent='Unsaved worksheet changes';
@@ -233,6 +245,9 @@
       const prior=clean(el.dataset.smallOriginal),current=clean(el.value);
       if(prior&&prior!==current&&['sku','art','pack'].includes(k)){
         m=model({sku:m.sku,art:k==='sku'?'':m.art,pack:k==='pack'?current:''});opened=null;
+      }else if(prior&&prior!==current&&k==='dateArticle'){
+        m.dateRef='';m.dateAbv='';m.dateLife='';
+        if(!current&&m.seen.expiry==='bestBefore')delete m.seen.expiry;
       }else if(prior&&prior!==current&&k==='outerRef'){
         for(const [key,where] of Object.entries(m.seen)){
           if(where==='outer')delete m.seen[key];
@@ -241,7 +256,7 @@
       }else if(prior&&prior!==current&&k==='scanRef'){
         for(const key of codeFields)if(m.seen[key]==='code')delete m.seen[key];
       }
-      if(k==='pack'||(prior&&prior!==current&&['sku','art','outerRef','scanRef'].includes(k))){changed();paint();}
+      if(k==='pack'||k==='dateArticle'||(prior&&prior!==current&&['sku','art','outerRef','scanRef'].includes(k))){changed();paint();}
     });
     panel.addEventListener('click',async e=>{
       const b=e.target.closest('button');if(!b)return;
@@ -259,5 +274,5 @@
       }
     });
   }
-  root.PMSVSmallPack=Object.freeze({sources,columns,titles,identityParts,model,draft,measurement,analyse,values,brief,exportRows,section,attach});
+  root.PMSVSmallPack=Object.freeze({sources,columns,titles,identityParts,model,draft,measurement,analyse,values,dateValues,brief,exportRows,section,attach});
 })(globalThis);

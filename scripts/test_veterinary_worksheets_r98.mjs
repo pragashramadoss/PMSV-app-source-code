@@ -5,7 +5,7 @@ const require=createRequire(import.meta.url);
 global.window=global;
 for (const file of ['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data',
   'catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope',
-  'catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets']) require('../fssai-helper/'+file+'.js');
+  'catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-worksheets']) require('../fssai-helper/'+file+'.js');
 const V=PMSVVeterinary,W=PMSVCatalogueWorksheets,r=PMSV_REVIEW_REGISTER.veterinaryReview;
 const old=JSON.parse(readFileSync(new URL('../fssai-helper/ctr-residue-gazette-concordance-r71-2026-11-14.json',import.meta.url)));
 for(const group of r.groups) {
@@ -27,7 +27,7 @@ assert.equal(summary.directProducts,r.directProducts);assert.equal(summary.prior
 assert.equal(Object.values(summary.scopeCounts).reduce((n,v)=>n+v),533);
 assert.equal(V.profile('made-up-article'),null);
 const rows=W.registerRows();
-assert(W.available);assert.equal(rows.length,534);assert.equal(rows[0].length,99+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length);
+assert(W.available);assert.equal(rows.length,534);assert.equal(rows[0].length,99+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length);
 assert.equal(new Set(rows[0]).size,rows[0].length);assert(rows.slice(1).every(row=>row.length===rows[0].length&&row[15]==='No'&&!row[97]&&!row[98]));
 assert.deepEqual(rows,W.registerRows(true));
 const milk='01-01-1-cow-milk', powder='01-01-5-milk-powders-and-cream-powder',chocolate='05-05-1-chocolate';

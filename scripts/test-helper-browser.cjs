@@ -1055,6 +1055,28 @@ async function testVegetableMeals(page,register,base,artifacts) {
 }
 
 
+async function testDateMarkingArtwork(page) {
+ const panel=page.locator('.small-pack-section');
+ if(!await panel.evaluate(el=>el.open))await panel.locator(':scope > summary').click();
+ await panel.locator('[data-small-new]').click();
+ const field=k=>panel.locator('[data-small-field="'+k+'"]');
+ await field('sku').fill('Date review SKU');await field('art').fill('Date artwork R107');await field('pack').selectOption('retail');
+ await field('dateArticle').selectOption('candy');await field('dateRef').fill('Finished candy spec R107');await field('dateLife').selectOption('long');
+ const row=k=>panel.locator('[data-small-row="'+k+'"]');
+ await row('made').locator('select').selectOption('missing');await row('expiry').locator('select').selectOption('bestBefore');
+ assert((await row('expiry').innerText()).includes('5(10)(d)(v)'));
+ assert((await row('made').innerText()).includes('missing declaration'));
+ await panel.locator('[data-small-save]').click();
+ const saved=panel.locator('[data-small-saved] li').filter({hasText:'Date artwork R107'});
+ await saved.getByRole('button',{name:'Open',exact:true}).click();
+ assert.equal(await row('expiry').locator('select').inputValue(),'bestBefore');
+ const download=page.waitForEvent('download');await panel.locator('[data-small-export]').click();
+ const file=await download;const csv=fs.readFileSync(await file.path(),'utf8');
+ assert(csv.includes('Finished candy spec R107')&&csv.includes('5(10)(d)(v)'));
+ assert((await readProductBrief(page)).includes('Finished candy spec R107'));
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+}
+
 async function testBatchSiteArtwork(page){
  const panel=page.locator('.trace-section'),small=page.locator('.small-pack-section');
  const f=k=>panel.locator('[data-trace-field="'+k+'"]'),sf=k=>small.locator('[data-small-field="'+k+'"]');
@@ -1493,6 +1515,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await testArtworkIngredientOrder(page);
  await testSmallPackArtwork(page);
  await testBatchSiteArtwork(page);
+ await testDateMarkingArtwork(page);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('spiceOrder');
  assert.equal(await page.locator('#productList [data-id]').count(),36);
  await page.locator('#productSearch').fill('');await page.locator('#productClass').selectOption('pestNamed');
@@ -1501,8 +1524,8 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R106.csv');
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R107.csv');
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
 async function testPortableHelper(browser, register) {
