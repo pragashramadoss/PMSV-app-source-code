@@ -268,7 +268,7 @@
       if(el.hasAttribute('data-pest-search'))node.querySelector('[data-pest-found]').innerHTML=X.indexPage(el.value);
       if(el.hasAttribute('data-vet-index'))node.querySelector('[data-vet-found]').innerHTML=V.indexTable(el.value);
       if(!fields.includes(k))return;
-      const state=getState(id);
+      const state=getState(id), previous=state[k];
       state[k]=el.type==='checkbox'?(el.checked?'yes':''):el.value;
       if(k==='criterion'){state.unitConfirmed='';state.result='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;node.querySelector('[data-ws-field="result"]').value='';}
       if(k==='broadForm'){state.broadRef='';node.querySelector('[data-ws-field="broadRef"]').value='';}
@@ -285,7 +285,7 @@
       }
       if(C.fields.includes(k))C.update(node,id,k,state);
       if(V.fields.includes(k))V.update(node,id,k,state);
-      if(X.fields.includes(k))X.update(node,id,k,state);
+      if(X.fields.includes(k))X.update(node,id,k,state,previous);
       if(k==='pack')node.querySelector('[data-ws-pack]').innerHTML=packRules(state.pack);
       const out=node.querySelector('[data-ws-outcome]');if(out)out.textContent=resultText(id);
       const feedback=node.querySelector('[data-ws-saved]');if(feedback)feedback.textContent='Unsaved changes';

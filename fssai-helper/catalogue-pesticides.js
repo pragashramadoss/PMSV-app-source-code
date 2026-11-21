@@ -202,7 +202,7 @@
     const {p,role,matrix,choices,options,row}=current(id,s);
     const cropOptions=choices.map(k=>[k,matrices[k][0]]);
     let body=select('pestRole','Sample being assessed',Object.entries(roleNames),role,'');
-    if(!choices.length) return body+'<p>'+esc(p.note)+'</p>';
+    if(!choices.length) return body+'<p>Search the source table below for the marketed article, or choose a separately sampled ingredient to record its result.</p>';
     body+=select('pestMatrix','Physical sample article',cropOptions,matrix,'Choose the tested article');
     if(!matrix) return body;
     const tea=matrix==='tea'||matrix==='greenTea';
@@ -261,8 +261,16 @@
       details('Processing and fallback rules','<p>The 213-entry table and the general 0.01 mg/kg note concern agricultural commodities and resulting physically processed foods. The clarification excludes thermally or chemically processed foods from that table and note. Check any separate product standard or direction. '+ref(sources.scope+'#page=1','FSSAI clarification, paragraph 3')+' · '+ref(sources.gazette+'#page=51','Gazette note and symbols')+'</p><p>'+esc(spiceText)+' '+ref(sources.spice+'#page=1','April 2024 spice order')+'</p>')+
       details('Search the pesticide tables','<label>Search pesticide or commodity<input type="search" data-pest-search placeholder="e.g. rice carbendazim, tea, 64"></label><div data-pest-found>'+indexPage('')+'</div>')+'</div></details>';
   }
-  function update(node,id,field,s) {
+  function update(node,id,field,s,previous) {
     const reset=k=>{s[k]='';};
+    if(field==='pestSample'&&clean(previous)&&clean(previous)!==clean(s.pestSample)&&fieldsAfterRow.some(k=>s[k])) {
+      for(const k of fieldsAfterRow) {
+        reset(k);
+        const el=node.querySelector('[data-ws-field="'+k+'"]');
+        if(el?.type==='checkbox') el.checked=false;
+        else if(el) el.value='';
+      }
+    }
     if(field==='pestRole') reset('pestMatrix');
     if(['pestRole','pestMatrix','pestProcess'].includes(field)) {
       if(field!=='pestProcess') reset('pestProcess');

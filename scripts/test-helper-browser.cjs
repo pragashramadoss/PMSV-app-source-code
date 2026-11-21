@@ -1068,7 +1068,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
    for(const {id} of all){
     host.innerHTML=PMSVCatalogueWorksheets.markup(id);PMSVCatalogueWorksheets.attach(host,id);
     const detail=host.querySelector('[data-ws-id]');detail.open=true;detail.dispatchEvent(new Event('toggle'));
-    if(!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
+    if(!detail.querySelector('.pest-scope [data-pest-search]')||!detail.querySelector('.vet-scope [data-vet-index]')||detail.querySelectorAll('[data-panel-metal]').length!==11||detail.querySelectorAll('[data-crop-result]').length!==12||!detail.querySelector('[data-ws-field="reference"]')||detail.querySelectorAll('.ws-section').length<5)throw Error('Missing worksheet sections '+id);
    }
    return all.length;
   });assert.equal(count,533);
@@ -1244,6 +1244,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await f('pestSample').fill('Plain tea R99');await f('pestRow').selectOption('tea2024-3');await f('pestReport').fill('Tea test R99');
  await f('pestKind').selectOption('quantified');await f('pestUnit').selectOption('mg/kg');await f('pestBasis').check();await f('pestValue').fill('0.02');
  assert((await pesticideResult.innerText()).startsWith('Above'));
+ await f('pestSample').fill('A second tea lot');assert.equal(await f('pestReport').inputValue(),'');assert.equal(await f('pestValue').inputValue(),'');assert(!(await f('pestBasis').isChecked()));
  await f('pestRole').selectOption('ingredient');assert.equal(await f('pestMatrix').inputValue(),'');assert.equal(await f('pestRow').count(),0);
  await pesticide('05-05-2-sugar-boiled-confectionery-hard-candy');
  assert.equal(await f('pestSample').inputValue(),'Incoming sugarcane lot R99');assert.equal(await f('pestUnit').inputValue(),'mg/kg');
