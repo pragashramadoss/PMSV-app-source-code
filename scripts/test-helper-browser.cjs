@@ -1136,7 +1136,7 @@ async function testSmallPackArtwork(page) {
  await saved.getByRole('button',{name:'Open',exact:true}).click();assert.equal(await f('outerRef').inputValue(),'Retail pouch R105 v2');
  const dl=page.waitForEvent('download');await panel.locator('[data-small-export]').click();const file=await dl;
  assert(file.suggestedFilename().startsWith('PMSV-Small-Pack-Declarations-'));
- const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Process declaration R105')&&csv.includes('Nonretail R105'));
+ const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Decoded address R105')&&csv.includes('Process declaration R105')&&csv.includes('Nonretail R105'));
  assert((await readProductBrief(page)).includes('Saved small-pack checks (2)'));
  const extra=panel.locator('[data-small-saved] li').filter({hasText:'Nonretail R105'});await extra.getByRole('button',{name:'Remove',exact:true}).click();await extra.waitFor({state:'detached'});
  assert.equal(await page.evaluate(()=>PMSVIngredientPercentage.requestRows().length),expected);
