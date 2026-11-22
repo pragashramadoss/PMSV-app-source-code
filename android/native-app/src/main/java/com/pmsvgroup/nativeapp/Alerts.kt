@@ -57,19 +57,36 @@ object Alerts {
         createChannel(context)
         val manager = WorkManager.getInstance(context)
         val network = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val periodic = PeriodicWorkRequestBuilder<DailyUpdatesWorker>(30, TimeUnit.MINUTES)
+        val periodic = PeriodicWorkRequestBuilder<DailyUpdatesWorker>(24, TimeUnit.HOURS)
             .setConstraints(network).build()
-        manager.enqueueUniquePeriodicWork(WORK, ExistingPeriodicWorkPolicy.KEEP, periodic)
+        manager.enqueueUniquePeriodicWork(WORK, ExistingPeriodicWorkPolicy.UPDATE, periodic)
 
-        val sinceCheck = System.currentTimeMillis() - prefs(context).getLong("lastDailyCheck", 0L)
-        if (deliveredToday(context) || sinceCheck in 0L until TimeUnit.MINUTES.toMillis(15)) return
+        // A resume catch-up is useful if Android postponed the scheduled work,
+        // but only one automatic network check is allowed per India calendar day.
+        if (deliveredToday(context) || checkedToday(context)) return
         val catchUp = OneTimeWorkRequestBuilder<DailyUpdatesWorker>().setConstraints(network).build()
         manager.enqueueUniqueWork(CATCH_UP, ExistingWorkPolicy.KEEP, catchUp)
     }
 
     internal fun deliveredToday(context: Context) = last(context) == DigestCodec.dailyId(DigestCodec.today())
-    internal fun checked(context: Context) {
-        prefs(context).edit().putLong("lastDailyCheck", System.currentTimeMillis()).apply()
+    internal fun checkedToday(context: Context, day: String = DigestCodec.today()): Boolean {
+        val saved = prefs(context)
+        return DailyCheckPolicy.alreadyChecked(
+            saved.getString("lastDailyCheckDate", null),
+            saved.getLong("lastDailyCheck", 0L),
+            day
+        )
+    }
+    @Synchronized
+    internal fun claimDailyCheck(context: Context): Boolean {
+        val day = DigestCodec.today()
+        if (checkedToday(context, day)) return false
+        // Persist before fetching, preventing the periodic and app-open workers
+        // from checking twice if they start together or the server times out.
+        return prefs(context).edit()
+            .putString("lastDailyCheckDate", day)
+            .putLong("lastDailyCheck", System.currentTimeMillis())
+            .commit()
     }
     fun post(context: Context, title: String, body: String, id: Int = 100): Boolean {
         if (!allowed(context)) return false
@@ -116,11 +133,14 @@ class DailyUpdatesWorker(context: Context, parameters: WorkerParameters) : Worke
     override fun doWork(): Result {
         val context = applicationContext
         if (!Alerts.enabled(context) || !Alerts.allowed(context) || Alerts.deliveredToday(context)) return Result.success()
+        if (!Alerts.claimDailyCheck(context)) return Result.success()
         return try {
             val digest = PmsvRepository(context).digest()
             Alerts.deliverDaily(context, digest)
-            Alerts.checked(context)
             Result.success()
-        } catch (_: Exception) { Result.retry() }
+        } catch (_: Exception) {
+            // Strictly once a day: do not retry the network request again today.
+            Result.success()
+        }
     }
 }
