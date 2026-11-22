@@ -1,4 +1,4 @@
-# PMSV Android 2.1.1
+# PMSV Android 2.1.2
 
 The Google Play package now builds the same native PMSV interface as the website
 installer. Home, feeds, search, bookmarks, settings and notifications use Compose.
@@ -11,7 +11,7 @@ Audits and FSSAI Licence are packaged offline tools within the shared app shell.
 | Existing Google Play listing | com.pmsvgroup.foodsafety | :play-app release AAB | Existing Play upload key |
 | Website / existing preview installs | com.pmsvgroup.foodsafety.preview | :native-app release APK | Retained private preview signing key |
 
-Both are version 2.1.1, versionCode 12, target SDK 36 and minimum SDK 26.
+Both are version 2.1.2, versionCode 13, target SDK 36 and minimum SDK 26.
 Both show PMSV as the launcher name. They compile identical sources and tools.
 Debug builds add .debug and are never distributed.
 
@@ -30,7 +30,7 @@ key. Never commit passwords, private keys or CI debug-signed installers.
 
 ## Play Console handoff
 
-Upload PMSV-2.1.1-Play-Upload-Signed.aab to the existing app and testing track.
+Upload PMSV-2.1.2-Play-Upload-Signed.aab to the existing app and testing track.
 Do not create a new Play listing. Review the release and Data safety declaration,
 then submit it. Building or signing an AAB does not publish it to Google Play.
 
@@ -48,8 +48,13 @@ those records remain in the browser and cannot be imported automatically into th
 new native app. Open pmsvgroup.com in the original browser for earlier records.
 New audits are saved privately on the phone. No account backup is connected.
 
-Daily news notifications use Android WorkManager periodic synchronization, not
-instant FCM push. Existing source dates and categories are retained. Fresh news,
+Automatic news checks are scheduled every 24 hours with Android WorkManager,
+with an app-open catch-up only when that India calendar day has not yet been
+checked. A persisted daily claim prevents a second network check that day,
+including when scheduled and catch-up work overlap or the server fails.
+At most one automatic news notification is shown for that day when today's
+digest is nonempty. Manual Send news notification is an explicit user test.
+Android may defer the scheduled check; this is not instant FCM push. Existing source dates and categories are retained. Fresh news,
 discussions and external documents require internet. Report attachment sharing
 and automatic migration of browser-saved records remain outside this release.
 The policy at https://pmsvgroup.com/privacy covers both app and website behavior.
