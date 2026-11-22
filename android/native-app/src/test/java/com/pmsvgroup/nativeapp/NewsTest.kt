@@ -37,6 +37,18 @@ class NewsTest {
         assertFalse(Links.isPmsv("https://pmsvgroup.com.evil.example/"))
         assertTrue(Links.isPmsv("https://pmsvgroup.com/audits/index.html"))
     }
+    @Test fun dailyNewsCheckOccursOnlyOncePerIndiaCalendarDay() {
+        assertFalse(DailyCheckPolicy.alreadyChecked(null, 0L, "2026-11-22"))
+        assertTrue(DailyCheckPolicy.alreadyChecked("2026-11-22", 0L, "2026-11-22"))
+        assertFalse(DailyCheckPolicy.alreadyChecked("2026-11-21", 0L, "2026-11-22"))
+        // 19:00 UTC on 21 Nov is already 00:30 on 22 Nov in India.
+        val legacy = java.time.Instant.parse("2026-11-21T19:00:00Z").toEpochMilli()
+        assertTrue(DailyCheckPolicy.alreadyChecked(null, legacy, "2026-11-22"))
+        assertFalse(DailyCheckPolicy.alreadyChecked(null, legacy, "2026-11-23"))
+        // Once a check has been recorded on a day, even an empty digest
+        // must not trigger a second automatic request until the next date.
+        assertTrue(DailyCheckPolicy.alreadyChecked("2026-11-22", legacy, "2026-11-22"))
+    }
     @Test fun dailyDigestUsesDateSoTomorrowCanNotifyAgain() {
         val json = JSONObject().put("tag", "pmsv-news").put("date", "2026-11-14").put("count", 3).put("body", "Daily headlines")
         assertEquals("pmsv-news-2026-11-14", DigestCodec.parse(json, "2026-11-14")!!.id)

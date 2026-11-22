@@ -49,7 +49,10 @@ class MainActivity : ComponentActivity() {
                         else if (Alerts.allowed(this)) { Alerts.setEnabled(this, true); alertEnabled = true }
                         else if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
                             permission.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        else openSettings()
+                        else {
+                            Alerts.setEnabled(this, true)
+                            openSettings()
+                        }
                     },
                     testAlert = { Alerts.previewLatest(this) },
                     openNotificationSettings = ::openSettings)
@@ -58,6 +61,7 @@ class MainActivity : ComponentActivity() {
     }
     override fun onResume() {
         super.onResume()
+        Alerts.reconcile(this)
         alertEnabled = Alerts.enabled(this)
         alertAllowed = Alerts.allowed(this)
         model.refreshIfStale()

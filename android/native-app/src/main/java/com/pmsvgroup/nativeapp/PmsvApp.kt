@@ -535,7 +535,7 @@ private fun storyLabel(item: NewsItem): String = when (item.tab) {
         Text("Sends the latest available headlines with their publication date.", color = Muted, style = MaterialTheme.typography.bodySmall)
         if (message.isNotBlank()) Text(message, style = MaterialTheme.typography.bodyMedium)
         TextButton(onClick = settings) { Text("Android notification settings") }
-        Text("The app checks for daily updates about every 30 minutes. Android may delay checks to save battery.", color = Muted, style = MaterialTheme.typography.bodySmall)
+        Text("The app checks for new headlines once per day when online and sends at most one automatic daily alert. Android may delay background checks.", color = Muted, style = MaterialTheme.typography.bodySmall)
     }
 }
 @Composable private fun WhiteCard(content: @Composable ColumnScope.() -> Unit) {
