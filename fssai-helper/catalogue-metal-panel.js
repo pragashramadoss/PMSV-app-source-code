@@ -14,7 +14,9 @@
   const rowKeys=Object.fromEntries(metals.map(([,m])=>[m,Object.keys(D.rows).filter(k=>k.replace(/\d+$/,'')===m)]));
   const field=m=>'panel_'+m;
   const reviewFields=metals.filter(([,m])=>m!=='Me').map(([,m])=>field(m));
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef','panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabAsForm','panelLabEdition'];
+  const readingFields=['panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabSample','panelLabEdition'];
+  const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther'];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -257,8 +259,93 @@
     const assessment=(outcome?'Within':'Outside')+' the cited '+row.parameter+' criterion';
     return planned?assessment+'.':assessment+' · '+number+' '+s.panelLabUnit+' · '+description+' · Report '+textValue(s,'panelLabRef');
   }
+  // Keep the selected measurement in its original fields so older worksheets reopen directly.
+  // Only the other measurements live in the per-product record below.
+  function reportKey(id,metal,form){
+    if(!Object.hasOwn(names,metal))return '';
+    return groups.fishOil.has(id)&&metal==='As'&&['total','inorganic'].includes(form)?metal+'_'+form:metal;
+  }
+  function otherReports(s){
+    if(!s.panelLabOther)return {};
+    try{
+      const data=JSON.parse(s.panelLabOther);
+      if(data&&typeof data==='object'&&!Array.isArray(data))return data;
+    }catch(_){}
+    return {};
+  }
+  function reading(s={}){
+    return Object.fromEntries(readingFields.map(k=>[k,typeof s?.[k]==='string'?s[k]:'']));
+  }
+  function storeOthers(s,others){
+    s.panelLabOther=Object.keys(others).length?JSON.stringify(others):'';
+  }
+  function setInput(node,s,k,value){
+    s[k]=value;
+    const el=node.querySelector('[data-ws-field="'+k+'"]');
+    if(el){if(el.type==='checkbox')el.checked=value==='yes';else el.value=value;}
+  }
+  function switchReading(node,id,s,key,previous){
+    const metal=s.panelLabMetal,form=s.panelLabAsForm;
+    const from=reportKey(id,key==='panelLabMetal'?previous:metal,key==='panelLabAsForm'?previous:form);
+    const to=reportKey(id,metal,form);
+    if(from===to)return;
+    const others=otherReports(s);
+    if(from){
+      if(readingFields.some(k=>textValue(s,k)))others[from]=reading(s);
+      else delete others[from];
+    }
+    const restored=reading(others[to]);
+    if(to)delete others[to];
+    for(const k of readingFields)setInput(node,s,k,restored[k]);
+    storeOthers(s,others);
+  }
+  function clearConfirmations(node,s,key){
+    // Per-metal article edits affect only that metal. Broader product/edition edits can affect every row.
+    const specific=metals.find(([,m])=>key===field(m)||key===field(m)+'Ref')?.[1];
+    const affected=specific||(key.startsWith('mercuryArticle')?'Hg':key.startsWith('panelContainer')?'Sn':'');
+    if(!affected||s.panelLabMetal===affected){
+      setInput(node,s,'panelLabBasis','');s.panelLabEdition='';
+    }
+    const others=otherReports(s);
+    for(const [slot,r] of Object.entries(others)){
+      if(!r||typeof r!=='object'||affected&&slot.split('_')[0]!==affected)continue;
+      r.panelLabBasis='';r.panelLabEdition='';
+    }
+    storeOthers(s,others);
+  }
+  function reportLines(id,s={},date=s.vetDate??root.PMSVVeterinary.reviewDate){
+    if(!known(id)||(!textValue(s,'panelLabNumber')&&!s.panelLabOther))return [];
+    const active=reportKey(id,s.panelLabMetal,s.panelLabAsForm),others=otherReports(s),out=[];
+    for(const [name,metal] of metals){
+      const forms=groups.fishOil.has(id)&&metal==='As'?['','total','inorganic']:[''];
+      for(const form of forms){
+        const key=reportKey(id,metal,form),record=key===active?s:others[key];
+        if(!textValue(record||{},'panelLabNumber'))continue;
+        const state={...s,...reading(record),panelLabMetal:metal,panelLabAsForm:form,vetDate:date};
+        const d=forMetal(id,metal,state),row=root.PMSVTestingPlan.metalRow(id,{...d,name},date);
+        const label=form==='total'?'Total arsenic':form==='inorganic'?'Inorganic arsenic':row?.labKey==='fishArsenic'?'Arsenic species unconfirmed':name;
+        const result=state.panelLabNumber.trim()+' '+(state.panelLabUnit||'(unit pending)');
+        const sample=textValue(state,'panelLabSample'),reference=textValue(state,'panelLabRef'),outcome=lab(id,state,row);
+        const summary=['Reported result: '+label+' '+result,sample&&'Sample: '+sample,reference&&'Report: '+reference,outcome].filter(Boolean).join(' · ');
+        out.push({metal,label,result,sample,reference,outcome,summary,source:row?.source||'',date});
+      }
+    }
+    return out;
+  }
+  function readingTable(id,s){
+    const records=reportLines(id,s);
+    if(!records.length)return '';
+    return '<div class="ws-scroll"><table><caption>Entered metal results</caption><thead><tr>'+
+      ['Analyte','Reported result','Sample or lot','Report reference','Comparison'].map(t=>'<th>'+t+'</th>').join('')+
+      '</tr></thead><tbody>'+records.map(r=>'<tr><th scope="row">'+escape(r.label)+'</th>'+
+        [r.result,r.sample,r.reference,r.outcome].map(t=>'<td>'+escape(t)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+  }
+  function labSummary(id,s){
+    const lines=reportLines(id,s);
+    return lines.length?lines.map(r=>['Assessment '+(r.date||'(date pending)'),r.summary,r.source].filter(Boolean).join(' · ')).join(' | '):lab(id,s);
+  }
   function fishArsenic(id,s){
-    return groups.fishOil.has(id)&&s.panelLabMetal==='As'&&root.PMSVVeterinary.edition(s.vetDate)==='amended';
+    return groups.fishOil.has(id)&&s.panelLabMetal==='As';
   }
   function controls(id,s={}){
     if(!known(id))return '';
@@ -271,33 +358,25 @@
     const transitions=nextEdition(id);
     const current=ref(source+'#page=18','Original Gazette table, PDF pp. 18–28');
     return extra+'<details class="ws-section metal-evidence"><summary>Record a metal article and supporting evidence</summary><div data-panel-choices>'+choices(id,s)+'</div></details>'+
-      '<details class="ws-section metal-analysis"><summary>Check a reported metal result</summary><p>Use the reported result on the named matrix and basis. Enter either a mass-based or volume-based result as appropriate. This check does not convert units, correct for moisture or adjust a milk concentration factor.</p>'+
+      '<details class="ws-section metal-analysis"><summary>Check a reported metal result</summary><p>Enter one measurement per metal. Switching metals retains the other entries. For fish oil, select total or inorganic arsenic as reported. Save the worksheet to keep the measurements on this device. Use the cited unit, sample and analytical basis.</p>'+
       '<label>Assessment date<input type="date" data-plan-vet-date value="'+escape(s.vetDate??root.PMSVVeterinary.reviewDate)+'"></label>'+
       '<label>Metal'+pick('panelLabMetal',metals.map(([n,m])=>[m,n]),s,'Select a metal')+'</label>'+
-      '<label data-panel-arsenic-form'+(fishArsenic(id,s)?'':' hidden')+'>Arsenic reported by the laboratory'+pick('panelLabAsForm',[['total','Total arsenic'],['inorganic','Inorganic arsenic']],s,'Select reported analyte')+'</label><label>Reported result<input inputmode="decimal" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
-      '<label>Reported unit'+pick('panelLabUnit',[['mg/kg','mg/kg'],['mg/L','mg/L']],s,'Select the reported unit')+'</label><label class="ws-check"><input type="checkbox" data-ws-field="panelLabBasis"'+(s.panelLabBasis==='yes'?' checked':'')+'> The report matches the cited food, edible portion, mass or volume unit and analytical basis</label><label>Laboratory report or sample reference'+input('panelLabRef',s)+'</label><p data-panel-lab role="status">'+escape(lab(id,s))+'</p></details>'+
+      '<label data-panel-arsenic-form'+(fishArsenic(id,s)?'':' hidden')+'>Arsenic reported by the laboratory'+pick('panelLabAsForm',[['total','Total arsenic'],['inorganic','Inorganic arsenic']],s,'Unspecified on report')+'</label><label>Reported result<input inputmode="decimal" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
+      '<label>Reported unit'+pick('panelLabUnit',[['mg/kg','mg/kg'],['mg/L','mg/L']],s,'Select the reported unit')+'</label><label class="ws-check"><input type="checkbox" data-ws-field="panelLabBasis"'+(s.panelLabBasis==='yes'?' checked':'')+'> The report matches the cited food, edible portion, mass or volume unit and analytical basis</label><label>Laboratory report or sample reference'+input('panelLabRef',s)+'</label><label>Sample or lot identifier (optional)'+input('panelLabSample',s)+'</label><p data-panel-lab role="status">'+escape(lab(id,s))+'</p><div data-panel-report-list>'+readingTable(id,s)+'</div></details>'+
       '<details class="ws-section metal-lookup"><summary>Search the 382 published metal entries</summary><label>Metal<select data-panel-search-metal>'+metals.map(([n,m])=>'<option value="'+m+'">'+escape(n)+'</option>').join('')+'</select></label><label>Food, ingredient or basis<input type="search" data-panel-search placeholder="e.g. milk, dry matter or confectionery"></label><div data-panel-found>'+findRows('Pb','')+'</div>'+current+'</details>'+
       (transitions.length?'<details class="ws-section metal-change"><summary>Metal changes effective 1 December 2026</summary>'+transitions.map(t=>'<p>'+escape(t)+'</p>').join('')+ref(amendment+'#page=4','Amendment · PDF pp. 4–5')+'</details>':'')+
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
-  function resetValue(node,s,k){
-    s[k]='';const el=node.querySelector('[data-ws-field="'+k+'"]');
-    if(el){if(el.type==='checkbox')el.checked=false;else el.value='';}
-  }
-  function update(node,id,k,s){
-    const labFields=['panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabAsForm','panelLabEdition'];
-    if(reviewFields.includes(k)||k==='panelFpc'||k==='panelContainer')resetValue(node,s,k+'Ref');
+  function update(node,id,k,s,previous){
+    if(reviewFields.includes(k)||k==='panelFpc'||k==='panelContainer')setInput(node,s,k+'Ref','');
     if(['metalForm','metalPack','panelFpc','panelIdentity','panelIdentityRef'].includes(k)){
       for(const f of reviewFields){s[f]='';s[f+'Ref']='';}
-      if(k==='panelIdentity')resetValue(node,s,'panelIdentityRef');
+      if(k==='panelIdentity')setInput(node,s,'panelIdentityRef','');
     }
     if(k==='panelContainer'){s.panel_Sn='';s.panel_SnRef='';}
     if(k==='panelLabBasis')s.panelLabEdition=s.panelLabBasis==='yes'?root.PMSVTestingPlan.metalEdition(s.vetDate):'';
-    if(k==='vetDate'){
-      resetValue(node,s,'panelLabBasis');s.panelLabEdition='';
-    }else if(!labFields.includes(k)||k==='panelLabMetal'||k==='panelLabAsForm'){
-      for(const f of labFields.slice(1))if(f!==k)resetValue(node,s,f);
-    }
+    if(k==='panelLabMetal'||k==='panelLabAsForm')switchReading(node,id,s,k,previous);
+    else if(!labFields.includes(k))clearConfirmations(node,s,k);
     if(!labFields.includes(k)){
       node.querySelector('[data-metal-results]').innerHTML=renderRows(id,s);
       if(['metalForm','metalFormRef','metalPack','metalPackRef','panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef'].includes(k))node.querySelector('[data-panel-choices]').innerHTML=choices(id,s);
@@ -306,6 +385,8 @@
     if(species)species.hidden=!fishArsenic(id,s);
     const result=node.querySelector('[data-panel-lab]');
     if(result)result.textContent=lab(id,s);
+    const list=node.querySelector('[data-panel-report-list]');
+    if(list)list.innerHTML=readingTable(id,s);
   }
   function columns(){return ['Metal headings with exact article or exclusion (of 11)','Additional metal headings with equal limits across eligible rows',...metals.map(([name])=>name+' · full CTR metal table'),'Current original metal source (all 382 rows)','Metal transition from 1 Dec 2026','Documented metal articles and references','Metal laboratory comparison'];}
   function values(id,s={}){
@@ -314,7 +395,7 @@
     const recorded=ds.filter(d=>d.proof).map(d=>d.name+' · '+compact(d));
     if(qualified(s,'panelContainer',['can','other']))recorded.unshift('Canning · '+s.panelContainer+' · '+evidence(s,'panelContainer'));
     if(textValue(s,'panelIdentity')&&evidence(s,'panelIdentity'))recorded.unshift(textValue(s,'panelIdentity')+' · '+evidence(s,'panelIdentity'));
-    return [st.exact,st.common,...ds.map(compact),source+'#page=18',notes.length?notes.join(' ')+' '+amendment+'#page=4':'',recorded.join(' | '),lab(id,s)];
+    return [st.exact,st.common,...ds.map(compact),source+'#page=18',notes.length?notes.join(' ')+' '+amendment+'#page=4':'',recorded.join(' | '),labSummary(id,s)];
   }
   function brief(id,s={}){
     if(!known(id))return [];
@@ -323,8 +404,9 @@
     if(textValue(s,'panelIdentity')&&evidence(s,'panelIdentity'))details.push('Supplied material · '+textValue(s,'panelIdentity')+' · '+evidence(s,'panelIdentity'));
     if(qualified(s,'panelContainer',['can','other']))details.push('Canning · '+s.panelContainer+' · '+evidence(s,'panelContainer'));
     if(qualified(s,'panelFpc',['yes','no']))details.push('FPC 18 eligibility · '+s.panelFpc+' · '+evidence(s,'panelFpc'));
+    const summary=labSummary(id,s);
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
-      'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(lab(id,s)?['Metal result · '+lab(id,s)]:[])];
+      'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,lab,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

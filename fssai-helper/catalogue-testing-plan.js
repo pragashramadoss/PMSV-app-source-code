@@ -429,13 +429,10 @@
         notes:'The reviewed metal and toxin plans start on 20 November 2026. Choose a covered date or check the source edition in force on the sample date.',source:links('ctr-1',[4,5])});
       return;
     }
+    const readings=state.vetDate&&state.vetDate!==date?[]:P.reportLines(id,state,date);
     for(const d of P.panel(id,state)){
       const row=metalRow(id,d,date);
-      if(d.key===state.panelLabMetal&&state.panelLabNumber?.trim()&&(!state.vetDate||state.vetDate===date)){
-        const species=d.key==='As'&&inGroup(metalGroups,'fishOil',id)&&(row.labKey==='fishArsenic'||state.panelLabAsForm)?({total:'Total arsenic',inorganic:'Inorganic arsenic'}[state.panelLabAsForm]||'Arsenic species unconfirmed'):d.name;
-        row.notes=join([row.notes,'Reported result: '+species+' '+state.panelLabNumber.trim()+' '+(state.panelLabUnit||'(unit pending)'),
-          state.panelLabRef?.trim()&&'Report: '+state.panelLabRef.trim(),P.lab(id,{...state,vetDate:date},row)]);
-      }
+      row.notes=join([row.notes,...readings.filter(r=>r.metal===d.key).map(r=>r.summary)]);
       add(row);
     }
     for(const d of C.decisions(id,state)){

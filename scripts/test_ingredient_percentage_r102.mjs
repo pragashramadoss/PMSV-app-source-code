@@ -18,7 +18,7 @@ const model=(patch={})=>Q.model({...item,...patch});
 const decide=(p={})=>Q.decide(model(p));
 const calc=(p={})=>Q.calculate(model(p));
 const compare=p=>{const m=model(p);return Q.compare(m,Q.decide(m),Q.calculate(m));};
-assert(W.available);assert.equal(R.latestRound,117);assert.equal(R.ingredientPercentageReview.products,533);
+assert(W.available);assert.equal(R.latestRound,118);assert.equal(R.ingredientPercentageReview.products,533);
 assert.equal(R.ingredientPercentageReview.provisos,6);assert(Q.sources.trigger.endsWith('#page=31'));assert(Q.sources.exceptions.endsWith('#page=32'));
 assert.equal(decide().kind,'required');assert(decide().text.includes('(i)'));
 const quiet={name:'absent',words:'no',picture:'no',character:'no'};
