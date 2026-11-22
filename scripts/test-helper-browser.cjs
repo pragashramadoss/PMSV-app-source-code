@@ -1448,6 +1448,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await f('vetDate').fill('2026-12-01');
  assert.equal(await f('vetRow').locator('option[value="sea-1"]').count(),0);
  assert.equal(await f('vetRow').inputValue(),'');
+ await f('vetSource').fill('Documented wild finfish sample 113');
  await f('vetRow').selectOption('amended-sea-45');
  await f('vetValue').fill('0.05');await f('vetUnit').selectOption('mg/kg');await f('vetBasis').check();await f('vetReport').fill('Seafood COA 113');
  assert((await vetOutcome.innerText()).startsWith('At or below'));
