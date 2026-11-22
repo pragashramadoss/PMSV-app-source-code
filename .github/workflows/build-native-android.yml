@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
+      - name: Read native Android version
+        run: grep -E '^PMSV_VERSION_(CODE|NAME)=' android/gradle.properties >> "$GITHUB_ENV"
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -49,7 +51,11 @@ jobs:
           PLAY=android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$PLAY" > /tmp/play-badging.txt
           grep -q "name='com.pmsvgroup.foodsafety'" /tmp/play-badging.txt
-          grep -q "versionCode='12'" /tmp/play-badging.txt
+          for badging in /tmp/release-badging.txt /tmp/play-badging.txt; do
+            grep '^package:' "$badging"
+            grep -Fq "versionCode='${PMSV_VERSION_CODE:?}'" "$badging"
+            grep -Fq "versionName='${PMSV_VERSION_NAME:?}'" "$badging"
+          done
           grep -q 'com.pmsvgroup.nativeapp.MainActivity' /tmp/play-badging.txt
           ! grep -qE 'application-debuggable|PmsvLauncherActivity' /tmp/play-badging.txt
           test -s android/play-app/build/outputs/bundle/release/play-app-release.aab
@@ -71,16 +77,16 @@ jobs:
         if: success()
         run: |
           mkdir -p native-release
-          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk native-release/PMSV-2.1.1-Website-unsigned.apk
-          cp android/play-app/build/outputs/bundle/release/play-app-release.aab native-release/PMSV-2.1.1-Play-unsigned.aab
-          cp android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk native-release/PMSV-2.1.1-Play-unsigned.apk
+          cp android/native-app/build/outputs/apk/release/native-app-release-unsigned.apk "native-release/PMSV-${PMSV_VERSION_NAME}-Website-unsigned.apk"
+          cp android/play-app/build/outputs/bundle/release/play-app-release.aab "native-release/PMSV-${PMSV_VERSION_NAME}-Play-unsigned.aab"
+          cp android/play-app/build/outputs/apk/release/play-app-release-unsigned.apk "native-release/PMSV-${PMSV_VERSION_NAME}-Play-unsigned.apk"
           cp android/README-PLAYSTORE.md native-release/README.md
           cp -R native-qa native-release/
           sha256sum native-release/*.apk native-release/*.aab > native-release/SHA256SUMS
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PMSV-Android-2.1.1-and-Test-Results
+          name: PMSV-Android-${{ env.PMSV_VERSION_NAME }}-and-Test-Results
           path: |
             native-release/
             native-qa/

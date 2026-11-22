@@ -24,6 +24,7 @@ import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.concurrent.TimeUnit
 
 class NotificationNavigationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
@@ -149,6 +150,7 @@ class NotificationNavigationTest {
             prefs.edit().putBoolean("enabled", true).putString("lastDigest", DigestCodec.dailyId(DigestCodec.today())).commit()
             Alerts.reconcile(context)
             val job = work.getWorkInfosForUniqueWork(Alerts.WORK).get().single { !it.state.isFinished }
+            assertEquals(TimeUnit.DAYS.toMillis(1), job.periodicityInfo?.repeatIntervalMillis)
             Alerts.reconcile(context)
             assertEquals(job.id, work.getWorkInfosForUniqueWork(Alerts.WORK).get().single { !it.state.isFinished }.id)
         } finally {
