@@ -6,7 +6,7 @@
   const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 114 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 115 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -179,7 +179,7 @@
   }
   function testingPlanSection(id) {
     return '<details class="ws-section" data-testing-plan><summary>Testing plan and source decisions</summary><div>'+
-      '<p>The selected date applies to metals, toxins and veterinary residues. Composition, microbiology and pesticides use the 22 November 2026 review.</p><label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
+      '<p>The selected date applies to metals, toxins and veterinary residues. Composition, microbiology and pesticides use the 22 November 2026 review. This product plan includes the selected cocoa or gum variant, documented sample decisions, saved pesticide results and the veterinary result entered for the selected date.</p><label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
       '<label data-plan-vet-date-label hidden>Assessment date for metals, toxins and veterinary residues<input type="date" data-plan-vet-date value="'+esc(getState(id).vetDate)+'"></label>'+
       '<div data-plan-fish-screen hidden><label>Total arsenic in fish oil (mg/kg)<input type="text" inputmode="decimal" maxlength="80" data-plan-total-as></label><p data-plan-as-result role="status"></p></div>'+
       '<button type="button" data-plan-export>Download this product’s testing plan</button><div data-plan-results></div></div></details>';
@@ -196,9 +196,9 @@
       const sampling=[['n',r.n],['c',r.c],['m',r.m],['M',r.M]].filter(([,v])=>v!=null).map(([k,v])=>k+' = '+v).join(', ');
       const urls=(r.source||'').split(' | ').filter(Boolean);
       return [esc(r.parameter),esc([r.form,r.status].filter(Boolean).join(' · ')),esc([r.limit,r.unit,sampling].filter(Boolean).join(' · ')),esc(r.notes),
-        esc(r.article)+' '+urls.map(u=>href(u,u.includes('#page=')?'p. '+u.split('#page=')[1]:'Source')).join(' ')];
+        esc(r.article)+' '+urls.map(u=>href(u,u.includes('#page=')?'p. '+u.split('#page=')[1]:'Source')||esc(u)).join(' ')];
     });
-    node.querySelector('[data-plan-results]').innerHTML=table(['Parameter or decision','Form and applicability','Criterion or sampling plan','Basis or next action','FSSAI source'],cells);
+    node.querySelector('[data-plan-results]').innerHTML=table(['Parameter or decision','Form and applicability','Criterion or sampling plan','Basis or next action','Source'],cells);
   }
   function microSection(p) {
     const sections=[];
@@ -303,6 +303,11 @@
   function attach(pane,id) {
     const node=pane.querySelector('[data-ws-id]');
     if(!valid || !node || node.dataset.wsId!==id)return;
+    function refreshPlan(){
+      const testing=node.querySelector('[data-testing-plan]');
+      if(testing?.open)showPlan(testing,id);
+    }
+    node.addEventListener('pmsv-residue-results',refreshPlan);
     node.addEventListener('toggle',()=>{
       const body=node.querySelector('.ws-body');
       if(!node.open || body.hasChildNodes())return;
@@ -342,23 +347,19 @@
         state[k+'Ref']='';
         node.querySelector('[data-ws-field="'+k+'Ref"]').value='';
       }
-      if(P.fields.includes(k)||['metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef'].includes(k))P.update(node,id,k,state);
+      const metalField=P.fields.includes(k)||['metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef'].includes(k);
+      if(metalField)P.update(node,id,k,state);
       if(['metalForm','metalFormRef','mercuryArticle','mercuryArticleRef','panel_Hg','panel_HgRef','panelFpc','panelFpcRef'].includes(k)){
         const result=root.PMSVBroadContaminants.scope(id,state.broadForm,state.broadRef,state).h;
         node.querySelector('[data-hg-value]').textContent=result.article+(result.level?' · '+result.level:'');
         node.querySelector('[data-hg-basis]').textContent=result.why;
       }
-      if(C.fields.includes(k)){
-        C.update(node,id,k,state);
-        const testing=node.querySelector('[data-testing-plan]');
-        if(testing.open&&['crop_dec','crop_decRef','crop_af','crop_afRef'].includes(k))showPlan(testing,id);
-      }
+      if(C.fields.includes(k))C.update(node,id,k,state);
       if(V.fields.includes(k))V.update(node,id,k,state);
       if(k==='vetDate'){
         for(const input of node.querySelectorAll('[data-plan-vet-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
-        const testing=node.querySelector('[data-testing-plan]');
-        if(testing.open)showPlan(testing,id);
       }
+      if(metalField||C.fields.includes(k)||V.fields.includes(k)||k==='compVariant'||k==='compSweetener')refreshPlan();
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
       if(Y.fields.includes(k))Y.update(node,id,k,state,previous);
       if(k==='pack')node.querySelector('[data-ws-pack]').innerHTML=packRules(state.pack);
@@ -366,7 +367,7 @@
       const feedback=node.querySelector('[data-ws-saved]');if(feedback)feedback.textContent='Unsaved changes';
     });
     node.addEventListener('click',e=>{
-      if(Y.handle(node,id,getState(id),e.target))return;
+      if(Y.handle(node,id,getState(id),e.target)){refreshPlan();return;}
       const pageButton=e.target.closest('[data-pest-page]');
       if(pageButton){
         const result=node.querySelector('[data-pest-found]');

@@ -326,6 +326,17 @@
       if (out) out.textContent=current(id,s).comparison;
     }
   }
+  function recordedPlanRow(id,state,date){
+    if(state.vetDate&&state.vetDate!==date)return null;
+    const c=current(id,{...state,vetDate:date});
+    if(!c?.recorded||!state.vetReport?.trim()||!state.vetValue?.trim())return null;
+    const {row,b}=c;
+    return {article:'CTR 2.3.2('+row.clause+') · '+rowType[row.clause],parameter:row.drug,
+      form:[b.separate?'Separately sampled ingredient':'Marketed product',b.label,b.origin].filter(Boolean).join(' · '),
+      status:'Recorded veterinary laboratory result',notes:['Sample: '+state.vetSource.trim(),'Report: '+state.vetReport.trim(),
+        'Reported result: '+state.vetValue.trim()+' '+(state.vetUnit||'(unit pending)'),row.article,
+        'Selected source row: '+row.limit+' '+row.unit,qualification(row,b),c.comparison].filter(Boolean).join(' · '),source:getUrl(row)};
+  }
   function planRows(id,date=reviewDate) {
     const p=profile(id);
     if(!p)return [];
@@ -369,5 +380,5 @@
       source:refs.december+'#page=4 | '+refs.december+'#page=6'});
     return rows;
   }
-  root.PMSVVeterinary=Object.freeze({reviewDate,edition,planRows,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
+  root.PMSVVeterinary=Object.freeze({reviewDate,edition,planRows,recordedPlanRow,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
 })(globalThis);

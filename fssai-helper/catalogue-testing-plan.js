@@ -65,7 +65,7 @@
   }
   const coffeePages={'2.10.2':{roasted_ground:[5],decaffeinated_roasted_ground:[5,6],soluble_coffee:[6],decaffeinated_soluble:[6,7]},
     '2.10.4':{regular_roasted_ground:[7,8],instant:[8],decaffeinated_roasted_ground:[8,9],decaffeinated_instant:[9,10]}};
-  function composition(id,add) {
+  function composition(id,add,state) {
     const product=E.products[id],std=R.standards[product.standard],anchor=E.standards[product.standard];
     const route=R.products[id];
     if(anchor && id.startsWith('102-')){
@@ -108,9 +108,16 @@
     }
     const profile=V.profiles.get(id);
     if(profile){
-      for(const form of profile.forms)for(const r of form.rows)push({form:form.name,parameter:r.parameter,status:r.conditional?'Confirm sweetener formulation':'Select declared variant',
-        limit:r.operator==='range'?r.min+' to '+r.max:({'<=':'≤','>=':'≥'})[r.operator]+' '+r.value,unit:r.unit,
-        notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',V.note(profile.kind)]),source:links(anchor.doc,profile.pages)});
+      const chosen=state&&V.selected(id,state);
+      for(const form of chosen?[chosen]:profile.forms){
+        for(const r of form.rows){
+          const condition=chosen?V.applicability(r,state.compSweetener):'';
+          const limit=r.operator==='range'?r.min+' to '+r.max:({'<=':'≤','>=':'≥'})[r.operator]+' '+r.value;
+          const status=chosen?(condition||'Selected product variant'):(r.conditional?'Confirm sweetener formulation':'Select declared variant');
+          push({form:form.name,parameter:r.parameter,status,limit:condition?'':limit,unit:condition?'':r.unit,
+            notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',V.note(profile.kind)]),source:links(anchor.doc,profile.pages)});
+        }
+      }
       return;
     }
     const unresolved=new Set((product.qualityCrosschecks||[]).filter(([,x])=>x[5]==='different numerical values').map(([,x])=>x[0]));
@@ -353,16 +360,15 @@
       notes:'The revised oil entry includes the identified edible oil. Confirm the actual sample is the oil itself.',source:sources};
     if(seeds.has(id)&&state.crop_af==='oil'&&String(state.crop_afRef||'').trim())return {...row,form:'Documented oilseed as marketed',
       status:'Documented oilseed',limit:String(r.limit),unit:r.unit,notes:'Oilseed identity and use: '+state.crop_afRef.trim(),source:sources};
-    if(inOilGroup){
-      if(state.crop_af==='composite'&&String(state.crop_afRef||'').trim()){
-        const resolution=C.decision(id,d.key,state);
-        if(resolution.sample==='finished'&&resolution.rows.length===1){
-          const value=data[resolution.rows[0]];
-          return {...row,form:value.article,status:resolution.status,limit:String(value.limit),unit:value.unit,notes:resolution.reason,source:links(value.doc,[value.page])+' | '+amendment};
-        }
-      }
+    if(inOilGroup&&d.sample==='outside')return {...row,form:'Documented outside these rows',source:sources};
+    if(inOilGroup&&state.crop_af==='composite'&&d.sample==='finished'&&d.rows.length===1){
+      const value=data[d.rows[0]];
+      return {...row,form:value.article,status:d.status,limit:String(value.limit),unit:value.unit,notes:d.reason,source:links(value.doc,[value.page])+' | '+amendment};
+    }
+    const legacyOilChoice=d.status==='Documented finished article'&&d.rows.some(k=>oilKeys.includes(k));
+    if(inOilGroup||legacyOilChoice){
       return {...row,form:'Confirm oil, oilseed or finished composite',status:'Confirm sampled article and use',limit:'',unit:'',
-        notes:'For a qualifying oil or an oilseed for processing or ready to eat, the maximum is '+r.limit+' '+r.unit+'. Check the marketed form and food use. A prepared spread, analogue, flour or mixed food requires its own classification.',
+        notes:(legacyOilChoice?d.reason+'. ':'')+'For a qualifying oil or an oilseed for processing or ready to eat, the maximum is '+r.limit+' '+r.unit+'. Check the marketed form and food use. A prepared spread, analogue, flour or mixed food requires its own classification.',
         source:sources};
     }
     if(id==='02-02-1-fish-oil'||id==='02-02-1-butter-oil')return {...row,form:'Oil of animal origin',status:'Review scope of the oil entry',limit:'',unit:'',
@@ -377,35 +383,43 @@
       return;
     }
     const amended=edition==='amended';
-    for(const d of P.panel(id)){
+    for(const d of P.panel(id,state)){
       const keys=d.keys, numeric=['named','residual','all','same'].includes(d.kind);
       const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
       const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
         form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
-      add(amended?amendedMetal(id,d,row):row);
+      const dated=amended?amendedMetal(id,d,row):row;
+      if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
+      add(dated);
     }
-    for(const d of C.decisions(id)){
+    for(const d of C.decisions(id,state)){
       const data=root.PMSVCropScopeData.rows;
       const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
-      const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,form:d.sample,
+      const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,
+        form:d.sample==='ingredient'?'Separately sampled ingredient':d.status==='Documented finished article'?'Finished product':d.sample,
         limit:join(d.rows.map(k=>data[k].article+' — '+data[k].limit+' '+data[k].unit+(data[k].heading?' (Oilseeds or oil heading)':''))),
         notes:d.reason,source:sources.join(' | ')};
       add(amended?amendedToxin(id,d,row,state):row);
     }
   }
-  function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state={}) {
+  function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state) {
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
-    composition(id,add);microbiology(id,add);contaminants(id,add,vetDate,state);
+    composition(id,add,state);microbiology(id,add);contaminants(id,add,vetDate,state||{});
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
+    if(state){
+      for(const r of root.PMSVResiduePanel.planRows(id))add({...r,area:areas[4]});
+      const veterinary=root.PMSVVeterinary.recordedPlanRow(id,state,vetDate);
+      if(veterinary)add({...veterinary,area:areas[5]});
+    }
     return result;
   }
-  function exportRows(id,vetDate,veterinaryOnly=false,state={}) {
+  function exportRows(id,vetDate,veterinaryOnly=false,state) {
     const products=id?(R.products[id]?[id]:[]):root.PMSV_CATALOGUE.map(p=>p.id);
     const out=[veterinaryOnly?[...headers,'Veterinary assessment date']:headers];
     for(const key of products){
-      const rows=veterinaryOnly?root.PMSVVeterinary.planRows(key,vetDate):entries(key,vetDate,id?state:{});
+      const rows=veterinaryOnly?root.PMSVVeterinary.planRows(key,vetDate):entries(key,vetDate,id?state:undefined);
       for(const r of rows){
         const area=veterinaryOnly?areas[5]:r.area;
         const notes=!veterinaryOnly&&vetDate&&vetDate!==root.PMSVVeterinary.reviewDate&&[areas[2],areas[3],areas[5]].includes(area)?

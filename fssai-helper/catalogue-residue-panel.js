@@ -326,6 +326,15 @@
     return [roleLabel[r.role],r.matrix,r.sample,r.process,r.report,r.analyte,r.result.startsWith('Total unavailable')?r.result:r.result+' '+r.unit,r.loq?'LOQ '+r.loq+' mg/kg':'',
       r.basis,r.limit?'Limit '+r.limit+' mg/kg':'',r.decision,r.reference,r.source].filter(Boolean).join(' · ');
   }
+  function planRows(id){
+    return records(id).map(([,r])=>({
+      article:r.reference,parameter:r.analyte,form:roleLabel[r.role]+' · '+r.matrix,
+      status:r.type==='eo'?'Recorded EO and 2-CE laboratory result':'Recorded pesticide laboratory result',
+      limit:r.limit,unit:r.limit?r.unit:'',notes:['Sample: '+r.sample,'Report: '+r.report,r.process,
+        'Reported result: '+r.result+(r.result.startsWith('Total unavailable')?'':' '+r.unit),r.loq?'LOQ '+r.loq+' mg/kg':'',
+        r.basis,r.decision].filter(Boolean).join(' · '),source:r.source
+    }));
+  }
   function values(id,s={},includeSaved=false) {
     const c=context(id,s);
     const names=targets.get(id)||[];
@@ -409,10 +418,13 @@
     const id=e.key===null?'':applyStored(e.key,e.newValue);
     for(const node of root.document?.querySelectorAll('.catalogue-worksheet[open]')||[]){
       const list=node.querySelector('[data-residue-list]');
-      if(list&&(!id||id===node.dataset.wsId))list.innerHTML=panel(node.dataset.wsId);
+      if(list&&(!id||id===node.dataset.wsId)){
+        list.innerHTML=panel(node.dataset.wsId);
+        node.dispatchEvent(new Event('pmsv-residue-results'));
+      }
     }
   });
   const summary=()=>({products:Object.keys(products).length,marketedProducts:targets.size,sampleChoices:articles.size,
     codedChoices:[...articles.values()].filter(a=>a.codes).length});
-  root.PMSVResiduePanel=Object.freeze({fields,columns,values,brief,markup,update,handle,records,exportRows,summary,context,decide,spiceComparison,save,remove,marketed:id=>targets.has(id),sources});
+  root.PMSVResiduePanel=Object.freeze({fields,columns,values,brief,markup,update,handle,records,planRows,exportRows,summary,context,decide,spiceComparison,save,remove,marketed:id=>targets.has(id),sources});
 })(globalThis);
