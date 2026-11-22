@@ -292,38 +292,124 @@
     }
   }
 
-  function contaminants(id,add) {
+  const metalGroups=root.PMSVMetalPanelData.groups, cropGroups=root.PMSVCropScopeData.groups;
+  const inGroup=(groups,group,id)=>groups[group].includes(id);
+  // These catalogue identities specify the oil itself; the other oil routes
+  // include spreads, derivatives, grade-dependent material and mixed foods.
+  const namedOils=new Set([
+    '02-02-1-refined-grapeseed-oil','02-02-1-refined-rapeseed-or-mustard-oil-low-erucic-acid',
+    '02-02-1-refined-safflower-seed-oil-and-safflower-seed-oil-high-oleic-acid-imported-or-dome',
+    '02-02-1-moringa-oil','02-02-1-refined-palm-kernel-olein','02-02-1-refined-moringa-oil','fssai-2-16-hemp-seed-oil',
+    ...['soyabean','soybean'].flatMap(legume=>['partially-hydrogenated-','partially-hydrogenated-and-winterised-'].map(prefix=>'02-02-1-'+prefix+legume+'-oil'))
+  ]);
+  const seeds=new Set(['06-06-1-chia-seeds','12-12-2-poppy-khas-khas','fssai-2-16-hemp-seed','06-06-1-soybean']);
+  function fishOilScreen(value){
+    if(!String(value??'').trim())return 'Enter the quantified total arsenic result in mg/kg.';
+    const compare=root.PMSVCatalogueWorksheets.compare;
+    const below=compare({operator:'<',value:'0.1'},value);
+    if(below===null)return 'A qualified result such as <LOQ needs its reporting threshold reviewed. Enter a non-negative decimal for this screen.';
+    if(below)return 'Below 0.1 mg/kg total arsenic. The Gazette accepts this screen for the inorganic arsenic limit.';
+    if(compare({operator:'>',value:'0.1'},value))return 'Above 0.1 mg/kg total arsenic. Determine inorganic arsenic to assess the limit.';
+    return 'Exactly 0.1 mg/kg total arsenic. The Gazette gives no screening disposition at equality. Review the report or obtain speciation.';
+  }
+  function amendedMetal(id,d,row) {
+    const source=links('ctr-1',[4]),key=d.name==='Lead'?'Pb127':d.name==='Cadmium'?'Cd18':'';
+    if(d.name==='Arsenic'&&inGroup(metalGroups,'fishOil',id)){
+      return {...row,article:'CTR 2.1.1(2) · fish-oil note',parameter:'Inorganic arsenic',form:'Fish oil',status:'Named finished article',
+        limit:'0.1',unit:'mg/kg',notes:'Screen using total arsenic. Below 0.1 mg/kg, the note accepts the sample for this limit. Above 0.1 mg/kg, determine inorganic arsenic. At exactly 0.1 mg/kg total, the note gives no screening disposition. Review the result or obtain speciation.',
+        source:links('ctr-1',[4,5])};
+    }
+    if(!key||!inGroup(metalGroups,'futurePulse',id))return row;
+    const cadmium=key==='Cd18',article=cadmium?'Pulses and pulse flours, excluding dry soybean':'Pulses and pulse flours';
+    const original=root.PMSVMetalPanelData.rows[key];
+    const refs=[source,links('ctr-3',[original[2]])].join(' | ');
+    if(inGroup(metalGroups,'plainPulseFlour',id)||d.keys.includes(key)&&d.kind==='named'){
+      return {...row,status:'Named finished article',form:article,limit:original[1],unit:'ppm',
+        notes:'Confirm the stated pulse or plain pulse flour and sample as marketed.'+(cadmium?' The amended cadmium entry excludes dry soybean.':''),source:refs};
+    }
+    if(inGroup(metalGroups,'soyFlour',id))return {...row,form:article,status:'Confirm soy flour classification',limit:'',unit:'',
+      notes:cadmium?'Determine how the dry-soybean exclusion applies to this processed soy flour before assigning a cadmium limit.':'Document that the marketed soy flour falls within the amended pulse-flour entry.',source:refs};
+    return {...row,notes:row.notes+' Check the identity of any separately sampled pulse flour. The amended entry names the pulse or its flour.'+
+      (cadmium?' Dry soybean is excluded from that cadmium entry.':''),source:[row.source,source].join(' | ')};
+  }
+  function amendedToxin(id,d,row,state) {
+    const amendment=links('ctr-1',[5]);
+    if(d.key==='saf'){
+      const reference=String(state.crop_decRef||'').trim(),choice=state.crop_dec;
+      const contains=choice==='contains'&&reference,absent=choice==='absent'&&reference;
+      return {...row,article:'CTR 2.2.1(2) · serial 4',form:'Food or beverage containing mace or nutmeg kernel as an ingredient',
+        status:contains?'Documented finished formulation':absent?'Documented ingredients outside entry':'Confirm ingredients of finished article',
+        limit:contains?'10':'',unit:contains?'ppm':'',
+        notes:contains?'Mace, nutmeg kernel or both documented. Recipe reference: '+reference:
+          absent?'Neither ingredient is used. Recipe reference: '+reference:
+          'Check the formulation for mace, nutmeg kernel or both. The 10 ppm maximum applies when at least one is an ingredient. Record the recipe under Crop contaminants → December amendment. A sample of the spice alone does not establish that condition.',
+        source:[amendment,links(root.PMSVCropScopeData.rows.N8.doc,[root.PMSVCropScopeData.rows.N8.page])].join(' | ')};
+    }
+    if(d.key!=='total'&&d.key!=='b1')return row;
+    const inOilGroup=inGroup(cropGroups,'afoils',id), oilKeys=d.key==='total'?['C5','C6']:['C15','C16'];
+    const data=root.PMSVCropScopeData.rows, r=data[oilKeys[0]];
+    const sources=[amendment,links(r.doc,[r.page])].join(' | ');
+    if(namedOils.has(id))return {...row,form:'Oil as marketed',status:'Named finished article',limit:String(r.limit),unit:r.unit,
+      notes:'The revised oil entry includes the identified edible oil. Confirm the actual sample is the oil itself.',source:sources};
+    if(seeds.has(id)&&state.crop_af==='oil'&&String(state.crop_afRef||'').trim())return {...row,form:'Documented oilseed as marketed',
+      status:'Documented oilseed',limit:String(r.limit),unit:r.unit,notes:'Oilseed identity and use: '+state.crop_afRef.trim(),source:sources};
+    if(inOilGroup){
+      if(state.crop_af==='composite'&&String(state.crop_afRef||'').trim()){
+        const resolution=C.decision(id,d.key,state);
+        if(resolution.sample==='finished'&&resolution.rows.length===1){
+          const value=data[resolution.rows[0]];
+          return {...row,form:value.article,status:resolution.status,limit:String(value.limit),unit:value.unit,notes:resolution.reason,source:links(value.doc,[value.page])+' | '+amendment};
+        }
+      }
+      return {...row,form:'Confirm oil, oilseed or finished composite',status:'Confirm sampled article and use',limit:'',unit:'',
+        notes:'For a qualifying oil or an oilseed for processing or ready to eat, the maximum is '+r.limit+' '+r.unit+'. Check the marketed form and food use. A prepared spread, analogue, flour or mixed food requires its own classification.',
+        source:sources};
+    }
+    if(id==='02-02-1-fish-oil'||id==='02-02-1-butter-oil')return {...row,form:'Oil of animal origin',status:'Review scope of the oil entry',limit:'',unit:'',
+      notes:'Confirm the scope of the oil and oilseed entry for this animal-derived oil before applying a plant-commodity limit.',source:sources};
+    return row;
+  }
+  function contaminants(id,add,date,state) {
+    const edition=root.PMSVVeterinary.edition(date);
+    if(!edition||date<'2026-11-20'){
+      for(const area of areas.slice(2,4))add({area,article:'CTR 2.1 / 2.2',parameter:'Check assessment edition',status:'Assessment date outside reviewed contaminant editions',
+        notes:'The reviewed metal and toxin plans start on 20 November 2026. Choose a covered date or check the source edition in force on the sample date.',source:links('ctr-1',[4,5])});
+      return;
+    }
+    const amended=edition==='amended';
     for(const d of P.panel(id)){
       const keys=d.keys, numeric=['named','residual','all','same'].includes(d.kind);
       const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
-      add({area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
-        form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])});
+      const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
+        form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
+      add(amended?amendedMetal(id,d,row):row);
     }
     for(const d of C.decisions(id)){
       const data=root.PMSVCropScopeData.rows;
       const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
-      add({area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,form:d.sample,
+      const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,form:d.sample,
         limit:join(d.rows.map(k=>data[k].article+' — '+data[k].limit+' '+data[k].unit+(data[k].heading?' (Oilseeds or oil heading)':''))),
-        notes:d.reason,source:sources.join(' | ')});
+        notes:d.reason,source:sources.join(' | ')};
+      add(amended?amendedToxin(id,d,row,state):row);
     }
   }
-  function entries(id,vetDate) {
+  function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state={}) {
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
-    composition(id,add);microbiology(id,add);contaminants(id,add);
+    composition(id,add);microbiology(id,add);contaminants(id,add,vetDate,state);
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
     return result;
   }
-  function exportRows(id,vetDate,veterinaryOnly=false) {
+  function exportRows(id,vetDate,veterinaryOnly=false,state={}) {
     const products=id?(R.products[id]?[id]:[]):root.PMSV_CATALOGUE.map(p=>p.id);
     const out=[veterinaryOnly?[...headers,'Veterinary assessment date']:headers];
     for(const key of products){
-      const rows=veterinaryOnly?root.PMSVVeterinary.planRows(key,vetDate):entries(key,vetDate);
+      const rows=veterinaryOnly?root.PMSVVeterinary.planRows(key,vetDate):entries(key,vetDate,id?state:{});
       for(const r of rows){
         const area=veterinaryOnly?areas[5]:r.area;
-        const notes=!veterinaryOnly&&vetDate&&vetDate!==root.PMSVVeterinary.reviewDate&&area===areas[5]?
-          'Veterinary assessment date '+vetDate+'. '+r.notes:r.notes;
+        const notes=!veterinaryOnly&&vetDate&&vetDate!==root.PMSVVeterinary.reviewDate&&[areas[2],areas[3],areas[5]].includes(area)?
+          (area===areas[5]?'Veterinary assessment date ':'Contaminant assessment date ')+vetDate+'. '+r.notes:r.notes;
         const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
         if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
         out.push(cells.map(v=>v??''));
@@ -331,5 +417,5 @@
     }
     return out;
   }
-  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

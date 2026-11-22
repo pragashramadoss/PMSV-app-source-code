@@ -36,7 +36,7 @@ const seafood=a.filter(r=>r[14].endsWith('272840.pdf#page=6')&&r[7]!=='');
 assert.equal(seafood.length,48);assert.equal(new Set(seafood.map(r=>r[0])).size,24);
 for(const r of seafood)assert.deepEqual([r[7],r[8]],[r[5]==='Trimethoprim'?'0.05':'0.3','mg/kg']);
 assert(v.current(fish,{vetDate:next}).options.every(r=>r.clause!==1));
-const otherAreas=date=>p.exportRows(fish,date).filter(r=>r[2]!=='Veterinary drug residues');
+const otherAreas=date=>p.exportRows(fish,date).filter(r=>!p.areas.slice(2,4).includes(r[2])&&r[2]!=='Veterinary drug residues');
 assert.deepEqual(otherAreas(old),otherAreas(next));
 assert(p.exportRows(fish,next).filter(r=>r[2]==='Veterinary drug residues').every(r=>r[9].includes(next)));
 console.log('Both veterinary editions verified across 533 products, 24 seafood identities, assessment boundaries, dated exports, source hierarchy and sampling conditions.');
