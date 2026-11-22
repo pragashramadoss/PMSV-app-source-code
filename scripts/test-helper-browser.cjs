@@ -1253,12 +1253,12 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await planSection.locator('[data-plan-area]').selectOption('Pesticide residues');
  assert((await microTable.textContent()).includes('Identify the sampled commodity and process'));
  const onePlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
- const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R116.csv');
+ const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R117.csv');
  const oneText=fs.readFileSync(await oneFile.path(),'utf8');
  assert(oneText.includes('Milk Powders and Cream Powder')&&!oneText.includes('01-01-1-cow-milk'));
  assert(oneText.includes('Veterinary drug residues')&&oneText.includes('Pesticide residues')&&oneText.includes('Chloramphenicol'));
  const allPlan=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R116.csv');
+ const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R117.csv');
  const allPlanText=fs.readFileSync(await planFile.path(),'utf8');
  assert(allPlanText.includes('01-01-1-cow-milk')&&allPlanText.includes('05-05-1-cocoa-powder')&&allPlanText.includes('Thermal-centre temperature'));
  assert(allPlanText.includes('Banned insecticide · extraneous MRL')&&allPlanText.includes('Honey misuse · MRPL')&&allPlanText.includes('farmed aquaculture only'));
@@ -1378,6 +1378,29 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert((await toxin('b1').innerText()).includes('10 µg/kg'));
  await page.locator('.ws-body [data-ws-save]').click();
  assert((await readProductBrief(page)).includes('Recipe C96 lists toasted almond'));
+ const toxinSample='01-01-5-dairy-whitener';
+ await open(toxinSample);await page.locator('.crop-scope>summary').click();await page.locator('.crop-inputs>summary').click();
+ await f('crop_milk').selectOption('wholeIn');await f('crop_milkRef').fill('Incoming milk powder spec 117');
+ const toxinLab=page.locator('.toxin-analysis'),toxinOutcome=toxinLab.locator('[data-toxin-outcome]');
+ await toxinLab.locator('summary').click();await f('toxinActive').selectOption('m1');
+ await f('tox_m1_role').selectOption('finished');await f('tox_m1_sample').fill('Incoming milk powder lot 117');
+ await f('tox_m1_report').fill('COA-M1-117');await f('tox_m1_value').fill('0.00400000000001');await f('tox_m1_unit').fill('mg/kg');
+ assert((await toxinOutcome.innerText()).includes('different sample role'));assert(await f('tox_m1_basis').isDisabled());
+ await f('tox_m1_role').selectOption('ingredient');await f('tox_m1_basis').check();assert((await toxinOutcome.innerText()).startsWith('Above'));
+ await planSection.locator('summary').click();await planSection.locator('[data-plan-area]').selectOption('Toxins and other contaminants');
+ const toxinPlanLine=planSection.locator('tr').filter({hasText:'COA-M1-117'});
+ assert((await toxinPlanLine.innerText()).includes('Separately sampled ingredient')&&(await toxinPlanLine.innerText()).includes('Above the cited maximum'));
+ await f('tox_m1_value').fill('<0.005');assert((await toxinOutcome.innerText()).startsWith('Inconclusive'));
+ await f('toxinActive').selectOption('total');assert.equal(await f('tox_total_report').inputValue(),'');
+ await f('toxinActive').selectOption('m1');assert.equal(await f('tox_m1_value').inputValue(),'<0.005');
+ await toxinLab.locator('[data-plan-vet-date]').fill('2026-12-01');assert(!(await f('tox_m1_basis').isChecked()));
+ await f('tox_m1_basis').check();await page.locator('.ws-body [data-ws-save]').click();
+ const toxinDownload=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
+ const toxinText=fs.readFileSync(await (await toxinDownload).path(),'utf8');
+ assert(toxinText.includes('COA-M1-117')&&toxinText.includes('Inconclusive')&&toxinText.includes('2026-12-01'));
+ assert((await readProductBrief(page)).includes('Incoming milk powder lot 117'));
+ await open(oil);await open(toxinSample);await page.locator('.crop-scope>summary').click();await toxinLab.locator('summary').click();
+ assert.equal(await f('tox_m1_report').inputValue(),'COA-M1-117');assert((await toxinOutcome.innerText()).startsWith('Inconclusive'));
  await open('01-01-5-milk-powders-and-cream-powder');await page.locator('.crop-scope>summary').click();
  await page.locator('.crop-inputs>summary').click();
  await f('crop_milk').selectOption('skim');await f('crop_milkRef').fill('Grade S96');
@@ -1477,7 +1500,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await datedPlan.locator('[data-plan-vet-date]').inputValue(),'2026-12-01');
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Amended seafood provisions in use'));
  const oneDated=page.waitForEvent('download');await datedPlan.locator('[data-plan-export]').click();
- const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R116.csv'));
+ const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R117.csv'));
  const singleText=fs.readFileSync(await datedCsv.path(),'utf8');
  assert(singleText.includes('Seafood COA 113')&&singleText.includes('At or below the selected source tolerance'));
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Documented wild finfish sample 113'));
@@ -1489,10 +1512,10 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const bulkDate=page.locator('#veterinaryExportDate'), bulkButton=page.locator('#downloadVeterinaryPlan');
  await bulkDate.fill('');assert(await bulkButton.isDisabled());
  await bulkDate.fill('2026-12-01');const bulkDownload=page.waitForEvent('download');await bulkButton.click();
- const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R116.csv');
+ const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R117.csv');
  const vetText=fs.readFileSync(await vetFile.path(),'utf8');assert(vetText.includes('Veterinary assessment date')&&vetText.includes('11-11-5-honey')&&!vetText.includes('CTR 2.3.2(1)'));
  const wholeDated=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R116.csv'));
+ const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R117.csv'));
  const bulkText=fs.readFileSync(await december.path(),'utf8');assert(!bulkText.includes('Seafood COA 113')&&bulkText.includes('CTR 2.1.1(2) · fish-oil note')&&bulkText.includes('Contaminant assessment date 2026-12-01'));
  await open('02-02-1-fish-oil');await datedPlan.locator('summary').click();
  await datedPlan.locator('[data-plan-area]').selectOption('Metals');await datedPlan.locator('[data-plan-vet-date]').fill('2026-12-01');
@@ -1668,7 +1691,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R116.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R117.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 

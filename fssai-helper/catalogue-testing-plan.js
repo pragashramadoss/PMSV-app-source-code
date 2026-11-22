@@ -400,6 +400,28 @@
     if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
     return dated;
   }
+  function toxinRow(id,d,date,state={}){
+    const edition=metalEdition(date);
+    if(!edition||!d)return null;
+    const data=root.PMSVCropScopeData.rows;
+    const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
+    const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,
+      form:d.sample==='ingredient'?'Separately sampled ingredient':d.status==='Documented finished article'?'Finished product':d.sample,
+      limit:join(d.rows.map(k=>data[k].article+' — '+data[k].limit+' '+data[k].unit+(data[k].heading?' (Oilseeds or oil heading)':''))),
+      notes:d.reason,source:sources.join(' | ')};
+    const dated=edition==='amended'?amendedToxin(id,d,row,state):row;
+    if(!dated.limit)return dated;
+    // Replacement rows explicitly carry a numeric maximum and refer to the finished food.
+    if(dated.unit){
+      dated.criterion={value:dated.limit,unit:dated.unit,role:'finished',article:dated.form};
+    }else if(['finished','ingredient'].includes(d.sample)&&d.rows.length){
+      const matches=d.rows.map(k=>data[k]),first=matches[0];
+      if(matches.every(r=>r.limit===first.limit&&r.unit===first.unit)){
+        dated.criterion={value:String(first.limit),unit:first.unit,role:d.sample,article:join(matches.map(r=>r.article))};
+      }
+    }
+    return dated;
+  }
   function contaminants(id,add,date,state) {
     const edition=metalEdition(date);
     if(!edition){
@@ -407,7 +429,6 @@
         notes:'The reviewed metal and toxin plans start on 20 November 2026. Choose a covered date or check the source edition in force on the sample date.',source:links('ctr-1',[4,5])});
       return;
     }
-    const amended=edition==='amended';
     for(const d of P.panel(id,state)){
       const row=metalRow(id,d,date);
       if(d.key===state.panelLabMetal&&state.panelLabNumber?.trim()&&(!state.vetDate||state.vetDate===date)){
@@ -418,13 +439,10 @@
       add(row);
     }
     for(const d of C.decisions(id,state)){
-      const data=root.PMSVCropScopeData.rows;
-      const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
-      const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,
-        form:d.sample==='ingredient'?'Separately sampled ingredient':d.status==='Documented finished article'?'Finished product':d.sample,
-        limit:join(d.rows.map(k=>data[k].article+' — '+data[k].limit+' '+data[k].unit+(data[k].heading?' (Oilseeds or oil heading)':''))),
-        notes:d.reason,source:sources.join(' | ')};
-      add(amended?amendedToxin(id,d,row,state):row);
+      const row=toxinRow(id,d,date,state);
+      if(state['tox_'+d.key+'_value']?.trim()&&(!state.vetDate||state.vetDate===date))
+        row.notes=join([row.notes,C.labResult(id,d.key,state,date,row).summary]);
+      add(row);
     }
   }
   function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state) {
@@ -456,5 +474,5 @@
     }
     return out;
   }
-  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
