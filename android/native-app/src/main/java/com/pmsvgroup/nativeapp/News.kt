@@ -70,6 +70,20 @@ fun displayDate(value: String): String = runCatching {
 
 data class Digest(val id: String, val title: String, val body: String, val date: String = "")
 
+// This pure policy can be tested without Android WorkManager. Legacy check
+// timestamps are interpreted in India time during the first upgraded launch.
+internal object DailyCheckPolicy {
+    fun alreadyChecked(lastDay: String?, legacyCheckMillis: Long, today: String): Boolean {
+        if (lastDay != null) return lastDay == today
+        if (legacyCheckMillis <= 0L) return false
+        return runCatching {
+            java.time.Instant.ofEpochMilli(legacyCheckMillis)
+                .atZone(java.time.ZoneId.of("Asia/Kolkata"))
+                .toLocalDate().toString() == today
+        }.getOrDefault(false)
+    }
+}
+
 object DigestCodec {
     fun today(): String = LocalDate.now(java.time.ZoneId.of("Asia/Kolkata")).toString()
     fun dailyId(date: String) = "pmsv-news-$date"
