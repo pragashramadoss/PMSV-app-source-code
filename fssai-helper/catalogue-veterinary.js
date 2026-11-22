@@ -100,6 +100,14 @@
   const currentSea='Tetracycline 0.1, oxytetracycline 0.1, trimethoprim 0.05 and oxolinic acid 0.3 mg/kg.';
   const restriction='Production use is prohibited for 14 listed substances or classes. EMRL 0.001 mg/kg, except chloramphenicol 0.0003 mg/kg.';
   const transition='On 1 December 2026 clause (1) is omitted. In clause (4), seafood is added to trimethoprim at 0.05 mg/kg (serial 45) and oxolinic acid at 0.3 mg/kg (new serial 50). Check the species, drug and portion in the remaining tetracycline entries.';
+  const {reviewedOn:reviewDate,effectiveFrom:changeDate}=root.PMSV_REVIEW_REGISTER.veterinaryEditionReview;
+  const datePrompt='Enter a valid assessment date within a reviewed edition effective from 1 April 2025.';
+  function edition(date=reviewDate) {
+    if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<'2025-04-01')return '';
+    const value=new Date(date+'T00:00:00Z');
+    if(!Number.isFinite(value.getTime())||value.toISOString().slice(0,10)!==date)return '';
+    return date<changeDate?'original':'amended';
+  }
   function buildRows() {
     const rows=[];
     review.seafood.forEach(([drug,limit],i)=>rows.push({key:'sea-'+i,clause:1,drug,article:'Seafood and fishery products',limit,unit:'mg/kg',page:19}));
@@ -110,7 +118,13 @@
     return rows;
   }
   const all=buildRows();
-  const getUrl=r=>(r.clause===1?refs.seafood:refs.veterinary)+'#page='+r.page;
+  const amendedRows=[
+    {key:'amended-sea-45',serial:45,drug:'Trimethoprim',limit:'0.05'},
+    {key:'amended-sea-50',serial:50,drug:'Oxolinic acid',limit:'0.3'}
+  ].map(r=>({...r,clause:4,article:'Seafood, including shrimps, prawns, fish and fishery products',unit:'mg/kg',page:6,amendment:true}));
+  const amended=all.filter(r=>r.clause!==1).concat(amendedRows);
+  const editionRows=e=>e==='original'?all:e==='amended'?amended:[];
+  const getUrl=r=>(r.amendment?refs.december:r.clause===1?refs.seafood:refs.veterinary)+'#page='+r.page;
   const rowType={1:'Seafood tolerance',2:'Prohibited use · EMRL',3:'Honey misuse · MRPL',4:'Food and tissue tolerance'};
   const fields=['vetDate','vetRole','vetMatrix','vetOrigin','vetSource','vetRow','vetValue','vetUnit','vetBasis','vetReport'];
   function basis(id,s={}) {
@@ -121,10 +135,11 @@
     const matrix=options.includes(s.vetMatrix)?s.vetMatrix:separate?'':options[0];
     const [label='',family='other',species='']=matrices[matrix]||[];
     const origin=family==='seafood'&&['farmed','wild'].includes(s.vetOrigin)?s.vetOrigin:'';
-    return {p,separate,options,matrix,label,family,species,origin};
+    return {p,separate,options,matrix,label,family,species,origin,edition:edition(s.vetDate)};
   }
   function toleranceMatch(r,b) {
     const a=r.article, sp=b.species;
+    if (r.amendment) return b.family==='seafood';
     if (r.locked) return false;
     if (b.family==='milk') {
       if (a==='Milk'||a.endsWith('; Milk')||a==='Species not specified — Milk') return true;
@@ -150,7 +165,7 @@
   function candidates(b) {
     if (!b?.matrix||b.family==='other') return [];
     const prohibited=['milk','dairy','tissue','meatProduct','egg'].includes(b.family)||(b.family==='seafood'&&b.origin==='farmed');
-    return all.filter(r=>r.clause===1?b.family==='seafood':r.clause===2?prohibited:r.clause===3?b.family==='honey':toleranceMatch(r,b));
+    return editionRows(b.edition).filter(r=>r.clause===1?b.family==='seafood':r.clause===2?prohibited:r.clause===3?b.family==='honey':toleranceMatch(r,b));
   }
   function qualification(r,b) {
     if (r.locked) return 'The printed Muscle entry has no resolved species heading.';
@@ -158,7 +173,7 @@
       return 'Sulfadimidine and sulfamethazine are names for the same drug. Serials 39 and 41 give potentially overlapping tissue limits of 0.1 and 0.01 mg/kg. Reconcile the entries for the sampled portion.';
     if (r.clause===4&&r.serial===1&&['finfish','trout'].includes(b?.species))
       return 'Ampicillin has a finfish entry at 0.05 mg/kg and a broader animal-tissue entry at 0.01 mg/kg. Resolve the scope for the sampled portion before comparison.';
-    if (r.clause===4&&r.serial===7&&(/Giant prawn|Oxytetracycline — Fish/.test(r.article)))
+    if (b?.edition==='original'&&r.clause===4&&r.serial===7&&(/Giant prawn|Oxytetracycline — Fish/.test(r.article)))
       return 'The 0.2 mg/kg entry can overlap the current 0.1 mg/kg seafood provision for tetracycline or oxytetracycline, depending on the drug and species. Resolve the applicable provision before comparison.';
     if (r.clause===1&&['Tetracycline','Oxytetracycline'].includes(r.drug)) {
       const prawnOrUnknown=['','shrimp','giantPrawn'].includes(b?.species||'');
@@ -174,14 +189,11 @@
     const options=candidates(b);
     const row=options.find(r=>r.key===s.vetRow);
     const recorded=!!row&&!!s.vetSource?.trim();
-    const date=s.vetDate??review.reviewedOn;
-    const instant=/^\d{4}-\d{2}-\d{2}$/.test(date)?new Date(date+'T00:00:00Z'):null;
-    const inEdition=instant&&Number.isFinite(instant.getTime())&&instant.toISOString().slice(0,10)===date&&date>='2025-04-01'&&date<'2026-12-01';
-    let comparison='';
+    const date=s.vetDate??reviewDate;
+    let comparison=b.edition?'':datePrompt;
     if (row) {
       const qualifier=qualification(row,b);
-      if (!inEdition) comparison='The comparison requires the edition effective from 1 April 2025 through 30 November 2026. Review the law effective on the assessment date.';
-      else if (qualifier&&!row.condition) comparison='Source interpretation required. '+qualifier;
+      if (qualifier&&!row.condition) comparison='Source interpretation required. '+qualifier;
       else if (!recorded||s.vetBasis!=='yes'||!s.vetReport?.trim()||s.vetUnit!==row.unit) comparison='Confirm the applicable article, sample and analytical basis, enter both references and use the printed unit.';
       else if (!String(s.vetValue||'').trim()) comparison='Enter the quantified result in '+row.unit+'.';
       else {
@@ -193,14 +205,16 @@
     return {b,options,row,recorded,date,comparison};
   }
   function summaries(b) {
+    if(!b.edition)return Array(4).fill(datePrompt);
     const f=b.family;
     const profileOpen=!b.separate&&b.p.grade==='conditional'&&f==='other';
     const other=profileOpen?'Establish the marketed article and sampling basis.':'No named match for this sample.';
     return [
-      f==='seafood'?currentSea:other,
+      f==='seafood'?(b.edition==='amended'?'Clause (1) was omitted on 1 December 2026.':currentSea):other,
       ['dairy','milk','tissue','meatProduct','egg'].includes(f)?restriction:
         f==='seafood'?(b.origin==='farmed'?restriction:b.origin==='wild'?'Documented wild catch lies outside the aquaculture production group.':'Identify farmed or wild origin. The production prohibition names aquaculture and its products.'):other,
       f==='honey'?'12 MRPL entries in µg/kg for detecting misuse in honey, including the individual or collective conditions at serials 3 and 4. Antibiotic use during production is prohibited.':other,
+      f==='seafood'&&b.edition==='amended'?'Seafood tolerances under clause (4) are 0.05 mg/kg for trimethoprim and 0.3 mg/kg for oxolinic acid. Match other entries by drug, species and portion.':
       ['milk','tissue','egg','seafood'].includes(f)?'Match the drug, species and sampled portion to an individual Gazette row. The published unit applies to that row.':
         f==='dairy'?'The named milk rows concern milk. Establish a separate legal basis for a dairy derivative or assess the independently sampled milk.':
         f==='meatProduct'?'The drug table distinguishes tissues and fats. Identify the sampled tissue and any legal basis for the processed product.':other
@@ -217,7 +231,7 @@
     'Honey misuse MRPL · CTR 2.3.2(3)','Veterinary tolerance scope · CTR 2.3.2(4)','Candidate residue rows for the catalogue sample',
     'Official veterinary residue sources','Seafood transition from 1 Dec 2026','Documented residue sample and row','Veterinary residue comparison'];
   function values(id,s={}) {
-    const base=basis(id), c=current(id,s);
+    const base=basis(id,{vetDate:s.vetDate}), c=current(id,s);
     if (!base||!c) return [];
     const list=candidates(base);
     const doc=c.b.matrix&&s.vetSource?.trim()?(c.b.separate?'Separately sampled ingredient':'Catalogue product')+' · '+c.b.label+
@@ -226,28 +240,29 @@
     const outcome=c.recorded&&s.vetValue?.trim()?s.vetValue.trim()+' '+(s.vetUnit||'(unit pending)')+' · '+c.comparison+(s.vetReport?.trim()?' · '+s.vetReport.trim():''):'';
     return [grades[base.p.grade]+' · '+base.p.note,...summaries(base),
       list.map(r=>'('+r.clause+') '+labelRow(r)+(qualification(r,base)?' · '+qualification(r,base):'')+' · p. '+r.page).join(' | '),
-      refs.seafood+'#page=19 | '+refs.veterinary+'#page=17 | '+refs.veterinary+'#page=18'+(base.family==='tissue'?' | '+drugIdentity:''),
+      (base.edition==='amended'?refs.december+'#page=6':refs.seafood+'#page=19')+' | '+refs.veterinary+'#page=17 | '+refs.veterinary+'#page=18'+(base.family==='tissue'?' | '+drugIdentity:''),
       base.p.choices.some(k=>matrices[k][1]==='seafood')?transition+' '+refs.december+'#page=6':'',doc,outcome];
   }
   function brief(id,s={}) {
     const vals=values(id,s);
-    return vals.length?['','Veterinary drug residues · 20 November 2026',...columns.flatMap((name,i)=>vals[i]?[name+' · '+vals[i]]:[])]:[];
+    return vals.length?['','Veterinary drug residues · assessment '+(s.vetDate??reviewDate),...columns.flatMap((name,i)=>vals[i]?[name+' · '+vals[i]]:[])]:[];
   }
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const link=(url,name)=>'<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+esc(name)+'</a>';
   const opt=(key,name,value)=>'<option value="'+esc(key)+'"'+(key===value?' selected':'')+'>'+esc(name)+'</option>';
   const select=(field,label,options)=>'<label>'+esc(label)+'<select data-ws-field="'+field+'">'+options+'</select></label>';
   const input=(field,label,s,attrs='maxlength="220"')=>'<label>'+esc(label)+'<input '+attrs+' data-ws-field="'+field+'" value="'+esc(s[field])+'"></label>';
-  function listTable(rows) {
+  function listTable(rows,e) {
     return '<div class="ws-scroll"><table><thead><tr><th>Drug or group</th><th>Food or sample</th><th>Source value</th><th>Gazette</th></tr></thead><tbody>'+
       rows.map(r=>'<tr><td>'+esc(r.drug)+'</td><td>'+esc(r.article)+'</td><td>'+esc(r.limit+' '+r.unit)+
         (r.condition?'<br>'+esc(r.condition):'')+(r.locked?'<br>Species heading unresolved.':'')+
-        (r.clause===4&&r.serial===7&&/Giant prawn|Oxytetracycline — Fish/.test(r.article)?'<br>Check overlapping seafood provision.':'')+'</td><td>'+link(getUrl(r),'PDF p. '+r.page)+'</td></tr>').join('')+'</tbody></table></div>';
+        (e==='original'&&r.clause===4&&r.serial===7&&/Giant prawn|Oxytetracycline — Fish/.test(r.article)?'<br>Check overlapping seafood provision.':'')+'</td><td>'+link(getUrl(r),'PDF p. '+r.page)+'</td></tr>').join('')+'</tbody></table></div>';
   }
-  function indexTable(key) {
+  function indexTable(key,date) {
+    const e=edition(date);
     if (!key) return '';
-    const rows=all.filter(r=>r.clause<4?'c'+r.clause===key:'g'+r.serial===key);
-    return rows.length?listTable(rows):'';
+    const rows=editionRows(e).filter(r=>r.clause<4?'c'+r.clause===key:'g'+r.serial===key);
+    return rows.length?listTable(rows,e):'';
   }
   function sampleMarkup(id,s) {
     const {b,options,row,comparison}=current(id,s);
@@ -259,7 +274,7 @@
       return rows.length?'<optgroup label="'+esc(rowType[n])+'">'+rows.map(r=>opt(r.key,labelRow(r),s.vetRow)).join('')+'</optgroup>':'';
     }).join('');
     const sampleInfo=b.matrix?'<p>'+summaries(b).filter(t=>!['No named match for this sample.','Establish the marketed article and sampling basis.'].includes(t)).map(esc).join(' ')+'</p>':'';
-    return input('vetDate','Assessment date',{vetDate:s.vetDate??review.reviewedOn},'type="date"')+matrix+origin+sampleInfo+input('vetSource','Sample, species or specification reference',s)+
+    return matrix+origin+sampleInfo+input('vetSource','Sample, species or specification reference',s)+
       (options.length?select('vetRow','Source row for the sampled article',opt('','Choose a drug and article',s.vetRow)+grouped):
       '<p>No numerical row has been assigned to this sample. The complete Gazette index is available below.</p>')+
       (row?'<p><strong>'+esc(rowType[row.clause])+'</strong> · '+esc(labelRow(row))+' · '+link(getUrl(row),'PDF p. '+row.page)+'</p>'+
@@ -270,20 +285,38 @@
         input('vetReport','Laboratory report reference',s)+'<p data-vet-comparison role="status">'+esc(comparison)+'</p>':'');
   }
   function markup(id,s={}) {
-    const b=basis(id);
+    const b=basis(id,{vetDate:s.vetDate});
     if (!b) return '';
-    const sourcePages=[refs.seafood+'#page=19',refs.veterinary+'#page=17',refs.veterinary+'#page=18',refs.veterinary+'#page=18'];
-    const summary=summaries(b).map((v,i)=>'<li><strong>'+esc(rowType[i+1])+'</strong> · '+esc(v)+' '+link(sourcePages[i],'Clause ('+(i+1)+')')+'</li>').join('');
-    const lookup=[1,2,3].map(n=>opt('c'+n,rowType[n],'')).join('')+
-      review.groups.map(g=>opt('g'+g.serial,'('+g.serial+') '+g.drug,'')).join('');
-    return '<details class="ws-section vet-scope"><summary>Veterinary drug residues · CTR 2.3.2</summary><div><p><strong>'+esc(grades[b.p.grade])+'</strong>. '+esc(b.p.note)+'</p><ul>'+summary+'</ul>'+
+    return '<details class="ws-section vet-scope"><summary>Veterinary drug residues · CTR 2.3.2</summary><div><p><strong>'+esc(grades[b.p.grade])+'</strong>. '+esc(b.p.note)+'</p>'+
+      input('vetDate','Veterinary assessment date',{vetDate:s.vetDate??reviewDate},'type="date"')+
+      '<div data-vet-edition>'+editionSummary(b)+'</div>'+
       '<details class="ws-section" data-vet-assessment><summary>Review a sampled article</summary><div>'+select('vetRole','Sample being reviewed',opt('','Catalogue product as sold',s.vetRole||'')+opt('ingredient','Separately sampled ingredient',s.vetRole))+
       '<div data-vet-controls>'+sampleMarkup(id,s)+'</div></div></details>'+
-      '<details class="ws-section"><summary>Browse all four Gazette provisions</summary><div><label>Provision or veterinary drug<select data-vet-index>'+opt('','Choose a table or drug','')+lookup+'</select></label><div data-vet-found></div></div></details>'+
-      (b.p.choices.some(k=>matrices[k][1]==='seafood')?'<p><strong>From 1 December 2026</strong> · '+esc(transition)+' '+link(refs.december+'#page=6','Amendment, PDF p. 6')+'</p>':'')+
-      '</div></details>';
+      '<details class="ws-section"><summary>Browse Gazette provisions for this date</summary><div data-vet-lookup>'+lookupMarkup(b.edition)+'</div></details></div></details>';
+  }
+  function editionSummary(b) {
+    if(!b.edition)return '<p role="status">'+esc(datePrompt)+'</p>';
+    const sourcePages=[b.edition==='amended'?refs.december+'#page=6':refs.seafood+'#page=19',refs.veterinary+'#page=17',refs.veterinary+'#page=18',refs.veterinary+'#page=18'];
+    const summary=summaries(b).map((v,i)=>'<li><strong>'+esc(rowType[i+1])+'</strong> · '+esc(v)+' '+link(sourcePages[i],'Clause ('+(i+1)+')')+'</li>').join('');
+    return '<ul>'+summary+'</ul>'+(b.edition==='amended'&&b.family==='seafood'?link(refs.december+'#page=6','Amended clause (4) seafood rows'):'')+(b.p.choices.some(k=>matrices[k][1]==='seafood')?
+      '<p>'+esc(transition)+' '+link(refs.december+'#page=6','Amendment, PDF p. 6')+'</p>':'');
+  }
+  function lookupMarkup(e) {
+    if(!e)return '<p>'+esc(datePrompt)+'</p>';
+    const clauses=e==='amended'?[2,3]:[1,2,3];
+    const lookup=clauses.map(n=>opt('c'+n,rowType[n],'')).join('')+
+      review.groups.map(g=>opt('g'+g.serial,'('+g.serial+') '+g.drug,'')).join('')+
+      (e==='amended'?opt('g50','(50) Oxolinic acid',''):'');
+    return '<label>Provision or veterinary drug<select data-vet-index>'+opt('','Choose a table or drug','')+lookup+'</select></label><div data-vet-found></div>';
   }
   function update(node,id,key,s) {
+    if(key==='vetDate'){
+      const b=basis(id,{vetDate:s.vetDate});
+      node.querySelector('[data-vet-controls]').innerHTML=sampleMarkup(id,s);
+      node.querySelector('[data-vet-edition]').innerHTML=editionSummary(b);
+      node.querySelector('[data-vet-lookup]').innerHTML=lookupMarkup(b.edition);
+      return;
+    }
     const cascade={vetRole:['vetMatrix','vetOrigin','vetSource','vetRow'],vetMatrix:['vetOrigin','vetSource','vetRow'],vetOrigin:['vetSource','vetRow'],vetRow:[]};
     if (Object.hasOwn(cascade,key)) {
       for (const field of [...cascade[key],'vetValue','vetUnit','vetBasis','vetReport']) s[field]='';
@@ -293,15 +326,18 @@
       if (out) out.textContent=current(id,s).comparison;
     }
   }
-  function planRows(id) {
+  function planRows(id,date=reviewDate) {
     const p=profile(id);
     if(!p)return [];
+    const e=edition(date);
+    if(!e)return [{article:'CTR 2.3.2',form:'Marketed article',parameter:'Check the veterinary assessment date',
+      status:'Assessment date outside reviewed editions',notes:datePrompt,source:refs.veterinary+'#page=17 | '+refs.december+'#page=4'}];
     const rows=[{article:'CTR 2.3.2',form:'Marketed article',parameter:'Identify the animal source, product and sampled portion',
-      status:grades[p.grade],notes:p.note,source:refs.veterinary+'#page=17 | '+refs.seafood+'#page=19'}];
+      status:grades[p.grade],notes:p.note,source:refs.veterinary+'#page=17 | '+(e==='amended'?refs.december+'#page=6':refs.seafood+'#page=19')}];
     const found=new Map();
     let seafood=false;
     for(const matrix of p.choices){
-      const b=basis(id,{vetMatrix:matrix,vetOrigin:'farmed'});
+      const b=basis(id,{vetMatrix:matrix,vetOrigin:'farmed',vetDate:date});
       seafood ||= b.family==='seafood';
       for(const r of candidates(b)){
         const qualifier=qualification(r,b);
@@ -315,7 +351,7 @@
             'Apply only to the indicated article and sample portion, in the unit printed.';
           const article='CTR 2.3.2('+r.clause+')'+(r.serial?' · serial '+r.serial:'');
           const notes=[qualifier,held&&'Printed reference: '+r.limit+' '+r.unit,explanation,
-            p.grade==='conditional'&&p.note,r.clause===1&&'Clause (1) applies in this edition through 30 November 2026.'].filter(Boolean).join(' · ');
+            p.grade==='conditional'&&p.note,r.amendment&&'Effective 1 December 2026.',r.clause===1&&'Clause (1) applies in this edition through 30 November 2026.'].filter(Boolean).join(' · ');
           match={forms:new Set(),row:{article,parameter:r.drug,status:held?'Resolve overlapping source entries':rowType[r.clause],
             limit:held?'':r.limit,unit:held?'':r.unit,notes,source:getUrl(r)}};
           found.set(key,match);
@@ -328,10 +364,10 @@
       rows.push({...row,form:[...forms].join(' / ')+' · '+article});
     }
     if(seafood)rows.push({article:'May 2026 Gazette · amendment 4',form:'Seafood and fishery products',
-      parameter:'Check the assessment date',status:'Change effective 1 December 2026',
-      notes:'For a sample assessed from 1 December, use the amended seafood provisions. The clause (1) rows in this export represent the edition through 30 November 2026.',
+      parameter:'Check the assessment date',status:e==='amended'?'Amended seafood provisions in use':'Change effective 1 December 2026',
+      notes:e==='amended'?'The selected edition omits clause (1). Use clause (4) for seafood and retain the species and tissue conditions on individual rows.':'For a sample assessed from 1 December, use the amended seafood provisions. The clause (1) rows in this export represent the edition through 30 November 2026.',
       source:refs.december+'#page=4 | '+refs.december+'#page=6'});
     return rows;
   }
-  root.PMSVVeterinary=Object.freeze({planRows,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
+  root.PMSVVeterinary=Object.freeze({reviewDate,edition,planRows,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
 })(globalThis);

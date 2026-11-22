@@ -307,19 +307,27 @@
         notes:d.reason,source:sources.join(' | ')});
     }
   }
-  function entries(id) {
+  function entries(id,vetDate) {
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add);microbiology(id,add);contaminants(id,add);
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
-    for(const r of root.PMSVVeterinary.planRows(id))add({...r,area:areas[5]});
+    for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
     return result;
   }
-  function exportRows(id) {
+  function exportRows(id,vetDate,veterinaryOnly=false) {
     const products=id?(R.products[id]?[id]:[]):root.PMSV_CATALOGUE.map(p=>p.id);
-    const out=[headers];
+    const out=[veterinaryOnly?[...headers,'Veterinary assessment date']:headers];
     for(const key of products){
-      for(const r of entries(key))out.push([key,R.products[key].name,r.area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,r.notes,r.n,r.c,r.m,r.M,r.source].map(v=>v??''));
+      const rows=veterinaryOnly?root.PMSVVeterinary.planRows(key,vetDate):entries(key,vetDate);
+      for(const r of rows){
+        const area=veterinaryOnly?areas[5]:r.area;
+        const notes=!veterinaryOnly&&vetDate&&vetDate!==root.PMSVVeterinary.reviewDate&&area===areas[5]?
+          'Veterinary assessment date '+vetDate+'. '+r.notes:r.notes;
+        const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
+        if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
+        out.push(cells.map(v=>v??''));
+      }
     }
     return out;
   }

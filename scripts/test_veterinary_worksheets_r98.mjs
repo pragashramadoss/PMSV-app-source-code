@@ -46,7 +46,7 @@ const milkRow=key(milk,'Ceftiofur','Cattle — Milk');
 assert(compare(milk,milkRow,'0.1','mg/L').startsWith('At or below'));
 assert(compare(milk,milkRow,'0.10000000000000001','mg/L').startsWith('Above'));
 assert(compare(milk,milkRow,'0.1','mg/kg').startsWith('Confirm'));
-for(const date of ['','2025-03-31','2026-12-01','2026-02-30']) assert(compare(milk,milkRow,'0.1','mg/L',{vetDate:date}).includes('edition effective'));
+for(const date of ['','2025-03-31','2026-02-30']) assert(compare(milk,milkRow,'0.1','mg/L',{vetDate:date}).includes('edition effective'));
 assert(compare(milk,milkRow,'0.1','mg/L',{vetDate:'2026-11-30'}).startsWith('At or below'));
 const meat='08-08-1-fresh-or-chilled-pork-or-pig-meat';
 for(const n of [39,41]){
