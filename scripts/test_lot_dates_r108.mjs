@@ -13,7 +13,7 @@ const id='05-05-1-chocolate';
 const m=(change={})=>L.model({sku:'Fixture',art:'A1',batch:'001',pack:'retail',band:'long',rule:'general',sample:'Image A',spec:'Instruction B',
   firstKind:'packed',lastKind:'useBy',first:'30/11/2026',last:'31/MAR/2027',...change});
 const check=change=>L.analyse(m(change));
-assert.equal(c.PMSV_REVIEW_REGISTER.latestRound,119);
+assert.equal(c.PMSV_REVIEW_REGISTER.latestRound,120);
 assert.match(check().order,/Use by follows packaging/);
 assert.match(check({last:'29/11/2026'}).order,/precedes/);
 assert.match(check({last:'30/11/2026'}).order,/same day/);
@@ -50,7 +50,7 @@ assert(Q.save(id,m({first:'31/01/2025'}),receipt).key);
 assert(!Q.save(id,m(),receipt).key);
 assert.deepEqual([...L.exportRows(id)].map(r=>r.length),[30,30,30]);
 const blank=W.registerRows(),full=W.registerRows(true);
-assert.equal(blank.length,534);assert.equal(blank[0].length,154);
+assert.equal(blank.length,534);assert.equal(blank[0].length,156);
 assert(blank.slice(1).every(r=>r[145].includes('#page=16')&&!r[146]&&!r[147]));
 assert(full.find(r=>r[0]===id)[147].includes('001')&&full.find(r=>r[0]===id)[147].includes('002'));
 assert(W.briefLines(id).join('\n').includes('31/01/2025'));

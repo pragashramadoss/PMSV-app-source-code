@@ -9,10 +9,10 @@ for(const name of ['full-catalogue-533','review-status-data','catalogue-source-e
 const X=PMSVPesticides, W=PMSVCatalogueWorksheets, r=PMSV_REVIEW_REGISTER.pesticideReview;
 const concordance=JSON.parse(readFileSync(new URL('../fssai-helper/ctr-residue-gazette-concordance-r71-2026-11-14.json',import.meta.url)));
 const registry=W.registerRows(false);
-assert(W.available);assert.equal(registry.length,534);assert.equal(registry[0].length,107+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);assert.equal(new Set(registry[0]).size,registry[0].length);
+assert(W.available);assert.equal(registry.length,534);assert.equal(registry[0].length,107+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+6);assert.equal(new Set(registry[0]).size,registry[0].length);
 assert.deepEqual(registry,W.registerRows(true));assert(registry.slice(1).every(row=>row.length===registry[0].length&&row[15]==='No'&&row.slice(103,107).every(v=>v==='')));
 const ids=PMSV_CATALOGUE.map(p=>p.id);
-const stats=X.stats(PMSV_REVIEW_REGISTER.records.map(v=>v.id));
+const stats=X.stats(PMSV_REVIEW_REGISTER.records.map(v=>v.id),false);
 assert.equal(Object.values(r.scopeCounts).reduce((a,b)=>a+b,0),533);
 for(const k of Object.keys(stats)) assert.deepEqual(stats[k],r[k]);
 assert.deepEqual([stats.gazetteRows,r.groups.length,stats.directionRows,stats.mappedProducts],[1098,213,11,45]);

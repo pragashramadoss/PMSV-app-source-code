@@ -40,8 +40,8 @@ assert.equal(L.shelfComparison(L.model({sku:'Earlier lot',batch:'007'})).status,
 assert(Q.save(id,L.model(base)).key);
 const old=L.model({sku:'Old',art:'R108',pack:'retail',batch:'007',first:'01/01/2026'});assert(Q.save(id,old).key);
 const register=W.registerRows(true),row=register.find(r=>r[0]===id);
-assert.equal(register[0].length,154);assert(row[149].includes('Expected 29/02/2028'));assert(!row[149].includes('007'));
-assert(W.registerRows().slice(1).every(r=>r.length===154&&!r[148]&&!r[149]));
+assert.equal(register[0].length,156);assert(row[149].includes('Expected 29/02/2028'));assert(!row[149].includes('007'));
+assert(W.registerRows().slice(1).every(r=>r.length===156&&!r[148]&&!r[149]));
 const exported=L.exportRows(id);assert(exported.every(r=>r.length===30));assert(exported.some(r=>r[28]==='29/02/2028'));
 assert(W.briefLines(id).join(' ').includes('Expected 29/02/2028'));
 console.log('Checked date arithmetic, month ends, comparison precision, competing date evidence, stored lots and exports.');

@@ -243,6 +243,7 @@
       kind=s.pestKind;value=clean(s.pestValue);loq=clean(s.pestLoq);
       basis=['Matched unit, residue definition and sample basis',row.condition,row.subgroup,s.pestPortion].filter(Boolean).join(' · ');
       reference=(row.source==='gazette'?'FSSAI Gazette':'FSSAI tea direction')+' · '+row.article+' · '+row.key;
+      if(role==='product' && X.groupSource(id))reference+=' · Marketed form and process record: '+clean(s.pestScopeRef);
     }else if(mode==='spice'){
       const c=context(id,s),d=decide(id,s);reading=spiceComparison(id,s);
       if(reading.kind==='hold')return {error:reading.text};

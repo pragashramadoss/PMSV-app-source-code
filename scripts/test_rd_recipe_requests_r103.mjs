@@ -21,7 +21,7 @@ const candy={sku:'Example candy',art:'Jar A',pack:'outer',target:'Mango pulp',re
 const form=(changes={})=>Q.model({...candy,...changes});
 const requests=changes=>Array.from(Q.recipeQuestions(form(changes))).join('\n');
 const save=(changes={},pid=id)=>{const r=Q.save(pid,form(changes));assert(r.key,r.message);return r;};
-assert(W.available);assert.equal(R.latestRound,119);assert.equal(R.recipeRequestReview.products,533);
+assert(W.available);assert.equal(R.latestRound,120);assert.equal(R.recipeRequestReview.products,533);
 assert.equal(Q.requestRows().length,1);assert.equal(Q.requestColumns[2],'Recipe information required from R&D');
 assert.equal(requests({}),''); // Percentage missing on artwork; all recipe information is known.
 assert.equal(requests({printed:'8',print:'value'}),''); // Fully documented numerical mismatch.
@@ -59,8 +59,8 @@ const exportOne=Q.exportRows(id);assert.equal(exportOne[0].at(-1),Q.requestColum
 assert(exportOne.some(row=>row.at(-1).includes('supplier composition specification')));
 const full=W.registerRows(true),product=full.find(r=>r[0]===id);assert.equal(product[128],6);
 assert(product[129].includes('Confirm the emulsifier sequence.')&&product[129].includes('Wrap B'));
-const pristine=W.registerRows(false);assert.equal(pristine.length,534);assert.equal(new Set(pristine[0]).size,154);
-assert(pristine.slice(1).every(row=>row.length===154&&row[128]===0&&row[129]===''));
+const pristine=W.registerRows(false);assert.equal(pristine.length,534);assert.equal(new Set(pristine[0]).size,156);
+assert(pristine.slice(1).every(row=>row.length===156&&row[128]===0&&row[129]===''));
 
 // Multiple tabs read the same saved data; filling or deleting a review recomputes only its outstanding questions.
 const tab=open(storage);

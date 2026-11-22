@@ -12,12 +12,12 @@ for(const [,name] of template.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const plan=ctx.PMSVTestingPlan;
 const [header,...rows]=plan.exportRows();
 assert.equal(header.length,15);
-assert.equal(rows.length,25369);
+assert.equal(rows.length,25372);
 assert.equal(plan.areas.length,6);
 const residueAreas=plan.areas.slice(4);
 for(const [index,area] of residueAreas.entries()){
   const matches=rows.filter(row=>row[2]===area);
-  assert.equal(matches.length,[3029,3709][index]);
+  assert.equal(matches.length,[3032,3709][index]);
   assert.equal(new Set(matches.map(r=>r[0])).size,533);
 }
 for(const {id} of ctx.PMSV_CATALOGUE){

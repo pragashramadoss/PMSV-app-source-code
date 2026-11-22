@@ -27,7 +27,7 @@ assert.equal(summary.directProducts,r.directProducts);assert.equal(summary.prior
 assert.equal(Object.values(summary.scopeCounts).reduce((n,v)=>n+v),533);
 assert.equal(V.profile('made-up-article'),null);
 const rows=W.registerRows();
-assert(W.available);assert.equal(rows.length,534);assert.equal(rows[0].length,99+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);
+assert(W.available);assert.equal(rows.length,534);assert.equal(rows[0].length,99+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+6);
 assert.equal(new Set(rows[0]).size,rows[0].length);assert(rows.slice(1).every(row=>row.length===rows[0].length&&row[15]==='No'&&!row[97]&&!row[98]));
 assert.deepEqual(rows,W.registerRows(true));
 const milk='01-01-1-cow-milk', powder='01-01-5-milk-powders-and-cream-powder',chocolate='05-05-1-chocolate';

@@ -81,7 +81,7 @@ assert(C.markup(idFor('Bean')).includes('20 ppm'));assert(!C.positive(idFor('Bea
 assert(C.brief(idFor(candy),candyFormula).some(v=>v.includes('20 µg/kg')&&v.includes('Formula B17')));
 assert(C.markup(idFor(candy),{...candyFormula,crop_afRef:'<img onerror=x>'}).includes('&lt;img onerror=x&gt;'));
 const csv=PMSVCatalogueWorksheets.registerRows(false);
-assert.equal(csv.length,534);assert.equal(csv[0].length,72+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);assert.equal(csv[0].length,new Set(csv[0]).size);
+assert.equal(csv.length,534);assert.equal(csv[0].length,72+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+6);assert.equal(csv[0].length,new Set(csv[0]).size);
 assert.equal(csv.slice(1).filter(r=>r[10].includes('Named finished-article')).length,priorityNamed);
-assert(csv.slice(1).every(r=>r[15]==='No'&&r.at(-1)===''));assert.deepEqual(csv,PMSVCatalogueWorksheets.registerRows(true));
+assert(csv.slice(1).every(r=>r[15]==='No'&&r[csv[0].indexOf(PMSVVariantComposition.columns.at(-1))]===''));assert.deepEqual(csv,PMSVCatalogueWorksheets.registerRows(true));
 console.log(JSON.stringify({products:533,analytes:12,sourceRows:45,namedProducts,priorityNamed,finished,unknown,unmatched}));

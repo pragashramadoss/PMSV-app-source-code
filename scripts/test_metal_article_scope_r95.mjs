@@ -76,6 +76,6 @@ const ice=D.frozen[0];assert.equal(M.frozenRows(ice).Lead.kind,'check');
 assert.equal(M.frozenRows(ice,{metalForm:'frozen',metalFormRef:'pack'}).Lead.kind,'named');
 assert.equal(M.frozenRows(ice,{metalForm:'dry',metalFormRef:'spec'}).Lead.keys.length,0);
 const csv=W.registerRows();
-assert.equal(csv.length,534);assert.equal(csv[0].length,55+PMSVCropScope.columns().length+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);
+assert.equal(csv.length,534);assert.equal(csv[0].length,55+PMSVCropScope.columns().length+PMSVMetalPanel.columns().length+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+6);
 assert(csv.every(r=>r.length===csv[0].length));assert.deepEqual(csv,W.registerRows(true));
 console.log('533 product identities, 22 complete short-table rows, 11 metals across category 05, 31 ingredient decisions and documented sample boundaries passed.');

@@ -100,7 +100,7 @@ assert(P.nextEdition(ids[121])[0].includes('equality'));assert.equal(run(121,'As
 const unknown={panel_Pb:'Pb140',panel_PbRef:'Spec',panelIdentity:'',panelIdentityRef:''};
 assert.equal(run(474,'Pb',unknown).kind,'unidentified');
 assert.equal(run(474,'Pb',{...unknown,panelIdentity:'Sodium metabisulphite',panelIdentityRef:'Food-grade material identity'}).kind,'named');
-const rows=W.registerRows();assert.equal(rows.length,534);assert.equal(rows[0].length,89+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+4);assert.equal(rows[0].length,new Set(rows[0]).size);
+const rows=W.registerRows();assert.equal(rows.length,534);assert.equal(rows[0].length,89+PMSVVeterinary.columns.length+PMSVPesticides.columns.length+PMSVResiduePanel.columns.length+PMSVIngredientPercentage.columns.length+PMSVIngredientOrder.columns.length+PMSVSmallPack.columns.length+PMSVBatchSite.columns.length+PMSVDateMarking.columns.length+PMSVLotDates.columns.length+6);assert.equal(rows[0].length,new Set(rows[0]).size);
 assert(rows.slice(1).every(r=>r.length===rows[0].length&&r[15]==='No'));assert.deepEqual(W.registerRows(true),rows);
 assert(P.findRows('Cu','cocoa powder').includes('1 of 1'));assert(P.findRows('???','milk')==='');
 assert(!P.controls(ids[290],{panelContainerRef:'<svg onload=alert(1)>'}).includes('<svg'));

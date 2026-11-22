@@ -14,8 +14,8 @@
     named:'Named sample available', tea:'Tea directions', raw:'Raw or physical commodity review',
     spice:'Spice or culinary herb review', ingredient:'Finished process or recipe review', other:'Article classification required'
   };
-  // Each spelling is a named article in the table. Broad group wording remains
-  // visible in the source browser and is never used to substitute for a commodity.
+  // Each spelling maps to a named article. A group entry requires a separately
+  // reviewed product form and a single Gazette row.
   const matrices = {
     wheat:['Wheat grain','Wheat','Wheat grains'],flour:['Wheat flour','Wheat Flour'],rice:['Rice','Rice'],
     maize:['Maize grain','Maize','Corn'],soy:['Soya bean seed','Soya bean','Soyabean','Soya bean seed'],
@@ -63,8 +63,28 @@
   }
   assign('09-09-2-',{'frozen-finfish':'fish'});
   const teaIds = new Set(['tea','kangra-tea','green-tea']);
+  const fruitStandard='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf';
+  const chiaStandard='https://stg-old.fssai.gov.in/upload/notifications/2020/08/5f362b888233bGazette_Notification_FSS_Additives_Third_Amendment_14_08_2020.pdf#page=18';
+  const chiaClassification='https://www.fao.org/fao-who-codexalimentarius/sh-proxy/fr/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXA%2B4-1989%252FCXA_004e.pdf';
+  const groupRoutes=new Map([
+    ['04-04-1-seedless-tamarind',{matrix:'plainSeedlessTamarind',rowKey:'1-10',article:'Fruits',
+      label:'Plain seedless tamarind fruit',clause:'FPSFA 2.3.49',identity:fruitStandard+'#page=73',processes:['physical'],
+      evidence:'Identify ripe Tamarindus indica fruit sold after physical removal of its shell and seeds. Check the specification for added ingredients and the process for extraction, concentration, heat or chemical treatment. These forms require a separate assessment.'}],
+    ['04-04-1-frozen-fruits-fruit-products',{matrix:'plainFrozenFruit',rowKey:'1-10',article:'Fruits',
+      label:'Plain single-fruit frozen product',clause:'FPSFA 2.3.37',identity:fruitStandard+'#page=40',processes:['physical'],
+      evidence:'Name the fruit and confirm it was only physically prepared and frozen. Blanching, pasteurisation, chemical treatment, added syrup or another ingredient takes the sample outside this route.'}],
+    ['06-06-1-chia-seeds',{matrix:'wholeChia',rowKey:'1-4',article:'other food grains',
+      label:'Plain whole chia seed',clause:'FPSFA 2.4.6(25)',identity:chiaStandard,classification:chiaClassification,processes:['raw','physical'],
+      evidence:'Identify plain whole Salvia hispanica seed, raw or physically cleaned. Document its acceptance as a food grain for this pesticide. Codex lists chia under pseudocereals (GC 3084). Oil, flour, mixtures and heat- or chemically treated seed require a separate assessment.'}]
+  ]);
+  const groupMatrices=new Map([...groupRoutes.values()].map(g=>[g.matrix,g]));
+  const matrixName=key=>groupMatrices.get(key)?.label||matrices[key]?.[0];
+  const groupStatus='CONDITIONAL_GROUP_SOURCE_MATCH';
+  function sourceStatus(product) {
+    return groupRoutes.has(product.id)?groupStatus:product.sourceStatus;
+  }
   const profileCache=new Map();
-  function profile(id) {
+  function originalProfile(id) {
     if (!Object.hasOwn(products,id)) return null;
     if (profileCache.has(id)) return profileCache.get(id);
     let grade='other', choices=[], note='Establish the marketed article, process and sampled portion. Check the Gazette index for specific or group entries and applicable directions.';
@@ -92,6 +112,10 @@
     const result={grade,choices,note};
     profileCache.set(id,result);return result;
   }
+  function profile(id) {
+    const p=originalProfile(id),g=groupRoutes.get(id);
+    return g?{grade:'named',choices:[g.matrix,...p.choices],note:'2,4-D has a conditional group entry for '+g.label.toLowerCase()+'. '+g.evidence}:p;
+  }
   const rowIndex=[], byGroup=new Map(), byMatrix=new Map();
   for(const g of review.groups) {
     const rows=g.rows.map(([article,limit,page,condition,subgroup,articleCell,limitCell],i)=>{
@@ -109,7 +133,22 @@
     const articles=new Set(names.map(norm));
     byMatrix.set(matrix,matrix==='tea'?directed:rowIndex.filter(r=>articles.has(norm(r.article))));
   }
-  const fields=['pestRole','pestMatrix','pestProcess','pestRow','pestSample','pestReport','pestKind','pestValue','pestUnit','pestLoq','pestPortion','pestBasis'];
+  for(const g of groupRoutes.values()) {
+    const row=byGroup.get(1)?.find(r=>r.key===g.rowKey && r.article===g.article);
+    if(!row || row.page!==31 || row.drug!=='2,4-Dichlorophenoxy Acetic Acid')throw new Error('Missing original 2,4-D row for '+g.label);
+    byMatrix.set(g.matrix,[row]);
+  }
+  function groupSource(id) {
+    const g=groupRoutes.get(id);
+    if(!g)return null;
+    const row=byMatrix.get(g.matrix)[0];
+    return {...g,row,text:'2,4-D · '+row.article+' · '+row.limit+' mg/kg · '+g.label+'. '+g.evidence,
+      urls:[row.url,sources.scope+'#page=1',g.identity,g.classification].filter(Boolean)};
+  }
+  function marketedForm(id,role,matrix) {
+    return role==='product' && matrix ? groupRoutes.get(id) : undefined;
+  }
+  const fields=['pestRole','pestMatrix','pestProcess','pestRow','pestSample','pestScopeRef','pestReport','pestKind','pestValue','pestUnit','pestLoq','pestPortion','pestBasis'];
   const columns=['Pesticide review route · CTR 2.3.1','Named pesticide sample choices','Pesticide article and processing checks',
     'Pesticide source references','Recorded pesticide sample and process','Selected pesticide and source limit','Pesticide laboratory evidence','Pesticide comparison for recorded sample'];
   function identifiesRole(s) {return !s.pestRole || Object.hasOwn(roleNames,s.pestRole);}
@@ -172,12 +211,15 @@
     const sourceLock=lock(row,matrix,options);if(sourceLock) return {kind:'hold',text:sourceLock};
     if (row.source==='gazette'?!['raw','physical'].includes(s.pestProcess):s.pestProcess!=='tea')
       return {kind:'hold',text:'Document an eligible processing route for the selected source.'};
+    const group=marketedForm(id,role,matrix);
+    if(group && (!group.processes.includes(s.pestProcess)||!clean(s.pestScopeRef)))
+      return {kind:'hold',text:'Document the eligible marketed form and its processing record before using this group limit. '+group.evidence};
     if (!clean(s.pestSample)||!clean(s.pestReport)||s.pestBasis!=='yes'||s.pestUnit!=='mg/kg')
       return {kind:'hold',text:'Confirm the sample and report references, mg/kg, residue definition and printed analytical basis.'};
     if(portion(row)&&s.pestPortion!==portion(row)) return {kind:'hold',text:'The printed row requires the '+portions[portion(row)].toLowerCase()+'. Confirm the portion or basis on the report.'};
     const result=reading(row.limit,s);
     if(result.kind==='hold') return result;
-    return {...result,text:result.text+' for '+roleNames[role].toLowerCase()+' · '+matrices[matrix][0]+' · '+row.drug+' · '+row.limit+' mg/kg.'};
+    return {...result,text:result.text+' for '+roleNames[role].toLowerCase()+' · '+matrixName(matrix)+' · '+row.drug+' · '+row.limit+' mg/kg.'};
   }
   function compare(id,s) {return comparison(id,s).text;}
   function sourceList(p) {
@@ -189,8 +231,9 @@
   const fieldsAfterRow=['pestReport','pestKind','pestValue','pestUnit','pestLoq','pestPortion','pestBasis'];
   function values(id,s={}) {
     const {p,role,matrix,row}=current(id,s);
-    const sample=matrix&&clean(s.pestSample)?[roleNames[role],matrices[matrix][0],processes[s.pestProcess]||'Process pending',clean(s.pestSample)].join(' · '):'';
-    return [routes[p.grade],p.choices.map(k=>matrices[k][0]).join(' | '),p.note,sourceList(p).join(' | '),sample,
+    const g=groupSource(id);
+    const sample=matrix&&clean(s.pestSample)?[roleNames[role],matrixName(matrix),processes[s.pestProcess]||'Process pending',clean(s.pestSample),marketedForm(id,role,matrix)&&clean(s.pestScopeRef)].filter(Boolean).join(' · '):'';
+    return [routes[p.grade],p.choices.map(matrixName).join(' | '),p.note,[...new Set([...sourceList(p),...(g?.urls||[])])].join(' | '),sample,
       row?[row.drug,row.article,row.limit+(row.limit==='$'?'':' mg/kg'),row.condition,row.subgroup,row.url].filter(Boolean).join(' · '):'',
       row&&clean(s.pestReport)?[clean(s.pestReport),s.pestKind==='less'?'Reported <':s.pestKind==='quantified'?'Quantified':'Result type pending',
         clean(s.pestValue),s.pestUnit,portions[s.pestPortion],clean(s.pestLoq)?'Method LOQ '+clean(s.pestLoq)+' mg/kg':'',s.pestBasis==='yes'?'Basis confirmed':'Basis pending'].filter(Boolean).join(' · '):'',
@@ -204,7 +247,7 @@
   const spiceText='First check the FSSAI MRL for the pesticide and the spice. If CIB&RC has registered the pesticide and FSSAI has set MRLs for other foods, use the applicable Codex spice MRL. If Codex has none in that branch, the order specifies 0.1 mg/kg. The order also specifies 0.1 mg/kg for an unregistered pesticide. Verify the registration, commodity and applicable sources before selecting a fallback.';
   function assessment(id,s) {
     const {p,role,matrix,choices,options,row}=current(id,s);
-    const cropOptions=choices.map(k=>[k,matrices[k][0]]);
+    const cropOptions=choices.map(k=>[k,matrixName(k)]);
     let body=select('pestRole','Sample being assessed',Object.entries(roleNames),role,'');
     if(!choices.length) return body+'<p>Search the source table below for the marketed article, or choose a separately sampled ingredient to record its result.</p>';
     body+=select('pestMatrix','Physical sample article',cropOptions,matrix,'Choose the tested article');
@@ -212,6 +255,9 @@
     const tea=matrix==='tea'||matrix==='greenTea';
     body+=select('pestProcess','Documented process',Object.entries(processes).filter(([k])=>tea||k!=='tea'),s.pestProcess);
     body+=input('pestSample','Sample or lot reference and process record',s.pestSample);
+    const group=marketedForm(id,role,matrix);
+    if(group)body+='<p>'+esc(group.evidence)+' '+ref(group.identity,group.clause)+(group.classification?' · '+ref(group.classification,'Codex GC 3084'):'')+'</p>'+
+      input('pestScopeRef','Specification and process record confirming the eligible form',s.pestScopeRef);
     if(spiceMatrices.has(matrix)) body+='<p>'+esc(spiceText)+' '+ref(sources.spice+'#page=1','Spice order, page 1')+'</p>';
     if(tea) body+='<p>The April 2023 direction sets five tea MRLs. The March 2024 laboratory direction specifies six additional tests at 0.01 mg/kg. The October 2026 acetamiprid and imidacloprid values are proposals. '+ref(sources.tea2023,'2023 direction')+' · '+ref(sources.tea2024,'2024 direction')+' · '+ref(sources.teaTesting,'20 additional tests')+' · '+ref(sources.teaDraft,'October 2026 draft status')+'</p>';
     if(!options.length) return body+'<p>No named numerical entry for this sample in the mapped table. Check group scope, directions and the original note.</p>';
@@ -268,7 +314,12 @@
   }
   function update(node,id,field,s,previous) {
     const reset=k=>{s[k]='';};
-    if(field==='pestSample'&&clean(previous)&&clean(previous)!==clean(s.pestSample)&&fieldsAfterRow.some(k=>s[k])) {
+    if(field==='pestSample'&&clean(previous)&&clean(previous)!==clean(s.pestSample)&&s.pestScopeRef) {
+      reset('pestScopeRef');
+      const input=node.querySelector('[data-ws-field="pestScopeRef"]');
+      if(input)input.value='';
+    }
+    if(['pestSample','pestScopeRef'].includes(field)&&clean(previous)&&clean(previous)!==clean(s[field])&&fieldsAfterRow.some(k=>s[k])) {
       for(const k of fieldsAfterRow) {
         reset(k);
         const el=node.querySelector('[data-ws-field="'+k+'"]');
@@ -279,7 +330,7 @@
     if(field==='pestRole') reset('pestMatrix');
     if(['pestRole','pestMatrix','pestProcess'].includes(field)) {
       if(field!=='pestProcess') reset('pestProcess');
-      ['pestSample','pestRow',...fieldsAfterRow].forEach(reset);
+      ['pestSample','pestScopeRef','pestRow',...fieldsAfterRow].forEach(reset);
     } else if(field==='pestRow') fieldsAfterRow.filter(k=>k!=='pestReport').forEach(reset);
     if(['pestRole','pestMatrix','pestProcess','pestRow'].includes(field)){
       node.querySelector('[data-pest-controls]').innerHTML=assessment(id,s);
@@ -289,10 +340,11 @@
       if(outcome) outcome.textContent=compare(id,s);
     }
   }
-  function stats(priority=[]) {
+  function stats(priority=[],includeGroupRoutes=true) {
     const counts={};const keys=Object.keys(products);
-    for(const id of keys) {const grade=profile(id).grade;counts[grade]=(counts[grade]||0)+1;}
-    const mapped=id=>profile(id)?.choices.some(k=>byMatrix.get(k)?.length);
+    const getProfile=includeGroupRoutes?profile:originalProfile;
+    for(const id of keys) {const grade=getProfile(id).grade;counts[grade]=(counts[grade]||0)+1;}
+    const mapped=id=>getProfile(id)?.choices.some(k=>byMatrix.get(k)?.length);
     return {products:keys.length,scopeCounts:counts,mappedProducts:keys.filter(mapped).length,
       priorityMapped:priority.filter(mapped).length,gazetteRows:rowIndex.length,directionRows:directed.length};
   }
@@ -317,18 +369,19 @@
       const options=matrix==='tea'?[...tableTea,...directed]:byMatrix.get(matrix)||[];
       for(const r of options){
         const held=lock(r,matrix,options);
+        const group=groupMatrices.get(matrix);
         const fieldUnit=r.serial===64?'mg CS₂/kg':'mg/kg';
         const value=r.limit.replace(/\*$/,'');
         const basis=portions[portion(r)];
         const status=r.source==='tea2024'?'Additional notified-laboratory test and tolerance':
           r.source==='tea2023'?'Tea MRL under the April 2023 direction':'Confirm named commodity and reporting basis';
         rows.push({article:r.source==='gazette'?'CTR 2.3.1 · serial '+r.serial:r.source==='tea2024'?'4 March 2024 · points 1–3':'April 2023 tea direction · MRL table',
-          form:matrices[matrix][0]+' · '+r.article,parameter:r.drug+(r.subgroup?' · '+r.subgroup:''),
-          status:held?'Resolve source before comparison':status,limit:held?'':value,unit:held?'':fieldUnit,
+          form:matrixName(matrix)+' · '+r.article,parameter:r.drug+(r.subgroup?' · '+r.subgroup:''),
+          status:held?'Resolve source before comparison':group?'Conditional group entry · confirm marketed form and process':status,limit:held?'':value,unit:held?'':fieldUnit,
           notes:[held,held&&'Printed entry: '+r.limit+(r.limit==='$'?'':' '+fieldUnit),r.condition,basis,
             r.limit.endsWith('*')&&'Starred value at quantification limit. Confirm the validated method LOQ.',
-            matrix==='tea'||matrix==='greenTea'?'Confirm the tea form and residue definition.':'Confirm the specific commodity and sample. The January 2021 clarification limits this table to agricultural commodities and their physically processed forms.'].filter(Boolean).join(' · '),
-          source:r.url});
+            groupRoutes.get(id)?.evidence,matrix==='tea'||matrix==='greenTea'?'Confirm the tea form and residue definition.':'Confirm the specific commodity and sample. The January 2021 clarification limits this table to agricultural commodities and their physically processed forms.'].filter(Boolean).join(' · '),
+          source:group?[r.url,sources.scope+'#page=1',group.identity].join(' | '):r.url});
       }
       if(matrix==='tea'){
         bannedTea.forEach(([parameter,scope],i)=>rows.push({article:'29 November 2023 · Annexure 1, item '+(i+1),
@@ -345,6 +398,6 @@
     }
     return rows;
   }
-  root.PMSVPesticides=Object.freeze({planRows,profile,current,compare,comparison,reading,matrixName:key=>matrices[key]?.[0],fields,columns,values,brief,markup,update,indexPage,stats,
+  root.PMSVPesticides=Object.freeze({planRows,profile,current,compare,comparison,reading,matrixName,groupSource,sourceStatus,groupStatus,fields,columns,values,brief,markup,update,indexPage,stats,
     mapped:id=>!!profile(id)?.choices.some(k=>byMatrix.get(k)?.length)});
 })(globalThis);
