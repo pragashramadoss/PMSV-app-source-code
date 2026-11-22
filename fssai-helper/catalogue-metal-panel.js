@@ -15,6 +15,8 @@
   const field=m=>'panel_'+m;
   const reviewFields=metals.filter(([,m])=>m!=='Me').map(([,m])=>field(m));
   const readingFields=['panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabSample','panelLabEdition'];
+  const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
+  const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
   const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther'];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
@@ -231,6 +233,38 @@
     return {key:k,spec:k==='Cu13'?{operator:'range',min:'2.8',max:'15'}:{operator:'<=',value:number},
       units:/mg\/l/i.test(r[0])?['mg/L']:/dry|dried|fat free|fat-free|solids/i.test(literal(k))?['mg/kg']:groups.volumePossible.has(id)?['mg/kg','mg/L']:['mg/kg']};
   }
+  function parseReading(text,unit){
+    if(!reportUnits.includes(unit))return null;
+    const parts=String(text).trim().match(/^(<=|≤|<)?\s*\+?(\d+(?:\.\d+)?|\.\d+)$/);
+    if(!parts)return null;
+    const qualifier=parts[1]==='<='?'≤':parts[1]||'';
+    let [whole,fraction='']=parts[2].split('.');
+    whole=whole||'0';
+    // Shift the decimal point as text so long laboratory readings are never rounded.
+    if(unit.startsWith('µg/')){
+      const padded=whole.padStart(4,'0');
+      whole=padded.slice(0,-3);
+      fraction=padded.slice(-3)+fraction;
+    }
+    fraction=fraction.replace(/0+$/,'');
+    const amount=whole.replace(/^0+(?=\d)/,'')+(fraction?'.'+fraction:'');
+    if(qualifier==='<'&&amount==='0')return null;
+    const basis=milligramUnit(unit);
+    const equivalent=basis===unit?'':' Equivalent to '+qualifier+amount+' '+basis+'.';
+    return {amount,qualifier,equivalent};
+  }
+  function compareUpperBound(spec,reading){
+    const compare=root.PMSVCatalogueWorksheets.compare;
+    if(spec.operator==='range'){
+      const belowMinimum=compare({operator:reading.qualifier==='<'?'<=':'<',value:spec.min},reading.amount);
+      if(belowMinimum)return 'Outside the cited range. The reported bound places the result below the minimum.';
+      if(compare({operator:'>',value:'0'},spec.min))return 'Inconclusive. An upper bound alone cannot establish that the minimum is met.';
+    }
+    const maximum=spec.operator==='range'?spec.max:spec.value;
+    return compare({operator:'<=',value:maximum},reading.amount)
+      ?'Reported upper bound is within the cited maximum.'
+      :'Inconclusive. The reporting bound exceeds the cited maximum.';
+  }
   function lab(id,s={},planned){
     const m=s.panelLabMetal;
     if(!known(id)||!Object.hasOwn(names,m))return '';
@@ -251,13 +285,16 @@
     if(!number)return description;
     const edition=root.PMSVVeterinary.edition(date);
     const unconfirmedEdition=s.panelLabEdition?s.panelLabEdition!==edition:!!row.labKey;
-    if(!c.units.includes(s.panelLabUnit)||s.panelLabBasis!=='yes'||unconfirmedEdition||!textValue(s,'panelLabRef'))
+    if(!reportUnits.includes(s.panelLabUnit)||!c.units.includes(milligramUnit(s.panelLabUnit))||s.panelLabBasis!=='yes'||unconfirmedEdition||!textValue(s,'panelLabRef'))
       return 'Confirm the matching unit, matrix, analytical basis and laboratory report reference for this assessment edition before comparing. '+description;
-    if(row.labKey==='fishArsenic'&&s.panelLabAsForm==='total')return root.PMSVTestingPlan.fishOilScreen(number);
-    const outcome=root.PMSVCatalogueWorksheets.compare(c.spec,number);
-    if(outcome===null)return 'Enter a non-negative decimal result in the matched unit. A qualified or below-quantification result needs separate interpretation.';
+    if(row.labKey==='fishArsenic'&&s.panelLabAsForm==='total')return root.PMSVTestingPlan.fishOilScreen(number,s.panelLabUnit);
+    const measured=parseReading(number,s.panelLabUnit);
+    if(!measured)return 'Manual review required. Enter a non-negative decimal result or a numeric upper bound from the report, such as <10.';
+    if(measured.qualifier)return compareUpperBound(c.spec,measured)+measured.equivalent;
+    const outcome=root.PMSVCatalogueWorksheets.compare(c.spec,measured.amount);
+    if(outcome===null)return 'Review the numerical criterion and reporting basis for the selected article.';
     const assessment=(outcome?'Within':'Outside')+' the cited '+row.parameter+' criterion';
-    return planned?assessment+'.':assessment+' · '+number+' '+s.panelLabUnit+' · '+description+' · Report '+textValue(s,'panelLabRef');
+    return (planned?assessment+'.':assessment+' · '+number+' '+s.panelLabUnit+' · '+description+' · Report '+textValue(s,'panelLabRef'))+measured.equivalent;
   }
   // Keep the selected measurement in its original fields so older worksheets reopen directly.
   // Only the other measurements live in the per-product record below.
@@ -361,8 +398,8 @@
       '<details class="ws-section metal-analysis"><summary>Check a reported metal result</summary><p>Enter one measurement per metal. Switching metals retains the other entries. For fish oil, select total or inorganic arsenic as reported. Save the worksheet to keep the measurements on this device. Use the cited unit, sample and analytical basis.</p>'+
       '<label>Assessment date<input type="date" data-plan-vet-date value="'+escape(s.vetDate??root.PMSVVeterinary.reviewDate)+'"></label>'+
       '<label>Metal'+pick('panelLabMetal',metals.map(([n,m])=>[m,n]),s,'Select a metal')+'</label>'+
-      '<label data-panel-arsenic-form'+(fishArsenic(id,s)?'':' hidden')+'>Arsenic reported by the laboratory'+pick('panelLabAsForm',[['total','Total arsenic'],['inorganic','Inorganic arsenic']],s,'Unspecified on report')+'</label><label>Reported result<input inputmode="decimal" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
-      '<label>Reported unit'+pick('panelLabUnit',[['mg/kg','mg/kg'],['mg/L','mg/L']],s,'Select the reported unit')+'</label><label class="ws-check"><input type="checkbox" data-ws-field="panelLabBasis"'+(s.panelLabBasis==='yes'?' checked':'')+'> The report matches the cited food, edible portion, mass or volume unit and analytical basis</label><label>Laboratory report or sample reference'+input('panelLabRef',s)+'</label><label>Sample or lot identifier (optional)'+input('panelLabSample',s)+'</label><p data-panel-lab role="status">'+escape(lab(id,s))+'</p><div data-panel-report-list>'+readingTable(id,s)+'</div></details>'+
+      '<label data-panel-arsenic-form'+(fishArsenic(id,s)?'':' hidden')+'>Arsenic reported by the laboratory'+pick('panelLabAsForm',[['total','Total arsenic'],['inorganic','Inorganic arsenic']],s,'Unspecified on report')+'</label><label>Reported result or upper bound<input type="text" placeholder="e.g. 10 or &lt;10" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
+      '<label>Reported unit'+pick('panelLabUnit',reportUnits.map(u=>[u,u]),s,'Select the reported unit')+'</label><label class="ws-check"><input type="checkbox" data-ws-field="panelLabBasis"'+(s.panelLabBasis==='yes'?' checked':'')+'> The report matches the cited food, edible portion, mass or volume unit and analytical basis</label><label>Laboratory report or sample reference'+input('panelLabRef',s)+'</label><label>Sample or lot identifier (optional)'+input('panelLabSample',s)+'</label><p data-panel-lab role="status">'+escape(lab(id,s))+'</p><div data-panel-report-list>'+readingTable(id,s)+'</div></details>'+
       '<details class="ws-section metal-lookup"><summary>Search the 382 published metal entries</summary><label>Metal<select data-panel-search-metal>'+metals.map(([n,m])=>'<option value="'+m+'">'+escape(n)+'</option>').join('')+'</select></label><label>Food, ingredient or basis<input type="search" data-panel-search placeholder="e.g. milk, dry matter or confectionery"></label><div data-panel-found>'+findRows('Pb','')+'</div>'+current+'</details>'+
       (transitions.length?'<details class="ws-section metal-change"><summary>Metal changes effective 1 December 2026</summary>'+transitions.map(t=>'<p>'+escape(t)+'</p>').join('')+ref(amendment+'#page=4','Amendment · PDF pp. 4–5')+'</details>':'')+
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
@@ -374,6 +411,10 @@
       if(k==='panelIdentity')setInput(node,s,'panelIdentityRef','');
     }
     if(k==='panelContainer'){s.panel_Sn='';s.panel_SnRef='';}
+    if(k==='panelLabUnit'&&previous&&milligramUnit(previous)!==milligramUnit(s.panelLabUnit)){
+      setInput(node,s,'panelLabBasis','');
+      s.panelLabEdition='';
+    }
     if(k==='panelLabBasis')s.panelLabEdition=s.panelLabBasis==='yes'?root.PMSVTestingPlan.metalEdition(s.vetDate):'';
     if(k==='panelLabMetal'||k==='panelLabAsForm')switchReading(node,id,s,k,previous);
     else if(!labFields.includes(k))clearConfirmations(node,s,k);
@@ -408,5 +449,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

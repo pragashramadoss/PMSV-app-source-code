@@ -321,14 +321,17 @@
     ...['soyabean','soybean'].flatMap(legume=>['partially-hydrogenated-','partially-hydrogenated-and-winterised-'].map(prefix=>'02-02-1-'+prefix+legume+'-oil'))
   ]);
   const seeds=new Set(['06-06-1-chia-seeds','12-12-2-poppy-khas-khas','fssai-2-16-hemp-seed','06-06-1-soybean']);
-  function fishOilScreen(value){
-    if(!String(value??'').trim())return 'Enter the quantified total arsenic result in mg/kg.';
+  function fishOilScreen(value,unit='mg/kg'){
+    if(!String(value??'').trim())return 'Enter the total arsenic result or its numerical upper bound in mg/kg.';
+    if(!['mg/kg','µg/kg'].includes(unit))return 'Check the mass-based reporting unit for total arsenic in fish oil.';
+    const measured=root.PMSVMetalPanel.parseReading(value,unit);
+    if(!measured)return 'Manual review required. Enter a non-negative decimal result or a numeric upper bound from the report.';
     const compare=root.PMSVCatalogueWorksheets.compare;
-    const below=compare({operator:'<',value:'0.1'},value);
-    if(below===null)return 'A qualified result such as <LOQ needs its reporting threshold reviewed. Enter a non-negative decimal for this screen.';
-    if(below)return 'Below 0.1 mg/kg total arsenic. The Gazette accepts this screen for the inorganic arsenic limit.';
-    if(compare({operator:'>',value:'0.1'},value))return 'Above 0.1 mg/kg total arsenic. Determine inorganic arsenic to assess the limit.';
-    return 'Exactly 0.1 mg/kg total arsenic. The Gazette gives no screening disposition at equality. Review the report or obtain speciation.';
+    const below=compare({operator:measured.qualifier==='<'?'<=':'<',value:'0.1'},measured.amount);
+    if(below)return 'Below 0.1 mg/kg total arsenic. The Gazette accepts this screen for the inorganic arsenic limit.'+measured.equivalent;
+    if(measured.qualifier)return 'Inconclusive. The reported upper bound does not establish total arsenic strictly below 0.1 mg/kg. Review the reporting threshold or obtain an inorganic arsenic result.'+measured.equivalent;
+    if(compare({operator:'>',value:'0.1'},measured.amount))return 'Above 0.1 mg/kg total arsenic. Determine inorganic arsenic to assess the limit.'+measured.equivalent;
+    return 'Exactly 0.1 mg/kg total arsenic. The Gazette gives no screening disposition at equality. Review the report or obtain speciation.'+measured.equivalent;
   }
   function amendedMetal(id,d,row) {
     const source=links('ctr-1',[4]),key=d.name==='Lead'?'Pb127':d.name==='Cadmium'?'Cd18':'';

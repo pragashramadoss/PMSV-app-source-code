@@ -18,7 +18,7 @@ for(const id of ctx.PMSVMetalPanelData.groups.plainPulseFlour){
 assert(!row('06-06-2-solvent-extract-soya-flour',2,'Cadmium').limit);
 assert(row('18-18-1-pulses-based-sweets',2,'Cadmium').limit!=='0.1');
 assert.equal(row(oil,2,'Inorganic arsenic').limit,'0.1');assert(!row(oil,2,'Inorganic arsenic',old));
-for(const [n,msg] of [['0.099999999999999999','Below'],['0.1000','Exactly'],['0.100000000000000001','Above'],['<0.1','qualified'],['-1','non-negative']])assert(p.fishOilScreen(n).includes(msg));
+for(const [n,msg] of [['0.099999999999999999','Below'],['0.1000','Exactly'],['0.100000000000000001','Above'],['<0.1','Below'],['-1','non-negative']])assert(p.fishOilScreen(n).includes(msg));
 for(const [a,max] of [['Total aflatoxins','15'],['Aflatoxin B1','10']]){
   assert.equal(row('02-02-1-refined-grapeseed-oil',3,a).limit,max);
   assert.equal(row('02-02-2-table-margarine',3,a).limit,'');
