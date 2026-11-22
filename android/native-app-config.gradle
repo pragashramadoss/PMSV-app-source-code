@@ -6,8 +6,8 @@ android {
         applicationId (project.name == 'play-app' ? 'com.pmsvgroup.foodsafety' : 'com.pmsvgroup.foodsafety.preview')
         minSdk 26
         targetSdk 36
-        versionCode 13
-        versionName '2.1.2'
+        versionCode project.providers.gradleProperty('PMSV_VERSION_CODE').get().toInteger()
+        versionName project.providers.gradleProperty('PMSV_VERSION_NAME').get()
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     sourceSets {
