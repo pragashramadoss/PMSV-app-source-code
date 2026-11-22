@@ -84,8 +84,19 @@
       if(!anchor||product.scope!=='food_additive_identity_purity')return;
     }
     const base={area:areas[0],article:product.standard.split('#')[1],source:links(anchor.doc,anchor.p),form:std.name};
-    const push=row=>add({...base,...row});
-    for(const g of product.gazetteFindings||[])push({article:g.clause,parameter:g.parameter,limit:g.result,status:'Gazette finding',notes:join([g.scope,g.effective && 'Effective '+g.effective]),source:links(g.document,g.pages)});
+    const worksheet=root.PMSVCatalogueWorksheets;
+    const measured=state?.result?.trim() && worksheet.enabledCriteria(id,state).find(({i})=>String(i)===state.criterion)?.v.spec;
+    const operative=measured && product.gazetteFindings?.find(g=>g.parameter===measured.parameter&&
+      g.clause===measured.source_clause&&g.effective&&g.effective===measured.effective_from);
+    function push(row,spec){
+      if(measured && spec===measured){
+        const notes=join([row.notes,'Reported result: '+state.result.trim()+' '+(spec.unit||''),
+          spec.analytical_basis&&'Analytical basis: '+spec.analytical_basis,state.reference?.trim()&&'Sample or SKU: '+state.reference.trim(),
+          state.compReport?.trim()&&'Report: '+state.compReport.trim(),worksheet.resultText(id,state)]);
+        add({...base,...row,notes});
+      }else add({...base,...row});
+    }
+    for(const g of product.gazetteFindings||[])push({article:g.clause,parameter:g.parameter,limit:g.result,status:'Gazette finding',notes:join([g.scope,g.effective && 'Effective '+g.effective]),source:links(g.document,g.pages)},g===operative?measured:undefined);
     if(sourceRows.products[id]){
       for(const key of sourceRows.products[id]){
         const [form,parameter,status,limit,unit,notes,article,doc,pages,kind,extra]=sourceRows.rows[key];
@@ -115,7 +126,7 @@
           const limit=r.operator==='range'?r.min+' to '+r.max:({'<=':'≤','>=':'≥'})[r.operator]+' '+r.value;
           const status=chosen?(condition||'Selected product variant'):(r.conditional?'Confirm sweetener formulation':'Select declared variant');
           push({form:form.name,parameter:r.parameter,status,limit:condition?'':limit,unit:condition?'':r.unit,
-            notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',V.note(profile.kind)]),source:links(anchor.doc,profile.pages)});
+            notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',V.note(profile.kind)]),source:links(anchor.doc,profile.pages)},r);
         }
       }
       return;
@@ -131,7 +142,7 @@
       const info=specInfo(s);
       push({...info,form,parameter:s.parameter,status:review?'Resolve source before use':status,
         notes:join([info.notes,differs?'Chapter and monograph give different numbers.':'',operative?'Use the Gazette finding above for its named scope.':'',anchor.basis]),
-        source:Array.isArray(s.source_pages)&&s.source_pages.every(n=>Number.isInteger(n)&&n>0&&n<=E.documents[anchor.doc].pages)?links(anchor.doc,s.source_pages):defaultSource});
+        source:Array.isArray(s.source_pages)&&s.source_pages.every(n=>Number.isInteger(n)&&n>0&&n<=E.documents[anchor.doc].pages)?links(anchor.doc,s.source_pages):defaultSource},operative?undefined:s);
       count++;
     }
     std.criteria.forEach((row,i)=>criterion(row.spec,checked.has(i)?'Source-edition comparison available':'Confirm article and conditions'));
@@ -323,7 +334,7 @@
     const source=links('ctr-1',[4]),key=d.name==='Lead'?'Pb127':d.name==='Cadmium'?'Cd18':'';
     if(d.name==='Arsenic'&&inGroup(metalGroups,'fishOil',id)){
       return {...row,article:'CTR 2.1.1(2) · fish-oil note',parameter:'Inorganic arsenic',form:'Fish oil',status:'Named finished article',
-        limit:'0.1',unit:'mg/kg',notes:'Screen using total arsenic. Below 0.1 mg/kg, the note accepts the sample for this limit. Above 0.1 mg/kg, determine inorganic arsenic. At exactly 0.1 mg/kg total, the note gives no screening disposition. Review the result or obtain speciation.',
+        labKey:'fishArsenic',limit:'0.1',unit:'mg/kg',notes:'Screen using total arsenic. Below 0.1 mg/kg, the note accepts the sample for this limit. Above 0.1 mg/kg, determine inorganic arsenic. At exactly 0.1 mg/kg total, the note gives no screening disposition. Review the result or obtain speciation.',
         source:links('ctr-1',[4,5])};
     }
     if(!key||!inGroup(metalGroups,'futurePulse',id))return row;
@@ -331,10 +342,10 @@
     const original=root.PMSVMetalPanelData.rows[key];
     const refs=[source,links('ctr-3',[original[2]])].join(' | ');
     if(inGroup(metalGroups,'plainPulseFlour',id)||d.keys.includes(key)&&d.kind==='named'){
-      return {...row,status:'Named finished article',form:article,limit:original[1],unit:'ppm',
+      return {...row,status:'Named finished article',form:article,labKey:key,limit:original[1],unit:'ppm',
         notes:'Confirm the stated pulse or plain pulse flour and sample as marketed.'+(cadmium?' The amended cadmium entry excludes dry soybean.':''),source:refs};
     }
-    if(inGroup(metalGroups,'soyFlour',id))return {...row,form:article,status:'Confirm soy flour classification',limit:'',unit:'',
+    if(inGroup(metalGroups,'soyFlour',id))return {...row,form:article,status:'Confirm soy flour classification',labKey:null,limit:'',unit:'',
       notes:cadmium?'Determine how the dry-soybean exclusion applies to this processed soy flour before assigning a cadmium limit.':'Document that the marketed soy flour falls within the amended pulse-flour entry.',source:refs};
     return {...row,notes:row.notes+' Check the identity of any separately sampled pulse flour. The amended entry names the pulse or its flour.'+
       (cadmium?' Dry soybean is excluded from that cadmium entry.':''),source:[row.source,source].join(' | ')};
@@ -375,22 +386,36 @@
       notes:'Confirm the scope of the oil and oilseed entry for this animal-derived oil before applying a plant-commodity limit.',source:sources};
     return row;
   }
+  function metalEdition(date){
+    return date>='2026-11-20'?root.PMSVVeterinary.edition(date):'';
+  }
+  function metalRow(id,d,date){
+    const edition=metalEdition(date);
+    if(!edition)return null;
+    const keys=d.keys, numeric=['named','residual','all','same'].includes(d.kind);
+    const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
+    const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
+      form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
+    const dated=edition==='amended'?amendedMetal(id,d,row):row;
+    if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
+    return dated;
+  }
   function contaminants(id,add,date,state) {
-    const edition=root.PMSVVeterinary.edition(date);
-    if(!edition||date<'2026-11-20'){
+    const edition=metalEdition(date);
+    if(!edition){
       for(const area of areas.slice(2,4))add({area,article:'CTR 2.1 / 2.2',parameter:'Check assessment edition',status:'Assessment date outside reviewed contaminant editions',
         notes:'The reviewed metal and toxin plans start on 20 November 2026. Choose a covered date or check the source edition in force on the sample date.',source:links('ctr-1',[4,5])});
       return;
     }
     const amended=edition==='amended';
     for(const d of P.panel(id,state)){
-      const keys=d.keys, numeric=['named','residual','all','same'].includes(d.kind);
-      const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
-      const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
-        form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
-      const dated=amended?amendedMetal(id,d,row):row;
-      if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
-      add(dated);
+      const row=metalRow(id,d,date);
+      if(d.key===state.panelLabMetal&&state.panelLabNumber?.trim()&&(!state.vetDate||state.vetDate===date)){
+        const species=d.key==='As'&&inGroup(metalGroups,'fishOil',id)&&(row.labKey==='fishArsenic'||state.panelLabAsForm)?({total:'Total arsenic',inorganic:'Inorganic arsenic'}[state.panelLabAsForm]||'Arsenic species unconfirmed'):d.name;
+        row.notes=join([row.notes,'Reported result: '+species+' '+state.panelLabNumber.trim()+' '+(state.panelLabUnit||'(unit pending)'),
+          state.panelLabRef?.trim()&&'Report: '+state.panelLabRef.trim(),P.lab(id,{...state,vetDate:date},row)]);
+      }
+      add(row);
     }
     for(const d of C.decisions(id,state)){
       const data=root.PMSVCropScopeData.rows;
@@ -431,5 +456,5 @@
     }
     return out;
   }
-  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

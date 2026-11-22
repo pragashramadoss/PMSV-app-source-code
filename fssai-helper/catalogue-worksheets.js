@@ -6,7 +6,7 @@
   const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 115 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 116 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -25,7 +25,7 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
+  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -66,6 +66,7 @@
       const state = {};
       for (const k of fields) state[k] = typeof saved[k] === 'string' ? saved[k] : '';
       if(typeof saved.vetDate!=='string')state.vetDate=V.reviewDate;
+      if(state.panelLabBasis==='yes'&&plan.metalEdition(state.vetDate)!==(state.panelLabEdition||'original'))state.panelLabBasis='';
       states.set(id,state);
     }
     return states.get(id);
@@ -100,20 +101,20 @@
       case '<':return c<0; case '<=':return c<=0;case '>':return c>0;case '>=':return c>=0;case '=':return c===0;default:return null;
     }
   }
-  function enabledCriteria(id) {
+  function enabledCriteria(id,state) {
     const p=E.products[id];
     if (!p) return [];
     if (id.startsWith('102-')) return [];
-    if (composition.profiles.has(id)) return composition.enabled(id,getState(id));
+    if (composition.profiles.has(id)) return composition.enabled(id,state||getState(id));
     const s=R.standards[p.standard];
     if (focused.has(id) || p.scope!=='product_standard' || !s) return [];
     const differences=new Set((p.qualityCrosschecks||[]).filter(([,row])=>row[5]==='different numerical values').map(([,row])=>row[0]));
     return s.criteria.map((v,i)=>({v,i})).filter(({v})=>v.compare && !differences.has(v.spec.parameter) && !String(v.spec.unit).includes('°Bé') &&
       [v.spec.value ?? v.spec.min,v.spec.max ?? v.spec.value].every(b=>decimals(b,b)===0));
   }
-  function resultText(id) {
-    const s=getState(id), row=enabledCriteria(id).find(({i})=>String(i)===s.criterion);
-    if (!row || !s.result.trim()) return '';
+  function resultText(id,s=getState(id)) {
+    const row=enabledCriteria(id,s).find(({i})=>String(i)===s.criterion);
+    if (!row || !s.result?.trim()) return '';
     if (s.unitConfirmed!=='yes') return 'Confirm the product variant, unit and analytical basis before comparing.';
     const outcome=compare(row.v.spec,s.result.trim());
     if (outcome===null) return 'Enter a non-negative decimal result in the cited unit. Qualifiers such as <LOQ require manual review.';
@@ -179,9 +180,9 @@
   }
   function testingPlanSection(id) {
     return '<details class="ws-section" data-testing-plan><summary>Testing plan and source decisions</summary><div>'+
-      '<p>The selected date applies to metals, toxins and veterinary residues. Composition, microbiology and pesticides use the 22 November 2026 review. This product plan includes the selected cocoa or gum variant, documented sample decisions, saved pesticide results and the veterinary result entered for the selected date.</p><label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
+      '<p>The selected date applies to metals, toxins and veterinary residues. Composition, microbiology and pesticides use the 22 November 2026 review. The product plan includes measured composition and metal results entered in the worksheet, documented sample decisions, saved pesticide reports and the veterinary assessment.</p><label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
       '<label data-plan-vet-date-label hidden>Assessment date for metals, toxins and veterinary residues<input type="date" data-plan-vet-date value="'+esc(getState(id).vetDate)+'"></label>'+
-      '<div data-plan-fish-screen hidden><label>Total arsenic in fish oil (mg/kg)<input type="text" inputmode="decimal" maxlength="80" data-plan-total-as></label><p data-plan-as-result role="status"></p></div>'+
+      '<div data-plan-fish-screen hidden><label>Quick screen for total arsenic in fish oil (mg/kg)<input type="text" inputmode="decimal" maxlength="80" data-plan-total-as></label><p data-plan-as-result role="status"></p><p>To include a laboratory report in the download, enter it under Check a reported metal result.</p></div>'+
       '<button type="button" data-plan-export>Download this product’s testing plan</button><div data-plan-results></div></div></details>';
   }
   function showPlan(node,id) {
@@ -275,7 +276,7 @@
   function measurement(id) {
     const s=getState(id), rows=enabledCriteria(id);
     let calc='';
-    if(rows.length)calc='<label>Source-edition criterion<select data-ws-field="criterion"><option value="">Select a criterion</option>'+rows.map(({v,i})=>'<option value="'+i+'"'+(String(i)===s.criterion?' selected':'')+'>'+esc(v.spec.parameter+' · '+threshold(v.spec)+' · '+(v.spec.analytical_basis||''))+'</option>').join('')+'</select></label><label>Measured result in the cited unit<input inputmode="decimal" data-ws-field="result" value="'+esc(s.result)+'"></label><label class="ws-check"><input type="checkbox" data-ws-field="unitConfirmed"'+(s.unitConfirmed==='yes'?' checked':'')+'> Product variant, analytical basis and unit match the selected criterion</label><p data-ws-outcome role="status">'+esc(resultText(id))+'</p>';
+    if(rows.length)calc='<label>Source-edition criterion<select data-ws-field="criterion"><option value="">Select a criterion</option>'+rows.map(({v,i})=>'<option value="'+i+'"'+(String(i)===s.criterion?' selected':'')+'>'+esc(v.spec.parameter+' · '+threshold(v.spec)+' · '+(v.spec.analytical_basis||''))+'</option>').join('')+'</select></label><label>Measured result in the cited unit<input inputmode="decimal" data-ws-field="result" value="'+esc(s.result)+'"></label><label>Composition report reference (optional)<input maxlength="180" data-ws-field="compReport" value="'+esc(s.compReport)+'"></label><label class="ws-check"><input type="checkbox" data-ws-field="unitConfirmed"'+(s.unitConfirmed==='yes'?' checked':'')+'> Product variant, analytical basis and unit match the selected criterion</label><p data-ws-outcome role="status">'+esc(resultText(id))+'</p>';
     return calc;
   }
   function variantTable(id) {
@@ -335,12 +336,12 @@
       state[k]=el.type==='checkbox'?(el.checked?'yes':''):el.value;
       if(k==='compVariant' || k==='compSweetener'){
         if(k==='compVariant')state.compSweetener='';
-        state.criterion='';state.result='';state.unitConfirmed='';
+        state.criterion='';state.result='';state.unitConfirmed='';state.compReport='';
         const panel=node.querySelector('[data-variant-composition]');
         panel.innerHTML=variantTable(id);
         panel.querySelector('[data-ws-field="'+k+'"]').focus();
       }
-      if(k==='criterion'){state.unitConfirmed='';state.result='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;node.querySelector('[data-ws-field="result"]').value='';}
+      if(k==='criterion'){state.unitConfirmed='';state.result='';state.compReport='';node.querySelector('[data-ws-field="compReport"]').value='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;node.querySelector('[data-ws-field="result"]').value='';}
       if(k==='broadForm'){state.broadRef='';node.querySelector('[data-ws-field="broadRef"]').value='';}
       if(k==='broadForm' || k==='broadRef')node.querySelector('[data-broad-result]').textContent=root.PMSVBroadContaminants.resolution(id,state.broadForm,state.broadRef);
       if(k==='metalForm' || k==='metalPack' || k==='mercuryArticle'){
@@ -357,9 +358,10 @@
       if(C.fields.includes(k))C.update(node,id,k,state);
       if(V.fields.includes(k))V.update(node,id,k,state);
       if(k==='vetDate'){
+        if(plan.metalEdition(previous)!==plan.metalEdition(state.vetDate))P.update(node,id,k,state);
         for(const input of node.querySelectorAll('[data-plan-vet-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
       }
-      if(metalField||C.fields.includes(k)||V.fields.includes(k)||k==='compVariant'||k==='compSweetener')refreshPlan();
+      if(metalField||C.fields.includes(k)||V.fields.includes(k)||['compVariant','compSweetener','criterion','result','unitConfirmed','compReport','reference'].includes(k))refreshPlan();
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
       if(Y.fields.includes(k))Y.update(node,id,k,state,previous);
       if(k==='pack')node.querySelector('[data-ws-pack]').innerHTML=packRules(state.pack);
@@ -403,7 +405,7 @@
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
       'Original Gazette rows matching the catalogue name: '+(p.namedGazette||[]).length,'Product reference: '+(s.reference||'—'),'Variant or article: '+(s.article||'—'),'Primary pack: '+(s.pack?human(s.pack):'—'),
       ...composition.values(id,s,s.result?resultText(id):'').map((v,i)=>v?composition.columns[i]+': '+v:'').filter(Boolean),
-      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...P.brief(id,s),...['metalForm','metalPack'].map(k=>root.PMSVMetalScope.documentedChoice(id,k,s)).filter(Boolean),...C.brief(id,s),...V.brief(id,s),...X.brief(id,s),...Y.brief(id,s),...Q.brief(id,s,artworkChecks),...O.brief(id,s,artworkChecks),...S.brief(id,s,artworkChecks),...T.brief(id,s,artworkChecks),...L.brief(id,s,artworkChecks),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
+      ...(chosen?['Measured criterion: '+chosen.v.spec.parameter+' · '+threshold(chosen.v.spec),'Measured result: '+s.result,...(s.compReport?.trim()?['Composition report: '+s.compReport.trim()]:[]),'Comparison: '+(resultText(id)||'Awaiting result')]:[]),...root.PMSVBroadContaminants.brief(id,s),...P.brief(id,s),...['metalForm','metalPack'].map(k=>root.PMSVMetalScope.documentedChoice(id,k,s)).filter(Boolean),...C.brief(id,s),...V.brief(id,s),...X.brief(id,s),...Y.brief(id,s),...Q.brief(id,s,artworkChecks),...O.brief(id,s,artworkChecks),...S.brief(id,s,artworkChecks),...T.brief(id,s,artworkChecks),...L.brief(id,s,artworkChecks),'Selected Gazette commodity: '+(recordedCommodity(id)||'—'),'Evidence and open actions: '+(s.note||'—')];
   }
   function registerRows(includeDeviceEntries=false) {
     if(!valid)return [];
@@ -423,5 +425,5 @@
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,
     partial:[...ids].filter(id=>E.products[id].directCTR).length,portal:[...ids].filter(id=>E.products[id].monographs.length).length}:null;
-  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),compare,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
+  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
 })(globalThis);

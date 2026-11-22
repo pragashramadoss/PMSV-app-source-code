@@ -14,7 +14,7 @@
   const rowKeys=Object.fromEntries(metals.map(([,m])=>[m,Object.keys(D.rows).filter(k=>k.replace(/\d+$/,'')===m)]));
   const field=m=>'panel_'+m;
   const reviewFields=metals.filter(([,m])=>m!=='Me').map(([,m])=>field(m));
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef','panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef'];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef','panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabAsForm','panelLabEdition'];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -229,17 +229,36 @@
     return {key:k,spec:k==='Cu13'?{operator:'range',min:'2.8',max:'15'}:{operator:'<=',value:number},
       units:/mg\/l/i.test(r[0])?['mg/L']:/dry|dried|fat free|fat-free|solids/i.test(literal(k))?['mg/kg']:groups.volumePossible.has(id)?['mg/kg','mg/L']:['mg/kg']};
   }
-  function lab(id,s={}){
+  function lab(id,s={},planned){
     const m=s.panelLabMetal;
     if(!known(id)||!Object.hasOwn(names,m))return '';
-    const d=forMetal(id,m,s),c=criterion(id,d);
+    const date=s.vetDate??root.PMSVVeterinary.reviewDate;
+    const d=forMetal(id,m,s);
+    const row=planned||root.PMSVTestingPlan.metalRow(id,{...d,name:names[m]},date);
+    if(!row)return 'Select an assessment date covered by the reviewed metal editions.';
+    let c=criterion(id,d),description=c?names[m]+' · '+rowText(c.key):'';
+    if(Object.hasOwn(row,'labKey')){
+      if(!row.labKey)return row.notes;
+      if(row.labKey==='fishArsenic'&&!['total','inorganic'].includes(s.panelLabAsForm))return 'Identify whether the report measured total arsenic or inorganic arsenic in fish oil.';
+      c={spec:{operator:'<=',value:row.limit},units:['mg/kg']};
+      description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
+    }
+    if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
     if(!c)return 'A comparison requires an applicable numeric article with the correct basis. Dehydrated milk under the milk row also needs a concentration-factor assessment.';
-    const description=names[m]+' · '+rowText(c.key);
-    if(!textValue(s,'panelLabNumber'))return description;
-    if(!c.units.includes(s.panelLabUnit)||s.panelLabBasis!=='yes'||!textValue(s,'panelLabRef'))return 'Confirm the matching unit, matrix, analytical basis and laboratory report reference before comparing. '+description;
-    const outcome=root.PMSVCatalogueWorksheets?.compare(c.spec,textValue(s,'panelLabNumber'));
-    if(outcome===null||outcome===undefined)return 'Enter a non-negative decimal result in the matched unit. A qualified or below-quantification result needs separate interpretation.';
-    return (outcome?'Within':'Outside')+' the cited '+names[m]+' criterion · '+s.panelLabNumber+' '+s.panelLabUnit+' · '+rowText(c.key)+' · Report '+textValue(s,'panelLabRef');
+    const number=textValue(s,'panelLabNumber');
+    if(!number)return description;
+    const edition=root.PMSVVeterinary.edition(date);
+    const unconfirmedEdition=s.panelLabEdition?s.panelLabEdition!==edition:!!row.labKey;
+    if(!c.units.includes(s.panelLabUnit)||s.panelLabBasis!=='yes'||unconfirmedEdition||!textValue(s,'panelLabRef'))
+      return 'Confirm the matching unit, matrix, analytical basis and laboratory report reference for this assessment edition before comparing. '+description;
+    if(row.labKey==='fishArsenic'&&s.panelLabAsForm==='total')return root.PMSVTestingPlan.fishOilScreen(number);
+    const outcome=root.PMSVCatalogueWorksheets.compare(c.spec,number);
+    if(outcome===null)return 'Enter a non-negative decimal result in the matched unit. A qualified or below-quantification result needs separate interpretation.';
+    const assessment=(outcome?'Within':'Outside')+' the cited '+row.parameter+' criterion';
+    return planned?assessment+'.':assessment+' · '+number+' '+s.panelLabUnit+' · '+description+' · Report '+textValue(s,'panelLabRef');
+  }
+  function fishArsenic(id,s){
+    return groups.fishOil.has(id)&&s.panelLabMetal==='As'&&root.PMSVVeterinary.edition(s.vetDate)==='amended';
   }
   function controls(id,s={}){
     if(!known(id))return '';
@@ -253,7 +272,9 @@
     const current=ref(source+'#page=18','Original Gazette table, PDF pp. 18–28');
     return extra+'<details class="ws-section metal-evidence"><summary>Record a metal article and supporting evidence</summary><div data-panel-choices>'+choices(id,s)+'</div></details>'+
       '<details class="ws-section metal-analysis"><summary>Check a reported metal result</summary><p>Use the reported result on the named matrix and basis. Enter either a mass-based or volume-based result as appropriate. This check does not convert units, correct for moisture or adjust a milk concentration factor.</p>'+
-      '<label>Metal'+pick('panelLabMetal',metals.map(([n,m])=>[m,n]),s,'Select a metal')+'</label><label>Reported result<input inputmode="decimal" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
+      '<label>Assessment date<input type="date" data-plan-vet-date value="'+escape(s.vetDate??root.PMSVVeterinary.reviewDate)+'"></label>'+
+      '<label>Metal'+pick('panelLabMetal',metals.map(([n,m])=>[m,n]),s,'Select a metal')+'</label>'+
+      '<label data-panel-arsenic-form'+(fishArsenic(id,s)?'':' hidden')+'>Arsenic reported by the laboratory'+pick('panelLabAsForm',[['total','Total arsenic'],['inorganic','Inorganic arsenic']],s,'Select reported analyte')+'</label><label>Reported result<input inputmode="decimal" data-ws-field="panelLabNumber" value="'+escape(s.panelLabNumber||'')+'"></label>'+
       '<label>Reported unit'+pick('panelLabUnit',[['mg/kg','mg/kg'],['mg/L','mg/L']],s,'Select the reported unit')+'</label><label class="ws-check"><input type="checkbox" data-ws-field="panelLabBasis"'+(s.panelLabBasis==='yes'?' checked':'')+'> The report matches the cited food, edible portion, mass or volume unit and analytical basis</label><label>Laboratory report or sample reference'+input('panelLabRef',s)+'</label><p data-panel-lab role="status">'+escape(lab(id,s))+'</p></details>'+
       '<details class="ws-section metal-lookup"><summary>Search the 382 published metal entries</summary><label>Metal<select data-panel-search-metal>'+metals.map(([n,m])=>'<option value="'+m+'">'+escape(n)+'</option>').join('')+'</select></label><label>Food, ingredient or basis<input type="search" data-panel-search placeholder="e.g. milk, dry matter or confectionery"></label><div data-panel-found>'+findRows('Pb','')+'</div>'+current+'</details>'+
       (transitions.length?'<details class="ws-section metal-change"><summary>Metal changes effective 1 December 2026</summary>'+transitions.map(t=>'<p>'+escape(t)+'</p>').join('')+ref(amendment+'#page=4','Amendment · PDF pp. 4–5')+'</details>':'')+
@@ -264,20 +285,25 @@
     if(el){if(el.type==='checkbox')el.checked=false;else el.value='';}
   }
   function update(node,id,k,s){
-    const labFields=['panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef'];
+    const labFields=['panelLabMetal','panelLabNumber','panelLabUnit','panelLabBasis','panelLabRef','panelLabAsForm','panelLabEdition'];
     if(reviewFields.includes(k)||k==='panelFpc'||k==='panelContainer')resetValue(node,s,k+'Ref');
     if(['metalForm','metalPack','panelFpc','panelIdentity','panelIdentityRef'].includes(k)){
       for(const f of reviewFields){s[f]='';s[f+'Ref']='';}
       if(k==='panelIdentity')resetValue(node,s,'panelIdentityRef');
     }
     if(k==='panelContainer'){s.panel_Sn='';s.panel_SnRef='';}
-    if(!labFields.includes(k)||k==='panelLabMetal'){
-      for(const f of labFields.slice(1))resetValue(node,s,f);
+    if(k==='panelLabBasis')s.panelLabEdition=s.panelLabBasis==='yes'?root.PMSVTestingPlan.metalEdition(s.vetDate):'';
+    if(k==='vetDate'){
+      resetValue(node,s,'panelLabBasis');s.panelLabEdition='';
+    }else if(!labFields.includes(k)||k==='panelLabMetal'||k==='panelLabAsForm'){
+      for(const f of labFields.slice(1))if(f!==k)resetValue(node,s,f);
     }
     if(!labFields.includes(k)){
       node.querySelector('[data-metal-results]').innerHTML=renderRows(id,s);
       if(['metalForm','metalFormRef','metalPack','metalPackRef','panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef'].includes(k))node.querySelector('[data-panel-choices]').innerHTML=choices(id,s);
     }
+    const species=node.querySelector('[data-panel-arsenic-form]');
+    if(species)species.hidden=!fishArsenic(id,s);
     const result=node.querySelector('[data-panel-lab]');
     if(result)result.textContent=lab(id,s);
   }

@@ -1253,12 +1253,12 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await planSection.locator('[data-plan-area]').selectOption('Pesticide residues');
  assert((await microTable.textContent()).includes('Identify the sampled commodity and process'));
  const onePlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
- const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R115.csv');
+ const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R116.csv');
  const oneText=fs.readFileSync(await oneFile.path(),'utf8');
  assert(oneText.includes('Milk Powders and Cream Powder')&&!oneText.includes('01-01-1-cow-milk'));
  assert(oneText.includes('Veterinary drug residues')&&oneText.includes('Pesticide residues')&&oneText.includes('Chloramphenicol'));
  const allPlan=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R115.csv');
+ const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R116.csv');
  const allPlanText=fs.readFileSync(await planFile.path(),'utf8');
  assert(allPlanText.includes('01-01-1-cow-milk')&&allPlanText.includes('05-05-1-cocoa-powder')&&allPlanText.includes('Thermal-centre temperature'));
  assert(allPlanText.includes('Banned insecticide · extraneous MRL')&&allPlanText.includes('Honey misuse · MRPL')&&allPlanText.includes('farmed aquaculture only'));
@@ -1274,15 +1274,23 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await selector('criterion').selectOption('5');
  await selector('result').fill('60.001');await selector('unitConfirmed').check();
  assert((await comp.locator('[data-ws-outcome]').textContent()).includes('Outside'));
+ await planSection.locator('summary').click();await selector('compReport').fill('Bubble gum composition COA 116');
+ assert((await planSection.locator('[data-plan-results]').innerText()).includes('Bubble gum composition COA 116'));
  await selector('compVariant').selectOption('Chewing Gum');
  assert.equal(await selector('result').inputValue(),'');
- assert.equal(await selector('criterion').inputValue(),'');
+ assert.equal(await selector('criterion').inputValue(),'');assert.equal(await selector('compReport').inputValue(),'');
+ assert(!(await planSection.locator('[data-plan-results]').innerText()).includes('Bubble gum composition COA 116'));
  await open('05-05-1-cocoa-powder');
  await selector('compVariant').selectOption({label:'Fat Reduced Cocoa Powder (Medium Fat)'});
  await selector('criterion').selectOption('1');
  await selector('result').fill('20.00');await selector('unitConfirmed').check();
  assert((await comp.locator('[data-ws-outcome]').textContent()).includes('Within'));
+ await selector('compReport').fill('Cocoa grade COA 116');
  await page.locator('[data-ws-save]').click();
+ await planSection.locator('summary').click();
+ const cocoaPlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
+ const cocoaText=fs.readFileSync(await (await cocoaPlan).path(),'utf8');
+ assert(cocoaText.includes('Cocoa grade COA 116')&&cocoaText.includes('Reported result: 20.00')&&cocoaText.includes('Within the cited source-edition criterion'));
  const cocoaExport=await page.evaluate(()=>PMSVCatalogueWorksheets.registerRows(true).find(r=>r[0]==='05-05-1-cocoa-powder').slice(-2));
  assert(cocoaExport[0].includes('Medium Fat')&&cocoaExport[1].includes('20.00%')&&cocoaExport[1].includes('dry basis'));
  if(exhaustive) {
@@ -1404,6 +1412,17 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await f('panelLabNumber').fill('5.0');assert((await report.innerText()).startsWith('Within'));
  await page.locator('.ws-body [data-ws-save]').click();
  assert((await readProductBrief(page)).includes('Cocoa dry fat-free COA 97'));
+ await metals('06-06-2-besan');await page.locator('.metal-analysis>summary').click();
+ const assessmentDate=page.locator('.metal-analysis [data-plan-vet-date]');
+ await f('panelLabMetal').selectOption('Pb');await f('panelLabNumber').fill('0.3');await f('panelLabUnit').selectOption('mg/kg');
+ await f('panelLabRef').fill('Besan lead COA 116');await f('panelLabBasis').check();assert((await report.innerText()).startsWith('Within'));
+ await assessmentDate.fill('2026-12-01');assert(!(await f('panelLabBasis').isChecked()));assert((await report.innerText()).startsWith('Confirm'));
+ await f('panelLabBasis').check();assert((await report.innerText()).startsWith('Outside'));
+ await planSection.locator('summary').click();await planSection.locator('[data-plan-area]').selectOption('Metals');
+ const besanRow=planSection.locator('tr').filter({hasText:'Besan lead COA 116'});
+ assert((await besanRow.innerText()).includes('0.2')&&(await besanRow.innerText()).includes('Outside the cited Lead criterion'));
+ await page.locator('[data-ws-save]').click();await open(oil);await metals('06-06-2-besan');await page.locator('.metal-analysis>summary').click();
+ assert.equal(await assessmentDate.inputValue(),'2026-12-01');assert((await report.innerText()).startsWith('Outside'));
  await metals('13-13-1-infant-milk-food');await page.locator('.metal-analysis>summary').click();await f('panelLabMetal').selectOption('Cu');
  await f('panelLabNumber').fill('2.79');await f('panelLabUnit').selectOption('mg/kg');await f('panelLabBasis').check();await f('panelLabRef').fill('Infant-food copper COA 97');
  assert((await report.innerText()).startsWith('Outside'));await f('panelLabNumber').fill('2.8');assert((await report.innerText()).startsWith('Within'));
@@ -1458,7 +1477,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await datedPlan.locator('[data-plan-vet-date]').inputValue(),'2026-12-01');
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Amended seafood provisions in use'));
  const oneDated=page.waitForEvent('download');await datedPlan.locator('[data-plan-export]').click();
- const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R115.csv'));
+ const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R116.csv'));
  const singleText=fs.readFileSync(await datedCsv.path(),'utf8');
  assert(singleText.includes('Seafood COA 113')&&singleText.includes('At or below the selected source tolerance'));
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Documented wild finfish sample 113'));
@@ -1470,10 +1489,10 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const bulkDate=page.locator('#veterinaryExportDate'), bulkButton=page.locator('#downloadVeterinaryPlan');
  await bulkDate.fill('');assert(await bulkButton.isDisabled());
  await bulkDate.fill('2026-12-01');const bulkDownload=page.waitForEvent('download');await bulkButton.click();
- const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R115.csv');
+ const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R116.csv');
  const vetText=fs.readFileSync(await vetFile.path(),'utf8');assert(vetText.includes('Veterinary assessment date')&&vetText.includes('11-11-5-honey')&&!vetText.includes('CTR 2.3.2(1)'));
  const wholeDated=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R115.csv'));
+ const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R116.csv'));
  const bulkText=fs.readFileSync(await december.path(),'utf8');assert(!bulkText.includes('Seafood COA 113')&&bulkText.includes('CTR 2.1.1(2) · fish-oil note')&&bulkText.includes('Contaminant assessment date 2026-12-01'));
  await open('02-02-1-fish-oil');await datedPlan.locator('summary').click();
  await datedPlan.locator('[data-plan-area]').selectOption('Metals');await datedPlan.locator('[data-plan-vet-date]').fill('2026-12-01');
@@ -1649,7 +1668,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R115.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-R116.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 
