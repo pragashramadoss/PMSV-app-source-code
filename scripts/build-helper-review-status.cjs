@@ -315,7 +315,8 @@ const veterinaryReview = {
    page:r.sourcePdfPage,override:r.originalDrugOverride,locked:r.lockedSourceAlignment}))})),
  fullProductApprovals:0
 };
-cropContext.PMSV_REVIEW_REGISTER={veterinaryReview};
+const veterinaryEditionReview={round:113,reviewedOn:'2026-11-22',effectiveFrom:'2026-12-01',products:533,seafoodProducts:24,report:'catalogue-veterinary-editions-r113.md'};
+cropContext.PMSV_REVIEW_REGISTER={veterinaryReview,veterinaryEditionReview};
 vm.runInContext(fs.readFileSync(path.join(dir,'catalogue-veterinary.js'),'utf8'),cropContext);
 Object.assign(veterinaryReview,cropContext.PMSVVeterinary.stats([...ids]));
 assert.equal(veterinaryReview.products,533);
@@ -391,7 +392,6 @@ const testingPlanReview={round:111,reviewedOn:'2026-11-21',report:'catalogue-tes
  areas:['Composition and identity','Microbiology','Metals','Toxins and other contaminants'],fullProductApprovals:0};
 const residueTestingPlanReview={round:112,reviewedOn:'2026-11-21',report:'catalogue-residue-testing-plan-r112.md',products:533,
  areas:['Pesticide residues','Veterinary drug residues'],fullProductApprovals:0};
-const veterinaryEditionReview={round:113,reviewedOn:'2026-11-22',effectiveFrom:'2026-12-01',products:533,seafoodProducts:24,report:'catalogue-veterinary-editions-r113.md'};
 const data={veterinaryEditionReview,residueTestingPlanReview,testingPlanReview,variantCompositionReview,shelfLifeReview,lotDateReview,dateMarkingReview,batchSiteReview,smallPackReview,ingredientOrderReview,recipeRequestReview,ingredientPercentageReview,ethyleneOxideReview,spicePanelReview,pesticideReview,veterinaryReview,metalPanelReview,cropArticleReview,metalArticleReview,broadContaminantReview,worksheetReview,schemaVersion:1,checkpointDate:'2026-11-14',latestSourceReviewDate:veterinaryEditionReview.reviewedOn,latestRound:veterinaryEditionReview.round,
  catalogueCount:533,queueCount:records.length,focusedCount,remainingFocusedCount:records.length-focusedCount,
  legalProductApprovals:0,batchReleases:0,
