@@ -83,8 +83,9 @@ still require connectivity. Tool definitions update with a signed app release.
 - TWA/Chrome storage cannot be automatically read by this app. Existing audit
   records stay in the old app. Do not uninstall it. Continue using it for report
   export/email and existing records until explicit export/import is implemented.
-- Daily alerts use WorkManager with a 30-minute requested interval and Android
-  may defer them. This is periodic synchronization, not instant push. Automatic
+- Daily alerts use a 24-hour WorkManager schedule with at most one automatic
+  news check per India calendar day; app-open catch-up only runs when that day
+  has not been checked. Android may defer delivery. This is not instant push. Automatic
   alerts only use a nonempty digest for the current India date, once per day.
   Send news notification fetches the latest available headlines, showing their
   actual publication date (including an older day when today is empty). If the
@@ -98,7 +99,7 @@ still require connectivity. Tool definitions update with a signed app release.
   sharing, saved-audit migration, and native audit/licence forms are release work.
   No Firebase configuration has been supplied or fabricated. No push registration
   is taken away from the existing working app.
-- Release 2.1.0 keeps periodic news alerts, local saves and the bundled form
+- Release 2.1.2 keeps once-daily news alerts, local saves and the bundled form
   renderer. Instant FCM, browser-record import and report attachment sharing
   remain future work. The Play variant uses the existing production identity
   and upload key. A Play-signed install still needs verification after upload.
