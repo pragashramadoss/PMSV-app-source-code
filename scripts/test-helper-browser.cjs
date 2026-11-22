@@ -1291,7 +1291,11 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const cocoaPlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
  const cocoaText=fs.readFileSync(await (await cocoaPlan).path(),'utf8');
  assert(cocoaText.includes('Cocoa grade COA 116')&&cocoaText.includes('Reported result: 20.00')&&cocoaText.includes('Within the cited source-edition criterion'));
- const cocoaExport=await page.evaluate(()=>PMSVCatalogueWorksheets.registerRows(true).find(r=>r[0]==='05-05-1-cocoa-powder').slice(-2));
+ const cocoaExport=await page.evaluate(()=>{
+  const [headers,...rows]=PMSVCatalogueWorksheets.registerRows(true);
+  const row=rows.find(r=>r[0]==='05-05-1-cocoa-powder');
+  return ['Selected composition variant and sweetener basis','Measured composition result and comparison'].map(name=>row[headers.indexOf(name)]);
+ });
  assert(cocoaExport[0].includes('Medium Fat')&&cocoaExport[1].includes('20.00%')&&cocoaExport[1].includes('dry basis'));
  if(exhaustive) {
   const count=await page.evaluate(()=>{
