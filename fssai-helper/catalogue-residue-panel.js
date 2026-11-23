@@ -241,7 +241,7 @@
       analyteKey='fssai-'+row.serial;analyte=row.drug;source=row.url;limit=row.limit;
       sample=clean(s.pestSample);report=clean(s.pestReport);process=processLabel[s.pestProcess];
       kind=s.pestKind;value=clean(s.pestValue);loq=clean(s.pestLoq);
-      basis=['Matched unit, residue definition and sample basis',row.condition,row.subgroup,s.pestPortion].filter(Boolean).join(' · ');
+      basis=['Matched unit, residue definition and sample basis',row.reportBasis,row.condition,row.subgroup,s.pestPortion].filter(Boolean).join(' · ');
       reference=(row.source==='gazette'?'FSSAI Gazette':'FSSAI tea direction')+' · '+row.article+' · '+row.key;
       if(role==='product' && X.groupSource(id))reference+=' · Marketed form and process record: '+clean(s.pestScopeRef);
     }else if(mode==='spice'){

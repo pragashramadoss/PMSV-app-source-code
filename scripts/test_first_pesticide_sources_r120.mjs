@@ -30,7 +30,7 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
   assert(g.row.url.endsWith('#page=31'));assert(g.identity.endsWith('#page='+identityPage));assert(g.urls[1].endsWith('#page=1'));
   const sample={pestRole:'product',pestMatrix:matrix,pestRow:key,pestSample:'Product lot A',pestScopeRef:'Identity and process record A',
     pestProcess:process,pestReport:'Test report 120',pestUnit:'mg/kg',pestBasis:'yes',pestKind:'quantified',pestValue:limit};
-  assert.equal(X.current(id,sample).options.length,1);
+  assert.equal(X.current(id,sample).options.filter(r=>r.serial===1).length,1);
   assert.equal(X.comparison(id,sample).kind,'within');
   assert.equal(X.comparison(id,{...sample,pestValue:limit+'0000000000000001'}).kind,'above');
   assert.equal(X.comparison(id,{...sample,pestKind:'less'}).kind,'within');
@@ -41,7 +41,7 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
   assert.equal(X.comparison(id,{...sample,pestProcess:'raw'}).kind,id===chia?'within':'hold');
   assert.equal(X.comparison(id,{...sample,pestProcess:'physical'}).kind,'within');
   for(const date of ['2026-11-22','2026-12-01']){
-    const rows=plan.exportRows(id,date).filter(r=>r.includes('Conditional group entry · confirm marketed form and process'));
+    const rows=plan.exportRows(id,date).filter(r=>r.includes('Conditional group entry · confirm marketed form and process')&&r.includes('CTR 2.3.1 · serial 1'));
     assert.equal(rows.length,1);assert(rows[0].includes(limit));assert(rows[0].includes('mg/kg'));
     for(const url of [g.row.url,g.identity,g.urls[1]])assert(rows[0].at(-1).includes(url));
     assert(rows[0].some(v=>String(v).includes(g.evidence)));

@@ -100,7 +100,9 @@
   const currentSea='Tetracycline 0.1, oxytetracycline 0.1, trimethoprim 0.05 and oxolinic acid 0.3 mg/kg.';
   const restriction='Production use is prohibited for 14 listed substances or classes. EMRL 0.001 mg/kg, except chloramphenicol 0.0003 mg/kg.';
   const transition='On 1 December 2026 clause (1) is omitted. In clause (4), seafood is added to trimethoprim at 0.05 mg/kg (serial 45) and oxolinic acid at 0.3 mg/kg (new serial 50). Check the species, drug and portion in the remaining tetracycline entries.';
-  const {reviewedOn:reviewDate,effectiveFrom:changeDate}=root.PMSV_REVIEW_REGISTER.veterinaryEditionReview;
+  const {veterinaryEditionReview,latestSourceReviewDate}=root.PMSV_REVIEW_REGISTER;
+  const changeDate=veterinaryEditionReview.effectiveFrom;
+  const reviewDate=latestSourceReviewDate||veterinaryEditionReview.reviewedOn;
   const datePrompt='Enter a valid assessment date within a reviewed edition effective from 1 April 2025.';
   function edition(date=reviewDate) {
     if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<'2025-04-01')return '';

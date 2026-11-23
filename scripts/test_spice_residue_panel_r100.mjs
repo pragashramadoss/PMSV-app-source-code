@@ -11,7 +11,7 @@ function open(store=storage) {
   x.window=x;codes.forEach(code=>vm.runInContext(code,x));return {x,Y:x.PMSVResiduePanel,W:x.PMSVCatalogueWorksheets,events};
 }
 const {x,Y,W,events}=open(),r=x.PMSV_REVIEW_REGISTER.spicePanelReview;
-assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,120);
+assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,121);
 assert.equal(r.marketedProducts,36);assert.equal(r.sampleChoices,36);assert.equal(r.codedChoices,32);
 const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,156);assert.equal(new Set(baseline[0]).size,156);
 assert(baseline.slice(1).every(row=>row[15]==='No'&&row[112]===0&&row[113]===''));
