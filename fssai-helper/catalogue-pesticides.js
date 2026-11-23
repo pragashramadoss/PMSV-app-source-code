@@ -66,11 +66,11 @@
   const fruitStandard='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf';
   const chiaStandard='https://stg-old.fssai.gov.in/upload/notifications/2020/08/5f362b888233bGazette_Notification_FSS_Additives_Third_Amendment_14_08_2020.pdf#page=18';
   const chiaClassification='https://www.fao.org/fao-who-codexalimentarius/sh-proxy/fr/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXA%2B4-1989%252FCXA_004e.pdf';
-  const dairyGazette='https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf';
+  const dairyGazette='https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf';
   const groupRoutes=new Map([
     ['11-11-1-edible-lactose',{matrix:'edibleLactose',commodityGroup:'dairy',
-      label:'Plain whey-derived edible lactose',clause:'FPSFA 2.1.20',identity:dairyGazette+'#page=133',
-      classification:dairyGazette+'#page=74',classificationLabel:'FPSFA 2.1.1(2)(f)(xii) · milk products',processes:['physical'],
+      label:'Plain whey-derived edible lactose',clause:'FPSFA 2.1.20',identity:dairyGazette+'#page=134',
+      classification:dairyGazette+'#page=75',classificationLabel:'FPSFA 2.1.1(2)(f)(xii) · milk products',processes:['physical'],
       evidence:'Identify the finished sample as plain edible lactose derived from whey. Check the supplier specification and the complete process from milk through whey to the finished crystals. Confirm physical processing only. Pasteurisation, heat concentration, spray drying, chemical treatment, a blend or an undocumented step prevents comparison under this route. A raw milk or whey report describes a different sample.'}],
     ['04-04-1-seedless-tamarind',{matrix:'plainSeedlessTamarind',commodityGroup:'fruit',
       label:'Plain seedless tamarind fruit',clause:'FPSFA 2.3.49',identity:fruitStandard+'#page=73',processes:['physical'],

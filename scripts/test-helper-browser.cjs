@@ -1627,7 +1627,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const lactoseDownload=page.waitForEvent('download');await page.locator('[data-group-plan]').click();
  const lactoseFile=await lactoseDownload;assert.equal(lactoseFile.suggestedFilename(),'PMSV-FSSAI-11-11-1-edible-lactose-Pesticides-R123.csv');
  const lactoseCsv=fs.readFileSync(await lactoseFile.path(),'utf8');
- assert(lactoseCsv.includes('Bifenthrin')&&lactoseCsv.includes('#page=74')&&lactoseCsv.includes('#page=133'));
+ assert(lactoseCsv.includes('Bifenthrin')&&lactoseCsv.includes('#page=75')&&lactoseCsv.includes('#page=134'));
 
  await f('pestProcess').selectOption('physical');await f('pestSample').fill('Lactose lot L-23');
  await f('pestScopeRef').fill('Supplier process reviewed from milk to crystals');await f('pestRow').selectOption({label:'Bifenthrin · Milk and Milk products · 0.2 mg/kg'});

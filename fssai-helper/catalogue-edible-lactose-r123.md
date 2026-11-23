@@ -1,6 +1,6 @@
 # R123 · Edible lactose and pesticide residues
 
-**Reviewed 23 November 2026.** FSSAI names lactose among milk derivatives in its definition of a milk product. Its edible lactose standard specifies whey as the raw material and expressly refers back to that definition. This establishes a conditional link to the pesticide table's milk-product group for plain edible lactose. [Dairy Gazette, definition on p. 74](https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf#page=74) · [Edible lactose, p. 133](https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf#page=133)
+**Reviewed 23 November 2026.** FSSAI names lactose among milk derivatives in its definition of a milk product. Its edible lactose standard specifies whey as the raw material and expressly refers back to that definition. This establishes a conditional link to the pesticide table's milk-product group for plain edible lactose. [Dairy Gazette, definition on PDF p. 75](https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf#page=75) · [Edible lactose, PDF p. 134](https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf#page=134)
 
 ## Determine whether the sample qualifies
 
