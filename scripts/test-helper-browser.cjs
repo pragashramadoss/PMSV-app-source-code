@@ -1231,13 +1231,7 @@ async function testArtworkIngredientOrder(page) {
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Ingredient-order form overflows viewport');
 }
 
-async function testCatalogueWorksheets(page, exhaustive) {
- const oil='02-02-1-refined-grapeseed-oil', khoa='18-18-1-khoa-based-sweets';
- const open=async id=>{
-  assert(await page.evaluate(v=>PMSV_HELPER_TEST.selectProduct(v),id));
-  await page.locator('.catalogue-worksheet > summary').click();
-  await page.locator('.ws-inputs').waitFor();
- };
+async function testVendingWaterPlan(page,open){
  await open('purified-vending-water');
  const waterPlan=page.locator('[data-testing-plan]');await waterPlan.locator('summary').first().click();
  assert.equal(await waterPlan.locator('[data-plan-area]').inputValue(),'Vending water · IS 10500');
@@ -1252,6 +1246,16 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const waterFile=await waterDownload;assert.equal(waterFile.suggestedFilename(),'PMSV-FSSAI-Vending-Water-IS10500-R122.csv');
  assert(fs.readFileSync(await waterFile.path(),'utf8').includes('Water report R122'));
  await waterField('waterPoint').selectOption('other');assert.equal(await waterField('waterValue').inputValue(),'');
+}
+
+async function testCatalogueWorksheets(page, exhaustive) {
+ const oil='02-02-1-refined-grapeseed-oil', khoa='18-18-1-khoa-based-sweets';
+ const open=async id=>{
+  assert(await page.evaluate(v=>PMSV_HELPER_TEST.selectProduct(v),id));
+  await page.locator('.catalogue-worksheet > summary').click();
+  await page.locator('.ws-inputs').waitFor();
+ };
+ await testVendingWaterPlan(page,open);
  await open('01-01-5-milk-powders-and-cream-powder');
  const planSection=page.locator('[data-testing-plan]');
  await planSection.locator('summary').click();
