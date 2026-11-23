@@ -39,7 +39,7 @@ assert.equal(A.enabled(gum,state(regular)).length,0);
 const row= A.enabled(mass,state(liquor)).find(r=>r.v.spec.parameter==='Cocoa butter');
 saved.set('pmsv-fssai-worksheet-r93:'+mass,JSON.stringify(state(liquor,{criterion:row.i,result:'60.0001',unitConfirmed:'yes'})));
 const ref=W.registerRows(),entered=W.registerRows(true);
-assert.equal(ref.length,534);assert.equal(new Set(ref[0]).size,156);assert.equal(ref.filter(r=>r[150]).length,4);
+assert.equal(ref.length,534);assert.equal(new Set(ref[0]).size,156);assert.equal(ref.filter(r=>r[150]).length,5);
 assert(ref.slice(1).every(r=>!r[152]&&!r[153]));
 assert(ref.filter(r=>A.profiles.has(r[0])).every(r=>r[151].includes('#page=')));
 const reported=entered.find(r=>r[0]===mass);assert(reported[153].includes('Outside')&&reported[153].includes('60.0001%'));
