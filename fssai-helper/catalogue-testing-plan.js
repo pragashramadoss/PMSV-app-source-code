@@ -440,6 +440,10 @@
     }
     for(const d of C.decisions(id,state)){
       const row=toxinRow(id,d,date,state);
+      if(id===root.PMSVCocoaMixtures?.productId&&d.key==='saf'){
+        row.notes+=' FPSFA 2.7.6(3) permits spices in this mix. Check the actual recipe and the dry product as sold.';
+        row.source+=' | '+root.PMSVCocoaMixtures.sources[1];
+      }
       if(state['tox_'+d.key+'_value']?.trim()&&(!state.vetDate||state.vetDate===date))
         row.notes=join([row.notes,C.labResult(id,d.key,state,date,row).summary]);
       add(row);
@@ -448,7 +452,9 @@
   function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state) {
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
-    composition(id,add,state);microbiology(id,add);contaminants(id,add,vetDate,state||{});
+    composition(id,add,state);
+    if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
+    microbiology(id,add);contaminants(id,add,vetDate,state||{});
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
     if(id===root.PMSVVendingWater?.productId)for(const row of root.PMSVVendingWater.planRows(id,state))add(row);

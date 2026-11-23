@@ -15,7 +15,7 @@ const {S,Q,O,W,R}=open(),id='05-05-2-sugar-boiled-confectionery-hard-candy';
 const base={sku:'Example R105',art:'Inner A1',pack:'inner',method:'visible',area:'10000',unit:'mm2',measureRef:'Spec M1',outerType:'multi',outerRef:'Retail outer A2',origin:'domestic',operator:'different',scanRef:'Decoded evidence A1'};
 const m=(patch={})=>S.model({...base,...patch});
 const row=(key,seen,patch={})=>S.analyse(m({seen:{[key]:seen},...patch})).rows.find(r=>r.key===key);
-assert(W.available);assert.equal(R.latestRound,123);assert.equal(R.smallPackReview.products,533);assert.equal(Object.keys(S.titles).length,20);
+assert(W.available);assert.equal(R.latestRound,124);assert.equal(R.smallPackReview.products,533);assert.equal(Object.keys(S.titles).length,20);
 for(const [area,unit,small,below30,text] of [['10000','mm2',true,false,'100 cm²'],['100.000000000000000001','cm2',false,false,'100.000000000000000001 cm²'],['2999.999999999999999999','mm2',true,true,'29.99999999999999999999 cm²'],['30.00','cm2',true,false,'30 cm²'],['.1','mm2',true,true,'0.001 cm²']]){
   const v=S.measurement(m({area,unit}));assert.equal(v.small,small);assert.equal(v.below30,below30);assert.equal(v.text,text);
 }

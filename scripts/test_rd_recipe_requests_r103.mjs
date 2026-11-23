@@ -5,7 +5,7 @@ import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
 const files=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope',
   'broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary',
-  'catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-testing-plan','catalogue-worksheets'];
+  'catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-cocoa-mixtures','catalogue-testing-plan','catalogue-worksheets'];
 const scripts=files.map(f=>fs.readFileSync(new URL(f+'.js',dir),'utf8'));
 const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
 function open(localStorage){
@@ -21,7 +21,7 @@ const candy={sku:'Example candy',art:'Jar A',pack:'outer',target:'Mango pulp',re
 const form=(changes={})=>Q.model({...candy,...changes});
 const requests=changes=>Array.from(Q.recipeQuestions(form(changes))).join('\n');
 const save=(changes={},pid=id)=>{const r=Q.save(pid,form(changes));assert(r.key,r.message);return r;};
-assert(W.available);assert.equal(R.latestRound,123);assert.equal(R.recipeRequestReview.products,533);
+assert(W.available);assert.equal(R.latestRound,124);assert.equal(R.recipeRequestReview.products,533);
 assert.equal(Q.requestRows().length,1);assert.equal(Q.requestColumns[2],'Recipe information required from R&D');
 assert.equal(requests({}),''); // Percentage missing on artwork; all recipe information is known.
 assert.equal(requests({printed:'8',print:'value'}),''); // Fully documented numerical mismatch.

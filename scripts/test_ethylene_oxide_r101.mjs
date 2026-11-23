@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
-const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-testing-plan','catalogue-worksheets'];
+const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-cocoa-mixtures','catalogue-testing-plan','catalogue-worksheets'];
 const scripts=modules.map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
 const db=new Map();
 const storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
@@ -17,7 +17,7 @@ const state={spRole:'product',spArticle:'pepper',spProcess:'physical',spSample:'
   eoFreeKind:'quantified',eoFreeValue:'0.010',eoFreeUnit:'mg/kg',eoCeKind:'quantified',eoCeValue:'40',eoCeUnit:'µg/kg',eoCeBasis:'native'};
 const test=options=>E.analysis({...state,...options});
 const make=(changes={},id=pepper)=>{const s={...state,...changes};return E.review(Y.context(id,s),s);};
-assert.equal(registry.latestRound,123);assert.equal(registry.ethyleneOxideReview.marketedProducts,36);
+assert.equal(registry.latestRound,124);assert.equal(registry.ethyleneOxideReview.marketedProducts,36);
 assert.equal(registry.ethyleneOxideReview.method,'FSSAI.OM.EO.001.2024');
 assert(E.sources.calculation.endsWith('#page=8')&&E.sources.decision.endsWith('#page=8'));
 assert.equal(test({}).sum,'EO sum = 0.032');

@@ -3,10 +3,10 @@
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
   const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel, Q = root.PMSVIngredientPercentage, O = root.PMSVIngredientOrder, S = root.PMSVSmallPack, T = root.PMSVBatchSite, L = root.PMSVLotDates;
-  const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan, water = root.PMSVVendingWater;
+  const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan, water = root.PMSVVendingWater, cocoaMix = root.PMSVCocoaMixtures;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 123 && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 502 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 124 && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 502 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -25,7 +25,7 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[])];
+  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(cocoaMix?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -182,7 +182,7 @@
     const isVending=id===water.productId;
     const areas=isVending?[water.area,...plan.areas]:plan.areas;
     return '<details class="ws-section" data-testing-plan><summary>Testing plan and source decisions</summary><div>'+
-      '<p>The selected date applies to metals, toxins and veterinary residues. Composition and microbiology use the 22 November review. The conditional pesticide entries for four product forms were reviewed on 23 November 2026. The product plan includes measured composition, metal and toxin results entered in the worksheet, documented sample decisions, saved pesticide reports and the veterinary assessment.</p><label>Review area<select data-plan-area>'+areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
+      '<p>The selected date applies to metals, toxins and veterinary residues. The cocoa mix naming table was reviewed on 23 November. Other composition and microbiology entries use the 22 November review. The conditional pesticide entries for four product forms were reviewed on 23 November 2026. The product plan includes measured composition, metal and toxin results entered in the worksheet, documented sample decisions, saved pesticide reports and the veterinary assessment.</p><label>Review area<select data-plan-area>'+areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
       '<label data-plan-vet-date-label hidden>Assessment date for metals, toxins and veterinary residues<input type="date" data-plan-vet-date value="'+esc(getState(id).vetDate)+'"></label>'+
       (isVending?water.markup(getState(id)):'')+
       '<div data-plan-fish-screen hidden><label>Quick screen for total arsenic in fish oil (mg/kg)<input type="text" placeholder="e.g. &lt;0.1" maxlength="80" data-plan-total-as></label><p data-plan-as-result role="status"></p><p>To include a laboratory report in the download, enter it under Check a reported metal result.</p></div>'+
@@ -319,7 +319,7 @@
       const body=node.querySelector('.ws-body');
       if(!node.open || body.hasChildNodes())return;
       const p=E.products[id];
-      body.innerHTML=(composition.profiles.has(id)?'<section class="panel compact" data-variant-composition>'+variantTable(id)+'</section>':'')+testingPlanSection(id)+productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
+      body.innerHTML=(id===cocoaMix.productId?cocoaMix.markup(getState(id)):'')+(composition.profiles.has(id)?'<section class="panel compact" data-variant-composition>'+variantTable(id)+'</section>':'')+testingPlanSection(id)+productSections(id)+root.PMSVBroadContaminants.markup(id,getState(id))+root.PMSVMetalScope.markup(id,getState(id))+C.markup(id,getState(id))+V.markup(id,getState(id))+X.markup(id,getState(id))+contaminants(id)+addSection(id)+microSection(p)+horizontal(id)+monographs(p)+inputs(id);
       const testing=node.querySelector('[data-testing-plan]');
       testing.addEventListener('toggle',()=>{if(testing.open)showPlan(testing,id);});
       testing.querySelector('[data-plan-area]').addEventListener('change',()=>showPlan(testing,id));
@@ -368,6 +368,17 @@
         if(plan.metalEdition(previous)!==plan.metalEdition(state.vetDate))P.update(node,id,k,state);
         for(const input of node.querySelectorAll('[data-plan-vet-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
       }
+      if(id===cocoaMix.productId&&cocoaMix.fields.includes(k)){
+        if(['mixRecipe','mixScope'].includes(k)&&previous.trim()&&previous!==state[k]){
+          for(const field of ['mixCocoa','mixButter','mixDryCocoa','mixPowderRef']){
+            state[field]='';node.querySelector('[data-ws-field="'+field+'"]').value='';
+          }
+        }
+        if(k==='mixPowderRef'&&previous.trim()&&previous!==state.mixPowderRef){
+          state.mixButter='';node.querySelector('[data-ws-field="mixButter"]').value='';
+        }
+        cocoaMix.update(node,state);refreshPlan();
+      }
       if(id===water.productId&&water.fields.includes(k)){water.update(node,k,state,previous);refreshPlan();}
       if(metalField||C.fields.includes(k)||V.fields.includes(k)||['compVariant','compSweetener','criterion','result','unitConfirmed','compReport','reference'].includes(k))refreshPlan();
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
@@ -408,6 +419,7 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
+      ...(id===cocoaMix.productId&&cocoaMix.evidence(s)?[cocoaMix.evidence(s),...cocoaMix.sources]:[]),
       ...(X.groupSource(id)?[X.groupSource(id).text,...X.groupSource(id).urls]:[]),'Product-specific contaminant evidence: '+(contaminantEvidence(id,s)),'Remaining action: '+(priority.get(id)?.sourceReviewNextAction||p.ctrAction),
       ...(p.routeAnchors||[]).map(([doc,pp,note])=>note+' · '+E.documents[doc].url+'#page='+pp[0]),
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
@@ -429,10 +441,20 @@
         M.mercuryGuide(id)?.reason||B.scope(id).h.why,
         mel.m.options.length && mel.applied ? B.resolution(id,s.broadForm,s.broadRef)+' · '+s.broadRef:'',
         hg?hg.article+' · '+hg.level+' · '+hg.why:'',documented('metalForm'),documented('metalPack'),
-        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s),...Y.values(id,s,includeDeviceEntries),...Q.values(id,s,artworkChecks),...O.values(id,s,artworkChecks),...S.values(id,s,artworkChecks),...T.values(id,s,artworkChecks),...S.dateValues(id,s,artworkChecks),...L.values(id,s,artworkChecks),...composition.values(id,s,s.result?resultText(id):''),X.sourceStatus(entry),group?[group.text,...group.urls].join(' | '):''];
+        (documented('metalForm')||documented('metalPack'))?M.brief(id,s).join(' | '):'',...C.values(id,s),...P.values(id,s),...V.values(id,s),...X.values(id,s),...Y.values(id,s,includeDeviceEntries),...Q.values(id,s,artworkChecks),...O.values(id,s,artworkChecks),...S.values(id,s,artworkChecks),...T.values(id,s,artworkChecks),...S.dateValues(id,s,artworkChecks),...L.values(id,s,artworkChecks),...(id===cocoaMix.productId?cocoaMix.registerValues(s):composition.values(id,s,s.result?resultText(id):'')),X.sourceStatus(entry),group?[group.text,...group.urls].join(' | '):''];
+    })];
+  }
+  function pendingSourceRows(){
+    const header=['Catalogue ID','Product','Product standard or classification','First-source status','Historical catalogue finding','Potential error when applying a limit','Next evidence to obtain','Official product identity source','Named standard or regulatory route'];
+    return [header,...list.filter(p=>X.sourceStatus(p)==='FIRST_EXACT_SOURCE_PENDING').map(p=>{
+      const e=E.products[p.id],a=E.standards[e.standard],doc=a?.doc||e.routeAnchors?.[0]?.[0]||e.routeDocs[0];
+      const page=a?.p?.[0]||e.routeAnchors?.[0]?.[1]?.[0];
+      const link=E.documents[doc].url+(page?'#page='+page:'');
+      return [p.id,p.product,p.fssr||e.standard||p.fcs||'Confirm regulatory classification',X.sourceStatus(p),p.finding,p.nonTransfer,
+        p.sourceCheck?.nextEvidence||p.nextAction||e.ctrAction,link,R.standards[e.standard]?.name||R.products[p.id].routeFinding];
     })];
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,
     partial:[...ids].filter(id=>E.products[id].directCTR).length,portal:[...ids].filter(id=>E.products[id].monographs.length).length}:null;
-  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
+  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,pendingSourceRows,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
 })(globalThis);
