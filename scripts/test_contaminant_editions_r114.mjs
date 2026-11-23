@@ -33,7 +33,7 @@ for(const id of [sauce,'05-05-2-sugar-boiled-confectionery-hard-candy','12-12-2-
   assert(row(id,3,'Saffrole',next,{crop_dec:'absent',crop_decRef:'Recipe 114'}).status.includes('outside'));
 }
 const bulk=p.exportRows(null,next),baseline=p.exportRows();
-assert.equal(baseline.length,25453);assert.equal(bulk.length,25405);assert.equal(new Set(bulk.slice(1).map(r=>r[0])).size,533);
+assert.equal(baseline.length,25459);assert.equal(bulk.length,25411);assert.equal(new Set(bulk.slice(1).map(r=>r[0])).size,533);
 assert.equal(bulk.filter(r=>r[2]===p.areas[3]&&r[5]==='Saffrole'&&!r[7]&&r[14].includes('272840.pdf#page=5')).length,533);
 assert.equal(bulk.filter(r=>r[2]===p.areas[2]&&r[5]==='Inorganic arsenic').length,1);
 for(const a of [0,1,4])assert.deepEqual(baseline.filter(r=>r[2]===p.areas[a]),bulk.filter(r=>r[2]===p.areas[a]));

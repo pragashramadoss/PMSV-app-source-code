@@ -17,10 +17,10 @@ const cases=[
 const baseline=ctx.PMSV_CATALOGUE, register=W.registerRows();
 assert(W.available);
 assert.equal(baseline.filter(p=>p.sourceStatus==='FIRST_EXACT_SOURCE_PENDING').length,35);
-assert.equal(baseline.filter(p=>X.sourceStatus(p)===X.groupStatus).length,3);
-assert.equal(baseline.filter(p=>X.sourceStatus(p)==='FIRST_EXACT_SOURCE_PENDING').length,32);
+assert.equal(baseline.filter(p=>X.sourceStatus(p)===X.groupStatus).length,4);
+assert.equal(baseline.filter(p=>X.sourceStatus(p)==='FIRST_EXACT_SOURCE_PENDING').length,31);
 assert.equal(baseline.filter(p=>X.sourceStatus(p)==='PARTIAL_EXACT_SOURCE_MATCH').length,498);
-assert.equal(ctx.PMSV_REVIEW_REGISTER.firstSourceReview.pesticideMapped,47);
+assert.equal(ctx.PMSV_REVIEW_REGISTER.firstSourceReview.pesticideMapped,48);
 assert.equal(register.length,534);assert.equal(register[0].length,156);
 for(const [id,matrix,key,article,limit,process,identityPage] of cases){
   const g=X.groupSource(id), row=register.find(r=>r[0]===id), entry=baseline.find(p=>p.id===id);
@@ -52,7 +52,7 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
   assert(plan.exportRows(id,'2026-11-22',false,sample).some(r=>r.includes('Recorded pesticide laboratory result')&&r.some(v=>String(v).includes(sample.pestScopeRef))));
 }
 for(const row of register.slice(1)) {
-  if(cases.some(([id])=>id===row[0]))continue;
+  if(cases.some(([id])=>id===row[0])||row[0]==='11-11-1-edible-lactose')continue;
   assert.equal(X.groupSource(row[0]),null);assert.equal(row.at(-1),'');
 }
 const frozenMango=X.current(frozen,{pestRole:'product',pestMatrix:'mango'}).options[0];

@@ -66,7 +66,12 @@
   const fruitStandard='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit_Vegetable_products.pdf';
   const chiaStandard='https://stg-old.fssai.gov.in/upload/notifications/2020/08/5f362b888233bGazette_Notification_FSS_Additives_Third_Amendment_14_08_2020.pdf#page=18';
   const chiaClassification='https://www.fao.org/fao-who-codexalimentarius/sh-proxy/fr/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXA%2B4-1989%252FCXA_004e.pdf';
+  const dairyGazette='https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Milk_Products_24_10_2017.pdf';
   const groupRoutes=new Map([
+    ['11-11-1-edible-lactose',{matrix:'edibleLactose',commodityGroup:'dairy',
+      label:'Plain whey-derived edible lactose',clause:'FPSFA 2.1.20',identity:dairyGazette+'#page=133',
+      classification:dairyGazette+'#page=74',classificationLabel:'FPSFA 2.1.1(2)(f)(xii) · milk products',processes:['physical'],
+      evidence:'Identify the finished sample as plain edible lactose derived from whey. Check the supplier specification and the complete process from milk through whey to the finished crystals. Confirm physical processing only. Pasteurisation, heat concentration, spray drying, chemical treatment, a blend or an undocumented step prevents comparison under this route. A raw milk or whey report describes a different sample.'}],
     ['04-04-1-seedless-tamarind',{matrix:'plainSeedlessTamarind',commodityGroup:'fruit',
       label:'Plain seedless tamarind fruit',clause:'FPSFA 2.3.49',identity:fruitStandard+'#page=73',processes:['physical'],
       evidence:'Identify ripe Tamarindus indica fruit sold after physical removal of its shell and seeds. Check the specification for added ingredients and the process for extraction, drying, concentration, heat or chemical treatment. These forms require a separate assessment.'}],
@@ -74,12 +79,17 @@
       label:'Plain single-fruit frozen product',clause:'FPSFA 2.3.37',identity:fruitStandard+'#page=40',processes:['physical'],
       evidence:'Name the fruit and confirm it was only physically prepared and frozen. Drying, blanching, pasteurisation, chemical treatment, added syrup or another ingredient takes the sample outside this route.'}],
     ['06-06-1-chia-seeds',{matrix:'wholeChia',commodityGroup:'grain',
-      label:'Plain whole chia seed',clause:'FPSFA 2.4.6(25)',identity:chiaStandard,classification:chiaClassification,processes:['raw','physical'],
+      label:'Plain whole chia seed',clause:'FPSFA 2.4.6(25)',identity:chiaStandard,classification:chiaClassification,classificationLabel:'Codex GC 3084',processes:['raw','physical'],
       evidence:'Identify plain whole Salvia hispanica seed, raw or physically cleaned. Document its acceptance as a food grain for this pesticide. Codex lists chia under pseudocereals (GC 3084). Oil, flour, mixtures and seed subjected to drying, heat or chemical treatment require a separate assessment.'}]
   ]);
-  // Gazette serials with a reviewed commodity entry for both eligible groups.
+  // Each property identifies the printed commodity cell for one reviewed group.
   const groupPesticides=[
-    {serial:1, name:'2,4-D', fruit:'Fruits', grain:'other food grains'},
+    {serial:1, name:'2,4-D', fruit:'Fruits', grain:'other food grains', dairy:'Milk and Milk products'},
+    {serial:2, name:'Acephate', dairy:'Milk and Milk products', basis:'Report acephate and methamidophos together as specified in the Gazette.'},
+    {serial:3, name:'Acetamiprid', dairy:'Milk and Milk products'},
+    {serial:11, name:'Azoxystrobin', dairy:'Milk and Milk products'},
+    {serial:16, name:'Bifenthrin', dairy:'Milk and Milk products'},
+    {serial:18, name:'Bitertanol', dairy:'Milk and Milk products'},
     {serial:138, name:'Paraquat dichloride', fruit:'Fruits', grain:'other food grains',
       basis:'Report the result as paraquat cation.'},
     {serial:175, name:'Thiometon', fruit:'Fruits', grain:'Food grains',
@@ -142,7 +152,7 @@
     byMatrix.set(matrix,matrix==='tea'?directed:rowIndex.filter(r=>articles.has(norm(r.article))));
   }
   for(const g of groupRoutes.values()) {
-    const rows=groupPesticides.map(spec=>{
+    const rows=groupPesticides.filter(spec=>spec[g.commodityGroup]).map(spec=>{
       const matches=byGroup.get(spec.serial).filter(r=>r.article===spec[g.commodityGroup]);
       if(matches.length!==1)throw new Error('Ambiguous or missing Gazette row for '+spec.name+' and '+g.label);
       return {...matches[0],shortName:spec.name,reportBasis:spec.basis||''};
@@ -268,7 +278,7 @@
     body+=select('pestProcess','Documented process',Object.entries(processes).filter(([k])=>tea||k!=='tea'),s.pestProcess);
     body+=input('pestSample','Sample or lot reference and process record',s.pestSample);
     const group=marketedForm(id,role,matrix);
-    if(group)body+='<p>'+esc(group.evidence)+' '+ref(group.identity,group.clause)+(group.classification?' · '+ref(group.classification,'Codex GC 3084'):'')+'</p>'+
+    if(group)body+='<p>'+esc(group.evidence)+' '+ref(group.identity,group.clause)+(group.classification?' · '+ref(group.classification,group.classificationLabel):'')+'</p>'+
       input('pestScopeRef','Specification and process record confirming the eligible form',s.pestScopeRef);
     if(spiceMatrices.has(matrix)) body+='<p>'+esc(spiceText)+' '+ref(sources.spice+'#page=1','Spice order, page 1')+'</p>';
     if(tea) body+='<p>The April 2023 direction sets five tea MRLs. The March 2024 laboratory direction specifies six additional tests at 0.01 mg/kg. The October 2026 acetamiprid and imidacloprid values are proposals. '+ref(sources.tea2023,'2023 direction')+' · '+ref(sources.tea2024,'2024 direction')+' · '+ref(sources.teaTesting,'20 additional tests')+' · '+ref(sources.teaDraft,'October 2026 draft status')+'</p>';
@@ -393,7 +403,7 @@
           notes:[held,held&&'Printed entry: '+r.limit+(r.limit==='$'?'':' '+fieldUnit),r.condition,r.reportBasis,basis,
             r.limit.endsWith('*')&&'Starred value at quantification limit. Confirm the validated method LOQ.',
             groupRoutes.get(id)?.evidence,matrix==='tea'||matrix==='greenTea'?'Confirm the tea form and residue definition.':'Confirm the specific commodity and sample. The January 2021 clarification limits this table to agricultural commodities and their physically processed forms.'].filter(Boolean).join(' · '),
-          source:group?[r.url,sources.scope+'#page=1',group.identity].join(' | '):r.url});
+          source:group?[r.url,sources.scope+'#page=1',group.identity,...(group.commodityGroup==='dairy'?[group.classification]:[])].join(' | '):r.url});
       }
       if(matrix==='tea'){
         bannedTea.forEach(([parameter,scope],i)=>rows.push({article:'29 November 2023 · Annexure 1, item '+(i+1),
