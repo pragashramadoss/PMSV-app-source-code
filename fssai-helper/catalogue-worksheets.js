@@ -3,10 +3,10 @@
   'use strict';
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
   const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel, Q = root.PMSVIngredientPercentage, O = root.PMSVIngredientOrder, S = root.PMSVSmallPack, T = root.PMSVBatchSite, L = root.PMSVLotDates;
-  const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan;
+  const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan, water = root.PMSVVendingWater;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 121 && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 501 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 122 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 501 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -25,11 +25,11 @@
     for (const row of r.rows || []) for (const p of row.products || []) focused.add(p.id);
   }
   const states = new Map();
-  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[])];
+  const fields = ['compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
-  const href = (url,label) => /^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url || '') ?
+  const href = (url,label) => (/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url || '') || water?.isSource(url)) ?
     '<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+esc(label)+'</a>' : '';
   function documentLink(id,page,label) {
     const d = E.documents[id];
@@ -179,15 +179,20 @@
       (alias?'<p>'+esc(alias.reason)+'</p>':'')+'<label>Find an additive by name or INS<input type="search" data-ws-add placeholder="e.g. sorbate or 202"></label><div data-ws-add-results>'+addResults(id,'')+'</div>'+documentLink('chapter-19')+' '+documentLink('chapter-21',null,'Appendix C · processing aids'));
   }
   function testingPlanSection(id) {
+    const isVending=id===water.productId;
+    const areas=isVending?[water.area,...plan.areas]:plan.areas;
     return '<details class="ws-section" data-testing-plan><summary>Testing plan and source decisions</summary><div>'+
-      '<p>The selected date applies to metals, toxins and veterinary residues. Composition and microbiology use the 22 November review. The pesticide entries for three product forms were reviewed on 23 November 2026. The product plan includes measured composition, metal and toxin results entered in the worksheet, documented sample decisions, saved pesticide reports and the veterinary assessment.</p><label>Review area<select data-plan-area>'+plan.areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
+      '<p>The selected date applies to metals, toxins and veterinary residues. Composition and microbiology use the 22 November review. The pesticide entries for three product forms were reviewed on 23 November 2026. The product plan includes measured composition, metal and toxin results entered in the worksheet, documented sample decisions, saved pesticide reports and the veterinary assessment.</p><label>Review area<select data-plan-area>'+areas.map(a=>'<option>'+esc(a)+'</option>').join('')+'</select></label>'+
       '<label data-plan-vet-date-label hidden>Assessment date for metals, toxins and veterinary residues<input type="date" data-plan-vet-date value="'+esc(getState(id).vetDate)+'"></label>'+
+      (isVending?water.markup(getState(id)):'')+
       '<div data-plan-fish-screen hidden><label>Quick screen for total arsenic in fish oil (mg/kg)<input type="text" placeholder="e.g. &lt;0.1" maxlength="80" data-plan-total-as></label><p data-plan-as-result role="status"></p><p>To include a laboratory report in the download, enter it under Check a reported metal result.</p></div>'+
       '<button type="button" data-plan-export>Download this product’s testing plan</button><div data-plan-results></div></div></details>';
   }
   function showPlan(node,id) {
     const area=node.querySelector('[data-plan-area]').value;
     const state=getState(id);
+    const waterControls=node.querySelector('[data-water-controls]');
+    if(waterControls)waterControls.hidden=area!==water.area;
     node.querySelector('[data-plan-vet-date-label]').hidden=![plan.areas[2],plan.areas[3],plan.areas[5]].includes(area);
     const screen=node.querySelector('[data-plan-fish-screen]');
     screen.hidden=area!==plan.areas[2]||id!=='02-02-1-fish-oil'||V.edition(state.vetDate)!=='amended';
@@ -197,7 +202,7 @@
       const sampling=[['n',r.n],['c',r.c],['m',r.m],['M',r.M]].filter(([,v])=>v!=null).map(([k,v])=>k+' = '+v).join(', ');
       const urls=(r.source||'').split(' | ').filter(Boolean);
       return [esc(r.parameter),esc([r.form,r.status].filter(Boolean).join(' · ')),esc([r.limit,r.unit,sampling].filter(Boolean).join(' · ')),esc(r.notes),
-        esc(r.article)+' '+urls.map(u=>href(u,u.includes('#page=')?'p. '+u.split('#page=')[1]:'Source')||esc(u)).join(' ')];
+        esc(r.article)+' '+urls.map(u=>href(u,r.area===water.area?water.sourceLabel(u):u.includes('#page=')?'p. '+u.split('#page=')[1]:'Source')||esc(u)).join(' ')];
     });
     node.querySelector('[data-plan-results]').innerHTML=table(['Parameter or decision','Form and applicability','Criterion or sampling plan','Basis or next action','Source'],cells);
   }
@@ -232,7 +237,8 @@
     const a=E.commodityRows[Number(key)];
     return 'Candidate recorded for review · '+a[0]+' · '+a[1]+' · '+E.documents[a[5]].url.split('#')[0]+'#page='+a[6];
   }
-  function contaminantEvidence(id) {
+  function contaminantEvidence(id,state={}) {
+    if(id===water.productId)return ['FSSR 2.10.9 incorporates IS 10500 for water offered or sold through a vending machine. The testing plan includes 74 source entries. The named CTR article remains open.',water.readingNote(state)].filter(Boolean).join(' ');
     if(E.products[id].directCTR)return 'Partial direct evidence';
     if(C.positive(id).length)return 'Named finished-article evidence in CTR 2.2.1; wider review open';
     const st=P.status(id);
@@ -362,6 +368,7 @@
         if(plan.metalEdition(previous)!==plan.metalEdition(state.vetDate))P.update(node,id,k,state);
         for(const input of node.querySelectorAll('[data-plan-vet-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
       }
+      if(id===water.productId&&water.fields.includes(k)){water.update(node,k,state,previous);refreshPlan();}
       if(metalField||C.fields.includes(k)||V.fields.includes(k)||['compVariant','compSweetener','criterion','result','unitConfirmed','compReport','reference'].includes(k))refreshPlan();
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
       if(Y.fields.includes(k))Y.update(node,id,k,state,previous);
@@ -401,7 +408,7 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
-      ...(X.groupSource(id)?[X.groupSource(id).text,...X.groupSource(id).urls]:[]),'Product-specific contaminant evidence: '+(contaminantEvidence(id)),'Remaining action: '+(priority.get(id)?.sourceReviewNextAction||p.ctrAction),
+      ...(X.groupSource(id)?[X.groupSource(id).text,...X.groupSource(id).urls]:[]),'Product-specific contaminant evidence: '+(contaminantEvidence(id,s)),'Remaining action: '+(priority.get(id)?.sourceReviewNextAction||p.ctrAction),
       ...(p.routeAnchors||[]).map(([doc,pp,note])=>note+' · '+E.documents[doc].url+'#page='+pp[0]),
       ...(p.gazetteFindings||[]).map(z=>z.parameter+' · '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]),
       'Original Gazette rows matching the catalogue name: '+(p.namedGazette||[]).length,'Product reference: '+(s.reference||'—'),'Variant or article: '+(s.article||'—'),'Primary pack: '+(s.pack?human(s.pack):'—'),
@@ -418,7 +425,7 @@
       const M=root.PMSVMetalScope,B=root.PMSVBroadContaminants;
       const mel=B.scope(id,s.broadForm,s.broadRef,s),hg=M.documentedMercury(id,s);
       const documented=field=>M.documentedChoice(id,field,s);
-      return [id,r.name,human(p.scope),p.standard.split('#')[1]||'',std?.name||r.routeFinding,a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url,(a?.p||route?.[1]||[]).join(', '),a?.basis||route?.[2]||'Regulatory category or licensing route',r.category,p.micro.map(([k,v])=>[k,v.note||v.reason||v.route||v.profile_key].filter(Boolean).join(' · ')).join(' | '),contaminantEvidence(id),(p.namedGazette||[]).length,p.monographs.length,priority.get(id)?.sourceReviewNextAction||p.ctrAction,p.future,'No', (a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url).split('#')[0]+'#page='+(a?.p?.[0]||route?.[1]?.[0]||1),(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='same numerical value').length,(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='different numerical values').length,s.reference||'',s.article||'',s.note||'',(p.gazetteFindings||[]).map(z=>z.parameter+' '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]).join(' | '),...root.PMSVBroadContaminants.values(id),...M.values(id),
+      return [id,r.name,human(p.scope),p.standard.split('#')[1]||'',std?.name||r.routeFinding,a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url,(a?.p||route?.[1]||[]).join(', '),a?.basis||route?.[2]||'Regulatory category or licensing route',r.category,p.micro.map(([k,v])=>[k,v.note||v.reason||v.route||v.profile_key].filter(Boolean).join(' · ')).join(' | '),contaminantEvidence(id,s),(p.namedGazette||[]).length,p.monographs.length,priority.get(id)?.sourceReviewNextAction||p.ctrAction,p.future,'No', (a?E.documents[a.doc].url:E.documents[route?.[0]||p.routeDocs[0]].url).split('#')[0]+'#page='+(a?.p?.[0]||route?.[1]?.[0]||1),(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='same numerical value').length,(p.qualityCrosschecks||[]).filter(([,z])=>z[5]==='different numerical values').length,s.reference||'',s.article||'',s.note||'',(p.gazetteFindings||[]).map(z=>z.parameter+' '+z.result+' '+z.scope+' '+E.documents[z.document].url+'#page='+z.pages[0]).join(' | '),...root.PMSVBroadContaminants.values(id),...M.values(id),
         M.mercuryGuide(id)?.reason||B.scope(id).h.why,
         mel.m.options.length && mel.applied ? B.resolution(id,s.broadForm,s.broadRef)+' · '+s.broadRef:'',
         hg?hg.article+' · '+hg.level+' · '+hg.why:'',documented('metalForm'),documented('metalPack'),

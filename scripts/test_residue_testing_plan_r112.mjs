@@ -12,7 +12,7 @@ for(const [,name] of template.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const plan=ctx.PMSVTestingPlan;
 const [header,...rows]=plan.exportRows();
 assert.equal(header.length,15);
-assert.equal(rows.length,25378);
+assert.equal(rows.length,25452);
 assert.equal(plan.areas.length,6);
 const residueAreas=plan.areas.slice(4);
 for(const [index,area] of residueAreas.entries()){
@@ -22,7 +22,7 @@ for(const [index,area] of residueAreas.entries()){
 }
 for(const {id} of ctx.PMSV_CATALOGUE){
   const product=plan.exportRows(id).slice(1);
-  assert.equal(new Set(product.map(row=>row[2])).size,6);
+  assert.equal(new Set(product.map(row=>row[2])).size,id===ctx.PMSVVendingWater.productId?7:6);
   assert(product.every(row=>row[0]===id));
 }
 const vet=id=>ctx.PMSVVeterinary.planRows(id);

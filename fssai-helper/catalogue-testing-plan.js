@@ -451,6 +451,7 @@
     composition(id,add,state);microbiology(id,add);contaminants(id,add,vetDate,state||{});
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
+    if(id===root.PMSVVendingWater?.productId)for(const row of root.PMSVVendingWater.planRows(id,state))add(row);
     if(state){
       for(const r of root.PMSVResiduePanel.planRows(id))add({...r,area:areas[4]});
       const veterinary=root.PMSVVeterinary.recordedPlanRow(id,state,vetDate);
