@@ -10,10 +10,10 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
 }
 const {PMSVCropScope:crop,PMSVTestingPlan:plan,PMSVCatalogueWorksheets:worksheets,PMSV_REVIEW_REGISTER:register}=ctx;
 const ids=['05-05-1-dry-mixtures-of-cocoa-and-sugars','10-10-3-pickled-eggs'];
-assert.deepEqual([...register.firstSourceReview.toxinProductIds].sort(),ids);
-assert.equal(register.firstSourceReview.withRoute,505);
+assert.deepEqual([...register.firstSourceReview.toxinProductIds].sort(),[...ids,crop.childId].sort());
+assert.equal(register.firstSourceReview.withRoute,506);
 const queue=worksheets.pendingSourceRows().slice(1);
-assert.equal(queue.length,28);
+assert.equal(queue.length,27);
 assert(queue.some(r=>r[1]==='Cocoa Beans')&&queue.some(r=>r[1]==='Egg powder'));
 assert.equal(crop.spiceCriteriaRows().length,9);
 for(const id of ids){

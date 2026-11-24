@@ -347,6 +347,11 @@
       status:'Assessment date outside reviewed editions',notes:datePrompt,source:refs.veterinary+'#page=17 | '+refs.december+'#page=4'}];
     const rows=[{article:'CTR 2.3.2',form:'Marketed article',parameter:'Identify the animal source, product and sampled portion',
       status:grades[p.grade],notes:p.note,source:refs.veterinary+'#page=17 | '+(e==='amended'?refs.december+'#page=6':refs.seafood+'#page=19')}];
+    if(id===root.PMSVCropScope?.childId){
+      const provision=root.PMSVCropScope.childResidues;
+      rows[0].notes+=' '+provision.veterinary;
+      rows[0].source+=' | '+provision.source;
+    }
     const found=new Map();
     let seafood=false;
     for(const matrix of p.choices){

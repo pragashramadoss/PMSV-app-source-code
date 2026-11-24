@@ -14,7 +14,7 @@
   };
   const selections={total:'af',b1:'af',m1:'milk',ota:'ochra',pat:'apple',don:'don',agar:'mushroom',hcn:'cyan',hyp:'hyper',saf:'saff',pcb:'fish',pah:'smoke'};
   const field=a=>'crop_'+selections[a];
-  const fieldKeys=[...new Set(analytes.map(field).concat('crop_dec'))];
+  const fieldKeys=[...new Set(analytes.map(field).concat('crop_dec','crop_childAge'))];
 
   const maps={
     m1:[['milk','milk'],['milkgrade','powder'],['milkflav','flavmilk'],['milksource','milkin']],
@@ -78,7 +78,50 @@
     }
   };
   const afKeys={total:{finished:'C9',ingredient:'C8'},b1:{finished:'C19',ingredient:'C18'}};
+  const childId='formulated-supplements-children';
+  const childGazette='https://www.fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf';
+  const childAgeChoices=[
+    {value:'covered',label:'Label and specification identify a formulated supplement for children over 24 and up to 36 months'},
+    {value:'other',label:'Another age range, another product standard, or identity uncertain'}
+  ];
+  const childForms=[
+    {value:'finishedBlend',label:'Finished compound food containing a listed cereal or pulse; classification documented',sample:'finished',keys:{total:'C9',b1:'C19'}},
+    {value:'finishedCereal',label:'Finished food classified under the cereal and cereal products entry',sample:'finished',keys:{total:'C0',b1:'C11'}},
+    {value:'inputCereal',label:'Incoming cereal or cereal product sampled separately',sample:'ingredient',keys:{total:'C0',b1:'C11'}},
+    {value:'inputPulse',label:'Incoming pulse sampled separately',sample:'ingredient',keys:{total:'C7',b1:'C17'}},
+    ...['wheat','wheat bran','rye','barley'].map(grain=>({
+      value:grain,label:'Separately sampled '+grain,sample:'ingredient',keys:grain==='rye'?{ota:'C23'}:{ota:'C23',don:'C26'}
+    }))
+  ];
+  const childAnalytes=['total','b1','ota','don'];
+  const childIdentityNote='Confirm FPSFA 2.4.11(4) on the marketed label and specification for children over 24 months through 36 months.';
+  const childSampleNote='Document the recipe, applicable commodity entry and sampled lot. If the finished food could fall under either aflatoxin entry, resolve its classification before comparison.';
+  const childSourceText=childIdentityNote+' '+childSampleNote+' The total aflatoxins maximum is 20 µg/kg for a qualifying compound food and 15 µg/kg for a cereal product or separately tested cereal or pulse. B1 is 10 µg/kg for these entries. Ochratoxin A and deoxynivalenol checks here apply only to individually named grain samples.';
+  const childResidues={
+    source:childGazette+'#page=16',
+    pesticide:'FPSFA 2.4.11(4)(7) requires preparation with special care under good manufacturing practices to minimise pesticide residues in the product.',
+    veterinary:'FPSFA 2.4.11(4)(7) requires the product to be free of hormone and antibiotic residues as determined by agreed analytical methods. Document the agreed method and its reporting limit.'
+  };
+  function childCriteriaRows(){
+    const rows=[['Catalogue ID','Product','Sample','Sample role','Analyte','Maximum','Unit','Evidence needed','Product standard','Contaminant Gazette']];
+    for(const form of childForms){
+      for(const [analyte,key] of Object.entries(form.keys)){
+        const r=data.rows[key];
+        rows.push([childId,root.PMSVCatalogueRules.products[childId].name,form.label,form.sample,data.labels[analyte],
+          String(r.limit),r.unit,childIdentityNote+' '+(form.sample==='finished'?childSampleNote:'Identify the incoming commodity and lot on its separate sample report.'),
+          childGazette+'#page=12',url(r.doc,r.page)]);
+      }
+    }
+    return rows;
+  }
+  function childRoute(a){
+    if(!childAnalytes.includes(a))return null;
+    const options=childForms.filter(form=>form.keys[a]).map(form=>({value:form.value,label:form.label,sample:form.sample,rows:[form.keys[a]]}));
+    options.push({value:'uncertain',label:'Other sample, or classification still unresolved',sample:'unresolved',rows:[]});
+    return {mode:'check',reason:a==='ota'||a==='don'?'Identify the named grain on a separate ingredient report. The finished supplement requires its own applicable entry.':childSampleNote,options};
+  }
   function firstSource(id){
+    if(id===childId)return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:childSourceText,urls:[childGazette+'#page=12',url('ctr-3',28),url('ctr-3',29),url('ctr-2',17)]};
     if(!Object.hasOwn(spiceFoods,id))return null;
     const food=spiceFoods[id];
     return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:food.note+' Finished food: total aflatoxins 20 µg/kg and B1 10 µg/kg. Incoming spice: 30 and 15 µg/kg respectively.',urls:[food.identity,url('ctr-3',29)]};
@@ -111,13 +154,17 @@
   }
   function decision(id,a,s={}){
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
-    const r=spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
+    const child=id===childId&&childRoute(a);
+    const r=child||spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
     if(!r)return {status:'Not named for stated identity',sample:'unmatched',rows:[],reason:note[a]+' No match identified for the catalogue article as described.',sources:allRows[a],choices:[]};
     if(r.mode==='named')return {status:'Named finished article',sample:'finished',rows:r.rows,reason:r.reason,sources:r.rows,choices:[]};
     const opt=r.options.find(o=>o.value===s[k]),proof=evidence(s,k);
     const sources=[...new Set(r.options.flatMap(o=>o.rows))];
+    const ageRef=child&&evidence(s,'crop_childAge');
+    if(child&&(s.crop_childAge!=='covered'||!ageRef))return {status:'Confirm marketed age and product standard',sample:'unresolved',rows:[],
+      reason:childIdentityNote+' '+r.reason,sources,choices:r.options};
     if(opt&&proof)return {status:{finished:'Documented finished article',ingredient:'Documented ingredient sample',outside:'Documented outside these rows',unresolved:'Sample basis unresolved'}[opt.sample],
-      sample:opt.sample,rows:opt.rows,reason:opt.label+' · '+proof,sources:opt.rows.length?opt.rows:sources,choices:r.options};
+      sample:opt.sample,rows:opt.rows,reason:opt.label+' · '+proof+(child?' · Marketed age and identity: '+ageRef:''),sources:opt.rows.length?opt.rows:sources,choices:r.options};
     return {status:opt?'Awaiting evidence reference':'Check article or recipe',sample:'unresolved',rows:[],reason:r.reason,sources,choices:r.options};
   }
   function decisions(id,s={}){return catalogue.has(id)?analytes.map(a=>({key:a,name:data.labels[a],...decision(id,a,s)})):[];}
@@ -256,6 +303,7 @@
   function markup(id,s={}){
     if(!catalogue.has(id))return '';
     const ds=decisions(id,s),seen=new Set(),controlList=[];
+    if(id===childId)controlList.push(control('crop_childAge','Marketed age and product standard',childAgeChoices,s));
     for(const d of ds){
       const k=field(d.key);
       if(!d.choices.length||seen.has(k))continue;
@@ -281,6 +329,7 @@
     }
     if(k==='vetDate'||k==='toxinActive'||k.startsWith('tox_')){refreshLab(node,id,k,s);return;}
     if(!fields.includes(k))return;
+    const childAgeChanged=id===childId&&(k==='crop_childAge'||k==='crop_childAgeRef');
     if(fieldKeys.includes(k)){
       s[k+'Ref']='';
       const input=node.querySelector('[data-ws-field="'+k+'Ref"]');
@@ -288,7 +337,7 @@
     }
     for(const a of analytes){
       const target=field(a);
-      if(k===target||k===target+'Ref'||a==='saf'&&(k==='crop_dec'||k==='crop_decRef'))s[labField(a,'basis')]='';
+      if((childAgeChanged&&childAnalytes.includes(a))||k===target||k===target+'Ref'||a==='saf'&&(k==='crop_dec'||k==='crop_decRef'))s[labField(a,'basis')]='';
     }
     refreshLab(node,id,k,s);
     if(k==='crop_dec'||k==='crop_decRef'){
@@ -296,7 +345,7 @@
       return;
     }
     for(const a of analytes){
-      if(k!==field(a)&&k!==field(a)+'Ref')continue;
+      if(k!==field(a)&&k!==field(a)+'Ref'&&!(childAgeChanged&&childAnalytes.includes(a)))continue;
       const d=decision(id,a,s);
       node.querySelector('[data-crop-result="'+a+'"]').innerHTML=resultCell(d);
       node.querySelector('[data-crop-source="'+a+'"]').innerHTML=referenceLinks(d.sources);
@@ -325,5 +374,5 @@
     }
     return {products:catalogue.size,analytes:analytes.length,sourceRows:Object.keys(data.rows).length,namedProducts,priorityNamed,namedDecisions};
   }
-  root.PMSVCropScope=Object.freeze({fields,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
+  root.PMSVCropScope=Object.freeze({fields,childId,childCriteriaRows,childResidues,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
 })(globalThis);

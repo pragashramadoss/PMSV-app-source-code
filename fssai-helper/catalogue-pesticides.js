@@ -387,6 +387,11 @@
     if(!p)return [];
     const rows=[{article:'CTR 2.3.1',form:'Marketed article',parameter:'Identify the sampled commodity and process',
       status:routes[p.grade],notes:p.note,source:sources.gazette+'#page=31 | '+sources.scope+'#page=1'}];
+    if(id===root.PMSVCropScope?.childId){
+      const provision=root.PMSVCropScope.childResidues;
+      rows[0].notes+=' '+provision.pesticide;
+      rows[0].source+=' | '+provision.source;
+    }
     for(const matrix of p.choices){
       const options=matrix==='tea'?[...tableTea,...directed]:byMatrix.get(matrix)||[];
       for(const r of options){
