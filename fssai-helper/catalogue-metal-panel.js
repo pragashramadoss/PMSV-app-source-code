@@ -5,6 +5,12 @@
   if(!D||!M||!B||!E||Object.keys(D.rows).length!==382||Object.keys(D.products).length!==533)return;
   const silverId='100-100-silver-leaf-chandi-ka-warq';
   const silverMetals={Pb:'Pb70',Cu:'Cu8',As:'As31'};
+  const sajjiId='99-99-1-sajji-khar';
+  const unspecifiedMetals={Pb:'Pb71',Cu:'Cu11',As:'As32',Sn:'Sn16',Cd:'Cd8',Hg:'Hg6'};
+  const importLetter='https://indiantradeportal.in/uploads/General%20Documents/NU_SPS-TBT/2021/Dec/cs_ins_26_2021.pdf';
+  const importSources=[importLetter+'#page=2',importLetter+'#page=1'];
+  const importRule='The FSSAI import clarification of 23 June 2021 and Customs Instruction 26/2021 direct testing of imported Sajji Khar or Papad Khar under the foods-not-specified entries until a specific standard is notified. Match the imported ingredient, consignment and lot. A finished papad or a different alkali requires its own assessment.';
+  const importFields=['panelKharForm','panelKharDocument','panelKharLot','panelKharCurrent'];
   const silverSources=[E.documents['food-70'].url+'#page=3',E.documents['chapter-19'].url+'#page=320'];
   const silverFields=['panelSilverForm','panelSilverSpec','panelSilverUse','panelSilverLot','panelSilverDry','panelSilverAs'];
   const silverRule='For a documented lot of edible metallic silver leaf supplied as colour INS 174, the maxima are 10 mg/kg lead and 30 mg/kg copper on dry colouring matter. Arsenic has a 5 mg/kg maximum only when an independent record establishes the non-synthetic colouring classification. Establish permission for the intended use separately.';
@@ -55,7 +61,7 @@
   const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
   const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields,...importFields];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -86,7 +92,7 @@
   function eligible(id,s){
     return groups.fpc.has(id)&&qualified(s,'panelFpc',['yes']);
   }
-  const residualKeys=new Set(['Pb71','Cu11','As32','Sn16','Cd8','Hg6']);
+  const residualKeys=new Set(Object.values(unspecifiedMetals));
   const narrowMetal=m=>['Cr','Ni','Se','Sb'].includes(m);
   function shortDecision(id,m,s){
     const active=M.confection(id,s);
@@ -113,6 +119,7 @@
     return decision('named',[key],h.why);
   }
   function firstSource(id){
+    if(id===sajjiId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:importRule,urls:[...importSources,...[20,23,24,26,27].map(page=>source+'#page='+page)]};
     if(id===silverId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:silverRule,urls:[...silverSources,...[20,23,24].map(page=>source+'#page='+page)]};
     const group=additiveGroup(id);
     if(group){
@@ -181,6 +188,14 @@
     return out;
   }
   function base(id,m,s){
+    if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
+      const key=unspecifiedMetals[m];
+      const consignment=textValue(s,'panelKharDocument'),lot=textValue(s,'panelKharLot');
+      const matched=s.panelKharForm==='imported'&&consignment&&lot&&s.panelKharCurrent==='yes';
+      const reason=matched?'Imported Sajji Khar covered by the FSSAI clarification.':importRule;
+      return {...decision(matched?'residual':'check',[key],reason,matched?'Consignment '+consignment+' · Lot '+lot:''),
+        identitySources:importSources,articleLabel:matched?'Documented imported Sajji Khar':'Confirm imported ingredient and applicable instruction'};
+    }
     if(id===silverId&&Object.hasOwn(silverMetals,m)){
       const keys=[silverMetals[m]],record=(kind,reason,proof)=>({...decision(kind,keys,reason,proof),identitySources:silverSources,articleLabel:kind==='named'?'Documented silver leaf as colour':''});
       if(s.panelSilverForm!=='leaf'||!textValue(s,'panelSilverSpec')||!textValue(s,'panelSilverUse')||!textValue(s,'panelSilverLot')||s.panelSilverDry!=='yes')
@@ -198,7 +213,7 @@
       if(s.panelFpc==='no'&&evidence(s,'panelFpc'))return decision('check',[], 'Identify the applicable product standard and review its catalogue worksheet. The recorded product is outside the FPC 18 direction.',evidence(s,'panelFpc'));
       if(m==='Hg'&&!eligible(id,s)&&M.residualMercury(id))return decision('residual',['Hg6'],'This finished food was independently compared with the named mercury entries. Document category eligibility for the FPC 18 directed assessment.');
       if(primary.includes(m)||m==='Hg'){
-        const k={Pb:'Pb71',Cu:'Cu11',As:'As32',Sn:'Sn16',Cd:'Cd8',Hg:'Hg6'}[m];
+        const k=unspecifiedMetals[m];
         return eligible(id,s)?decision('residual',[k],'Directed finished-food entry under paragraph 4(f). Review the base foods separately for other provisions.',evidence(s,'panelFpc')):
           decision('fpc',[k],'Document that the finished sweet or snack qualifies under paragraphs 3 and 4(f) of the FPC 18 direction.');
       }
@@ -239,6 +254,7 @@
     return p;
   }
   function selectable(id,m,d,s){
+    if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m))return [];
     if(id===silverId&&Object.hasOwn(silverMetals,m))return [];
     if(guidedAdditive(id,m,s))return [];
     if(m==='Pb'&&(ashProfiles[id]||id===syrupId))return [];
@@ -402,6 +418,11 @@
       description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
     }
     if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
+    if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
+      if(!c)return d.reason;
+      if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelKharLot'))return 'Match the laboratory sample to the lot on the import record.';
+      if(textValue(s,'panelLabNumber')&&milligramUnit(s.panelLabUnit)!=='mg/kg')return 'Use a mass-based result for the imported solid ingredient.';
+    }
     if(id===silverId&&Object.hasOwn(silverMetals,m)){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelSilverLot'))return 'Enter the same silver-leaf lot identifier for the material and laboratory report.';
@@ -523,6 +544,13 @@
     if(!known(id))return '';
     let extra='';
     const group=additiveGroup(id);
+    if(id===sajjiId)extra+='<fieldset><legend>Imported Sajji Khar or Papad Khar</legend><p>'+escape(importRule)+'</p>'+
+      '<label>Sample identity'+pick('panelKharForm',[['imported','Imported Sajji Khar or Papad Khar ingredient'],['other','Domestic material, other alkali or finished food']],s)+'</label>'+
+      '<label>Bill of entry or import consignment reference'+input('panelKharDocument',s)+'</label>'+
+      '<label>Ingredient lot on the import record'+input('panelKharLot',s)+'</label>'+
+      '<label class="ws-check"><input type="checkbox" data-ws-field="panelKharCurrent"'+(s.panelKharCurrent==='yes'?' checked':'')+'> The interim instruction applies to this consignment on the assessment date</label>'+
+      '<p>'+ref(importSources[0],'FSSAI import clarification, p. 2')+' '+ref(importSources[1],'Customs Instruction 26/2021, p. 1')+'</p>'+
+      '<button type="button" data-sample-review-export>Download the six metal checks</button></fieldset>';
     if(id===silverId)extra+='<fieldset><legend>Silver leaf supplied as a food colour</legend><p>'+escape(silverRule)+'</p>'+
       '<label>Sampled material'+pick('panelSilverForm',[['leaf','Separate edible metallic leaf, INS 174'],['other','Decorated food, premix or other sample']],s)+'</label>'+
       '<label>Food-grade silver leaf supplier specification'+input('panelSilverSpec',s)+'</label>'+
@@ -562,6 +590,10 @@
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
   function update(node,id,k,s,previous){
+    if(id===sajjiId&&previous!==s[k]){
+      if(k==='panelKharForm')for(const f of importFields.slice(1))setInput(node,s,f,'');
+      if(['panelKharDocument','panelKharLot','vetDate'].includes(k))setInput(node,s,'panelKharCurrent','');
+    }
     if(silverFields.includes(k)&&previous!==s[k]){
       if(k==='panelSilverForm')for(const f of silverFields.slice(1))setInput(node,s,f,'');
       if(['panelSilverSpec','panelSilverUse','panelSilverLot'].includes(k)){
@@ -623,5 +655,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

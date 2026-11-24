@@ -48,7 +48,13 @@
   }
   function scope(id,selected='',reference='',state={}){
     if(!canonical(id))return null;
-    const m=melamine(id),h=root.PMSVMetalScope.documentedMercury(id,state)||mercury(id);
+    const m=melamine(id),panel=root.PMSVMetalPanel;
+    let h;
+    if(panel&&id===panel.sajjiId){
+      const d=panel.forMetal(id,'Hg',state);
+      h={key:d.kind==='residual'?'residual':'matrix',article:d.kind==='residual'?'Foods not specified':'Confirm imported Sajji Khar consignment',
+        level:d.kind==='residual'?panel.limit(d.keys[0]):'',page:27,why:[d.reason,d.proof].filter(Boolean).join(' · ')};
+    }else h=root.PMSVMetalScope.documentedMercury(id,state)||mercury(id);
     const applied=m.key||(String(reference).trim()&&m.options.includes(selected)?selected:'');
     return {m,h,applied:applied||'',result:applied?limits[applied][1]+' mg/kg':'Awaiting article or form evidence',
       methyl:'0.25 ppm, calculated as the element',unit:'The table heading allows mg/kg or mg/L. Match the matrix and the reported unit. Melamine uses mg/kg even for liquid infant formula.'};
@@ -63,7 +69,7 @@
     return '<details class="ws-section broad-ctr"><summary>Melamine, mercury and methyl mercury</summary><div><h5>Melamine · CTR 2.5.1</h5><p>'+escape(m.why)+'</p>'+choice+'<p data-broad-result role="status">'+escape(resolution(id,state.broadForm,state.broadRef))+'</p>'+
       (m.options.length?'<p>Published levels in mg/kg · '+m.options.map(k=>escape(limits[k][0]+' '+limits[k][1])).join(' · ')+'</p>':'')+
       ref(source.melamine,3,'Original melamine table')+' '+ref(source.correction,1,'Clause-number corrigendum')+' '+ref(source.current,51,'Consolidated table')+' '+(m.extra?ref(m.extra[0],m.extra[1],'Product identity source'):'')+' '+(m.law?ref(m.law[0],m.law[1],'Food Safety and Standards Act, section 3'):'')+
-      '<h5>Mercury · CTR 2.1.1, item 6</h5>'+root.PMSVMetalScope.mercuryControls(id,state)+'<p data-hg-value role="status">'+escape(h.article+(h.level?' · '+h.level:''))+'</p><p data-hg-basis>'+escape(h.why)+'</p>'+ref(source.metal,27,'Mercury table p. 27')+' '+ref(source.metal,28,'Mercury table p. 28')+
+      '<h5>Mercury · CTR 2.1.1, item 6</h5>'+(id===root.PMSVMetalPanel?.sajjiId?'':root.PMSVMetalScope.mercuryControls(id,state))+'<p data-hg-value role="status">'+escape(h.article+(h.level?' · '+h.level:''))+'</p><p data-hg-basis>'+escape(h.why)+'</p>'+ref(source.metal,27,'Mercury table p. 27')+' '+ref(source.metal,28,'Mercury table p. 28')+
       '<h5>Methyl mercury · CTR 2.1.1, item 7</h5><p>All foods · '+escape(a.methyl)+'. '+escape(a.unit)+'</p><p>Use a result reported for the stated analyte. A mercury result alone does not quantify methyl mercury.</p>'+ref(source.metal,18,'Original unit heading')+' '+ref(source.metal,28,'All-foods Gazette row')+' '+ref(source.current,12,'Consolidated mercury rows')+'</div></details>';
   }
   function brief(id,state){

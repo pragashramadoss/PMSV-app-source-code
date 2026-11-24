@@ -184,7 +184,7 @@
       push({parameter:'Product-specific composition and pack criteria',status:'Use the product calculator',notes:'Use the dedicated calculator for the selected product and pack. Review its linked sources and applicable conditions.'});
       return;
     }
-    const profile=V.profiles.get(id);
+    const profile=V.profileFor(id);
     if(profile){
       const chosen=state&&V.selected(id,state);
       for(const form of chosen?[chosen]:profile.forms){
@@ -193,8 +193,9 @@
           const limit=r.operator==='range'?r.min+' to '+r.max:({'<=':'≤','>=':'≥'})[r.operator]+' '+r.value;
           const status=chosen?(condition||'Selected product variant'):(r.conditional?'Confirm sweetener formulation':'Select declared variant');
           push({form:form.name,parameter:r.parameter,status,limit:condition?'':limit,unit:condition?'':r.unit,
-            notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',V.note(profile.kind)]),source:links(anchor.doc,profile.pages)},r);
+            notes:join([r.analytical_basis,r.conditional?'Exclude when only artificial sweetener is used.':'',profile.note||V.note(profile.kind)]),source:r.source||links(anchor.doc,profile.pages)},r);
         }
+        for(const check of form.checks||[])push({form:form.name,...check});
       }
       return;
     }
@@ -488,6 +489,9 @@
       if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
     }
     if(d.identitySources)row.source=[...new Set([...d.identitySources,...row.source.split(' | ')])].join(' | ');
+    if(id===P.sajjiId&&d.identitySources&&!numeric){
+      row.notes+=' Published maximum for the qualifying imported lot: '+P.limit(keys[0])+' (mg/kg for the solid).';
+    }
     const dated=edition==='amended'?amendedMetal(id,d,row):row;
     if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
     return dated;
@@ -593,6 +597,23 @@
     }
     return out;
   }
+  function sampleReviewRows(id,date=root.PMSVVeterinary.reviewDate,state){
+    const out=[[...headers,'Published conditional maximum','Condition for the published maximum']];
+    for(const key of [P.sajjiId,...V.sampleProfiles.keys()]){
+      if(id&&key!==id)continue;
+      for(const row of exportRows(key,date,false,id?state:undefined).slice(1)){
+        if(key!==P.sajjiId){
+          if(row[2]===areas[0])out.push([...row,'','']);
+          continue;
+        }
+        const code=P.metals.find(([name])=>name===row[5])?.[1];
+        if(row[2]===areas[2]&&Object.hasOwn(P.unspecifiedMetals,code)){
+          out.push([...row,P.limit(P.unspecifiedMetals[code]),P.firstSource(key).text]);
+        }
+      }
+    }
+    return out;
+  }
   function coffeeRows(id,date=root.PMSVVeterinary.reviewDate,state){
     const rows=[headers];
     for(const key of root.PMSVCoffee.ids){
@@ -633,5 +654,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
