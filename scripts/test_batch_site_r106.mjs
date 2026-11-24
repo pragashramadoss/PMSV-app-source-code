@@ -14,7 +14,7 @@ const master='01\tExample North\t'+n+'\tapproved\nA2 | Example West | '+w+' | re
 const base={sku:'Example SKU',art:'Wrapper 106 A',pack:'inner',batch:'01X27',width:'2',masterRef:'Site register 106 revision A',master,role:'different',recordRef:'Batch record 106',recordLicence:n,printState:'list',printList:n};
 const m=(patch={})=>T.model({...base,...patch}),analyse=(patch={},records=[])=>T.analyse(m(patch),records);
 const has=(a,key,kind)=>a.findings.some(f=>f.text.includes(key)&&(!kind||f.kind===kind));
-assert(W.available);assert.equal(R.latestRound,128);assert.equal(R.batchSiteReview.products,533);
+assert(W.available);assert.equal(R.latestRound,129);assert.equal(R.batchSiteReview.products,533);
 assert.equal(analyse().status,'Batch, site and operator licence agree');assert.equal(analyse().prefix,'01');assert.equal(analyse().site,'Example North');
 assert.equal(analyse({master:master.replace('01\t','01 | ').replace('North\t','North | ').replace(n+'\t',n+' | ')}).status,analyse().status);
 for(const width of ['0','-2','2.0','1e1','+2','2characters','10000000000000000000000',''])assert(!analyse({width}).prefix);

@@ -401,9 +401,10 @@
       form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
     if(d.name==='Lead'){
       const route=P.firstSource(id);
-      if(route)row.source=join(route.urls);
+      if(id===P.dextrinId&&route)row.source=join(route.urls);
       if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
     }
+    if(d.identitySources)row.source=[...new Set([...d.identitySources,...row.source.split(' | ')])].join(' | ');
     const dated=edition==='amended'?amendedMetal(id,d,row):row;
     if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
     return dated;

@@ -10,6 +10,24 @@
   const dextrinFields=['panelDextrinForm','panelDextrinSpec','panelDextrinLot','panelDextrinAsh','panelDextrinReport','panelDextrinBasis'];
   const dextrinRule='The starch-conversion entry sets a lead maximum of 5.0 mg/kg only when sulphated ash exceeds 1.0%. Establish the purified ingredient identity under FPSFA 2.11.8 and the sulphated ash of the sampled lot.';
   const syrupRule='FPSFA 2.8.7 allows at most 1.0% sulphated ash by weight in dried glucose syrup. A conforming lot cannot meet the above-1.0% starch-conversion condition. An above-limit ash result requires a separate product-standard review. Confirm the precise lead article independently.';
+  const generalAdditives='99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-';
+  const nutraAdditives='99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised';
+  const additiveGroups={
+    [generalAdditives]:{
+      forms:[['475','Polyglycerol esters of fatty acids'],['476','Polyglycerol esters of interesterified ricinoleic acid (PGPR)']],
+      sources:[E.documents['chapter-19'].url+'#page=174'],
+      text:'For a separately supplied INS 475 or INS 476 lot, the named entries set maxima of 2 mg/kg lead, 25 mg/kg copper and 3 mg/kg arsenic. The emulsifier group also has a 3 mg/kg dry-matter arsenic maximum. Check each reporting basis separately.'
+    },
+    [nutraAdditives]:{
+      forms:[['1401','Acid treated starch'],['1417','Acetylated distarch phosphate'],['1422','Acetylated distarch adipate'],['1451','Acetylated oxidized starch']],
+      sources:[E.documents['baser06-1'].url+'#page=116',E.documents['baser06-3'].url+'#page=7'],
+      text:'For a documented single modified starch supplied as an emulsifier or stabilizer, the group arsenic maximum is 3 mg/kg on dry matter. Identify the INS, its function and current permission for the intended category and format. The historical Schedule VE identifies the substances and functions.'
+    }
+  };
+  const namedEsterRows={'475':{Pb:'Pb113',Cu:'Cu20',As:'As61'},'476':{Pb:'Pb114',Cu:'Cu21',As:'As62'}};
+  const additiveFields=['panelAdditiveINS','panelAdditiveSpec','panelAdditiveRoute','panelAdditiveLot','panelAdditiveAsBasis'];
+  const additiveGroup=id=>Object.hasOwn(additiveGroups,id)?additiveGroups[id]:null;
+  const additiveScope=(id,m)=>id===generalAdditives?['Pb','Cu','As'].includes(m):id===nutraAdditives&&m==='As';
   const metals=Object.entries(D.metals);
   const primary=['Pb','Cu','As','Sn','Cd'];
   const names=Object.fromEntries(metals.map(([name,key])=>[key,name]));
@@ -25,7 +43,7 @@
   const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
   const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -83,6 +101,11 @@
     return decision('named',[key],h.why);
   }
   function firstSource(id){
+    const group=additiveGroup(id);
+    if(group){
+      const pages=id===generalAdditives?[21,23,25]:[25];
+      return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:group.text,urls:[...group.sources,...pages.map(page=>source+'#page='+page)]};
+    }
     return id===dextrinId?{status:'CONDITIONAL_METAL_SOURCE_MATCH',text:dextrinRule,urls:[dextrinIdentity,source+'#page=20']}:null;
   }
   function dextrinLead(s){
@@ -97,7 +120,53 @@
     if(!compare({operator:'>',value:'1.0'},ash))return decision('check',['Pb64'],'At or below 1.0% the sulphated-ash condition is unmet. Review other lead provisions separately.',proof);
     return decision('named',['Pb64'],'The documented purified dextrin lot meets the sulphated-ash condition for the starch-conversion entry.',proof);
   }
+  function additiveRows(id,ins,m){
+    if(!additiveGroup(id)?.forms.some(([code])=>code===ins))return [];
+    const named=namedEsterRows[ins]?.[m];
+    return [named,m==='As'&&'As67'].filter(Boolean);
+  }
+  function guidedAdditive(id,m,s){
+    if(!additiveScope(id,m)||s.panelAdditiveINS==='other')return false;
+    // Keep a documented legacy selection for a different article on its original path.
+    const prior=s[field(m)];
+    if(!s.panelAdditiveINS&&prior&&Object.hasOwn(D.rows,prior)&&evidence(s,field(m))&&
+       !additiveGroup(id).forms.some(([code])=>additiveRows(id,code,m).includes(prior)))return false;
+    return true;
+  }
+  function additiveDecision(id,m,s){
+    const group=additiveGroup(id);
+    const ins=s.panelAdditiveINS,keys=additiveRows(id,ins,m);
+    const choices=keys.length?keys:[...new Set(group.forms.flatMap(([code])=>additiveRows(id,code,m)))];
+    const pending=why=>decision('check',choices,why+' '+group.text);
+    if(!keys.length||!textValue(s,'panelAdditiveSpec')||!textValue(s,'panelAdditiveRoute')||!textValue(s,'panelAdditiveLot'))
+      return pending('Identify the single additive lot and document the supplier specification and its eligible 99.1 route. A blend or finished food requires its own article.');
+    const basis=s.panelAdditiveAsBasis;
+    const key=m==='As'?(basis==='dry'?'As67':basis==='named'?namedEsterRows[ins]?.As:null):keys[0];
+    if(!key)return pending('Confirm the article and analytical basis shown on the arsenic report.');
+    const dry=key==='As67';
+    const reason=dry?'The documented material is an emulsifier or stabilizer and the report gives arsenic on a dry-matter basis.':
+      'Use the entry naming the supplied additive. '+(m==='As'?'Also review the separate dry-matter group entry.':'');
+    const proof=['INS '+ins,'Specification '+textValue(s,'panelAdditiveSpec'),'Classification/use record '+textValue(s,'panelAdditiveRoute'),'Lot '+textValue(s,'panelAdditiveLot')];
+    return decision('named',[key],reason.trim(),proof.join(' · '));
+  }
+  function additiveCriteriaRows(id){
+    const out=[['Catalogue ID','Product','INS','Supplied additive','Metal','Maximum','Unit','Reporting basis','Evidence needed','Identity and classification sources','CTR Gazette']];
+    for(const [key,group] of Object.entries(additiveGroups)){
+      if(id&&key!==id)continue;
+      for(const [ins,name] of group.forms)for(const [metal,m] of metals){
+        for(const rowKey of additiveRows(key,ins,m)){
+          const r=D.rows[rowKey],dry=rowKey==='As67';
+          out.push([key,root.PMSVCatalogueRules.products[key].name,ins,name,metal,literal(rowKey).split(' ')[0],'mg/kg',
+            dry?'Dry matter, for the documented emulsifier or stabilizer':'Named additive, mass basis',
+            'Single supplied material, supplier specification, lot, current classification and intended-use reference; verify the laboratory reporting basis.',
+            group.sources.join(' | '),source+'#page='+r[2]]);
+        }
+      }
+    }
+    return out;
+  }
   function base(id,m,s){
+    if(guidedAdditive(id,m,s))return {...additiveDecision(id,m,s),identitySources:additiveGroup(id).sources};
     if(id===dextrinId&&m==='Pb')return dextrinLead(s);
     if(id===syrupId&&m==='Pb')return decision('check',profile(id,m).keys,syrupRule);
     if(groups.fpc.has(id)){
@@ -145,6 +214,7 @@
     return p;
   }
   function selectable(id,m,d,s){
+    if(guidedAdditive(id,m,s))return [];
     if(m==='Pb'&&(id===dextrinId||id===syrupId))return [];
     if(groups.vending.has(id)||d.kind==='fpc'||d.kind==='hold'||d.kind==='factor'||exact(d.kind)||!d.keys.length||!foodGrade(id,s))return [];
     const mouth=['plantMouth','spiceMouth','otherMouth'].includes(old.confectionery[id]);
@@ -156,6 +226,7 @@
     const requiresPack=m==='Sn'&&!groups.alwaysCanned.has(id)&&d.keys.some(k=>['Sn0','Sn1','Sn3','Sn4','Sn5','Sn6','Sn25'].includes(k));
     if(requiresPack&&!hasPack)return [];
     const selected=d.keys.filter(k=>!['As30','As52'].includes(k)).filter(k=>{
+      if(additiveScope(id,m)&&s.panelAdditiveINS==='other'&&additiveGroup(id).forms.some(([code])=>additiveRows(id,code,m).includes(k)))return false;
       if(m!=='Sn'||!hasPack)return true;
       return s[packKey]==='other'?!['Sn0','Sn1','Sn2','Sn3','Sn4','Sn5','Sn6','Sn25'].includes(k):k!=='Sn16';
     });
@@ -305,6 +376,11 @@
       description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
     }
     if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
+    if(guidedAdditive(id,m,s)){
+      if(!c)return d.reason;
+      if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelAdditiveLot'))return 'Enter the same additive lot identifier on the specification and laboratory report before comparison.';
+      if(textValue(s,'panelLabNumber')&&milligramUnit(s.panelLabUnit)!=='mg/kg')return 'The cited additive entry requires a mass-based report in mg/kg or µg/kg.';
+    }
     if(m==='Pb'&&id===dextrinId){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelDextrinLot'))return 'Enter the same lot identifier on the lead and sulphated ash reports before comparing the lead result.';
@@ -416,6 +492,13 @@
   function controls(id,s={}){
     if(!known(id))return '';
     let extra='';
+    const group=additiveGroup(id);
+    if(group)extra+='<fieldset><legend>Metals in the supplied additive</legend><p>'+escape(group.text)+'</p>'+
+      '<label>Sampled material'+pick('panelAdditiveINS',[...group.forms.map(([ins,name])=>[ins,'INS '+ins+' · '+name]),['blend','Premix, carrier preparation or downstream food'],['other','Another single additive for manual article review']],s)+'</label>'+
+      '<label>Supplier specification and single-substance identity'+input('panelAdditiveSpec',s)+'</label>'+
+      '<label>Current classification, intended food or format and permission reference'+input('panelAdditiveRoute',s)+'</label>'+
+      '<label>Supplier or sampled lot ID'+input('panelAdditiveLot',s)+'</label>'+
+      '<label>Arsenic article and laboratory reporting basis'+pick('panelAdditiveAsBasis',[...(id===generalAdditives?[['named','Mass basis for the named additive']]:[]),['dry','Documented emulsifier or stabilizer function; arsenic reported on dry matter']],s)+'</label></fieldset>';
     if(id===dextrinId)extra+='<fieldset><legend>Lead in dietary fibre (dextrin)</legend><p>'+escape(dextrinRule)+'</p>'+
       '<label>Sampled material'+pick('panelDextrinForm',[['ingredient','Purified dextrin ingredient under FPSFA 2.11.8'],['other','Blend, finished food or different material']],s)+'</label>'+
       '<label>Ingredient specification or process reference'+input('panelDextrinSpec',s)+'</label><label>Sample or lot identifier on the ash report'+input('panelDextrinLot',s)+'</label>'+
@@ -440,6 +523,10 @@
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
   function update(node,id,k,s,previous){
+    if(k==='panelAdditiveINS'&&s[k]!==previous){
+      for(const f of additiveFields.slice(1))setInput(node,s,f,'');
+      for(const m of ['Pb','Cu','As'])if(additiveScope(id,m)){s[field(m)]='';s[field(m)+'Ref']='';}
+    }
     if(dextrinFields.includes(k)&&k!=='panelDextrinBasis'&&previous!==s[k]){
       setInput(node,s,'panelDextrinBasis','');
       if(k==='panelDextrinForm'||k==='panelDextrinLot'){
@@ -462,7 +549,7 @@
     else if(!labFields.includes(k))clearConfirmations(node,s,k);
     if(!labFields.includes(k)){
       node.querySelector('[data-metal-results]').innerHTML=renderRows(id,s);
-      if(['metalForm','metalFormRef','metalPack','metalPackRef','panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef'].includes(k))node.querySelector('[data-panel-choices]').innerHTML=choices(id,s);
+      if(['panelAdditiveINS','metalForm','metalFormRef','metalPack','metalPackRef','panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef'].includes(k))node.querySelector('[data-panel-choices]').innerHTML=choices(id,s);
     }
     const species=node.querySelector('[data-panel-arsenic-form]');
     if(species)species.hidden=!fishArsenic(id,s);
@@ -491,5 +578,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);
