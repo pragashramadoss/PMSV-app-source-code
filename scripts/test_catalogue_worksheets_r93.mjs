@@ -8,7 +8,7 @@ const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const dir=path.join(repo,'fssai-helper');
 const source=f=>fs.readFileSync(path.join(dir,f+'.js'),'utf8');
 const ctx=vm.createContext({});ctx.window=ctx;
-for(const f of ['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-recipe-samples','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-ayurveda-plan','catalogue-cocoa-mixtures','catalogue-powder-standards','catalogue-testing-plan','catalogue-worksheets'])vm.runInContext(source(f),ctx);
+for(const f of ['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-recipe-samples','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-ayurveda-plan','catalogue-cocoa-mixtures','catalogue-powder-standards','catalogue-coffee','catalogue-testing-plan','catalogue-worksheets'])vm.runInContext(source(f),ctx);
 const E=ctx.PMSVCatalogueEvidence,R=ctx.PMSVCatalogueRules,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 assert.equal(W.stats.total,533);assert.equal(W.stats.direct,475);assert.equal(W.stats.partial,396);
@@ -31,7 +31,10 @@ for(const row of rows.slice(1)) {
   for(const key of R.products[id].ctrProfiles||[])if(E.profileGazette[key])hasProfile++;
   for(const item of p.namedGazette||[])assert(E.documents[item[5]]&&item[6]>0);
   for(const {v} of W.enabledCriteria(id)) {
-    if(v.gazette?.endsWith('Gazette_Notification_Standards_Tapioca_Sago_03_11_2017.pdf#page=5')){
+    if(id==='chicory'){
+      const page=v.spec.parameter.startsWith('Added')?120:121;
+      assert.equal(v.gazette,E.documents['baser02-1'].url+'#page='+page);assert(E.documents['baser02-1'].sha256);
+    }else if(v.gazette?.endsWith('Gazette_Notification_Standards_Tapioca_Sago_03_11_2017.pdf#page=5')){
       assert(ref.gaz.some(([key])=>key==='food-46'));assert.equal(E.documents['food-46'].sha256,'cf330b03318e531c15f0b14668f60a9e53cff13ce802d7fa20daed5e342d2323');assert(E.documents['food-46'].pages>=5);
     }else if(v.gazette)assert(ref.gaz.some(([doc,pages])=>pages.some(page=>E.documents[doc].sha256&&v.gazette===E.documents[doc].url+'#page='+page)));
     else assert.equal(ref.basis,'Reviewed source edition and PDF fingerprint');

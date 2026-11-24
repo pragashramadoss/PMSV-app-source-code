@@ -127,6 +127,8 @@
       if (id==='05-05-1-chocolate'||id.includes('cocoa-powder')||id.includes('cocoa-mass')) note='Record the cocoa form and whether it was roasted, alkalised or otherwise processed. An incoming cocoa bean, nut or milk report belongs to that ingredient. The table has no named chocolate or cocoa-bean entry.';
       if (id.includes('sugar-boiled-confectionery')||id.startsWith('11-11-1-')&&id.includes('sugar')) note='Sugarcane is a named crop. Refined sugar and boiled candy need their own processing assessment. Use a sugarcane row only for a separately identified sugarcane sample.';
     }
+    if(id==='coffee')note='Select green or raw beans in the coffee worksheet to assess a marketed raw-bean sample. Identify any separate ingredient lot in the pesticide worksheet.';
+    if(id==='coffee-chicory-mixture')note='Select the ingredient role for a separately tested raw coffee-bean lot. The blend requires its own residue assessment.';
     const result={grade,choices,note};
     profileCache.set(id,result);return result;
   }
@@ -178,7 +180,8 @@
     const p=profile(id);
     if (!p) return null;
     const role=s.pestRole||'product';
-    const choices=!identifiesRole(s)?[]:role==='ingredient'?Object.keys(matrices):p.choices;
+    const marketedChoices=id==='coffee'&&s.coffeeForm==='green'?['coffee']:p.choices;
+    const choices=!identifiesRole(s)?[]:role==='ingredient'?Object.keys(matrices):marketedChoices;
     const matrix=choices.includes(s.pestMatrix)?s.pestMatrix:'';
     const options=byMatrix.get(matrix)||[];
     const row=options.find(r=>r.key===s.pestRow);
@@ -255,7 +258,7 @@
     const {p,role,matrix,row}=current(id,s);
     const g=groupSource(id);
     const sample=matrix&&clean(s.pestSample)?[roleNames[role],matrixName(matrix),processes[s.pestProcess]||'Process pending',clean(s.pestSample),marketedForm(id,role,matrix)&&clean(s.pestScopeRef)].filter(Boolean).join(' · '):'';
-    return [routes[p.grade],p.choices.map(matrixName).join(' | '),p.note,[...new Set([...sourceList(p),...(g?.urls||[]),...(g?.rows.map(r=>r.url)||[])])].join(' | '),sample,
+    return [routes[p.grade],(id==='coffee'&&s.coffeeForm==='green'?['coffee']:p.choices).map(matrixName).join(' | '),p.note,[...new Set([...sourceList(p),...(g?.urls||[]),...(g?.rows.map(r=>r.url)||[])])].join(' | '),sample,
       row?[row.drug,row.article,row.limit+(row.limit==='$'?'':' mg/kg'),row.condition,row.subgroup,row.url].filter(Boolean).join(' · '):'',
       row&&clean(s.pestReport)?[clean(s.pestReport),s.pestKind==='less'?'Reported <':s.pestKind==='quantified'?'Quantified':'Result type pending',
         clean(s.pestValue),s.pestUnit,portions[s.pestPortion],clean(s.pestLoq)?'Method LOQ '+clean(s.pestLoq)+' mg/kg':'',s.pestBasis==='yes'?'Basis confirmed':'Basis pending'].filter(Boolean).join(' · '):'',
@@ -335,6 +338,7 @@
       details('Search the pesticide tables','<label>Search pesticide or commodity<input type="search" data-pest-search placeholder="e.g. rice carbendazim, tea, 64"></label><div data-pest-found>'+indexPage('')+'</div>')+'</div></details>';
   }
   function update(node,id,field,s,previous) {
+    const coffeeChanged=id==='coffee'&&field==='coffeeForm';
     const reset=k=>{s[k]='';};
     if(field==='pestSample'&&clean(previous)&&clean(previous)!==clean(s.pestSample)&&s.pestScopeRef) {
       reset('pestScopeRef');
@@ -349,14 +353,14 @@
         else if(el) el.value='';
       }
     }
-    if(field==='pestRole') reset('pestMatrix');
-    if(['pestRole','pestMatrix','pestProcess'].includes(field)) {
+    if(field==='pestRole'||coffeeChanged) reset('pestMatrix');
+    if(coffeeChanged||['pestRole','pestMatrix','pestProcess'].includes(field)) {
       if(field!=='pestProcess') reset('pestProcess');
       ['pestSample','pestScopeRef','pestRow',...fieldsAfterRow].forEach(reset);
     } else if(field==='pestRow') fieldsAfterRow.filter(k=>k!=='pestReport').forEach(reset);
-    if(['pestRole','pestMatrix','pestProcess','pestRow'].includes(field)){
+    if(coffeeChanged||['pestRole','pestMatrix','pestProcess','pestRow'].includes(field)){
       node.querySelector('[data-pest-controls]').innerHTML=assessment(id,s);
-      node.querySelector('[data-ws-field="'+field+'"]')?.focus();
+      if(!coffeeChanged)node.querySelector('[data-ws-field="'+field+'"]')?.focus();
     } else {
       const outcome=node.querySelector('[data-pest-outcome]');
       if(outcome) outcome.textContent=compare(id,s);

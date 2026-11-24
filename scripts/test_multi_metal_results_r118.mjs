@@ -124,7 +124,7 @@ for (const date of [earlier,later]) {
     }
   }
   const bulk = plan.exportRows(null,date,false,state);
-  assert.equal(bulk.length,date===earlier?25562:25514);
+  assert.equal(bulk.length,date===earlier?25571:25523);
   assert(!bulk.some(row=>row[9].includes('LAB118|')));
 }
 assert.equal(checked,11726);

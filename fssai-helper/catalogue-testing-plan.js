@@ -76,7 +76,7 @@
   }
   const coffeePages={'2.10.2':{roasted_ground:[5],decaffeinated_roasted_ground:[5,6],soluble_coffee:[6],decaffeinated_soluble:[6,7]},
     '2.10.4':{regular_roasted_ground:[7,8],instant:[8],decaffeinated_roasted_ground:[8,9],decaffeinated_instant:[9,10]}};
-  function composition(id,add,state) {
+  function composition(id,add,state,date) {
     const product=E.products[id],std=R.standards[product.standard],anchor=E.standards[product.standard];
     const route=R.products[id];
     if(anchor && id.startsWith('102-')){
@@ -107,6 +107,22 @@
           state.compReport?.trim()&&'Report: '+state.compReport.trim(),worksheet.resultText(id,state)]);
         add({...base,...row,notes});
       }else add({...base,...row});
+    }
+    const coffee=root.PMSVCoffee;
+    if(coffee.profiles.has(id)){
+      const selected=coffee.selected(id,state);
+      for(const form of selected?[selected]:coffee.profiles.get(id)){
+        for(const {spec,source,review} of form.rows){
+          const numeric=form.criteria.some(c=>c.v.spec===spec);
+          push({form:form.name,parameter:spec.parameter,...specInfo(spec),source,
+            status:review?'Confirm the reporting basis':numeric?(selected?'Selected form criterion':'Select the sampled form'):'Inspect solubility under the cited conditions',
+            ...(review?{limit:'',notes:review}:{})},spec);
+        }
+        if(!form.rows.length)push({form:form.name,parameter:'Raw bean identity',status:'Verify product identity',source:form.source,
+          notes:'Match the green or unroasted Coffea seed and species under 2.10.2(1). The roasted and soluble analytical tables have different scopes.'});
+      }
+      if(id===coffee.blend)push(coffee.labelRow(date,state));
+      return;
     }
     const powder=powders?.products.get(id);
     if(powder){
@@ -503,7 +519,9 @@
   function entries(id,vetDate=root.PMSVVeterinary.reviewDate,state) {
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
-    composition(id,add,state);
+    composition(id,add,state,vetDate);
+    const coffee=root.PMSVCoffee;
+    if(id===coffee.blend||id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
     if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
     microbiology(id,add);contaminants(id,add,vetDate,state||{});
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
@@ -532,6 +550,15 @@
       }
     }
     return out;
+  }
+  function coffeeRows(id,date=root.PMSVVeterinary.reviewDate,state){
+    const rows=[headers];
+    for(const key of root.PMSVCoffee.ids){
+      if(id&&key!==id)continue;
+      rows.push(...exportRows(key,date,false,id?state:undefined).slice(1)
+        .filter(r=>r[2]===areas[0]||r[2]===areas[4]&&r[3]==='CTR 2.3.1, entry 129'));
+    }
+    return rows;
   }
   function powderRows(id,date=root.PMSVVeterinary.reviewDate,state){
     const rows=[headers];
@@ -564,5 +591,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

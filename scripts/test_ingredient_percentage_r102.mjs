@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const dir=new URL('../fssai-helper/',import.meta.url);
-const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-recipe-samples','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-ayurveda-plan','catalogue-cocoa-mixtures','catalogue-powder-standards','catalogue-testing-plan','catalogue-worksheets'];
+const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-recipe-samples','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-ayurveda-plan','catalogue-cocoa-mixtures','catalogue-powder-standards','catalogue-coffee','catalogue-testing-plan','catalogue-worksheets'];
 const scripts=modules.map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
 const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
 function open(store=storage){
@@ -18,7 +18,7 @@ const model=(patch={})=>Q.model({...item,...patch});
 const decide=(p={})=>Q.decide(model(p));
 const calc=(p={})=>Q.calculate(model(p));
 const compare=p=>{const m=model(p);return Q.compare(m,Q.decide(m),Q.calculate(m));};
-assert(W.available);assert.equal(R.latestRound,134);assert.equal(R.ingredientPercentageReview.products,533);
+assert(W.available);assert.equal(R.latestRound,135);assert.equal(R.ingredientPercentageReview.products,533);
 assert.equal(R.ingredientPercentageReview.provisos,6);assert(Q.sources.trigger.endsWith('#page=31'));assert(Q.sources.exceptions.endsWith('#page=32'));
 assert.equal(decide().kind,'required');assert(decide().text.includes('(i)'));
 const quiet={name:'absent',words:'no',picture:'no',character:'no'};
