@@ -4,12 +4,19 @@
   const D=root.PMSVMetalPanelData, old=root.PMSVMetalScopeData, M=root.PMSVMetalScope, B=root.PMSVBroadContaminants, E=root.PMSVCatalogueEvidence;
   if(!D||!M||!B||!E||Object.keys(D.rows).length!==382||Object.keys(D.products).length!==533)return;
   const dextrinId='99-99-7-dietary-fibre-dextrin-soluble-fibre';
+  const misriId='11-11-1-misri',trehaloseId='99-99-1-trehalose';
   const syrupId='11-11-1-dried-glucose-syrup';
   const dextrinIdentity='https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Plant_Sterol_HFD_25_07_2016.pdf#page=5';
   const syrupIdentity='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20%28Sweetening%20agents%20including%20Honey%29.pdf#page=13';
   const dextrinFields=['panelDextrinForm','panelDextrinSpec','panelDextrinLot','panelDextrinAsh','panelDextrinReport','panelDextrinBasis'];
   const dextrinRule='The starch-conversion entry sets a lead maximum of 5.0 mg/kg only when sulphated ash exceeds 1.0%. Establish the purified ingredient identity under FPSFA 2.11.8 and the sulphated ash of the sampled lot.';
   const syrupRule='FPSFA 2.8.7 allows at most 1.0% sulphated ash by weight in dried glucose syrup. A conforming lot cannot meet the above-1.0% starch-conversion condition. An above-limit ash result requires a separate product-standard review. Confirm the precise lead article independently.';
+  const misriRule='For finished Misri documented as sugar under the CTR sugar entry, lead is limited to 5.0 mg/kg by mass when the same lot has more than 1.0% sulphated ash. Misri has a separate total-ash maximum of 0.4%. Record a sulphated-ash determination and the product classification before applying the lead row.';
+  const ashProfiles={
+    [dextrinId]:{title:'Lead in dietary fibre (dextrin)',form:'ingredient',sample:'Purified dextrin ingredient under FPSFA 2.11.8',rule:dextrinRule,key:'Pb64',page:20,identity:dextrinIdentity,article:'FPSFA 2.11.8'},
+    [misriId]:{title:'Lead in finished Misri',form:'misri',sample:'Finished Misri documented as sugar under the CTR entry',rule:misriRule,key:'Pb2',page:18,identity:E.documents['baser02-1'].url+'#page=97',article:'FPSFA 2.8.2'}
+  };
+  const trehaloseNote='FPSFA 3.3.4 specifies loss on drying and total ash for crystalline trehalose as supplied. The total-ash result cannot establish sulphated ash. Verify the applicable CTR article and grade for the separate lead assessment.';
   const generalAdditives='99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-';
   const nutraAdditives='99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised';
   const additiveGroups={
@@ -106,19 +113,21 @@
       const pages=id===generalAdditives?[21,23,25]:[25];
       return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:group.text,urls:[...group.sources,...pages.map(page=>source+'#page='+page)]};
     }
-    return id===dextrinId?{status:'CONDITIONAL_METAL_SOURCE_MATCH',text:dextrinRule,urls:[dextrinIdentity,source+'#page=20']}:null;
+    const ash=ashProfiles[id];
+    return ash?{status:'CONDITIONAL_METAL_SOURCE_MATCH',text:ash.rule,urls:[ash.identity,source+'#page='+ash.page]}:null;
   }
-  function dextrinLead(s){
-    const pending=reason=>decision('check',['Pb64'],reason);
-    if(s.panelDextrinForm==='other')return pending('Review the sampled blend or finished food under its own identity. '+dextrinRule);
-    if(s.panelDextrinForm!=='ingredient'||!textValue(s,'panelDextrinSpec')||!textValue(s,'panelDextrinLot')||
-       !textValue(s,'panelDextrinReport')||s.panelDextrinBasis!=='yes')return pending(dextrinRule);
+  function ashLead(id,s){
+    const profile=ashProfiles[id];
+    const pending=reason=>decision('check',[profile.key],reason);
+    if(s.panelDextrinForm==='other')return pending('Review the sampled material under its own identity. '+profile.rule);
+    if(s.panelDextrinForm!==profile.form||!textValue(s,'panelDextrinSpec')||!textValue(s,'panelDextrinLot')||
+       !textValue(s,'panelDextrinReport')||s.panelDextrinBasis!=='yes')return pending(profile.rule);
     const ash=textValue(s,'panelDextrinAsh').replace(/^\./,'0.');
     const compare=root.PMSVCatalogueWorksheets?.compare;
-    if(!compare||compare({operator:'range',min:'0',max:'100'},ash)!==true)return pending('Enter a numerical sulphated ash percentage from the lot report. '+dextrinRule);
-    const proof=['Lot '+textValue(s,'panelDextrinLot'),'ingredient specification '+textValue(s,'panelDextrinSpec'),'sulphated ash '+ash+'%','report/method '+textValue(s,'panelDextrinReport')].join(' · ');
-    if(!compare({operator:'>',value:'1.0'},ash))return decision('check',['Pb64'],'At or below 1.0% the sulphated-ash condition is unmet. Review other lead provisions separately.',proof);
-    return decision('named',['Pb64'],'The documented purified dextrin lot meets the sulphated-ash condition for the starch-conversion entry.',proof);
+    if(!compare||compare({operator:'range',min:'0',max:'100'},ash)!==true)return pending('Enter a numerical sulphated ash percentage from the lot report. '+profile.rule);
+    const proof=['Lot '+textValue(s,'panelDextrinLot'),'classification/specification '+textValue(s,'panelDextrinSpec'),'sulphated ash '+ash+'%','report/method '+textValue(s,'panelDextrinReport')].join(' · ');
+    if(!compare({operator:'>',value:'1.0'},ash))return decision('check',[profile.key],'At or below 1.0% the sulphated-ash condition is unmet. Review other lead provisions separately.',proof);
+    return decision('named',[profile.key],'The sampled lot meets the documented sulphated-ash condition. '+profile.rule,proof);
   }
   function additiveRows(id,ins,m){
     if(!additiveGroup(id)?.forms.some(([code])=>code===ins))return [];
@@ -167,7 +176,8 @@
   }
   function base(id,m,s){
     if(guidedAdditive(id,m,s))return {...additiveDecision(id,m,s),identitySources:additiveGroup(id).sources};
-    if(id===dextrinId&&m==='Pb')return dextrinLead(s);
+    if(ashProfiles[id]&&m==='Pb')return ashLead(id,s);
+    if(id===trehaloseId&&m==='Pb')return decision('check',profile(id,m).keys.filter(k=>k!=='Pb2'&&k!=='Pb64'),trehaloseNote);
     if(id===syrupId&&m==='Pb')return decision('check',profile(id,m).keys,syrupRule);
     if(groups.fpc.has(id)){
       if(s.panelFpc==='no'&&evidence(s,'panelFpc'))return decision('check',[], 'Identify the applicable product standard and review its catalogue worksheet. The recorded product is outside the FPC 18 direction.',evidence(s,'panelFpc'));
@@ -215,7 +225,7 @@
   }
   function selectable(id,m,d,s){
     if(guidedAdditive(id,m,s))return [];
-    if(m==='Pb'&&(id===dextrinId||id===syrupId))return [];
+    if(m==='Pb'&&(ashProfiles[id]||id===syrupId))return [];
     if(groups.vending.has(id)||d.kind==='fpc'||d.kind==='hold'||d.kind==='factor'||exact(d.kind)||!d.keys.length||!foodGrade(id,s))return [];
     const mouth=['plantMouth','spiceMouth','otherMouth'].includes(old.confectionery[id]);
     if(mouth&&!qualified(s,'metalForm',['composite','commodity']))return [];
@@ -381,7 +391,7 @@
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelAdditiveLot'))return 'Enter the same additive lot identifier on the specification and laboratory report before comparison.';
       if(textValue(s,'panelLabNumber')&&milligramUnit(s.panelLabUnit)!=='mg/kg')return 'The cited additive entry requires a mass-based report in mg/kg or µg/kg.';
     }
-    if(m==='Pb'&&id===dextrinId){
+    if(m==='Pb'&&ashProfiles[id]){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelDextrinLot'))return 'Enter the same lot identifier on the lead and sulphated ash reports before comparing the lead result.';
     }
@@ -499,12 +509,14 @@
       '<label>Current classification, intended food or format and permission reference'+input('panelAdditiveRoute',s)+'</label>'+
       '<label>Supplier or sampled lot ID'+input('panelAdditiveLot',s)+'</label>'+
       '<label>Arsenic article and laboratory reporting basis'+pick('panelAdditiveAsBasis',[...(id===generalAdditives?[['named','Mass basis for the named additive']]:[]),['dry','Documented emulsifier or stabilizer function; arsenic reported on dry matter']],s)+'</label></fieldset>';
-    if(id===dextrinId)extra+='<fieldset><legend>Lead in dietary fibre (dextrin)</legend><p>'+escape(dextrinRule)+'</p>'+
-      '<label>Sampled material'+pick('panelDextrinForm',[['ingredient','Purified dextrin ingredient under FPSFA 2.11.8'],['other','Blend, finished food or different material']],s)+'</label>'+
-      '<label>Ingredient specification or process reference'+input('panelDextrinSpec',s)+'</label><label>Sample or lot identifier on the ash report'+input('panelDextrinLot',s)+'</label>'+
+    const ash=ashProfiles[id];
+    if(ash)extra+='<fieldset><legend>'+escape(ash.title)+'</legend><p>'+escape(ash.rule)+'</p>'+
+      '<label>Sampled material'+pick('panelDextrinForm',[[ash.form,ash.sample],['other','A different material or an unresolved classification']],s)+'</label>'+
+      '<label>Product specification and classification reference'+input('panelDextrinSpec',s)+'</label><label>Sample or lot identifier on the ash report'+input('panelDextrinLot',s)+'</label>'+
       '<label>Measured sulphated ash (% by weight)'+input('panelDextrinAsh',s)+'</label><label>Ash report and method reference'+input('panelDextrinReport',s)+'</label>'+
-      '<label class="ws-check"><input type="checkbox" data-ws-field="panelDextrinBasis"'+(s.panelDextrinBasis==='yes'?' checked':'')+'> The report measures sulphated ash on the applicable basis for this ingredient lot</label>'+
-      '<p>'+ref(dextrinIdentity,'Ingredient definition · FPSFA 2.11.8')+' '+ref(source+'#page=20','Lead · Gazette p. 20')+'</p><button type="button" data-dextrin-export>Download dextrin lead check</button></fieldset>';
+      '<label class="ws-check"><input type="checkbox" data-ws-field="panelDextrinBasis"'+(s.panelDextrinBasis==='yes'?' checked':'')+'> The report measures sulphated ash on the applicable basis for this lot</label>'+
+      '<p>'+ref(ash.identity,ash.article)+' '+ref(source+'#page='+ash.page,'Lead · Gazette p. '+ash.page)+'</p>'+
+      (id===dextrinId?'<button type="button" data-dextrin-export>Download dextrin lead check</button>':'<button type="button" data-sugar-export>Download Misri checks</button>')+'</fieldset>';
     if(groups.fpc.has(id))extra+='<label>FPC 18 eligibility'+pick('panelFpc',[['yes','Eligible finished FPC 18 sweet or snack; existing categories 01–14 checked'],['no','An existing product standard or a different category applies']],s)+'</label>'+supporting('panelFpc',s)+'<p>'+ref(direction+'#page=1','FPC 18 direction · paragraphs 3 and 4')+'</p>';
     if(groups.unidentified.has(id))extra+='<label>Exact supplied food-grade material and manufacturing function'+input('panelIdentity',s)+'</label>'+supporting('panelIdentity',s);
     const tin=profile(id,'Sn');
@@ -578,5 +590,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

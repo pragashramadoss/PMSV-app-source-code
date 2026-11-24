@@ -12,7 +12,7 @@ const {PMSVAyurvedaPlan:A,PMSVTestingPlan:P,PMSVCatalogueWorksheets:W,PMSV_REVIE
 assert(W.available);
 const review=register.ayurvedaPlanReview, ids=Object.keys(review.recipePages), [header,...criteria]=A.criteriaRows();
 assert.equal(ids.length,10);assert.equal(criteria.length,100);assert.equal(header.length,10);
-assert.equal(register.firstSourceReview.pending,20);
+assert.equal(register.firstSourceReview.pending,19);
 const queue=W.pendingSourceRows().slice(1).filter(r=>A.known(r[0]));
 assert.equal(queue.length,0);
 const base={ayRecipe:'Signed recipe R',ayVariant:'Variant resolved V',ayIngredient:'present',ayIngredientRef:'Verified ingredient formula',

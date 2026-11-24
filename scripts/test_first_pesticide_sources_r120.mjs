@@ -54,7 +54,7 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
 for(const row of register.slice(1)) {
   if(cases.some(([id])=>id===row[0])||row[0]==='11-11-1-edible-lactose')continue;
   assert.equal(X.groupSource(row[0]),null);
-  if(row[0]===ctx.PMSVMetalPanel.dextrinId)assert.match(row.at(-1),/sulphated ash/);
+  if([ctx.PMSVMetalPanel.dextrinId,ctx.PMSVMetalPanel.misriId].includes(row[0]))assert.match(row.at(-1),/sulphated ash/);
   else if(ctx.PMSVMetalPanel.additiveGroup(row[0]))assert.match(row.at(-1),/arsenic/);
   else if(ctx.PMSVVeterinary.firstSource(row[0]))assert.match(row.at(-1),/edible animal tissues/);
   else if(row[0]===ctx.PMSVRecipeSamples.drink)assert.match(row.at(-1),/saffrole/);

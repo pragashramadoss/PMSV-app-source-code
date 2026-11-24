@@ -7,7 +7,7 @@
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
   const ayurveda=root.PMSVAyurvedaPlan;
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 132 && root.PMSVRecipeSamples?.ids?.length === 4 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 513 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 133 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 4 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 514 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -105,6 +105,7 @@
   function enabledCriteria(id,state) {
     const p=E.products[id];
     if (!p) return [];
+    if (plan.sugarCriteria.has(id)) return plan.sugarCriteria.get(id);
     if (id.startsWith('102-')) return [];
     if (composition.profiles.has(id)) return composition.enabled(id,state||getState(id));
     const s=R.standards[p.standard];
@@ -117,6 +118,10 @@
     const row=enabledCriteria(id,s).find(({i})=>String(i)===s.criterion);
     if (!row || !s.result?.trim()) return '';
     if (s.unitConfirmed!=='yes') return 'Confirm the product variant, unit and analytical basis before comparing.';
+    if(plan.sugarCriteria.has(id)){
+      if(!s.reference?.trim()||!s.compReport?.trim())return 'Enter the sample or lot and laboratory report reference before comparison.';
+      if(compare({operator:'range',min:'0',max:'100'},s.result.trim())!==true)return 'Enter a percentage from 0 to 100 on the specified analytical basis.';
+    }
     const outcome=compare(row.v.spec,s.result.trim());
     if (outcome===null) return 'Enter a non-negative decimal result in the cited unit. Qualifiers such as <LOQ require manual review.';
     return (outcome?'Within':'Outside')+' the cited source-edition criterion for '+row.v.spec.parameter+'.';
@@ -286,7 +291,7 @@
   function measurement(id) {
     const s=getState(id), rows=enabledCriteria(id);
     let calc='';
-    if(rows.length)calc='<label>Source-edition criterion<select data-ws-field="criterion"><option value="">Select a criterion</option>'+rows.map(({v,i})=>'<option value="'+i+'"'+(String(i)===s.criterion?' selected':'')+'>'+esc(v.spec.parameter+' · '+threshold(v.spec)+' · '+(v.spec.analytical_basis||''))+'</option>').join('')+'</select></label><label>Measured result in the cited unit<input inputmode="decimal" data-ws-field="result" value="'+esc(s.result)+'"></label><label>Composition report reference (optional)<input maxlength="180" data-ws-field="compReport" value="'+esc(s.compReport)+'"></label><label class="ws-check"><input type="checkbox" data-ws-field="unitConfirmed"'+(s.unitConfirmed==='yes'?' checked':'')+'> Product variant, analytical basis and unit match the selected criterion</label><p data-ws-outcome role="status">'+esc(resultText(id))+'</p>';
+    if(rows.length)calc='<label>Source-edition criterion<select data-ws-field="criterion"><option value="">Select a criterion</option>'+rows.map(({v,i})=>'<option value="'+i+'"'+(String(i)===s.criterion?' selected':'')+'>'+esc(v.spec.parameter+' · '+threshold(v.spec)+' · '+(v.spec.analytical_basis||''))+'</option>').join('')+'</select></label><label>Measured result in the cited unit<input inputmode="decimal" data-ws-field="result" value="'+esc(s.result)+'"></label><label>Composition report reference'+(plan.sugarCriteria.has(id)?'':' (optional)')+'<input maxlength="180" data-ws-field="compReport" value="'+esc(s.compReport)+'"></label><label class="ws-check"><input type="checkbox" data-ws-field="unitConfirmed"'+(s.unitConfirmed==='yes'?' checked':'')+'> Product variant, analytical basis and unit match the selected criterion</label><p data-ws-outcome role="status">'+esc(resultText(id))+'</p>';
     return calc;
   }
   function variantTable(id) {
@@ -350,6 +355,9 @@
         const panel=node.querySelector('[data-variant-composition]');
         panel.innerHTML=variantTable(id);
         panel.querySelector('[data-ws-field="'+k+'"]').focus();
+      }
+      if(plan.sugarCriteria.has(id)&&['reference','compReport','result'].includes(k)&&previous!==state[k]){
+        state.unitConfirmed='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;
       }
       if(k==='criterion'){state.unitConfirmed='';state.result='';state.compReport='';node.querySelector('[data-ws-field="compReport"]').value='';node.querySelector('[data-ws-field="unitConfirmed"]').checked=false;node.querySelector('[data-ws-field="result"]').value='';}
       if(k==='broadForm'){state.broadRef='';node.querySelector('[data-ws-field="broadRef"]').value='';}
@@ -462,10 +470,10 @@
       const page=a?.p?.[0]||e.routeAnchors?.[0]?.[1]?.[0];
       const link=E.documents[doc].url+(page?'#page='+page:'');
       return [p.id,p.product,p.fssr||e.standard||p.fcs||'Confirm regulatory classification',currentSource(p),p.finding,p.nonTransfer,
-        [root.PMSVRecipeSamples?.profiles[p.id]?.text||(p.id===V.eggPowderId?V.eggNote:p.id===P.syrupId?P.syrupRule:p.sourceCheck?.nextEvidence||p.nextAction||e.ctrAction),ayurveda.known(p.id)?'A separate finished-food Schedule D plan is available. '+ayurveda.brief(p.id):''].filter(Boolean).join(' '),p.id===P.syrupId?P.syrupIdentity:link,R.standards[e.standard]?.name||R.products[p.id].routeFinding];
+        [root.PMSVRecipeSamples?.profiles[p.id]?.text||(p.id===V.eggPowderId?V.eggNote:p.id===P.syrupId?P.syrupRule:p.id===P.trehaloseId?P.trehaloseNote:p.sourceCheck?.nextEvidence||p.nextAction||e.ctrAction),ayurveda.known(p.id)?'A separate finished-food Schedule D plan is available. '+ayurveda.brief(p.id):''].filter(Boolean).join(' '),p.id===P.syrupId?P.syrupIdentity:p.id===P.trehaloseId?E.documents['food-13'].url+'#page=39':link,R.standards[e.standard]?.name||R.products[p.id].routeFinding];
     })];
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,
     partial:[...ids].filter(id=>E.products[id].directCTR).length,portal:[...ids].filter(id=>E.products[id].monographs.length).length}:null;
-  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,pendingSourceRows,currentSource,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
+  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,briefLines,registerRows,pendingSourceRows,currentSource,veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),sugarRows:id=>plan.sugarRows(id,getState(id).vetDate,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
 })(globalThis);

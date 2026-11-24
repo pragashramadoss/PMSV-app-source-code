@@ -19,6 +19,17 @@
     if(!url)return '';
     return pages.length?[...new Set(pages)].map(n=>url+'#page='+n).join(' | '):url;
   }
+  const sugarSources={
+    [P.misriId]:links('baser02-1',[97]),[P.syrupId]:links('baser02-1',[98]),[P.trehaloseId]:links('food-13',[39])
+  };
+  // Keep the stored source rows as the single definition of the eight numerical criteria.
+  const sugarCriteria=new Map();
+  for(const id of Object.keys(sugarSources)){
+    const standard=R.standards[E.products[id].standard];
+    const rows=id!==P.trehaloseId?standard.criteria:sourceRows.products[id].map(k=>sourceRows.rows[k])
+      .filter(r=>r[4]==='%'&&/^≤ [0-9.]+$/.test(r[3])).map(r=>({spec:{parameter:r[1],operator:'<=',value:r[3].slice(2),unit:r[4]}}));
+    sugarCriteria.set(id,rows.map((v,i)=>({v:{...v,compare:true,gazette:sugarSources[id]},i})));
+  }
   const testKeys=['parameter','operator','value','unit','min','max','analytical_basis','source_clause','source_pages','kind'];
   function specInfo(s) {
     const symbol={'<=':'≤','>=':'≥','<':'<','>':'>','=':'='}[s.operator];
@@ -84,6 +95,7 @@
       if(!anchor||product.scope!=='food_additive_identity_purity')return;
     }
     const base={area:areas[0],article:product.standard.split('#')[1],source:links(anchor.doc,anchor.p),form:std.name};
+    if(sugarCriteria.has(id))base.source=[sugarSources[id],base.source].join(' | ');
     const worksheet=root.PMSVCatalogueWorksheets;
     const measured=state?.result?.trim() && worksheet.enabledCriteria(id,state).find(({i})=>String(i)===state.criterion)?.v.spec;
     const operative=measured && product.gazetteFindings?.find(g=>g.parameter===measured.parameter&&
@@ -100,8 +112,9 @@
     if(sourceRows.products[id]){
       for(const key of sourceRows.products[id]){
         const [form,parameter,status,limit,unit,notes,article,doc,pages,kind,extra]=sourceRows.rows[key];
-        const source=[links(doc,pages),...extra].join(' | ');
-        push({area:kind==='micro'?areas[1]:areas[0],form,parameter,status,limit,unit,notes,article,source});
+        const sugar=sugarCriteria.get(id)?.find(item=>item.v.spec.parameter===parameter);
+        const source=[sugarSources[id],links(doc,pages),...extra].filter(Boolean).join(' | ');
+        push({area:kind==='micro'?areas[1]:areas[0],form,parameter,status:sugar?'Source-edition comparison available':status,limit,unit,notes,article,source},sugar?.v.spec);
       }
       return;
     }
@@ -416,7 +429,8 @@
       form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
     if(d.name==='Lead'){
       const route=P.firstSource(id);
-      if(id===P.dextrinId&&route)row.source=join(route.urls);
+      if((id===P.dextrinId||id===P.misriId)&&route)row.source=route.urls.join(' | ');
+      if(id===P.trehaloseId)row.source=[row.source,sugarSources[id]].join(' | ');
       if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
     }
     if(d.identitySources)row.source=[...new Set([...d.identitySources,...row.source.split(' | ')])].join(' | ');
@@ -511,6 +525,19 @@
     }
     return out;
   }
+  function sugarRows(id,date=root.PMSVVeterinary.reviewDate,state={}){
+    const rows=[[...headers,'Published conditional lead maximum','Condition for the published maximum']];
+    for(const [key,checks] of sugarCriteria){
+      if(id&&key!==id)continue;
+      const names=new Set(checks.map(c=>c.v.spec.parameter));
+      rows.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>
+        (row[2]===areas[0]&&names.has(row[5]))||(row[2]===areas[2]&&row[5]==='Lead')).map(row=>{
+          const conditional=key===P.misriId&&row[2]===areas[2];
+          return [...row,conditional?P.limit('Pb2'):'',conditional?P.firstSource(key).text:''];
+        }));
+    }
+    return rows;
+  }
   function animalCriteriaRows(id,date=root.PMSVVeterinary.reviewDate){
     const vet=root.PMSVVeterinary;
     const rows=[headers];
@@ -521,5 +548,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

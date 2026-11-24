@@ -31,7 +31,9 @@ for(const row of rows.slice(1)) {
   for(const key of R.products[id].ctrProfiles||[])if(E.profileGazette[key])hasProfile++;
   for(const item of p.namedGazette||[])assert(E.documents[item[5]]&&item[6]>0);
   for(const {v} of W.enabledCriteria(id)) {
-    assert.equal(ref.basis,'Reviewed source edition and PDF fingerprint');assert.equal(v.compare,true);assert(!v.spec.when || !Object.keys(v.spec.when).length);confirmed++;
+    if(v.gazette)assert(ref.gaz.some(([doc,pages])=>pages.some(page=>E.documents[doc].sha256&&v.gazette===E.documents[doc].url+'#page='+page)));
+    else assert.equal(ref.basis,'Reviewed source edition and PDF fingerprint');
+    assert.equal(v.compare,true);assert(!v.spec.when || !Object.keys(v.spec.when).length);confirmed++;
   }
 }
 assert.equal(hasPage,493);assert.equal(allPages,533);
