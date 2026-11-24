@@ -12,9 +12,9 @@ const {PMSVAyurvedaPlan:A,PMSVTestingPlan:P,PMSVCatalogueWorksheets:W,PMSV_REVIE
 assert(W.available);
 const review=register.ayurvedaPlanReview, ids=Object.keys(review.recipePages), [header,...criteria]=A.criteriaRows();
 assert.equal(ids.length,10);assert.equal(criteria.length,100);assert.equal(header.length,10);
-assert.equal(register.firstSourceReview.pending,22);
+assert.equal(register.firstSourceReview.pending,20);
 const queue=W.pendingSourceRows().slice(1).filter(r=>A.known(r[0]));
-assert.equal(queue.length,2);assert(queue.every(r=>r[6].includes('Schedule D')));
+assert.equal(queue.length,0);
 const base={ayRecipe:'Signed recipe R',ayVariant:'Variant resolved V',ayIngredient:'present',ayIngredientRef:'Verified ingredient formula',
  aySample:'Lot 1',ayReport:'Certificate A',ayBasis:'yes'};
 const expected={'Lead':'2.5','Copper':'30','Arsenic':'1.1','Tin':'250','Cadmium':'1.5','Mercury':'1',

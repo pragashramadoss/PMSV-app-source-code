@@ -4,6 +4,7 @@
   const data=root.PMSVCropScopeData, docs=root.PMSVCatalogueEvidence?.documents;
   const catalogue=new Set(root.PMSVMetalScopeData?.catalogue);
   if(!data || !docs || catalogue.size!==533) return;
+  const recipe=root.PMSVRecipeSamples;
   const analytes=Object.keys(data.labels);
   const groups=Object.fromEntries(Object.entries(data.groups).map(([k,ids])=>[k,new Set(ids)]));
   const allRows={
@@ -162,6 +163,7 @@
     return {mode:'check',reason:a==='ota'||a==='don'?'Identify the named grain on a separate ingredient report. The finished supplement requires its own applicable entry.':childSampleNote,options};
   }
   function firstSource(id){
+    if(recipe?.firstSource(id))return recipe.firstSource(id);
     if(botanicalIds.includes(id)){
       const single=id===botanicalIds[0],sources=new Map();
       for(const f of botanicalForms){
@@ -206,6 +208,8 @@
   }
   function decision(id,a,s={}){
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
+    const recipeDecision=recipe?.decision(id,a,s);
+    if(recipeDecision)return recipeDecision;
     const child=id===childId&&childRoute(a);
     const bot=botanicalRoute(id,a);
     const r=child||bot||spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
@@ -235,7 +239,11 @@
   const futureOptions=[{value:'contains',label:'Mace or nutmeg kernel is an ingredient of the beverage or food'},
     {value:'absent',label:'Neither ingredient is used in the beverage or food'}];
   const futureSource=()=>url('ctr-1',5);
-  function future(s={}){
+  function future(s={},id){
+    if(recipe&&id===recipe.drink){
+      const d=recipe.decision(id,'saf',s,'2026-12-01');
+      return d.status+' · '+d.reason;
+    }
     const v=futureOptions.find(o=>o.value===s.crop_dec),proof=evidence(s,'crop_dec');
     if(!v||!proof)return 'Check the ingredient list for mace and/or nutmeg kernel against the replacement entry. A prior food-category match alone does not carry forward.';
     return (v.value==='contains'?'Documented future article · Saffrole 10 ppm':'Neither specified ingredient documented · no match to the replacement entry on this formulation')+' · '+proof;
@@ -252,7 +260,7 @@
   function documented(id,s){
     const selected=decisions(id,s).filter(d=>['Documented finished article','Documented ingredient sample','Documented outside these rows'].includes(d.status));
     const result=selected.map(d=>d.name+' · '+itemText(d));
-    if(futureOptions.some(o=>o.value===s.crop_dec)&&evidence(s,'crop_dec'))result.push('From 1 December 2026 · '+future(s));
+    if(futureOptions.some(o=>o.value===s.crop_dec)&&evidence(s,'crop_dec'))result.push('From 1 December 2026 · '+future(s,id));
     return result.concat(labSummaries(id,s)).join(' | ');
   }
   function control(k,label,opts,s){
@@ -277,12 +285,12 @@
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
     const get=k=>String(s[labField(a,k)]??'').trim();
     const role=get('role'),sample=get('sample'),report=get('report'),unit=get('unit'),value=get('value');
-    const d=decision(id,a,s),plan=root.PMSVTestingPlan;
+    const d=decision(id,a,recipe?.covered(id,a)&&s.vetDate!==date?{...s,vetDate:date}:s),plan=root.PMSVTestingPlan;
     const row=planned??plan.toxinRow(id,{...d,key:a,name:data.labels[a]},date,s);
     const rule=row?.criterion;
     const criterion=rule?roles[rule.role]+' · '+rule.article+' · maximum '+rule.value+' '+rule.unit:'';
     const botanical=botanicalIds.includes(id)&&Object.hasOwn(afKeys,a);
-    const sameLot=!botanical||sample===String(s.crop_botanicalLot||'').trim();
+    const sameLot=recipe?.covered(id,a)?sample===String(s[field(a)+'Lot']||'').trim():!botanical||sample===String(s.crop_botanicalLot||'').trim();
     const comparable=sameLot&&rule&&role===rule.role&&sample&&report&&Object.hasOwn(massUnits,massUnit(unit));
     const stamp=comparable?JSON.stringify([id,a,plan.metalEdition(date),rule,role,sample,report,unit,row.source,row.notes]):'';
     const confirmed=!!stamp&&get('basis')===stamp;
@@ -292,7 +300,7 @@
     else if(!role)outcome='Select the sample role shown on the laboratory report.';
     else if(role!==rule.role)outcome='The cited maximum applies to a different sample role. Check the sampled article and the report.';
     else if(!sample||!report)outcome='Enter the sample or lot identifier and laboratory report reference.';
-    else if(!sameLot)outcome='The laboratory sample must match the documented spice or premix lot.';
+    else if(!sameLot)outcome=botanical?'The laboratory sample must match the documented spice or premix lot.':'The laboratory sample must match the documented lot for this analyte.';
     else if(!Object.hasOwn(massUnits,massUnit(unit)))outcome='Choose the reported mass-based unit. A volume-based or other unit requires separate review.';
     else if(!confirmed)outcome='Confirm the sample, analyte definition and mass basis for this assessment edition.';
     else if(!value)outcome='Enter the reported value, including any numerical upper bound.';
@@ -358,7 +366,7 @@
     box.querySelector('[data-toxin-outcome]').textContent=confirmed===r.confirmed?r.outcome:labResult(id,a,s).outcome;
     box.querySelector('[data-toxin-links]').innerHTML=labLinks(r);
   }
-  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
+  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','crop_afLot','crop_saffLot','crop_milkLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
   function markup(id,s={}){
     if(!catalogue.has(id))return '';
     const ds=decisions(id,s),seen=new Set(),controlList=[];
@@ -370,21 +378,40 @@
       if(!d.choices.length||seen.has(k))continue;
       seen.add(k);
       controlList.push(control(k,d.key==='total'?'Total aflatoxins and B1':d.name,d.choices,s));
+      if(recipe?.covered(id,d.key))controlList.push('<label>Lot for '+esc(d.key==='total'?'aflatoxins':d.name)+'<input maxlength="180" data-ws-field="'+k+'Lot" value="'+esc(s[k+'Lot'])+'"></label>');
     }
     const published=[...new Set(decisions(id).flatMap(d=>d.sources))];
     const catalogueName=root.PMSVCatalogueRules?.products[id]?.name||'selected food';
     return '<details class="ws-section crop-scope"><summary>Crop contaminants, natural toxins and fish contaminants</summary><div>'+
       '<p>FSSAI CTR 2.2.1 · 20 November 2026 · '+esc(catalogueName)+'. Each limit belongs to the article and sample shown. A recipe or supplier reference can establish an article match. A laboratory result is a separate check.</p>'+
       '<div class="ws-scroll"><table><thead><tr><th>Analyte</th><th>Finished article or input sample</th><th>Gazette</th></tr></thead><tbody>'+
-      ds.map(d=>'<tr><th scope="row">'+esc(d.name)+'</th><td data-crop-result="'+d.key+'">'+resultCell(d)+'</td><td data-crop-source="'+d.key+'">'+referenceLinks(d.sources)+'</td></tr>').join('')+'</tbody></table></div>'+
+      ds.map(d=>'<tr><th scope="row">'+esc(d.name)+'</th><td data-crop-result="'+d.key+'">'+resultCell(d)+'</td><td data-crop-source="'+d.key+'">'+(d.links?recipeLinks(d):referenceLinks(d.sources))+'</td></tr>').join('')+'</tbody></table></div>'+
       (controlList.length?'<details class="ws-section crop-inputs"><summary>Document article and ingredient decisions</summary>'+controlList.join('')+'</details>':'')+
       labPanel(id,s)+'<details class="ws-section"><summary>Published commodity rows and limits</summary><ul>'+published.map(k=>'<li>'+esc(data.labels[analytes.find(a=>allRows[a].includes(k))]+' · '+rowText(k))+' '+referenceLinks([k])+'</li>').join('')+'</ul></details>'+
       cross(id).map(n=>'<p>'+esc(n.text)+' <a class="source-ref" href="'+esc(url(n.doc,n.p))+'" target="_blank" rel="noopener noreferrer">Product standard · PDF p. '+n.p+'</a></p>').join('')+
       '<p>Food product standards also prohibit adding saffrole or isosaffrole as flavouring agents. The natural-occurrence maximum serves a different purpose. <a class="source-ref" href="'+esc(url('chapter-18',90))+'" target="_blank" rel="noopener noreferrer">Flavouring restrictions · PDF p. 90</a></p>'+
       '<details class="ws-section crop-future"><summary>Change effective 1 December 2026</summary><p>The six current saffrole entries are replaced by one 10 ppm entry for beverages and foods containing mace and/or nutmeg kernel as an ingredient.'+esc(futureNote(id))+' <a class="source-ref" href="'+esc(futureSource())+'" target="_blank" rel="noopener noreferrer">Amendment · PDF p. 5</a></p>'+
-      control('crop_dec','Future saffrole article',futureOptions,s)+'<p data-crop-future role="status">'+esc(future(s))+'</p></details></div></details>';
+      control('crop_dec','Future saffrole article',futureOptions,s)+'<p data-crop-future role="status">'+esc(future(s,id))+'</p></details></div></details>';
   }
+  function recipeLinks(d){return (d.links||[]).map(u=>'<a class="source-ref" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Source · p. '+esc(u.split('#page=')[1])+'</a>').join(' ');}
   function update(node,id,k,s,previous){
+    if(recipe?.profiles[id]){
+      for(const a of analytes){
+        if(!recipe.covered(id,a))continue;
+        const key=field(a);
+        if(![key,key+'Lot',key+'Ref','ayRecipe','ayVariant','ayIngredient','ayIngredientRef','vetDate','crop_dec','crop_decRef'].includes(k))continue;
+        if(k===key){
+          s[key+'Lot']='';s[key+'Ref']='';
+          for(const suffix of ['Lot','Ref']){const el=node.querySelector('[data-ws-field="'+key+suffix+'"]');if(el)el.value='';}
+        }
+        s[labField(a,'basis')]='';
+        const d=decision(id,a,s);
+        node.querySelector('[data-crop-result="'+a+'"]').innerHTML=resultCell(d);
+        node.querySelector('[data-crop-source="'+a+'"]').innerHTML=recipeLinks(d);
+      }
+      if(id===recipe.drink&&['ayRecipe','ayVariant','vetDate','crop_saff','crop_saffLot','crop_saffRef'].includes(k))node.querySelector('[data-crop-future]').textContent=future(s,id);
+      if(['ayRecipe','ayVariant','ayIngredient','ayIngredientRef'].includes(k)){refreshLab(node,id,k,s);return;}
+    }
     if(k==='vetDate'&&root.PMSVTestingPlan.metalEdition(previous)!==root.PMSVTestingPlan.metalEdition(s.vetDate)){
       for(const a of analytes)s[labField(a,'basis')]='';
     }
@@ -411,20 +438,20 @@
     }
     refreshLab(node,id,k,s);
     if(k==='crop_dec'||k==='crop_decRef'){
-      node.querySelector('[data-crop-future]').textContent=future(s);
+      node.querySelector('[data-crop-future]').textContent=future(s,id);
       return;
     }
     for(const a of analytes){
       if(k!==field(a)&&k!==field(a)+'Ref'&&!(childAgeChanged&&childAnalytes.includes(a))&&!(botanicalChanged&&Object.hasOwn(afKeys,a)))continue;
       const d=decision(id,a,s);
       node.querySelector('[data-crop-result="'+a+'"]').innerHTML=resultCell(d);
-      node.querySelector('[data-crop-source="'+a+'"]').innerHTML=referenceLinks(d.sources);
+      node.querySelector('[data-crop-source="'+a+'"]').innerHTML=d.links?recipeLinks(d):referenceLinks(d.sources);
     }
   }
   function brief(id,s={}){
     if(!catalogue.has(id))return [];
     return ['FSSAI CTR 2.2.1 · assessment edition 20 November 2026',...decisions(id,s).map(d=>d.name+' · '+itemText(d)+' · '+refs(d.sources).map(x=>x[0]).join(' ')),
-      ...cross(id).map(n=>n.text+' · '+url(n.doc,n.p)),'From 1 December 2026 · '+future(s)+futureNote(id)+' · '+futureSource(),...labSummaries(id,s)];
+      ...cross(id).map(n=>n.text+' · '+url(n.doc,n.p)),'From 1 December 2026 · '+future(s,id)+futureNote(id)+' · '+futureSource(),...labSummaries(id,s)];
   }
   function columns(){return [...analytes.map(a=>data.labels[a]+' · CTR 2.2.1'), 'Named finished-article limits in CTR 2.2.1','Original Gazette references for CTR 2.2.1','Additional product-standard cross-check','From 1 Dec 2026 · saffrole and applicable oil entries','Documented CTR 2.2.1 scope and evidence'];}
   function values(id,s={}){
@@ -432,7 +459,7 @@
     if(!ds.length)return [];
     const sources=[...new Set(ds.flatMap(d=>refs(d.sources).map(([u])=>u)))];
     return [...ds.map(itemText),positive(id).map(d=>d.name).join(' | '),sources.join(' | '),cross(id).map(n=>n.text+' '+url(n.doc,n.p)).join(' | '),
-      future(s)+futureNote(id)+' '+futureSource(),documented(id,s)];
+      future(s,id)+futureNote(id)+' '+futureSource(),documented(id,s)];
   }
   function stats(){
     let namedProducts=0,priorityNamed=0,namedDecisions=0;

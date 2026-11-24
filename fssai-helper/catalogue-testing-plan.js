@@ -427,6 +427,8 @@
   function toxinRow(id,d,date,state={}){
     const edition=metalEdition(date);
     if(!edition||!d)return null;
+    const recipe=root.PMSVRecipeSamples;
+    if(recipe?.covered(id,d.key))d={...d,...recipe.decision(id,d.key,state,date)};
     const data=root.PMSVCropScopeData.rows;
     const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
     const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,
@@ -435,8 +437,11 @@
       notes:d.reason,source:sources.join(' | ')};
     const child=id===C.childId;
     const profile=(d.key==='total'||d.key==='b1'||child&&['ota','don'].includes(d.key))&&C.firstSource(id);
-    if(profile)row.source=[...new Set([...sources,...(child?[profile.urls[0]]:profile.urls)])].join(' | ');
-    const dated=edition==='amended'?amendedToxin(id,d,row,state):row;
+    if(d.links)row.source=[...new Set([...sources,...d.links])].join(' | ');
+    else if(profile)row.source=[...new Set([...sources,...(child?[profile.urls[0]]:profile.urls)])].join(' | ');
+    const recipeDrink=id===recipe?.drink&&d.key==='saf';
+    const dated=edition==='amended'&&!recipeDrink?amendedToxin(id,d,row,state):row;
+    if(recipeDrink)dated.article='CTR 2.2.1(2) · serial 4';
     if(!dated.limit)return dated;
     // Replacement rows explicitly carry a numeric maximum and refer to the finished food.
     if(dated.unit){

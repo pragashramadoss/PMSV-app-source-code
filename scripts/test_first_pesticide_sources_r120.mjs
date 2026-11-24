@@ -57,6 +57,7 @@ for(const row of register.slice(1)) {
   if(row[0]===ctx.PMSVMetalPanel.dextrinId)assert.match(row.at(-1),/sulphated ash/);
   else if(ctx.PMSVMetalPanel.additiveGroup(row[0]))assert.match(row.at(-1),/arsenic/);
   else if(ctx.PMSVVeterinary.firstSource(row[0]))assert.match(row.at(-1),/edible animal tissues/);
+  else if(row[0]===ctx.PMSVRecipeSamples.drink)assert.match(row.at(-1),/saffrole/);
   else if(ctx.PMSVCropScope.firstSource(row[0]))assert.match(row.at(-1),/aflatoxins/);
   else assert.equal(row.at(-1),'');
 }
