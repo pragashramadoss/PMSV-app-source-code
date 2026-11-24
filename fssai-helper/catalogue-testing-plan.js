@@ -399,6 +399,11 @@
     const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
     const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
       form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
+    if(d.name==='Lead'){
+      const route=P.firstSource(id);
+      if(route)row.source=join(route.urls);
+      if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
+    }
     const dated=edition==='amended'?amendedMetal(id,d,row):row;
     if(d.proof&&dated.form===row.form&&dated.status===row.status)dated.notes+=' Evidence: '+d.proof;
     return dated;

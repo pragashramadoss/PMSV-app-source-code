@@ -34,7 +34,7 @@ for(const date of ['2026-11-23','2026-12-01']){
   assert(p.exportRows(m.productId,date).find(r=>r[5]==='Saffrole')[9].includes('actual recipe'));
 }
 const [header,...pending]=w.pendingSourceRows();
-assert.equal(header.length,9);assert.equal(pending.length,31);assert.equal(new Set(pending.map(r=>r[0])).size,31);
+assert.equal(header.length,9);assert.equal(pending.length,30);assert.equal(new Set(pending.map(r=>r[0])).size,30);
 assert(pending.every(r=>r.every(v=>typeof v==='string'&&v.trim())&&r[3]==='FIRST_EXACT_SOURCE_PENDING'&&r[7].startsWith('https://')));
 assert(!pending.some(r=>r[0].endsWith('edible-lactose')));
-console.log('Verified 9 cocoa mix names and 2 chocolate powder reporting bases, scoped exports and all 31 pending source identities.');
+console.log('Verified 9 cocoa mix names and 2 chocolate powder reporting bases, scoped exports and all 30 pending source identities.');

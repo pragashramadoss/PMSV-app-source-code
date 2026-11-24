@@ -53,7 +53,9 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
 }
 for(const row of register.slice(1)) {
   if(cases.some(([id])=>id===row[0])||row[0]==='11-11-1-edible-lactose')continue;
-  assert.equal(X.groupSource(row[0]),null);assert.equal(row.at(-1),'');
+  assert.equal(X.groupSource(row[0]),null);
+  if(row[0]===ctx.PMSVMetalPanel.dextrinId)assert.match(row.at(-1),/sulphated ash/);
+  else assert.equal(row.at(-1),'');
 }
 const frozenMango=X.current(frozen,{pestRole:'product',pestMatrix:'mango'}).options[0];
 assert(frozenMango);
