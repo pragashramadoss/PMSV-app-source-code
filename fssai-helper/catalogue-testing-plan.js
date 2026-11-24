@@ -30,6 +30,27 @@
       .filter(r=>r[4]==='%'&&/^≤ [0-9.]+$/.test(r[3])).map(r=>({spec:{parameter:r[1],operator:'<=',value:r[3].slice(2),unit:r[4]}}));
     sugarCriteria.set(id,rows.map((v,i)=>({v:{...v,compare:true,gazette:sugarSources[id]},i})));
   }
+  const catechuId='04-04-1-catechu-edible',beanId='04-04-2-cocoa-beans';
+  const ingredients=new Map([
+    [P.silverId,{doc:'food-70',pages:[3],note:'Inspect food-grade silver leaf for uniform thickness and absence of creases and folds. Verify that no material of animal origin was used at any stage. Weigh the leaf alone and confirm silver fineness.'}],
+    [catechuId,{doc:'baser02-1',pages:[128],note:'Identify the dried aqueous extract of Acacia catechu heartwood. Check for foreign material. Record ordinary catechu or Bhatti Katha before comparing acid-insoluble ash.'}],
+    [beanId,{doc:'food-54',pages:[28,29],note:'Inspect properly fermented and dried whole Theobroma cacao beans for characteristic shell and absence of live insects. Use a lengthwise cut for internal mould and slaty colour. Apply bean defect percentages by count. Cocoa-powder limits require a different sample.'}]
+  ]);
+  for(const [id,p] of ingredients){
+    p.source=links(p.doc,p.pages);
+    p.criteria=R.standards[E.products[id].standard].criteria.map(({spec},i)=>{
+      const {requires_actual_subtype,replaces_general_acid_insoluble_ash_limit,applies_to_r12,...definition}=spec;
+      const subtype=requires_actual_subtype?(replaces_general_acid_insoluble_ash_limit?'bhatti':'ordinary'):'';
+      const gazette=links(p.doc,[id===beanId&&i>=3?29:p.pages[0]]);
+      const basis=id===catechuId?['Dry at 100°C to constant mass.','Use boiling water and dry residue at 100°C.','Use 90% alcohol and dry residue at 100°C.','Dry basis.','Dry basis, ordinary catechu only.','Dry basis, Bhatti Katha only.'][i]:
+        id===beanId?(i===0?'Moisture by mass.':i===4?'Combined count of germinated and flat beans.':'Percentage of examined beans by count.'):
+        i===0?'Mass per unit area of the leaf alone.':'Parts of silver per 1,000.';
+      return {i:'ingredient-'+i,v:{compare:true,gazette,spec:{...definition,analytical_basis:basis}},subtype};
+    });
+  }
+  function ingredientCriteria(id,state,allForms=false){
+    return (ingredients.get(id)?.criteria||[]).filter(c=>!c.subtype||c.subtype===state?.ingredientSubtype||allForms&&!state?.ingredientSubtype);
+  }
   const testKeys=['parameter','operator','value','unit','min','max','analytical_basis','source_clause','source_pages','kind'];
   function specInfo(s) {
     const symbol={'<=':'≤','>=':'≥','<':'<','>':'>','=':'='}[s.operator];
@@ -107,6 +128,15 @@
           state.compReport?.trim()&&'Report: '+state.compReport.trim(),worksheet.resultText(id,state)]);
         add({...base,...row,notes});
       }else add({...base,...row});
+    }
+    const ingredient=ingredients.get(id);
+    if(ingredient){
+      push({parameter:'Sample identity and physical checks',status:'Verify sample identity',notes:ingredient.note,source:ingredient.source});
+      for(const {v,subtype} of ingredientCriteria(id,state,true)){
+        push({parameter:v.spec.parameter,...specInfo(v.spec),form:subtype==='bhatti'?'Bhatti Katha':subtype==='ordinary'?'Ordinary catechu':std.name,
+          status:subtype&&!state?.ingredientSubtype?'Select the sampled catechu subtype':'Source-edition criterion',source:v.gazette},v.spec);
+      }
+      return;
     }
     const coffee=root.PMSVCoffee;
     if(coffee.profiles.has(id)){
@@ -449,7 +479,7 @@
     if(!edition)return null;
     const keys=d.keys, numeric=['named','residual','all','same'].includes(d.kind);
     const pages=[...new Set(keys.flatMap(k=>{const r=root.PMSVMetalPanelData.rows[k];return [r[2],...r[3]];}))].sort((a,b)=>a-b);
-    const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
+    const row={area:areas[2],article:'CTR 2.1.1(2)',parameter:d.name,status:d.articleLabel||P.labels[d.kind],limit:numeric?join(keys.map(k=>P.limit(k))):'',
       form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
     if(d.name==='Lead'){
       const route=P.firstSource(id);
@@ -551,6 +581,18 @@
     }
     return out;
   }
+  function ingredientRows(id,date=root.PMSVVeterinary.reviewDate,state){
+    const out=[[...headers,'Published conditional maximum','Condition for the published maximum']];
+    for(const key of ingredients.keys()){
+      if(id&&id!==key)continue;
+      for(const row of exportRows(key,date,false,id?state:undefined).slice(1)){
+        const metal=key===P.silverId&&row[2]===areas[2]&&P.metals.find(([name,code])=>name===row[5]&&Object.hasOwn(P.silverMetals,code));
+        if(row[2]!==areas[0]&&!metal)continue;
+        out.push([...row,metal?P.limit(P.silverMetals[metal[1]]):'',metal?P.firstSource(key).text:'']);
+      }
+    }
+    return out;
+  }
   function coffeeRows(id,date=root.PMSVVeterinary.reviewDate,state){
     const rows=[headers];
     for(const key of root.PMSVCoffee.ids){
@@ -591,5 +633,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

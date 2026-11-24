@@ -34,6 +34,10 @@ for(const row of rows.slice(1)) {
     if(id==='chicory'){
       const page=v.spec.parameter.startsWith('Added')?120:121;
       assert.equal(v.gazette,E.documents['baser02-1'].url+'#page='+page);assert(E.documents['baser02-1'].sha256);
+    }else if(id==='04-04-2-cocoa-beans'){
+      const page=['Insect-damaged beans','Germinated and flat beans'].includes(v.spec.parameter)?29:28;
+      assert.equal(v.gazette,E.documents['food-54'].url+'#page='+page);
+      assert.equal(E.documents['food-54'].sha256,'303ec88b54a3fa046ef49ab4dbdc3ca574b237b619f762c64a2fc678fd93f235');
     }else if(v.gazette?.endsWith('Gazette_Notification_Standards_Tapioca_Sago_03_11_2017.pdf#page=5')){
       assert(ref.gaz.some(([key])=>key==='food-46'));assert.equal(E.documents['food-46'].sha256,'cf330b03318e531c15f0b14668f60a9e53cff13ce802d7fa20daed5e342d2323');assert(E.documents['food-46'].pages>=5);
     }else if(v.gazette)assert(ref.gaz.some(([doc,pages])=>pages.some(page=>E.documents[doc].sha256&&v.gazette===E.documents[doc].url+'#page='+page)));

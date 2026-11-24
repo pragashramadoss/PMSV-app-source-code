@@ -3,6 +3,11 @@
   'use strict';
   const D=root.PMSVMetalPanelData, old=root.PMSVMetalScopeData, M=root.PMSVMetalScope, B=root.PMSVBroadContaminants, E=root.PMSVCatalogueEvidence;
   if(!D||!M||!B||!E||Object.keys(D.rows).length!==382||Object.keys(D.products).length!==533)return;
+  const silverId='100-100-silver-leaf-chandi-ka-warq';
+  const silverMetals={Pb:'Pb70',Cu:'Cu8',As:'As31'};
+  const silverSources=[E.documents['food-70'].url+'#page=3',E.documents['chapter-19'].url+'#page=320'];
+  const silverFields=['panelSilverForm','panelSilverSpec','panelSilverUse','panelSilverLot','panelSilverDry','panelSilverAs'];
+  const silverRule='For a documented lot of edible metallic silver leaf supplied as colour INS 174, the maxima are 10 mg/kg lead and 30 mg/kg copper on dry colouring matter. Arsenic has a 5 mg/kg maximum only when an independent record establishes the non-synthetic colouring classification. Establish permission for the intended use separately.';
   const dextrinId='99-99-7-dietary-fibre-dextrin-soluble-fibre';
   const misriId='11-11-1-misri',trehaloseId='99-99-1-trehalose';
   const syrupId='11-11-1-dried-glucose-syrup';
@@ -50,7 +55,7 @@
   const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
   const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -108,6 +113,7 @@
     return decision('named',[key],h.why);
   }
   function firstSource(id){
+    if(id===silverId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:silverRule,urls:[...silverSources,...[20,23,24].map(page=>source+'#page='+page)]};
     const group=additiveGroup(id);
     if(group){
       const pages=id===generalAdditives?[21,23,25]:[25];
@@ -175,6 +181,15 @@
     return out;
   }
   function base(id,m,s){
+    if(id===silverId&&Object.hasOwn(silverMetals,m)){
+      const keys=[silverMetals[m]],record=(kind,reason,proof)=>({...decision(kind,keys,reason,proof),identitySources:silverSources,articleLabel:kind==='named'?'Documented silver leaf as colour':''});
+      if(s.panelSilverForm!=='leaf'||!textValue(s,'panelSilverSpec')||!textValue(s,'panelSilverUse')||!textValue(s,'panelSilverLot')||s.panelSilverDry!=='yes')
+        return record('check','Identify the supplied silver leaf as colour INS 174. Record the specification, intended use and permission reference, lot and dry colouring matter basis. Exclude backing, preparations and decorated foods.');
+      if(m==='As'&&!textValue(s,'panelSilverAs'))return record('check','Document the independent basis for treating this material as food colouring other than synthetic colouring.');
+      const proof=['Specification '+s.panelSilverSpec,'Use and permission '+s.panelSilverUse,'Lot '+s.panelSilverLot];
+      if(m==='As')proof.push('Non-synthetic classification '+s.panelSilverAs);
+      return record('named','Apply to the separately sampled INS 174 silver leaf on dry colouring matter.',proof.join(' · '));
+    }
     if(guidedAdditive(id,m,s))return {...additiveDecision(id,m,s),identitySources:additiveGroup(id).sources};
     if(ashProfiles[id]&&m==='Pb')return ashLead(id,s);
     if(id===trehaloseId&&m==='Pb')return decision('check',profile(id,m).keys.filter(k=>k!=='Pb2'&&k!=='Pb64'),trehaloseNote);
@@ -224,6 +239,7 @@
     return p;
   }
   function selectable(id,m,d,s){
+    if(id===silverId&&Object.hasOwn(silverMetals,m))return [];
     if(guidedAdditive(id,m,s))return [];
     if(m==='Pb'&&(ashProfiles[id]||id===syrupId))return [];
     if(groups.vending.has(id)||d.kind==='fpc'||d.kind==='hold'||d.kind==='factor'||exact(d.kind)||!d.keys.length||!foodGrade(id,s))return [];
@@ -298,7 +314,7 @@
   }
   function compact(d){
     const items=d.keys.length<=10?d.keys.map(rowText).join(' / '):d.keys.length+' candidate Gazette rows on PDF pages '+[...new Set(d.keys.flatMap(pages))].sort((a,b)=>a-b).join(', ');
-    return [label[d.kind],items,d.reason,d.proof?'Evidence · '+d.proof:''].filter(Boolean).join(' · ');
+    return [d.articleLabel||label[d.kind],items,d.reason,d.proof?'Evidence · '+d.proof:''].filter(Boolean).join(' · ');
   }
   const pdfLinks=keys=>[...new Set(keys.flatMap(pages))].sort((a,b)=>a-b).map(pg=>ref(source+'#page='+pg,'PDF p. '+pg)).join(' ');
   function renderRows(id,s={}){
@@ -307,7 +323,7 @@
     return '<p data-panel-progress role="status">'+st.exact+' of 11 headings have an exact article or a confirmed absence of a named row.'+
       (st.common?' Another '+st.common+' have a common maximum across the possible articles.':'')+'</p>'+
       '<div class="ws-scroll"><table><thead><tr><th>Metal</th><th>Decision</th><th>Published entry and basis</th><th>Scope and sources</th></tr></thead><tbody>'+
-      ds.map(d=>'<tr data-panel-metal="'+d.key+'"><th scope="row">'+escape(d.name)+'</th><td>'+escape(label[d.kind])+'</td><td>'+
+      ds.map(d=>'<tr data-panel-metal="'+d.key+'"><th scope="row">'+escape(d.name)+'</th><td>'+escape(d.articleLabel||label[d.kind])+'</td><td>'+
         (d.keys.length<=8?d.keys.map(k=>escape(D.rows[k][0]+' · '+limit(k))).join('<br>'):escape(d.keys.length+' candidate entries. Use the Gazette table search below.'))+
         '</td><td>'+escape(d.reason)+(d.proof?'<br>'+escape('Evidence · '+d.proof):'')+' '+pdfLinks(d.keys)+'</td></tr>').join('')+'</tbody></table></div>';
   }
@@ -386,6 +402,10 @@
       description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
     }
     if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
+    if(id===silverId&&Object.hasOwn(silverMetals,m)){
+      if(!c)return d.reason;
+      if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelSilverLot'))return 'Enter the same silver-leaf lot identifier for the material and laboratory report.';
+    }
     if(guidedAdditive(id,m,s)){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelAdditiveLot'))return 'Enter the same additive lot identifier on the specification and laboratory report before comparison.';
@@ -503,6 +523,13 @@
     if(!known(id))return '';
     let extra='';
     const group=additiveGroup(id);
+    if(id===silverId)extra+='<fieldset><legend>Silver leaf supplied as a food colour</legend><p>'+escape(silverRule)+'</p>'+
+      '<label>Sampled material'+pick('panelSilverForm',[['leaf','Separate edible metallic leaf, INS 174'],['other','Decorated food, premix or other sample']],s)+'</label>'+
+      '<label>Food-grade silver leaf supplier specification'+input('panelSilverSpec',s)+'</label>'+
+      '<label>Intended use and applicable permission reference'+input('panelSilverUse',s)+'</label>'+
+      '<label>Sampled silver-leaf lot ID'+input('panelSilverLot',s)+'</label>'+
+      '<label class="ws-check"><input type="checkbox" data-ws-field="panelSilverDry"'+(s.panelSilverDry==='yes'?' checked':'')+'> The analytical basis is dry colouring matter for the silver leaf alone</label>'+
+      '<label>Independent non-synthetic classification reference for arsenic'+input('panelSilverAs',s)+'</label></fieldset>';
     if(group)extra+='<fieldset><legend>Metals in the supplied additive</legend><p>'+escape(group.text)+'</p>'+
       '<label>Sampled material'+pick('panelAdditiveINS',[...group.forms.map(([ins,name])=>[ins,'INS '+ins+' · '+name]),['blend','Premix, carrier preparation or downstream food'],['other','Another single additive for manual article review']],s)+'</label>'+
       '<label>Supplier specification and single-substance identity'+input('panelAdditiveSpec',s)+'</label>'+
@@ -535,6 +562,12 @@
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
   function update(node,id,k,s,previous){
+    if(silverFields.includes(k)&&previous!==s[k]){
+      if(k==='panelSilverForm')for(const f of silverFields.slice(1))setInput(node,s,f,'');
+      if(['panelSilverSpec','panelSilverUse','panelSilverLot'].includes(k)){
+        setInput(node,s,'panelSilverDry','');setInput(node,s,'panelSilverAs','');
+      }
+    }
     if(k==='panelAdditiveINS'&&s[k]!==previous){
       for(const f of additiveFields.slice(1))setInput(node,s,f,'');
       for(const m of ['Pb','Cu','As'])if(additiveScope(id,m)){s[field(m)]='';s[field(m)+'Ref']='';}
@@ -590,5 +623,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);
