@@ -21,7 +21,7 @@ const candy={sku:'Example candy',art:'Jar A',pack:'outer',target:'Mango pulp',re
 const form=(changes={})=>Q.model({...candy,...changes});
 const requests=changes=>Array.from(Q.recipeQuestions(form(changes))).join('\n');
 const save=(changes={},pid=id)=>{const r=Q.save(pid,form(changes));assert(r.key,r.message);return r;};
-assert(W.available);assert.equal(R.latestRound,129);assert.equal(R.recipeRequestReview.products,533);
+assert(W.available);assert.equal(R.latestRound,130);assert.equal(R.recipeRequestReview.products,533);
 assert.equal(Q.requestRows().length,1);assert.equal(Q.requestColumns[2],'Recipe information required from R&D');
 assert.equal(requests({}),''); // Percentage missing on artwork; all recipe information is known.
 assert.equal(requests({printed:'8',print:'value'}),''); // Fully documented numerical mismatch.

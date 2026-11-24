@@ -14,7 +14,7 @@
   };
   const selections={total:'af',b1:'af',m1:'milk',ota:'ochra',pat:'apple',don:'don',agar:'mushroom',hcn:'cyan',hyp:'hyper',saf:'saff',pcb:'fish',pah:'smoke'};
   const field=a=>'crop_'+selections[a];
-  const fieldKeys=[...new Set(analytes.map(field).concat('crop_dec','crop_childAge'))];
+  const fieldKeys=[...new Set(analytes.map(field).concat('crop_dec','crop_childAge','crop_botanical'))];
 
   const maps={
     m1:[['milk','milk'],['milkgrade','powder'],['milkflav','flavmilk'],['milksource','milkin']],
@@ -78,6 +78,47 @@
     }
   };
   const afKeys={total:{finished:'C9',ingredient:'C8'},b1:{finished:'C19',ingredient:'C18'}};
+  const botanicalIds=[
+    '99-99-7-ingredients-listed-under-schedule-iv-schedule-vi-and-schedule-viii-of-nutraceutica',
+    '99-99-7-mixtures-preparations-premix-of-functional-ingredients'
+  ];
+  const botanicalGazette='https://fssai.gov.in/docs/food-law/regulations/amendments/nutraceuticals/6138887092069Gazette_Notification_Nutra_08_09_2021.pdf';
+  const spiceStandard='https://fssai.gov.in/upload/uploadfiles/files/10_%20Chapter%202_9%20%28Salt%2C%20Spices%2C%20Condiments%20and%20related%20products%29.pdf';
+  const botanicalForms=[
+    {value:'turmeric',label:'Turmeric · ground dried Curcuma longa rhizome',page:114,spicePage:27},
+    {value:'cinnamon',label:'Cinnamon · ground dried inner bark of Cinnamomum verum',page:113,spicePage:8},
+    {value:'clove',label:'Clove · ground dried unopened flower buds of Syzygium aromaticum',page:113,spicePage:10}
+  ];
+  const botanicalEvidence='Record the applicable FoSCoS 99.7 classification, the listed species, plant part and grinding process in the approved specification. Extracts, oils and isolated constituents require their own assessment.';
+  const botanicalSamples={
+    single:{value:'suppliedPowder',label:'Finished lot sold as the identified single ground spice ingredient',sample:'finished',keys:{total:'C8',b1:'C18'}},
+    mix:{value:'compoundPremix',label:'Finished compound food premix containing the ground spice, classified under the food-containing entry',sample:'finished',keys:{total:'C9',b1:'C19'}},
+    incoming:{value:'incomingPowder',label:'Separately sampled incoming ground spice for the premix',sample:'ingredient',keys:{total:'C8',b1:'C18'}}
+  };
+  function botanicalSamplesFor(id){
+    if(id===botanicalIds[0])return [botanicalSamples.single];
+    if(id===botanicalIds[1])return [botanicalSamples.mix,botanicalSamples.incoming];
+    return [];
+  }
+  function botanicalRoute(id,a){
+    if(!botanicalIds.includes(id)||!Object.hasOwn(afKeys,a))return null;
+    const options=botanicalSamplesFor(id).map(f=>({...f,rows:[f.keys[a]]}));
+    options.push({value:'unverified',label:'Extract, oil, isolate, other product or unresolved classification',sample:'unresolved',rows:[]});
+    return {mode:'check',reason:botanicalEvidence+' Identify the sampled article and lot. For a compound premix, document the full formulation and its classification. A spice mix alone has a separate entry.',options};
+  }
+  function botanicalCriteriaRows(id){
+    const rows=[['Catalogue ID','Product','Specified ground spice','Sampled article','Sample role','Analyte','Maximum','Unit','Required evidence','Ingredient list','Spice identity','Contaminant Gazette']];
+    for(const key of botanicalIds){
+      if(id&&id!==key)continue;
+      for(const f of botanicalForms)for(const sample of botanicalSamplesFor(key))for(const [a,k] of Object.entries(sample.keys)){
+        const r=data.rows[k];
+        rows.push([key,root.PMSVCatalogueRules.products[key].name,f.label,sample.label,sample.sample,data.labels[a],String(r.limit),r.unit,
+          botanicalEvidence+' Identify the sampled lot. '+(sample===botanicalSamples.mix?'Document the finished formulation and food-containing classification.':'Match the report to the single spice powder.'),
+          botanicalGazette+'#page='+f.page,spiceStandard+'#page='+f.spicePage,url(r.doc,r.page)]);
+      }
+    }
+    return rows;
+  }
   const childId='formulated-supplements-children';
   const childGazette='https://www.fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5bfd0a04c4d4bGazette_Notification_Children_Supplement_26_11_2018.pdf';
   const childAgeChoices=[
@@ -121,6 +162,17 @@
     return {mode:'check',reason:a==='ota'||a==='don'?'Identify the named grain on a separate ingredient report. The finished supplement requires its own applicable entry.':childSampleNote,options};
   }
   function firstSource(id){
+    if(botanicalIds.includes(id)){
+      const single=id===botanicalIds[0],sources=new Map();
+      for(const f of botanicalForms){
+        sources.set(botanicalGazette+'#page='+f.page,'FSSAI ingredient list · p. '+f.page);
+        sources.set(spiceStandard+'#page='+f.spicePage,'Spice identity · p. '+f.spicePage);
+      }
+      sources.set(url('ctr-3',29),'Aflatoxin table · p. 29');
+      sources.set('https://fcstraining.fssai.gov.in/standard-product','FoSCoS · 99.7');
+      return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:botanicalEvidence+' '+(single?'When the marketed powder itself meets the spice entry, total aflatoxins are limited to 30 µg/kg and B1 to 15 µg/kg.':'A documented compound food premix containing the ground spice has maxima of 20 µg/kg total aflatoxins and 10 µg/kg B1. A separately sampled spice has maxima of 30 and 15 µg/kg respectively.'),
+        urls:[...sources.keys()],labels:[...sources.values()]};
+    }
     if(id===childId)return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:childSourceText,urls:[childGazette+'#page=12',url('ctr-3',28),url('ctr-3',29),url('ctr-2',17)]};
     if(!Object.hasOwn(spiceFoods,id))return null;
     const food=spiceFoods[id];
@@ -155,7 +207,8 @@
   function decision(id,a,s={}){
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
     const child=id===childId&&childRoute(a);
-    const r=child||spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
+    const bot=botanicalRoute(id,a);
+    const r=child||bot||spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
     if(!r)return {status:'Not named for stated identity',sample:'unmatched',rows:[],reason:note[a]+' No match identified for the catalogue article as described.',sources:allRows[a],choices:[]};
     if(r.mode==='named')return {status:'Named finished article',sample:'finished',rows:r.rows,reason:r.reason,sources:r.rows,choices:[]};
     const opt=r.options.find(o=>o.value===s[k]),proof=evidence(s,k);
@@ -163,8 +216,11 @@
     const ageRef=child&&evidence(s,'crop_childAge');
     if(child&&(s.crop_childAge!=='covered'||!ageRef))return {status:'Confirm marketed age and product standard',sample:'unresolved',rows:[],
       reason:childIdentityNote+' '+r.reason,sources,choices:r.options};
+    const botanical=bot&&botanicalForms.find(f=>f.value===s.crop_botanical);
+    const spec=bot&&evidence(s,'crop_botanical'),lot=bot&&String(s.crop_botanicalLot||'').trim();
+    if(bot&&(!botanical||!spec||!lot))return {status:'Confirm spice identity, specification and sample lot',sample:'unresolved',rows:[],reason:r.reason,sources,choices:r.options};
     if(opt&&proof)return {status:{finished:'Documented finished article',ingredient:'Documented ingredient sample',outside:'Documented outside these rows',unresolved:'Sample basis unresolved'}[opt.sample],
-      sample:opt.sample,rows:opt.rows,reason:opt.label+' · '+proof+(child?' · Marketed age and identity: '+ageRef:''),sources:opt.rows.length?opt.rows:sources,choices:r.options};
+      sample:opt.sample,rows:opt.rows,reason:opt.label+' · '+proof+(child?' · Marketed age and identity: '+ageRef:'')+(bot?' · '+botanical.label+' · Spec: '+spec+' · Lot: '+lot:''),sources:opt.rows.length?opt.rows:sources,choices:r.options};
     return {status:opt?'Awaiting evidence reference':'Check article or recipe',sample:'unresolved',rows:[],reason:r.reason,sources,choices:r.options};
   }
   function decisions(id,s={}){return catalogue.has(id)?analytes.map(a=>({key:a,name:data.labels[a],...decision(id,a,s)})):[];}
@@ -225,7 +281,9 @@
     const row=planned??plan.toxinRow(id,{...d,key:a,name:data.labels[a]},date,s);
     const rule=row?.criterion;
     const criterion=rule?roles[rule.role]+' · '+rule.article+' · maximum '+rule.value+' '+rule.unit:'';
-    const comparable=rule&&role===rule.role&&sample&&report&&Object.hasOwn(massUnits,massUnit(unit));
+    const botanical=botanicalIds.includes(id)&&Object.hasOwn(afKeys,a);
+    const sameLot=!botanical||sample===String(s.crop_botanicalLot||'').trim();
+    const comparable=sameLot&&rule&&role===rule.role&&sample&&report&&Object.hasOwn(massUnits,massUnit(unit));
     const stamp=comparable?JSON.stringify([id,a,plan.metalEdition(date),rule,role,sample,report,unit,row.source,row.notes]):'';
     const confirmed=!!stamp&&get('basis')===stamp;
     let outcome;
@@ -234,6 +292,7 @@
     else if(!role)outcome='Select the sample role shown on the laboratory report.';
     else if(role!==rule.role)outcome='The cited maximum applies to a different sample role. Check the sampled article and the report.';
     else if(!sample||!report)outcome='Enter the sample or lot identifier and laboratory report reference.';
+    else if(!sameLot)outcome='The laboratory sample must match the documented spice or premix lot.';
     else if(!Object.hasOwn(massUnits,massUnit(unit)))outcome='Choose the reported mass-based unit. A volume-based or other unit requires separate review.';
     else if(!confirmed)outcome='Confirm the sample, analyte definition and mass basis for this assessment edition.';
     else if(!value)outcome='Enter the reported value, including any numerical upper bound.';
@@ -274,7 +333,7 @@
       '<p data-toxin-outcome role="status">'+esc(r.outcome)+'</p><span data-toxin-links>'+labLinks(r)+'</span>';
   }
   function labLinks(r){
-    return r.source.split(' | ').filter(Boolean).map(u=>'<a class="source-ref" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Gazette · p. '+esc(u.split('#page=')[1])+'</a>').join(' ');
+    return r.source.split(' | ').filter(Boolean).map(u=>'<a class="source-ref" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Source · '+(u.includes('#page=')?esc(u.split('#page=')[1]):'FoSCoS')+'</a>').join(' ');
   }
   function labPanel(id,s){
     return '<details class="ws-section toxin-analysis"><summary>Check toxin laboratory results</summary><div>'+
@@ -299,10 +358,12 @@
     box.querySelector('[data-toxin-outcome]').textContent=confirmed===r.confirmed?r.outcome:labResult(id,a,s).outcome;
     box.querySelector('[data-toxin-links]').innerHTML=labLinks(r);
   }
-  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
+  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
   function markup(id,s={}){
     if(!catalogue.has(id))return '';
     const ds=decisions(id,s),seen=new Set(),controlList=[];
+    if(botanicalIds.includes(id))controlList.push(control('crop_botanical','Ground spice identity',botanicalForms.concat({value:'other',label:'Other form, oil, extract or isolate'}),s),
+      '<label>Sampled spice or premix lot identifier<input maxlength="180" data-ws-field="crop_botanicalLot" value="'+esc(s.crop_botanicalLot)+'"></label>');
     if(id===childId)controlList.push(control('crop_childAge','Marketed age and product standard',childAgeChoices,s));
     for(const d of ds){
       const k=field(d.key);
@@ -329,7 +390,16 @@
     }
     if(k==='vetDate'||k==='toxinActive'||k.startsWith('tox_')){refreshLab(node,id,k,s);return;}
     if(!fields.includes(k))return;
+    const botanicalChanged=botanicalIds.includes(id)&&['crop_botanical','crop_botanicalRef','crop_botanicalLot'].includes(k);
     const childAgeChanged=id===childId&&(k==='crop_childAge'||k==='crop_childAgeRef');
+    if(botanicalIds.includes(id)&&(k==='crop_botanical'||k==='crop_af')){
+      const reset=k==='crop_botanical'?['crop_af','crop_afRef','crop_botanicalLot']:['crop_botanicalLot'];
+      for(const dependent of reset){
+        s[dependent]='';
+        const input=node.querySelector('[data-ws-field="'+dependent+'"]');
+        if(input)input.value='';
+      }
+    }
     if(fieldKeys.includes(k)){
       s[k+'Ref']='';
       const input=node.querySelector('[data-ws-field="'+k+'Ref"]');
@@ -337,7 +407,7 @@
     }
     for(const a of analytes){
       const target=field(a);
-      if((childAgeChanged&&childAnalytes.includes(a))||k===target||k===target+'Ref'||a==='saf'&&(k==='crop_dec'||k==='crop_decRef'))s[labField(a,'basis')]='';
+      if((botanicalChanged&&Object.hasOwn(afKeys,a))||(childAgeChanged&&childAnalytes.includes(a))||k===target||k===target+'Ref'||a==='saf'&&(k==='crop_dec'||k==='crop_decRef'))s[labField(a,'basis')]='';
     }
     refreshLab(node,id,k,s);
     if(k==='crop_dec'||k==='crop_decRef'){
@@ -345,7 +415,7 @@
       return;
     }
     for(const a of analytes){
-      if(k!==field(a)&&k!==field(a)+'Ref'&&!(childAgeChanged&&childAnalytes.includes(a)))continue;
+      if(k!==field(a)&&k!==field(a)+'Ref'&&!(childAgeChanged&&childAnalytes.includes(a))&&!(botanicalChanged&&Object.hasOwn(afKeys,a)))continue;
       const d=decision(id,a,s);
       node.querySelector('[data-crop-result="'+a+'"]').innerHTML=resultCell(d);
       node.querySelector('[data-crop-source="'+a+'"]').innerHTML=referenceLinks(d.sources);
@@ -374,5 +444,5 @@
     }
     return {products:catalogue.size,analytes:analytes.length,sourceRows:Object.keys(data.rows).length,namedProducts,priorityNamed,namedDecisions};
   }
-  root.PMSVCropScope=Object.freeze({fields,childId,childCriteriaRows,childResidues,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
+  root.PMSVCropScope=Object.freeze({fields,botanicalIds,botanicalCriteriaRows,childId,childCriteriaRows,childResidues,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
 })(globalThis);
