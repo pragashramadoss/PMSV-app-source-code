@@ -65,14 +65,58 @@
     return r.article+' · '+r.limit+' '+r.unit+(r.heading?' (group heading: Oilseeds or oil)':'');
   }
   function evidence(s,k){return typeof s[k+'Ref']==='string'?s[k+'Ref'].trim():'';}
+  const spiceFoods={
+    '05-05-1-dry-mixtures-of-cocoa-and-sugars':{
+      form:'Finished dry cocoa mix containing an identified spice or spice mix',
+      note:'FPSFA 2.7.6(3) permits spices in the dry mixture. Check that the approved formula contains an identified spice and the sample is the dry mix as sold. A plain cocoa and sugar recipe has no basis for this spice entry.',
+      identity:'https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification/Gazette_Notification_Pulses_Grains_Maize_14_08_2018.pdf#page=22'
+    },
+    '10-10-3-pickled-eggs':{
+      form:'Finished egg pickle including its documented spiced gravy or medium',
+      note:'FPSFA 2.5.3(5) describes spices in the oil-based gravy and filtration of the vinegar pickling solution. Confirm the qualifying ingredient in the finished product and the sampled portion. A drained egg, filtered liquor alone or incoming whole egg needs a separate assessment.',
+      identity:'https://www.fssai.gov.in/upload/uploadfiles/files/GAZETTE%20NOTIFICATION%20DATED%2021_10_2024_ammendments.pdf#page=30'
+    }
+  };
+  const afKeys={total:{finished:'C9',ingredient:'C8'},b1:{finished:'C19',ingredient:'C18'}};
+  function firstSource(id){
+    if(!Object.hasOwn(spiceFoods,id))return null;
+    const food=spiceFoods[id];
+    return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:food.note+' Finished food: total aflatoxins 20 µg/kg and B1 10 µg/kg. Incoming spice: 30 and 15 µg/kg respectively.',urls:[food.identity,url('ctr-3',29)]};
+  }
+  function spiceCriteriaRows(id){
+    const header=['Catalogue ID','Product','Sample','Analyte','Maximum','Unit','Evidence needed','Product standard','Contaminant Gazette'];
+    const rows=[header];
+    for(const [key,food] of Object.entries(spiceFoods)){
+      if(id&&key!==id)continue;
+      for(const [analyte,keys] of Object.entries(afKeys)){
+        for(const [role,sourceKey] of Object.entries(keys)){
+          const r=data.rows[sourceKey],finished=role==='finished';
+          rows.push([key,root.PMSVCatalogueRules.products[key].name,finished?food.form:'Incoming spice or spice mix sampled separately',
+            data.labels[analyte],String(r.limit),r.unit,finished?food.note:'Identify the incoming spice and its lot on the supplier or laboratory report.',food.identity,url(r.doc,r.page)]);
+        }
+      }
+    }
+    return rows;
+  }
+  function spiceRoute(id,a){
+    const food=spiceFoods[id],keys=afKeys[a];
+    if(!food||!keys)return null;
+    return {mode:'check',reason:firstSource(id).text,options:[
+      {value:'finishedSpice',label:food.form,rows:[keys.finished],sample:'finished'},
+      {value:'incomingSpice',label:'Separately sampled incoming spice or spice mix',rows:[keys.ingredient],sample:'ingredient'},
+      {value:'composite',label:'Finished food containing another documented article listed in this aflatoxin table',rows:[keys.finished],sample:'finished'},
+      {value:'portion',label:'Isolated portion, filtered liquid or other unverified sample basis',rows:[],sample:'unresolved'},
+      {value:'outside',label:'Reviewed finished formula excludes the listed ingredients',rows:[],sample:'outside'}
+    ]};
+  }
   function decision(id,a,s={}){
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
-    const r=data.routes[routeFor(id,a)], k=field(a);
+    const r=spiceRoute(id,a)||data.routes[routeFor(id,a)], k=field(a);
     if(!r)return {status:'Not named for stated identity',sample:'unmatched',rows:[],reason:note[a]+' No match identified for the catalogue article as described.',sources:allRows[a],choices:[]};
     if(r.mode==='named')return {status:'Named finished article',sample:'finished',rows:r.rows,reason:r.reason,sources:r.rows,choices:[]};
     const opt=r.options.find(o=>o.value===s[k]),proof=evidence(s,k);
     const sources=[...new Set(r.options.flatMap(o=>o.rows))];
-    if(opt&&proof)return {status:{finished:'Documented finished article',ingredient:'Documented ingredient sample',outside:'Documented outside these rows'}[opt.sample],
+    if(opt&&proof)return {status:{finished:'Documented finished article',ingredient:'Documented ingredient sample',outside:'Documented outside these rows',unresolved:'Sample basis unresolved'}[opt.sample],
       sample:opt.sample,rows:opt.rows,reason:opt.label+' · '+proof,sources:opt.rows.length?opt.rows:sources,choices:r.options};
     return {status:opt?'Awaiting evidence reference':'Check article or recipe',sample:'unresolved',rows:[],reason:r.reason,sources,choices:r.options};
   }
@@ -281,5 +325,5 @@
     }
     return {products:catalogue.size,analytes:analytes.length,sourceRows:Object.keys(data.rows).length,namedProducts,priorityNamed,namedDecisions};
   }
-  root.PMSVCropScope=Object.freeze({fields,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
+  root.PMSVCropScope=Object.freeze({fields,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
 })(globalThis);

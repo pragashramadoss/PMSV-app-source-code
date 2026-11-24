@@ -49,5 +49,5 @@ for (const [id,process,...criteria] of cases) {
   assert.equal(savedPlan.length,2);
 }
 assert.equal(context.PMSV_REVIEW_REGISTER.groupPesticideReview.comparisons,9);
-assert.equal(register.filter(r=>r.at(-2)==='FIRST_EXACT_SOURCE_PENDING').length,30);
+assert.equal(register.filter(r=>r.at(-2)==='FIRST_EXACT_SOURCE_PENDING').length,28);
 console.log('Six additional product and pesticide combinations checked against their source pages in two editions.');

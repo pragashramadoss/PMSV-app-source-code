@@ -417,6 +417,8 @@
       form:d.sample==='ingredient'?'Separately sampled ingredient':d.status==='Documented finished article'?'Finished product':d.sample,
       limit:join(d.rows.map(k=>data[k].article+' — '+data[k].limit+' '+data[k].unit+(data[k].heading?' (Oilseeds or oil heading)':''))),
       notes:d.reason,source:sources.join(' | ')};
+    const spiceSource=(d.key==='total'||d.key==='b1')&&C.firstSource(id);
+    if(spiceSource)row.source=[...new Set([...sources,...spiceSource.urls])].join(' | ');
     const dated=edition==='amended'?amendedToxin(id,d,row,state):row;
     if(!dated.limit)return dated;
     // Replacement rows explicitly carry a numeric maximum and refer to the finished food.
