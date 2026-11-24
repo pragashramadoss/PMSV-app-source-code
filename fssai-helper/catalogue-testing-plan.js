@@ -166,6 +166,21 @@
       if(Array.isArray(form.composition))for(const s of form.composition)if(s?.parameter)criterion(s,'Confirm variant and conditions',name);
       const entries=Object.entries(form).filter(([k])=>!['variant','name','type','composition'].includes(k));
       if(!entries.length)continue;
+      const veterinary=root.PMSVVeterinary;
+      if(id===veterinary.eggPowderId){
+        const gazette=veterinary.animalGazette;
+        for(const [k,v] of entries){
+          const basic=percentage(k,v),ph=k==='pH_min';
+          if(!basic&&!ph)continue;
+          const conflict=k==='protein_min_pct'&&name==='Dried whole egg';
+          const pages=conflict?[15,38]:k==='moisture_max_pct'?[37]:k==='total_solids_min_pct'?[37,38]:[38];
+          push({form:name,parameter:ph?'pH':basic.parameter,limit:conflict?'':ph?'≥ '+v:basic.limit,unit:ph||conflict?'':basic.unit,
+            status:conflict?'Resolve Gazette language discrepancy':'Confirm variant and conditions',notes:conflict?veterinary.eggProteinNote:'Dried hen egg product, FPSFA 2.5.3(3).',
+            source:pages.map(page=>gazette+'#page='+page).join(' | ')});
+          count++;
+        }
+        continue;
+      }
       const qualifier=entries.filter(([k,v])=>!percentage(k,v)).map(([k,v])=>label(k)+' = '+detail(v));
       const pct=entries.map(([k,v])=>percentage(k,v,form[k.split('_max_pct')[0]+'_basis'])).filter(Boolean);
       if(pct.length)for(const item of pct){
@@ -491,5 +506,15 @@
     }
     return out;
   }
-  root.PMSVTestingPlan=Object.freeze({available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  function animalCriteriaRows(id,date=root.PMSVVeterinary.reviewDate){
+    const vet=root.PMSVVeterinary;
+    const rows=[headers];
+    for(const key of [vet.casingId,vet.eggPowderId]){
+      if(id&&key!==id)continue;
+      const data=exportRows(key,date);
+      rows.push(...data.slice(1).filter(r=>r[2]===areas[5]&&r[3].startsWith('CTR 2.3.2(4)')||key===vet.eggPowderId&&r[2]===areas[0]));
+    }
+    return rows;
+  }
+  root.PMSVTestingPlan=Object.freeze({animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

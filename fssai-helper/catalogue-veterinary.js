@@ -8,6 +8,7 @@
   // For a finished product, the choices are limited by its catalogue identity.
   // Intake of a separately sampled ingredient has its own set of choices.
   const matrices = {
+    casing:['Edible natural casing from a non-fish food animal, as sold','casing'],
     none:['Article as sold','other'], honey:['Honey','honey'],
     dairy:['Milk product as sold (e.g. powder, cream, cheese or butter)','dairy'],
     milk:['Liquid milk, species unspecified or mixed','milk'],
@@ -28,7 +29,7 @@
     giantPrawn:['Giant prawn (Penaeus monodon)','seafood','giantPrawn'],
     otherShell:['Mollusc or crustacean other than a prawn','seafood','shellfish']
   };
-  const ingredients = Object.keys(matrices).filter(k=>k!=='none');
+  const ingredients = Object.keys(matrices).filter(k=>k!=='none'&&k!=='casing');
   const distinctMilk = {
     '01-01-1-cow-milk':'cow', '01-01-1-buffalo-milk':'buffalo',
     '01-01-1-goat-milk':'goatMilk', '01-01-1-sheep-milk':'sheepMilk', '01-01-1-camel-milk':'camel'
@@ -43,6 +44,14 @@
   const shellIds = new Set(['09-09-1-live-and-raw-bivalve-molluscs','09-09-2-frozen-lobsters',
     '09-09-2-frozen-squid-and-parts-of-squid','09-09-2-frozen-cephalopods','09-09-2-frozen-clam-meat',
     '09-09-2-fresh-and-quick-frozen-raw-scallop-products','09-09-2-pasteurised-crab-meat']);
+  const casingId='08-08-4-animal-casings',eggPowderId='10-10-2-egg-powder';
+  const animalGazette='https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5fedb66ac1b15Gazette_Notification_FPS_Tenth_amendment_31_12_2020.pdf';
+  const casingNote='FPSFA 2.5.2(14) identifies dried or wet-salted natural animal casings. CTR 2.3.2(4) includes entries for all edible animal tissues. Document the non-fish source species, tissue, preservation, lot and applicable analytical mass basis of the marketed casing. Brine, stuffing, reconstructed collagen and synthetic casings require separate assessment.';
+  const eggNote='FPSFA 2.5.3(3) covers dried hen egg white, yolk and whole egg. Seven clause (4) entries can be reviewed on a separately sampled whole hen egg. No drying or reconstitution factor for transferring these tolerances to the powder was established.';
+  const eggProteinNote='Dried whole egg protein minima differ in the 2020 Gazette. The English table gives 45% and the Hindi table gives 47.1%. The English FSSAI chapter gives 45%. Resolve the applicable text before using a release limit.';
+  const casingPortions={small:'Small intestine',large:'Large intestine',oesophagus:'Oesophagus',bladder:'Urinary bladder'};
+  const casingProcesses={dried:'Dried',salted:'Wet salted'};
+  const casingFields=['vetCasingPortion','vetCasingProcess','vetProcessRef','vetCasingLot','vetReportLot'];
   const grades = {
     direct:'A current provision names the food or its production group',
     conditional:'Finished-article classification or process needs evidence',
@@ -65,7 +74,7 @@
     if (id==='100-100-cow-or-buffalo-colostrum-and-colostrum-products'||id==='11-11-1-edible-lactose')
       return status('conditional',['none'],'Document the source, grade and the legal classification of the finished dairy-derived material. Check the separately sampled milk where appropriate.');
     if (cat==='8') {
-      if (id==='08-08-4-animal-casings') return status('conditional',['none'],'Document the animal source and the casing sold. A muscle, fat, liver or kidney row requires that precise tissue.');
+      if (id===casingId) return status('conditional',['none','casing'],casingNote);
       const raw=/fresh-or-chilled|^08-08-2-frozen-(?:rabbit|pork|beef|chevon|mutton|poultry)/.test(id);
       if (raw) {
         const key=id.includes('pork')?'pork':id.includes('beef')?'beef':id.includes('chevon')?'goat':id.includes('mutton')?'sheep':id.includes('rabbit')?'rabbit':'poultry';
@@ -77,6 +86,7 @@
       return status('direct',['meatProduct'],'The production rule includes meat products. For a mixed, cooked or comminuted sample, identify a legal basis for any tissue-specific comparison.');
     }
     if (id==='10-10-1-fresh-eggs') return status('direct',['egg','henEgg'],'Confirm the poultry species. Some drug tolerances specify chicken eggs.');
+    if (id===eggPowderId) return status('conditional',['none'],eggNote);
     if (cat==='10') return status('conditional',['none'],'Clause (2) covers poultry and eggs. Establish the basis for the liquid, dried, frozen or pickled article. An incoming whole egg can be reviewed separately.');
     if (compositeFish.has(id)) return status('conditional',['none','fishProduct'],'Document whether the whole food qualifies as a fishery product. A fillet or muscle limit needs a sample of the named tissue.');
     if (cat==='9') {
@@ -128,7 +138,7 @@
   const editionRows=e=>e==='original'?all:e==='amended'?amended:[];
   const getUrl=r=>(r.amendment?refs.december:r.clause===1?refs.seafood:refs.veterinary)+'#page='+r.page;
   const rowType={1:'Seafood tolerance',2:'Prohibited use · EMRL',3:'Honey misuse · MRPL',4:'Food and tissue tolerance'};
-  const fields=['vetDate','vetRole','vetMatrix','vetOrigin','vetSource','vetRow','vetValue','vetUnit','vetBasis','vetReport'];
+  const fields=['vetDate','vetRole','vetMatrix','vetOrigin','vetSource','vetRow','vetValue','vetUnit','vetBasis','vetReport',...casingFields];
   function basis(id,s={}) {
     const p=profile(id);
     if (!p) return null;
@@ -143,6 +153,7 @@
     const a=r.article, sp=b.species;
     if (r.amendment) return b.family==='seafood';
     if (r.locked) return false;
+    if (b.family==='casing')return a.startsWith('All edible animal tissues');
     if (b.family==='milk') {
       if (a==='Milk'||a.endsWith('; Milk')||a==='Species not specified — Milk') return true;
       if (['Cattle','Buffalo','Goat','Sheep'].includes(sp)&&a==='Milk (All ruminants)') return true;
@@ -171,7 +182,7 @@
   }
   function qualification(r,b) {
     if (r.locked) return 'The printed Muscle entry has no resolved species heading.';
-    if (b?.family==='tissue'&&(r.serial===39||r.serial===41)&&r.clause===4)
+    if (['tissue','casing'].includes(b?.family)&&(r.serial===39||r.serial===41)&&r.clause===4)
       return 'Sulfadimidine and sulfamethazine are names for the same drug. Serials 39 and 41 give potentially overlapping tissue limits of 0.1 and 0.01 mg/kg. Reconcile the entries for the sampled portion.';
     if (r.clause===4&&r.serial===1&&['finfish','trout'].includes(b?.species))
       return 'Ampicillin has a finfish entry at 0.05 mg/kg and a broader animal-tissue entry at 0.01 mg/kg. Resolve the scope for the sampled portion before comparison.';
@@ -196,6 +207,8 @@
     if (row) {
       const qualifier=qualification(row,b);
       if (qualifier&&!row.condition) comparison='Source interpretation required. '+qualifier;
+      else if(b.family==='casing'&&(!Object.hasOwn(casingPortions,s.vetCasingPortion)||!Object.hasOwn(casingProcesses,s.vetCasingProcess)||!s.vetProcessRef?.trim()||!s.vetCasingLot?.trim()||s.vetCasingLot.trim()!==s.vetReportLot?.trim()))
+        comparison='Document the tissue, preservation, as-sold mass basis and matching lot on the laboratory report.';
       else if (!recorded||s.vetBasis!=='yes'||!s.vetReport?.trim()||s.vetUnit!==row.unit) comparison='Confirm the applicable article, sample and analytical basis, enter both references and use the printed unit.';
       else if (!String(s.vetValue||'').trim()) comparison='Enter the quantified result in '+row.unit+'.';
       else {
@@ -218,6 +231,7 @@
       f==='honey'?'12 MRPL entries in µg/kg for detecting misuse in honey, including the individual or collective conditions at serials 3 and 4. Antibiotic use during production is prohibited.':other,
       f==='seafood'&&b.edition==='amended'?'Seafood tolerances under clause (4) are 0.05 mg/kg for trimethoprim and 0.3 mg/kg for oxolinic acid. Match other entries by drug, species and portion.':
       ['milk','tissue','egg','seafood'].includes(f)?'Match the drug, species and sampled portion to an individual Gazette row. The published unit applies to that row.':
+        f==='casing'?casingNote:
         f==='dairy'?'The named milk rows concern milk. Establish a separate legal basis for a dairy derivative or assess the independently sampled milk.':
         f==='meatProduct'?'The drug table distinguishes tissues and fats. Identify the sampled tissue and any legal basis for the processed product.':other
     ];
@@ -232,12 +246,26 @@
   const columns=['Finished-article scope · CTR 2.3.2','Seafood antibiotics · CTR 2.3.2(1)','Prohibited veterinary use · CTR 2.3.2(2)',
     'Honey misuse MRPL · CTR 2.3.2(3)','Veterinary tolerance scope · CTR 2.3.2(4)','Candidate residue rows for the catalogue sample',
     'Official veterinary residue sources','Seafood transition from 1 Dec 2026','Documented residue sample and row','Veterinary residue comparison'];
+  function focusedRows(id,date=reviewDate){
+    if(!edition(date))return [];
+    if(id===casingId)return candidates(basis(id,{vetMatrix:'casing',vetDate:date}));
+    if(id===eggPowderId)return candidates(basis(id,{vetRole:'ingredient',vetMatrix:'henEgg',vetDate:date})).filter(r=>r.clause===4);
+    return [];
+  }
+  function firstSource(id){
+    if(id!==casingId)return null;
+    const urls=[animalGazette+'#page=36',...new Set(focusedRows(id).map(getUrl))];
+    return {status:'CONDITIONAL_VETERINARY_SOURCE_MATCH',text:casingNote,urls};
+  }
+  function casingSample(s){
+    return [casingPortions[s.vetCasingPortion],casingProcesses[s.vetCasingProcess],s.vetProcessRef?.trim(),s.vetCasingLot?.trim()&&'Casing lot '+s.vetCasingLot.trim(),s.vetReportLot?.trim()&&'Report lot '+s.vetReportLot.trim()].filter(Boolean).join(' · ');
+  }
   function values(id,s={}) {
     const base=basis(id,{vetDate:s.vetDate}), c=current(id,s);
     if (!base||!c) return [];
     const list=candidates(base);
     const doc=c.b.matrix&&s.vetSource?.trim()?(c.b.separate?'Separately sampled ingredient':'Catalogue product')+' · '+c.b.label+
-      (c.b.origin?' · '+c.b.origin:'')+' · '+c.date+' · '+s.vetSource.trim()+(c.row?' · '+labelRow(c.row)+' · '+getUrl(c.row):' · No source row selected'):'';
+      (c.b.origin?' · '+c.b.origin:'')+' · '+c.date+' · '+s.vetSource.trim()+(c.b.family==='casing'?' · '+casingSample(s):'')+(c.row?' · '+labelRow(c.row)+' · '+getUrl(c.row):' · No source row selected'):'';
 
     const outcome=c.recorded&&s.vetValue?.trim()?s.vetValue.trim()+' '+(s.vetUnit||'(unit pending)')+' · '+c.comparison+(s.vetReport?.trim()?' · '+s.vetReport.trim():''):'';
     return [grades[base.p.grade]+' · '+base.p.note,...summaries(base),
@@ -276,7 +304,10 @@
       return rows.length?'<optgroup label="'+esc(rowType[n])+'">'+rows.map(r=>opt(r.key,labelRow(r),s.vetRow)).join('')+'</optgroup>':'';
     }).join('');
     const sampleInfo=b.matrix?'<p>'+summaries(b).filter(t=>!['No named match for this sample.','Establish the marketed article and sampling basis.'].includes(t)).map(esc).join(' ')+'</p>':'';
-    return matrix+origin+sampleInfo+input('vetSource','Sample, species or specification reference',s)+
+    const casing=b.family==='casing';
+    const pick=(key,label,options)=>select(key,label,opt('','Select from the specification',s[key])+Object.entries(options).map(([k,v])=>opt(k,v,s[key])).join(''));
+    const casingControls=casing?pick('vetCasingPortion','Edible casing tissue',casingPortions)+pick('vetCasingProcess','Preservation of marketed casing',casingProcesses)+input('vetProcessRef','Reference establishing the applicable as-sold sample and mass basis after preservation',s)+input('vetCasingLot','Sampled casing lot',s):'';
+    return matrix+origin+sampleInfo+casingControls+input('vetSource','Sample, species or specification reference',s)+
       (options.length?select('vetRow','Source row for the sampled article',opt('','Choose a drug and article',s.vetRow)+grouped):
       '<p>No numerical row has been assigned to this sample. The complete Gazette index is available below.</p>')+
       (row?'<p><strong>'+esc(rowType[row.clause])+'</strong> · '+esc(labelRow(row))+' · '+link(getUrl(row),'PDF p. '+row.page)+'</p>'+
@@ -284,7 +315,7 @@
         input('vetValue','Laboratory result',s,'inputmode="decimal" maxlength="80"')+
         select('vetUnit','Reported unit',opt('','Choose the unit from the report',s.vetUnit)+['mg/kg','mg/L','µg/kg'].map(k=>opt(k,k,s.vetUnit)).join(''))+
         '<label class="ws-check"><input type="checkbox" data-ws-field="vetBasis"'+(s.vetBasis==='yes'?' checked':'')+'>The species, sample portion, analyte or group and reporting basis match this row.</label>'+
-        input('vetReport','Laboratory report reference',s)+'<p data-vet-comparison role="status">'+esc(comparison)+'</p>':'');
+        (casing?input('vetReportLot','Lot on laboratory report',s):'')+input('vetReport','Laboratory report reference',s)+'<p data-vet-comparison role="status">'+esc(comparison)+'</p>':'');
   }
   function markup(id,s={}) {
     const b=basis(id,{vetDate:s.vetDate});
@@ -321,9 +352,15 @@
     }
     const cascade={vetRole:['vetMatrix','vetOrigin','vetSource','vetRow'],vetMatrix:['vetOrigin','vetSource','vetRow'],vetOrigin:['vetSource','vetRow'],vetRow:[]};
     if (Object.hasOwn(cascade,key)) {
+      if(key==='vetRole'||key==='vetMatrix')for(const field of casingFields)s[field]='';
+      if(key==='vetRow')s.vetReportLot='';
       for (const field of [...cascade[key],'vetValue','vetUnit','vetBasis','vetReport']) s[field]='';
       node.querySelector('[data-vet-controls]').innerHTML=sampleMarkup(id,s);
     } else {
+      if(id===casingId&&s.vetMatrix==='casing'&&(casingFields.includes(key)||['vetSource','vetReport','vetUnit'].includes(key))){
+        s.vetBasis='';
+        const check=node.querySelector('[data-ws-field="vetBasis"]');if(check)check.checked=false;
+      }
       const out=node.querySelector('[data-vet-comparison]');
       if (out) out.textContent=current(id,s).comparison;
     }
@@ -336,7 +373,7 @@
     return {article:'CTR 2.3.2('+row.clause+') · '+rowType[row.clause],parameter:row.drug,
       form:[b.separate?'Separately sampled ingredient':'Marketed product',b.label,b.origin].filter(Boolean).join(' · '),
       status:'Recorded veterinary laboratory result',notes:['Sample: '+state.vetSource.trim(),'Report: '+state.vetReport.trim(),
-        'Reported result: '+state.vetValue.trim()+' '+(state.vetUnit||'(unit pending)'),row.article,
+        b.family==='casing'&&casingSample(state),'Reported result: '+state.vetValue.trim()+' '+(state.vetUnit||'(unit pending)'),row.article,
         'Selected source row: '+row.limit+' '+row.unit,qualification(row,b),c.comparison].filter(Boolean).join(' · '),source:getUrl(row)};
   }
   function planRows(id,date=reviewDate) {
@@ -352,6 +389,12 @@
       rows[0].notes+=' '+provision.veterinary;
       rows[0].source+=' | '+provision.source;
     }
+    if(id===eggPowderId){
+      rows[0].source+=' | '+animalGazette+'#page=37';
+      for(const r of focusedRows(id,date))rows.push({article:'CTR 2.3.2(4) · serial '+r.serial,form:'Separately sampled incoming whole hen egg · '+r.article,
+        parameter:r.drug,status:'Ingredient sample only',limit:r.limit,unit:r.unit,notes:eggNote,source:getUrl(r)+' | '+animalGazette+'#page=37'});
+    }
+    if(id===casingId)rows[0].source+=' | '+animalGazette+'#page=36';
     const found=new Map();
     let seafood=false;
     for(const matrix of p.choices){
@@ -370,8 +413,8 @@
           const article='CTR 2.3.2('+r.clause+')'+(r.serial?' · serial '+r.serial:'');
           const notes=[qualifier,held&&'Printed reference: '+r.limit+' '+r.unit,explanation,
             p.grade==='conditional'&&p.note,r.amendment&&'Effective 1 December 2026.',r.clause===1&&'Clause (1) applies in this edition through 30 November 2026.'].filter(Boolean).join(' · ');
-          match={forms:new Set(),row:{article,parameter:r.drug,status:held?'Resolve overlapping source entries':rowType[r.clause],
-            limit:held?'':r.limit,unit:held?'':r.unit,notes,source:getUrl(r)}};
+          match={forms:new Set(),row:{article,parameter:r.drug,status:held?'Resolve overlapping source entries':b.family==='casing'?'Conditional edible casing tissue tolerance':rowType[r.clause],
+            limit:held?'':r.limit,unit:held?'':r.unit,notes,source:getUrl(r)+(b.family==='casing'?' | '+animalGazette+'#page=36':'')}};
           found.set(key,match);
         }
         match.forms.add(b.label+(farmed?' · farmed aquaculture only':''));
@@ -387,5 +430,5 @@
       source:refs.december+'#page=4 | '+refs.december+'#page=6'});
     return rows;
   }
-  root.PMSVVeterinary=Object.freeze({reviewDate,edition,planRows,recordedPlanRow,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
+  root.PMSVVeterinary=Object.freeze({casingId,eggPowderId,animalGazette,eggNote,eggProteinNote,firstSource,focusedRows,reviewDate,edition,planRows,recordedPlanRow,fields,columns,profile,basis,candidates,current,stats,values,brief,markup,indexTable,update});
 })(globalThis);

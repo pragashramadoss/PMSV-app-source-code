@@ -8,7 +8,7 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
 }
 const {PMSVCropScope:crop,PMSVCatalogueWorksheets:w,PMSVTestingPlan:plan,PMSV_REVIEW_REGISTER:reg}=ctx;
 const [single,premix]=crop.botanicalIds;
-assert(w.available);assert.equal(reg.firstSourceReview.pending,23);
+assert(w.available);assert.equal(reg.firstSourceReview.pending,22);
 assert.equal(crop.botanicalCriteriaRows().length,19);
 assert.equal(crop.botanicalCriteriaRows('tea').length,1);
 const cases=[[single,'suppliedPowder','finished',30,15],[premix,'compoundPremix','finished',20,10],[premix,'incomingPowder','ingredient',30,15]];

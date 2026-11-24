@@ -29,7 +29,7 @@ assert(choose(fish,old,tet).comparison.includes('interpretation'));assert(choose
 assert(choose(fish,next,'vet-1-1').comparison.includes('interpretation'));
 assert(!v.indexTable('g50',old));assert(v.indexTable('g50',next).includes('272840.pdf#page=6'));assert(!v.indexTable('c1',next));
 const b=p.exportRows(null,old,true),a=p.exportRows(null,next,true);
-assert.equal(b.length,3710);assert.equal(a.length,3662);assert.equal(a[0].length,16);
+assert.equal(b.length,3737);assert.equal(a.length,3689);assert.equal(a[0].length,16);
 assert.equal(new Set(a.slice(1).map(r=>r[0])).size,533);assert(a.slice(1).every(r=>r.at(-1)===next));
 assert.equal(b.filter(r=>r[3]==='CTR 2.3.2(1)').length,96);assert(!a.some(r=>r[3]==='CTR 2.3.2(1)'));
 const seafood=a.filter(r=>r[14].endsWith('272840.pdf#page=6')&&r[7]!=='');
