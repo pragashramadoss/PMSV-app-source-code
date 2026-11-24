@@ -3,7 +3,7 @@
   'use strict';
   const E=root.PMSVCatalogueEvidence, R=root.PMSVCatalogueRules;
   const V=root.PMSVVariantComposition, P=root.PMSVMetalPanel, C=root.PMSVCropScope;
-  const sourceRows=root.PMSVTestingSources;
+  const sourceRows=root.PMSVTestingSources,powders=root.PMSVPowderStandards;
   const headers=['Catalogue ID','Product','Review area','Article or table','Product form or sample','Parameter or decision','Applicability','Requirement or reported limit','Unit','Reporting basis, condition or next action','n','c','m','M','Official source pages'];
   const areas=['Composition and identity','Microbiology','Metals','Toxins and other contaminants','Pesticide residues','Veterinary drug residues'];
   const label=k=>String(k).replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
@@ -107,6 +107,14 @@
           state.compReport?.trim()&&'Report: '+state.compReport.trim(),worksheet.resultText(id,state)]);
         add({...base,...row,notes});
       }else add({...base,...row});
+    }
+    const powder=powders?.products.get(id);
+    if(powder){
+      for(const {spec,...row} of powder.rows){
+        const info=spec?{parameter:spec.parameter,...specInfo(spec)}:{};
+        push({...info,...row,form:powder.name},spec);
+      }
+      return;
     }
     for(const g of product.gazetteFindings||[])push({article:g.clause,parameter:g.parameter,limit:g.result,status:'Gazette finding',notes:join([g.scope,g.effective && 'Effective '+g.effective]),source:links(g.document,g.pages)},g===operative?measured:undefined);
     if(sourceRows.products[id]){
@@ -525,6 +533,14 @@
     }
     return out;
   }
+  function powderRows(id,date=root.PMSVVeterinary.reviewDate,state){
+    const rows=[headers];
+    for(const key of powders.products.keys()){
+      if(id&&key!==id)continue;
+      rows.push(...exportRows(key,date,false,id?state:undefined).slice(1).filter(r=>r[2]===areas[0]));
+    }
+    return rows;
+  }
   function sugarRows(id,date=root.PMSVVeterinary.reviewDate,state={}){
     const rows=[[...headers,'Published conditional lead maximum','Condition for the published maximum']];
     for(const [key,checks] of sugarCriteria){
@@ -548,5 +564,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
