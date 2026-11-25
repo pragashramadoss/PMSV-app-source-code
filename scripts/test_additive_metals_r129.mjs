@@ -11,7 +11,7 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
 const {PMSVMetalPanel:metal,PMSVCatalogueWorksheets:worksheets,PMSVTestingPlan:plan,PMSV_REVIEW_REGISTER:register}=ctx;
 const focused=metal.additiveCriteriaRows().slice(1), groupIds=Object.keys(metal.additiveGroups);
 assert(worksheets.available);
-assert.equal(register.latestRound,139);assert.equal(register.firstSourceReview.withRoute,517);
+assert.equal(register.latestRound,140);assert.equal(register.firstSourceReview.withRoute,517);
 assert.equal(worksheets.pendingSourceRows().length,17);
 assert.equal(focused.length,12);assert.equal(new Set(focused.map(r=>r[2])).size,6);
 const expected={'475':{Pb:'2.0',Cu:'25',As:'3.0'},'476':{Pb:'2.0',Cu:'25',As:'3.0'},

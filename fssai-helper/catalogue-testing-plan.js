@@ -666,6 +666,7 @@
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add,state,vetDate);
+    for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
     const coffee=root.PMSVCoffee;
     if(id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
@@ -695,6 +696,16 @@
         const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
         if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
         out.push(cells.map(v=>v??''));
+      }
+    }
+    return out;
+  }
+  function sulphiteRows(id,state) {
+    const out=[headers];
+    for(const key of root.PMSVSulphites.profiles.keys()){
+      if(id&&key!==id)continue;
+      for(const r of root.PMSVSulphites.rows(key,id?state:undefined)){
+        out.push([key,R.products[key].name,r.area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,r.notes,'','','','',r.source]);
       }
     }
     return out;
@@ -803,5 +814,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
