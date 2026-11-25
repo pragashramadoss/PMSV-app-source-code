@@ -17,6 +17,8 @@ assert.equal(review.legalProductApprovals,0);
 const queue=ws.pendingSourceRows().slice(1).map(row=>row[0]);
 assert(!queue.includes(salt)&&queue.includes(polyols)&&queue.includes(enzyme)&&queue.includes(cocoa));
 assert.equal(recipes.firstSource(salt).status,'CONDITIONAL_TOXIN_SOURCE_MATCH');
+assert.equal(recipes.criteriaRows(salt)[1][0],review.latestSourceReviewDate);
+assert(!recipes.decision(salt,'total',{}).reason.includes('µg/kg'));
 for(const date of ['2026-11-25','2026-12-01']){
   const both=plan.ingredientRouteRows(null,date);
   assert.equal(both.length,22);

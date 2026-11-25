@@ -45,7 +45,8 @@
     return p?.finished?{status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:p.text,urls:p.urls}:null;
   }
   const val=(s,k)=>typeof s[k]==='string'?s[k].trim():'';
-  function decision(id,a,s={},date=s.vetDate??'2026-11-24'){
+  const reviewDate=()=>root.PMSV_REVIEW_REGISTER?.latestSourceReviewDate||'2026-11-25';
+  function decision(id,a,s={},date=s.vetDate??reviewDate()){
     if(!covered(id,a))return null;
     const p=profiles[id],k=fields[a],forms=samples[id].filter(f=>f.keys[a]);
     const form=forms.find(f=>f.value===s[k]),lot=val(s,k+'Lot'),proof=val(s,k+'Ref');
@@ -54,7 +55,7 @@
     const choices=forms.concat(excluded,pick('other','Other sample, or classification unresolved','unresolved',{}))
       .map(f=>({...f,rows:f.keys[a]&&!changed?[f.keys[a]]:[]}));
     const result={status:'Confirm sampled article, lot and specification',sample:'unresolved',rows:[],sources:changed?[]:forms.map(f=>f.keys[a]),
-      links:p.urls,reason:p.text,choices};
+      links:p.urls,reason:id===salt?'Choose the sample and record the named cereal, lot and recipe or intake reference. A reviewed recipe without cereal flour can be recorded separately.':p.text,choices};
     if(root.PMSVTestingPlan&&!root.PMSVTestingPlan.metalEdition(date))return {...result,status:'Select a valid assessment date in a reviewed edition'};
     if(id===salt&&s[k]==='flourAbsent'&&lot&&proof)
       return {...result,status:'Documented formula outside the cereal-containing entry',sample:'outside',reason:'Reviewed formula and lot '+lot+' · '+proof+'. Assess other applicable provisions independently.'};
@@ -74,7 +75,7 @@
     }
     return {...result,status:form.sample==='finished'?'Documented finished article':'Documented ingredient sample',sample:form.sample,rows:[form.keys[a]],sources:[form.keys[a]],reason};
   }
-  function criteriaRows(id,date='2026-11-24'){
+  function criteriaRows(id,date=reviewDate()){
     const out=[['Assessment date','Catalogue ID','Product','Sample','Sample role','Analyte','Maximum','Unit','Evidence and scope','Source pages']];
     if(root.PMSVTestingPlan&&!root.PMSVTestingPlan.metalEdition(date))return out;
     for(const key of ids){
