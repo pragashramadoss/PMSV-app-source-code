@@ -110,7 +110,7 @@ for (const date of [earlier,later]) {
   for (const {id} of ctx.PMSV_CATALOGUE) {
     const readings = metal.reportLines(id,state);
     const sourceRows = metal.panel(id,state).map(d=>plan.metalRow(id,d,date));
-    const rows = plan.entries(id,date,state).filter(row=>row.area===plan.areas[2]);
+    const rows = plan.entries(id,date,state).filter(row=>row.area===plan.areas[2]&&row.sampleRole!=='ingredient');
     assert.equal(readings.length,11,id);
     assert.equal(rows.length,11,id);
     for (const [i,reading] of readings.entries()) {
@@ -124,7 +124,7 @@ for (const date of [earlier,later]) {
     }
   }
   const bulk = plan.exportRows(null,date,false,state);
-  assert.equal(bulk.length,date===earlier?25596:25548);
+  assert.equal(bulk.length,date===earlier?25611:25563);
   assert(!bulk.some(row=>row[9].includes('LAB118|')));
 }
 assert.equal(checked,11726);

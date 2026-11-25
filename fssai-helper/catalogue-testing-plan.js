@@ -19,6 +19,81 @@
     if(!url)return '';
     return pages.length?[...new Set(pages)].map(n=>url+'#page='+n).join(' | '):url;
   }
+  function buildIncomingSamples(){
+    const pesticide=root.PMSV_REVIEW_REGISTER.pesticideReview;
+    const blend = 'coffee-chicory-mixture';
+    const egg = '10-10-2-egg-powder';
+    const coconutPowder = '04-04-1-coconut-milk-powder';
+    const milk = '04-04-1-coconut-milk-non-dairy';
+    const cream = '04-04-1-coconut-cream-non-dairy';
+    const scope = new Map([
+      ['purified-vending-water', ['Point of sale', 'Identify the dispensing point and collect its treatment schematic and sample record. Use the IS 10500 worksheet for vending water. A separate CTR citation must cover water dispensed in this manner.']],
+      [blend, ['Blend and inputs', 'Obtain the finished blend specification, its ground or instant form and the sampling point. Keep the coffee and chicory intake reports attached to their respective lots. Find a provision covering the blend as sold.']],
+      ['04-04-1-catechu-edible', ['Botanical extract', 'Identify the species, heartwood, aqueous extraction and marketed catechu grade. Obtain a provision covering the dried extract.']],
+      [coconutPowder, ['Extracted and dried product', 'Trace the kernel lot through extraction and drying. Identify any carriers on the formula and obtain a provision for the finished coconut milk powder.']],
+      ['04-04-2-cocoa-beans', ['Fermented and dried seed', 'Confirm whole fermented, dried Theobroma cacao beans on the specification. Seek a provision that includes this commodity and preparation.']],
+      ['05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake', ['Processed cocoa', 'Distinguish ground mass or liquor from pressed cake on the process record. Check the sampled material against each named cocoa article and its reporting basis.']],
+      ['06-06-2-carob-powder', ['Roasted botanical powder', 'Obtain the Ceratonia siliqua pod specification, husk removal and roasting records. Establish coverage of the marketed powder for the analyte.']],
+      ['06-06-2-arrowroot', ['Separated starch', 'Record the rhizome species, starch separation and drying. Seek a provision for purified starch or documented coverage of the processed fraction.']],
+      ['06-06-2-water-chestnut-flour-singhare-ka-atta', ['Milled nut flour', 'Confirm the Trapa species and the retained fraction after milling. Resolve whether the applicable aflatoxin article covers the milled flour before selecting a finished-food maximum.']],
+      [egg, ['Dried animal product', 'Identify dried white, yolk or whole egg. Keep the pre-drying shell-free egg report with its intake lot and obtain the specific regulatory basis for interpreting a powder result.']],
+      ['11-11-1-dried-glucose-syrup', ['Starch conversion product', 'Obtain the solid identity, specification and sulphated-ash result. Document the applicable wording for the lead article and check the separate 2.8.7 ash requirement.']],
+      ['11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th', ['Supplied substance or retail preparation', 'Obtain the INS, composition, grade and intended use. Establish whether a separately standardised substance or a finished table-top preparation is being assessed.']],
+      ['99-99-1-trehalose', ['Crystalline ingredient', 'Identify the supplied grade and its manufacturing route. Obtain sulphated-ash evidence if that is the proposed lead criterion. The total-ash specification measures a different property.']],
+      ['99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc', ['Preparation and use', 'Obtain the enzyme name, activity, preparation specification and intended food process. Check whether the exact preparation belongs in the processing-aid schedule or the separate category 99.2.']],
+      ['100-100-cow-or-buffalo-colostrum-and-colostrum-products', ['Postpartum secretion', 'Record species, postpartum collection window and whether the sample is colostrum or its powder. Obtain explicit support for the veterinary or contaminant article on that matrix.']],
+      ['100-100-royal-jelly', ['Bee secretion', 'Obtain the beekeeper feeding record, marketed form and lot trace. Seek a provision covering royal jelly for the target residue. A honey report identifies a different sample.']]
+    ]);
+
+    const pdf = (doc, page) => links(doc,[page]);
+    const footnote = pesticide.sources.gazette + '#page=51';
+    const coffee = 'Separately sampled raw coffee beans';
+    const chicory = 'Separately sampled dried or roasted chicory';
+    const eggs = 'Separately sampled shell-free whole hen eggs before drying';
+    const kernel = 'Separately sampled coconut before processing';
+    const water = 'Separately sampled raw coconut water before addition';
+    function metal(key, parameter, form) {
+      const [, limit, page] = root.PMSVMetalPanelData.rows[key];
+      return {area:'Metals', article:'CTR 2.1.1(2)', form, parameter, limit, unit:'mg/kg',
+        notes:'Use the named solid ingredient as sampled. Record the intake lot and the mass-based laboratory report.', source:pdf('ctr-3',page)};
+    }
+    function pesticideRow(serial, article, form) {
+      const group = pesticide.groups.find(g => g.serial === serial);
+      const [name, value, page, basis] = group.rows.find(r => r[0] === article);
+      const deferred = value === '$';
+      return {area:'Pesticide residues', article:'CTR 2.3.1 · serial ' + serial, form, parameter:group.printed,
+        limit:deferred ? '' : value, unit:deferred ? '' : 'mg/kg',
+        notes:deferred ? 'Report elemental copper. The $ footnote refers to the applicable metal entry in CTR 2.1. Identify that entry and its basis before comparing.'
+          : ['The named commodity is ' + name + '.', basis && basis+'.', 'Match the printed residue definition, the sampling stage and the lot. Retain the reported mass basis.'].filter(Boolean).join(' '),
+        source:[pesticide.sources.gazette + '#page=' + page, deferred ? footnote : pesticide.sources.scope + '#page=1'].join(' | ')};
+    }
+    const ota = root.PMSVCropScopeData.rows.C23;
+    const coconutRows = [43,44].map(serial => pesticideRow(serial, 'Coconut', kernel));
+    const waterRow = pesticideRow(82, 'Coconut Water', water);
+    const intake = new Map([
+      [blend, [metal('Cu5','Copper',coffee), metal('Cu5','Copper',chicory), metal('As19','Arsenic',chicory),
+        {area:'Toxins and other contaminants', article:'CTR 2.2.1(1) · serial 4', form:coffee, parameter:'Ochratoxin A',
+          limit:String(ota.limit), unit:ota.unit, notes:'Assess the separately sampled coffee lot against the coffee entry in force from 1 April 2025.', source:pdf(ota.doc,ota.page)},
+        {...root.PMSVCoffee.rawBeanRow(blend),area:'Pesticide residues'}]],
+      [egg, [129,145,150].map(serial => pesticideRow(serial,'Eggs',eggs))],
+      [coconutPowder, coconutRows], [milk, [...coconutRows,waterRow]], [cream, [...coconutRows,waterRow]]
+    ]);
+    const descriptions = new Map([
+      [blend, 'Match each intake result to raw coffee beans or dried or roasted chicory. Assess the finished blend separately.'],
+      [egg, 'These pesticide references cover separately sampled shell-free whole eggs. A dried powder, separated white or separated yolk needs its own assessment.'],
+      [coconutPowder, 'The powder is made by drying extracted coconut milk. The pesticide table sends the two coconut copper entries to CTR 2.1. Coconut water is a distinct commodity.'],
+      [milk, 'Check the actual formula. Use the coconut-water entry only for an independently sampled raw coconut-water lot before addition.'],
+      [cream, 'Check the actual formula. Use the coconut-water entry only for an independently sampled raw coconut-water lot before addition.']
+    ]);
+    const identityPages = new Map([[blend,pdf('baser02-1',121)],[egg,root.PMSVVeterinary.animalGazette+'#page=38'],
+      [coconutPowder,pdf('food-20',17)],[milk,pdf('chapter-4',77)],[cream,pdf('chapter-4',79)]]);
+    function rows(id) {
+      return (intake.get(id)||[]).map(r => ({...r, sampleRole:'ingredient', status:r.status||(r.limit?'Incoming ingredient reference only':'Identify the applicable metal article'),
+        source:r.source+' | '+identityPages.get(id)}));
+    }
+    return {scope,descriptions,rows};
+  }
+  const incomingSamples=buildIncomingSamples();
   const routeIds={
     salt:root.PMSVRecipeSamples.salt,
     polyols:'11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th',
@@ -593,9 +668,10 @@
     composition(id,add,state,vetDate);
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
     const coffee=root.PMSVCoffee;
-    if(id===coffee.blend||id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
+    if(id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
     if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
     microbiology(id,add);contaminants(id,add,vetDate,state||{});
+    if(metalEdition(vetDate))for(const row of incomingSamples.rows(id))add(row);
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
     if(root.PMSVAyurvedaPlan?.known(id))for(const row of root.PMSVAyurvedaPlan.planRows(id,state))add(row);
@@ -619,6 +695,17 @@
         const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
         if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
         out.push(cells.map(v=>v??''));
+      }
+    }
+    return out;
+  }
+  function incomingExport(id,date=root.PMSVVeterinary.reviewDate){
+    const out=[headers];
+    if(!metalEdition(date))return out;
+    for(const key of incomingSamples.descriptions.keys()){
+      if(id&&id!==key)continue;
+      for(const r of incomingSamples.rows(key)){
+        out.push([key,R.products[key].name,r.area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,r.notes,'','','','',r.source]);
       }
     }
     return out;
@@ -716,5 +803,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

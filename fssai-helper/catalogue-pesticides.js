@@ -20,7 +20,7 @@
     wheat:['Wheat grain','Wheat','Wheat grains'],flour:['Wheat flour','Wheat Flour'],rice:['Rice','Rice'],
     maize:['Maize grain','Maize','Corn'],soy:['Soya bean seed','Soya bean','Soyabean','Soya bean seed'],
     groundnut:['Groundnut kernel or seed','Groundnut','Ground nut','Groundnut Seed','Ground nut seed','Groundnut seeds'],
-    areca:['Areca nut','Areca nut'],cane:['Sugarcane','Sugarcane'],coconut:['Coconut','Coconut'],
+    areca:['Areca nut','Areca nut'],cane:['Sugarcane','Sugarcane'],coconut:['Coconut','Coconut'],coconutWater:['Raw coconut water','Coconut Water'],
     chickpea:['Chickpea','Chickpea','Chick pea','Bengal gram'],greenGram:['Green gram','Green gram'],blackGram:['Black gram','Black gram','Black gram seed','Blackgram'],
     pigeon:['Pigeon pea','Pigeon pea','Pigeon pea seeds','Red gram'],bajra:['Pearl millet','Pearl Millet (Bajra)'],sorghum:['Sorghum','Sorghum'],
     cotton:['Cottonseed','Cotton seed','Cottonseed'],sunflower:['Sunflower seed','Sunflower seed'],mustard:['Mustard seed','Mustard seed','Mustard'],sesame:['Sesamum','Sesamum'],
