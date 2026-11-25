@@ -366,10 +366,11 @@
     box.querySelector('[data-toxin-outcome]').textContent=confirmed===r.confirmed?r.outcome:labResult(id,a,s).outcome;
     box.querySelector('[data-toxin-links]').innerHTML=labLinks(r);
   }
-  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','crop_afLot','crop_saffLot','crop_milkLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
+  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','crop_saltCereal','crop_afLot','crop_saffLot','crop_milkLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
   function markup(id,s={}){
     if(!catalogue.has(id))return '';
     const ds=decisions(id,s),seen=new Set(),controlList=[];
+    if(id===recipe?.salt)controlList.push('<label>Cereal named on the flour specification (for example, wheat or rice)<input maxlength="180" data-ws-field="crop_saltCereal" value="'+esc(s.crop_saltCereal||'')+'"></label>');
     if(botanicalIds.includes(id))controlList.push(control('crop_botanical','Ground spice identity',botanicalForms.concat({value:'other',label:'Other form, oil, extract or isolate'}),s),
       '<label>Sampled spice or premix lot identifier<input maxlength="180" data-ws-field="crop_botanicalLot" value="'+esc(s.crop_botanicalLot)+'"></label>');
     if(id===childId)controlList.push(control('crop_childAge','Marketed age and product standard',childAgeChoices,s));
@@ -399,9 +400,13 @@
       for(const a of analytes){
         if(!recipe.covered(id,a))continue;
         const key=field(a);
-        if(![key,key+'Lot',key+'Ref','ayRecipe','ayVariant','ayIngredient','ayIngredientRef','vetDate','crop_dec','crop_decRef'].includes(k))continue;
+        if(![key,key+'Lot',key+'Ref','crop_saltCereal','ayRecipe','ayVariant','ayIngredient','ayIngredientRef','vetDate','crop_dec','crop_decRef'].includes(k))continue;
         if(k===key){
           s[key+'Lot']='';s[key+'Ref']='';
+          if(id===recipe.salt){
+            s.crop_saltCereal='';
+            const cereal=node.querySelector('[data-ws-field="crop_saltCereal"]');if(cereal)cereal.value='';
+          }
           for(const suffix of ['Lot','Ref']){const el=node.querySelector('[data-ws-field="'+key+suffix+'"]');if(el)el.value='';}
         }
         s[labField(a,'basis')]='';

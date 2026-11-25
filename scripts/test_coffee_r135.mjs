@@ -40,5 +40,5 @@ assert(check('coffee','green','product'));assert(!check('coffee','roasted_ground
 assert(!check(C.blend,'instant','product'));assert(check(C.blend,'instant','ingredient'));
 assert(!P.coffeeRows('coffee','2026-11-24',{coffeeForm:'roasted_ground'}).some(r=>r[5]==='Monocrotophos'));
 assert(rows.some(r=>r[5]==='Monocrotophos'&&r[6]==='Ingredient sample only'&&r[7]==='0.1'&&r[14].endsWith('#page=44')));
-assert.equal(W.pendingSourceRows().length,18);assert(W.pendingSourceRows().some(r=>r[0]===C.blend));
+assert.equal(W.pendingSourceRows().length,17);assert(W.pendingSourceRows().some(r=>r[0]===C.blend));
 console.log('Verified 45 quantitative criteria, 10 forms, dated front labels and raw-bean residue scope.');

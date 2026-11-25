@@ -19,6 +19,43 @@
     if(!url)return '';
     return pages.length?[...new Set(pages)].map(n=>url+'#page='+n).join(' | '):url;
   }
+  const routeIds={
+    salt:root.PMSVRecipeSamples.salt,
+    polyols:'11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th',
+    enzyme:'99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc',
+    cocoa:'05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake',
+    sorbitol:'11-11-6-sorbitol'
+  };
+  const appendixC='https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=40';
+  const categories='https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf';
+  const sorbitolSource=links('chapter-18',[88,89]);
+  const routeNotes=new Map([
+    [routeIds.salt,[
+      {article:'2.9.30(6)(2)(b)',form:'Finished salt substitute',parameter:'Diluent identity and finished lot',status:'Document the approved recipe',
+        notes:root.PMSVRecipeSamples.firstSource(routeIds.salt).text,source:links('food-56',[6])+' | '+links('ctr-3',[29])},
+      {article:'2.9.30(6)(5)',form:'Retail salt substitute',parameter:'Product name and cation declarations',status:'Check the label against the formula',
+        notes:'Use the prescribed name “low sodium salt substitute” or “low sodium dietetic salt”. Declare sodium, potassium, calcium, magnesium, ammonium and choline per 100 g of mixture. The sodium maximum is 120 mg per 100 g of finished mixture.',source:links('food-56',[6])}
+    ]],
+    [routeIds.polyols,[
+      {article:'FoSCoS 11.6 / Appendix A',form:'Single polyol or preparation',parameter:'Identify the named additive and permitted use',status:'Obtain the specification and formula',
+        notes:'Record the additive name, INS number, carriers, intended food category and permitted use. This 11.6 catalogue entry excludes individually standardized products. Check a blend against its actual ingredients and use.',source:categories+'#page=6 | https://fcstraining.fssai.gov.in/standard-product'},
+      {article:'FPSFA 3.2.16(1) / CTR 2.1.1(2)',form:'Confirmed sorbitol powder',parameter:'Separate standardized sorbitol entry',status:'Open the named sorbitol worksheet',
+        notes:'Use the Sorbitol entry for a confirmed lot of standardized sorbitol powder. Its specification gives lead 1 mg/kg, arsenic 3 mg/kg and nickel 2 mg/kg as maxima. A different polyol or blend needs its own source.',source:sorbitolSource+' | '+links('ctr-3',[22,25,28])}
+    ]],
+    [routeIds.enzyme,[
+      {article:'FoSCoS 99.2 / 99.4',form:'Supplied preparation',parameter:'Enzyme identity and regulatory classification',status:'Check the named use in FSSR',
+        notes:'Record the enzyme identity, preparation specification, intended technological purpose and food application. Category 99.2 excludes products classified under the processing-aid or nutraceutical regulations. Match the applicable source and application before choosing a specification.',source:categories+'#page=9'},
+      {article:'Appendix C, Table 11, row 51',form:'Listed processing-aid preparation',parameter:'Chymosin classification example',status:'Use the processing-aid entry when identity and use match',
+        notes:'Row 51 lists chymosin for milk coagulation in paneer and cheese at GMP. Match the source, preparation and application to the row. Its table note gives a lead maximum of 5 mg/kg on the covered enzyme preparation. The generic 99.2 product and the finished dairy food each require their own assessment.',source:appendixC+' | '+categories+'#page=9'}
+    ]],
+    [routeIds.cocoa,[
+      {article:'Appendix C, Table 12, row 2',form:'Cocoa mass or cake',parameter:'Ammonium carbonate (INS 503(i)) for pH control',status:'Check actual use and good manufacturing practice',
+        notes:'For this use the residue column specifies GMP. Record the processing-aid identity, purpose and use record. The entry provides no numerical mg/kg limit for the cocoa sample.',source:appendixC}
+    ]]
+  ]);
+  function routeSummary(id){
+    return (routeNotes.get(id)||[]).map(r=>r.notes+' '+r.source).join(' | ');
+  }
   const sugarSources={
     [P.misriId]:links('baser02-1',[97]),[P.syrupId]:links('baser02-1',[98]),[P.trehaloseId]:links('food-13',[39])
   };
@@ -554,6 +591,7 @@
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add,state,vetDate);
+    for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
     const coffee=root.PMSVCoffee;
     if(id===coffee.blend||id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
     if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
@@ -581,6 +619,30 @@
         const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
         if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
         out.push(cells.map(v=>v??''));
+      }
+    }
+    return out;
+  }
+  function ingredientRouteRows(id,date=root.PMSVVeterinary.reviewDate,state){
+    const out=[[...headers,'Reference maximum for the named sample','Reference unit']];
+    for(const key of [...routeNotes.keys(),routeIds.sorbitol]){
+      if(id&&key!==id)continue;
+      const selected=id?state:undefined;
+      const rows=exportRows(key,date,false,selected).slice(1);
+      const parameters=(routeNotes.get(key)||[]).map(r=>r.parameter);
+      for(const row of rows){
+        if(row[2]!==areas[0])continue;
+        const salt=key===routeIds.salt;
+        const sorbitol=key===routeIds.sorbitol&&(/Purity as d-sorbitol|^(Lead|Arsenic|Nickel)$/.test(row[5]));
+        if(salt||sorbitol||parameters.includes(row[5]))out.push([...row,'','']);
+      }
+      if(key!==routeIds.salt)continue;
+      for(const ref of root.PMSVRecipeSamples.criteriaRows(key,date).slice(1)){
+        const active=rows.find(r=>r[2]===areas[3]&&r[5]===ref[5]);
+        const matching=active&&active[7]&&active[4]===(ref[4]==='finished'?'Finished product':'Separately sampled ingredient');
+        out.push([key,R.products[key].name,areas[3],'CTR 2.2.1(1)',ref[3],ref[5],
+          matching?active[6]:'Confirm the sampled article and evidence',matching?ref[6]:'',matching?ref[7]:'',
+          matching?active[9]:ref[8],'','','','',ref[9],ref[6],ref[7]]);
       }
     }
     return out;
@@ -654,5 +716,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

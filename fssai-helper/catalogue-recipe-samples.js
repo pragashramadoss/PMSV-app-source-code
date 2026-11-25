@@ -6,7 +6,9 @@
   const coconutRecipe='102-102-1-14-3-narikela-ksheerika-milky-coconut-delight';
   const drink='102-102-1-14-7-ksheerapaka-mystic-milk-quartet';
   const coconutPowder='04-04-1-coconut-milk-powder',singhara='06-06-2-water-chestnut-flour-singhare-ka-atta';
-  const ids=[coconutRecipe,drink,coconutPowder,singhara];
+  const salt='12-12-1-salt-substitutes';
+  const originalIds=[coconutRecipe,drink,coconutPowder,singhara],ids=[...originalIds,salt];
+  const saltNote='Regulation 2.9.30(6) permits cereal flour as a diluent. Identify the flour and an approved recipe showing it is present in the sampled finished lot. The food-containing-cereal entry gives 20 µg/kg for total aflatoxins and 10 µg/kg for B1. An incoming flour sample has its own cereal limits. A sugar-only or mineral-only formula requires a separate assessment.';
   const link=(doc,page)=>evidence.documents[doc].url.split('#')[0]+'#page='+page;
   const order='https://www.fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf';
   const coconutIdentity='https://www.fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/63fdb05adf62csample.pdf#page=33';
@@ -16,6 +18,7 @@
   const powderNote='FPSFA 2.3.63 defines powder made by drying extracted coconut milk and permits maltodextrin and sodium caseinate. Identify the separately sampled incoming coconut kernel. A kernel result does not establish a finished powder limit.';
   const flourNote='FPSFA 2.3.64 specifies grinding dried nuts of Trapa bispinosa or Trapa quadrispinosa. Identify the species and the incoming nut lot before milling. The finished flour requires its own applicability assessment.';
   const profiles={
+    [salt]:{text:saltNote,urls:[link('food-56',6),link('ctr-3',29)],finished:true},
     [coconutRecipe]:{text:coconutNote,urls:[order+'#page=93',coconutIdentity,link('ctr-3',29),schedule],finished:true},
     [drink]:{text:drinkNote,urls:[order+'#page=98',link('ctr-16',4),link('ctr-1',5),link('ctr-3',29)],finished:true},
     [coconutPowder]:{text:powderNote,urls:[link('food-20',17),coconutIdentity,link('ctr-3',29)]},
@@ -28,6 +31,10 @@
   const milk=species=>pick('liquidMilk','Separately sampled incoming liquid '+species+' milk','ingredient',{m1:'C20'});
   const beverage=pick('recipeDrink','Finished authorised recipe sold as a non-alcoholic drink','finished',{saf:'N11'});
   const samples={
+    [salt]:[
+      pick('flourFood','Finished salt substitute with cereal flour documented in the recipe','finished',{total:'C9',b1:'C19'}),
+      pick('incomingFlour','Separately sampled cereal flour before blending','ingredient',{total:'C0',b1:'C11'})
+    ],
     [coconutRecipe]:[finished,coconut,milk('cow')], [drink]:[beverage,milk('buffalo')],
     [coconutPowder]:[coconut], [singhara]:[pick('trapaNut','Incoming dried Trapa nuts sampled separately before milling','ingredient',{total:'C3',b1:'C13'})]
   };
@@ -43,17 +50,22 @@
     const p=profiles[id],k=fields[a],forms=samples[id].filter(f=>f.keys[a]);
     const form=forms.find(f=>f.value===s[k]),lot=val(s,k+'Lot'),proof=val(s,k+'Ref');
     const changed=id===drink&&a==='saf'&&date>=legacyChange;
-    const choices=forms.concat(pick('other','Other sample, or classification unresolved','unresolved',{}))
+    const excluded=id===salt?[pick('flourAbsent','Reviewed formula contains only minerals or sugar as diluent and no listed aflatoxin article','outside',{})]:[];
+    const choices=forms.concat(excluded,pick('other','Other sample, or classification unresolved','unresolved',{}))
       .map(f=>({...f,rows:f.keys[a]&&!changed?[f.keys[a]]:[]}));
     const result={status:'Confirm sampled article, lot and specification',sample:'unresolved',rows:[],sources:changed?[]:forms.map(f=>f.keys[a]),
       links:p.urls,reason:p.text,choices};
     if(root.PMSVTestingPlan&&!root.PMSVTestingPlan.metalEdition(date))return {...result,status:'Select a valid assessment date in a reviewed edition'};
+    if(id===salt&&s[k]==='flourAbsent'&&lot&&proof)
+      return {...result,status:'Documented formula outside the cereal-containing entry',sample:'outside',reason:'Reviewed formula and lot '+lot+' · '+proof+'. Assess other applicable provisions independently.'};
     if(!form||!lot||!proof)return result;
-    if(form.sample==='finished'&&(!val(s,'ayRecipe')||(id===drink&&!val(s,'ayVariant'))))
+    const cereal=id===salt?val(s,'crop_saltCereal'):'';
+    if(id===salt&&!cereal)return {...result,status:'Enter the cereal named on the flour specification'};
+    if(id!==salt&&form.sample==='finished'&&(!val(s,'ayRecipe')||(id===drink&&!val(s,'ayVariant'))))
       return {...result,status:'Document the finished recipe and variant in the Schedule D section'};
     if(id===coconutRecipe&&form.sample==='finished'&&(s.ayIngredient!=='present'||!val(s,'ayIngredientRef')))
       return {...result,status:'Document the retained coconut kernel in the Schedule D ingredient check'};
-    const reason=[form.label,'Lot '+lot,proof,form.sample==='finished'&&val(s,'ayRecipe'),id===coconutRecipe&&form.sample==='finished'&&val(s,'ayIngredientRef'),id===drink&&form.sample==='finished'&&val(s,'ayVariant')].filter(Boolean).join(' · ');
+    const reason=[form.label,'Lot '+lot,proof,cereal&&'Cereal '+cereal,id!==salt&&form.sample==='finished'&&val(s,'ayRecipe'),id===coconutRecipe&&form.sample==='finished'&&val(s,'ayIngredientRef'),id===drink&&form.sample==='finished'&&val(s,'ayVariant')].filter(Boolean).join(' · ');
     if(changed){
       const ref=val(s,'crop_decRef');
       if(!ref||!['absent','contains'].includes(s.crop_dec))return {...result,status:'Document the December ingredient decision',reason:reason+'. '+drinkNote};
@@ -76,5 +88,5 @@
     }
     return out;
   }
-  root.PMSVRecipeSamples=Object.freeze({ids,drink,profiles,covered,firstSource,decision,criteriaRows});
+  root.PMSVRecipeSamples=Object.freeze({ids,originalIds,salt,drink,profiles,covered,firstSource,decision,criteriaRows});
 })(globalThis);

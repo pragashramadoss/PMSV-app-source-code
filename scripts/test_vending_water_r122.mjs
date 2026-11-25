@@ -49,5 +49,5 @@ assert.equal(measured.filter(row=>row[9]?.includes(base.waterReport)).length,1);
 assert(!plan.exportRows(null,'2026-11-23',false,reading).some(row=>row[9]?.includes(base.waterReport)));
 assert.equal(water.planRows('mineral-water',reading).length,0);
 assert.equal(water.assess({...reading,waterAnalyte:'pesticide-pointer'}),'');
-assert.equal(register.firstSourceReview.pending,17);
+assert.equal(register.firstSourceReview.pending,16);
 console.log('74 vending-water entries, 15 Table 3 reading checks, two plan editions, documented outlet scope and separate reference exports verified.');
