@@ -12,13 +12,13 @@ assert(W.available);
 assert.equal(R.covered('constructor','total'),false);
 assert.equal(R.criteriaRows(null,'2026-01-01').length,1);
 assert.deepEqual(Array.from(C.decision(powder,'total',{crop_af:'kernel',crop_afLot:'K',crop_afRef:'Intake',vetDate:''}).rows),[]);
-const queue=W.pendingSourceRows().slice(1).map(r=>r[0]);assert.equal(queue.length,16);
-assert(!queue.includes(sweet)&&!queue.includes(drink)&&queue.includes(powder)&&queue.includes(flour));
+const queue=W.pendingSourceRows().slice(1).map(r=>r[0]);assert.equal(queue.length,15);
+assert(!queue.includes(sweet)&&!queue.includes(drink)&&queue.includes(powder)&&!queue.includes(flour));
 for(const id of [sweet,drink,powder,flour]){
  for(const date of ['2026-11-24','2026-11-30','2026-12-01']){
-  const rules=R.criteriaRows(id,date).slice(1);assert.equal(rules.length,id===sweet?5:2);
-  const all=R.criteriaRows(null,date).slice(1);assert.equal(all.length,15);
-  assert.equal(all.filter(r=>r[6]!=='').length,date==='2026-12-01'?14:15);
+  const rules=R.criteriaRows(id,date).slice(1).filter(r=>id!==flour||r[4]==='ingredient');assert.equal(rules.length,id===sweet?5:2);
+  const all=R.criteriaRows(null,date).slice(1);assert.equal(all.length,21);
+  assert.equal(all.filter(r=>r[6]!=='').length,date==='2026-12-01'?19:20);
   for(const r of rules){
    const analyte=Object.keys(ctx.PMSVCropScopeData.labels).find(a=>ctx.PMSVCropScopeData.labels[a]===r[5]);
    const k={total:'crop_af',b1:'crop_af',m1:'crop_milk',saf:'crop_saff'}[analyte];

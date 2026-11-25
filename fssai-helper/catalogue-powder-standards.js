@@ -12,7 +12,7 @@
     ['06-06-2-arrowroot',source('baser02-1',83),'Identify the separated, purified starch from Maranta arundinacea or the Curcuma species printed as “augustifolia” in clause 2.4.14(1). The numerical table in the following clause covers tapioca sago and palm sago starch.','arrowroot'],
     ['06-06-2-tapioca-sago',sagoSource,'Identify sago pearls produced from tapioca root starch. Use the reported basis for each parameter.','tapioca_sago'],
     ['06-06-2-palm-sago-starch',sagoSource,'Identify starch from Metroxylon sagu or M. rumphii. Clause 2(3) expressly extends the sago standard to this product.','palm_sago_starch'],
-    [singhara,source('food-14',35),'Confirm flour milled from dried Trapa nuts. Keep the incoming nut lot and the finished flour sample distinct. The published nut limits require a separate classification decision for the flour.'],
+    [singhara,source('food-14',35),'Confirm flour milled from dried Trapa nuts. Keep the incoming nut lot and the finished flour sample distinct. Use the aflatoxin worksheet for the two potential finished-flour entries and the separate incoming-nut sample.'],
     ['04-04-1-coconut-milk-powder',source('food-20',17),'Match the dried coconut milk powder, the dry-matter fat result and the free fatty acid result for extracted fat. Maltodextrin and sodium caseinate are permitted ingredients. Added colour and flavour are prohibited.'],
     ['06-06-2-carob-powder',source('baser02-1',129),'Match powder from roasted, husk-free Ceratonia siliqua pods. The carob standard excludes artificial colour or flavour, extraneous matter and glazing substances, and requires sound material free of rancid or objectionable flavour.']
   ];
