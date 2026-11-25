@@ -10,7 +10,7 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
 }
 const {PMSVCropScope:crop,PMSVTestingPlan:plan,PMSVCatalogueWorksheets:worksheets,PMSV_REVIEW_REGISTER:register}=ctx;
 const ids=['05-05-1-dry-mixtures-of-cocoa-and-sugars','10-10-3-pickled-eggs'];
-assert.deepEqual([...register.firstSourceReview.toxinProductIds].sort(),[...ids,crop.childId,...crop.botanicalIds,...register.recipeSampleReview.productIds].sort());
+assert.deepEqual([...register.firstSourceReview.toxinProductIds].sort(),[...ids,crop.childId,...crop.botanicalIds,...register.recipeSampleReview.productIds,register.saltAndIngredientReview.saltProductId].sort());
 assert.equal(register.firstSourceReview.withRoute,517);
 const queue=worksheets.pendingSourceRows().slice(1);
 assert.equal(queue.length,16);
