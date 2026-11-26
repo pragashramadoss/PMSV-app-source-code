@@ -3,6 +3,14 @@
   'use strict';
   const D=root.PMSVMetalPanelData, old=root.PMSVMetalScopeData, M=root.PMSVMetalScope, B=root.PMSVBroadContaminants, E=root.PMSVCatalogueEvidence;
   if(!D||!M||!B||!E||Object.keys(D.rows).length!==382||Object.keys(D.products).length!==533)return;
+  const catechuId='04-04-1-catechu-edible';
+  const catechuKeys={Pb:'Pb60',Cu:'Cu5'};
+  const catechuFields=['panelCatechuForm','panelCatechuSpec','panelCatechuUse','panelCatechuLot','panelCatechuCopper','panelCatechuPbBasis','panelCatechuCuBasis'];
+  const catechuSources=[
+    E.documents['baser02-1'].url.split('#')[0]+'#page=128',
+    'https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/Gazette_Notification_Additive_Harmonization_16_09_2016.pdf#page=335'
+  ];
+  const catechuRule='Identify the separately supplied food-grade dried aqueous extract of Acacia catechu heartwood. Record the supplier specification, intended Indian food use, classification and lot. The flavouring lead entry uses dry matter. The copper entry reads “flavourings/pectin liquid”; document its coverage of the supplied solid before using it.';
   const silverId='100-100-silver-leaf-chandi-ka-warq';
   const silverMetals={Pb:'Pb70',Cu:'Cu8',As:'As31'};
   const sajjiId='99-99-1-sajji-khar';
@@ -71,7 +79,7 @@
   const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
   const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields,...importFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields,...catechuFields,...importFields];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -128,7 +136,30 @@
     if(!key)return decision('check',rowKeys.Hg,'Confirm the exact named mercury article, edible sample and source.');
     return decision('named',[key],h.why);
   }
+  function catechuRows(){
+    return [['Catalogue ID','Analyte','Reference maximum','Unit','Reporting basis','Applicable sample','Required evidence','Product standard','Flavour definition','Metal schedule'],
+      ...Object.entries(catechuKeys).map(([m,key])=>[catechuId,names[m],literal(key).split(' ')[0],'mg/kg',
+        m==='Pb'?'Dry matter':'As-supplied mass of solid','Separately supplied edible catechu classified as a natural flavouring',
+        m==='Pb'?catechuRule:'Record the Indian article interpretation covering this solid and the lot-specific as-supplied reporting basis. '+catechuRule,
+        ...catechuSources,source+'#page='+pages(key)[0]])];
+  }
+  function catechuMetal(m,s){
+    const flavour=s.panelCatechuForm==='flavour',ordinary=s.panelCatechuForm==='ordinary';
+    const key=flavour?catechuKeys[m]:unspecifiedMetals[m];
+    const keys=ordinary||flavour?[key]:[catechuKeys[m],unspecifiedMetals[m]];
+    const record=(kind,reason,proof='')=>({...decision(kind,keys,reason,proof),identitySources:catechuSources});
+    if(!(ordinary||flavour)||!textValue(s,'panelCatechuSpec')||!textValue(s,'panelCatechuLot')||!textValue(s,'panelCatechuUse'))
+      return record('check','Record the sampled catechu identity, role, Indian classification or exclusion of named metal articles, and lot.');
+    if(flavour&&m==='Cu'&&!textValue(s,'panelCatechuCopper'))
+      return record('check','Document why the Gazette copper article “flavourings/pectin liquid” covers this solid flavouring.');
+    const dry=flavour&&m==='Pb',basis=s['panelCatechu'+m+'Basis'];
+    if(basis!==(dry?'dry':'supplied'))return record('check',dry?'Confirm the lead reporting basis is dry matter.':'Confirm the as-supplied mass basis for the sampled solid.');
+    const proof=['Specification '+s.panelCatechuSpec,'Classification '+s.panelCatechuUse,'Lot '+s.panelCatechuLot,dry?'Dry matter':'As supplied'];
+    if(flavour&&m==='Cu')proof.push('Copper article scope '+s.panelCatechuCopper);
+    return record(flavour?'named':'residual',flavour?'Food-grade catechu supplied as a documented natural flavouring.':'Ordinary ingredient with a documented review of the named articles.',proof.join(' · '));
+  }
   function firstSource(id){
+    if(id===catechuId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:catechuRule,urls:[...catechuSources,source+'#page=20',source+'#page=23']};
     if(id===sajjiId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:importRule,urls:[...importSources,...[20,23,24,26,27].map(page=>source+'#page='+page)]};
     if(id===silverId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:silverRule,urls:[...silverSources,...[20,23,24].map(page=>source+'#page='+page)]};
     const group=additiveGroup(id);
@@ -212,6 +243,7 @@
     return rows;
   }
   function base(id,m,s){
+    if(id===catechuId&&Object.hasOwn(catechuKeys,m))return catechuMetal(m,s);
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
       const key=unspecifiedMetals[m];
       const consignment=textValue(s,'panelKharDocument'),lot=textValue(s,'panelKharLot');
@@ -277,6 +309,7 @@
     return p;
   }
   function selectable(id,m,d,s){
+    if(id===catechuId&&Object.hasOwn(catechuKeys,m))return [];
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m))return [];
     if(id===silverId&&Object.hasOwn(silverMetals,m))return [];
     if(guidedAdditive(id,m,s))return [];
@@ -441,6 +474,10 @@
       description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
     }
     if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
+    if(id===catechuId&&Object.hasOwn(catechuKeys,m)){
+      if(!c)return d.reason;
+      if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelCatechuLot'))return 'Match the laboratory sample to the documented catechu lot.';
+    }
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelKharLot'))return 'Match the laboratory sample to the lot on the import record.';
@@ -567,6 +604,18 @@
     if(!known(id))return '';
     let extra='';
     const group=additiveGroup(id);
+    if(id===catechuId){
+      const basisOptions=[['dry','Dry matter'],['supplied','As-supplied solid']];
+      extra+='<fieldset><legend>Edible catechu metal checks</legend><p>'+escape(catechuRule)+'</p>'+
+        '<label>Supplied article'+pick('panelCatechuForm',[['flavour','Single extract supplied as a natural flavouring'],['ordinary','Ordinary edible ingredient'],['other','Other material, mixture or finished food']],s)+'</label>'+
+        '<label>Food-grade extract and processing specification'+input('panelCatechuSpec',s)+'</label>'+
+        '<label>Use and Indian classification reference, or ordinary-ingredient review of named articles'+input('panelCatechuUse',s)+'</label>'+
+        '<label>Sampled extract lot ID'+input('panelCatechuLot',s)+'</label>'+
+        '<label>Copper article reference supporting coverage of this solid flavouring'+input('panelCatechuCopper',s)+'</label>'+
+        '<label>Lead reporting basis'+pick('panelCatechuPbBasis',basisOptions,s)+'</label>'+
+        '<label>Copper reporting basis'+pick('panelCatechuCuBasis',basisOptions,s)+'</label>'+
+        '<button type="button" data-catechu-export>Download catechu flavouring metal references</button></fieldset>';
+    }
     if(id===sajjiId)extra+='<fieldset><legend>Imported Sajji Khar or Papad Khar</legend><p>'+escape(importRule)+'</p>'+
       '<label>Sample identity'+pick('panelKharForm',[['imported','Imported Sajji Khar or Papad Khar ingredient'],['other','Domestic material, other alkali or finished food']],s)+'</label>'+
       '<label>Bill of entry or import consignment reference'+input('panelKharDocument',s)+'</label>'+
@@ -614,6 +663,13 @@
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
   function update(node,id,k,s,previous){
+    if(id===catechuId&&s[k]!==previous){
+      if(k==='panelCatechuForm')for(const field of catechuFields.slice(1))setInput(node,s,field,'');
+      if(['panelCatechuLot','panelCatechuSpec','panelCatechuUse','ingredientSubtype','vetDate'].includes(k)){
+        for(const field of ['panelCatechuCopper','panelCatechuCuBasis','panelCatechuPbBasis'])setInput(node,s,field,'');
+      }
+      if(k==='panelCatechuCopper')setInput(node,s,'panelCatechuCuBasis','');
+    }
     if(id===sajjiId&&previous!==s[k]){
       if(k==='panelKharForm')for(const f of importFields.slice(1))setInput(node,s,f,'');
       if(['panelKharDocument','panelKharLot','vetDate'].includes(k))setInput(node,s,'panelKharCurrent','');
@@ -682,5 +738,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({polyolId,polyolRows,sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({catechuId,catechuRows,polyolId,polyolRows,sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

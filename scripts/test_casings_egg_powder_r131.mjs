@@ -11,7 +11,7 @@ const casing=v.casingId,egg=v.eggPowderId;
 assert(w.available);assert.equal(v.firstSource(egg),null);
 assert(w.pendingSourceRows().some(r=>r[0]===egg&&r[6].includes('whole hen egg')));
 assert(!w.pendingSourceRows().some(r=>r[0]===casing));
-assert.equal(ctx.PMSV_REVIEW_REGISTER.firstSourceReview.withRoute,521);
+assert.equal(ctx.PMSV_REVIEW_REGISTER.firstSourceReview.withRoute,522);
 for(const date of ['2026-11-24','2026-12-01']){
  const rows=plan.animalCriteriaRows(null,date).slice(1),tissue=rows.filter(r=>r[0]===casing);
  assert.equal(rows.length,39);assert.equal(tissue.length,20);

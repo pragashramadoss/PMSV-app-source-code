@@ -12,7 +12,7 @@ assert(W.available);
 assert.equal(R.covered('constructor','total'),false);
 assert.equal(R.criteriaRows(null,'2026-01-01').length,1);
 assert.deepEqual(Array.from(C.decision(powder,'total',{crop_af:'kernel',crop_afLot:'K',crop_afRef:'Intake',vetDate:''}).rows),[]);
-const queue=W.pendingSourceRows().slice(1).map(r=>r[0]);assert.equal(queue.length,12);
+const queue=W.pendingSourceRows().slice(1).map(r=>r[0]);assert.equal(queue.length,11);
 assert(!queue.includes(sweet)&&!queue.includes(drink)&&queue.includes(powder)&&!queue.includes(flour));
 for(const id of [sweet,drink,powder,flour]){
  for(const date of ['2026-11-24','2026-11-30','2026-12-01']){

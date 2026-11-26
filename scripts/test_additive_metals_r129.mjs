@@ -12,8 +12,8 @@ const {PMSVMetalPanel:metal,PMSVCatalogueWorksheets:worksheets,PMSVTestingPlan:p
 const groupIds=register.additiveMetalReview.productIds;
 const focused=groupIds.flatMap(id=>metal.additiveCriteriaRows(id).slice(1));
 assert(worksheets.available);
-assert.equal(register.latestRound,145);assert.equal(register.firstSourceReview.withRoute,521);
-assert.equal(worksheets.pendingSourceRows().length,13);
+assert.equal(register.latestRound,146);assert.equal(register.firstSourceReview.withRoute,522);
+assert.equal(worksheets.pendingSourceRows().length,12);
 assert.equal(focused.length,12);assert.equal(new Set(focused.map(r=>r[2])).size,6);
 const expected={'475':{Pb:'2.0',Cu:'25',As:'3.0'},'476':{Pb:'2.0',Cu:'25',As:'3.0'},
   '1401':{As:'3.0'},'1417':{As:'3.0'},'1422':{As:'3.0'},'1451':{As:'3.0'}};

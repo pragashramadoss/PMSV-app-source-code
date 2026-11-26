@@ -30,7 +30,6 @@
     const scope = new Map([
       ['purified-vending-water', ['Point of sale', 'Identify the dispensing point and collect its treatment schematic and sample record. Use the IS 10500 worksheet for vending water. A separate CTR citation must cover water dispensed in this manner.']],
       [blend, ['Blend and inputs', 'Obtain the finished blend specification, its ground or instant form and the sampling point. Keep the coffee and chicory intake reports attached to their respective lots. Find a provision covering the blend as sold.']],
-      ['04-04-1-catechu-edible', ['Botanical extract', 'Identify the species, heartwood, aqueous extraction and marketed catechu grade. Obtain a provision covering the dried extract.']],
       [coconutPowder, ['Extracted and dried product', 'Trace the kernel lot through extraction and drying. Identify any carriers on the formula and obtain a provision for the finished coconut milk powder.']],
       ['04-04-2-cocoa-beans', ['Fermented and dried seed', 'Confirm whole fermented, dried Theobroma cacao beans on the specification. Seek a provision that includes this commodity and preparation.']],
       ['05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake', ['Processed cocoa', 'Distinguish ground mass or liquor from pressed cake on the process record. Check the sampled material against each named cocoa article and its reporting basis.']],
