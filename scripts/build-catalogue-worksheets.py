@@ -109,6 +109,11 @@ def build():
     for k,z in additive["loaded_permission_sets"].items():
         sets[k]={"name":z["name"],"rows":[[v["name"],v["ins"],v["limit"],v["condition"],v.get("note_refs",""),v.get("variant_id",""),v.get("specific","")] for v in z.get("entries",[])]}
     micro = read("appendix-b-v2-core")
+    for route in micro["product_mappings"]["milk"]["exact"]:
+        if route.get("status") == "mapped_explicit_chapter_cross_reference":
+            stored = evidence["products"][route["catalog_id"]]["micro"]
+            if stored != [["exact", route]]:
+                raise ValueError("Catalogue microbiology differs from the checked dairy clause for " + route["catalog_id"])
     microprofiles = {}
     for family,tab in micro["tables"].items():
         for row in tab["categories"]:

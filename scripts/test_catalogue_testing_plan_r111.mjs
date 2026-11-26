@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19203);
-const totals=[3855,2550,5868,6930];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19227);
+const totals=[3855,2574,5868,6930];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -23,6 +23,24 @@ for(const row of rows){
   for(const url of row[14].split(' | '))assert((row[2]===ctx.PMSVImportDocuments.area&&ctx.PMSVImportDocuments.isSource(url))||(row[2]===ctx.PMSVLabGuide.referenceArea&&(ctx.PMSVLabGuide.isIgGSource(url)||ctx.PMSVLabGuide.isControlSource(url)||ctx.PMSVLabGuide.isRecognitionSource(url)))||(row[0]===ctx.PMSVVeterinary.eggPowderId&&row[2]===A.scopedArea&&A.isExportSource(url))||(row[0]==='06-06-2-arrowroot'&&row[4]==='Separately sampled raw Maranta arundinacea rhizome'&&url.startsWith('https://www.fao.org/fao-who-codexalimentarius/sh-proxy/')&&url.endsWith('CXA_004e.pdf#page=82'))||(row[0]===ctx.PMSVMetalPanel.polyolId && ['Lead','Nickel'].includes(row[5]) && ctx.PMSVMetalPanel.polyolRows().some(r=>r[4]===row[5]&&r[8]===url))||(row[0]===ctx.PMSVMetalPanel.trehaloseId && row[5]==='Lead' && url==='https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-472.pdf#page=1')||(row[0]===ctx.PMSVMetalPanel.sajjiId && row[2]===A.areas[2] && ctx.PMSVMetalPanel.importSources.includes(url))||(row[0]===ctx.PMSVVendingWater.productId && row[2]===ctx.PMSVVendingWater.area && ctx.PMSVVendingWater.isSource(url))||/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url),url);
   assert(!row.includes('undefined')&&!row.includes('[object Object]'));
 }
+const dairyIds=['01-01-3-milk-protein-concentrate','01-01-8-whey-protein-concentrate','100-100-cow-or-buffalo-colostrum-and-colostrum-products','01-01-5-dairy-permeate-powders'];
+const dairy=A.dairySamplingRows('2026-11-26').slice(1);
+assert.equal(dairy.length,28);
+for(const [i,id] of dairyIds.entries()){
+  const set=dairy.filter(r=>r[0]===id);
+  assert.equal(set.length,7);
+  assert(set.every(r=>r[4].startsWith(set[0][1])&&r[14].includes('Gazette_Notification_')&&r[14].includes('Appendix%20B')&&r[9].includes('2.1.'+(21+i)+'(4)')));
+  assert(!set.some(r=>/yeast|mould|cronobacter/i.test(r[5])));
+  assert.equal(set.find(r=>r[5]==='Salmonella')[12],'Absent/25g');
+  assert.equal(set.find(r=>r[5].startsWith('Listeria'))[12],'Absent/g');
+  assert.equal(set.find(r=>r[5]==='Bacillus cereus')[13],1000);
+}
+assert.equal(A.dairySamplingRows('2010-01-01').length,1);
+const processing=rows.filter(r=>r[2]===A.processingArea);
+assert.equal(processing.length,5);
+assert(processing.every(r=>r[6]==='Processing-study guidance'&&!r[7]&&!r[8]&&r[14].endsWith('#page=53')));
+assert(!A.processingRow('10-10-2-egg-powder'));
+
 function forProduct(product){return rows.filter(r=>r[1]===product);}
 const composition=p=>forProduct(p).filter(r=>r[2]===A.areas[0]);
 assert(composition('Cow Milk').some(r=>r[5]==='Milk fat'&&r[7]==='≥ 3.2'));

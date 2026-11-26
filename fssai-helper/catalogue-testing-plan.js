@@ -521,6 +521,44 @@
     if(!count)push({parameter:'Product composition and identity',status:'Read product article',notes:join([anchor.basis,...std.issues.map(detail),'Check the cited article for the declared product and process.'])});
   }
 
+  const dairyGazette='https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/';
+  const dairyClauses={
+    '2.1.21(4)':['5bfd095d0ad63Gazette_Notification_DairyProducts_27_11_2018.pdf',7],
+    '2.1.22(4)':['5bfd095d0ad63Gazette_Notification_DairyProducts_27_11_2018.pdf',8],
+    '2.1.23(4)':['5bfd095d0ad63Gazette_Notification_DairyProducts_27_11_2018.pdf',9],
+    '2.1.24(4)':['5f50bca66e5bdGazette_Notification_Standards_Milk_Cheese_03_09_2020.pdf',9]
+  };
+  function microSources(route){
+    const gazette=dairyClauses[route.source_clause];
+    if(!gazette||route.status!=='mapped_explicit_chapter_cross_reference')return [];
+    return [dairyGazette+gazette[0]+'#page='+gazette[1],...route.source_pdf_pages.map(page=>route.source_url+'#page='+page)];
+  }
+  function dairySamplingRows(date){
+    const out=[headers];
+    if(!metalEdition(date))return out;
+    for(const [id,product] of Object.entries(E.products)){
+      if(product.micro.some(([,route])=>microSources(route).length)){
+        out.push(...exportRows(id,date).slice(1).filter(row=>row[2]===areas[1]));
+      }
+    }
+    return out;
+  }
+  const processingArea='Pesticide processing studies';
+  const processingSource='https://fssai.gov.in/upload/uploadfiles/files/Guidance_Document_SOP_MRL_16_03_2022.pdf';
+  const processingSamples=new Map([
+    ['coffee-chicory-mixture',['Coffee and chicory inputs → roasted ground blend or soluble extract','Trace the coffee and chicory lots separately. Obtain the blend proportions and identify whether the sample is ground or extracted. A single ingredient result cannot establish the concentration in the blend.']],
+    ['04-04-1-coconut-milk-powder',['Kernel → coconut milk → dried powder','Record the extraction and drying stages, carriers and their proportions. A moisture adjustment alone cannot account for partitioning during extraction.']],
+    ['04-04-2-cocoa-beans',['Fresh seed → fermented, dried whole beans','Identify whether the cited raw commodity already describes the fermented, dried bean. Use a processing study only for an actual change of commodity or stage.']],
+    ['05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake',['Whole beans → nib → mass or liquor → press cake','Identify the residue, whether the shell was removed, and which fraction was sampled. For pressed material distinguish cake from butter and retain their separate results.']],
+    ['06-06-2-arrowroot',['Rhizome → separated and purified starch','Document the botanical source, washing, starch separation and drying. A whole-rhizome result alone cannot establish the residue in the purified starch.']]
+  ]);
+  function processingRow(id){
+    const sample=processingSamples.get(id);if(!sample)return null;
+    return {area:processingArea,article:'FSSAI pesticide MRL guidance, section 9',form:sample[0],parameter:'Evidence for pesticide residues after processing',
+      status:'Processing-study guidance',limit:'',unit:'',
+      notes:sample[1]+' For the same pesticide residue definition, compare the processed fraction and its linked raw commodity in consistent units. The processing factor is the processed concentration divided by the raw concentration. Record the study, method, reporting limits and separately applicable Indian MRL before interpreting a finished-food result.',
+      source:[45,53].map(page=>processingSource+'#page='+page).join(' | ')};
+  }
   // A shared Appendix B profile can have product- or variant-specific exclusions.
   function microCriteria(profile,route) {
     const data={...profile.criteria};
@@ -554,10 +592,10 @@
           const conditionalYeast=route.profile_key==='milk-11'&&organism==='yeast_and_mold_count';
           const caseinOnly=route.profile_key==='milk-07'&&organism==='yeast_and_mold_count';
           push({article:join(['Appendix B',tableRef || (kind==='supplemental_process_criteria'?'Table 2A footnote 4':profile.group==='bakers_yeast'?'Tables 6A/6B':'') ,kindLabel]),
-            form,parameter:R.organisms[organism]||label(organism),status:row.source_question?'Resolve source before use':conditional||conditionalYeast||caseinOnly?'Confirm product form':'Mapped table row',
-            limit:row.requirement||'',unit:row.unit,notes:join([reason,route.note,route.message,row.notes,row.source_question,
+            form:route.source_clause?R.products[id].name+' · '+form:form,parameter:R.organisms[organism]||label(organism),status:row.source_question?'Resolve source before use':conditional||conditionalYeast||caseinOnly?'Confirm product form':'Mapped table row',
+            limit:row.requirement||'',unit:row.unit,notes:join([reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
               row.applicability,conditionalYeast?'Exclude mould-ripened cheese.':'',caseinOnly?'Applies to casein powder only.':'',
-              kind==='hygiene'?criteria.stage:'',profile.group==='milk'?(kind==='safety'?'End of manufacture and products on the market during shelf life.':'Process hygiene at end of manufacture.'):'',detail(criteria.notes)]),n:row.n,c:row.c,m:row.m,M:row.M,source:links('chapter-20',cited)});
+              kind==='hygiene'?criteria.stage:'',profile.group==='milk'?(kind==='safety'?'End of manufacture and products on the market during shelf life.':'Process hygiene at end of manufacture.'):'',detail(criteria.notes)]),n:row.n,c:row.c,m:row.m,M:row.M,source:[...microSources(route),links('chapter-20',cited)].join(' | ')});
           count++;
         }
       }
@@ -759,6 +797,8 @@
     composition(id,add,state,vetDate);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
     if(sampleGuide)add(sampleGuide);
+    const processing=metalEdition(vetDate)&&processingRow(id);
+    if(processing)add(processing);
     if(metalEdition(vetDate)&&root.PMSVImportDocuments){
       for(const row of root.PMSVImportDocuments.entries(id,state))add(row);
     }
@@ -881,6 +921,14 @@
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:task,source:links(doc,anchor?.p||route?.[1]||[])});
       const melamine=root.PMSVBroadContaminants.melamineRow(key);
       add('Finished food',melamine.limit?'General melamine provision':'Confirm food-grade article for melamine',melamine);
+      const processing=processingRow(key);
+      if(processing)add('Raw and processed samples',processing.status,processing);
+      if(record.micro.some(([,route])=>microSources(route).length)){
+        microbiology(key,row=>{
+          const sampling=['n','c','m','M'].filter(field=>row[field]!=null).map(field=>field+' = '+row[field]).join(', ');
+          add('Finished product','Microbiological sampling plan',{...row,notes:join([sampling,row.notes])});
+        });
+      }
       const sampleRow=additionalSampleRow(key);
       if(sampleRow){
         const downstream=sampleRow.status==='Downstream product reference only';
@@ -1015,5 +1063,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sampleArea,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleArea,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
