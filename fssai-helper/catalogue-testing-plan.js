@@ -759,6 +759,9 @@
     composition(id,add,state,vetDate);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
     if(sampleGuide)add(sampleGuide);
+    if(metalEdition(vetDate)&&root.PMSVImportDocuments){
+      for(const row of root.PMSVImportDocuments.entries(id,state))add(row);
+    }
     if(metalEdition(vetDate)&&root.PMSVLabGuide){
       for(const row of root.PMSVLabGuide.referenceEntries(id,state))add(row);
     }
@@ -884,6 +887,7 @@
         add(downstream?'Downstream cocoa powder':'Finished product method',sampleRow.status,{...sampleRow,limit:downstream?cocoaPowderReference:'',unit:downstream?'ppm':''});
       }
       for(const r of scopedReferences(key,date))add(r.role,r.status,{...r,limit:r.value});
+      for(const row of root.PMSVImportDocuments?.entries(key)||[])add('Import consignment',row.status,row);
       if(key===water.productId){
         for(const row of water.planRows(key).filter(r=>r.article.includes('Table 3')&&r.unit==='mg/L')){
           add('Finished vending outlet','Drinking-water standard incorporated by FSSR 2.10.9',row);
