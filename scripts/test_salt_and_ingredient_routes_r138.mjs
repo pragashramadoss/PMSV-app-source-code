@@ -11,11 +11,11 @@ for(const [,name] of html.matchAll(/<script src="((?:catalogue-|full-catalogue-|
 const {PMSVCatalogueWorksheets:ws,PMSVTestingPlan:plan,PMSVCropScope:crop,PMSVRecipeSamples:recipes,PMSV_REVIEW_REGISTER:review}=ctx;
 const {salt,polyols,sorbitol,enzyme,cocoa}=plan.routeIds;
 assert(ws.available);
-assert.equal(review.firstSourceReview.withRoute,520);
-assert.equal(review.firstSourceReview.pending,13);
+assert.equal(review.firstSourceReview.withRoute,521);
+assert.equal(review.firstSourceReview.pending,12);
 assert.equal(review.legalProductApprovals,0);
 const queue=ws.pendingSourceRows().slice(1).map(row=>row[0]);
-assert(!queue.includes(salt)&&queue.includes(polyols)&&queue.includes(enzyme)&&queue.includes(cocoa));
+assert(!queue.includes(salt)&&!queue.includes(polyols)&&queue.includes(enzyme)&&queue.includes(cocoa));
 assert.equal(recipes.firstSource(salt).status,'CONDITIONAL_TOXIN_SOURCE_MATCH');
 assert.equal(recipes.criteriaRows(salt)[1][0],review.latestSourceReviewDate);
 assert(!recipes.decision(salt,'total',{}).reason.includes('µg/kg'));

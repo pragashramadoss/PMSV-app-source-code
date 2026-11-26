@@ -32,7 +32,15 @@
   };
   const generalAdditives='99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-';
   const nutraAdditives='99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised';
+  const polyolId='11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th';
+  const polyolFunctions={emulsifier:'Emulsifier',stabilizer:'Stabilizer'};
+  const polyolMonographs={'965(i)':'Additive-271.pdf','965(ii)':'additive-272-m1.pdf','967':'Additive-491.pdf'};
   const additiveGroups={
+    [polyolId]:{
+      forms:[['965(i)','Maltitol'],['965(ii)','Maltitol syrup'],['967','Xylitol']],
+      sources:[E.documents['chapter-19'].url+'#page=310','https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=74'],
+      text:'For a separately supplied category 11.6 polyol documented as an emulsifier or stabilizer, the group arsenic maximum is 3 mg/kg on dry matter. Match the INS, permitted use, actual function, supplier lot and laboratory reporting basis. Sweetener-only uses, retail blends and standardized sorbitol require their own assessment.'
+    },
     [generalAdditives]:{
       forms:[['475','Polyglycerol esters of fatty acids'],['476','Polyglycerol esters of interesterified ricinoleic acid (PGPR)']],
       sources:[E.documents['chapter-19'].url+'#page=174'],
@@ -45,9 +53,9 @@
     }
   };
   const namedEsterRows={'475':{Pb:'Pb113',Cu:'Cu20',As:'As61'},'476':{Pb:'Pb114',Cu:'Cu21',As:'As62'}};
-  const additiveFields=['panelAdditiveINS','panelAdditiveSpec','panelAdditiveRoute','panelAdditiveLot','panelAdditiveAsBasis'];
+  const additiveFields=['panelAdditiveINS','panelAdditiveSpec','panelAdditiveRoute','panelAdditiveLot','panelAdditiveAsBasis','panelPolyolFunction'];
   const additiveGroup=id=>Object.hasOwn(additiveGroups,id)?additiveGroups[id]:null;
-  const additiveScope=(id,m)=>id===generalAdditives?['Pb','Cu','As'].includes(m):id===nutraAdditives&&m==='As';
+  const additiveScope=(id,m)=>id===generalAdditives?['Pb','Cu','As'].includes(m):(id===nutraAdditives||id===polyolId)&&m==='As';
   const metals=Object.entries(D.metals);
   const primary=['Pb','Cu','As','Sn','Cd'];
   const names=Object.fromEntries(metals.map(([name,key])=>[key,name]));
@@ -151,6 +159,7 @@
   }
   function guidedAdditive(id,m,s){
     if(!additiveScope(id,m)||s.panelAdditiveINS==='other')return false;
+    if(id===polyolId)return true;
     // Keep a documented legacy selection for a different article on its original path.
     const prior=s[field(m)];
     if(!s.panelAdditiveINS&&prior&&Object.hasOwn(D.rows,prior)&&evidence(s,field(m))&&
@@ -162,8 +171,9 @@
     const ins=s.panelAdditiveINS,keys=additiveRows(id,ins,m);
     const choices=keys.length?keys:[...new Set(group.forms.flatMap(([code])=>additiveRows(id,code,m)))];
     const pending=why=>decision('check',choices,why+' '+group.text);
+    if(id===polyolId&&!Object.hasOwn(polyolFunctions,s.panelPolyolFunction))return pending('Document the emulsifying or stabilizing function for this lot.');
     if(!keys.length||!textValue(s,'panelAdditiveSpec')||!textValue(s,'panelAdditiveRoute')||!textValue(s,'panelAdditiveLot'))
-      return pending('Identify the single additive lot and document the supplier specification and its eligible 99.1 route. A blend or finished food requires its own article.');
+      return pending('Identify the single additive lot and document the supplier specification and its eligible '+(id===polyolId?'11.6':'99.1')+' route. A blend or finished food requires its own article.');
     const basis=s.panelAdditiveAsBasis;
     const key=m==='As'?(basis==='dry'?'As67':basis==='named'?namedEsterRows[ins]?.As:null):keys[0];
     if(!key)return pending('Confirm the article and analytical basis shown on the arsenic report.');
@@ -171,6 +181,7 @@
     const reason=dry?'The documented material is an emulsifier or stabilizer and the report gives arsenic on a dry-matter basis.':
       'Use the entry naming the supplied additive. '+(m==='As'?'Also review the separate dry-matter group entry.':'');
     const proof=['INS '+ins,'Specification '+textValue(s,'panelAdditiveSpec'),'Classification/use record '+textValue(s,'panelAdditiveRoute'),'Lot '+textValue(s,'panelAdditiveLot')];
+    if(id===polyolId)proof.push('Function '+polyolFunctions[s.panelPolyolFunction]);
     return decision('named',[key],reason.trim(),proof.join(' · '));
   }
   function additiveCriteriaRows(id){
@@ -182,12 +193,23 @@
           const r=D.rows[rowKey],dry=rowKey==='As67';
           out.push([key,root.PMSVCatalogueRules.products[key].name,ins,name,metal,literal(rowKey).split(' ')[0],'mg/kg',
             dry?'Dry matter, for the documented emulsifier or stabilizer':'Named additive, mass basis',
-            'Single supplied material, supplier specification, lot, current classification and intended-use reference; verify the laboratory reporting basis.',
+            'Single supplied material, supplier specification, lot, current classification and intended-use reference. Verify the laboratory reporting basis.',
             group.sources.join(' | '),source+'#page='+r[2]]);
         }
       }
     }
     return out;
+  }
+  function polyolRows(){
+    const rows=[['Catalogue ID','INS','Material','Reference','Analyte','Published maximum','Unit','Conditions','Sources']];
+    for(const r of additiveCriteriaRows(polyolId).slice(1)){
+      rows.push([r[0],r[2],r[3],'FSSAI CTR 2.1.1(2)',r[4],r[5],r[6],additiveGroups[polyolId].text,r[9]+' | '+r[10]]);
+      const source='https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/'+polyolMonographs[r[2]];
+      for(const [analyte,maximum] of [['Lead','1'],['Nickel','2']]){
+        rows.push([r[0],r[2],r[3],'JECFA additive purity specification',analyte,maximum,'mg/kg','Use the monograph for the supplied grade, its specified analytical basis and the applicable purchasing specification.',source]);
+      }
+    }
+    return rows;
   }
   function base(id,m,s){
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
@@ -561,9 +583,10 @@
       '<label>Independent non-synthetic classification reference for arsenic'+input('panelSilverAs',s)+'</label></fieldset>';
     if(group)extra+='<fieldset><legend>Metals in the supplied additive</legend><p>'+escape(group.text)+'</p>'+
       '<label>Sampled material'+pick('panelAdditiveINS',[...group.forms.map(([ins,name])=>[ins,'INS '+ins+' · '+name]),['blend','Premix, carrier preparation or downstream food'],['other','Another single additive for manual article review']],s)+'</label>'+
-      '<label>Supplier specification and single-substance identity'+input('panelAdditiveSpec',s)+'</label>'+
+      '<label>'+(id===polyolId?'Supplier specification and identity of the supplied polyol grade':'Supplier specification and single-substance identity')+input('panelAdditiveSpec',s)+'</label>'+
       '<label>Current classification, intended food or format and permission reference'+input('panelAdditiveRoute',s)+'</label>'+
       '<label>Supplier or sampled lot ID'+input('panelAdditiveLot',s)+'</label>'+
+      (id===polyolId?'<label>Documented function of this supplied polyol'+pick('panelPolyolFunction',[...Object.entries(polyolFunctions),['sweetener','Sweetener only'],['other','Other or unknown function']],s)+'</label>':'')+
       '<label>Arsenic article and laboratory reporting basis'+pick('panelAdditiveAsBasis',[...(id===generalAdditives?[['named','Mass basis for the named additive']]:[]),['dry','Documented emulsifier or stabilizer function; arsenic reported on dry matter']],s)+'</label></fieldset>';
     const ash=ashProfiles[id];
     if(ash)extra+='<fieldset><legend>'+escape(ash.title)+'</legend><p>'+escape(ash.rule)+'</p>'+
@@ -600,6 +623,9 @@
       if(['panelSilverSpec','panelSilverUse','panelSilverLot'].includes(k)){
         setInput(node,s,'panelSilverDry','');setInput(node,s,'panelSilverAs','');
       }
+    }
+    if(id===polyolId&&previous!==s[k]&&['panelPolyolFunction','panelAdditiveLot','panelAdditiveRoute','panelAdditiveSpec'].includes(k)){
+      setInput(node,s,'panelAdditiveAsBasis','');
     }
     if(k==='panelAdditiveINS'&&s[k]!==previous){
       for(const f of additiveFields.slice(1))setInput(node,s,f,'');
@@ -656,5 +682,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({polyolId,polyolRows,sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

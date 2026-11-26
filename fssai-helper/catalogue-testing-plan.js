@@ -36,7 +36,6 @@
       ['06-06-2-carob-powder', ['Roasted botanical powder', 'Obtain the Ceratonia siliqua pod specification, husk removal and roasting records. Establish coverage of the marketed powder for the analyte.']],
       ['06-06-2-arrowroot', ['Separated starch', 'Record the rhizome species, starch separation and drying. Seek a provision for purified starch or documented coverage of the processed fraction.']],
       [egg, ['Dried animal product', 'Identify dried white, yolk or whole egg. Keep the pre-drying shell-free egg report with its intake lot and obtain the specific regulatory basis for interpreting a powder result.']],
-      ['11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th', ['Supplied substance or retail preparation', 'Obtain the INS, composition, grade and intended use. Establish whether a separately standardised substance or a finished table-top preparation is being assessed.']],
       ['99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc', ['Preparation and use', 'Obtain the enzyme name, activity, preparation specification and intended food process. Check whether the exact preparation belongs in the processing-aid schedule or the separate category 99.2.']],
       ['100-100-cow-or-buffalo-colostrum-and-colostrum-products', ['Postpartum secretion', 'Record species, postpartum collection window and whether the sample is colostrum or its powder. Obtain explicit support for the veterinary or contaminant article on that matrix.']],
       ['100-100-royal-jelly', ['Bee secretion', 'Obtain the beekeeper feeding record, marketed form and lot trace. Seek a provision covering royal jelly for the target residue. A honey report identifies a different sample.']]
@@ -93,7 +92,7 @@
   const incomingSamples=buildIncomingSamples();
   const routeIds={
     salt:root.PMSVRecipeSamples.salt,
-    polyols:'11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th',
+    polyols:P.polyolId,
     enzyme:'99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc',
     cocoa:'05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake',
     sorbitol:'11-11-6-sorbitol'
@@ -595,6 +594,11 @@
       const route=P.firstSource(id);
       if((id===P.dextrinId||id===P.misriId||id===P.trehaloseId)&&route)row.source=route.urls.join(' | ');
       if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
+    }
+    if(id===P.polyolId&&['Lead','Nickel'].includes(d.name)){
+      const gradeRows=P.polyolRows().slice(1).filter(r=>r[4]===d.name);
+      row.notes+=' Separately, the JECFA grade specifications for maltitol, maltitol syrup and xylitol give '+d.name.toLowerCase()+' at a maximum of '+gradeRows[0][5]+' mg/kg. Match the supplied grade and monograph basis for that purity assessment.';
+      row.source=[row.source,...gradeRows.map(r=>r[8])].join(' | ');
     }
     if(d.identitySources)row.source=[...new Set([...d.identitySources,...row.source.split(' | ')])].join(' | ');
     if(id===P.sajjiId&&d.identitySources&&!numeric){

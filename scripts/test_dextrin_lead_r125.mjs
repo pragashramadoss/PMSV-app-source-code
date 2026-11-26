@@ -13,8 +13,8 @@ const id=metal.dextrinId;
 const ash={panelDextrinForm:'ingredient',panelDextrinSpec:'Spec S',panelDextrinLot:'F-24',panelDextrinReport:'Report A / ash method',panelDextrinBasis:'yes',panelDextrinAsh:'1.01'};
 const lead={panelLabMetal:'Pb',panelLabSample:'F-24',panelLabRef:'Report B',panelLabNumber:'5.0',panelLabUnit:'mg/kg',panelLabBasis:'yes'};
 const row=(id,date,state)=>plan.exportRows(id,date,false,state).find(r=>r[2]==='Metals'&&r[5]==='Lead');
-assert.equal(register.firstSourceReview.withRoute,520);
-assert.equal(register.firstSourceReview.pending,13);
+assert.equal(register.firstSourceReview.withRoute,521);
+assert.equal(register.firstSourceReview.pending,12);
 assert.equal(worksheets.currentSource(ctx.PMSV_CATALOGUE.find(p=>p.id===id)),'CONDITIONAL_METAL_SOURCE_MATCH');
 assert(!worksheets.pendingSourceRows().some(r=>r[0]===id));
 assert(!worksheets.pendingSourceRows().some(r=>r[0]===metal.syrupId));
@@ -40,6 +40,6 @@ for(const date of ['2026-11-24','2026-12-01']){
   assert.equal(row(metal.syrupId,date,{...state,panel_Pb:'Pb64',panel_PbRef:'syrup'})[7],'');
 }
 const [header,...records]=worksheets.registerRows();
-assert.equal(records.filter(r=>r[header.indexOf('Current first-source status')]==='CONDITIONAL_METAL_SOURCE_MATCH').length,7);
+assert.equal(records.filter(r=>r[header.indexOf('Current first-source status')]==='CONDITIONAL_METAL_SOURCE_MATCH').length,8);
 assert(records.find(r=>r[0]===id).at(-1).includes('#page=20'));
 console.log('Verified the dextrin identity, lot linkage, strict ash boundary, lead results, both editions, dried glucose syrup and register coverage.');
