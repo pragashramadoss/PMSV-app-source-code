@@ -18,20 +18,42 @@
   function profile(id,article,sample,boundary,reference){
     profiles.set(id,{article,sample,boundary,reference,methods:[]});
   }
-  function method(id,form,parameter,code,locator,url,note){
-    profiles.get(id).methods.push({form,parameter,code,locator,url,note});
+  function method(id,form,parameter,code,locator,url,note,variants){
+    profiles.get(id).methods.push({form,parameter,code,locator,url,note,variants});
   }
 
+  const ground=['regular_roasted_ground','decaffeinated_roasted_ground'];
+  const instant=['instant','decaffeinated_instant'];
+  const regular=['regular_roasted_ground','instant'];
   profile(coffee,'2.10.4','Dry coffee–chicory blend','Choose ground or instant and regular or decaffeinated. Blend composition depends on both choices. The brewed drink and each incoming ingredient have separate sample identities.',coffeeManual);
   method(coffee,'Ground or instant, regular or decaffeinated','Caffeine','04A.011:2023','printed pp. 25–27',coffeeManual,'Bailey–Andrew procedure. Request the reporting basis that matches the selected blend.');
   method(coffee,'Ground or instant, regular or decaffeinated','Caffeine','04A.012:2023','printed pp. 28–30',coffeeManual,'Alternative chromatographic and spectrophotometric procedure for the same four blend forms.');
-  method(coffee,'Instant blend, regular or decaffeinated','Cold-water solubility','04A.017:2023','printed p. 38',coffeeManual,'Record dissolution time at the specified water temperature for the instant sample.');
+  method(coffee,'Instant blend, regular or decaffeinated','Cold-water solubility','04A.017:2023','printed p. 38',coffeeManual,'Record dissolution time at the specified water temperature for the instant sample.',instant);
+
+  for(const [code,pages,name,form,variants,note] of [
+    ['001','6–7','Moisture','Ground blend, regular or decaffeinated',ground,'Record moisture on the sample as received and identify the blend on the report.'],
+    ['003','10–11','Total ash','Ground blend, regular or decaffeinated',ground,'Use the reporting basis specified for the selected blend.'],
+    ['007','18–19','Acid-insoluble ash','Ground or instant, regular or decaffeinated',null,'Report ash insoluble in dilute hydrochloric acid on the basis specified for the declared blend.'],
+    ['010','23–24','Aqueous extract','Ground blend, regular or decaffeinated',ground,'Report the extract yield for the ground blend. An instant dissolution time is a separate measurement.'],
+    ['013','31–32','Caffeine','Ground or instant, regular or decaffeinated',null,'HPLC alternative. Record the method and the basis used for the blend result.'],
+    ['014','33–35','Microscopic screen for adulterants','Regular ground or regular instant blend',regular,'Identify the material observed by microscopy. The result does not quantify the coffee-to-chicory ratio.'],
+    ['016','37','Boiling-water solubility','Instant blend, regular or decaffeinated',instant,'Report dissolution time in freshly boiled water. Record the cold-water test separately.']
+  ])method(coffee,form,name,'04A.'+code+':2023','printed pp. '+pages,coffeeManual,note,variants);
 
   profile(coconut,'2.3.63','Dried coconut milk','Check moisture on the powder, fat on a dry basis, free fatty acids in the extracted fat as lauric acid, and bulk density in g/mL. Trace the kernel and any carrier separately.',root.PMSVPowderStandards.products.get(coconut).gazette);
   profile(bean,'2.3.54','Whole fermented and dried cocoa beans','Use the count of examined beans for the four defect percentages, and mass for moisture. Record germinated and flat beans together, counting a bean once within this combined class.',source('food-54',29));
   profile(cocoa,'2.7.8','Cocoa mass or liquor, or pressed cake','Keep shell alone distinct from shell plus germ. Check the material, the analyte actually reported and the fat-free dry matter or alkali-free basis before using a result.',cocoaManual);
   method(cocoa,'Mass, liquor or cake','Shell and germ on fat-free dry matter','04C.031:2024','printed pp. 74–79',cocoaManual,'Request the fat-free dry-matter result. The product standard lists this separately from shell only.');
   method(cocoa,'Mass, liquor or cake','Shell on an alkali-free basis','04C.032:2024','printed pp. 80–84',cocoaManual,'The method heading names shell and germ. The standard specifies shell only on this basis. Confirm the laboratory measured shell only before comparing.');
+
+  for(const [code,pages,name,note] of [
+    ['001','2–3','Moisture','Record which moisture procedure was used for the sampled mass, liquor or cake.'],
+    ['003','6–7','Moisture','Vacuum-oven procedure for the processed cocoa sample.'],
+    ['005','11–12','Acid-insoluble ash','Identify the sampled material and report the basis used for the ash result.'],
+    ['007','15–16','Alkalinity of total ash','For clause 2.7.8, report potassium oxide equivalent on a moisture- and fat-free basis.'],
+    ['018','42–44','Cocoa butter','Clause 2.7.8 gives a cocoa-butter range for mass or liquor. Its cake column marks that criterion inapplicable.'],
+    ['019','45–47','Crude fibre','Document the sample fraction and reporting basis. Use the applicable product standard for interpretation.']
+  ])method(cocoa,'Mass, liquor or cake',name,'04C.'+code+':2024','printed pp. '+pages,cocoaManual,note);
 
   profile(arrow,'2.4.14','Separated and purified arrowroot starch','Establish the species and separation process. The FSSAI manual illustrates Maranta starch. The product standard also permits Curcuma, which requires its own identification evidence.',cerealManual+'#page=77');
   method(arrow,'Starch declared as Maranta arundinacea','Microscopic appearance of starch granules','03.024:2023','PDF pp. 75–77',cerealManual+'#page=77','Use the Maranta illustration as an identity reference. The method scope names cereal starches. Document suitability for this sample before issuing a result. The illustration does not establish Curcuma identity.');
@@ -72,6 +94,37 @@
   }
   const guidanceNote='The laboratory recognition list names this test for the sample. It supplies no numerical limit. Use the applicable Gazette provision and reporting basis for any compliance comparison.';
   const isRecognitionSource=url=>[31,32,165,185].some(page=>url===recognitionUrl+'#page='+page);
+  const codexBase='https://www.fao.org/fao-who-codexalimentarius/sh-proxy/';
+  const cocoaOta=codexBase+'en/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXC%2B72-2013%252FCXC_072e.pdf';
+  const cocoaCd=codexBase+'en/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXC%2B81-2022%252FCXC_081e.pdf';
+  const coffeeOta=codexBase+'fr/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXC%2B69-2009%252FCXC_069e.pdf';
+  const controls=new Map([
+    [bean,[
+      ['Whole fermented and dried cocoa beans','Ochratoxin A','CXC 72-2013','Sections 3 and 4',cocoaOta,'Trace the bean lot through fermentation, drying and storage. Review drying records and any rewetting or visible mould.'],
+      ['Cocoa beans from an identified growing area','Cadmium','CXC 81-2022','Sections 2 and 4',cocoaCd,'Link the sampled beans to their growing area. Record the bean result separately from soil measurements and supplier mitigation records.']
+    ]],
+    [cocoa,[['Bean and nib lots feeding cocoa mass, liquor or cake','Ochratoxin A','CXC 72-2013','Paragraph 14',cocoaOta,'Record shell removal and identify whether the laboratory sampled whole beans, nibs, mass or cake. A shell or whole-bean result cannot establish a level in the finished lot.']]],
+    [coffee,[['Coffee ingredient before blending with chicory','Ochratoxin A','CXC 69-2009','Drying, storage and transport',coffeeOta,'Trace the coffee intake lot and review drying, storage and protection against rewetting. Assess the finished blend on its own sample and legal basis.']]]
+  ]);
+  const isControlSource=url=>[cocoaOta,cocoaCd,coffeeOta].includes(url);
+  const referenceArea='Laboratory methods and prevention guidance';
+  function referenceEntries(id,state){
+    const entries=[];
+    function add(form,parameter,article,status,source,locator,notes){
+      entries.push({area:referenceArea,form,parameter,article,status,source,locator,notes});
+    }
+    for(const m of profiles.get(id)?.methods||[]){
+      if(state?.coffeeForm&&m.variants&&!m.variants.includes(state.coffeeForm))continue;
+      add(m.form,m.parameter,m.code,'Analytical reference',m.url,m.locator,m.note);
+    }
+    for(const ref of recognition(id)){
+      for(const parameter of recognitionAnalytes)add(ref.form,parameter,ref.article,'Laboratory recognition guidance',ref.url,'p. '+ref.page,guidanceNote);
+    }
+    for(const [form,parameter,article,locator,url,notes] of controls.get(id)||[]){
+      add(form,parameter,article,'Codex prevention guidance',url,locator,notes);
+    }
+    return entries;
+  }
   const headers=['Catalogue ID','Product','Assessment date','Sample or form','Reference type','Parameter','Article or method','Reference criterion','Unit','n','c','m','M','Scope and reporting instructions','Official source','Manual page or section'];
   function rows(id,date=root.PMSVVeterinary.reviewDate){
     const out=[headers];
@@ -81,11 +134,11 @@
       if(id ? key!==id : !queue.has(key))continue;
       const prefix=[key,root.PMSVCatalogueRules.products[key].name,date];
       out.push([...prefix,p.sample,'Sample scope','Interpretation',p.article,'','','','','','',p.boundary,p.reference,'']);
-      for(const m of p.methods)out.push([...prefix,m.form,'Analytical reference',m.parameter,m.code,'','','','','','',m.note,m.url,m.locator]);
-      for(const ref of recognition(key)){
-        for(const parameter of recognitionAnalytes)out.push([...prefix,ref.form,'Laboratory recognition guidance',parameter,ref.article,'','','','','','',guidanceNote,ref.url,'p. '+ref.page]);
-      }
       for(const r of plan.entries(key,date)){
+        if(r.area===referenceArea){
+          out.push([...prefix,r.form,r.status,r.parameter,r.article,'','','','','','',r.notes,r.source,r.locator]);
+          continue;
+        }
         const productClause=r.area===plan.areas[0]&&r.article===p.article;
         const micro=r.area===plan.areas[1]&&r.n!=null;
         if(!(productClause||micro||r.area===root.PMSVVendingWater.area))continue;
@@ -118,5 +171,5 @@
     return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source'],
       ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source])];
   }
-  root.PMSVLabGuide=Object.freeze({profiles,rows,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
+  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
 })(globalThis);

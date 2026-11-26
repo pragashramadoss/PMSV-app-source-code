@@ -759,6 +759,9 @@
     composition(id,add,state,vetDate);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
     if(sampleGuide)add(sampleGuide);
+    if(metalEdition(vetDate)&&root.PMSVLabGuide){
+      for(const row of root.PMSVLabGuide.referenceEntries(id,state))add(row);
+    }
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
@@ -795,7 +798,7 @@
         const area=veterinaryOnly?areas[5]:r.area;
         const notes=!veterinaryOnly&&vetDate&&vetDate!==root.PMSVVeterinary.reviewDate&&[areas[2],areas[3],areas[5]].includes(area)?
           (area===areas[5]?'Veterinary assessment date ':'Contaminant assessment date ')+vetDate+'. '+r.notes:r.notes;
-        const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,notes,r.n,r.c,r.m,r.M,r.source];
+        const cells=[key,R.products[key].name,area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,r.locator?notes+' ('+r.locator+')':notes,r.n,r.c,r.m,r.M,r.source];
         if(veterinaryOnly)cells.push(vetDate??root.PMSVVeterinary.reviewDate);
         out.push(cells.map(v=>v??''));
       }

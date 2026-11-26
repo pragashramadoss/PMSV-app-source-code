@@ -14,7 +14,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets;
 assert(ws.available);
 assert.equal(g.profiles.size,reg.productProfiles);
 assert.equal(Array.from(g.profiles.values()).flatMap(p=>p.methods).length,reg.methodReferences);
-for(const [date,count] of [['2026-11-26',182],['2026-12-01',259]]){
+for(const [date,count] of [['2026-11-26',199],['2026-12-01',276]]){
   const summary=ws.sourceSummaryRows(date).slice(1);
   assert.equal(summary.length,533);
   assert.equal(new Set(summary.map(r=>r[0])).size,533);
@@ -36,7 +36,21 @@ for(const [date,count] of [['2026-11-26',182],['2026-12-01',259]]){
   assert(guidance.every(r=>!r[7]&&!r[8]&&g.isRecognitionSource(r[14])));
   assert(!g.isRecognitionSource('https://example.com/#page=32'));
   const methods=rows.filter(r=>r[4]==='Analytical reference');
-  assert.equal(methods.length,19);
+  assert.equal(methods.length,32);
+  const controls=rows.filter(r=>r[4]==='Codex prevention guidance');
+  assert.equal(controls.length,reg.preventionReferences);
+  assert(controls.every(r=>r.slice(7,13).every(v=>v==='')&&g.isControlSource(r[14])));
+  assert(!g.isControlSource(controls[0][14]+'&other=1'));
+  for(const id of new Set(rows.map(r=>r[0]))){
+    const exported=plan.exportRows(id,date).slice(1).filter(r=>r[2]===g.referenceArea);
+    const refs=rows.filter(r=>r[0]===id&&['Analytical reference','Codex prevention guidance','Laboratory recognition guidance'].includes(r[4]));
+    assert.equal(exported.length,refs.length);
+    assert(exported.every(r=>r[7]===''&&r[8]===''&&refs.some(v=>v[3]===r[4]&&v[5]===r[5]&&v[6]===r[3]&&v[14]===r[14]&&r[9].includes(v[15]))));
+  }
+  for(const [form,included,excluded] of [['instant','04A.016','04A.010'],['decaffeinated_roasted_ground','04A.010','04A.014']]){
+    const codes=g.referenceEntries('coffee-chicory-mixture',{coffeeForm:form}).map(r=>r.article.split(':')[0]);
+    assert(codes.includes(included)&&!codes.includes(excluded));
+  }
   assert(methods.every(r=>r[7]===''&&r[8]===''&&r[15]));
   assert(methods.filter(r=>r[6].startsWith('01.')).every(r=>r[3]==='Liquid colostrum'));
   assert(rows.some(r=>r[4]==='Microbiological sampling plan'&&String(r[10])==='0'));
