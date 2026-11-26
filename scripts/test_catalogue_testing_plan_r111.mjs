@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,18643);
-const totals=[3830,2550,5866,6397];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,18648);
+const totals=[3833,2550,5868,6397];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -20,7 +20,7 @@ for(const row of rows){
   assert.equal(row.length,columns.length);assert.equal(row[1],ids.get(row[0]));assert(row[5]&&row[6]);
   assert(row[7]!==''||row[9]||row[12]!=='');
   assert(row.every(v=>typeof v==='number'||typeof v==='string'));
-  for(const url of row[14].split(' | '))assert((row[0]===ctx.PMSVMetalPanel.polyolId && ['Lead','Nickel'].includes(row[5]) && ctx.PMSVMetalPanel.polyolRows().some(r=>r[4]===row[5]&&r[8]===url))||(row[0]===ctx.PMSVMetalPanel.trehaloseId && row[5]==='Lead' && url==='https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-472.pdf#page=1')||(row[0]===ctx.PMSVMetalPanel.sajjiId && row[2]===A.areas[2] && ctx.PMSVMetalPanel.importSources.includes(url))||(row[0]===ctx.PMSVVendingWater.productId && row[2]===ctx.PMSVVendingWater.area && ctx.PMSVVendingWater.isSource(url))||/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url),url);
+  for(const url of row[14].split(' | '))assert((row[0]==='06-06-2-arrowroot'&&row[4]==='Separately sampled raw Maranta arundinacea rhizome'&&url.startsWith('https://www.fao.org/fao-who-codexalimentarius/sh-proxy/')&&url.endsWith('CXA_004e.pdf#page=82'))||(row[0]===ctx.PMSVMetalPanel.polyolId && ['Lead','Nickel'].includes(row[5]) && ctx.PMSVMetalPanel.polyolRows().some(r=>r[4]===row[5]&&r[8]===url))||(row[0]===ctx.PMSVMetalPanel.trehaloseId && row[5]==='Lead' && url==='https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-472.pdf#page=1')||(row[0]===ctx.PMSVMetalPanel.sajjiId && row[2]===A.areas[2] && ctx.PMSVMetalPanel.importSources.includes(url))||(row[0]===ctx.PMSVVendingWater.productId && row[2]===ctx.PMSVVendingWater.area && ctx.PMSVVendingWater.isSource(url))||/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url),url);
   assert(!row.includes('undefined')&&!row.includes('[object Object]'));
 }
 function forProduct(product){return rows.filter(r=>r[1]===product);}

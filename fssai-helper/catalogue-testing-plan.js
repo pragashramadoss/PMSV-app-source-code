@@ -24,6 +24,7 @@
     const blend = 'coffee-chicory-mixture';
     const egg = '10-10-2-egg-powder';
     const coconutPowder = '04-04-1-coconut-milk-powder';
+    const arrowroot = '06-06-2-arrowroot';
     const milk = '04-04-1-coconut-milk-non-dairy';
     const cream = '04-04-1-coconut-cream-non-dairy';
     const scope = new Map([
@@ -67,6 +68,10 @@
     const coconutRows = [43,44].map(serial => pesticideRow(serial, 'Coconut', kernel));
     const waterRow = pesticideRow(82, 'Coconut Water', water);
     const intake = new Map([
+      [arrowroot, ['Pb130','Cd20'].map((key,i) => ({
+        ...metal(key,['Lead','Cadmium'][i],'Separately sampled raw Maranta arundinacea rhizome'),
+        notes:'Confirm the botanical identity and sample the raw rhizome before extraction. Record the intake lot and the as-sampled mass basis. Codex VR 0573 identifies the commodity. The maximum comes from the Indian root-and-tuber vegetable entry.'
+      }))],
       [blend, [metal('Cu5','Copper',coffee), metal('Cu5','Copper',chicory), metal('As19','Arsenic',chicory),
         {area:'Toxins and other contaminants', article:'CTR 2.2.1(1) · serial 4', form:coffee, parameter:'Ochratoxin A',
           limit:String(ota.limit), unit:ota.unit, notes:'Assess the separately sampled coffee lot against the coffee entry in force from 1 April 2025.', source:pdf(ota.doc,ota.page)},
@@ -75,13 +80,14 @@
       [coconutPowder, coconutRows], [milk, [...coconutRows,waterRow]], [cream, [...coconutRows,waterRow]]
     ]);
     const descriptions = new Map([
+      [arrowroot, 'These references cover raw Maranta arundinacea. The finished product under 2.4.14(1) is separated, purified starch. Keep the species certificate and the raw intake report with that lot. Curcuma and finished starch require separate scope evidence.'],
       [blend, 'Match each intake result to raw coffee beans or dried or roasted chicory. Assess the finished blend separately.'],
       [egg, 'These pesticide references cover separately sampled shell-free whole eggs. A dried powder, separated white or separated yolk needs its own assessment.'],
       [coconutPowder, 'The powder is made by drying extracted coconut milk. The pesticide table sends the two coconut copper entries to CTR 2.1. Coconut water is a distinct commodity.'],
       [milk, 'Check the actual formula. Use the coconut-water entry only for an independently sampled raw coconut-water lot before addition.'],
       [cream, 'Check the actual formula. Use the coconut-water entry only for an independently sampled raw coconut-water lot before addition.']
     ]);
-    const identityPages = new Map([[blend,pdf('baser02-1',121)],[egg,root.PMSVVeterinary.animalGazette+'#page=38'],
+    const identityPages = new Map([[arrowroot,pdf('baser02-1',83)+' | https://www.fao.org/fao-who-codexalimentarius/sh-proxy/fr/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXA%2B4-1989%252FCXA_004e.pdf#page=82'],[blend,pdf('baser02-1',121)],[egg,root.PMSVVeterinary.animalGazette+'#page=38'],
       [coconutPowder,pdf('food-20',17)],[milk,pdf('chapter-4',77)],[cream,pdf('chapter-4',79)]]);
     function rows(id) {
       return (intake.get(id)||[]).map(r => ({...r, sampleRole:'ingredient', status:r.status||(r.limit?'Incoming ingredient reference only':'Identify the applicable metal article'),
@@ -99,6 +105,22 @@
   };
   const appendixC='https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=40';
   const categories='https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf';
+  const lysozymeSources={
+    classification:categories+'#page=9',
+    preservative:appendixC.replace('#page=40','#page=75'),
+    cheese:'https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20A%284%29.pdf',
+    controlAgent:appendixC.replace('#page=40','#page=6')
+  };
+  const lysozymeReferences=[
+    {article:'Appendix A, category 1.6.2',form:'Ripened cheese with lysozyme (INS 1105)',parameter:'Lysozyme use level',limit:'GMP',
+      notes:'Match the food category and document the amount needed for the preservative function.',source:lysozymeSources.cheese+' | '+lysozymeSources.preservative},
+    {article:'CTR 2.1.1(2), arsenic',form:'Separately supplied lysozyme (INS 1105) used as a preservative',parameter:'Arsenic',limit:'3.0',unit:'mg/kg',
+      notes:'Use the dry matter basis for the preservative lot. Verify the specification, documented use as a preservative and laboratory basis. The cheese has a separate assessment.',
+      source:links('ctr-3',[25])+' | '+lysozymeSources.preservative+' | '+lysozymeSources.cheese},
+    {article:'Appendix C, Table 5, row 2',form:'Alcoholic beverages including low-alcohol and alcohol-free counterparts',parameter:'Lysozyme as microbial control agent',limit:'GMP',
+      notes:'Confirm the beverage and its processing-aid use. FoSCoS 99.2 excludes enzymes already listed under the processing-aid or nutraceutical rules.',
+      source:lysozymeSources.controlAgent+' | '+lysozymeSources.classification}
+  ];
   const sorbitolSource=links('chapter-18',[88,89]);
   const routeNotes=new Map([
     [routeIds.salt,[
@@ -669,6 +691,11 @@
     composition(id,add,state,vetDate);
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
+    if(id===routeIds.enzyme)for(const row of lysozymeReferences){
+      add({...row,area:areas[0],status:'Separate classification example',limit:'',unit:'',
+        notes:row.notes+' Published reference for the specified sample: '+[row.limit,row.unit].filter(Boolean).join(' ')+'.'});
+    }
+
     const coffee=root.PMSVCoffee;
     if(id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
     if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
@@ -719,6 +746,38 @@
       for(const r of incomingSamples.rows(key)){
         out.push([key,R.products[key].name,r.area,r.article,r.form,r.parameter,r.status,r.limit,r.unit,r.notes,'','','','',r.source]);
       }
+    }
+    return out;
+  }
+  function openProductRows(id,date=root.PMSVVeterinary.reviewDate){
+    const out=[['Catalogue ID','Product','Assessment date','Sample role','Scope of reference','Article or table','Parameter','Reference value','Unit','Sample or declared matrix','Conditions and next action','Official sources']];
+    if(!metalEdition(date))return out;
+    const water=root.PMSVVendingWater;
+    for(const [key,[sample,task]] of incomingSamples.scope){
+      if(id&&id!==key)continue;
+      const add=(role,scope,row)=>out.push([key,R.products[key].name,date,role,scope,row.article,row.parameter,row.limit||'',row.unit||'',row.form,row.notes,row.source]);
+      const record=E.products[key], anchor=E.standards[record.standard], route=record.routeAnchors?.[0];
+      const doc=anchor?.doc||route?.[0]||record.routeDocs[0];
+      add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:task,source:links(doc,anchor?.p||route?.[1]||[])});
+      if(key===water.productId){
+        for(const row of water.planRows(key).filter(r=>r.article.includes('Table 3')&&r.unit==='mg/L')){
+          add('Finished vending outlet','Drinking-water standard incorporated by FSSR 2.10.9',row);
+        }
+      } else {
+        for(const decision of P.panel(key)){
+          if(!['Cd','Me'].includes(decision.key)||!['residual','all'].includes(decision.kind))continue;
+          const row=metalRow(key,decision,date), code=decision.keys[0];
+          if(decision.keys.length===1&&['Cd8','Me0'].includes(code)){
+            const [article,maximum,,,basis]=root.PMSVMetalPanelData.rows[code];
+            add('Finished food',decision.kind==='residual'?'Residual CTR article':'All-food CTR article',
+              {...row,form:article,limit:maximum,unit:'ppm',notes:[basis,row.notes].filter(Boolean).join(' ')});
+          }
+        }
+      }
+      if(key===routeIds.enzyme){
+        for(const row of lysozymeReferences)add('Separate product or use','Lysozyme classification example outside the generic 99.2 assessment',row);
+      }
+      for(const row of incomingSamples.rows(key))add('Incoming ingredient','Separately sampled input',row);
     }
     return out;
   }
@@ -826,5 +885,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
