@@ -37,10 +37,10 @@ for(const id of ['coffee',blend]){
 }
 for(const date of ['2026-11-26','2026-12-01']){
   const all=plan.openProductRows(null,date).slice(1);
-  assert.equal(all.length,154);
+  assert.equal(all.length,date<'2026-12-01'?140:157);
   assert.equal(all.filter(r=>r[4]==='Residual CTR article').length,31);
   assert(!all.some(r=>r[0]==='purified-vending-water'&&r[8]==='ppm'));
   assert(!all.some(r=>r[0]===plan.routeIds.enzyme&&r[4]==='Residual CTR article'));
   assert.deepEqual(Array.from(all.filter(r=>r[0]===blend&&r[5].startsWith('Appendix C, Table 6')),r=>r[3]),['Incoming ingredient','Incoming ingredient']);
 }
-assert.equal(rev.firstSourceReview.withRoute,523);
+assert.equal(rev.firstSourceReview.withRoute,524);

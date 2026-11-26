@@ -62,7 +62,7 @@ for(const row of register.slice(1)) {
   else if(ctx.PMSVMetalPanel.additiveGroup(row[0]))assert.match(row.at(-1),/arsenic/);
   else if(ctx.PMSVVeterinary.firstSource(row[0]))assert.match(row.at(-1),/edible animal tissues/);
   else if(row[0]===ctx.PMSVRecipeSamples.syrup)assert.match(row.at(-1),/hydrocyanic acid/);
-  else if(row[0]===ctx.PMSVRecipeSamples.drink)assert.match(row.at(-1),/saffrole/);
+  else if(row[0]===ctx.PMSVCropScope.vendingId||row[0]===ctx.PMSVRecipeSamples.drink)assert.match(row.at(-1),/saffrole/);
   else if(ctx.PMSVCropScope.firstSource(row[0]))assert.match(row.at(-1),/aflatoxins/);
   else assert.equal(row.at(-1),'');
 }

@@ -13,7 +13,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets,rev=ctx.PMSV_REVIE
 const {scope,descriptions}=plan.incomingSamples;
 assert(ws.available);
 const queue=ws.pendingSourceRows();
-assert.deepEqual([...scope.keys()].sort(),Array.from(queue.slice(1),r=>r[0]).sort());
+assert.deepEqual([...plan.openScope().keys()].sort(),Array.from(queue.slice(1),r=>r[0]).sort());
 assert(queue.slice(1).every(r=>r.length===queue[0].length && r.at(-1)===scope.get(r[0])[1]));
 assert.equal(descriptions.size,rev.openProductReview.productPlans);
 const milk='04-04-1-coconut-milk-non-dairy',powder='04-04-1-coconut-milk-powder';
@@ -35,5 +35,5 @@ for(const date of ['2026-11-25','2026-12-01']){
   }
 }
 assert.equal(plan.incomingExport(null,'2020-01-01').length,1);
-assert.equal(rev.firstSourceReview.withRoute,523);
+assert.equal(rev.firstSourceReview.withRoute,524);
 assert.equal(rev.legalProductApprovals,0);

@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="((?:catalogue-|full-catalogue-|
 const {PMSVCatalogueWorksheets:ws,PMSVTestingPlan:plan,PMSVCropScope:crop,PMSVRecipeSamples:recipes,PMSV_REVIEW_REGISTER:review}=ctx;
 const {salt,polyols,sorbitol,enzyme,cocoa}=plan.routeIds;
 assert(ws.available);
-assert.equal(review.firstSourceReview.withRoute,523);
-assert.equal(review.firstSourceReview.pending,10);
+assert.equal(review.firstSourceReview.withRoute,524);
+assert.equal(review.firstSourceReview.pending,9);
 assert.equal(review.legalProductApprovals,0);
 const queue=ws.pendingSourceRows().slice(1).map(row=>row[0]);
 assert(!queue.includes(salt)&&!queue.includes(polyols)&&queue.includes(enzyme)&&queue.includes(cocoa));

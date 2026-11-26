@@ -13,8 +13,8 @@ const {PMSVMetalPanel:metal,PMSVTestingPlan:plan,PMSVCatalogueWorksheets:ws,PMSV
 const imported=metal.sajjiId,[colostrum,jelly]=reg.importAndFormReview.formProductIds;
 const scope={panelKharForm:'imported',panelKharDocument:'Bill of entry 27',panelKharLot:'Khar lot 137',panelKharCurrent:'yes'};
 const lab={panelLabUnit:'mg/kg',panelLabRef:'Report 9',panelLabSample:scope.panelKharLot,panelLabBasis:'yes'};
-assert.equal(reg.firstSourceReview.withRoute,523);
-assert.equal(reg.firstSourceReview.pending,10);
+assert.equal(reg.firstSourceReview.withRoute,524);
+assert.equal(reg.firstSourceReview.pending,9);
 assert.equal(reg.legalProductApprovals,0);
 const queue=ws.pendingSourceRows().slice(1).map(r=>r[0]);
 assert(!queue.includes(imported)&&queue.includes(colostrum)&&queue.includes(jelly));

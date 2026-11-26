@@ -14,9 +14,9 @@ assert(ws.available);
 const ids=Array.from(ws.pendingSourceRows().slice(1),row=>row[0]);
 for(const date of ['2026-11-26','2026-12-01']){
   const [header,...all]=plan.openProductRows(null,date);
-  assert.equal(new Set(all.map(r=>r[0])).size,10);
+  assert.equal(new Set(all.map(r=>r[0])).size,date<'2026-12-01'?9:10);
   assert(all.every(r=>r.length===header.length&&r[2]===date&&r[11].startsWith('https://')));
-  for(const id of ids){
+  for(const id of plan.openScope(date).keys()){
     const group=all.filter(r=>r[0]===id);
     assert.equal(group.filter(r=>r[4]==='Product-specific CTR source pending').length,1);
     assert.deepEqual(Array.from(plan.openProductRows(id,date).slice(1)),group);
@@ -26,7 +26,7 @@ for(const date of ['2026-11-26','2026-12-01']){
     }
   }
   const water=all.filter(r=>r[3]==='Finished vending outlet');
-  assert.equal(water.length,rev.openProductReview.waterToxicLimits);
+  assert.equal(water.length,date<'2026-12-01'?0:rev.openProductReview.waterToxicLimits);
   assert(water.every(r=>r[8]==='mg/L'&&r[5].includes('Table 3')));
   assert(!all.some(r=>r[0]==='purified-vending-water'&&r[8]==='ppm'));
   const id='06-06-2-arrowroot';
@@ -37,7 +37,7 @@ for(const date of ['2026-11-26','2026-12-01']){
   assert.equal(plan.openProductRows('coffee',date).length,1);
 }
 assert.equal(plan.openProductRows(null,'2010-01-01').length,1);
-assert.equal(rev.firstSourceReview.withRoute,523);
+assert.equal(rev.firstSourceReview.withRoute,524);
 const enzyme=plan.routeIds.enzyme;
 const alternate=plan.openProductRows(enzyme).slice(1).filter(r=>r[3]==='Separate product or use');
 assert.equal(alternate.length,3);

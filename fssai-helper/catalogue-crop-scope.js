@@ -162,7 +162,27 @@
     options.push({value:'uncertain',label:'Other sample, or classification still unresolved',sample:'unresolved',rows:[]});
     return {mode:'check',reason:a==='ota'||a==='don'?'Identify the named grain on a separate ingredient report. The finished supplement requires its own applicable entry.':childSampleNote,options};
   }
-  function firstSource(id){
+  const vendingId='purified-vending-water',coffeeBlend='coffee-chicory-mixture';
+  const vendingIdentity='https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Drinking_Water_05_02_2019.pdf#page=4';
+  const beverageClass='https://fssai.gov.in/upload/uploadfiles/files/Appendix%20A%282%29.pdf#page=57';
+  const coffeeIdentity='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_10_BEVERAGES_Other%20than%20Dairy%20and%20Fruits%20Vegetables%20based.pdf#page=8';
+  const outletNote='FoSCoS lists purified water sold through a vending machine in 14.1.1. Through 30 November 2026 the non-alcoholic beverage saffrole entry gives 10 ppm for the dispensed liquid. In the vending-water section, identify the outlet and the sample. Match the laboratory report on a mass basis.';
+  function beverageDecision(id,s={},date=s.vetDate||'2026-11-26'){
+    if(id!==vendingId&&id!==coffeeBlend)return null;
+    const water=id===vendingId,amended=date>='2026-12-01';
+    const identity=water?vendingIdentity:coffeeIdentity;
+    const links=[identity,beverageClass,...(water?['https://fcstraining.fssai.gov.in/standard-product']:[]),amended?futureSource():url(data.rows.N11.doc,data.rows.N11.page)];
+    const applicable=water&&!amended&&date>='2026-11-20';
+    const sample=String(s.waterSample||'').trim();
+    const ready=applicable&&s.waterPoint==='outlet'&&sample;
+    const reason=amended?'From 1 December 2026 the saffrole entry requires mace or nutmeg kernel as an ingredient. '+(water?'Plain vending water has neither.':'The standard coffee–chicory blend excludes both.'):
+      water?outletNote+(ready?' Outlet sample: '+sample+'.':''):'Assess the packaged coffee–chicory blend as a dry product. Brewing produces a separate beverage sample. The beverage maximum cannot be applied to dry grounds or instant powder.';
+    return {status:ready?'Documented finished article':applicable?'Confirm vending outlet and sample':'Outside the saffrole entry for this article',sample:ready?'finished':applicable?'unresolved':'outside',
+      rows:ready?['N11']:[],sources:amended?[]:['N11'],reason,choices:[],links};
+  }
+  function firstSource(id,date='2026-11-26'){
+    if(id===vendingId&&date>='2026-11-20'&&date<'2026-12-01')return {status:'CONDITIONAL_TOXIN_SOURCE_MATCH',text:outletNote+' From 1 December 2026 the replacement entry requires mace or nutmeg kernel.',urls:beverageDecision(id,{},date).links};
+
     if(recipe?.firstSource(id))return recipe.firstSource(id);
     if(botanicalIds.includes(id)){
       const single=id===botanicalIds[0],sources=new Map();
@@ -208,6 +228,10 @@
   }
   function decision(id,a,s={}){
     if(!catalogue.has(id)||!Object.hasOwn(data.labels,a))return null;
+    if(a==='saf'){
+      const beverage=beverageDecision(id,s);
+      if(beverage)return beverage;
+    }
     const recipeDecision=recipe?.decision(id,a,s);
     if(recipeDecision)return recipeDecision;
     const child=id===childId&&childRoute(a);
@@ -240,6 +264,8 @@
     {value:'absent',label:'Neither ingredient is used in the beverage or food'}];
   const futureSource=()=>url('ctr-1',5);
   function future(s={},id){
+    const beverage=beverageDecision(id,s,'2026-12-01');
+    if(beverage)return beverage.reason;
     if(recipe&&id===recipe.drink){
       const d=recipe.decision(id,'saf',s,'2026-12-01');
       return d.status+' · '+d.reason;
@@ -290,7 +316,7 @@
     const rule=row?.criterion;
     const criterion=rule?roles[rule.role]+' · '+rule.article+' · maximum '+rule.value+' '+rule.unit:'';
     const botanical=botanicalIds.includes(id)&&Object.hasOwn(afKeys,a);
-    const sameLot=recipe?.covered(id,a)?sample===String(s[field(a)+'Lot']||'').trim():!botanical||sample===String(s.crop_botanicalLot||'').trim();
+    const sameLot=id===vendingId&&a==='saf'?sample===String(s.waterSample||'').trim():recipe?.covered(id,a)?sample===String(s[field(a)+'Lot']||'').trim():!botanical||sample===String(s.crop_botanicalLot||'').trim();
     const comparable=sameLot&&rule&&role===rule.role&&sample&&report&&Object.hasOwn(massUnits,massUnit(unit));
     const stamp=comparable?JSON.stringify([id,a,plan.metalEdition(date),rule,role,sample,report,unit,row.source,row.notes]):'';
     const confirmed=!!stamp&&get('basis')===stamp;
@@ -402,10 +428,17 @@
       cross(id).map(n=>'<p>'+esc(n.text)+' <a class="source-ref" href="'+esc(url(n.doc,n.p))+'" target="_blank" rel="noopener noreferrer">Product standard · PDF p. '+n.p+'</a></p>').join('')+
       '<p>Food product standards also prohibit adding saffrole or isosaffrole as flavouring agents. The natural-occurrence maximum serves a different purpose. <a class="source-ref" href="'+esc(url('chapter-18',90))+'" target="_blank" rel="noopener noreferrer">Flavouring restrictions · PDF p. 90</a></p>'+
       '<details class="ws-section crop-future"><summary>Change effective 1 December 2026</summary><p>The six current saffrole entries are replaced by one 10 ppm entry for beverages and foods containing mace and/or nutmeg kernel as an ingredient.'+esc(futureNote(id))+' <a class="source-ref" href="'+esc(futureSource())+'" target="_blank" rel="noopener noreferrer">Amendment · PDF p. 5</a></p>'+
-      control('crop_dec','Future saffrole article',futureOptions,s)+'<p data-crop-future role="status">'+esc(future(s,id))+'</p></details></div></details>';
+      (id===vendingId||id===coffeeBlend?'':control('crop_dec','Future saffrole article',futureOptions,s))+'<p data-crop-future role="status">'+esc(future(s,id))+'</p></details></div></details>';
   }
   function recipeLinks(d){return (d.links||[]).map(u=>'<a class="source-ref" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Source · p. '+esc(u.split('#page=')[1])+'</a>').join(' ');}
   function update(node,id,k,s,previous){
+    if((id===vendingId||id===coffeeBlend)&&['waterPoint','waterSample','vetDate'].includes(k)){
+      const d=beverageDecision(id,s);
+      node.querySelector('[data-crop-result="saf"]').innerHTML=resultCell(d);
+      node.querySelector('[data-crop-source="saf"]').innerHTML=recipeLinks(d);
+      if(s[k]!==previous)s[labField('saf','basis')]='';
+      if(k!=='vetDate'){refreshLab(node,id,k,s);return;}
+    }
     if((id===recipe?.singhara||id===recipe?.syrup)&&previous!==s[k]){
       const flour=id===recipe.singhara;
       const key=flour?'crop_af':'crop_cyan',identity=flour?'crop_trapaSpecies':'crop_syrupFlour',article=flour?'crop_trapaArticle':'crop_syrupArticle';
@@ -498,5 +531,5 @@
     }
     return {products:catalogue.size,analytes:analytes.length,sourceRows:Object.keys(data.rows).length,namedProducts,priorityNamed,namedDecisions};
   }
-  root.PMSVCropScope=Object.freeze({fields,botanicalIds,botanicalCriteriaRows,childId,childCriteriaRows,childResidues,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
+  root.PMSVCropScope=Object.freeze({beverageDecision,vendingId,fields,botanicalIds,botanicalCriteriaRows,childId,childCriteriaRows,childResidues,firstSource,spiceCriteriaRows,decisions,decision,labResult,positive,stats,markup,brief,columns,values,update,future});
 })(globalThis);

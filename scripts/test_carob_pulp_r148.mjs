@@ -15,8 +15,8 @@ const metal=ctx.PMSVMetalPanel,id=metal.carobId;
 const rows=metal.carobRows().slice(1);
 assert.deepEqual(Array.from(rows,r=>[r[1],r[2],r[3]]),[['Copper','5.0','mg/kg'],['Arsenic','0.2','mg/kg'],['Tin','250','mg/kg']]);
 assert(rows.every(r=>r[4]==='Pulp and pulp products of any fruit'&&r[8].includes('#page=')&&r[9].includes('cgiar.org')));
-assert.equal(rev.firstSourceReview.withRoute,523);
-assert.equal(ws.pendingSourceRows().length-1,10);
+assert.equal(rev.firstSourceReview.withRoute,524);
+assert.equal(ws.pendingSourceRows().length-1,9);
 assert(!ws.pendingSourceRows().some(r=>r[0]===id));
 const pulp={panelCarobForm:'pulp',panelCarobSpec:'Supplier process 17, seeds separated before roasting and milling',panelCarobScope:'Single pulp powder classified under CTR fruit-pulp products',panelCarobLot:'CB-148',panelCarobBasis:'supplied'};
 for(const vetDate of ['2026-11-26','2026-12-01']){

@@ -11,9 +11,9 @@ for(const [,file] of html.matchAll(/<script src="((?:catalogue-|full-catalogue-|
 const {PMSVCatalogueWorksheets:w,PMSVTestingPlan:p,PMSVMetalPanel:m,PMSV_REVIEW_REGISTER:r}=ctx;
 const leaf=m.silverId,catechu=p.catechuId,beans='04-04-2-cocoa-beans';
 assert(w.available);
-assert.equal(r.firstSourceReview.withRoute,523);
+assert.equal(r.firstSourceReview.withRoute,524);
 const queue=w.pendingSourceRows().slice(1).map(row=>row[0]);
-assert(queue.length===10&&!queue.includes(leaf)&&!queue.includes(catechu)&&queue.includes(beans));
+assert(queue.length===9&&!queue.includes(leaf)&&!queue.includes(catechu)&&queue.includes(beans));
 const scope={panelSilverForm:'leaf',panelSilverSpec:'Spec 174',panelSilverUse:'Approved use record',panelSilverLot:'Silver lot 12',panelSilverDry:'yes'};
 const report={...scope,panelLabBasis:'yes',panelLabRef:'Report 52',panelLabSample:'Silver lot 12',panelLabUnit:'µg/kg'};
 for(const date of ['2026-11-24','2026-12-01']){

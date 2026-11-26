@@ -41,8 +41,8 @@ for(const id of ids){
   if(ds.some(v=>v.sample==='finished')){namedProducts++;if(!E.products[id].directCTR)priorityNamed++;}
   for(const d of ds){
     if(d.sample==='finished'){finished++;assert(d.rows.length);d.rows.forEach(k=>reached.add(k));}
-    else if(d.sample==='unresolved'){unknown++;assert(d.choices.length&&d.rows.length===0);d.choices.forEach(o=>o.rows.forEach(k=>reached.add(k)));}
-    else {unmatched++;assert.equal(d.sample,'unmatched');assert.equal(d.rows.length,0);}
+    else if(d.sample==='unresolved'){unknown++;assert((d.choices.length||id===C.vendingId&&d.key==='saf')&&d.rows.length===0);d.choices.forEach(o=>o.rows.forEach(k=>reached.add(k)));}
+    else {unmatched++;assert.equal(d.sample,id==='coffee-chicory-mixture'&&d.key==='saf'?'outside':'unmatched');assert.equal(d.rows.length,0);}
   }
   assert.equal(C.values(id).length,C.columns().length);
   assert(!C.values(id).at(-1));assert.equal(C.positive(id).length,ds.filter(d=>d.rows.length).length);

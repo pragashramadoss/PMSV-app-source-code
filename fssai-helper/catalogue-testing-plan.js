@@ -700,6 +700,8 @@
     if(!edition||!d)return null;
     const recipe=root.PMSVRecipeSamples;
     if(recipe?.covered(id,d.key))d={...d,...recipe.decision(id,d.key,state,date)};
+    const beverage=d.key==='saf'&&C.beverageDecision(id,state,date);
+    if(beverage)d={...d,...beverage};
     const data=root.PMSVCropScopeData.rows;
     const sources=[...new Set(d.sources.map(k=>links(data[k].doc,[data[k].page])))];
     const row={area:areas[3],article:'CTR 2.2.1',parameter:d.name,status:d.status,
@@ -711,9 +713,9 @@
     if(d.links)row.source=[...new Set([...sources,...d.links])].join(' | ');
     else if(profile)row.source=[...new Set([...sources,...(child?[profile.urls[0]]:profile.urls)])].join(' | ');
     const recipeDrink=id===recipe?.drink&&d.key==='saf';
-    const dated=edition==='amended'&&!recipeDrink?amendedToxin(id,d,row,state):row;
+    const dated=edition==='amended'&&!recipeDrink&&!beverage?amendedToxin(id,d,row,state):row;
     if(id===recipe?.syrup&&d.key==='hcn')dated.article='CTR 2.2.1(2) · serial 2';
-    if(recipeDrink)dated.article='CTR 2.2.1(2) · serial 4';
+    if(recipeDrink||beverage)dated.article='CTR 2.2.1(2) · serial 4';
     if(!dated.limit)return dated;
     // Replacement rows explicitly carry a numeric maximum and refer to the finished food.
     if(dated.unit){
@@ -755,6 +757,8 @@
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add,state,vetDate);
+    const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
+    if(sampleGuide)add(sampleGuide);
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
@@ -819,11 +823,51 @@
     }
     return out;
   }
+  const sampleArea='Product samples and analytical methods';
+  const focusIds=[C.vendingId,'coffee-chicory-mixture',beanId,routeIds.cocoa];
+  const cocoaPowderReference=root.PMSVMetalPanelData.rows.Cu7[1].split(' ')[0];
+  function additionalSampleRow(id){
+    if(id==='coffee-chicory-mixture')return {area:sampleArea,article:'FSSAI 04A.014:2023',form:'Finished dry roasted-ground or instant coffee–chicory blend',
+      parameter:'Microscopic examination for adulterants',status:'Qualitative method',limit:'',unit:'',
+      notes:'Record the dry sample lot and the identified material. Compare the finding with the specification. This method provides no numerical contaminant limit.',
+      source:'https://fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20for%20Beverages%20Tea%2C%20Coffee%20and%20Chicory.pdf#page=37'};
+    if(id!==beanId&&id!==routeIds.cocoa)return null;
+    const [article,,page]=root.PMSVMetalPanelData.rows.Cu7;
+    return {area:sampleArea,article:'CTR 2.1.1(2), copper',form:'Separate downstream sample of '+article.toLowerCase(),parameter:'Copper in separately sampled cocoa powder',
+      status:'Downstream product reference only',limit:'',unit:'',notes:'The Gazette gives '+cocoaPowderReference+' ppm on the fat-free substance basis for cocoa powder. A whole bean, cocoa mass/liquor or pressed cake requires its own assessment. Match the downstream powder lot and the reported analytical basis.',
+      source:links('ctr-3',[page])};
+  }
+  function marketSampleRows(id,date=root.PMSVVeterinary.reviewDate){
+    const out=[['Catalogue ID','Product','Assessment date','Sample or form','Parameter','Scope','Published reference','Unit','Evidence and interpretation','Provision','Official sources']];
+    if(!metalEdition(date))return out;
+    for(const key of focusIds){
+      if(id&&id!==key)continue;
+      const emit=(form,parameter,scope,value,unit,notes,article,source)=>out.push([key,R.products[key].name,date,form,parameter,scope,value,unit,notes,article,source]);
+      const b=C.beverageDecision(key,{},date);
+      if(b)emit(key===C.vendingId?'Dispensed plain water':'Dry coffee–chicory mixture','Saffrole',b.status,
+        key===C.vendingId&&date<'2026-12-01'?'10':'',key===C.vendingId&&date<'2026-12-01'?'ppm':'',b.reason,'CTR 2.2.1(2), serial 4',b.links.join(' | '));
+      const extra=additionalSampleRow(key);
+      if(extra){
+        const downstream=extra.status==='Downstream product reference only';
+        emit(extra.form,extra.parameter,extra.status,downstream?cocoaPowderReference:'',downstream?'ppm':'',extra.notes,extra.article,extra.source);
+      }
+      if(key==='coffee-chicory-mixture')for(const r of incomingSamples.rows(key))emit(r.form,r.parameter,'Incoming ingredient',r.limit,r.unit,r.notes,r.article,r.source);
+      if(key===beanId||key===routeIds.cocoa){
+        for(const row of entries(key,date).filter(r=>r.area===areas[0]&&String(r.unit||'').startsWith('%')&&['2.3.54','2.7.8'].includes(r.article)&&r.limit)){
+          emit(row.form,row.parameter,'Finished product composition',row.limit,row.unit,row.notes||'Match the product form and reporting basis.',row.article,row.source);
+        }
+      }
+    }
+    return out;
+  }
+  function openScope(date=root.PMSVVeterinary.reviewDate){
+    return new Map([...incomingSamples.scope].filter(([id])=>!C.firstSource(id,date)));
+  }
   function openProductRows(id,date=root.PMSVVeterinary.reviewDate){
     const out=[['Catalogue ID','Product','Assessment date','Sample role','Scope of reference','Article or table','Parameter','Reference value','Unit','Sample or declared matrix','Conditions and next action','Official sources']];
     if(!metalEdition(date))return out;
     const water=root.PMSVVendingWater;
-    for(const [key,[sample,task]] of incomingSamples.scope){
+    for(const [key,[sample,task]] of openScope(date)){
       if(id&&id!==key)continue;
       const add=(role,scope,row)=>out.push([key,R.products[key].name,date,role,scope,row.article,row.parameter,row.limit||'',row.unit||'',row.form,row.notes,row.source]);
       const record=E.products[key], anchor=E.standards[record.standard], route=record.routeAnchors?.[0];
@@ -831,6 +875,11 @@
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:task,source:links(doc,anchor?.p||route?.[1]||[])});
       const melamine=root.PMSVBroadContaminants.melamineRow(key);
       add('Finished food',melamine.limit?'General melamine provision':'Confirm food-grade article for melamine',melamine);
+      const sampleRow=additionalSampleRow(key);
+      if(sampleRow){
+        const downstream=sampleRow.status==='Downstream product reference only';
+        add(downstream?'Downstream cocoa powder':'Finished product method',sampleRow.status,{...sampleRow,limit:downstream?cocoaPowderReference:'',unit:downstream?'ppm':''});
+      }
       for(const r of scopedReferences(key,date))add(r.role,r.status,{...r,limit:r.value});
       if(key===water.productId){
         for(const row of water.planRows(key).filter(r=>r.article.includes('Table 3')&&r.unit==='mg/L')){
@@ -959,5 +1008,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleArea,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
