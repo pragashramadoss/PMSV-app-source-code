@@ -1,0 +1,31 @@
+# Laboratory guide for finished samples
+
+Reviewed 26 November 2026. In the product finder, choose an assessment date and download the finished-sample laboratory guide. It brings together the composition and identity criteria, available microbiological sampling plans, relevant analytical methods and the sample conditions for each product awaiting its first specific domestic contaminant, toxin or residue source. The compact source-status export covers all 533 products. It distinguishes a partial match carried forward in the catalogue from a conditional source review and an outstanding first match. It keeps the product identity link separate from sources supporting a conditional match. The full product register and testing plan remain available. A method establishes how a laboratory can examine a material. A numerical acceptance decision also requires a provision for the applicable product, unit and reporting basis.
+
+| Finished sample | Review finding |
+| --- | --- |
+| Coffee–chicory blend | Select the regular or decaffeinated form and ground or instant preparation. Two caffeine methods cover all four. The cold-water solubility method covers the instant forms. |
+| Coconut milk powder | Check moisture, dry-basis fat, free fatty acids in the extracted fat and bulk density for the dried product. The guide retains the applicability notes for each microbiological sampling plan. |
+| Cocoa beans | Enter the examined bean count and the observed defect counts. The worksheet calculates four percentages and compares the original counts with each inclusive maximum. Moisture remains a separate mass-based determination. |
+| Cocoa mass, liquor or cake | Method 04C.031 concerns shell and germ on fat-free dry matter. For 04C.032, verify that the laboratory reported shell alone on an alkali-free basis before applying the product limit. The method heading mentions both shell and germ. |
+| Arrowroot starch | Method 03.024 includes a Maranta arrowroot illustration while its scope field specifies cereal starches. Record how the laboratory established identity and suitability. The second plant allowed by the standard, Curcuma, needs separate identification evidence. |
+| Egg powder | Use the rows for dried white, yolk or whole egg. The organic-acid maxima in the adjacent frozen and liquid egg tables have a different sample basis. |
+| Permitted enzyme preparations, category 99.2 | Obtain the enzyme identity, activity units, source, preparation and intended food use. The category alone supplies no common finished-preparation activity or purity specification. |
+| Cow or buffalo colostrum | The dairy manual identifies sample preparation, moisture, gravimetric fat and total protein methods for liquid colostrum. Powder, IgG and lactoferrin require methods suitable for their particular matrix and analyte. |
+| Royal jelly | The guide links nine analytical methods, including 10-HDA, individual sugars, the carbon isotope ratio and furosine. Retain the independent bee-feeding record and identify the royal-jelly type. The Gazette gives no numerical furosine threshold. |
+| Purified vending water | The December guide includes the outlet sample and its 74 IS 10500 rows. Through 30 November the Helper separately lists a group-based saffrole provision. The replacement entry from 1 December requires mace or nutmeg kernel. |
+
+On 26 November, 524 products have a partial or conditional contaminant-source match and nine await a first such match. On 1 December the counts are 523 and ten. All ten have individual sample profiles. The date-selected combined guide contains 150 rows for November and 227 for December. It includes separate rows for published criteria and methods, and carries the applicable n, c, m and M values for microbiological criteria. Open each product to view its full worksheet, including its general contaminant and ingredient references.
+
+**Official sources**
+
+- [FSSAI manual for coffee and chicory, methods 04A.011, 04A.012 and 04A.017](https://fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Methods%20of%20Analysis%20for%20Beverages%20Tea%2C%20Coffee%20and%20Chicory.pdf)
+- [Coconut milk powder, Gazette p. 17](https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5f362b888233bGazette_Notification_FSS_Additives_Third_Amendment_14_08_2020.pdf#page=17)
+- [Cocoa beans, Gazette pp. 28–29](https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/Gazette_Notification_Standards_Fruits_FPSFA_09_08_2017.pdf#page=28)
+- [Cocoa mass and cake, product standard 2.7.8](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf#page=13) · [Cocoa methods 04C.031 and 04C.032](https://fssai.gov.in/upload/uploadfiles/files/Manual%20of%20methods-sugar%20and%20confectionary%20including%20sweetening%20agent.pdf)
+- [Arrowroot standard 2.4.14](https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals%20and%20Cereal%20products.pdf#page=56) · [Revised cereal manual, arrowroot illustration on PDF p. 77](https://fssai.gov.in/upload/uploadfiles/files/Manual-Cereals-Revision1.pdf#page=77)
+- [Egg powder and adjacent product tables, Gazette](https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5fedb66ac1b15Gazette_Notification_FPS_Tenth_amendment_31_12_2020.pdf#page=37)
+- [FoSCoS classification for enzymes, p. 9](https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf#page=9)
+- [Revised dairy manual, colostrum section from PDF p. 326](https://fssai.gov.in/upload/uploadfiles/files/Manual-Dairy-Revision1.pdf#page=326)
+- [Royal jelly analytical manual, section C](https://fssai.gov.in/upload/uploadfiles/files/Manual%20of%20Honey%20and%20Other%20bee%20Hive%20Products_05082024.pdf)
+- [Vending-water standard](https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Drinking_Water_05_02_2019.pdf#page=4) · [December natural-toxins amendment](https://fssai.gov.in/upload/uploadfiles/files/272840.pdf#page=5)
