@@ -32,8 +32,8 @@ for(const date of ['2026-11-26','2026-12-01']){
     assert(ref.every(r=>!r.limit&&!r.unit&&r.notes.includes('Published reference:')));
   }
   const open=plan.openProductRows(null,date).slice(1);
-  assert.equal(open.length,152);
-  assert.equal(open.filter(r=>r[6]==='Melamine').length,11);
+  assert.equal(open.length,154);
+  assert.equal(open.filter(r=>r[6]==='Melamine').length,10);
   assert.equal(plan.scopeReferenceExport('coffee',date).length,1);
 }
 const contents=plan.entries('13-13-1-infant-formula');

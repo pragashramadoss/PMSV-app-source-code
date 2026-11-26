@@ -3,6 +3,12 @@
   'use strict';
   const D=root.PMSVMetalPanelData, old=root.PMSVMetalScopeData, M=root.PMSVMetalScope, B=root.PMSVBroadContaminants, E=root.PMSVCatalogueEvidence;
   if(!D||!M||!B||!E||Object.keys(D.rows).length!==382||Object.keys(D.products).length!==533)return;
+  const carobId='06-06-2-carob-powder';
+  const carobKeys={Cu:'Cu22',As:'As70',Sn:'Sn27'};
+  const carobFields=['panelCarobForm','panelCarobSpec','panelCarobScope','panelCarobLot','panelCarobBasis'];
+  const carobIdentity=E.documents['baser02-1'].url.split('#')[0]+'#page=129';
+  const carobProcessing='https://cgspace.cgiar.org/server/api/core/bitstreams/f8b6bb44-ec81-4f3b-b45b-e6e03c2a6faf/content';
+  const carobRule='For roasted carob powder documented as ground, deseeded fruit pulp, review the fruit-pulp-products entry for copper, arsenic and tin. Confirm the supplied powder contains only the pulp, the applicability of that article to the finished lot, and a result per kg of the powder as supplied. Whole pods with seeds, seed gum and blends need a different assessment.';
   const catechuId='04-04-1-catechu-edible';
   const catechuKeys={Pb:'Pb60',Cu:'Cu5'};
   const catechuFields=['panelCatechuForm','panelCatechuSpec','panelCatechuUse','panelCatechuLot','panelCatechuCopper','panelCatechuPbBasis','panelCatechuCuBasis'];
@@ -79,7 +85,7 @@
   const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
   const milligramUnit=unit=>unit?.replace(/^µg\//,'mg/');
   const labFields=['panelLabMetal','panelLabAsForm',...readingFields];
-  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields,...catechuFields,...importFields];
+  const fields=[...reviewFields.flatMap(k=>[k,k+'Ref']),'panelFpc','panelFpcRef','panelIdentity','panelIdentityRef','panelContainer','panelContainerRef',...labFields,'panelLabOther',...dextrinFields,...additiveFields,...silverFields,...carobFields,...catechuFields,...importFields];
   const label={named:'Named finished article',residual:'Foods not specified',all:'All foods',outside:'No listed finished article',same:'Common maximum · exact article open',check:'Article or sample evidence needed',hold:'Source interpretation open',unidentified:'Identify supplied food-grade article',fpc:'Confirm FPC 18 eligibility',factor:'Named milk article · concentration factor needed'};
   const exact=k=>['named','residual','outside','all'].includes(k);
   const decision=(kind,keys,reason,proof='')=>({kind,keys,reason,proof});
@@ -158,7 +164,18 @@
     if(flavour&&m==='Cu')proof.push('Copper article scope '+s.panelCatechuCopper);
     return record(flavour?'named':'residual',flavour?'Food-grade catechu supplied as a documented natural flavouring.':'Ordinary ingredient with a documented review of the named articles.',proof.join(' · '));
   }
+  function carobMetal(m,s){
+    const key=carobKeys[m];
+    const matched=s.panelCarobForm==='pulp'&&textValue(s,'panelCarobSpec')&&textValue(s,'panelCarobScope')&&textValue(s,'panelCarobLot')&&s.panelCarobBasis==='supplied';
+    const proof=matched?['Process '+s.panelCarobSpec,'Article assessment '+s.panelCarobScope,'Lot '+s.panelCarobLot,'As-supplied powder'].join(' · '):'';
+    return {...decision(matched?'named':'check',[key],carobRule,proof),identitySources:[carobIdentity]};
+  }
+  function carobRows(){
+    return [['Catalogue ID','Parameter','Published maximum','Unit','Food article','Sample and reporting basis','Evidence required','Indian product standard','Indian metal provision','Processing reference, section 12.11'],
+      ...Object.entries(carobKeys).map(([m,key])=>[carobId,names[m],literal(key),'mg/kg',D.rows[key][0],'Finished roasted powder made only from deseeded fruit pulp, as supplied',carobRule,carobIdentity,source+'#page='+pages(key)[0],carobProcessing])];
+  }
   function firstSource(id){
+    if(id===carobId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:carobRule,urls:[carobIdentity,...Object.values(carobKeys).map(key=>source+'#page='+pages(key)[0])]};
     if(id===catechuId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:catechuRule,urls:[...catechuSources,source+'#page=20',source+'#page=23']};
     if(id===sajjiId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:importRule,urls:[...importSources,...[20,23,24,26,27].map(page=>source+'#page='+page)]};
     if(id===silverId)return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:silverRule,urls:[...silverSources,...[20,23,24].map(page=>source+'#page='+page)]};
@@ -243,6 +260,7 @@
     return rows;
   }
   function base(id,m,s){
+    if(id===carobId&&Object.hasOwn(carobKeys,m))return carobMetal(m,s);
     if(id===catechuId&&Object.hasOwn(catechuKeys,m))return catechuMetal(m,s);
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m)){
       const key=unspecifiedMetals[m];
@@ -309,6 +327,7 @@
     return p;
   }
   function selectable(id,m,d,s){
+    if(id===carobId&&Object.hasOwn(carobKeys,m))return [];
     if(id===catechuId&&Object.hasOwn(catechuKeys,m))return [];
     if(id===sajjiId&&Object.hasOwn(unspecifiedMetals,m))return [];
     if(id===silverId&&Object.hasOwn(silverMetals,m))return [];
@@ -474,6 +493,11 @@
       description=row.parameter+' · '+row.form+' · '+row.limit+' '+row.unit;
     }
     if(groups.fishOil.has(id)&&m==='As'&&s.panelLabAsForm==='inorganic'&&row.labKey!=='fishArsenic')return 'Review the reported inorganic arsenic against a source covering that species on this assessment date.';
+    if(id===carobId&&Object.hasOwn(carobKeys,m)){
+      if(!c)return d.reason;
+      if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelCarobLot'))return 'Match the laboratory sample to the documented carob powder lot.';
+      if(textValue(s,'panelLabNumber')&&milligramUnit(s.panelLabUnit)!=='mg/kg')return 'Use a mass-based result for the powder as supplied.';
+    }
     if(id===catechuId&&Object.hasOwn(catechuKeys,m)){
       if(!c)return d.reason;
       if(textValue(s,'panelLabNumber')&&textValue(s,'panelLabSample')!==textValue(s,'panelCatechuLot'))return 'Match the laboratory sample to the documented catechu lot.';
@@ -604,6 +628,15 @@
     if(!known(id))return '';
     let extra='';
     const group=additiveGroup(id);
+    if(id===carobId){
+      extra+='<fieldset><legend>Carob fruit-pulp metal checks</legend><p>'+escape(carobRule)+'</p>'+
+        '<label>Material supplied'+pick('panelCarobForm',[['pulp','Roasted and ground deseeded carob pulp only'],['whole','Whole pod including seed'],['gum','Seed gum or isolated seed material'],['blend','Blend or other preparation']],s)+'</label>'+
+        '<label>Supplier specification and process record for separation, roasting and grinding'+input('panelCarobSpec',s)+'</label>'+
+        '<label>Basis for classifying this powder under the fruit-pulp-products article'+input('panelCarobScope',s)+'</label>'+
+        '<label>Sampled finished-powder lot ID'+input('panelCarobLot',s)+'</label>'+
+        '<label>Laboratory reporting basis'+pick('panelCarobBasis',[['supplied','Mass of the finished powder as supplied'],['dry','Calculated on dry matter'],['other','Different sample or reporting basis']],s)+'</label>'+
+        '<p>'+ref(carobIdentity,'FSSAI 2.11.7')+' · '+ref(carobProcessing,'Carob processing, section 12.11')+'</p><button type="button" data-carob-export>Download carob metal references</button></fieldset>';
+    }
     if(id===catechuId){
       const basisOptions=[['dry','Dry matter'],['supplied','As-supplied solid']];
       extra+='<fieldset><legend>Edible catechu metal checks</legend><p>'+escape(catechuRule)+'</p>'+
@@ -663,6 +696,10 @@
       (groups.foodChem.has(id)?'<p>CTR 2.1.1(1) also calls for metals specified in the relevant Indian Pharmacopoeia monograph for chemicals described there. Review its purity requirements for this ingredient.</p>':'');
   }
   function update(node,id,k,s,previous){
+    if(id===carobId&&s[k]!==previous){
+      if(k==='panelCarobForm')for(const field of carobFields.slice(1))setInput(node,s,field,'');
+      if(['panelCarobSpec','panelCarobLot','panelCarobScope','vetDate'].includes(k))setInput(node,s,'panelCarobBasis','');
+    }
     if(id===catechuId&&s[k]!==previous){
       if(k==='panelCatechuForm')for(const field of catechuFields.slice(1))setInput(node,s,field,'');
       if(['panelCatechuLot','panelCatechuSpec','panelCatechuUse','ingredientSubtype','vetDate'].includes(k)){
@@ -738,5 +775,5 @@
     return [...details,'Complete metal table · '+st.exact+' of 11 exact headings · '+st.common+' additional common maxima',...panel(id,s).map(d=>d.name+' · '+compact(d)),
       'Original Gazette · '+source+'#page=18',...(notes.length?[...notes,amendment+'#page=4']:[]),...(summary?['Metal result · '+summary]:[])];
   }
-  root.PMSVMetalPanel=Object.freeze({catechuId,catechuRows,polyolId,polyolRows,sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
+  root.PMSVMetalPanel=Object.freeze({carobId,carobRows,catechuId,catechuRows,polyolId,polyolRows,sajjiId,unspecifiedMetals,importSources,silverId,silverMetals,misriId,trehaloseId,trehaloseNote,additiveGroups,additiveGroup,additiveCriteriaRows,dextrinId,syrupId,syrupIdentity,syrupRule,firstSource,fields,metals,labels:Object.freeze(label),panel,forMetal,status,stats,limit,rowText,renderRows,controls,findRows,parseReading,lab,reportLines,update,brief,columns,values,nextEdition});
 })(globalThis);

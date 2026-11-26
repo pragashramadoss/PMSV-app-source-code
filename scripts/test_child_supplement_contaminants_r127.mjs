@@ -11,8 +11,8 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
 const {PMSVCropScope:crop,PMSVTestingPlan:plan,PMSVCatalogueWorksheets:worksheets,PMSV_REVIEW_REGISTER:register}=ctx;
 const id=crop.childId, criteria=crop.childCriteriaRows().slice(1);
 assert(worksheets.available);
-assert.equal(register.firstSourceReview.withRoute,522);
-assert.equal(register.firstSourceReview.pending,11);
+assert.equal(register.firstSourceReview.withRoute,523);
+assert.equal(register.firstSourceReview.pending,10);
 assert(!worksheets.pendingSourceRows().some(row=>row[0]===id));
 assert.equal(criteria.length,15);
 const samples={

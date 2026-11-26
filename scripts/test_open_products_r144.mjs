@@ -14,7 +14,7 @@ assert(ws.available);
 const ids=Array.from(ws.pendingSourceRows().slice(1),row=>row[0]);
 for(const date of ['2026-11-26','2026-12-01']){
   const [header,...all]=plan.openProductRows(null,date);
-  assert.equal(new Set(all.map(r=>r[0])).size,11);
+  assert.equal(new Set(all.map(r=>r[0])).size,10);
   assert(all.every(r=>r.length===header.length&&r[2]===date&&r[11].startsWith('https://')));
   for(const id of ids){
     const group=all.filter(r=>r[0]===id);
@@ -30,14 +30,14 @@ for(const date of ['2026-11-26','2026-12-01']){
   assert(water.every(r=>r[8]==='mg/L'&&r[5].includes('Table 3')));
   assert(!all.some(r=>r[0]==='purified-vending-water'&&r[8]==='ppm'));
   const id='06-06-2-arrowroot';
-  const intake=all.filter(r=>r[0]===id&&r[3]==='Incoming ingredient');
+  const intake=all.filter(r=>r[0]===id&&r[3]==='Incoming ingredient'&&r[5]==='CTR 2.1.1(2)');
   assert.deepEqual(Array.from(intake,r=>r[6]),['Lead','Cadmium']);
   assert(intake.every(r=>r[7]==='0.1'&&r[8]==='mg/kg'&&r[9].includes('raw Maranta')&&r[11].includes('CXA_004e')));
   assert(!all.some(r=>r[0]===id&&r[3]!=='Incoming ingredient'&&r[7]==='0.1'));
   assert.equal(plan.openProductRows('coffee',date).length,1);
 }
 assert.equal(plan.openProductRows(null,'2010-01-01').length,1);
-assert.equal(rev.firstSourceReview.withRoute,522);
+assert.equal(rev.firstSourceReview.withRoute,523);
 const enzyme=plan.routeIds.enzyme;
 const alternate=plan.openProductRows(enzyme).slice(1).filter(r=>r[3]==='Separate product or use');
 assert.equal(alternate.length,3);

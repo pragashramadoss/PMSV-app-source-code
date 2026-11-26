@@ -56,7 +56,7 @@ const st=P.stats(),stored=PMSV_REVIEW_REGISTER.metalPanelReview;
 assert.equal(st.exactProducts,products.exact);assert.equal(st.allOutcomes,products.all);
 assert.equal(st.exactDecisions,counts.exact);assert.equal(st.commonDecisions,counts.common);
 for(const k of Object.keys(st))assert.equal(st[k],stored[k]);
-assert.deepEqual([st.exactProducts,st.allOutcomes,st.priorityOutcomes,newlyKnown],[49,123,29,21]);
+assert.deepEqual([st.exactProducts,st.allOutcomes,st.priorityOutcomes,newlyKnown],[49,122,28,20]);
 assert.deepEqual(P.panel('future-unknown-product'),[]);assert.equal(P.forMetal('future-unknown-product','Pb'),null);
 assert.deepEqual(P.values('future-unknown-product'),[]);assert.equal(P.forMetal(ids[0],'Zn'),null);
 const run=(i,m,s={})=>P.forMetal(ids[i],m,s);

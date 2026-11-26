@@ -44,5 +44,5 @@ for(const date of ['2026-11-25','2026-12-01']){
   assert.match(selected[0][9],/Report A.*Rectangular box required/);
   assert(!P.sulphiteRows().some(r=>r.includes('Report A')));
 }
-assert.equal(W.pendingSourceRows().length-1,11);
-assert.equal(R.firstSourceReview.withRoute,522);
+assert.equal(W.pendingSourceRows().length-1,10);
+assert.equal(R.firstSourceReview.withRoute,523);

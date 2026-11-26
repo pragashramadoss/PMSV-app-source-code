@@ -12,8 +12,8 @@ const {PMSVPesticides:x,PMSVTestingPlan:plan,PMSV_REVIEW_REGISTER:register,PMSVR
 const id=register.lactoseReview.productId,group=x.groupSource(id);
 const specifications=[[1,'0.05',31],[2,'0.02',31],[3,'0.02',31],[11,'0.01',32],[16,'0.2',32],[18,'0.05',32]];
 assert.equal(group.rows.length,specifications.length);
-assert.equal(register.firstSourceReview.pending,11);
-assert.equal(register.firstSourceReview.withRoute,522);
+assert.equal(register.firstSourceReview.pending,10);
+assert.equal(register.firstSourceReview.withRoute,523);
 for(const [i,[serial,limit,page]] of specifications.entries()){
   const row=group.rows[i];
   assert.equal(row.serial,serial);assert.equal(row.limit,limit);assert.equal(row.page,page);

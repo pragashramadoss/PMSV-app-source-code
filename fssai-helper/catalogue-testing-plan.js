@@ -33,7 +33,6 @@
       [coconutPowder, ['Extracted and dried product', 'Trace the kernel lot through extraction and drying. Identify any carriers on the formula and obtain a provision for the finished coconut milk powder.']],
       ['04-04-2-cocoa-beans', ['Fermented and dried seed', 'Confirm whole fermented, dried Theobroma cacao beans on the specification. Seek a provision that includes this commodity and preparation.']],
       ['05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake', ['Processed cocoa', 'Distinguish ground mass or liquor from pressed cake on the process record. Check the sampled material against each named cocoa article and its reporting basis.']],
-      ['06-06-2-carob-powder', ['Roasted botanical powder', 'Obtain the Ceratonia siliqua pod specification, husk removal and roasting records. Establish coverage of the marketed powder for the analyte.']],
       ['06-06-2-arrowroot', ['Separated starch', 'Record the rhizome species, starch separation and drying. Seek a provision for purified starch or documented coverage of the processed fraction.']],
       [egg, ['Dried animal product', 'Identify dried white, yolk or whole egg. Keep the pre-drying shell-free egg report with its intake lot and obtain the specific regulatory basis for interpreting a powder result.']],
       ['99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc', ['Preparation and use', 'Obtain the enzyme name, activity, preparation specification and intended food process. Check whether the exact preparation belongs in the processing-aid schedule or the separate category 99.2.']],
@@ -66,16 +65,24 @@
     const ota = root.PMSVCropScopeData.rows.C23;
     const coconutRows = [43,44].map(serial => pesticideRow(serial, 'Coconut', kernel));
     const waterRow = pesticideRow(82, 'Coconut Water', water);
+    function rawPesticide(serial,article,form){
+      const row=pesticideRow(serial,article,form);
+      if([13,23].includes(serial))row.notes+=' Serials 13 and 23 have overlapping residue definitions. Match the reported analytes and avoid summing the two limits.';
+      if(serial===13)row.notes+=' Benomyl is banned for use in India.';
+      if(serial===53)row.notes+=' Dichlorvos is listed as banned for use in India. A residue entry does not authorise pesticide use.';
+      return row;
+    }
+    const rhizome='Separately sampled raw Maranta arundinacea rhizome';
     const intake = new Map([
-      [arrowroot, ['Pb130','Cd20'].map((key,i) => ({
-        ...metal(key,['Lead','Cadmium'][i],'Separately sampled raw Maranta arundinacea rhizome'),
+      [arrowroot, [...['Pb130','Cd20'].map((key,i) => ({
+        ...metal(key,['Lead','Cadmium'][i],rhizome),
         notes:'Confirm the botanical identity and sample the raw rhizome before extraction. Record the intake lot and the as-sampled mass basis. Codex VR 0573 identifies the commodity. The maximum comes from the Indian root-and-tuber vegetable entry.'
-      }))],
+      })), ...[13,23,53,114].map(serial=>rawPesticide(serial,'Vegetables',rhizome))]],
       [blend, [metal('Cu5','Copper',coffee), metal('Cu5','Copper',chicory), metal('As19','Arsenic',chicory),
         {area:'Toxins and other contaminants', article:'CTR 2.2.1(1) · serial 4', form:coffee, parameter:'Ochratoxin A',
           limit:String(ota.limit), unit:ota.unit, notes:'Assess the separately sampled coffee lot against the coffee entry in force from 1 April 2025.', source:pdf(ota.doc,ota.page)},
         {...root.PMSVCoffee.rawBeanRow(blend),area:'Pesticide residues'}]],
-      [egg, [129,145,150].map(serial => pesticideRow(serial,'Eggs',eggs))],
+      [egg, [1,13,23,67,71,129,144,145,150].map(serial => rawPesticide(serial,'Eggs',eggs))],
       [coconutPowder, coconutRows], [milk, [...coconutRows,waterRow]], [cream, [...coconutRows,waterRow]]
     ]);
     const descriptions = new Map([

@@ -19,8 +19,8 @@ assert.equal(descriptions.size,rev.openProductReview.productPlans);
 const milk='04-04-1-coconut-milk-non-dairy',powder='04-04-1-coconut-milk-powder';
 for(const date of ['2026-11-25','2026-12-01']){
   const refs=plan.incomingExport(null,date).slice(1);
-  assert.equal(refs.length,rev.openProductReview.ingredientReferences);
-  assert.equal(refs.filter(r=>r[7]&&r[8]).length,12);
+  assert.equal(refs.length,rev.carobReview.incomingReferences);
+  assert.equal(refs.filter(r=>r[7]&&r[8]).length,22);
   assert(refs.filter(r=>!r[7]).every(r=>!r[8]&&r[14].includes('#page=51')));
   assert(!refs.some(r=>r[0]===powder&&r[5]==='Fenpyroximate'));
   assert(refs.some(r=>r[0]===milk&&r[5]==='Fenpyroximate'&&r[7]==='0.02'&&r[8]==='mg/kg'));
@@ -35,5 +35,5 @@ for(const date of ['2026-11-25','2026-12-01']){
   }
 }
 assert.equal(plan.incomingExport(null,'2020-01-01').length,1);
-assert.equal(rev.firstSourceReview.withRoute,522);
+assert.equal(rev.firstSourceReview.withRoute,523);
 assert.equal(rev.legalProductApprovals,0);
