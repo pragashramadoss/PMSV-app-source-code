@@ -690,6 +690,7 @@
     const result=[],add=row=>result.push(row);
     composition(id,add,state,vetDate);
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
+    for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
     if(id===routeIds.enzyme)for(const row of lysozymeReferences){
       add({...row,area:areas[0],status:'Separate classification example',limit:'',unit:'',
@@ -765,9 +766,9 @@
         }
       } else {
         for(const decision of P.panel(key)){
-          if(!['Cd','Me'].includes(decision.key)||!['residual','all'].includes(decision.kind))continue;
+          if(!['residual','all'].includes(decision.kind))continue;
           const row=metalRow(key,decision,date), code=decision.keys[0];
-          if(decision.keys.length===1&&['Cd8','Me0'].includes(code)){
+          if(decision.keys.length===1&&['Pb71','Cu11','As32','Cd8','Hg6','Me0'].includes(code)){
             const [article,maximum,,,basis]=root.PMSVMetalPanelData.rows[code];
             add('Finished food',decision.kind==='residual'?'Residual CTR article':'All-food CTR article',
               {...row,form:article,limit:maximum,unit:'ppm',notes:[basis,row.notes].filter(Boolean).join(' ')});
@@ -777,6 +778,7 @@
       if(key===routeIds.enzyme){
         for(const row of lysozymeReferences)add('Separate product or use','Lysozyme classification example outside the generic 99.2 assessment',row);
       }
+      for(const row of root.PMSVAdditivesSolvents.rows(key))add(row.role,row.status,row);
       for(const row of incomingSamples.rows(key))add('Incoming ingredient','Separately sampled input',row);
     }
     return out;
@@ -839,7 +841,7 @@
     for(const key of root.PMSVCoffee.ids){
       if(id&&key!==id)continue;
       rows.push(...exportRows(key,date,false,id?state:undefined).slice(1)
-        .filter(r=>r[2]===areas[0]||r[2]===areas[4]&&r[3]==='CTR 2.3.1, entry 129'));
+        .filter(r=>r[2]===areas[0]&&!r[3].startsWith('Appendix C, Table 6')||r[2]===areas[4]&&r[3]==='CTR 2.3.1, entry 129'));
     }
     return rows;
   }
@@ -881,7 +883,7 @@
     for(const key of [vet.casingId,vet.eggPowderId]){
       if(id&&key!==id)continue;
       const data=exportRows(key,date);
-      rows.push(...data.slice(1).filter(r=>r[2]===areas[5]&&r[3].startsWith('CTR 2.3.2(4)')||key===vet.eggPowderId&&r[2]===areas[0]));
+      rows.push(...data.slice(1).filter(r=>r[2]===areas[5]&&r[3].startsWith('CTR 2.3.2(4)')||key===vet.eggPowderId&&r[2]===areas[0]&&!r[3].startsWith('Appendix A,')));
     }
     return rows;
   }

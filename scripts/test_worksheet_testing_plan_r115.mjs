@@ -78,7 +78,7 @@ for(const date of [current,next]){
     const generic=plan.exportRows(p.id,date).slice(1);
     assert.deepEqual(bulk.slice(offset,offset+generic.length),generic);offset+=generic.length;
   }
-  assert.equal(offset,bulk.length);assert.equal(offset,date===current?25633:25585);assert(!bulk.some(row=>row.join(' ').includes('QA-115')));
+  assert.equal(offset,bulk.length);assert.equal(offset,date===current?25655:25607);assert(!bulk.some(row=>row.join(' ').includes('QA-115')));
 }
 localStorage.setItem('pmsv-fssai-worksheet-r93:'+candy,JSON.stringify({...formula,vetDate:next}));
 const restored=load();const rows=restored.PMSVCatalogueWorksheets.productPlan(candy);
