@@ -805,6 +805,7 @@
     if(metalEdition(vetDate)&&root.PMSVLabGuide){
       for(const row of root.PMSVLabGuide.referenceEntries(id,state))add(row);
     }
+    if(metalEdition(vetDate))for(const row of root.PMSVStarchSpecifications?.entries(id)||[])add(row);
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
@@ -933,6 +934,10 @@
       if(sampleRow){
         const downstream=sampleRow.status==='Downstream product reference only';
         add(downstream?'Downstream cocoa powder':'Finished product method',sampleRow.status,{...sampleRow,limit:downstream?cocoaPowderReference:'',unit:downstream?'ppm':''});
+      }
+      for(const r of root.PMSVStarchSpecifications?.entries(key)||[]){
+        const role=r.limit?'Finished starch':key===routeIds.enzyme?'Receiving food':'Purchase specification';
+        add(role,r.status,{...r,limit:r.published,unit:r.publishedUnit});
       }
       for(const r of scopedReferences(key,date))add(r.role,r.status,{...r,limit:r.value});
       for(const row of root.PMSVImportDocuments?.entries(key)||[])add('Import consignment',row.status,row);

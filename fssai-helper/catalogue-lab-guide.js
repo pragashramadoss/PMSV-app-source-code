@@ -55,7 +55,7 @@
     ['019','45–47','Crude fibre','Document the sample fraction and reporting basis. Use the applicable product standard for interpretation.']
   ])method(cocoa,'Mass, liquor or cake',name,'04C.'+code+':2024','printed pp. '+pages,cocoaManual,note);
 
-  profile(arrow,'2.4.14','Separated and purified arrowroot starch','Establish the species and separation process. The FSSAI manual illustrates Maranta starch. The product standard also permits Curcuma, which requires its own identification evidence.',cerealManual+'#page=77');
+  profile(arrow,'2.4.14','Separated and purified arrowroot starch','Establish the species and separation process. The FSSAI manual illustrates Maranta. IS 1006:1984 shows both Maranta in Figure 1 and Curcuma in Figure 2. Record the declared source and the figure used.',cerealManual+'#page=77');
   method(arrow,'Starch declared as Maranta arundinacea','Microscopic appearance of starch granules','03.024:2023','PDF pp. 75–77',cerealManual+'#page=77','Use the Maranta illustration as an identity reference. The method scope names cereal starches. Document suitability for this sample before issuing a result. The illustration does not establish Curcuma identity.');
   profile(egg,'2.5.3(3)','Dried hen egg white, yolk or whole egg','Use the powder table for the declared form. The adjacent beta-hydroxybutyric, lactic and succinic acid maxima apply to frozen or liquid egg products. Do not enter them as powder thresholds.',root.PMSVVeterinary.animalGazette+'#page=37');
   profile(enzyme,'FoSCoS 99.2 / 99.4','Enzyme preparation as supplied','Record the enzyme identity, activity and units, source, formulation and intended use. Match the named preparation to its permission before assigning a purity or activity result. The lysozyme and chymosin examples have separate uses.','https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf#page=9');
@@ -193,6 +193,10 @@
       const prefix=[key,root.PMSVCatalogueRules.products[key].name,date];
       out.push([...prefix,p.sample,'Sample scope','Interpretation',p.article,'','','','','','',p.boundary,p.reference,'']);
       for(const r of plan.entries(key,date)){
+        if(r.area===root.PMSVStarchSpecifications?.area){
+          out.push([...prefix,r.form,r.status,r.parameter,r.article,r.limit,r.unit,'','','','',r.notes,r.source,'']);
+          continue;
+        }
         if(r.area===referenceArea){
           out.push([...prefix,r.form,r.status,r.parameter,r.article,'','','','','','',r.notes,r.source,r.locator]);
           continue;

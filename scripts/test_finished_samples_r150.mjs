@@ -14,7 +14,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets;
 assert(ws.available);
 assert.equal(g.profiles.size,reg.productProfiles);
 assert.equal(Array.from(g.profiles.values()).flatMap(p=>p.methods).length,reg.methodReferences);
-for(const [date,count] of [['2026-11-26',210],['2026-12-01',287]]){
+for(const [date,count] of [['2026-11-26',226],['2026-12-01',303]]){
   const summary=ws.sourceSummaryRows(date).slice(1);
   assert.equal(summary.length,533);
   assert.equal(new Set(summary.map(r=>r[0])).size,533);
