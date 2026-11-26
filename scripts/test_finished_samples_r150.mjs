@@ -14,7 +14,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets;
 assert(ws.available);
 assert.equal(g.profiles.size,reg.productProfiles);
 assert.equal(Array.from(g.profiles.values()).flatMap(p=>p.methods).length,reg.methodReferences);
-for(const [date,count] of [['2026-11-26',150],['2026-12-01',227]]){
+for(const [date,count] of [['2026-11-26',182],['2026-12-01',259]]){
   const summary=ws.sourceSummaryRows(date).slice(1);
   assert.equal(summary.length,533);
   assert.equal(new Set(summary.map(r=>r[0])).size,533);
@@ -30,6 +30,11 @@ for(const [date,count] of [['2026-11-26',150],['2026-12-01',227]]){
   for(const id of plan.openScope(date).keys()){
     assert.deepEqual(Array.from(g.rows(id,date).slice(1)),rows.filter(r=>r[0]===id));
   }
+  const guidance=rows.filter(r=>r[4]==='Laboratory recognition guidance');
+  assert.equal(guidance.length,32);
+  assert.equal(new Set(guidance.map(r=>r[3])).size,4);
+  assert(guidance.every(r=>!r[7]&&!r[8]&&g.isRecognitionSource(r[14])));
+  assert(!g.isRecognitionSource('https://example.com/#page=32'));
   const methods=rows.filter(r=>r[4]==='Analytical reference');
   assert.equal(methods.length,19);
   assert(methods.every(r=>r[7]===''&&r[8]===''&&r[15]));

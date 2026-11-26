@@ -1651,6 +1651,7 @@ async function testFinishedSampleGuide(page,open){
  assert(fs.readFileSync(await file.path(),'utf8').includes('"Bean sample one","100","Mouldy beans","5","5","4","Above maximum"'));
  await field('beanSample').fill('Bean sample two');assert.equal(await field('beanMould').inputValue(),'');
  const guide=page.locator('[data-lab-guide]');await guide.locator('summary').click();
+ assert.equal(await guide.locator('a[href="https://foodsafety.meghealth.gov.in/documents/parameters-to-be-tested.pdf#page=165"]').count(),1);
  const one=page.waitForEvent('download');await guide.locator('[data-lab-download]').click();
  assert((await one).suggestedFilename().includes('04-04-2-cocoa-beans-Laboratory-Guide'));
 }

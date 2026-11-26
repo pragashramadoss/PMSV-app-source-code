@@ -291,7 +291,7 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
  const $=id=>document.getElementById(id);
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const sourceLink=(url,title)=>{
-   try{const u=new URL(String(url));if(u.protocol!=='https:'||(!/(^|\.)fssai\.gov\.in$/i.test(u.hostname)&&!window.PMSVTestingPlan?.isExportSource(u.href)))return '';
+   try{const u=new URL(String(url));if(u.protocol!=='https:'||(!/(^|\.)fssai\.gov\.in$/i.test(u.hostname)&&!window.PMSVTestingPlan?.isExportSource(u.href)&&!window.PMSVLabGuide?.isRecognitionSource(u.href)))return '';
     return `<a class="source-ref" href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${esc(title)} ↗</a>`;
    }catch(e){return ''}
  };
@@ -343,7 +343,9 @@ window.PMSV_CATALOGUE = [{"id":"purified-vending-water","product":"Drinking Wate
   if(!profile)return '';
   const rows=profile.methods.map(m=>'<tr><td>'+esc(m.form)+'</td><td>'+esc(m.parameter)+'</td><td>'+sourceLink(m.url,m.code)+'</td><td>'+esc(m.locator)+'</td><td>'+esc(m.note)+'</td></tr>').join('');
   const table=rows?'<div class="ws-scroll"><table><thead><tr><th>Sample</th><th>Test</th><th>FSSAI method</th><th>Location</th><th>Reporting instructions</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'';
-  return '<details class="panel compact" data-lab-guide><summary>Finished-sample laboratory guide</summary><p>'+esc(profile.boundary)+'</p>'+sourceLink(profile.reference,'Sample reference')+table+'<p><button type="button" data-lab-download>Download criteria and analytical references</button></p></details>';
+  const recognition=window.PMSVLabGuide.recognition(id);
+  const guidance=recognition.length?'<p><b>Tests named in laboratory recognition guidance</b></p><p>'+esc(window.PMSVLabGuide.recognitionAnalytes.join(', '))+'. The reference list gives no numerical limits.</p>'+recognition.map(r=>sourceLink(r.url,r.form+' · item '+r.article.split(' ').pop()+', p. '+r.page)).join(' '):'';
+  return '<details class="panel compact" data-lab-guide><summary>Finished-sample laboratory guide</summary><p>'+esc(profile.boundary)+'</p>'+sourceLink(profile.reference,'Sample reference')+table+guidance+'<p><button type="button" data-lab-download>Download criteria and analytical references</button></p></details>';
  }
  function scopePanel(id){
   const rows=window.PMSVTestingPlan.scopedReferences(id);

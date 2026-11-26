@@ -58,6 +58,20 @@
   ])method(jelly,'Raw royal jelly',parameter,'04B.'+code+':2024','manual index pp. '+locator,beeManual,note);
   profile(water,'2.10.9','Water at the dispensing outlet','Identify the outlet and sample. Each incorporated IS 10500 entry has its own unit, conditions and available method reference. Read the date-specific saffrole decision separately.',root.PMSV_REVIEW_REGISTER.waterSourceReview.sources.vending);
 
+  const recognitionUrl='https://foodsafety.meghealth.gov.in/documents/parameters-to-be-tested.pdf';
+  const recognitionAnalytes=['Melamine','Lead','Copper','Arsenic','Tin','Cadmium','Mercury','Methylmercury'];
+  const recognitionSamples=new Map([
+    [bean,[['Whole fermented and dried cocoa beans','300',165]]],
+    [coconut,[['Coconut milk powder','327',185]]],
+    [dairy,[['Liquid cow or buffalo colostrum','124',31],['Cow or buffalo colostrum powder','125',32]]]
+  ]);
+  function recognition(id){
+    return (recognitionSamples.get(id)||[]).map(([form,item,page])=>({
+      form,article:'NABL 154, Format 3, Annexure 3, item '+item,page,url:recognitionUrl+'#page='+page
+    }));
+  }
+  const guidanceNote='The laboratory recognition list names this test for the sample. It supplies no numerical limit. Use the applicable Gazette provision and reporting basis for any compliance comparison.';
+  const isRecognitionSource=url=>[31,32,165,185].some(page=>url===recognitionUrl+'#page='+page);
   const headers=['Catalogue ID','Product','Assessment date','Sample or form','Reference type','Parameter','Article or method','Reference criterion','Unit','n','c','m','M','Scope and reporting instructions','Official source','Manual page or section'];
   function rows(id,date=root.PMSVVeterinary.reviewDate){
     const out=[headers];
@@ -68,6 +82,9 @@
       const prefix=[key,root.PMSVCatalogueRules.products[key].name,date];
       out.push([...prefix,p.sample,'Sample scope','Interpretation',p.article,'','','','','','',p.boundary,p.reference,'']);
       for(const m of p.methods)out.push([...prefix,m.form,'Analytical reference',m.parameter,m.code,'','','','','','',m.note,m.url,m.locator]);
+      for(const ref of recognition(key)){
+        for(const parameter of recognitionAnalytes)out.push([...prefix,ref.form,'Laboratory recognition guidance',parameter,ref.article,'','','','','','',guidanceNote,ref.url,'p. '+ref.page]);
+      }
       for(const r of plan.entries(key,date)){
         const productClause=r.area===plan.areas[0]&&r.article===p.article;
         const micro=r.area===plan.areas[1]&&r.n!=null;
@@ -101,5 +118,5 @@
     return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source'],
       ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source])];
   }
-  root.PMSVLabGuide=Object.freeze({profiles,rows,bean,beanFields,countResults,countRows});
+  root.PMSVLabGuide=Object.freeze({profiles,rows,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
 })(globalThis);
