@@ -54,11 +54,12 @@ for(const [id,matrix,key,article,limit,process,identityPage] of cases){
 for(const row of register.slice(1)) {
   if(cases.some(([id])=>id===row[0])||row[0]==='11-11-1-edible-lactose')continue;
   assert.equal(X.groupSource(row[0]),null);
-  if([ctx.PMSVMetalPanel.dextrinId,ctx.PMSVMetalPanel.misriId].includes(row[0]))assert.match(row.at(-1),/sulphated ash/);
+  if([ctx.PMSVMetalPanel.dextrinId,ctx.PMSVMetalPanel.misriId,ctx.PMSVMetalPanel.trehaloseId].includes(row[0]))assert.match(row.at(-1),/sulphated ash/);
   else if(row[0]===ctx.PMSVMetalPanel.sajjiId)assert.match(row.at(-1),/imported Sajji Khar/);
   else if(row[0]===ctx.PMSVMetalPanel.silverId)assert.match(row.at(-1),/dry colouring matter/);
   else if(ctx.PMSVMetalPanel.additiveGroup(row[0]))assert.match(row.at(-1),/arsenic/);
   else if(ctx.PMSVVeterinary.firstSource(row[0]))assert.match(row.at(-1),/edible animal tissues/);
+  else if(row[0]===ctx.PMSVRecipeSamples.syrup)assert.match(row.at(-1),/hydrocyanic acid/);
   else if(row[0]===ctx.PMSVRecipeSamples.drink)assert.match(row.at(-1),/saffrole/);
   else if(ctx.PMSVCropScope.firstSource(row[0]))assert.match(row.at(-1),/aflatoxins/);
   else assert.equal(row.at(-1),'');

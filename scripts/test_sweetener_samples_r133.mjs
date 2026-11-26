@@ -7,9 +7,9 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
   vm.runInContext(fs.readFileSync(new URL(name,dir),'utf8'),ctx);
 }
 const {PMSVMetalPanel:M,PMSVTestingPlan:P,PMSVCatalogueWorksheets:W,PMSV_REVIEW_REGISTER:R}=ctx;
-assert(W.available);assert.equal(R.firstSourceReview.withRoute,518);
+assert(W.available);assert.equal(R.firstSourceReview.withRoute,520);
 const pending=W.pendingSourceRows().slice(1).map(r=>r[0]);
-assert.equal(pending.length,15);assert(!pending.includes(M.misriId)&&pending.includes(M.syrupId)&&pending.includes(M.trehaloseId));
+assert.equal(pending.length,13);assert(!pending.includes(M.misriId)&&!pending.includes(M.syrupId)&&!pending.includes(M.trehaloseId));
 const ash={panelDextrinForm:'misri',panelDextrinLot:'M-17',panelDextrinSpec:'Finished crystallised sugar classification',panelDextrinReport:'Ash method/report',panelDextrinBasis:'yes',panelDextrinAsh:'1.00000000000001'};
 const lead={panelLabMetal:'Pb',panelLabSample:'M-17',panelLabRef:'Pb report',panelLabUnit:'mg/kg',panelLabNumber:'5',panelLabBasis:'yes'};
 for(const date of ['2026-11-24','2026-12-01']){
@@ -18,7 +18,7 @@ for(const date of ['2026-11-24','2026-12-01']){
   const metal=(id,state)=>rows(id,state).find(r=>r[5]==='Lead');
   const all=rows(null);
   assert.equal(all.length,11);assert.equal(all.filter(r=>r[2]===P.areas[0]).length,8);
-  assert.equal(all.filter(r=>r[15]).length,1);assert(all.every(r=>r.length===17));
+  assert.equal(all.filter(r=>r[15]).length,2);assert(all.every(r=>r.length===17));
   assert(all.filter(r=>r[5]==='Lead').every(r=>!r[7]));
   const positive=metal(M.misriId,base);assert.match(positive[7],/5.0 ppm/);assert.match(positive[9],/Within the cited Lead/);assert(positive[14].includes('#page=97')&&positive[14].includes('#page=18'));
   const result=patch=>M.lab(M.misriId,{...base,...patch});

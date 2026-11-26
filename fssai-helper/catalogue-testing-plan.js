@@ -36,9 +36,7 @@
       ['06-06-2-carob-powder', ['Roasted botanical powder', 'Obtain the Ceratonia siliqua pod specification, husk removal and roasting records. Establish coverage of the marketed powder for the analyte.']],
       ['06-06-2-arrowroot', ['Separated starch', 'Record the rhizome species, starch separation and drying. Seek a provision for purified starch or documented coverage of the processed fraction.']],
       [egg, ['Dried animal product', 'Identify dried white, yolk or whole egg. Keep the pre-drying shell-free egg report with its intake lot and obtain the specific regulatory basis for interpreting a powder result.']],
-      ['11-11-1-dried-glucose-syrup', ['Starch conversion product', 'Obtain the solid identity, specification and sulphated-ash result. Document the applicable wording for the lead article and check the separate 2.8.7 ash requirement.']],
       ['11-11-6-polyols-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-excluding-th', ['Supplied substance or retail preparation', 'Obtain the INS, composition, grade and intended use. Establish whether a separately standardised substance or a finished table-top preparation is being assessed.']],
-      ['99-99-1-trehalose', ['Crystalline ingredient', 'Identify the supplied grade and its manufacturing route. Obtain sulphated-ash evidence if that is the proposed lead criterion. The total-ash specification measures a different property.']],
       ['99-99-2-permitted-enzymes-and-their-preparations-excluding-those-already-listed-under-proc', ['Preparation and use', 'Obtain the enzyme name, activity, preparation specification and intended food process. Check whether the exact preparation belongs in the processing-aid schedule or the separate category 99.2.']],
       ['100-100-cow-or-buffalo-colostrum-and-colostrum-products', ['Postpartum secretion', 'Record species, postpartum collection window and whether the sample is colostrum or its powder. Obtain explicit support for the veterinary or contaminant article on that matrix.']],
       ['100-100-royal-jelly', ['Bee secretion', 'Obtain the beekeeper feeding record, marketed form and lot trace. Seek a provision covering royal jelly for the target residue. A honey report identifies a different sample.']]
@@ -595,8 +593,7 @@
       form:numeric?join(keys.map(k=>root.PMSVMetalPanelData.rows[k][0])):'',notes:d.reason,source:links('ctr-3',pages.length?pages:[18])};
     if(d.name==='Lead'){
       const route=P.firstSource(id);
-      if((id===P.dextrinId||id===P.misriId)&&route)row.source=route.urls.join(' | ');
-      if(id===P.trehaloseId)row.source=[row.source,sugarSources[id]].join(' | ');
+      if((id===P.dextrinId||id===P.misriId||id===P.trehaloseId)&&route)row.source=route.urls.join(' | ');
       if(id===P.syrupId)row.source=join([row.source,P.syrupIdentity]);
     }
     if(d.identitySources)row.source=[...new Set([...d.identitySources,...row.source.split(' | ')])].join(' | ');
@@ -624,6 +621,7 @@
     else if(profile)row.source=[...new Set([...sources,...(child?[profile.urls[0]]:profile.urls)])].join(' | ');
     const recipeDrink=id===recipe?.drink&&d.key==='saf';
     const dated=edition==='amended'&&!recipeDrink?amendedToxin(id,d,row,state):row;
+    if(id===recipe?.syrup&&d.key==='hcn')dated.article='CTR 2.2.1(2) · serial 2';
     if(recipeDrink)dated.article='CTR 2.2.1(2) · serial 4';
     if(!dated.limit)return dated;
     // Replacement rows explicitly carry a numeric maximum and refer to the finished food.
@@ -797,9 +795,20 @@
       const names=new Set(checks.map(c=>c.v.spec.parameter));
       rows.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>
         (row[2]===areas[0]&&names.has(row[5]))||(row[2]===areas[2]&&row[5]==='Lead')).map(row=>{
-          const conditional=key===P.misriId&&row[2]===areas[2];
-          return [...row,conditional?P.limit('Pb2'):'',conditional?P.firstSource(key).text:''];
+          const conditional=(key===P.misriId||key===P.trehaloseId)&&row[2]===areas[2];
+          return [...row,conditional?P.limit(key===P.misriId?'Pb2':'Pb64'):'',conditional?P.firstSource(key).text:''];
         }));
+    }
+    return rows;
+  }
+  function starchRows(date=root.PMSVVeterinary.reviewDate){
+    const rows=[['Assessment date','Catalogue ID','Product or sample','Source type','Analyte','Published maximum','Unit','Applicable when','Source pages']];
+    if(!metalEdition(date))return rows;
+    const lead=P.firstSource(P.trehaloseId);
+    rows.push([date,P.trehaloseId,'Crystalline trehalose','Indian CTR group entry 2.1.1(2)','Lead','5.0','mg/kg',lead.text,lead.urls.join(' | ')],
+      [date,P.trehaloseId,'Trehalose meeting the JECFA specification','JECFA purity specification','Lead','1','mg/kg','Applies to the grade described in the JECFA monograph. Assess this purity requirement independently of the Indian CTR group entry.',lead.urls.at(-1).split('#')[0]]);
+    for(const r of root.PMSVRecipeSamples.criteriaRows(P.syrupId,date).slice(1)){
+      rows.push([date,P.syrupId,r[3],r[4]==='ingredient'?'Indian CTR named flour':'Indian CTR group entry for products of named flours',r[5],r[6],r[7],r[8],r[9]]);
     }
     return rows;
   }
@@ -813,5 +822,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

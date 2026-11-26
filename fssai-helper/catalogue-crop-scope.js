@@ -366,7 +366,7 @@
     box.querySelector('[data-toxin-outcome]').textContent=confirmed===r.confirmed?r.outcome:labResult(id,a,s).outcome;
     box.querySelector('[data-toxin-links]').innerHTML=labLinks(r);
   }
-  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','crop_trapaSpecies','crop_trapaArticle','crop_saltCereal','crop_afLot','crop_saffLot','crop_milkLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
+  const fields=[...fieldKeys.flatMap(k=>[k,k+'Ref']),'crop_botanicalLot','crop_cyanLot','crop_syrupFlour','crop_syrupArticle','crop_trapaSpecies','crop_trapaArticle','crop_saltCereal','crop_afLot','crop_saffLot','crop_milkLot','toxinActive',...analytes.flatMap(a=>labSuffixes.map(suffix=>labField(a,suffix)))];
   function markup(id,s={}){
     if(!catalogue.has(id))return '';
     const ds=decisions(id,s),seen=new Set(),controlList=[];
@@ -380,6 +380,11 @@
       seen.add(k);
       controlList.push(control(k,d.key==='total'?'Total aflatoxins and B1':d.name,d.choices,s));
       if(recipe?.covered(id,d.key))controlList.push('<label>Lot for '+esc(d.key==='total'?'aflatoxins':d.name)+'<input maxlength="180" data-ws-field="'+k+'Lot" value="'+esc(s[k+'Lot'])+'"></label>');
+    }
+    if(id===recipe?.syrup){
+      const options=recipe.syrupFlours.map(name=>'<option'+(s.crop_syrupFlour===name?' selected':'')+'>'+esc(name)+'</option>').join('');
+      controlList.push('<label>Flour identified on the specification<select data-ws-field="crop_syrupFlour"><option value="">Choose the documented flour</option>'+options+'</select></label>',
+        '<label>Finished syrup classification and production record linking flour, conversion and drying<input maxlength="320" data-ws-field="crop_syrupArticle" value="'+esc(s.crop_syrupArticle||'')+'"></label>');
     }
     if(id===recipe?.singhara){
       const options=['Trapa bispinosa','Trapa quadrispinosa'].map(name=>'<option'+(s.crop_trapaSpecies===name?' selected':'')+'>'+name+'</option>').join('');
@@ -401,11 +406,12 @@
   }
   function recipeLinks(d){return (d.links||[]).map(u=>'<a class="source-ref" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Source · p. '+esc(u.split('#page=')[1])+'</a>').join(' ');}
   function update(node,id,k,s,previous){
-    if(id===recipe?.singhara&&previous!==s[k]){
-      const switchForm=k==='crop_af',switchLot=k==='crop_afLot'&&previous;
-      const fieldsToClear=switchForm||switchLot?['crop_trapaSpecies','crop_trapaArticle']:
-        previous&&['crop_trapaSpecies','crop_afRef'].includes(k)?['crop_trapaArticle']:[];
-      if(switchLot)fieldsToClear.push('crop_afRef');
+    if((id===recipe?.singhara||id===recipe?.syrup)&&previous!==s[k]){
+      const flour=id===recipe.singhara;
+      const key=flour?'crop_af':'crop_cyan',identity=flour?'crop_trapaSpecies':'crop_syrupFlour',article=flour?'crop_trapaArticle':'crop_syrupArticle';
+      const switchLot=k===key+'Lot'&&previous;
+      const fieldsToClear=k===key||switchLot?[identity,article]:previous&&[identity,key+'Ref'].includes(k)?[article]:[];
+      if(switchLot)fieldsToClear.push(key+'Ref');
       for(const attr of fieldsToClear){
         s[attr]='';
         const input=node.querySelector('[data-ws-field="'+attr+'"]');
@@ -416,7 +422,7 @@
       for(const a of analytes){
         if(!recipe.covered(id,a))continue;
         const key=field(a);
-        if(![key,key+'Lot',key+'Ref','crop_trapaSpecies','crop_trapaArticle','crop_saltCereal','ayRecipe','ayVariant','ayIngredient','ayIngredientRef','vetDate','crop_dec','crop_decRef'].includes(k))continue;
+        if(![key,key+'Lot',key+'Ref','crop_syrupFlour','crop_syrupArticle','crop_trapaSpecies','crop_trapaArticle','crop_saltCereal','ayRecipe','ayVariant','ayIngredient','ayIngredientRef','vetDate','crop_dec','crop_decRef'].includes(k))continue;
         if(k===key){
           s[key+'Lot']='';s[key+'Ref']='';
           if(id===recipe.salt){

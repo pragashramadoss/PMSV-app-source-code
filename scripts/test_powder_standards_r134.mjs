@@ -6,7 +6,7 @@ for(const [,name] of fs.readFileSync(new URL('index.html',dir),'utf8').matchAll(
   vm.runInContext(fs.readFileSync(new URL(name,dir),'utf8'),ctx);
 }
 const {PMSVPowderStandards:D,PMSVTestingPlan:P,PMSVCatalogueWorksheets:W,PMSV_REVIEW_REGISTER:R}=ctx;
-assert(W.available);assert.equal(R.powderReview.rows,39);assert.equal(R.firstSourceReview.pending,15);
+assert(W.available);assert.equal(R.powderReview.rows,39);assert.equal(R.firstSourceReview.pending,13);
 let count=0;
 for(const [id,product] of D.products){
   const criteria=W.enabledCriteria(id);
@@ -39,6 +39,6 @@ for(const name of ['Protein on dry basis','Uric acid']){
  const row=P.powderRows(D.singhara).find(r=>r[5]===name);assert.equal(row[7],'');assert(row[14].includes('#page=12')&&row[14].includes('#page=35'));
  assert(!W.enabledCriteria(D.singhara).some(x=>x.v.spec.parameter===name));
 }
-const queue=W.pendingSourceRows().slice(1);assert.equal(queue.length,15);assert.equal(queue.filter(r=>D.products.has(r[0])).length,3);
+const queue=W.pendingSourceRows().slice(1);assert.equal(queue.length,13);assert.equal(queue.filter(r=>D.products.has(r[0])).length,3);
 assert(P.exportRows(D.singhara,'2026-11-24').filter(r=>r[2]===P.areas[3]&&/aflatoxin/i.test(r[5])).every(r=>r[7]===''));
 console.log('Verified 26 measurements, six scoped worksheets, 39 exported rows, held protein and uric acid readings and the existing pending-source count.');

@@ -23,11 +23,13 @@
   const dextrinRule='The starch-conversion entry sets a lead maximum of 5.0 mg/kg only when sulphated ash exceeds 1.0%. Establish the purified ingredient identity under FPSFA 2.11.8 and the sulphated ash of the sampled lot.';
   const syrupRule='FPSFA 2.8.7 allows at most 1.0% sulphated ash by weight in dried glucose syrup. A conforming lot cannot meet the above-1.0% starch-conversion condition. An above-limit ash result requires a separate product-standard review. Confirm the precise lead article independently.';
   const misriRule='For finished Misri documented as sugar under the CTR sugar entry, lead is limited to 5.0 mg/kg by mass when the same lot has more than 1.0% sulphated ash. Misri has a separate total-ash maximum of 0.4%. Record a sulphated-ash determination and the product classification before applying the lead row.';
+  const trehaloseNote='Confirm crystalline trehalose made by conversion of starch on the manufacturer’s specification. The group lead maximum of 5.0 mg/kg applies only above 1.0% sulphated ash on the same lot. FPSFA 3.3.4 sets a separate total-ash criterion. JECFA specifies lead at 1 mg/kg for its trehalose grade. Assess that purity specification separately.';
+  const trehaloseMonograph='https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-472.pdf#page=1';
   const ashProfiles={
+    [trehaloseId]:{title:'Lead in starch-derived trehalose',form:'starchTrehalose',sample:'Crystalline trehalose documented as a starch conversion product',rule:trehaloseNote,key:'Pb64',page:20,identity:E.documents['food-13'].url+'#page=39',article:'FPSFA 3.3.4',process:trehaloseMonograph},
     [dextrinId]:{title:'Lead in dietary fibre (dextrin)',form:'ingredient',sample:'Purified dextrin ingredient under FPSFA 2.11.8',rule:dextrinRule,key:'Pb64',page:20,identity:dextrinIdentity,article:'FPSFA 2.11.8'},
     [misriId]:{title:'Lead in finished Misri',form:'misri',sample:'Finished Misri documented as sugar under the CTR entry',rule:misriRule,key:'Pb2',page:18,identity:E.documents['baser02-1'].url+'#page=97',article:'FPSFA 2.8.2'}
   };
-  const trehaloseNote='FPSFA 3.3.4 specifies loss on drying and total ash for crystalline trehalose as supplied. The total-ash result cannot establish sulphated ash. Verify the applicable CTR article and grade for the separate lead assessment.';
   const generalAdditives='99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-';
   const nutraAdditives='99-99-1-additives-va-vf-of-nutraceutical-regulations-excluding-those-already-standardised';
   const additiveGroups={
@@ -127,7 +129,7 @@
       return {status:'CONDITIONAL_METAL_SOURCE_MATCH',text:group.text,urls:[...group.sources,...pages.map(page=>source+'#page='+page)]};
     }
     const ash=ashProfiles[id];
-    return ash?{status:'CONDITIONAL_METAL_SOURCE_MATCH',text:ash.rule,urls:[ash.identity,source+'#page='+ash.page]}:null;
+    return ash?{status:'CONDITIONAL_METAL_SOURCE_MATCH',text:ash.rule,urls:[ash.identity,source+'#page='+ash.page,...(ash.process?[ash.process]:[])]}:null;
   }
   function ashLead(id,s){
     const profile=ashProfiles[id];
@@ -207,7 +209,6 @@
     }
     if(guidedAdditive(id,m,s))return {...additiveDecision(id,m,s),identitySources:additiveGroup(id).sources};
     if(ashProfiles[id]&&m==='Pb')return ashLead(id,s);
-    if(id===trehaloseId&&m==='Pb')return decision('check',profile(id,m).keys.filter(k=>k!=='Pb2'&&k!=='Pb64'),trehaloseNote);
     if(id===syrupId&&m==='Pb')return decision('check',profile(id,m).keys,syrupRule);
     if(groups.fpc.has(id)){
       if(s.panelFpc==='no'&&evidence(s,'panelFpc'))return decision('check',[], 'Identify the applicable product standard and review its catalogue worksheet. The recorded product is outside the FPC 18 direction.',evidence(s,'panelFpc'));
@@ -570,8 +571,8 @@
       '<label>Product specification and classification reference'+input('panelDextrinSpec',s)+'</label><label>Sample or lot identifier on the ash report'+input('panelDextrinLot',s)+'</label>'+
       '<label>Measured sulphated ash (% by weight)'+input('panelDextrinAsh',s)+'</label><label>Ash report and method reference'+input('panelDextrinReport',s)+'</label>'+
       '<label class="ws-check"><input type="checkbox" data-ws-field="panelDextrinBasis"'+(s.panelDextrinBasis==='yes'?' checked':'')+'> The report measures sulphated ash on the applicable basis for this lot</label>'+
-      '<p>'+ref(ash.identity,ash.article)+' '+ref(source+'#page='+ash.page,'Lead · Gazette p. '+ash.page)+'</p>'+
-      (id===dextrinId?'<button type="button" data-dextrin-export>Download dextrin lead check</button>':'<button type="button" data-sugar-export>Download Misri checks</button>')+'</fieldset>';
+      '<p>'+ref(ash.identity,ash.article)+' '+(ash.process?ref(ash.process,'JECFA trehalose specification')+' ':'')+ref(source+'#page='+ash.page,'Lead · Gazette p. '+ash.page)+'</p>'+
+      (id===dextrinId?'<button type="button" data-dextrin-export>Download dextrin lead check</button>':'<button type="button" data-sugar-export>Download '+(id===trehaloseId?'trehalose':'Misri')+' checks</button>')+'</fieldset>';
     if(groups.fpc.has(id))extra+='<label>FPC 18 eligibility'+pick('panelFpc',[['yes','Eligible finished FPC 18 sweet or snack; existing categories 01–14 checked'],['no','An existing product standard or a different category applies']],s)+'</label>'+supporting('panelFpc',s)+'<p>'+ref(direction+'#page=1','FPC 18 direction · paragraphs 3 and 4')+'</p>';
     if(groups.unidentified.has(id))extra+='<label>Exact supplied food-grade material and manufacturing function'+input('panelIdentity',s)+'</label>'+supporting('panelIdentity',s);
     const tin=profile(id,'Sn');
