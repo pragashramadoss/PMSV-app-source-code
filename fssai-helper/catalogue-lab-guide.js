@@ -59,13 +59,18 @@
   method(arrow,'Starch declared as Maranta arundinacea','Microscopic appearance of starch granules','03.024:2023','PDF pp. 75–77',cerealManual+'#page=77','Use the Maranta illustration as an identity reference. The method scope names cereal starches. Document suitability for this sample before issuing a result. The illustration does not establish Curcuma identity.');
   profile(egg,'2.5.3(3)','Dried hen egg white, yolk or whole egg','Use the powder table for the declared form. The adjacent beta-hydroxybutyric, lactic and succinic acid maxima apply to frozen or liquid egg products. Do not enter them as powder thresholds.',root.PMSVVeterinary.animalGazette+'#page=37');
   profile(enzyme,'FoSCoS 99.2 / 99.4','Enzyme preparation as supplied','Record the enzyme identity, activity and units, source, formulation and intended use. Match the named preparation to its permission before assigning a purity or activity result. The lysozyme and chymosin examples have separate uses.','https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf#page=9');
-  profile(dairy,'2.1.23','Cow or buffalo colostrum, or its powder','Select the liquid or powder standard. The four listed dairy methods cover colostrum. For a powder result, obtain the laboratory method and evidence that it covers the dried matrix. Total protein and IgG are separate determinations.',dairyManual+'#page=326');
+  profile(dairy,'2.1.23','Cow or buffalo colostrum, or its powder','Select the liquid or powder standard. The four FSSAI dairy methods listed here cover liquid colostrum. Two AOAC IgG methods cover cow colostrum powder. For buffalo or mixed-species powder, obtain evidence that the laboratory method covers that species and matrix. Total protein and IgG are separate determinations.',dairyManual+'#page=326');
   for(const [code,page,parameter,note] of [
     ['121',326,'Sample preparation','Record sample identity and physical form before preparing the liquid.'],
     ['122',327,'Moisture','Report the result for the liquid sample as supplied.'],
     ['123',329,'Fat','Use the gravimetric colostrum method.'],
     ['124',331,'Total milk protein','The nitrogen-based total protein result cannot establish immunoglobulin G or lactoferrin.']
   ])method(dairy,'Liquid colostrum',parameter,'01.'+code+':2022','PDF p. '+page,dairyManual+'#page='+page,note);
+  const affinityStudy='https://pubmed.ncbi.nlm.nih.gov/20480910/';
+  const opticalStudy='https://pubmed.ncbi.nlm.nih.gov/24282942/';
+  const isIgGSource=url=>url===affinityStudy||url===opticalStudy;
+  method(dairy,'Cow colostrum powder','Immunoglobulin G (IgG)','AOAC 2010.01','Collaborative study, PMID 20480910',affinityStudy,'Protein G affinity liquid chromatography. Report IgG as % by mass of the powder as supplied. Confirm the species and laboratory scope.');
+  method(dairy,'Cow colostrum powder','Immunoglobulin G (IgG)','AOAC 2012.26','Collaborative study, PMID 24282942',opticalStudy,'Direct optical immunoassay using surface plasmon resonance. Request an IgG-specific result on the powder as supplied. Lactoferrin requires its own determination.');
   profile(jelly,'2.8.3(3)','Raw royal jelly, Type 1 or Type 2','Keep the feeding record with the sample. Match the result to the declared type. A moisture measurement can be reported independently of the ambiguity in the Gazette heading. Furosine is an optional freshness indicator.',source('food-35',25));
   for(const [code,locator,parameter,note] of [
     ['028','64–65','Moisture','Reference vacuum-oven method. Record the measured value for interpretation under the product table.'],
@@ -108,6 +113,45 @@
   ]);
   const isControlSource=url=>[cocoaOta,cocoaCd,coffeeOta].includes(url);
   const referenceArea='Laboratory methods and prevention guidance';
+  // Read the numeric thresholds from the same product-standard records as the testing plan.
+  const coconutCriteria=root.PMSVPowderStandards.products.get(coconut).criteria.map(r=>r.v.spec);
+  const powderForm=root.PMSVVariantComposition.profileFor(dairy).forms.find(f=>f.name==='Colostrum Powder');
+  const dryBasis=new Map();
+  function defineBasis(id,form,criteria,parameter,url){
+    const target=criteria.find(r=>r.parameter===parameter),moisture=criteria.find(r=>r.parameter==='Moisture');
+    dryBasis.set(id,{form,parameter:target.parameter,limit:target.value,minimum:target.operator==='>=',moistureMax:moisture.value,url});
+  }
+  defineBasis(coconut,'Coconut milk powder',coconutCriteria,'Fat on dry basis',profiles.get(coconut).reference);
+  defineBasis(dairy,powderForm.name,powderForm.rows,'Total ash',powderForm.rows.find(r=>r.parameter==='Total ash').source);
+  const basisFields=['dryLot','dryReport','dryBasis','dryValue','dryMoisture'];
+  const basisLabels={asSold:'As supplied',dry:'Dry basis'};
+  const basisNote='For an as-supplied result, calculate 100 × reported percentage ÷ (100 − moisture percentage) using moisture from the same powder sample. Compare a dry-basis report directly. Assess moisture separately.';
+  // Scaled integers preserve the inclusive legal boundary even if the displayed result rounds to it.
+  const scale=1000000n,whole=100n*scale;
+  function scaledPercent(value){
+    if(typeof value!=='string'||!/^\d{1,3}(?:\.\d{1,6})?$/.test(value))return null;
+    const [i,f='']=value.split('.');
+    const n=BigInt(i)*scale+BigInt(f.padEnd(6,'0'));
+    return n<=whole?n:null;
+  }
+  function basisResult(id,s={}){
+    const rule=dryBasis.get(id);
+    if(!rule)return '';
+    if(id===dairy&&s.compVariant!==powderForm.name)return 'Select Colostrum Powder under Product variant to use the ash check.';
+    if(!s.dryLot?.trim()||!s.dryReport?.trim())return 'Enter the powder sample or lot and laboratory report reference.';
+    const m=scaledPercent(s.dryMoisture),v=scaledPercent(s.dryValue);
+    const water=m!==null&&m<whole?'Moisture '+s.dryMoisture+'% is '+(m<=scaledPercent(String(rule.moistureMax))?'at or below':'above')+' the '+rule.moistureMax+'% maximum.':'';
+    if(!Object.hasOwn(basisLabels,s.dryBasis)||v===null)return [water,'Select the reporting basis and enter a numerical result from 0 to 100% (up to six decimal places).'].filter(Boolean).join(' ');
+    if((s.dryBasis==='asSold'||s.dryMoisture)&&(m===null||m===whole))return 'Enter same-sample moisture from 0 to below 100% (up to six decimal places).';
+    if(s.dryBasis==='asSold'&&v>whole-m)return water+' The reported constituent exceeds the dry solids in this sample. Check the units and reporting basis.';
+    const numerator=s.dryBasis==='asSold'?v*100n:v;
+    const denominator=s.dryBasis==='asSold'?whole-m:scale;
+    const boundary=BigInt(rule.limit)*denominator;
+    const within=rule.minimum?numerator>=boundary:numerator<=boundary;
+    const percent=(Number(numerator)/Number(denominator)).toLocaleString('en-US',{maximumFractionDigits:6,useGrouping:false});
+    const position=rule.minimum?(within?'at or above':'below'):(within?'at or below':'above');
+    return rule.parameter+' is '+percent+'% on dry basis (display rounded), '+position+' the '+rule.limit+'% '+(rule.minimum?'minimum':'maximum')+'. '+(water||'Moisture was not entered.');
+  }
   function referenceEntries(id,state){
     const entries=[];
     function add(form,parameter,article,status,source,locator,notes){
@@ -115,7 +159,21 @@
     }
     for(const m of profiles.get(id)?.methods||[]){
       if(state?.coffeeForm&&m.variants&&!m.variants.includes(state.coffeeForm))continue;
+      if(id===dairy&&state?.compVariant){
+        const powder=state.compVariant===powderForm.name;
+        if(powder!==isIgGSource(m.url))continue;
+        if(powder&&['buffalo','mixed'].includes(state.drySpecies))continue;
+      }
       add(m.form,m.parameter,m.code,'Analytical reference',m.url,m.locator,m.note);
+    }
+    const rule=dryBasis.get(id);
+    if(rule&&!(id===dairy&&state?.compVariant&&state.compVariant!==powderForm.name)){
+      const report=state&&basisFields.some(key=>state[key])?[
+        'Sample '+(state.dryLot||'pending'), 'report '+(state.dryReport||'pending'),
+        'reported '+(state.dryValue||'pending')+'% ('+(basisLabels[state.dryBasis]||'basis pending')+')',
+        'moisture '+(state.dryMoisture?state.dryMoisture+'%':'pending'),basisResult(id,state)
+      ].join(' · '):'';
+      add(rule.form,rule.parameter,profiles.get(id).article,'Dry-basis calculation',rule.url,'Composition table', [basisNote,id===dairy&&state?.drySpecies?'Declared species: '+state.drySpecies+'. '+(state.drySpecies==='cow'?'':'Document IgG method applicability for this species and sample before using a result.'):'',report].filter(Boolean).join(' '));
     }
     for(const ref of recognition(id)){
       for(const parameter of recognitionAnalytes)add(ref.form,parameter,ref.article,'Laboratory recognition guidance',ref.url,'p. '+ref.page,guidanceNote);
@@ -171,5 +229,5 @@
     return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source'],
       ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source])];
   }
-  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
+  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,dairy,dryBasis,basisFields,basisLabels,basisResult,isIgGSource,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
 })(globalThis);

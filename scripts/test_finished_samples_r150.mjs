@@ -14,7 +14,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets;
 assert(ws.available);
 assert.equal(g.profiles.size,reg.productProfiles);
 assert.equal(Array.from(g.profiles.values()).flatMap(p=>p.methods).length,reg.methodReferences);
-for(const [date,count] of [['2026-11-26',199],['2026-12-01',276]]){
+for(const [date,count] of [['2026-11-26',203],['2026-12-01',280]]){
   const summary=ws.sourceSummaryRows(date).slice(1);
   assert.equal(summary.length,533);
   assert.equal(new Set(summary.map(r=>r[0])).size,533);
@@ -36,14 +36,14 @@ for(const [date,count] of [['2026-11-26',199],['2026-12-01',276]]){
   assert(guidance.every(r=>!r[7]&&!r[8]&&g.isRecognitionSource(r[14])));
   assert(!g.isRecognitionSource('https://example.com/#page=32'));
   const methods=rows.filter(r=>r[4]==='Analytical reference');
-  assert.equal(methods.length,32);
+  assert.equal(methods.length,34);
   const controls=rows.filter(r=>r[4]==='Codex prevention guidance');
   assert.equal(controls.length,reg.preventionReferences);
   assert(controls.every(r=>r.slice(7,13).every(v=>v==='')&&g.isControlSource(r[14])));
   assert(!g.isControlSource(controls[0][14]+'&other=1'));
   for(const id of new Set(rows.map(r=>r[0]))){
     const exported=plan.exportRows(id,date).slice(1).filter(r=>r[2]===g.referenceArea);
-    const refs=rows.filter(r=>r[0]===id&&['Analytical reference','Codex prevention guidance','Laboratory recognition guidance'].includes(r[4]));
+    const refs=rows.filter(r=>r[0]===id&&['Analytical reference','Codex prevention guidance','Laboratory recognition guidance','Dry-basis calculation'].includes(r[4]));
     assert.equal(exported.length,refs.length);
     assert(exported.every(r=>r[7]===''&&r[8]===''&&refs.some(v=>v[3]===r[4]&&v[5]===r[5]&&v[6]===r[3]&&v[14]===r[14]&&r[9].includes(v[15]))));
   }
@@ -72,3 +72,29 @@ for(const bad of ['', '-1','1.2','1e3','10000000000']){
 }
 assert(g.countResults({...s,beanTotal:'0'}).every(r=>!r.percent));
 assert.equal(g.countRows(s)[1][0],'C-150');
+
+// Two composition checks share the published limits but use the laboratory's actual reporting basis.
+const coconut='04-04-1-coconut-milk-powder',dairy=g.dairy;
+const sample={dryLot:'Lot152',dryReport:'Report152',dryBasis:'asSold',dryValue:'58.8',dryMoisture:'2.0'};
+assert.equal(g.dryBasis.size,reg.dryBasisChecks);
+assert.match(g.basisResult(coconut,sample),/60% on dry basis .*at or above the 60% minimum/);
+assert.match(g.basisResult(coconut,{...sample,dryValue:'58.799999'}),/below the 60% minimum/);
+assert.match(g.basisResult(coconut,{...sample,dryBasis:'dry',dryValue:'60',dryMoisture:'3'}),/at or above the 60% minimum.*above the 2.5% maximum/);
+assert.match(g.basisResult(coconut,{...sample,dryBasis:'dry',dryValue:'59',dryMoisture:''}),/below the 60% minimum.*Moisture was not entered/);
+assert.match(g.basisResult(coconut,{...sample,dryValue:'99'}),/exceeds the dry solids/);
+for(const value of ['100','-1','','1e2','<1','1.0000001'])assert.doesNotMatch(g.basisResult(coconut,{...sample,dryMoisture:value}),/on dry basis \(display/);
+assert.match(g.basisResult(coconut,{...sample,dryReport:''}),/report reference/);
+const ash={...sample,compVariant:'Colostrum Powder',dryValue:'8.64',dryMoisture:'4'};
+assert.match(g.basisResult(dairy,ash),/9% on dry basis .*at or below the 9% maximum/);
+assert.match(g.basisResult(dairy,{...ash,dryValue:'8.640001'}),/above the 9% maximum/);
+assert.match(g.basisResult(dairy,{...ash,compVariant:'Colostrum'}),/Select Colostrum Powder/);
+const powderRefs=g.referenceEntries(dairy,ash).filter(r=>r.status==='Analytical reference');
+assert.equal(powderRefs.length,2);
+assert(powderRefs.every(r=>r.form==='Cow colostrum powder'&&g.isIgGSource(r.source)));
+assert(!g.isIgGSource(powderRefs[0].source+'other'));
+assert(!g.referenceEntries(dairy,{compVariant:'Colostrum'}).some(r=>g.isIgGSource(r.source)||r.status==='Dry-basis calculation'));
+const row=(id,state)=>plan.exportRows(id,'2026-11-26',false,state).find(r=>r[6]==='Dry-basis calculation');
+assert.match(row(dairy,ash)[9],/Lot152.*Report152.*8.64%.*9% on dry basis/);
+assert(!row(dairy)[9].includes('Lot152'));
+
+for(const drySpecies of ['buffalo','mixed'])assert(!g.referenceEntries(dairy,{...ash,drySpecies}).some(r=>g.isIgGSource(r.source)));
