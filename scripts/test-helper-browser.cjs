@@ -1244,7 +1244,7 @@ async function testRecipeSamples(page,open){
  for(const date of ['2026-11-30','2026-12-01']){
   await page.locator('.vet-scope [data-ws-field="vetDate"]').fill(date);
   const download=page.waitForEvent('download');await page.locator('[data-recipe-samples-export]').click();const file=await download;
-  assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+drink+'-Sample-Criteria-'+date+'-R153.csv');
+  assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+drink+'-Sample-Criteria-'+date+'-R154.csv');
   const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('buffalo milk')&&csv.includes('Saffrole'));
   assert.equal(csv.includes('"Saffrole","10","ppm"'),date==='2026-11-30');
  }
@@ -1262,14 +1262,14 @@ async function testCasingAndEgg(page,open){
  assert((await out.innerText()).includes('At or below'));
  await open(egg);assert((await page.locator('[data-animal-review]').innerText()).includes('47.1%'));
  const download=page.waitForEvent('download');await page.locator('[data-animal-export]').click();const file=await download;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+egg+'-Sample-Criteria-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+egg+'-Sample-Criteria-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('47.1%')&&csv.includes('incoming whole hen egg')&&csv.includes('≥ 4.2'));
 }
 async function testFunctionalSpice(page,open){
  const id='99-99-7-mixtures-preparations-premix-of-functional-ingredients';
  await open(id);
  const download=page.waitForEvent('download');await page.locator('[data-botanical-export]').click();
- const file=await download;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Functional-Spice-Criteria-R153.csv');
+ const file=await download;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Functional-Spice-Criteria-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Curcuma longa')&&csv.includes('incoming ground spice')&&!csv.includes('suppliedPowder'));
  const box=page.locator('.crop-scope');await box.locator(':scope > summary').click();await box.locator('.crop-inputs > summary').click();
  const field=k=>box.locator('[data-ws-field="'+k+'"]'),status=box.locator('[data-crop-result="total"]');
@@ -1286,7 +1286,7 @@ async function testAdditiveMetalPlan(page,open){
  const id='99-99-1-additives-permitted-under-appendix-a-of-fss-fps-and-fa-regulations-2011-and-other-';
  await open(id);
  const dl=page.waitForEvent('download');await page.locator('[data-additive-metal-export]').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Additive-Metals-R153.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Additive-Metals-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('PGPR')&&csv.includes('Dry matter')&&!csv.includes('Acetylated distarch'));
  const box=page.locator('.metal-scope');await box.locator(':scope > summary').click();
  const field=k=>box.locator('[data-ws-field="'+k+'"]');
@@ -1311,7 +1311,7 @@ async function testAyurvedaPlan(page,open){
  await field('ayBasis').check();
  const outcome=box.locator('[data-ayurveda-outcome]');assert((await outcome.innerText()).includes('At or below'));
  const dl=page.waitForEvent('download');await box.locator('[data-ayurveda-export]').click();const f=await dl;
- assert.equal(f.suggestedFilename(),'PMSV-FSSAI-'+id+'-Schedule-D-R153.csv');
+ assert.equal(f.suggestedFilename(),'PMSV-FSSAI-'+id+'-Schedule-D-R154.csv');
  const csv=fs.readFileSync(await f.path(),'utf8');assert(csv.includes('Report K2')&&csv.includes('Recipe includes black pepper'));
  await field('ayUnit').selectOption('mg/L');assert(!(await field('ayBasis').isChecked()));
  await field('ayBasis').check();assert((await outcome.innerText()).includes('compatible'));
@@ -1322,7 +1322,7 @@ async function testChildSupplement(page,open){
  const dl=page.waitForEvent('download');
  await page.locator('[data-child-crop-export]').click();
  const file=await dl;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Child-Supplement-Criteria-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Child-Supplement-Criteria-R154.csv');
  assert.equal(fs.readFileSync(await file.path(),'utf8').trim().split(/\r?\n/).length,16);
  const box=page.locator('.crop-scope');
  await box.locator(':scope > summary').click();
@@ -1347,7 +1347,7 @@ async function testSpicedFood(page,open){
  const dl=page.waitForEvent('download');
  await page.locator('[data-spice-food-export]').click();
  const file=await dl;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Aflatoxin-Criteria-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Aflatoxin-Criteria-R154.csv');
  const report=fs.readFileSync(await file.path(),'utf8');
  assert(report.includes('spiced gravy')&&report.includes('Incoming spice')&&!report.includes('05-05-1-dry-mixtures'));
  const box=page.locator('.crop-scope');
@@ -1374,7 +1374,7 @@ async function testSaltAndIngredientRoutes(page,open){
  await field('crop_saltCereal').fill('Wheat');
  assert((await result.innerText()).includes('20 µg/kg'));
  const d=page.waitForEvent('download');await page.locator('[data-route-export]').click();const f=await d;
- assert.equal(f.suggestedFilename(),'PMSV-FSSAI-'+salt+'-Ingredient-Checks-2026-11-26-R153.csv');
+ assert.equal(f.suggestedFilename(),'PMSV-FSSAI-'+salt+'-Ingredient-Checks-2026-11-26-R154.csv');
  const csv=fs.readFileSync(await f.path(),'utf8');assert(csv.includes('Approved formula 138')&&csv.includes('Final lot 138'));
  await field('crop_af').selectOption('incomingFlour');assert.equal(await field('crop_saltCereal').inputValue(),'');assert.equal(await field('crop_afLot').inputValue(),'');
  await field('crop_saltCereal').fill('Rice');await field('crop_afRef').fill('Intake 138');await field('crop_afLot').fill('Flour 138');assert((await result.innerText()).includes('15 µg/kg'));
@@ -1391,7 +1391,7 @@ async function testSaltAndIngredientRoutes(page,open){
  await poly('panelPolyolFunction').selectOption('sweetener');assert.equal(await poly('panelAdditiveAsBasis').inputValue(),'');
  assert(!(await panel.locator('[data-panel-metal="As"]').innerText()).includes('Lot M-143'));
  const refDownload=page.waitForEvent('download');await page.locator('[data-polyol-export]').click();const polyolFile=await refDownload;
- assert.equal(polyolFile.suggestedFilename(),'PMSV-FSSAI-Polyol-Metal-Checks-R153.csv');
+ assert.equal(polyolFile.suggestedFilename(),'PMSV-FSSAI-Polyol-Metal-Checks-R154.csv');
  assert.equal(fs.readFileSync(await polyolFile.path(),'utf8').trim().split(/\r?\n/).length,10);
  await page.getByRole('button',{name:'Open Sorbitol worksheet',exact:true}).click();
  await page.locator('[data-ws-id="'+ids.sorbitol+'"] .ws-inputs').waitFor();
@@ -1402,7 +1402,7 @@ async function testSaltAndIngredientRoutes(page,open){
   await assessment.fill(date);
   const ready=page.waitForEvent('download');
   await page.locator('#downloadIngredientRoutes').click();
-  const file=await ready,expected='PMSV-FSSAI-Salt-Substitute-and-Ingredient-Checks'+(date==='2026-11-26'?'':'-'+date)+'-R153.csv';
+  const file=await ready,expected='PMSV-FSSAI-Salt-Substitute-and-Ingredient-Checks'+(date==='2026-11-26'?'':'-'+date)+'-R154.csv';
   assert.equal(file.suggestedFilename(),expected);
   const exported=fs.readFileSync(await file.path(),'utf8');
   assert(exported.includes(ids.salt)&&exported.includes(ids.sorbitol)&&exported.includes(ids.enzyme)&&exported.includes('INS 503(i)'));
@@ -1430,7 +1430,7 @@ async function testImportAndSampleForms(page,open){
  assert.match(await page.locator('[data-hg-value]').textContent(),/1.0/);
  const dl=page.waitForEvent('download');await metals.locator('[data-sample-review-export]').click();
  const file=await dl;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-99-99-1-sajji-khar-Sample-Checks-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-99-99-1-sajji-khar-Sample-Checks-R154.csv');
  const contents=fs.readFileSync(await file.path(),'utf8');
  assert(contents.includes('Report 137')&&contents.includes('Bill 137')&&contents.includes('cs_ins_26_2021'));
  await metals.locator('[data-plan-vet-date]').fill('2026-12-01');
@@ -1486,7 +1486,7 @@ async function testIngredientChecks(page,open){
  await f('panelLabBasis').check();
  assert((await scope.locator('[data-panel-lab]').innerText()).includes('Within the cited Lead'));
  const download=page.waitForEvent('download');await page.locator('[data-ingredient-export]').click();
- const file=await download;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+leaf+'-Ingredient-Checks-R153.csv');
+ const file=await download;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+leaf+'-Ingredient-Checks-R154.csv');
  assert(fs.readFileSync(await file.path(),'utf8').includes('Lab 136'));
  await f('panelSilverLot').fill('Substitute lot');
  assert(!(await f('panelSilverDry').isChecked()));assert(!(await f('panelLabBasis').isChecked()));
@@ -1518,7 +1518,7 @@ async function testCoffeeBlend(page,open){
  await field('unitConfirmed').check();
  assert((await panel.locator('[data-ws-outcome]').innerText()).includes('Within the cited'));
  const dl=page.waitForEvent('download');await page.locator('[data-coffee-export]').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Coffee-Checks-R153.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Coffee-Checks-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');
  assert(['70.25 : 29.75','Dry-basis report 22','Ingredient sample only','Coffee lot 17'].every(t=>csv.includes(t)));
  assert(!csv.includes('Decaffeinated instant blend'));
@@ -1539,7 +1539,7 @@ async function testPowderStandards(page,open){
   const pending=page.waitForEvent('download');
   await page.locator('[data-powder-export]').click();
   const file=await pending;
-  assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Powder-Checks-R153.csv');
+  assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Powder-Checks-R154.csv');
   return fs.readFileSync(await file.path(),'utf8');
  };
  await open(arrow);
@@ -1592,7 +1592,7 @@ async function testSweetenerSamples(page,open){
  await f('panelDextrinAsh').fill('1.01');await f('panelDextrinBasis').check();
  assert((await lead.innerText()).includes('Lot M17'));
  const dl=page.waitForEvent('download');await metal.locator('[data-sugar-export]').click();const file=await dl;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Sweetener-Checks-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-'+id+'-Sweetener-Checks-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Sulphated ash method M17')&&csv.includes('Published conditional lead maximum'));
 }
 async function testDextrinLead(page,open){
@@ -1615,7 +1615,7 @@ async function testDextrinLead(page,open){
  const dl=page.waitForEvent('download');
  await box.locator('[data-dextrin-export]').click();
  const file=await dl;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Dextrin-Lead-Check-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Dextrin-Lead-Check-R154.csv');
  assert(fs.readFileSync(await file.path(),'utf8').includes('DX ash report and method'));
  await field('panelDextrinLot').fill('DX-25');
  assert.equal(await field('panelDextrinAsh').inputValue(),'');
@@ -1630,15 +1630,58 @@ async function testCocoaMixWorksheet(page,open){
  await f('mixCocoa').fill('25');await f('mixButter').fill('10');
  assert((await box.locator('[data-mix-outcome]').innerText()).includes('powder matches'));
  const download=page.waitForEvent('download');await box.locator('[data-mix-export]').click();const file=await download;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Cocoa-Mix-Criteria-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Cocoa-Mix-Criteria-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Approved cocoa recipe 124')&&csv.includes('Moisture'));
  await f('mixName').selectOption('chocolate');assert(await f('mixButter').isHidden());
  await f('mixCocoa').fill('32');await f('mixDryCocoa').fill('28');assert((await box.locator('[data-mix-outcome]').innerText()).includes('disagree'));
  await f('mixRecipe').fill('Replacement recipe');assert.equal(await f('mixCocoa').inputValue(),'');assert.equal(await f('mixDryCocoa').inputValue(),'');
  const waiting=page.waitForEvent('download');await page.locator('#downloadPendingSources').click();const queue=await waiting;
- assert.equal(queue.suggestedFilename(),'PMSV-FSSAI-Pending-CTR-Sources-R153.csv');
+ assert.equal(queue.suggestedFilename(),'PMSV-FSSAI-Pending-CTR-Sources-R154.csv');
  const text=fs.readFileSync(await queue.path(),'utf8');assert(!text.includes('purified-vending-water')&&text.includes('coffee-chicory-mixture')&&!text.includes('11-11-1-edible-lactose'));
 }
+async function testMelamineReports(page,open){
+ const id='13-13-1-infant-formula';
+ await open(id);
+ const panel=page.locator('.broad-ctr');
+ await panel.locator('summary').click();
+ const field=k=>panel.locator('[data-ws-field="'+k+'"]');
+ const assessment=panel.locator('[data-melamine-assessment]');
+ await field('broadForm').selectOption('liquid');
+ await field('broadRef').fill('Ready-to-feed label');
+ await field('melLot').fill('Lot-154-QA');
+ await field('melReport').fill('Report-154-QA');
+ await field('melMethod').fill('Validated method for ready-to-feed sample');
+ await field('melUnit').selectOption('mg/kg');
+ async function check(reading,pattern){
+   await field('melReading').fill(reading);
+   await field('melBasis').check();
+   assert.match(await assessment.innerText(),pattern);
+ }
+ await check('<0.25',/Inconclusive.*bound exceeds/);
+ await check('<0.10',/upper bound is within/);
+ await check('ND',/Inconclusive.*ND/);
+ await check('≥0.15',/Inconclusive/);
+ await check('>0.15',/Above the maximum/);
+ await check('0.150000000000000001',/above the maximum/);
+ await field('melUnit').selectOption('mg/L');
+ assert.match(await assessment.innerText(),/Mass-basis result needed/);
+ await field('melUnit').selectOption('µg/kg');
+ await check('150',/within the maximum.*0.15 mg\/kg/);
+ const download=page.waitForEvent('download');await panel.locator('[data-melamine-export]').click();
+ const single=await download, privateCsv=fs.readFileSync(await single.path(),'utf8');
+ assert(privateCsv.includes('Report-154-QA')&&privateCsv.includes('µg/kg')&&privateCsv.includes('within the maximum'));
+ const saved=await page.evaluate(id=>PMSVCatalogueWorksheets.productPlan(id).find(r=>r[5]==='Melamine'),id);
+ assert(saved.includes('0.15')&&saved.some(v=>String(v).includes('Report-154-QA')));
+ const bulk=page.waitForEvent('download');await page.locator('#downloadMelamineReports').click();
+ const published=await bulk,all=fs.readFileSync(await published.path(),'utf8');
+ assert.equal(all.trim().split('\r\n').length,534);assert(!all.includes('Report-154-QA'));
+ await field('melLot').fill('New lot');assert.equal(await field('melReading').inputValue(),'');assert.equal(await field('melReport').inputValue(),'');
+ await field('broadForm').selectOption('powder');
+ assert.match(await panel.locator('[data-broad-result]').innerText(),/Awaiting/);
+ await field('broadRef').fill('Powdered formula specification');
+ assert.match(await panel.locator('[data-broad-result]').innerText(),/1.0 mg\/kg/);
+}
+
 async function testImportDocuments(page,open){
  await open('10-10-2-egg-powder');
  const panel=page.locator('[data-import-panel]');await panel.locator('summary').click();
@@ -1687,7 +1730,7 @@ async function testFinishedSampleGuide(page,open){
  assert.match(await counts.locator('[data-count-for="beanMould"]').innerText(),/4% · At or below maximum/);
  await field('beanMould').fill('5');
  const download=page.waitForEvent('download');await counts.locator('[data-bean-export]').click();const file=await download;
- assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Cocoa-Bean-Defect-Counts-R153.csv');
+ assert.equal(file.suggestedFilename(),'PMSV-FSSAI-Cocoa-Bean-Defect-Counts-R154.csv');
  assert(fs.readFileSync(await file.path(),'utf8').includes('"Bean sample one","100","Mouldy beans","5","5","4","Above maximum"'));
  await field('beanSample').fill('Bean sample two');assert.equal(await field('beanMould').inputValue(),'');
  const guide=page.locator('[data-lab-guide]');await guide.locator('summary').click();
@@ -1716,7 +1759,7 @@ async function testVendingWaterPlan(page,open){
  await waterField('waterValue').fill('<10');await waterField('waterUnit').selectOption('µg/L');await waterField('waterBasis').check();
  assert((await waterPlan.locator('[data-water-outcome]').innerText()).includes('within the maximum'));
  const waterDownload=page.waitForEvent('download');await waterPlan.locator('[data-water-export]').click();
- const waterFile=await waterDownload;assert.equal(waterFile.suggestedFilename(),'PMSV-FSSAI-Vending-Water-IS10500-R153.csv');
+ const waterFile=await waterDownload;assert.equal(waterFile.suggestedFilename(),'PMSV-FSSAI-Vending-Water-IS10500-R154.csv');
  assert(fs.readFileSync(await waterFile.path(),'utf8').includes('Water report R122'));
  await waterField('waterPoint').selectOption('other');assert.equal(await waterField('waterValue').inputValue(),'');
 }
@@ -1743,6 +1786,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await testSaltAndIngredientRoutes(page,open);
  await testCoffeeBlend(page,open);
  await testCocoaMixWorksheet(page,open);
+ await testMelamineReports(page,open);
  await testImportDocuments(page,open);
  await testFinishedSampleGuide(page,open);
  await testVendingWaterPlan(page,open);
@@ -1761,12 +1805,12 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await planSection.locator('[data-plan-area]').selectOption('Pesticide residues');
  assert((await microTable.textContent()).includes('Identify the sampled commodity and process'));
  const onePlan=page.waitForEvent('download');await planSection.locator('[data-plan-export]').click();
- const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R153.csv');
+ const oneFile=await onePlan;assert.equal(oneFile.suggestedFilename(),'PMSV-Testing-Plan-01-01-5-milk-powders-and-cream-powder-R154.csv');
  const oneText=fs.readFileSync(await oneFile.path(),'utf8');
  assert(oneText.includes('Milk Powders and Cream Powder')&&!oneText.includes('01-01-1-cow-milk'));
  assert(oneText.includes('Veterinary drug residues')&&oneText.includes('Pesticide residues')&&oneText.includes('Chloramphenicol'));
  const allPlan=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R153.csv');
+ const planFile=await allPlan;assert.equal(planFile.suggestedFilename(),'PMSV-FSSAI-533-Product-Testing-Plan-R154.csv');
  const allPlanText=fs.readFileSync(await planFile.path(),'utf8');
  assert(allPlanText.includes('01-01-1-cow-milk')&&allPlanText.includes('05-05-1-cocoa-powder')&&allPlanText.includes('Thermal-centre temperature'));
  assert(allPlanText.includes('Banned insecticide · extraneous MRL')&&allPlanText.includes('Honey misuse · MRPL')&&allPlanText.includes('farmed aquaculture only'));
@@ -2058,7 +2102,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await datedPlan.locator('[data-plan-vet-date]').inputValue(),'2026-12-01');
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Amended seafood provisions in use'));
  const oneDated=page.waitForEvent('download');await datedPlan.locator('[data-plan-export]').click();
- const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R153.csv'));
+ const datedCsv=await oneDated;assert(datedCsv.suggestedFilename().endsWith('-2026-12-01-R154.csv'));
  const singleText=fs.readFileSync(await datedCsv.path(),'utf8');
  assert(singleText.includes('Seafood COA 113')&&singleText.includes('At or below the selected source tolerance'));
  assert((await datedPlan.locator('[data-plan-results]').innerText()).includes('Documented wild finfish sample 113'));
@@ -2070,10 +2114,10 @@ async function testCatalogueWorksheets(page, exhaustive) {
  const bulkDate=page.locator('#veterinaryExportDate'), bulkButton=page.locator('#downloadVeterinaryPlan');
  await bulkDate.fill('');assert(await bulkButton.isDisabled());
  await bulkDate.fill('2026-12-01');const bulkDownload=page.waitForEvent('download');await bulkButton.click();
- const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R153.csv');
+ const vetFile=await bulkDownload;assert.equal(vetFile.suggestedFilename(),'PMSV-FSSAI-533-Veterinary-Plan-2026-12-01-R154.csv');
  const vetText=fs.readFileSync(await vetFile.path(),'utf8');assert(vetText.includes('Veterinary assessment date')&&vetText.includes('11-11-5-honey')&&!vetText.includes('CTR 2.3.2(1)'));
  const wholeDated=page.waitForEvent('download');await page.locator('#downloadTestingPlan').click();
- const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R153.csv'));
+ const december=await wholeDated;assert(december.suggestedFilename().endsWith('Testing-Plan-2026-12-01-R154.csv'));
  const bulkText=fs.readFileSync(await december.path(),'utf8');assert(!bulkText.includes('Seafood COA 113')&&bulkText.includes('CTR 2.1.1(2) · fish-oil note')&&bulkText.includes('Contaminant assessment date 2026-12-01'));
  await open('02-02-1-fish-oil');await datedPlan.locator('summary').click();
  await datedPlan.locator('[data-plan-area]').selectOption('Metals');await datedPlan.locator('[data-plan-vet-date]').fill('2026-12-01');
@@ -2113,7 +2157,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  await pesticide('11-11-1-edible-lactose');await f('pestMatrix').selectOption('edibleLactose');
  assert.equal(await f('pestRow').locator('option').count(),7);
  const lactoseDownload=page.waitForEvent('download');await page.locator('[data-group-plan]').click();
- const lactoseFile=await lactoseDownload;assert.equal(lactoseFile.suggestedFilename(),'PMSV-FSSAI-11-11-1-edible-lactose-Pesticides-R153.csv');
+ const lactoseFile=await lactoseDownload;assert.equal(lactoseFile.suggestedFilename(),'PMSV-FSSAI-11-11-1-edible-lactose-Pesticides-R154.csv');
  const lactoseCsv=fs.readFileSync(await lactoseFile.path(),'utf8');
  assert(lactoseCsv.includes('Bifenthrin')&&lactoseCsv.includes('#page=75')&&lactoseCsv.includes('#page=134'));
 
@@ -2291,7 +2335,7 @@ async function testCatalogueWorksheets(page, exhaustive) {
  assert.equal(await page.locator('#productList [data-id]').count(),await page.evaluate(()=>PMSV_REVIEW_REGISTER.veterinaryReview.directProducts));
  await page.locator('#productClass').selectOption('all');
  const dl=page.waitForEvent('download');await page.locator('#downloadWorksheets').click();
- const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-2026-11-22-R153.csv');
+ const file=await dl;assert.equal(file.suggestedFilename(),'PMSV-FSSAI-533-Product-Register-2026-11-22-R154.csv');
  const csv=fs.readFileSync(await file.path(),'utf8');assert(csv.includes('Coding instruction R108')&&csv.includes('Finished candy spec R107')&&csv.includes('Site master R106 v1')&&csv.includes('Packing record R106 lot A')&&csv.includes('Decoded address R105')&&csv.includes('Retail pouch R105 v2')&&csv.includes('Approved R104 recipe v3')&&csv.includes('A → B')&&csv.includes('Supplier breakdown R104')&&csv.includes('Jar art R102 v1')&&csv.includes('2.4% w/w')&&csv.includes('Preparation R102')&&csv.includes('EO lab 101')&&csv.includes('0.022 ≤ EO sum < 0.032')&&csv.includes('EO sum = 0.032')&&csv.includes('Coriander report R100')&&csv.includes('LCMS report R100')&&csv.includes('reviewer-entered adopted Codex MRL')&&csv.includes('Incoming sugarcane lot R99')&&csv.includes('Sugarcane laboratory report R99')&&csv.includes('Reported upper bound')&&csv.includes('Physically sampled incoming cow milk 98')&&csv.includes('Milk report 98')&&csv.includes(khoa)&&csv.includes(oil)&&csv.includes('Exact finished-product decision open')&&csv.includes('Species specification · swordfish')&&csv.includes('Composite recipe and label 16')&&csv.includes('Recipe C96 lists toasted almond')&&csv.includes('Ketchup formula K96')&&csv.includes('Cocoa dry fat-free COA 97')&&csv.includes('Canned bakery process 97')&&csv.includes('FPC18 eligibility dossier 97'));
 }
 

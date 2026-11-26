@@ -49,12 +49,81 @@
   function selectedArticle(m,selected,reference){
     return m.key||(String(reference||'').trim()&&m.options.includes(selected)?selected:'');
   }
+  const reportFields=['melLot','melReport','melMethod','melReading','melUnit','melBasis'];
+  const reportUnits=['mg/kg','µg/kg','mg/L','µg/L'];
+  const dairyMethod='https://fssai.gov.in/upload/uploadfiles/files/Manual-Dairy-Revision1.pdf#page=333';
+  const isoMethod='https://www.iso.org/standard/77481.html';
+  const isoMatrices={
+    '13-13-1-infant-formula':'milk-based or soy-based infant formula',
+    '13-13-1-infant-milk-food':'milk-based infant formula',
+    '01-01-5-milk-powders-and-cream-powder':'milk powder',
+    '05-05-1-chocolate':'milk chocolate',
+    '06-06-8-soybean-beverages-and-related-products':'soy drink'
+  };
+  function methodGuide(id){
+    const matrix=isoMatrices[id];
+    const dairy=id.startsWith('01-')||['13-13-1-infant-formula','13-13-1-infant-milk-food'].includes(id);
+    const notes=['Ask the laboratory for a matrix-validated melamine method and a sample-specific reporting limit at or below the applicable maximum.'];
+    if(dairy)notes.push('FSSAI 01.125:2022 covers milk, milk products and infant formula. Confirm that the sample falls within that scope.');
+    if(matrix)notes.push('ISO 23970:2021 includes '+matrix+' in its validation. Confirm the subtype. Its published melamine LOQ is 0.05 mg/kg. Use the reporting limit on the actual certificate.');
+    if(id==='05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake'||id==='04-04-2-cocoa-beans')notes.push('Milk chocolate validation does not establish method performance in cocoa beans, mass or cake.');
+    return {notes:notes.join(' '),sources:[...(dairy?[dairyMethod]:[]),...(matrix?[isoMethod]:[])]};
+  }
+  function reportAssessment(state,maximum){
+    const reading=String(state.melReading||'').trim();
+    if(!reading)return 'Awaiting a reported melamine result.';
+    if(!maximum)return 'Identify the food and its supplied form before comparing the report.';
+    if(!state.melLot?.trim()||!state.melReport?.trim()||!state.melMethod?.trim())return 'Enter the lot, report reference and method used for this sample.';
+    if(!state.melUnit)return 'Select the unit printed on the report.';
+    if(!['mg/kg','µg/kg'].includes(state.melUnit))return 'Mass-basis result needed. Record the documented conversion or obtain a result in mg/kg or µg/kg.';
+    if(state.melBasis!=='yes')return 'Confirm the sample, analyte and reporting basis.';
+    const lower=reading.match(/^(>=|≥|>)\s*(.+)$/);
+    const raw=lower?lower[2]:reading;
+    const result=root.PMSVMetalPanel.parseReading(raw,state.melUnit);
+    if(!result||(lower&&result.qualifier))return 'Inconclusive. Enter a numeric result or a reporting bound from the certificate. ND alone gives no numerical bound.';
+    const compare=root.PMSVCatalogueWorksheets.compare;
+    const within=compare({operator:'<=',value:maximum},result.amount);
+    const suffix=' Maximum '+maximum+' mg/kg.';
+    if(lower){
+      const above=lower[1]==='>'?compare({operator:'>=',value:maximum},result.amount):!within;
+      return (above?'Above the maximum.':'Inconclusive. The lower bound permits a result on either side of the maximum or at it.')+suffix;
+    }
+    if(result.qualifier)return (within?'Reported upper bound is within the maximum.':'Inconclusive. The reporting bound exceeds the maximum.')+suffix;
+    return (within?'Reported value is within the maximum.':'Reported value is above the maximum.')+suffix;
+  }
+  function reportSummary(state,maximum){
+    if(!reportFields.some(k=>state[k]))return '';
+    const reading=[state.melReading,state.melUnit].filter(Boolean).join(' ');
+    return [state.melLot&&'Lot '+state.melLot,state.melReport&&'Report '+state.melReport,state.melMethod&&'Method '+state.melMethod,reading&&'Reported '+reading,reportAssessment(state,maximum)].filter(Boolean).join(' · ');
+  }
+  function reportPanel(id,state,maximum){
+    const guide=methodGuide(id);
+    const input=(field,label,hint)=>'<label>'+label+'<input data-ws-field="'+field+'" maxlength="240" value="'+escape(state[field])+'" placeholder="'+hint+'"></label>';
+    return '<h5>Check a melamine laboratory report</h5><p>'+escape(guide.notes)+'</p>'+
+      guide.sources.map(url=>'<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+url+'">'+(url===isoMethod?'ISO 23970 method scope':'FSSAI dairy method, p. 328')+'</a>').join(' ')+
+      '<div class="melamine-inputs">'+input('melLot','Lot or sample ID','Sample from the certificate')+input('melReport','Report reference','Certificate number and revision')+input('melMethod','Method used','Method reference on the certificate')+
+      input('melReading','Reported melamine result','e.g. &lt;0.10, 0.15 or ND')+
+      '<label>Reported unit<select data-ws-field="melUnit"><option value="">Select unit</option>'+reportUnits.map(unit=>'<option'+(unit===state.melUnit?' selected':'')+'>'+unit+'</option>').join('')+'</select></label>'+
+      '<label><input type="checkbox" data-ws-field="melBasis"'+(state.melBasis==='yes'?' checked':'')+'> I matched the report to this lot and method, and confirmed that the result is for melamine alone in the food as supplied.</label></div>'+
+      '<p data-melamine-assessment role="status">'+escape(reportAssessment(state,maximum))+'</p><p>This comparison uses the reported value or bound. Apply the laboratory’s decision rule and measurement uncertainty when making a conformity decision.</p>'+
+      '<button type="button" data-melamine-export>Export this melamine report check</button>';
+  }
+  function reportRows(id,date,state={}){
+    const header=['Catalogue ID','Product','Assessment date','Legal article','Food as supplied','Maximum','Maximum unit','Indian legal sources','Article evidence','Laboratory method guidance','Method scope sources','Lot or sample ID','Report reference','Reported method','Raw melamine result','Reported unit','Analyte and basis confirmed','Numerical comparison'];
+    if(!root.PMSVTestingPlan.metalEdition(date))return [header];
+    const entries=(root.PMSV_CATALOGUE||[]).filter(entry=>!id||entry.id===id);
+    const sample=id?state:{};
+    return [header,...entries.map(entry=>{
+      const row=melamineRow(entry.id,sample),guide=methodGuide(entry.id);
+      return [entry.id,entry.product,date,row.article,row.form,row.limit,row.unit,row.source,sample.broadRef||'',guide.notes,guide.sources.join(' | '),sample.melLot||'',sample.melReport||'',sample.melMethod||'',sample.melReading||'',sample.melUnit||'',sample.melBasis==='yes'?'Yes':'',reportAssessment(sample,row.limit)];
+    })];
+  }
   function melamineRow(id,state={}){
     const m=melamine(id),key=selectedArticle(m,state?.broadForm,state?.broadRef);
     const row=limits[key],ref=String(state?.broadRef||'').trim();
     return {article:'CTR 2.5.1, table, serial 1',parameter:'Melamine',form:row?row[0]:'Confirm the food and its supplied form',
       status:row?'Melamine article identified':'Article or product form needed',limit:row?row[1]:'',unit:row?'mg/kg':'',
-      notes:[m.why,'Use the mass of the food as supplied. A report in mg/L requires a documented conversion to mg/kg.',m.options.length&&key&&ref?'Identity reference: '+ref:''].filter(Boolean).join(' '),
+      notes:[m.why,'Use the mass of the food as supplied. A report in mg/L requires a documented conversion to mg/kg.',methodGuide(id).notes,reportSummary(state,row?.[1]),m.options.length&&key&&ref?'Identity reference: '+ref:''].filter(Boolean).join(' '),
       source:[source.melamine+'#page=3',source.correction+'#page=1',...(m.extra?[m.extra[0]+'#page='+m.extra[1]]:[])].join(' | ')};
   }
   function scope(id,selected='',reference='',state={}){
@@ -80,16 +149,16 @@
     return '<details class="ws-section broad-ctr"><summary>Melamine, mercury and methyl mercury</summary><div><h5>Melamine · CTR 2.5.1</h5><p>'+escape(m.why)+'</p>'+choice+'<p data-broad-result role="status">'+escape(resolution(id,state.broadForm,state.broadRef))+'</p>'+
       (m.options.length?'<p>Published levels in mg/kg · '+m.options.map(k=>escape(limits[k][0]+' '+limits[k][1])).join(' · ')+'</p>':'')+
       ref(source.melamine,3,'Original melamine table')+' '+ref(source.correction,1,'Clause-number corrigendum')+' '+ref(source.current,51,'Consolidated table')+' '+(m.extra?ref(m.extra[0],m.extra[1],'Product identity source'):'')+' '+(m.law?ref(m.law[0],m.law[1],'Food Safety and Standards Act, section 3'):'')+
-      '<h5>Mercury · CTR 2.1.1, item 6</h5>'+(id===root.PMSVMetalPanel?.sajjiId?'':root.PMSVMetalScope.mercuryControls(id,state))+'<p data-hg-value role="status">'+escape(h.article+(h.level?' · '+h.level:''))+'</p><p data-hg-basis>'+escape(h.why)+'</p>'+ref(source.metal,27,'Mercury table p. 27')+' '+ref(source.metal,28,'Mercury table p. 28')+
+      reportPanel(id,state,limits[a.applied]?.[1])+'<h5>Mercury · CTR 2.1.1, item 6</h5>'+(id===root.PMSVMetalPanel?.sajjiId?'':root.PMSVMetalScope.mercuryControls(id,state))+'<p data-hg-value role="status">'+escape(h.article+(h.level?' · '+h.level:''))+'</p><p data-hg-basis>'+escape(h.why)+'</p>'+ref(source.metal,27,'Mercury table p. 27')+' '+ref(source.metal,28,'Mercury table p. 28')+
       '<h5>Methyl mercury · CTR 2.1.1, item 7</h5><p>All foods · '+escape(a.methyl)+'. '+escape(a.unit)+'</p><p>Use a result reported for the stated analyte. A mercury result alone does not quantify methyl mercury.</p>'+ref(source.metal,18,'Original unit heading')+' '+ref(source.metal,28,'All-foods Gazette row')+' '+ref(source.current,12,'Consolidated mercury rows')+'</div></details>';
   }
   function brief(id,state){
     const a=scope(id,state.broadForm,state.broadRef,state);if(!a)return [];
     return ['Melamine (CTR 2.5.1): '+resolution(id,state.broadForm,state.broadRef),'Melamine identity basis: '+a.m.why,'Article evidence reference: '+((a.m.options.length && state.broadRef)||'—'),
-      'Mercury (item 6): '+a.h.article+(a.h.level?' · '+a.h.level:'')+'. '+a.h.why,'Methyl mercury (item 7, all foods): '+a.methyl+'. '+a.unit,
+      ...(reportSummary(state,limits[a.applied]?.[1])?['Melamine report: '+reportSummary(state,limits[a.applied]?.[1])]:[]),'Mercury (item 6): '+a.h.article+(a.h.level?' · '+a.h.level:'')+'. '+a.h.why,'Methyl mercury (item 7, all foods): '+a.methyl+'. '+a.unit,
       ...(a.m.extra?['Product identity source: '+a.m.extra[0]+'#page='+a.m.extra[1]]:[]),...(a.m.law?['Food-use definition: '+a.m.law[0]+'#page='+a.m.law[1]]:[]),'Melamine source: '+source.melamine+'#page=3','Mercury article source: '+source.metal+'#page='+a.h.page,'Methyl mercury source: '+source.metal+'#page=28'];
   }
   function columns(){return ['Melamine article at catalogue identity','Melamine maximum (mg/kg) or decision needed','Melamine identity condition','Mercury article or decision needed','Mercury maximum at catalogue identity','Methyl mercury, all foods (ppm as element)','Melamine Gazette page','Mercury Gazette page','Methyl mercury Gazette page'];}
   function values(id){const a=scope(id);return a?[a.applied?limits[a.applied][0]:'Identify article / form',a.applied?limits[a.applied][1]:'Select with evidence',a.m.why,a.h.article,a.h.level,'0.25',source.melamine+'#page=3',source.metal+'#page='+a.h.page,source.metal+'#page=28']:[];}
-  root.PMSVBroadContaminants=Object.freeze({scope,melamineRow,markup,brief,columns,values,resolution});
+  root.PMSVBroadContaminants=Object.freeze({scope,melamineRow,reportFields,reportRows,reportAssessment,markup,brief,columns,values,resolution});
 })(globalThis);
