@@ -46,6 +46,17 @@
     if(guide)return {key:'review',article:'Mercury article needs sample evidence',level:'',page:27,why:guide.reason};
     return {key:'review',article:'Check named mercury rows before the residual row',level:'',page:27,why:'The table lists “Foods not specified” at 1.0 ppm. Compare the marketed article with all named mercury rows on pages 27–28 and any applicable product standard before using that level.'};
   }
+  function selectedArticle(m,selected,reference){
+    return m.key||(String(reference||'').trim()&&m.options.includes(selected)?selected:'');
+  }
+  function melamineRow(id,state={}){
+    const m=melamine(id),key=selectedArticle(m,state?.broadForm,state?.broadRef);
+    const row=limits[key],ref=String(state?.broadRef||'').trim();
+    return {article:'CTR 2.5.1, table, serial 1',parameter:'Melamine',form:row?row[0]:'Confirm the food and its supplied form',
+      status:row?'Melamine article identified':'Article or product form needed',limit:row?row[1]:'',unit:row?'mg/kg':'',
+      notes:[m.why,'Use the mass of the food as supplied. A report in mg/L requires a documented conversion to mg/kg.',m.options.length&&key&&ref?'Identity reference: '+ref:''].filter(Boolean).join(' '),
+      source:[source.melamine+'#page=3',source.correction+'#page=1',...(m.extra?[m.extra[0]+'#page='+m.extra[1]]:[])].join(' | ')};
+  }
   function scope(id,selected='',reference='',state={}){
     if(!canonical(id))return null;
     const m=melamine(id),panel=root.PMSVMetalPanel;
@@ -55,7 +66,7 @@
       h={key:d.kind==='residual'?'residual':'matrix',article:d.kind==='residual'?'Foods not specified':'Confirm imported Sajji Khar consignment',
         level:d.kind==='residual'?panel.limit(d.keys[0]):'',page:27,why:[d.reason,d.proof].filter(Boolean).join(' · ')};
     }else h=root.PMSVMetalScope.documentedMercury(id,state)||mercury(id);
-    const applied=m.key||(String(reference).trim()&&m.options.includes(selected)?selected:'');
+    const applied=selectedArticle(m,selected,reference);
     return {m,h,applied:applied||'',result:applied?limits[applied][1]+' mg/kg':'Awaiting article or form evidence',
       methyl:'0.25 ppm, calculated as the element',unit:'The table heading allows mg/kg or mg/L. Match the matrix and the reported unit. Melamine uses mg/kg even for liquid infant formula.'};
   }
@@ -80,5 +91,5 @@
   }
   function columns(){return ['Melamine article at catalogue identity','Melamine maximum (mg/kg) or decision needed','Melamine identity condition','Mercury article or decision needed','Mercury maximum at catalogue identity','Methyl mercury, all foods (ppm as element)','Melamine Gazette page','Mercury Gazette page','Methyl mercury Gazette page'];}
   function values(id){const a=scope(id);return a?[a.applied?limits[a.applied][0]:'Identify article / form',a.applied?limits[a.applied][1]:'Select with evidence',a.m.why,a.h.article,a.h.level,'0.25',source.melamine+'#page=3',source.metal+'#page='+a.h.page,source.metal+'#page=28']:[];}
-  root.PMSVBroadContaminants=Object.freeze({scope,markup,brief,columns,values,resolution});
+  root.PMSVBroadContaminants=Object.freeze({scope,melamineRow,markup,brief,columns,values,resolution});
 })(globalThis);

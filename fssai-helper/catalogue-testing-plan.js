@@ -104,6 +104,65 @@
   };
   const appendixC='https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=40';
   const categories='https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf';
+  const eggExportOrder='https://www.eicindia.gov.in/WebApp1/resources/PDF/Order_Egg_Products1.pdf';
+  const eggExportAmendment='https://www.eicindia.gov.in/WebApp1/resources/PDF/SO%203225%20%28E%29%2015%20July%202025_Egg%20%20Egg%20Products.pdf';
+  const enzymeGazette='https://www.fssai.gov.in/upload/notifications/2025/07/6879d8af12522Palm%20Oil_FPSFA_Notification.pdf';
+  const scopedArea='Export and processing-aid references';
+  const exportPages=new Set([eggExportOrder+'#page=6',eggExportOrder+'#page=7',eggExportAmendment+'#page=3']);
+  const isExportSource=url=>exportPages.has(url);
+  const eggExportId='10-10-2-egg-powder';
+  const exportScope='Indian export order for finished egg powder';
+  const enzymeScope='Separate Appendix C Table 11A processing-aid preparation';
+  const referenceSets=new Map();
+  function eggExportGroup(section,unit,items){
+    const page=section===1?6:7;
+    return items.map(([parameter,value,remark=''])=>({
+      article:'S.O. 4368(E), clause (e)('+section+')',parameter,value,unit,
+      role:'Export consignment',form:'Finished egg powder intended for export from India',status:exportScope,
+      notes:['Match the powder lot, residue definition, reporting units and destination requirements. A stricter importing-country limit applies.',remark].filter(Boolean).join(' '),
+      source:[eggExportOrder+'#page='+page,eggExportOrder+'#page=7',...(section===1?[eggExportAmendment+'#page=3']:[]),
+        ...(parameter==='Colistin'?['https://fssai.gov.in/upload/uploadfiles/files/2_Notification%20dt%2017_10_2024.pdf#page=17']:[])].filter((s,i,a)=>a.indexOf(s)===i).join(' | ')
+    }));
+  }
+  referenceSets.set(eggExportId,[
+    ...eggExportGroup(1,'µg/kg',[
+      ['Erythromycin','150','The English order prints “Erythomycin”. Confirm the reported analyte identity.'],
+      ['Tylosin','200'],['Lincomycin','50'],['Neomycin','500'],
+      ['Colistin','300','Historical export-table value. FSSAI CTR 2.3.2(2) prohibits use in poultry and egg production and gives an EMRL of 0.001 mg/kg there. Resolve with the competent authority before interpreting finished powder.'],
+      ['Chlortetracycline','200'],['Oxytetracycline','200'],['Tetracycline','200'],['Spectinomycin','200'],['Tiamulin','1000'],['Josamycin','200'],['Oxolinic acid','50']
+    ]),
+    ...eggExportGroup(2,'µg/kg',[['Piperazine','2000'],['Flubendazole','400'],['Amprolium','1000']]),
+    ...eggExportGroup(3,'mg/kg',[
+      ['Aldrin and dieldrin','0.02','Combined, expressed as dieldrin.'],['Chrorthalonil (as printed)','0.01','Verify the substance identity against an authoritative specification before comparison.'],
+      ['DDT','0.05','Combined result for all isomers.'],['Dicofol','0.05','Sum of p,p′ and o,p′ isomers.'],
+      ['Endosulfan','0.005','Include alpha and beta isomers and endosulfan sulphate, expressed as endosulfan.'],
+      ['Endrin','0.005'],['HCH','0.03','Combined for all isomers. Also check alpha at 0.02 mg/kg and beta at 0.01 mg/kg. Review the separate lindane entry when gamma-HCH is present.'],
+      ['Lindane (gamma-HCH)','0.1','Review the combined HCH entry as well.'],['Methoxychlor','0.01'],['PCB','0.01','Establish the applicable congener definition with the destination authority.']
+    ]),
+    ...eggExportGroup(4,'',['Cypermethrin','Deltamethrin','Permethrin','Alpha-cypermethrin'].map(n=>[n,'0.05','The pyrethroid table omits the unit. Confirm it from the competent authority before comparison.']))
+  ]);
+  referenceSets.set(routeIds.enzyme,[
+    ['Lead','5','mg/kg','Maximum in the preparation.'],
+    ['Salmonella spp.','Absent','in 25 g','Presence or absence in the stated test portion.'],
+    ['Total coliforms','30','per g','Maximum count per gram.'],
+    ['Escherichia coli','Absent','in 25 g','Presence or absence in the stated test portion.'],
+    ['DNA','Absent','','Applies to preparations from microbial sources. The footnote supplies no numerical limit or test portion.'],
+    ['Antibiotic activity','Absent','','Applies to preparations from microbial sources. The footnote supplies no numerical limit or test portion.']
+  ].map(([parameter,value,unit,note])=>({article:'FPSFA Appendix C, Table 11A, # footnote',parameter,value,unit,
+    role:'Separate processing-aid preparation',form:'Supplied preparation matching a marked Table 11A entry',status:enzymeScope,
+    notes:'Verify the exact enzyme, source, intended use and marked table entry. Assess the supplied processing aid. '+note,
+    source:enzymeGazette+'#page=17 | '+appendixC.split('#')[0]+'#page=40'})));
+  function scopedReferences(id,date=root.PMSVVeterinary.reviewDate){
+    return metalEdition(date)?referenceSets.get(id)||[]:[];
+  }
+  function scopeReferenceExport(id,date=root.PMSVVeterinary.reviewDate){
+    const out=[['Catalogue ID','Product','Assessment date','Scope','Sample','Parameter','Published reference','Published unit','Conditions','Provision','Official sources']];
+    for(const key of referenceSets.keys()){
+      if(id&&id!==key)continue;
+      for(const r of scopedReferences(key,date))out.push([key,R.products[key].name,date,r.status,r.form,r.parameter,r.value,r.unit,r.notes,r.article,r.source]);
+    }
+    return out;
+  }
   const lysozymeSources={
     classification:categories+'#page=9',
     preservative:appendixC.replace('#page=40','#page=75'),
@@ -137,7 +196,7 @@
     [routeIds.enzyme,[
       {article:'FoSCoS 99.2 / 99.4',form:'Supplied preparation',parameter:'Enzyme identity and regulatory classification',status:'Check the named use in FSSR',
         notes:'Record the enzyme identity, preparation specification, intended technological purpose and food application. Category 99.2 excludes products classified under the processing-aid or nutraceutical regulations. Match the applicable source and application before choosing a specification.',source:categories+'#page=9'},
-      {article:'Appendix C, Table 11, row 51',form:'Listed processing-aid preparation',parameter:'Chymosin classification example',status:'Use the processing-aid entry when identity and use match',
+      {article:'Appendix C, Table 11A, row 51',form:'Listed processing-aid preparation',parameter:'Chymosin classification example',status:'Use the processing-aid entry when identity and use match',
         notes:'Row 51 lists chymosin for milk coagulation in paneer and cheese at GMP. Match the source, preparation and application to the row. Its table note gives a lead maximum of 5 mg/kg on the covered enzyme preparation. The generic 99.2 product and the finished dairy food each require their own assessment.',source:appendixC+' | '+categories+'#page=9'}
     ]],
     [routeIds.cocoa,[
@@ -667,6 +726,7 @@
         notes:'The reviewed metal and toxin plans start on 20 November 2026. Choose a covered date or check the source edition in force on the sample date.',source:links('ctr-1',[4,5])});
       return;
     }
+    add({...root.PMSVBroadContaminants.melamineRow(id,state),area:areas[3]});
     const readings=state.vetDate&&state.vetDate!==date?[]:P.reportLines(id,state,date);
     for(const d of P.panel(id,state)){
       const row=metalRow(id,d,date);
@@ -691,6 +751,9 @@
     for(const row of root.PMSVSulphites.rows(id,state))add(row);
     for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
+    for(const row of scopedReferences(id,vetDate)){
+      add({...row,area:scopedArea,limit:'',unit:'',notes:row.notes+' Published reference: '+row.value+(row.unit?' '+row.unit:'')+'.'});
+    }
     if(id===routeIds.enzyme)for(const row of lysozymeReferences){
       add({...row,area:areas[0],status:'Separate classification example',limit:'',unit:'',
         notes:row.notes+' Published reference for the specified sample: '+[row.limit,row.unit].filter(Boolean).join(' ')+'.'});
@@ -759,6 +822,9 @@
       const record=E.products[key], anchor=E.standards[record.standard], route=record.routeAnchors?.[0];
       const doc=anchor?.doc||route?.[0]||record.routeDocs[0];
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:task,source:links(doc,anchor?.p||route?.[1]||[])});
+      const melamine=root.PMSVBroadContaminants.melamineRow(key);
+      add('Finished food',melamine.limit?'General melamine provision':'Confirm food-grade article for melamine',melamine);
+      for(const r of scopedReferences(key,date))add(r.role,r.status,{...r,limit:r.value});
       if(key===water.productId){
         for(const row of water.planRows(key).filter(r=>r.article.includes('Table 3')&&r.unit==='mg/L')){
           add('Finished vending outlet','Drinking-water standard incorporated by FSSR 2.10.9',row);
@@ -886,5 +952,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
