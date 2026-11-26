@@ -1652,6 +1652,7 @@ async function testFinishedSampleGuide(page,open){
  await read('dryBasis').selectOption('dry');assert.equal(await read('dryValue').inputValue(),'');
  await read('dryLot').fill('Different sample');assert.equal(await read('dryReport').inputValue(),'');
  await open('100-100-cow-or-buffalo-colostrum-and-colostrum-products');
+ await page.locator('[data-ws-field="compVariant"]').selectOption('Colostrum');
  await basis.locator('summary').click();assert(await read('dryValue').isDisabled());
  await page.locator('[data-ws-field="compVariant"]').selectOption('Colostrum Powder');assert(await read('dryValue').isEnabled());
  await read('drySpecies').selectOption('buffalo');
