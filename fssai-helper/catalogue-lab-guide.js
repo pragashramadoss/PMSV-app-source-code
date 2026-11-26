@@ -193,7 +193,7 @@
       const prefix=[key,root.PMSVCatalogueRules.products[key].name,date];
       out.push([...prefix,p.sample,'Sample scope','Interpretation',p.article,'','','','','','',p.boundary,p.reference,'']);
       for(const r of plan.entries(key,date)){
-        if(r.area===root.PMSVStarchSpecifications?.area){
+        if(r.area===root.PMSVSamplingQuantities?.area||r.area===root.PMSVStarchSpecifications?.area){
           out.push([...prefix,r.form,r.status,r.parameter,r.article,r.limit,r.unit,'','','','',r.notes,r.source,'']);
           continue;
         }

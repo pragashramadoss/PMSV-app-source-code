@@ -795,6 +795,8 @@
     if(!Object.hasOwn(E.products,id))return [];
     const result=[],add=row=>result.push(row);
     composition(id,add,state,vetDate);
+    const dispatch=root.PMSVSamplingQuantities?.planEntry(id,vetDate,state);
+    if(dispatch)add(dispatch);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
     if(sampleGuide)add(sampleGuide);
     const processing=metalEdition(vetDate)&&processingRow(id);
@@ -920,6 +922,8 @@
       const record=E.products[key], anchor=E.standards[record.standard], route=record.routeAnchors?.[0];
       const doc=anchor?.doc||route?.[0]||record.routeDocs[0];
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:task,source:links(doc,anchor?.p||route?.[1]||[])});
+      const dispatch=root.PMSVSamplingQuantities?.decision(key,date);
+      if(dispatch)add('Regulatory sample dispatch',dispatch.status,{article:'Laboratory and Sample Analysis 2.3.1'+(dispatch.key?', item '+dispatch.key:''),parameter:'Quantity sent to the Food Analyst',form:dispatch.food,limit:dispatch.quantity,unit:dispatch.unit,notes:dispatch.notes,source:dispatch.source});
       const melamine=root.PMSVBroadContaminants.melamineRow(key);
       add('Finished food',melamine.limit?'General melamine provision':'Confirm food-grade article for melamine',melamine);
       const processing=processingRow(key);

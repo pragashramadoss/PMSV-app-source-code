@@ -12,7 +12,7 @@ for(const [,name] of template.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const plan=ctx.PMSVTestingPlan;
 const [header,...rows]=plan.exportRows();
 assert.equal(header.length,15);
-assert.equal(rows.length,26364);
+assert.equal(rows.length,26897);
 assert.equal(plan.areas.length,6);
 const residueAreas=plan.areas.slice(4);
 for(const [index,area] of residueAreas.entries()){
@@ -23,6 +23,7 @@ for(const [index,area] of residueAreas.entries()){
 for(const {id} of ctx.PMSV_CATALOGUE){
   const product=plan.exportRows(id).slice(1);
   const areas=new Set(product.map(row=>row[2]));
+  assert(areas.delete(ctx.PMSVSamplingQuantities.area));
   assert.equal(areas.delete(ctx.PMSVStarchSpecifications.area),ctx.PMSVStarchSpecifications.entries(id).length>0);
   assert.equal(areas.delete(plan.processingArea),!!plan.processingRow(id));
   assert.equal(areas.delete(ctx.PMSVImportDocuments.area),ctx.PMSVImportDocuments.routes.has(id));
