@@ -20,7 +20,10 @@ function assertComposition(id,selection){
     const state={...selection,criterion:String(i),result:String(spec.value??spec.min),unitConfirmed:'yes',compReport:report,reference:'QA-116 sample'};
     const rows=p.entries(id,current,state).filter(row=>row.notes?.includes(report));
     assert.equal(rows.length,1,id+' '+spec.parameter);const [r]=rows;
-    assert.equal(r.area,p.areas[0]);assert.equal(r.parameter,spec.parameter);
+    const cerealCount=/^2\.4\.(?:11\([12]\)|13\([1-5]\))$/.test(r.article)&&
+      ['Total bacterial count','Coliform bacteria','Bacterial count','Coliform count','Total plate count','Yeast and mould count'].includes(spec.parameter);
+    assert.equal(r.area,cerealCount?'Microbiology':'Composition and identity',id+' '+spec.parameter);
+    assert.equal(r.parameter,spec.parameter);
     assert(r.notes.includes(w.resultText(id,state)));assert(r.notes.includes('QA-116 sample'));
     assert(r.source.includes('https://'));if(spec.analytical_basis)assert(r.notes.includes(spec.analytical_basis));
     if(spec.effective_from&&c.PMSVCatalogueEvidence.products[id].gazetteFindings?.some(g=>g.clause===spec.source_clause&&g.effective===spec.effective_from))

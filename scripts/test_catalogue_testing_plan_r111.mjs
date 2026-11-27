@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,20030);
-const totals=[3855,3377,5868,6930];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,20061);
+const totals=[3824,3439,5868,6930];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -101,6 +101,37 @@ for(const id of ['04-04-1-fruit-bar-toffee','12-12-5-soup-powders','04-04-2-fung
 }
 assert.equal(chosen('ginger-cocktail','review','Essence formulation')[0][6],'Regulatory assessment needed');
 assert(!A.microFormRoute('12-12-2-harrisa-red-hot-pepper-paste').options.some(o=>o.profile_key?.startsWith('fruit-03')));
+const grain=A.microFormRows(null,'2026-11-27',{},'grain').slice(1);
+assert.equal(new Set(grain.map(x=>x[0])).size,78);assert.equal(grain.length,152);
+const grainFor=id=>grain.filter(r=>r[0]===id);
+const child=grainFor('formulated-supplements-children');
+const follow=rows.filter(r=>r[0]==='13-13-1-follow-up-formula'&&r[2]===A.areas[1]);
+const criteria=set=>Array.from(set,row=>[row[5],row[8],...row.slice(10,14)]);
+assert.deepEqual(criteria(child),criteria(follow));assert.equal(child.length,9);
+assert(child.every(r=>r[14].includes('#page=43')&&r[14].includes('Appendix%20B')));
+for(const id of ['06-06-4-macaroni-products-instant-noodle','06-06-4-macaroni-products-pasta-products']){
+  const two=grainFor(id);assert.equal(two.length,2);
+  assert(two.some(r=>r[5]==='Salmonella'&&r[10]===5&&r[12]==='Absent/25g'));
+  assert(!two.some(r=>r[5].startsWith('Listeria')));
+}
+for(const id of ['06-06-2-solvent-extracted-groundnut-flour','06-06-2-solvent-extract-soya-flour','06-06-2-solvent-extracted-cotton-seed-flour','06-06-2-solvent-extracted-sesame-flour','06-06-2-solvent-extracted-coconut-flour']){
+  const set=grainFor(id);assert.equal(set.length,3);
+  assert(set.every(r=>r.slice(10,14).every(x=>x==='')));
+  assert(set.some(r=>r[5]==='Total bacterial count'&&r[7]==='≤ 50000'));
+  assert(set.some(r=>r[5]==='Salmonella'&&r[7].includes('25 g')));
+  assert(!rows.some(r=>r[0]===id&&r[2]===A.areas[0]&&r[5]==='Coliform bacteria'));
+}
+assert(grainFor('06-06-7-malted-milk-food').some(r=>r[5]==='Salmonella and Shigella'&&r[7].includes('0.1 g')));
+assert(grainFor('06-06-7-malted-milk-food').some(r=>r[5]==='Salmonella'&&r[12]==='Absent/25g'));
+assert(grainFor('06-06-7-malt-based-foods-malt-food').every(r=>r[3]==='2.4.11(2)'));
+assert(grainFor('06-06-2-expeller-pressed-edible-groundnut-flour').every(r=>!r[7]&&!r[12]));
+assert.equal(grain.filter(r=>r[6].startsWith('No Table 9')).length,58);
+const cereal='06-06-3-breakfast-cereal';
+assert.equal(chosen(cereal,'grain-03','Approved RTE specification').length,3);
+assert.equal(chosen(cereal,'grain-03','')[0][6],'Evidence reference needed');
+assert.equal(chosen(cereal,'review','Cooking required')[0][6],'Regulatory assessment needed');
+assert.equal(A.microFormRows(null,'2010-01-01',{},'grain').length,1);
+
 const plainButtermilk='01-01-1-buttermilk-plain';
 assert.equal(chosen(plainButtermilk,'milk-12','Cultured product').length,6);
 assert.equal(chosen(plainButtermilk,'review','Churning record')[0][6],'Regulatory assessment needed');

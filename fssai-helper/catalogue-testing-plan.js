@@ -403,9 +403,11 @@
       const operative=gazetteNames.has(s.parameter.toLowerCase());
       const review=s.source_question || s.automatic_comparison_blocked || differs || operative;
       const info=specInfo(s);
-      push({...info,form,parameter:s.parameter,status:review?'Resolve source before use':status,
+      const grainMicro=(base.article.startsWith('2.4.13(')||['2.4.11(1)','2.4.11(2)'].includes(base.article))&&grainMicroNames.has(s.parameter);
+      const grainPages=base.article==='2.4.11(1)'?[35]:base.article==='2.4.11(2)'?[36,37]:anchor.p;
+      push({...info,...(grainMicro?{area:areas[1]}:{}),form,parameter:s.parameter,status:review?'Resolve source before use':status,
         notes:join([info.notes,differs?'Chapter and monograph give different numbers.':'',operative?'Use the Gazette finding above for its named scope.':'',anchor.basis]),
-        source:Array.isArray(s.source_pages)&&s.source_pages.every(n=>Number.isInteger(n)&&n>0&&n<=E.documents[anchor.doc].pages)?links(anchor.doc,s.source_pages):defaultSource},operative?undefined:s);
+        source:grainMicro?links(anchor.doc,grainPages).replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):Array.isArray(s.source_pages)&&s.source_pages.every(n=>Number.isInteger(n)&&n>0&&n<=E.documents[anchor.doc].pages)?links(anchor.doc,s.source_pages):defaultSource},operative?undefined:s);
       count++;
     }
     std.criteria.forEach((row,i)=>criterion(row.spec,checked.has(i)?'Source-edition comparison available':'Confirm article and conditions'));
@@ -575,6 +577,11 @@
     const entry=Object.entries(p).find(([k])=>new RegExp('^table_[0-9]+'+(kind==='safety'?'b':'a')+'$').test(k));
     return entry?.[1]||p.current_tables||[];
   }
+  const cerealChapter='chapter-2-4-cereals-v1.json#';
+  const grainMicroNames=new Set(['Total bacterial count','Coliform bacteria','Salmonella','Bacterial count','Coliform count','Yeast and mould','Salmonella and Shigella','E. coli','Vibrio cholerae and V. parahaemolyticus','Faecal streptococci and Staphylococcus aureus','Total plate count','Yeast and mould count']);
+  function grainProduct(id){
+    return E.products[id]?.standard?.startsWith(cerealChapter)||id==='06-06-3-fruit-vegetable-cereal-flakes';
+  }
   function microFormRoute(id){
     return E.products[id]?.micro.find(([,route])=>route.form_evidence)?.[1]||null;
   }
@@ -595,7 +602,8 @@
     const products=id?[id]:Object.keys(E.products);
     for(const key of products){
       const route=microFormRoute(key);
-      if(!route||(!id&&(route.form_evidence.family||null)!==family))continue;
+      const applies=id?(route||grainProduct(key)):family==='grain'?grainProduct(key):route&&(route.form_evidence.family||null)===family;
+      if(!applies)continue;
       out.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>row[2]===areas[1]));
     }
     return out;
@@ -604,11 +612,15 @@
     const product=E.products[id],base={area:areas[1],article:'Appendix B',source:links('chapter-20')};
     const decision=microFormRoute(id), selected=selectedMicroForm(decision,state), reference=String(state?.microFormRef||'').trim();
     const evidence=decision?.form_evidence;
-    const chapter=evidence?links(E.standards[product.standard].doc,evidence.product_pages):'';
-    const extra=evidence?[evidence.family==='fruit-vegetable'?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter,links('chapter-20',evidence.appendix_pages)]:[];
+    const grain=grainProduct(id);
+    const grainPages=grain?(evidence||product.micro[0]?.[1])?.product_pages:null;
+    const chapterPages=evidence?.product_pages||grainPages;
+    const chapter=chapterPages?links(E.standards[product.standard].doc,chapterPages):'';
+    const extra=evidence||grain?[evidence?.family==='fruit-vegetable'||grain?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter]:[];
+    if(evidence)extra.push(links('chapter-20',evidence.appendix_pages));
     function push(row){
       const item={...base,...row};
-      if(evidence)item.source=[...new Set([...extra,item.source].join(' | ').split(' | '))].join(' | ');
+      if(extra.length)item.source=[...new Set([...extra,item.source].join(' | ').split(' | '))].join(' | ');
       add(item);
     }
     function profileRows(route,conditional,reason){
@@ -622,14 +634,14 @@
           const footnotes=profile.pages.footnotes||[];
           const cited=profile.group==='milk'?[...new Set([...pg,...footnotes])]:pg;
           const tableRef=Array.isArray(profile.pages)?'Table 7':Object.entries(profile.pages).find(([k,v])=>k.startsWith('table_')&&v===pg)?.[0]?.replace('table_','Table ').toUpperCase();
-          const fruitStage=evidence?.family==='fruit-vegetable'?(kind==='hygiene'
+          const fruitStage=(evidence?.family==='fruit-vegetable'||(grain&&route.profile_key==='fruit-06'))?(kind==='hygiene'
             ?'End of manufacture. Use this criterion to assess process hygiene and investigate unsatisfactory results. It is not a lot-release criterion.'
             :'Food safety criterion for lot acceptability at the end of manufacture and during market shelf life.'):'';
           const conditionalYeast=route.profile_key==='milk-11'&&organism==='yeast_and_mold_count';
           const caseinOnly=route.profile_key==='milk-07'&&organism==='yeast_and_mold_count';
           push({article:join(['Appendix B',tableRef || (kind==='supplemental_process_criteria'?'Table 2A footnote 4':profile.group==='bakers_yeast'?'Tables 6A/6B':'') ,kindLabel]),
             form:route.source_clause?R.products[id].name+' · '+form:form,parameter:R.organisms[organism]||label(organism),status:row.source_question?'Resolve source before use':conditional||conditionalYeast||caseinOnly?'Confirm product form':'Mapped table row',
-            limit:row.requirement||'',unit:row.unit,notes:join([fruitStage,reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
+            limit:row.requirement||'',unit:row.unit,notes:join([fruitStage,profile.group==='food_grains'&&grain?(kind==='hygiene'?'Process hygiene at the end of manufacture. An unsatisfactory result calls for corrective action.':'Lot acceptability at the end of manufacture and throughout market shelf life.'):'',reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
               row.applicability,conditionalYeast?'Exclude mould-ripened cheese.':'',caseinOnly?'Applies to casein powder only.':'',
               kind==='hygiene'?criteria.stage:'',profile.group==='milk'?(kind==='safety'?'End of manufacture and products on the market during shelf life.':'Process hygiene at end of manufacture.'):'',detail(criteria.notes)]),n:row.n,c:row.c,m:row.m,M:row.M,source:[...microSources(route),links('chapter-20',cited)].join(' | ')});
           count++;
@@ -683,6 +695,10 @@
       return;
     }
     for(const [kind,route] of product.micro){
+      if(kind==='chapter_specific')continue; // Product-standard rows are emitted by composition to retain measured-result context.
+      if(kind==='grain_scope'){
+        push({article:product.standard.split('#')[1]+' · Appendix B Tables 9A/9B',form:R.products[id].name,parameter:'Food-grain table applicability',status:'No Table 9 category established for the named form',notes:route.note,source:links('chapter-20',[58,59])});continue;
+      }
       if(kind==='conditional')for(const option of route.options||[])profileRows(option,true,route.reason);
       else if(route.profile_key)profileRows(route,false,'');
       else {
@@ -1141,5 +1157,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sampleArea,microPhDecision,microFormRoute,microFormChoice,microFormRows,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleArea,grainProduct,microPhDecision,microFormRoute,microFormChoice,microFormRows,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
