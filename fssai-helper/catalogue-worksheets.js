@@ -4,11 +4,11 @@
   const E = root.PMSVCatalogueEvidence, R = root.PMSVCatalogueRules;
   const registry = root.PMSV_REVIEW_REGISTER, C = root.PMSVCropScope, P = root.PMSVMetalPanel, V = root.PMSVVeterinary, X = root.PMSVPesticides, Y = root.PMSVResiduePanel, Q = root.PMSVIngredientPercentage, O = root.PMSVIngredientOrder, S = root.PMSVSmallPack, T = root.PMSVBatchSite, L = root.PMSVLotDates;
   const composition = root.PMSVVariantComposition, plan = root.PMSVTestingPlan, water = root.PMSVVendingWater, cocoaMix = root.PMSVCocoaMixtures;
-  const sulphites=root.PMSVSulphites,egg=root.PMSVEggMicrobiology;
+  const sulphites=root.PMSVSulphites,egg=root.PMSVEggMicrobiology,spice=root.PMSVSpiceMicrobiology;
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
   const ayurveda=root.PMSVAyurvedaPlan,powders=root.PMSVPowderStandards,coffee=root.PMSVCoffee;
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 164 && egg?.products.size===registry.finishedSampleReview?.eggMicroProducts && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 165 && spice?.products.size===registry.finishedSampleReview?.spiceMicroProducts && egg?.products.size===registry.finishedSampleReview?.eggMicroProducts && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -30,7 +30,7 @@
   const lab=root.PMSVLabGuide, importDocs=root.PMSVImportDocuments;
   const broad=root.PMSVBroadContaminants;
   const sampling=root.PMSVSamplingQuantities, formulation=root.PMSVFormulation;
-  const fields = [...(egg?.fields||[]),'microForm','microFormRef','microPh','microPhRef',...(formulation?.assayFields||[]),'dispatchRow',...(sampling?.lotFields||[]),...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
+  const fields = [...(egg?.fields||[]),...(spice?.fields||[]),'microForm','microFormRef','microPh','microPhRef',...(formulation?.assayFields||[]),'dispatchRow',...(sampling?.lotFields||[]),...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -294,11 +294,11 @@
     const rows=plan.microFormRows(id,state.vetDate,state).slice(1);
     if(!rows.length)return '<p>Select a supported worksheet date to view sampling criteria.</p>';
     const fruit=plan.microFormRoute(id)?.form_evidence.family==='fruit-vegetable',grain=plan.grainProduct(id);
-    const eggProduct=egg?.products.has(id);
-    const showTable=fruit||grain||eggProduct;
+    const hasReport=!!reportModule(id);
+    const showTable=fruit||grain||hasReport;
     const cells=rows.map(r=>{
       const sampling=['n','c','m','M'].flatMap((key,i)=>r[10+i]!==''?[key+' = '+r[10+i]]:[]).join(', ');
-      return [esc(r[4]),esc(r[5]),...(showTable?[esc(r[3])]:[]),esc(r[6]),esc([grain?r[7]:'',sampling,r[8]].filter(Boolean).join(' · ')),...((grain||eggProduct)?[esc(r[9])]:[]),r[14].split(' | ').map(u=>href(u,(u.includes('Appendix%20B')?'Appendix B':'Product standard')+' p. '+u.split('#page=')[1])).join(' ')];
+      return [esc(r[4]),esc(r[5]),...(showTable?[esc(r[3])]:[]),esc(r[6]),esc([grain?r[7]:'',sampling,r[8]].filter(Boolean).join(' · ')),...((grain||hasReport)?[esc(r[9])]:[]),r[14].split(' | ').map(u=>href(u,(u.includes('Appendix%20B')?'Appendix B':u.includes('Gazette_Notification_Spices')?'Spice Gazette':'Product standard')+' p. '+u.split('#page=')[1])).join(' ')];
     });
     const option=plan.microFormRoute(id)?.options.find(o=>plan.microFormChoice(o)===state.microForm);
     const decision=option?.ph_exclusion&&String(state.microFormRef||'').trim()?'<p role="status">'+esc(plan.microPhDecision(state).note)+'</p>':'';
@@ -309,7 +309,7 @@
         :'Evidence reference needed. The plan retains the yeast and mould count until the fermentation record is entered.';
       fermentation='<p role="status">'+message+'</p>';
     }
-    return decision+fermentation+stage+table(['Food form','Parameter or decision',...(showTable?['Article or table']:[]),'Applicability','Sampling plan',...((grain||eggProduct)?['Reporting basis or scope']:[]),'Source'],cells);
+    return decision+fermentation+stage+table(['Food form','Parameter or decision',...(showTable?['Article or table']:[]),'Applicability','Sampling plan',...((grain||hasReport)?['Reporting basis or scope']:[]),'Source'],cells);
   }
   function microFormPanel(id,route,state){
     const options=route.options.map(option=>{
@@ -326,36 +326,45 @@
       '<p>Record the evidence for the selected route. The full catalogue export shows the options for all products.</p><div data-micro-form-results>'+microDecisionTable(id,state)+'</div>'+
       '<button type="button" data-export-micro-form>Export this microbiological plan</button></div></details>';
   }
-  function eggReportInputs(id,state){
+  function reportModule(id){
+    if(egg?.products.has(id))return egg;
+    if(spice?.products.has(id))return spice;
+    return null;
+  }
+  function labReportInputs(id,state){
+    const lab=reportModule(id);
     if(!plan.metalEdition(state.vetDate))return '<p>Select a supported worksheet date.</p>';
-    const criteria=egg.criteria(id,state);
-    if(!criteria.length)return '<p>Confirm the pasteurized liquid product and its supporting record to enter a laboratory set.</p>';
-    const options=criteria.map(([key])=>'<option value="'+key+'"'+(key===state.eggOrganism?' selected':'')+'>'+esc(R.organisms[key])+'</option>').join('');
-    const selected=criteria.find(([key])=>key===state.eggOrganism);
+    const criteria=lab.criteria(id,state);
+    if(!criteria.length)return '<p>'+ (lab===egg?'Confirm the pasteurized liquid product and its supporting record.':'Select a supported spice form and record the supporting specification or batch reference.')+'</p>';
+    const options=criteria.map(([key])=>'<option value="'+key+'"'+(key===state[lab.organism]?' selected':'')+'>'+esc(R.organisms[key])+'</option>').join('');
+    const selected=criteria.find(([key])=>key===state[lab.organism]);
     let inputs='';
     if(selected){
       const rule=selected[1],qualitative=rule.unit==='qualitative';
-      const isHygiene=Object.hasOwn(R.micro[egg.products.get(id)].criteria.hygiene,selected[0]);
+      const isHygiene=Object.hasOwn(R.micro[lab.profileKey(id,state)].criteria.hygiene,selected[0]);
       const thresholds='n = '+rule.n+', c = '+rule.c+', m = '+rule.m+(rule.M==null?'':', M = '+rule.M)+(qualitative?'':' cfu/g');
       const context=isHygiene?'Process hygiene at the end of manufacture':'Food safety at the end of manufacture and during market shelf life';
-      const planLine='<p><strong>'+esc(thresholds)+'</strong> · '+esc(context)+' · '+documentLink('chapter-20',isHygiene?53:54,isHygiene?'Table 8A':'Table 8B')+'</p>';
+      const planLine='<p><strong>'+esc(thresholds)+'</strong> · '+esc(context)+' · '+documentLink('chapter-20',lab.firstPage+(isHygiene?0:1),'Table '+lab.table+(isHygiene?'A':'B'))+'</p>';
       const field=(key,title,limit)=>'<label>'+title+'<input maxlength="'+limit+'" data-ws-field="'+key+'" value="'+esc(state[key])+'"></label>';
-      inputs=planLine+field('eggLot','Lot reference',180)+field('eggReport','Laboratory report reference',180)+egg.units.map((key,i)=>{
+      inputs=planLine+field(lab.lot,'Lot reference',180)+field(lab.report,'Laboratory report reference',180)+lab.units.map((key,i)=>{
         const title='Unit '+(i+1);
         if(!qualitative)return field(key,title+' (cfu/g)',45);
         return '<label>'+title+' (25 g)<select data-ws-field="'+key+'"><option value="">Select result</option>'+['Absent','Present'].map(v=>'<option'+(state[key]===v?' selected':'')+'>'+v+'</option>').join('')+'</select></label>';
       }).join('');
     }
-    return '<label>Reported criterion<select data-ws-field="eggOrganism"><option value="">Select a criterion</option>'+options+'</select></label>'+inputs+'<p role="status" data-egg-outcome>'+esc(egg.outcome(id,state))+'</p>';
+    return '<label>Reported criterion<select data-ws-field="'+lab.organism+'"><option value="">Select a criterion</option>'+options+'</select></label>'+inputs+'<p role="status" data-lab-outcome'+(lab===egg?' data-egg-outcome':'')+'>'+esc(lab.outcome(id,state))+'</p>';
   }
-  function eggReportPanel(id){
-    if(!egg?.products.has(id)||egg.products.get(id)==='egg-01')return '';
-    return '<details class="ws-section" data-egg-report><summary>Check one laboratory set of five egg results</summary><p>'+esc(egg.regulatory)+'</p><div data-egg-inputs>'+eggReportInputs(id,getState(id))+'</div></details>';
+  function labReportPanel(id){
+    const lab=reportModule(id);
+    if(!lab||lab.products.get(id)==='egg-01')return '';
+    const mapping=E.products[id].micro[0][1];
+    if(mapping.options&&!mapping.options.some(o=>o.profile_key))return '';
+    return '<details class="ws-section" data-'+lab.prefix+'-report><summary>Check one laboratory set of five '+lab.prefix+' results</summary><p>'+esc(lab.regulatory)+'</p><div data-lab-inputs data-'+lab.prefix+'-inputs>'+labReportInputs(id,getState(id))+'</div></details>';
   }
   function microSection(id,p) {
     const route=plan.microFormRoute(id);
-    if(route)return microFormPanel(id,route,getState(id))+eggReportPanel(id);
-    if(egg?.products.has(id))return '<details class="ws-section" data-egg-plan><summary>Microbiological criteria and sampling</summary><div data-micro-form-results>'+microDecisionTable(id,getState(id))+'</div><button type="button" data-export-micro-form>Export this microbiological plan</button></details>'+eggReportPanel(id);
+    if(route)return microFormPanel(id,route,getState(id))+labReportPanel(id);
+    if(reportModule(id))return '<details class="ws-section" data-'+reportModule(id).prefix+'-plan><summary>Microbiological criteria and sampling</summary><div data-micro-form-results>'+microDecisionTable(id,getState(id))+'</div><button type="button" data-export-micro-form>Export this microbiological plan</button></details>'+labReportPanel(id);
     if(plan.grainProduct(id))return '<details class="ws-section" data-grain-plan><summary>Microbiological criteria and sampling</summary><div data-micro-form-results>'+microDecisionTable(id,getState(id))+'</div><button type="button" data-export-micro-form>Export this microbiological plan</button></details>';
     const sections=[];
     function profile(key,route) {
@@ -628,19 +637,20 @@
         node.querySelector('[data-micro-form-results]').innerHTML=microDecisionTable(id,state);
         refreshPlan();
       }
-      if(egg?.products.has(id)&&(egg.fields.includes(k)||['microForm','microFormRef','vetDate'].includes(k))){
+      const report=reportModule(id);
+      if(report&&(report.fields.includes(k)||['microForm','microFormRef','vetDate'].includes(k))){
         const routeChange=['microForm','microFormRef'].includes(k)&&previous&&previous!==state[k];
-        const criterionChange=k==='eggOrganism'&&previous!==state[k];
-        const identityChange=['eggLot','eggReport'].includes(k)&&previous&&previous!==state[k];
-        const clear=routeChange?egg.fields:identityChange&&k==='eggLot'?['eggReport',...egg.units]:criterionChange||identityChange?egg.units:[];
+        const criterionChange=k===report.organism&&previous!==state[k];
+        const identityChange=[report.lot,report.report].includes(k)&&previous&&previous!==state[k];
+        const clear=routeChange?report.fields:identityChange&&k===report.lot?[report.report,...report.units]:criterionChange||identityChange?report.units:[];
         for(const name of clear){
           state[name]='';
           const input=node.querySelector('[data-ws-field="'+name+'"]');if(input)input.value='';
         }
-        const body=node.querySelector('[data-egg-inputs]');
+        const body=node.querySelector('[data-lab-inputs]');
         if(body){
-          if(egg.fields.includes(k)&&k!=='eggOrganism')body.querySelector('[data-egg-outcome]').textContent=egg.outcome(id,state);
-          else body.innerHTML=eggReportInputs(id,state);
+          if(report.fields.includes(k)&&k!==report.organism)body.querySelector('[data-lab-outcome]').textContent=report.outcome(id,state);
+          else body.innerHTML=labReportInputs(id,state);
         }
         node.querySelector('[data-micro-form-results]').innerHTML=microDecisionTable(id,state);
         refreshPlan();
@@ -879,7 +889,7 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
-      ...((plan.microFormRoute(id)?s.microForm:plan.grainProduct(id)||egg?.products.has(id))?plan.microFormRows(id,s.vetDate,s).slice(1).map(row=>{
+      ...((plan.microFormRoute(id)?s.microForm:plan.grainProduct(id)||reportModule(id))?plan.microFormRows(id,s.vetDate,s).slice(1).map(row=>{
         const sampling=['n','c','m','M'].flatMap((key,i)=>row[10+i]!==''?[key+' = '+row[10+i]]:[]).join(', ');
         return [row[4],row[5],row[6],row[7],sampling,row[8],row[9],row[14]].filter(Boolean).join(' · ');
       }):[]),

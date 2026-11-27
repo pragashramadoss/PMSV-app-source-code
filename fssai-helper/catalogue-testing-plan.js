@@ -602,8 +602,9 @@
     const products=id?[id]:Object.keys(E.products);
     for(const key of products){
       const route=microFormRoute(key);
-      const egg=root.PMSVEggMicrobiology?.products.has(key);
-      const applies=id?(route||grainProduct(key)||egg):family==='grain'?grainProduct(key):family==='egg'?egg:route&&(route.form_evidence.family||null)===family;
+      const egg=root.PMSVEggMicrobiology?.products.has(key),spice=root.PMSVSpiceMicrobiology?.products.has(key);
+      const groups={grain:grainProduct(key),egg,spice};
+      const applies=id?(route||groups.grain||egg||spice):Object.hasOwn(groups,family)?groups[family]:route&&(route.form_evidence.family||null)===family;
       if(!applies)continue;
       out.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>row[2]===areas[1]));
     }
@@ -616,10 +617,13 @@
     const grain=grainProduct(id);
     const grainPages=grain?(evidence||product.micro[0]?.[1])?.product_pages:null;
     const egg=root.PMSVEggMicrobiology,eggProduct=egg?.products.has(id);
-    const chapterPages=evidence?.product_pages||grainPages||(eggProduct?E.standards[product.standard].p:null);
+    const spice=root.PMSVSpiceMicrobiology,spiceProduct=spice?.products.has(id);
+    const chapterPages=evidence?.product_pages||grainPages||(spiceProduct?product.micro[0][1].product_pages:null)||(eggProduct?E.standards[product.standard].p:null);
     const chapter=chapterPages?links(E.standards[product.standard].doc,chapterPages):'';
-    const extra=evidence||grain||eggProduct?[evidence?.family==='fruit-vegetable'||grain||eggProduct?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter]:[];
+    const extra=evidence||grain||eggProduct||spiceProduct?[evidence?.family==='fruit-vegetable'||grain||eggProduct||spiceProduct?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter]:[];
     if(evidence)extra.push(links('chapter-20',evidence.appendix_pages));
+    const spiceGazette='https://fssai.gov.in/upload/notifications/2020/10/5f86e028b231eGazette_Notification_Spices_14_10_2020.pdf';
+    if(spiceProduct)extra.push(links('chapter-20',[24,25,26,27,28]),spiceGazette+'#page=15',spiceGazette+'#page=16');
     if(eggProduct)extra.push(links('chapter-20',[53,54,55,56]));
     function push(row){
       const item={...base,...row};
@@ -644,11 +648,14 @@
           const caseinOnly=route.profile_key==='milk-07'&&organism==='yeast_and_mold_count';
           push({article:join(['Appendix B',tableRef || (kind==='supplemental_process_criteria'?'Table 2A footnote 4':profile.group==='bakers_yeast'?'Tables 6A/6B':'') ,kindLabel]),
             form:route.source_clause?R.products[id].name+' · '+form:form,parameter:R.organisms[organism]||label(organism),status:row.source_question?'Resolve source before use':conditional||conditionalYeast||caseinOnly?'Confirm product form':'Mapped table row',
-            limit:row.requirement||'',unit:row.unit,notes:join([eggProduct?(kind==='hygiene'?'Assess process hygiene at the end of manufacture. Investigate unsatisfactory results, improve hygiene and check all Table 8B criteria.':'Assess lot acceptability at the end of manufacture and throughout market shelf life. '+egg.regulatory):'',eggProduct&&state.eggOrganism===organism?egg.note(id,state):'',fruitStage,profile.group==='food_grains'&&grain?(kind==='hygiene'?'Process hygiene at the end of manufacture. An unsatisfactory result calls for corrective action.':'Lot acceptability at the end of manufacture and throughout market shelf life.'):'',reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
+            limit:row.requirement||'',unit:row.unit,notes:join([spiceProduct?(kind==='hygiene'?'Process hygiene at the end of manufacture. Investigate unsatisfactory results and verify food safety criteria.':'Food safety at the end of manufacture and during market shelf life. '+spice.regulatory):'',spiceProduct&&state.spiceOrganism===organism?spice.note(id,state):'',eggProduct?(kind==='hygiene'?'Assess process hygiene at the end of manufacture. Investigate unsatisfactory results, improve hygiene and check all Table 8B criteria.':'Assess lot acceptability at the end of manufacture and throughout market shelf life. '+egg.regulatory):'',eggProduct&&state.eggOrganism===organism?egg.note(id,state):'',fruitStage,profile.group==='food_grains'&&grain?(kind==='hygiene'?'Process hygiene at the end of manufacture. An unsatisfactory result calls for corrective action.':'Lot acceptability at the end of manufacture and throughout market shelf life.'):'',reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
               row.applicability,conditionalYeast?'Exclude mould-ripened cheese.':'',caseinOnly?'Applies to casein powder only.':'',
               kind==='hygiene'?criteria.stage:'',profile.group==='milk'?(kind==='safety'?'End of manufacture and products on the market during shelf life.':'Process hygiene at end of manufacture.'):'',detail(criteria.notes)]),n:row.n,c:row.c,m:row.m,M:row.M,source:[...microSources(route),links('chapter-20',cited)].join(' | ')});
           count++;
         }
+      }
+      if(spiceProduct&&route.profile_key==='spice-05'){
+        push({article:'Appendix B · Table 3B, row 5',form,parameter:'Listeria monocytogenes · source confirmation',status:'Verify Gazette basis before use',notes:join([reason,'The April 2025 compendium page displays a Listeria entry for preserved spice paste. The October 2020 Gazette Table 3B lists three other food safety organisms. Verify the amending notification before interpreting a Listeria result for this category.']),source:links('chapter-20',[25])+' | '+spiceGazette+'#page=16'});
       }
       if(criteria.safety_special_requirement){
         push({form,parameter:'Food safety special requirement',status:conditional?'Confirm product form':'Mapped table row',
