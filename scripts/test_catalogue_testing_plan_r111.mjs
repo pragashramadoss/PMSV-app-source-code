@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19227);
-const totals=[3855,2574,5868,6930];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19250);
+const totals=[3855,2597,5868,6930];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -41,6 +41,24 @@ assert.equal(processing.length,5);
 assert(processing.every(r=>r[6]==='Processing-study guidance'&&!r[7]&&!r[8]&&r[14].endsWith('#page=53')));
 assert(!A.processingRow('10-10-2-egg-powder'));
 
+const conditional=A.microFormRows(null,'2026-11-27').slice(1);
+assert.equal(new Set(conditional.map(r=>r[0])).size,7);
+assert.equal(conditional.length,96);
+assert(conditional.every(r=>r[6]==='Confirm product form'||(r[6]==='Regulatory assessment needed'&&r.slice(10,14).every(x=>x===''))));
+const chosen=(id,key,ref)=>A.microFormRows(id,'2026-12-01',{microForm:key,microFormRef:ref}).slice(1);
+for(const herb of ['12-12-2-dried-mint','12-12-2-dried-laurel-or-dried-bay-leaf']){
+  const ground=chosen(herb,'spice-03','Grinder lot');
+  assert.equal(ground.length,7);assert(ground.every(r=>r[4].includes('Ground')&&r[9].includes('Grinder lot')));
+}
+const plainButtermilk='01-01-1-buttermilk-plain';
+assert.equal(chosen(plainButtermilk,'milk-12','Cultured product').length,6);
+assert.equal(chosen(plainButtermilk,'review','Churning record')[0][6],'Regulatory assessment needed');
+assert.equal(chosen(plainButtermilk,'milk-12',' ')[0][6],'Evidence reference needed');
+assert.equal(A.microFormRows(null,'2010-01-01').length,1);
+const cooked=chosen('08-08-3-meat-sausages-smoked','meat-08','Core process record');
+assert(cooked.every(r=>r[14].includes('#page=12')&&r[9].includes('Core process record')));
+const pickle=conditional.find(r=>r[4].includes('Ready-to-eat pickled')&&r[6]==='Regulatory assessment needed');
+assert(pickle&&pickle[14].includes('#page=9')&&pickle[14].includes('#page=43'));
 function forProduct(product){return rows.filter(r=>r[1]===product);}
 const composition=p=>forProduct(p).filter(r=>r[2]===A.areas[0]);
 assert(composition('Cow Milk').some(r=>r[5]==='Milk fat'&&r[7]==='≥ 3.2'));

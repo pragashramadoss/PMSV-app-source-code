@@ -575,9 +575,33 @@
     const entry=Object.entries(p).find(([k])=>new RegExp('^table_[0-9]+'+(kind==='safety'?'b':'a')+'$').test(k));
     return entry?.[1]||p.current_tables||[];
   }
-  function microbiology(id,add) {
+  function microFormRoute(id){
+    return E.products[id]?.micro.find(([,route])=>route.form_evidence)?.[1]||null;
+  }
+  function microFormChoice(option){return option.profile_key||'review';}
+  function selectedMicroForm(route,state){
+    return route?.options.find(option=>microFormChoice(option)===state?.microForm)||null;
+  }
+  function microFormRows(id,date,state={}){
+    const out=[headers];
+    if(!metalEdition(date))return out;
+    const products=id?[id]:Object.keys(E.products);
+    for(const key of products){
+      if(!microFormRoute(key))continue;
+      out.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>row[2]===areas[1]));
+    }
+    return out;
+  }
+  function microbiology(id,add,state={}) {
     const product=E.products[id],base={area:areas[1],article:'Appendix B',source:links('chapter-20')};
-    const push=row=>add({...base,...row});
+    const decision=microFormRoute(id), selected=selectedMicroForm(decision,state), reference=String(state?.microFormRef||'').trim();
+    const evidence=decision?.form_evidence;
+    const extra=evidence?[links(E.standards[product.standard].doc,evidence.product_pages),links('chapter-20',evidence.appendix_pages)]:[];
+    function push(row){
+      const item={...base,...row};
+      if(evidence)item.source=[...new Set([...extra,item.source].join(' | ').split(' | '))].join(' | ');
+      add(item);
+    }
     function profileRows(route,conditional,reason){
       const profile=R.micro[route.profile_key];
       if(!profile){push({form:route.condition,parameter:'Product and process mapping',status:'Review route',notes:join([reason,route.message,route.note,route.reason,route.route])});return;}
@@ -614,6 +638,21 @@
       push({parameter:'Appendix B product and process mapping',status:'Establish Appendix B route',notes:direct?
         'Product-specific microbiological cells appear separately. Check Appendix B against the supplied food and process.':
         'Check Appendix B and the product regulation for the food as supplied. No Appendix B numerical plan has been assigned in the catalogue.'});return;
+    }
+    if(decision){
+      const options=selected?[selected]:decision.options;
+      for(const option of options){
+        const condition=option.condition||option.when;
+        const reason=join([evidence.prompt,selected&&reference?'Evidence: '+reference:'']);
+        if(!option.profile_key||option.automatic_selection_allowed===false||(selected&&!reference)){
+          const needsEvidence=selected&&!reference&&option.profile_key&&option.automatic_selection_allowed!==false;
+          push({form:condition,parameter:'Product form and microbiological scope',status:needsEvidence?'Evidence reference needed':'Regulatory assessment needed',
+            notes:join([reason,needsEvidence?'Record the specification or batch reference before using this route.':option.message])});
+        }else{
+          profileRows({...option,condition},!selected,reason);
+        }
+      }
+      return;
     }
     for(const [kind,route] of product.micro){
       if(kind==='conditional')for(const option of route.options||[])profileRows(option,true,route.reason);
@@ -823,7 +862,7 @@
     const coffee=root.PMSVCoffee;
     if(id==='coffee'&&(!state?.coffeeForm||state.coffeeForm==='green'))add({...coffee.rawBeanRow(id),area:areas[4]});
     if(id===root.PMSVCocoaMixtures?.productId)for(const rule of root.PMSVCocoaMixtures.planRows(state))add({...rule,area:areas[0]});
-    microbiology(id,add);contaminants(id,add,vetDate,state||{});
+    microbiology(id,add,state);contaminants(id,add,vetDate,state||{});
     if(metalEdition(vetDate))for(const row of incomingSamples.rows(id))add(row);
     for(const r of root.PMSVPesticides.planRows(id))add({...r,area:areas[4]});
     for(const r of root.PMSVVeterinary.planRows(id,vetDate))add({...r,area:areas[5]});
@@ -1074,5 +1113,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sampleArea,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleArea,microFormRoute,microFormChoice,microFormRows,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);
