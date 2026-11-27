@@ -622,7 +622,7 @@
     const chapter=chapterPages?links(E.standards[product.standard].doc,chapterPages):'';
     const extra=evidence||grain||eggProduct||spiceProduct?[evidence?.family==='fruit-vegetable'||grain||eggProduct||spiceProduct?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter]:[];
     if(evidence)extra.push(links('chapter-20',evidence.appendix_pages));
-    const spiceGazette='https://fssai.gov.in/upload/notifications/2020/10/5f86e028b231eGazette_Notification_Spices_14_10_2020.pdf';
+    const spiceGazette='https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5f86e028b231eGazette_Notification_Spices_14_10_2020.pdf';
     if(spiceProduct)extra.push(links('chapter-20',[24,25,26,27,28]),spiceGazette+'#page=15',spiceGazette+'#page=16');
     if(eggProduct)extra.push(links('chapter-20',[53,54,55,56]));
     function push(row){

@@ -18,4 +18,4 @@ The chocolate provision applies to the finished food under 2.7.4. Cocoa mass, co
 
 R165 incorrectly flagged Listeria monocytogenes in Table 3B. For wet-ground (paste), preserved or pickled spices, the official table lists Salmonella, sulphite-reducing clostridia and Bacillus cereus. The worksheet now includes those three food-safety criteria and the four Table 3A process-hygiene criteria. This correction applies to this named category.
 
-[Appendix B, Table 3B, p. 25](https://mail.fssai.gov.in/upload/uploadfiles/files/20_%20Appendix%20B.pdf#page=25) · [2020 amending Gazette, pp. 15–16](https://www.fssai.gov.in/upload/notifications/2020/10/5f86e028b231eGazette_Notification_Spices_14_10_2020.pdf#page=16)
+[Appendix B, Table 3B, p. 25](https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20B(1).pdf#page=25) · [2020 amending Gazette, pp. 15–16](https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/5f86e028b231eGazette_Notification_Spices_14_10_2020.pdf#page=16)
