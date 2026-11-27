@@ -604,7 +604,8 @@
     const product=E.products[id],base={area:areas[1],article:'Appendix B',source:links('chapter-20')};
     const decision=microFormRoute(id), selected=selectedMicroForm(decision,state), reference=String(state?.microFormRef||'').trim();
     const evidence=decision?.form_evidence;
-    const extra=evidence?[links(E.standards[product.standard].doc,evidence.product_pages),links('chapter-20',evidence.appendix_pages)]:[];
+    const chapter=evidence?links(E.standards[product.standard].doc,evidence.product_pages):'';
+    const extra=evidence?[evidence.family==='fruit-vegetable'?chapter.replaceAll('https://www.fssai.gov.in/','https://fssai.gov.in/'):chapter,links('chapter-20',evidence.appendix_pages)]:[];
     function push(row){
       const item={...base,...row};
       if(evidence)item.source=[...new Set([...extra,item.source].join(' | ').split(' | '))].join(' | ');
@@ -621,11 +622,14 @@
           const footnotes=profile.pages.footnotes||[];
           const cited=profile.group==='milk'?[...new Set([...pg,...footnotes])]:pg;
           const tableRef=Array.isArray(profile.pages)?'Table 7':Object.entries(profile.pages).find(([k,v])=>k.startsWith('table_')&&v===pg)?.[0]?.replace('table_','Table ').toUpperCase();
+          const fruitStage=evidence?.family==='fruit-vegetable'?(kind==='hygiene'
+            ?'End of manufacture. Use this criterion to assess process hygiene and investigate unsatisfactory results. It is not a lot-release criterion.'
+            :'Food safety criterion for lot acceptability at the end of manufacture and during market shelf life.'):'';
           const conditionalYeast=route.profile_key==='milk-11'&&organism==='yeast_and_mold_count';
           const caseinOnly=route.profile_key==='milk-07'&&organism==='yeast_and_mold_count';
           push({article:join(['Appendix B',tableRef || (kind==='supplemental_process_criteria'?'Table 2A footnote 4':profile.group==='bakers_yeast'?'Tables 6A/6B':'') ,kindLabel]),
             form:route.source_clause?R.products[id].name+' · '+form:form,parameter:R.organisms[organism]||label(organism),status:row.source_question?'Resolve source before use':conditional||conditionalYeast||caseinOnly?'Confirm product form':'Mapped table row',
-            limit:row.requirement||'',unit:row.unit,notes:join([reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
+            limit:row.requirement||'',unit:row.unit,notes:join([fruitStage,reason,route.note,route.matrix_scope_note,route.message,row.notes,row.source_question,
               row.applicability,conditionalYeast?'Exclude mould-ripened cheese.':'',caseinOnly?'Applies to casein powder only.':'',
               kind==='hygiene'?criteria.stage:'',profile.group==='milk'?(kind==='safety'?'End of manufacture and products on the market during shelf life.':'Process hygiene at end of manufacture.'):'',detail(criteria.notes)]),n:row.n,c:row.c,m:row.m,M:row.M,source:[...microSources(route),links('chapter-20',cited)].join(' | ')});
           count++;
@@ -652,7 +656,18 @@
       for(const option of options){
         const condition=option.condition||option.when;
         const reason=join([evidence.prompt,selected&&reference?'Evidence: '+reference:'']);
-        if(option.ph_exclusion&&!selected){
+        if(option.fermentation_exclusion){
+          const documented=!!selected&&!!reference;
+          if(documented){
+            profileRows({...option,condition,exclude_criteria:['yeast_and_mold_count']},false,join([reason,'Table 4A footnote 3 applies because the documented fermentation involved yeast or mould. The yeast and mould count is omitted.']));
+          }else if(selected){
+            const routine=decision.options.find(o=>o.profile_key===option.profile_key&&!o.fermentation_exclusion);
+            profileRows(routine,true,join([reason,'Evidence reference needed. The full preserved-product plan retains the yeast and mould count until a process or batch record confirms the fermentation.']));
+          }else{
+            push({form:condition,parameter:'Fermentation evidence for yeast and mould count',status:'Evidence required for exclusion',
+              notes:join([reason,'Keep the yeast and mould count in the routine plan until the batch record identifies involvement of yeast or mould in fermentation. All food safety criteria continue to apply.'])});
+          }
+        }else if(option.ph_exclusion&&!selected){
           push({form:condition,parameter:'Optional Listeria testing decision',status:'Evidence required for exclusion',notes:join([reason,'The catalogue plan retains Listeria. Select this option on the individual worksheet only for an eligible product and record its pH result and reference.'])});
         }else if(!option.profile_key||option.automatic_selection_allowed===false||(selected&&!reference)){
           const needsEvidence=selected&&!reference&&option.profile_key&&option.automatic_selection_allowed!==false;

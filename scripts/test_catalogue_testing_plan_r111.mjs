@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19496);
-const totals=[3855,2843,5868,6930];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,20030);
+const totals=[3855,3377,5868,6930];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -51,8 +51,8 @@ for(const herb of ['12-12-2-dried-mint','12-12-2-dried-laurel-or-dried-bay-leaf'
   assert.equal(ground.length,7);assert(ground.every(r=>r[4].includes('Ground')&&r[9].includes('Grinder lot')));
 }
 const fruitFamily=A.microFormRows(null,'2026-11-27',{},'fruit-vegetable').slice(1);
-assert.equal(new Set(fruitFamily.map(row=>row[0])).size,12);
-assert.equal(fruitFamily.length,348);
+assert.equal(new Set(fruitFamily.map(row=>row[0])).size,55);
+assert.equal(fruitFamily.length,1262);
 assert(fruitFamily.every(row=>row[14].includes('#page=35')));
 for(const [id,key] of [['fruit-juices','fruit-04a'],['carbonated-fruit-beverages','fruit-04b']]){
   for(const [microPh,microPhRef,exclude] of [
@@ -75,6 +75,32 @@ assert(chosen(pulp,'fruit-07','Non-liquid specification').some(r=>r[5]==='Salmon
 assert(chosen(pulp,'fruit-08-liquid','Retort record').some(r=>r[5]==='Salmonella'&&r[12]==='Absent/25ml'));
 assert.equal(chosen(pulp,'review','')[0][6],'Regulatory assessment needed');
 assert.equal(A.microFormRows(null,'2010-01-01',{},'fruit-vegetable').length,1);
+for(const id of ['squash','crush','cordial','fruit-syrup-sharbat']){
+  const selected=chosen(id,'fruit-03-liquid','Filled liquid drink specification');
+  assert.equal(selected.length,7);
+  assert.equal(selected.find(r=>r[5]==='Salmonella')[12],'Absent/25ml');
+  assert(selected.every(r=>r[14].startsWith('https://fssai.gov.in/')&&r[14].includes('#page=36')));
+  assert(selected.filter(r=>r[3].includes('TABLE 4A')).every(r=>r[9].includes('process hygiene')));
+  assert(selected.filter(r=>r[3].includes('TABLE 4B')).every(r=>r[9].includes('market shelf life')));
+  assert(!A.microFormRoute(id).options.some(o=>o.profile_key==='fruit-03'||o.ph_exclusion||o.fermentation_exclusion));
+}
+const olive='04-04-2-table-olives';
+const oliveNormal=chosen(olive,'fruit-03','Pickled in vinegar');
+const oliveSpecial=chosen(olive,'fruit-03-ym','Fermentation process record');
+assert.equal(oliveNormal.length,7);assert.equal(oliveSpecial.length,6);
+assert.deepEqual(Array.from(oliveNormal.filter(r=>!/^Yeast/i.test(r[5])),r=>[r[5],...r.slice(10,14)]),Array.from(oliveSpecial,r=>[r[5],...r.slice(10,14)]));
+assert(oliveSpecial.every(r=>r[9].includes('footnote 3')));
+const unconfirmed=chosen(olive,'fruit-03-ym',' ');
+assert.equal(unconfirmed.length,7);assert(unconfirmed.some(r=>/^Yeast/i.test(r[5])));
+assert(unconfirmed.every(r=>r[6]==='Confirm product form'&&r[9].includes('Evidence reference needed')));
+const fermented='04-04-2-fermented-fungi';
+assert(!A.microFormRoute(fermented).options.some(o=>o.fermentation_exclusion));
+assert(chosen(fermented,'fruit-03','Lactic fermentation').some(r=>/^Yeast/i.test(r[5])));
+for(const id of ['04-04-1-fruit-bar-toffee','12-12-5-soup-powders','04-04-2-fungi-grits-and-fungi-powder']){
+  assert(chosen(id,'fruit-06','Dried product specification').some(r=>r[5]==='Salmonella'&&r[12]==='Absent/25g'));
+}
+assert.equal(chosen('ginger-cocktail','review','Essence formulation')[0][6],'Regulatory assessment needed');
+assert(!A.microFormRoute('12-12-2-harrisa-red-hot-pepper-paste').options.some(o=>o.profile_key?.startsWith('fruit-03')));
 const plainButtermilk='01-01-1-buttermilk-plain';
 assert.equal(chosen(plainButtermilk,'milk-12','Cultured product').length,6);
 assert.equal(chosen(plainButtermilk,'review','Churning record')[0][6],'Regulatory assessment needed');
