@@ -578,16 +578,24 @@
   function microFormRoute(id){
     return E.products[id]?.micro.find(([,route])=>route.form_evidence)?.[1]||null;
   }
-  function microFormChoice(option){return option.profile_key||'review';}
+  function microFormChoice(option){return option.choice_key||option.profile_key||'review';}
   function selectedMicroForm(route,state){
     return route?.options.find(option=>microFormChoice(option)===state?.microForm)||null;
   }
-  function microFormRows(id,date,state={}){
+  function microPhDecision(state){
+    const value=String(state.microPh||'').trim().replace(/^\./,'0.');
+    const reference=String(state.microPhRef||'').trim();
+    const below=root.PMSVCatalogueWorksheets.compare({operator:'<',value:'4.4'},value);
+    if(below===true&&reference)return {exclude:true,note:'Optional Listeria exclusion applied under Appendix B footnote 4. Measured pH '+value+'. Report or batch reference: '+reference+'.'};
+    return {exclude:false,note:'Listeria retained. The optional exclusion requires a recorded decimal pH below 4.4 and its report or batch reference.'+(value?' Entered pH: '+value+'.':'')+(reference?' Report or batch reference: '+reference+'.':'')};
+  }
+  function microFormRows(id,date,state={},family=null){
     const out=[headers];
     if(!metalEdition(date))return out;
     const products=id?[id]:Object.keys(E.products);
     for(const key of products){
-      if(!microFormRoute(key))continue;
+      const route=microFormRoute(key);
+      if(!route||(!id&&(route.form_evidence.family||null)!==family))continue;
       out.push(...exportRows(key,date,false,id?state:{}).slice(1).filter(row=>row[2]===areas[1]));
     }
     return out;
@@ -644,12 +652,17 @@
       for(const option of options){
         const condition=option.condition||option.when;
         const reason=join([evidence.prompt,selected&&reference?'Evidence: '+reference:'']);
-        if(!option.profile_key||option.automatic_selection_allowed===false||(selected&&!reference)){
+        if(option.ph_exclusion&&!selected){
+          push({form:condition,parameter:'Optional Listeria testing decision',status:'Evidence required for exclusion',notes:join([reason,'The catalogue plan retains Listeria. Select this option on the individual worksheet only for an eligible product and record its pH result and reference.'])});
+        }else if(!option.profile_key||option.automatic_selection_allowed===false||(selected&&!reference)){
           const needsEvidence=selected&&!reference&&option.profile_key&&option.automatic_selection_allowed!==false;
           push({form:condition,parameter:'Product form and microbiological scope',status:needsEvidence?'Evidence reference needed':'Regulatory assessment needed',
             notes:join([reason,needsEvidence?'Record the specification or batch reference before using this route.':option.message])});
         }else{
-          profileRows({...option,condition},!selected,reason);
+          if(option.ph_exclusion){
+            const decision=microPhDecision(state);
+            profileRows({...option,condition:condition.split(' · ')[0]+(decision.exclude?' · Listeria exclusion documented':' · Listeria retained'),exclude_criteria:decision.exclude?['listeria_monocytogenes']:[]},false,join([reason,decision.note]));
+          }else profileRows({...option,condition},!selected,reason);
         }
       }
       return;
@@ -1113,5 +1126,5 @@
     }
     return rows;
   }
-  root.PMSVTestingPlan=Object.freeze({sampleArea,microFormRoute,microFormChoice,microFormRows,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
+  root.PMSVTestingPlan=Object.freeze({sampleArea,microPhDecision,microFormRoute,microFormChoice,microFormRows,processingArea,processingRow,microSources,dairySamplingRows,marketSampleRows,focusIds,openScope,isExportSource,scopedArea,scopedReferences,scopeReferenceExport,openProductRows,starchRows,sulphiteRows,incomingSamples,incomingExport,routeIds,routeNotes,routeSummary,ingredientRouteRows,sampleReviewRows,ingredients,catechuId,ingredientCriteria,ingredientRows,coffeeRows,powderRows,sugarCriteria,sugarRows,animalCriteriaRows,available:!!root.PMSVPesticides?.planRows && !!root.PMSVVeterinary?.planRows && !!sourceRows && Object.keys(sourceRows.products).length===64,areas,headers,entries,exportRows,metalRow,toxinRow,metalEdition,fishOilScreen,microCriteria,relevantForm});
 })(globalThis);

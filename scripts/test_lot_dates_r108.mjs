@@ -13,7 +13,7 @@ const id='05-05-1-chocolate';
 const m=(change={})=>L.model({sku:'Fixture',art:'A1',batch:'001',pack:'retail',band:'long',rule:'general',sample:'Image A',spec:'Instruction B',
   firstKind:'packed',lastKind:'useBy',first:'30/11/2026',last:'31/MAR/2027',...change});
 const check=change=>L.analyse(m(change));
-assert.equal(c.PMSV_REVIEW_REGISTER.latestRound,160);
+assert.equal(c.PMSV_REVIEW_REGISTER.latestRound,161);
 assert.match(check().order,/Use by follows packaging/);
 assert.match(check({last:'29/11/2026'}).order,/precedes/);
 assert.match(check({last:'30/11/2026'}).order,/same day/);

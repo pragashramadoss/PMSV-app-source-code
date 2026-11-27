@@ -11,8 +11,8 @@ for(const [,name] of html.matchAll(/<script src="([a-z0-9-]+)\.js\?/g)){
 const A=ctx.PMSVTestingPlan,W=ctx.PMSVCatalogueWorksheets;
 assert(W.available);
 const [columns,...rows]=A.exportRows(),ids=new Map(ctx.PMSV_CATALOGUE.map(p=>[p.id,p.product]));
-assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19250);
-const totals=[3855,2597,5868,6930];
+assert.equal(ids.size,533);assert.equal(columns.length,15);assert.equal(rows.filter(row=>A.areas.slice(0,4).includes(row[2])).length,19496);
+const totals=[3855,2843,5868,6930];
 for(const [index,area] of A.areas.slice(0,4).entries()){
   const part=rows.filter(row=>row[2]===area);assert.equal(part.length,totals[index]);assert.equal(new Set(part.map(r=>r[0])).size,533);
 }
@@ -50,6 +50,31 @@ for(const herb of ['12-12-2-dried-mint','12-12-2-dried-laurel-or-dried-bay-leaf'
   const ground=chosen(herb,'spice-03','Grinder lot');
   assert.equal(ground.length,7);assert(ground.every(r=>r[4].includes('Ground')&&r[9].includes('Grinder lot')));
 }
+const fruitFamily=A.microFormRows(null,'2026-11-27',{},'fruit-vegetable').slice(1);
+assert.equal(new Set(fruitFamily.map(row=>row[0])).size,12);
+assert.equal(fruitFamily.length,348);
+assert(fruitFamily.every(row=>row[14].includes('#page=35')));
+for(const [id,key] of [['fruit-juices','fruit-04a'],['carbonated-fruit-beverages','fruit-04b']]){
+  for(const [microPh,microPhRef,exclude] of [
+    ['4.39','Report 1',true],['4.39999999999999999999','Report 1',true],['4.39',' ',false],
+    ['4.4','Report 1',false],['4.40','Report 1',false],['4.40000000000000001','Report 1',false],
+    ['15','Report 1',false],['-1','Report 1',false],['<4.4','Report 1',false],['','Report 1',false]
+  ]){
+    const sample=A.microFormRows(id,'2026-11-27',{microForm:key+'-ph',microFormRef:'Process record',microPh,microPhRef}).slice(1);
+    assert.equal(sample.length,exclude?7:8);assert.equal(sample.some(r=>/Listeria/i.test(r[5])),!exclude);
+    assert(sample.every(r=>r[9].includes(exclude?'exclusion applied':'Listeria retained')));
+  }
+  assert.equal(chosen(id,key+'-ph','')[0][6],'Evidence reference needed');
+}
+for(const [id,key] of [['vegetable-juices','fruit-04a'],['tomato-juice','fruit-04a'],['fruit-juices','fruit-02-liquid']]){
+  const state={microForm:key,microFormRef:'Process record',microPh:'4.1',microPhRef:'Lot'};
+  assert(A.microFormRows(id,'2026-12-01',state).some(r=>/Listeria/i.test(r[5])&&r[12]==='Absent/25ml'));
+}
+const pulp='concentrated-fruit-pulp-puree';
+assert(chosen(pulp,'fruit-07','Non-liquid specification').some(r=>r[5]==='Salmonella'&&r[12]==='Absent/25g'));
+assert(chosen(pulp,'fruit-08-liquid','Retort record').some(r=>r[5]==='Salmonella'&&r[12]==='Absent/25ml'));
+assert.equal(chosen(pulp,'review','')[0][6],'Regulatory assessment needed');
+assert.equal(A.microFormRows(null,'2010-01-01',{},'fruit-vegetable').length,1);
 const plainButtermilk='01-01-1-buttermilk-plain';
 assert.equal(chosen(plainButtermilk,'milk-12','Cultured product').length,6);
 assert.equal(chosen(plainButtermilk,'review','Churning record')[0][6],'Regulatory assessment needed');
