@@ -229,9 +229,14 @@
       return {key,parameter:v.spec.parameter,max,count:state[key]||'',percent,status,source:v.gazette};
     });
   }
+  const beanSampling={
+    note:'For commercial cocoa bean quality assessment, the Cacao of Excellence guide targets a 2 kg representative reference sample and takes at least 500 g from it as a test sample. Determine regulatory dispatch separately in the sampling worksheet.',
+    guide:'https://www.cacaoofexcellence.org/fileadmin/Websites/CocoaOfExcellence/Resources_items/Guides_for_the%20Assessment_of_Cacao_Quality_Flavour/14Feb2025_WEB_CoEx_Guide_Cacao_Quality_Flavour-ENGLISH-March_2024.pdf',
+    standard:'https://www.iso.org/standard/68203.html'
+  };
   function countRows(state={}){
-    return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source'],
-      ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source])];
+    return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source','Commercial quality sampling guidance','Quality sampling sources'],
+      ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source,beanSampling.note,beanSampling.guide+' | '+beanSampling.standard])];
   }
-  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,dairy,dryBasis,basisFields,basisLabels,basisResult,isIgGSource,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanFields,countResults,countRows});
+  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,dairy,dryBasis,basisFields,basisLabels,basisResult,isIgGSource,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanSampling,beanFields,countResults,countRows});
 })(globalThis);

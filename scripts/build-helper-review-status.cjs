@@ -471,7 +471,7 @@ const sampleScopeReview={round:147,reviewedOn:'2026-11-26',report:'catalogue-egg
 const carobReview={round:148,reviewedOn:'2026-11-26',report:'catalogue-carob-pulp-r148.md',productId:metal.carobId,referenceRows:metal.carobRows().length-1,incomingReferences:28};
 assert.equal(carobReview.referenceRows,3);
 const vendingSaffroleReview={round:149,reviewedOn:'2026-11-26',report:'catalogue-vending-coffee-cocoa-r149.md',endExclusive:'2026-12-01',productId:crop.vendingId};
-const finishedSampleReview={round:157,reviewedOn:'2026-11-26',report:'catalogue-sample-quantities-r157.md',regulatorySamplingProducts:533,samplingTableItems:52,starchAndEnzymeProducts:5,dairyMicroProducts:4,processedCropProducts:5,melamineReportProducts:533,productProfiles:10,methodReferences:34,dryBasisChecks:2,importProducts:5,importDocumentRows:11,preventionReferences:4,beanCountChecks:4};
+const finishedSampleReview={round:158,reviewedOn:'2026-11-27',report:'catalogue-sampling-decisions-r158.md',samplingPurposeCount:6,namedSamplingProducts:224,samplingFormProducts:25,regulatorySamplingProducts:533,samplingTableItems:52,starchAndEnzymeProducts:5,dairyMicroProducts:4,processedCropProducts:5,melamineReportProducts:533,productProfiles:10,methodReferences:34,dryBasisChecks:2,importProducts:5,importDocumentRows:11,preventionReferences:4,beanCountChecks:4};
 const firstSourceReview={
  round:finishedSampleReview.round,reviewedOn:finishedSampleReview.reviewedOn,report:finishedSampleReview.report,vetProductIds,metalProductIds,toxinProductIds:toxinProducts.map(p=>p.id),
  groupProductIds:newGroupSources.map(p=>p.id),

@@ -8,7 +8,7 @@
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
   const ayurveda=root.PMSVAyurvedaPlan,powders=root.PMSVPowderStandards,coffee=root.PMSVCoffee;
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 157 && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 158 && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -29,11 +29,12 @@
   const states = new Map();
   const lab=root.PMSVLabGuide, importDocs=root.PMSVImportDocuments;
   const broad=root.PMSVBroadContaminants;
-  const fields = ['dispatchRow',...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
+  const sampling=root.PMSVSamplingQuantities;
+  const fields = ['dispatchRow',...(sampling?.lotFields||[]),...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
-  const href = (url,label) => (/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url || '') || P?.importSources?.includes(url) || plan?.isExportSource(url) || importDocs?.isSource(url) || root.PMSVStarchSpecifications?.activeSource(url) || lab?.isIgGSource(url) || lab?.isControlSource(url) || lab?.isRecognitionSource(url) || water?.isSource(url)) ?
+  const href = (url,label) => (/^https:\/\/(?:[a-z0-9-]+\.)*fssai\.gov\.in\//i.test(url || '') || P?.importSources?.includes(url) || plan?.isExportSource(url) || importDocs?.isSource(url) || root.PMSVStarchSpecifications?.activeSource(url) || lab?.isIgGSource(url) || url===lab?.beanSampling?.guide || url===lab?.beanSampling?.standard || lab?.isControlSource(url) || lab?.isRecognitionSource(url) || water?.isSource(url)) ?
     '<a class="source-ref" target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+esc(label)+'</a>' : '';
   function documentLink(id,page,label) {
     const d = E.documents[id];
@@ -419,16 +420,31 @@
     const state=getState(id),record=root.PMSVSamplingQuantities.decision(id,state.vetDate,state);
     if(!record)return '<p>Select a supported assessment date in the worksheet.</p>';
     const quantity=record.quantity?'Approximate quantity to send: '+record.quantity+' '+record.unit+'. ':'';
-    const cited=record.source.split(' | ').map(url=>href(url,url.includes('Lab_Sample_Regulations')?'2011 Gazette':url.includes('Notification')?'2026 amendment':'Compendium p. '+url.split('#page=')[1])).join(' ');
-    return '<p>Worksheet date: '+esc(state.vetDate)+'</p><p><b>'+esc(quantity||record.status)+'</b> '+esc(record.food)+(record.key?' · item '+esc(record.key):'')+'</p><p>'+esc(record.notes)+'</p>'+cited;
+    const lot=sampling.lotDecision(record,state.vetDate,state);
+    const cited=record.source.split(' | ').map(url=>href(url,url.includes('Lab_Sample_Regulations')?'2011 Gazette':url.includes('14.09.2026')?'2026 amendment':url.includes('Comp_Laboratory')?'Compendium p. '+url.split('#page=')[1]:'Product identity standard')).join(' ');
+    const parts=lot.purpose?'<p><b>'+esc(lot.purpose[1])+'</b> '+esc(lot.purpose[2])+' '+lot.purpose[3].split(' | ').map((url,i)=>href(url,i?'FSSAI clarification':'Sampling rule')).join(' ')+'</p>':'';
+    const agreed=lot.amount?'<p><b>Quantity drawn for this lot: '+esc(lot.amount)+' '+esc(lot.unit)+'</b> · '+esc(lot.lot)+' · '+esc(lot.basis)+' · '+esc(lot.evidence)+'</p>':!record.key&&state.dispatchUnspecified==='yes'?'<p>Enter a sampling purpose, lot or sample reference, positive quantity, unit and supporting reference to include this decision in the export.</p>':'';
+    return '<p>Worksheet date: '+esc(state.vetDate)+'</p><p><b>'+esc(quantity||record.status)+'</b> '+esc(record.food)+(record.key?' · item '+esc(record.key):'')+'</p><p>'+esc(record.notes)+'</p>'+cited+parts+agreed;
   }
   function dispatchPanel(id){
-    const guide=root.PMSVSamplingQuantities;
-    if(!guide)return '';
-    const forms=guide.conditional.get(id)||[];
+    if(!sampling)return '';
+    const state=getState(id), forms=sampling.conditional.get(id)||[];
     const isCoffee=id==='coffee'||id==='coffee-chicory-mixture';
-    const choose=isCoffee?'<p>Choose the sampled form in the coffee worksheet.</p>':forms.length?'<label>Sample matches this table entry<select data-ws-field="dispatchRow"><option value="">Select the sampled form</option>'+forms.map(k=>'<option value="'+esc(k)+'"'+(getState(id).dispatchRow===k?' selected':'')+'>'+esc(guide.articles.get(k).food)+'</option>').join('')+'</select></label>':'';
-    return '<details class="ws-section" data-dispatch-panel><summary>Regulatory sample quantity</summary>'+choose+'<div data-dispatch-result>'+dispatchSummary(id)+'</div><button type="button" data-dispatch-export'+(plan.metalEdition(getState(id).vetDate)?'':' disabled')+'>Download this sampling entry</button></details>';
+    const options=(choices,current,placeholder)=>'<option value="">'+esc(placeholder)+'</option>'+choices.map(([key,label])=>'<option value="'+esc(key)+'"'+(current===key?' selected':'')+'>'+esc(label)+'</option>').join('');
+    const input=(key,label,extra='')=>'<label>'+esc(label)+'<input data-ws-field="'+key+'" '+extra+' value="'+esc(state[key])+'"></label>';
+    const canned=forms.length===1&&forms[0]==='51';
+    const choices=canned?[['51','Canned food in original sealed cans'],['other-pack','Glass, pouch or other packaging']]:forms.map(k=>[k,sampling.articles.get(k).food]);
+    const choose=isCoffee?'<p>Choose the sampled form in the coffee worksheet.</p>':forms.length?'<label>Sample matches this table entry<select data-ws-field="dispatchRow">'+options(choices,state.dispatchRow,canned?'Select the actual packaging':'Select the sampled form')+'</select></label>':'';
+    const record=sampling.decision(id,state.vetDate,state);
+    return '<details class="ws-section" data-dispatch-panel><summary>Regulatory sample quantity</summary><label>Sampling assessment date<input type="date" data-sampling-date min="2026-11-20" value="'+esc(state.vetDate)+'"></label>'+choose+
+      '<label>Sampling purpose<select data-ws-field="dispatchPurpose">'+options(Array.from(sampling.purposes,([k,v])=>[k,v[0]]),state.dispatchPurpose,'Select a purpose')+'</select></label>'+
+      input('dispatchLot','Actual sampled article and lot reference','maxlength="160"')+
+      '<div data-dispatch-unlisted'+(!record||record.key?' hidden':'')+'><label><input type="checkbox" data-ws-field="dispatchUnspecified"'+(state.dispatchUnspecified==='yes'?' checked':'')+'> I checked the article and packaging. No named table entry applies to this sample.</label>'+
+      '<fieldset data-dispatch-amount-fields'+(state.dispatchUnspecified==='yes'?'':' disabled')+'><legend>Quantity drawn for this lot</legend>'+
+      input('dispatchAmount','Quantity drawn','inputmode="decimal" maxlength="16"')+
+      '<label>Unit<select data-ws-field="dispatchUnit">'+options(sampling.units.map(u=>[u,u]),state.dispatchUnit,'Select a unit')+'</select></label>'+
+      '<label><span data-dispatch-evidence-label>'+esc(state.vetDate<'2027-04-01'?'Food Analyst name and consultation reference':'Applicable Food Authority guideline and clause')+'</span><input maxlength="320" data-ws-field="dispatchEvidence" value="'+esc(state.dispatchEvidence)+'"></label></fieldset></div>'+
+      '<div data-dispatch-result aria-live="polite">'+dispatchSummary(id)+'</div><button type="button" data-dispatch-export'+(record?'':' disabled')+'>Download this sampling entry</button></details>';
   }
   function dryBasisPanel(id){
     const rule=lab?.dryBasis.get(id);
@@ -450,6 +466,7 @@
     const input=(key,label)=>'<label>'+esc(label)+'<input data-ws-field="'+key+'" '+(key==='beanSample'?'maxlength="180"':'inputmode="numeric" maxlength="9"')+' value="'+esc(state[key])+'"></label>';
     const rows=lab.countResults(state).map(r=>[input(r.key,r.parameter),esc(r.max)+'%', '<output data-count-for="'+r.key+'">'+esc([r.percent?r.percent+'%':'',r.status].filter(Boolean).join(' · '))+'</output>']);
     return '<details class="ws-section" data-bean-counts><summary>Cocoa bean defect counts</summary><p>Enter counts for the same examined sample. For germinated and flat beans, count an affected bean once in the combined class. Each comparison uses the original counts.</p>'+
+      '<p>'+esc(lab.beanSampling.note)+' '+href(lab.beanSampling.guide,'Cacao of Excellence sampling guide, section 1')+' '+href(lab.beanSampling.standard,'ISO 2292 sampling scope')+'</p>'+
       input('beanSample','Sample or report reference')+input('beanTotal','Total whole beans examined')+table(['Defect and observed count','Maximum by count','Result'],rows)+
       href(plan.ingredients.get(id).source.split(' | ')[0],'FSSAI 2.3.54')+' <button type="button" data-bean-export>Download sample counts and results</button></details>';
   }
@@ -485,7 +502,7 @@
       });
     }
     node.addEventListener('input',e=>{
-      const el=e.target,k=el.hasAttribute('data-plan-vet-date')?'vetDate':el.dataset.wsField;
+      const el=e.target,k=el.matches('[data-plan-vet-date],[data-sampling-date]')?'vetDate':el.dataset.wsField;
       if(el.hasAttribute('data-plan-total-as'))node.querySelector('[data-plan-as-result]').textContent=plan.fishOilScreen(el.value);
       if(el.hasAttribute('data-ws-add'))node.querySelector('[data-ws-add-results]').innerHTML=addResults(id,el.value);
       if(el.hasAttribute('data-ws-commodity') || el.hasAttribute('data-ws-chemical'))node.querySelector('[data-ws-matches]').innerHTML=commodityResults(node.querySelector('[data-ws-commodity]').value,node.querySelector('[data-ws-chemical]').value);
@@ -621,7 +638,7 @@
       if(k==='vetDate'){
         C.update(node,id,k,state,previous);
         if(id===P.sajjiId||id===P.catechuId||id===P.carobId||plan.metalEdition(previous)!==plan.metalEdition(state.vetDate))P.update(node,id,k,state,previous);
-        for(const input of node.querySelectorAll('[data-plan-vet-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
+        for(const input of node.querySelectorAll('[data-plan-vet-date],[data-sampling-date],[data-ws-field="vetDate"]'))input.value=state.vetDate;
       }
       if(k.startsWith('panelKhar')||(id===P.sajjiId&&k==='vetDate')||['metalForm','metalFormRef','mercuryArticle','mercuryArticleRef','panel_Hg','panel_HgRef','panelFpc','panelFpcRef'].includes(k)){
         const result=root.PMSVBroadContaminants.scope(id,state.broadForm,state.broadRef,state).h;
@@ -644,7 +661,23 @@
       if(metalField||C.fields.includes(k)||V.fields.includes(k)||['compVariant','compSweetener','criterion','result','unitConfirmed','compReport','reference'].includes(k))refreshPlan();
       if(X.fields.includes(k))X.update(node,id,k,state,previous);
       if(Y.fields.includes(k))Y.update(node,id,k,state,previous);
-      if(['vetDate','coffeeForm','compVariant','dispatchRow'].includes(k)&&root.PMSVSamplingQuantities){
+      if(sampling&&(['vetDate','coffeeForm','compVariant','dispatchRow'].includes(k)||sampling.lotFields.includes(k))){
+        const identityChanged=previous!==state[k]&&(['vetDate','coffeeForm','compVariant','dispatchRow'].includes(k)||(['dispatchLot','dispatchPurpose'].includes(k)&&!!previous));
+        if(identityChanged||k==='dispatchUnspecified'&&state[k]!=='yes'){
+          const clear=['dispatchAmount','dispatchUnit','dispatchEvidence','dispatchRecordDate'];
+          if(identityChanged)clear.push('dispatchUnspecified');
+          if(k==='dispatchLot'&&previous)clear.push('dispatchRow');
+          for(const key of clear){
+            state[key]='';
+            const field=node.querySelector('[data-ws-field="'+key+'"]');
+            if(field){if(field.type==='checkbox')field.checked=false;else field.value='';}
+          }
+        }
+        if(k==='dispatchUnspecified'&&state[k]==='yes')state.dispatchRecordDate=state.vetDate;
+        const decision=sampling.decision(id,state.vetDate,state);
+        node.querySelector('[data-dispatch-unlisted]').hidden=!decision||!!decision.key;
+        node.querySelector('[data-dispatch-amount-fields]').disabled=state.dispatchUnspecified!=='yes';
+        node.querySelector('[data-dispatch-evidence-label]').textContent=state.vetDate<'2027-04-01'?'Food Analyst name and consultation reference':'Applicable Food Authority guideline and clause';
         node.querySelector('[data-dispatch-result]').innerHTML=dispatchSummary(id);
         node.querySelector('[data-dispatch-export]').disabled=!plan.metalEdition(state.vetDate);
         refreshPlan();
@@ -686,6 +719,7 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
+      ...(sampling&&s.dispatchPurpose&&plan.metalEdition(s.vetDate)?[sampling.planEntry(id,s.vetDate,s).notes]:[]),
       ...(importDocs?.routes.has(id)&&s.importScope?importDocs.entries(id,s).map(r=>[r.form,r.parameter,r.status,r.notes,r.source].join(' · ')):[]),
       ...(lab?.dryBasis.has(id)&&lab.basisFields.some(field=>s[field])?lab.referenceEntries(id,s).filter(r=>r.status==='Dry-basis calculation').map(r=>r.notes):[]),
       ...(id===lab?.bean&&lab.beanFields.some(field=>s[field])?lab.countRows(s).map(row=>row.join(' | ')):[]),

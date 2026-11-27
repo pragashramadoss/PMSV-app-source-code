@@ -340,13 +340,35 @@
     ['48', [
       '100-100-silver-leaf-chandi-ka-warq'
     ]],
-    ['51', [
-      '04-04-2-canned-tomatoes',
-      '04-04-2-canned-chestnut',
-      '04-04-2-canned-chestnut-puree',
-      '09-09-4-canned-fishery-products'
-    ]]
+
   ])for(const id of ids)listed.set(id,key);
+  const cereals='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_4_Cereals_and_Cereal_products.pdf';
+  const identities=new Map([
+    ['11-11-1-khandsari-sugar',['25','Khandsari under 2.8.1(3) is sugar made from sugarcane juice.','https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_8%20%28Sweetening%20agents%20including%20Honey%29.pdf#page=1']],
+    ['06-06-1-blended-rice',['38','The blended rice standard describes a mixture of basmati or non-basmati rice grains.',cereals]],
+    ['06-06-2-rice-flour-for-preparation-of-fortified-rice-kernel-frk',['39','Clause 2.4.6(24A) identifies the rice flour used as the input for making fortified kernels.','https://fssai.gov.in/upload/notifications/2024/10/671b28f9586dfGAZETTE%20NOTIFICATION%20DATED%2021.10.2024.pdf']],
+    ['06-06-2-edible-cassava-or-tapioca-flour',['39','Clause 2.4.32 describes flour ground or milled from cassava chips or paste. Tapioca sago is a different sampled article.',cereals]],
+    ['06-06-2-water-chestnut-flour-singhare-ka-atta',['39','Clause 2.3.64 defines singhare ka atta as flour ground from dried water chestnuts.','https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf']],
+    ['fssai-2-16-hemp-seed-flour',['39','The hemp seed standard defines this flour as seeds milled to powder, with or without oil extraction.','https://www.fssai.gov.in/upload/notifications/2021/11/619b553646e10Gazette_Notification_Oil_Flour_22_11_2021.pdf']]
+  ]);
+  for(const [id,[item]] of identities)listed.set(id,item);
+  const rules='https://fssai.gov.in/upload/uploadfiles/files/FSS_Gazete_Rules_2011%20comendium.pdf#page=9';
+  const partsAmendment='https://fssai.gov.in/docs/states/fso/fso_notification_16012023.pdf#page=2';
+  const imports='https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Food_Import_20_03_2017%281%29.pdf';
+  const importClarification='https://fssai.gov.in/upload/advisories/2022/08/62fe0bcc5afdbClarification_Sample_18_08_2022.pdf';
+  const purposes=new Map([
+    ['domestic',['Domestic enforcement, ordinary procedure','4 parts','Divide the sample into four parts or take four already sealed packages. Mark and seal each part as prescribed in rule 2.4.1(9)(i).',rules]],
+    ['micro',['Microbiological analysis','Applicable Appendix B plan','Use the sampling plan for the food and criterion in Appendix B. Record the specified number of sample units.',partsAmendment]],
+    ['surveillance',['Surveillance','As specified in the surveillance plan','Use the plan issued by the Food Authority or State Food Authority for the survey.',partsAmendment]],
+    ['import',['Import clearance','2 parts under import regulation 9','For sealed bulk containers that need aseptic or hygroscopic conditions, see regulation 9(2) for same-batch representative samples, the manufacturer declaration and its alternative procedure.',imports+' | '+importClarification]],
+    ['complaint',['Complaint investigation','Case-specific','Rule 2.4.1 names complaint investigations in the proviso. For a reduced count under the other-cases row, record the reasons and supporting evidence in writing.',partsAmendment]],
+    ['emergency',['Food safety emergency','Case-specific','Any reduction in the mandated number of parts requires reasons and supporting evidence in writing.',partsAmendment]]
+  ]);
+  const lotFields=['dispatchLot','dispatchPurpose','dispatchUnspecified','dispatchAmount','dispatchUnit','dispatchEvidence','dispatchRecordDate'];
+  const units=['g','kg','mL','L'];
+  function purposeRows(){
+    return [['Sampling purpose','Number of parts or governing plan','Application','Sources'],...purposes.values()];
+  }
   const spiceIds=new Set([
 '04-04-1-vanilla-pods',
       '04-04-1-cut-vanilla',
@@ -383,6 +405,26 @@
     ['08-08-2-canned-or-retort-pouch-meat-products',['51']],
     ['08-08-3-canned-or-retort-pouch-meat-products',['51']]
   ]);
+  const fruitChapter='https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_3_Fruit%20%20Vegetable%20products.pdf';
+  const packSources=new Map([
+    ['04-04-2-canned-tomatoes',fruitChapter+'#page=9'],
+    ['04-04-2-canned-chestnut',fruitChapter+'#page=93'],
+    ['04-04-2-canned-chestnut-puree',fruitChapter+'#page=93'],
+    ['09-09-4-canned-fishery-products','https://www.fssai.gov.in/upload/uploadfiles/files/food%20product.pdf'],
+    ['04-04-1-thermally-processed-fruits',fruitChapter+'#page=1'],
+    ['04-04-1-thermally-processed-fruit-salad-cocktail-mix',fruitChapter+'#page=2'],
+    ['04-04-2-thermally-processed-vegetables',fruitChapter+'#page=6'],
+    ['04-04-2-thermally-processed-curried-vegetables-ready-to-eat-vegetables',fruitChapter+'#page=10'],
+    ['12-12-5-thermally-processed-vegetable-soups',fruitChapter+'#page=11'],
+    ['vegetable-juices',fruitChapter+'#page=18'],
+    ['tomato-juice',fruitChapter+'#page=20'],
+    ['fruit-nectars',fruitChapter+'#page=20'],
+    ['04-04-1-thermally-processed-mango-pulp-puree-and-sweetened-mango-pulp-puree',fruitChapter+'#page=23'],
+    ['04-04-1-thermally-processed-fruit-pulp-puree-and-sweetened-fruit-pulp-puree-other-than-man',fruitChapter+'#page=24'],
+    ['concentrated-fruit-pulp-puree',fruitChapter+'#page=24'],
+    ['concentrated-vegetable-pulp-puree',fruitChapter+'#page=24']
+  ]);
+  for(const id of packSources.keys())conditional.set(id,['51']);
   const coffeeForms={
     coffee:{roasted_ground:'32',decaffeinated_roasted_ground:'32',soluble_coffee:'33',decaffeinated_soluble:'33'},
     'coffee-chicory-mixture':{instant:'33',decaffeinated_instant:'33'}
@@ -414,25 +456,46 @@
     if(spiceIds.has(id)){
       r={...articles.get('18'),key:'18/19',food:'Whole or powdered spice, condiment or mixed masala',condition:'Use item 18 for whole material and 19 for powder.'};
     }
-    if(r)return {...r,status,notes:[r.condition,boundary].filter(Boolean).join(' ')};
+    const packSource=packSources.get(id);
+    const packed=forms.length===1&&forms[0]==='51';
+    const otherPack=packed&&state.dispatchRow==='other-pack';
+    if(r){
+      const identity=identities.get(id);
+      return {...r,status,notes:[r.condition,identity?.[1],boundary].filter(Boolean).join(' '),source:[r.source,identity?.[2],packSource].filter(Boolean).join(' | ')};
+    }
     const candidates=forms.map(k=>{const a=articles.get(k);return 'item '+k+' ('+a.food+', '+a.quantity+' '+a.unit+')';});
-    const relevant=forms.length&&!(coffee&&form);
+    const relevant=forms.length&&!(coffee&&form)&&!otherPack;
     const action=relevant?'Confirm the marketed form before using '+candidates.join(' or ')+'.':'Review the table against the actual article and packaging.';
     const selected=root.PMSVVariantComposition.profileFor(id)?.forms.find(f=>f.name===state.compVariant);
-    return {key:'',food:selected?.name||root.PMSVCatalogueRules.products[id].name,quantity:'',unit:'',status:relevant?'Form confirmation needed':'Article confirmation needed',notes:[exceptions[id],action,'If no listed entry applies, item 52 gives 500 g as a reference.',unspecified(date),boundary].filter(Boolean).join(' '),
-      source:regulation+'#page=3 | '+regulation+'#page=4 | '+original+'#page=4'+(date>='2027-04-01'?' | '+amendment:'')};
+    return {key:'',food:selected?.name||root.PMSVCatalogueRules.products[id].name,quantity:'',unit:'',status:relevant?'Form confirmation needed':'Article confirmation needed',notes:[exceptions[id],packed?'Item 51 requires actual sealed cans. Confirm the container before choosing a quantity.':'',action,'If no listed entry applies, item 52 gives 500 g as a reference.',unspecified(date),boundary].filter(Boolean).join(' '),
+      source:regulation+'#page=3 | '+regulation+'#page=4 | '+original+'#page=4'+(date>='2027-04-01'?' | '+amendment:'')+(packSource?' | '+packSource:'')};
+  }
+  function lotDecision(record,date,state={}){
+    const purpose=purposes.get(state.dispatchPurpose);
+    const lot=String(state.dispatchLot||'').trim();
+    const evidence=String(state.dispatchEvidence||'').trim();
+    const amount=String(state.dispatchAmount||'').trim();
+    const applicable=record&&!record.key&&state.dispatchUnspecified==='yes'&&date===state.dispatchRecordDate;
+    const valid=applicable&&lot&&evidence&&purpose&&units.includes(state.dispatchUnit)&&/^\d+(?:\.\d+)?$/.test(amount)&&Number.isFinite(Number(amount))&&Number(amount)>0;
+    const basis=date<'2027-04-01'?'Food Analyst consultation':'Food Authority guideline';
+    return {lot,purpose,amount:valid?amount:'',unit:valid?state.dispatchUnit:'',basis:valid?basis:'',evidence:valid?evidence:''};
   }
   function planEntry(id,date,state){
     const r=decision(id,date,state);
     if(!r)return null;
+    const lot=lotDecision(r,date,state);
+    const extra=[lot.purpose?'Sampling purpose: '+lot.purpose[0]+'. '+lot.purpose[1]+'. '+lot.purpose[2]:'',lot.lot?'Lot or sample: '+lot.lot+'.':'',lot.amount?'Recorded quantity drawn for unspecified food: '+lot.amount+' '+lot.unit+'. '+lot.basis+': '+lot.evidence+'.':''].filter(Boolean).join(' ');
     return {area,form:r.food,parameter:'Quantity sent to the Food Analyst',article:'Laboratory and Sample Analysis 2.3.1'+(r.key?', item '+r.key:''),
-      status:r.status,limit:'',unit:'',notes:(r.quantity?'Approximate quantity: '+r.quantity+' '+r.unit+'. ':'')+r.notes,source:r.source};
+      status:r.status,limit:'',unit:'',notes:(r.quantity?'Approximate quantity: '+r.quantity+' '+r.unit+'. ':'')+[r.notes,extra].filter(Boolean).join(' '),source:[r.source,lot.purpose?.[3]].filter(Boolean).join(' | ')};
   }
   function exportRows(id,date=root.PMSVVeterinary.reviewDate,state){
-    const out=[['Catalogue ID','Product','Assessment date','Article match','Table item','Article or sample','Approximate quantity to send','Unit','Conditions and next action','Sources']];
+    const out=[['Catalogue ID','Product','Assessment date','Article match','Table item','Article or sample','Approximate quantity to send','Unit','Conditions and next action','Sources','Lot or sample reference','Sampling purpose','Parts or plan','Quantity drawn for unspecified food','Recorded unit','Basis','Evidence reference','Sample parts source']];
     for(const key of id?[id]:root.PMSV_CATALOGUE.map(p=>p.id)){
       const r=decision(key,date,id?state:undefined);
-      if(r)out.push([key,root.PMSVCatalogueRules.products[key].name,date,r.status,r.key,r.food,r.quantity,r.unit,r.notes,r.source]);
+      if(r){
+        const lot=lotDecision(r,date,id?state:undefined);
+        out.push([key,root.PMSVCatalogueRules.products[key].name,date,r.status,r.key,r.food,r.quantity,r.unit,r.notes,r.source,lot.lot,lot.purpose?.[0]||'',lot.purpose?.[1]||'',lot.amount,lot.unit,lot.basis,lot.evidence,lot.purpose?.[3]||'']);
+      }
     }
     return out;
   }
@@ -442,5 +505,5 @@
     for(const r of articles.values())out.push([parseInt(r.key,10),r.food,r.quantity,r.unit,r.key==='52'?r.condition+' '+unspecified(date):r.condition,r.key==='52'?r.source+' | '+regulation+'#page=4'+(date>='2027-04-01'?' | '+amendment:''):r.source]);
     return out;
   }
-  root.PMSVSamplingQuantities=Object.freeze({area,articles,listed,conditional,spiceIds,decision,planEntry,exportRows,tableRows});
+  root.PMSVSamplingQuantities=Object.freeze({area,articles,listed,conditional,spiceIds,identities,packSources,purposes,purposeRows,lotFields,units,lotDecision,decision,planEntry,exportRows,tableRows});
 })(globalThis);
