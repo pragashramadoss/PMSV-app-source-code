@@ -8,7 +8,7 @@
   const list = root.PMSV_CATALOGUE || [];
   const ids = new Set(list.map(p => p.id));
   const ayurveda=root.PMSVAyurvedaPlan,powders=root.PMSVPowderStandards,coffee=root.PMSVCoffee;
-  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 158 && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
+  const valid = E?.date === '2026-11-20' && R && registry?.latestRound === 159 && registry.carobReview?.referenceRows === 3 && registry.sampleScopeReview?.referenceRows === 35 && registry.catechuReview?.referenceRows === 2 && registry.additiveSolventReview?.products === 4 && registry.openProductReview?.products === 12 && registry.polyolReview?.referenceRows === 9 && registry.singharaReview?.criteria===8 && sulphites?.profiles.size===registry.sulphiteReview?.products && plan?.openScope().size === registry.firstSourceReview?.pending && registry.saltAndIngredientReview?.saltSampleCriteria === 4 && registry.importAndFormReview?.metalRows?.length === 6 && composition?.sampleProfiles.size === 2 && registry.ingredientReview?.silverId === P?.silverId && coffee?.profiles.size === 3 && registry.coffeeReview?.forms === 10 && powders?.products.size === 6 && registry.powderReview?.comparisons === 26 && registry.sugarReview?.metalRow === 'Pb2' && root.PMSVRecipeSamples?.ids?.length === 6 && registry.recipeSampleReview?.criteria === 11 && registry.casingReview?.casingCriteria === 20 && registry.botanicalReview?.criteria === 18 && registry.additiveMetalReview?.criteria === 12 && ayurveda && registry.ayurvedaPlanReview?.rules?.length === 10 && registry.childCropReview?.criteria === 15 && registry.spiceFoodReview?.products === 2 && registry.dextrinReview?.productId === P?.dextrinId && registry.cocoaMixReview?.namingRows === 11 && cocoaMix && registry.lactoseReview?.comparisons === 6 && registry.vendingPlanReview?.entries === 74 && water && registry.groupPesticideReview?.comparisons === 9 && registry.firstSourceReview?.withRoute === 524 && registry.metalReportingReview?.products === 533 && registry.multiMetalReview?.products === 533 && registry.toxinLabReview?.products === 533 && registry.measuredPlanReview?.products === 533 && registry.worksheetPlanEvidenceReview?.products === 533 && registry.contaminantEditionReview?.products === 533 && registry.veterinaryEditionReview?.seafoodProducts === 24 && registry.residueTestingPlanReview?.products === 533 && plan?.available && registry.testingPlanReview?.products === 533 && composition?.profiles.size === registry.variantCompositionReview?.products && registry.shelfLifeReview?.products===533 && L && registry.lotDateReview?.products===533 && registry.dateMarkingReview?.products===533 && T && registry.batchSiteReview?.products===533 && S && registry.smallPackReview?.products===533 && O && registry.ingredientOrderReview?.products===533 && Q?.requestColumns?.length===3 && registry.recipeRequestReview?.products===533 && registry.ingredientPercentageReview?.products===533 && registry.ethyleneOxideReview?.products===533 && Y && registry.spicePanelReview?.marketedProducts===36 && X && registry.pesticideReview?.gazetteRows===1098 && V && registry.veterinaryReview?.toleranceRows===358 && P?.fields?.length && registry.metalPanelReview?.rows===382 && C?.fields?.length && registry.cropArticleReview?.sourceRows===45 && root.PMSVMetalScope && root.PMSVBroadContaminants && registry.records?.length === 137 &&
     ['culinarySauceReview','tomatoSoybeanReview','tomatoJuiceReview','cannedTomatoReview','thermalPackReview','fruitCocktailReview','vegetableMealReview','gingerPasteReview','tomatoConcentrateReview'].every(k=>registry[k]) && ids.size === 533 && list.length === ids.size &&
     [E.products,R.products].every(rows => Object.keys(rows).length === ids.size && [...ids].every(id => Object.hasOwn(rows,id))) &&
     [...ids].every(id => {
@@ -29,8 +29,8 @@
   const states = new Map();
   const lab=root.PMSVLabGuide, importDocs=root.PMSVImportDocuments;
   const broad=root.PMSVBroadContaminants;
-  const sampling=root.PMSVSamplingQuantities;
-  const fields = ['dispatchRow',...(sampling?.lotFields||[]),...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
+  const sampling=root.PMSVSamplingQuantities, formulation=root.PMSVFormulation;
+  const fields = [...(formulation?.assayFields||[]),'dispatchRow',...(sampling?.lotFields||[]),...broad.reportFields,...(importDocs?.fields||[]),'drySpecies',...(lab?.basisFields||[]),...(lab?.beanFields||[]),...(sulphites?.fields||[]),'ingredientSubtype','coffeeForm','coffeePct','compVariant','compSweetener','lotDateDraft','batchSiteDraft','smallPackDraft','orderDraft','quidDraft','reference','article','note','criterion','result','unitConfirmed','compReport','pack','commodityKey','broadForm','broadRef','metalForm','metalFormRef','metalPack','metalPackRef','mercuryArticle','mercuryArticleRef',...(C?.fields||[]),...(P?.fields||[]),...(V?.fields||[]),...(X?.fields||[]),...(Y?.fields||[]),...(water?.fields||[]),...(ayurveda?.fields||[]),...(cocoaMix?.fields||[])];
   const portal = 'https://foodocopoeia.fssai.gov.in/home.aspx';
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
   const human = name => String(name || '').replace(/_/g,' ').replace(/^./, c => c.toUpperCase());
@@ -195,7 +195,33 @@
     }
     return [...paths];
   }
+  function formulationResults(id,filter){
+    const rows=formulation.entries(id,getState(id)),rule=rows[0];
+    const q=String(filter||'').toLowerCase().trim();
+    const matches=rows.slice(1).filter(r=>[r.parameter,r.ins,r.notes].join(' ').toLowerCase().includes(q));
+    const sources=[...new Set(rows.flatMap(r=>r.source.split(' | ')))];
+    const links=sources.map((url,i)=>href(url,i?(url.includes('#page=')?'Appendix A p. '+url.split('#page=')[1]:'Appendix A notes'):'FSSAI product standard')).join(' ');
+    return '<p><b>'+esc(rule.form)+'</b> · '+esc(rule.article)+'</p><p>'+esc(rule.notes)+'</p>'+
+      (id===formulation.colostrum&&!getState(id).compVariant?'<p>Choose the liquid or powder form under Product variant to see its requirements.</p>':'')+
+      (matches.length?table(['Substance or group','INS','Published maximum or GMP','Conditions'],matches.map(r=>[esc(r.parameter),esc(r.ins),esc(r.published),esc(r.notes)])):rows.length>1?'<p>No matching entry in this product-specific extract.</p>':'')+links;
+  }
+  function assayPanel(id){
+    if(id!==formulation?.mpc&&id!==formulation?.colostrum)return '';
+    const s=getState(id);
+    const field=(key,label,attributes='')=>'<label>'+label+'<input data-ws-field="'+key+'" '+attributes+' value="'+esc(s[key])+'"></label>';
+    const options=(items,selected)=>items.map(([value,label])=>'<option value="'+value+'"'+(value===selected?' selected':'')+'>'+label+'</option>').join('');
+    return '<fieldset data-form-assay'+(formulation.assayApplies(id,s)?'':' hidden')+'><legend>BHA or BHT result on a fat basis</legend>'+field('formLot','Powder sample or lot','maxlength="160"')+field('formReport','Laboratory report reference','maxlength="200"')+
+      '<label>Antioxidant<select data-ws-field="formIns">'+options([['','Choose antioxidant'],['320','BHA · INS 320'],['321','BHT · INS 321']],s.formIns)+'</select></label>'+
+      '<label>Basis on report<select data-ws-field="formBasis">'+options([['','Choose basis'],['fat','mg/kg fat'],['powder','mg/kg whole powder']],s.formBasis)+'</select></label>'+
+      field('formValue','Measured result (mg/kg)','inputmode="decimal" maxlength="24"')+
+      '<label data-form-fat'+(s.formBasis==='powder'?'':' hidden')+'>Fat in the same powder (% by mass)<input data-ws-field="formFat" inputmode="decimal" maxlength="20" value="'+esc(s.formFat)+'"></label>'+
+      '<label><input type="checkbox" data-ws-field="formSingle"'+(s.formSingle==='yes'?' checked':'')+'> The formula uses only the selected antioxidant from the BHA, BHT and propyl gallate group.</label>'+
+      '<p data-form-result role="status">'+esc(formulation.assay(id,s))+'</p></fieldset>';
+  }
   function addResults(id,filter) {
+    return formulation?.productRules.has(id)?formulationResults(id,filter):categoryResults(id,filter);
+  }
+  function categoryResults(id,filter) {
     const p=R.products[id], q=String(filter||'').trim().toLowerCase(),codes=categories(id);
     const rows=[];
     for (const c of codes) for (const v of R.categories[c].rows) {
@@ -214,6 +240,14 @@
       (rows.length?'<p>Showing '+capped.length+' of '+rows.length+' matching table rows.</p>'+table(['Table category','Additive / INS','Published entry','Conditions and notes'],capped):'<p>No matching row in the linked table extracts. Check the specific regulation, applicable parent table, carry-over provisions and the GMP rules.</p>');
   }
   function addSection(id) {
+    if(formulation?.productRules.has(id)){
+      const hasList=[formulation.mpc,formulation.colostrum,'01-01-8-whey-protein-concentrate'].includes(id);
+      const categoryLookup=['04-04-1-coconut-milk-powder','05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake','01-01-5-dairy-permeate-powders'].includes(id)
+        ?section('Appendix A category references','<p>Check each category entry against the product restrictions above and the conditions for the proposed use.</p><label>Find a category entry by name or INS<input type="search" data-ws-category-add></label><div data-ws-category-results>'+categoryResults(id,'')+'</div>'):'';
+      return section('Food additives and processing aids','<div data-formulation>'+ (hasList?'<label>Find an additive by name or INS<input type="search" data-ws-add></label>':'')+
+        '<div data-ws-add-results>'+addResults(id,'')+'</div>'+assayPanel(id)+'<p><button type="button" data-formulation-export>Download product formulation rules</button></p>'+
+        categoryLookup+documentLink('chapter-19',null,'Full Appendix A')+' '+documentLink('chapter-21',null,'Appendix C · processing aids')+'</div>');
+    }
     const r=R.products[id],alias=R.aliases[r.category];
     return section('Food additives and processing aids','<p>Appendix A category '+esc(r.category||'requires product-specific review')+'. Match the intended additive, food and function. Check the most specific entry, group total, notes and any stricter product rule. Annexure II categories for FPC 18 depend on the recipe.</p>'+
       (alias?'<p>'+esc(alias.reason)+'</p>':'')+'<label>Find an additive by name or INS<input type="search" data-ws-add placeholder="e.g. sorbate or 202"></label><div data-ws-add-results>'+addResults(id,'')+'</div>'+documentLink('chapter-19')+' '+documentLink('chapter-21',null,'Appendix C · processing aids'));
@@ -223,6 +257,7 @@
     const baseAreas=plan.scopedReferences(id).length?[...plan.areas,plan.scopedArea]:isVending?[water.area,...plan.areas]:ayurveda.known(id)?[ayurveda.area,...plan.areas]:sulphites.profiles.has(id)?[...plan.areas,sulphites.area]:plan.areas;
     const areas=plan.focusIds.includes(id)&&!isVending?[...baseAreas,plan.sampleArea]:baseAreas;
     const options=[...areas];
+    if(formulation?.productRules.has(id))options.push(formulation.area);
     if(root.PMSVSamplingQuantities)options.push(root.PMSVSamplingQuantities.area);
     if(root.PMSVStarchSpecifications?.ids.includes(id))options.push(root.PMSVStarchSpecifications.area);
     if(lab?.referenceEntries(id).length)options.push(lab.referenceArea);
@@ -505,6 +540,7 @@
       const el=e.target,k=el.matches('[data-plan-vet-date],[data-sampling-date]')?'vetDate':el.dataset.wsField;
       if(el.hasAttribute('data-plan-total-as'))node.querySelector('[data-plan-as-result]').textContent=plan.fishOilScreen(el.value);
       if(el.hasAttribute('data-ws-add'))node.querySelector('[data-ws-add-results]').innerHTML=addResults(id,el.value);
+      if(el.hasAttribute('data-ws-category-add'))node.querySelector('[data-ws-category-results]').innerHTML=categoryResults(id,el.value);
       if(el.hasAttribute('data-ws-commodity') || el.hasAttribute('data-ws-chemical'))node.querySelector('[data-ws-matches]').innerHTML=commodityResults(node.querySelector('[data-ws-commodity]').value,node.querySelector('[data-ws-chemical]').value);
       if(el.hasAttribute('data-panel-search')||el.hasAttribute('data-panel-search-metal'))node.querySelector('[data-panel-found]').innerHTML=P.findRows(node.querySelector('[data-panel-search-metal]').value,node.querySelector('[data-panel-search]').value);
       if(el.hasAttribute('data-pest-search'))node.querySelector('[data-pest-found]').innerHTML=X.indexPage(el.value);
@@ -591,6 +627,29 @@
         if(k==='coffeePct')panel.querySelector('[data-coffee-label]').textContent=coffee.labelRow(state.vetDate,state).notes;
         if(k==='vetDate')panel.innerHTML=coffeePanel(id);
         if(['coffeeForm','coffeePct','vetDate'].includes(k))refreshPlan();
+      }
+      if(formulation?.productRules.has(id)&&(k==='compVariant'||formulation.assayFields.includes(k))){
+        const panel=node.querySelector('[data-formulation]');
+        if(k==='compVariant'){
+          panel.querySelector('[data-ws-add-results]').innerHTML=addResults(id,panel.querySelector('[data-ws-add]')?.value);
+        }
+        const assay=panel.querySelector('[data-form-assay]');
+        if(assay){
+          let clear=[];
+          if(k==='compVariant'&&state[k]!==previous)clear=formulation.assayFields;
+          if(['formLot','formReport','formIns','formBasis'].includes(k)&&previous&&previous!==state[k]){
+            clear=k==='formLot'?['formReport','formValue','formFat','formSingle']:['formValue','formFat','formSingle'];
+          }
+          for(const field of clear){
+            state[field]='';
+            const input=assay.querySelector('[data-ws-field="'+field+'"]');
+            if(input.type==='checkbox')input.checked=false;else input.value='';
+          }
+          assay.hidden=!formulation.assayApplies(id,state);
+          assay.querySelector('[data-form-fat]').hidden=state.formBasis!=='powder';
+          assay.querySelector('[data-form-result]').textContent=formulation.assay(id,state);
+          refreshPlan();
+        }
       }
       if(k==='compVariant' || k==='compSweetener'){
         if(k==='compVariant')state.compSweetener='';
@@ -719,6 +778,7 @@
     return ['','Catalogue worksheet · '+r.name,'Review scope: '+human(p.scope),'Source standard / route: '+(std?std.name+' · '+p.standard.split('#')[1]:r.routeFinding),
       'Primary source: '+(anchor?E.documents[anchor.doc].url+(anchor.p.length?'#page='+anchor.p[0]:''):E.documents[p.routeDocs[0]].url),
       'Appendix A category: '+(r.category||'Requires classification'),'Microbiological routes: '+(p.micro.map(([k,v])=>human(k)+' '+(v.note||v.reason||v.route||v.profile_key||'')).join(' | ')||'Inspect product and process against applicable tables'),
+      ...(formulation?.assayApplies(id,s)&&s.formLot?[formulation.assay(id,s)]:[]),
       ...(sampling&&s.dispatchPurpose&&plan.metalEdition(s.vetDate)?[sampling.planEntry(id,s.vetDate,s).notes]:[]),
       ...(importDocs?.routes.has(id)&&s.importScope?importDocs.entries(id,s).map(r=>[r.form,r.parameter,r.status,r.notes,r.source].join(' · ')):[]),
       ...(lab?.dryBasis.has(id)&&lab.basisFields.some(field=>s[field])?lab.referenceEntries(id,s).filter(r=>r.status==='Dry-basis calculation').map(r=>r.notes):[]),
@@ -787,5 +847,5 @@
   }
   const stats=valid?{total:ids.size,direct:[...ids].filter(id=>E.products[id].scope==='product_standard').length,
     partial:[...ids].filter(id=>E.products[id].directCTR).length,portal:[...ids].filter(id=>E.products[id].monographs.length).length}:null;
-  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,dispatchRows:id=>root.PMSVSamplingQuantities.exportRows(id,getState(id).vetDate,getState(id)),melamineRows:(id,date)=>broad.reportRows(id,date,id?getState(id):{}),beanCountRows:()=>lab.countRows(getState(lab.bean)),briefLines,registerRows,sourceSummaryRows,pendingSourceRows,currentSource,sulphiteRows:id=>plan.sulphiteRows(id,getState(id)),ingredientRouteRows:id=>plan.ingredientRouteRows(id,getState(id).vetDate,getState(id)),veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),sampleReviewRows:id=>plan.sampleReviewRows(id,getState(id).vetDate,getState(id)),ingredientRows:id=>plan.ingredientRows(id,getState(id).vetDate,getState(id)),coffeeRows:id=>plan.coffeeRows(id,getState(id).vetDate,getState(id)),powderRows:id=>plan.powderRows(id,getState(id).vetDate,getState(id)),sugarRows:id=>plan.sugarRows(id,getState(id).vetDate,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
+  root.PMSVCatalogueWorksheets=Object.freeze({available:!!valid,stats,markup,attach,formulationRows:id=>formulation.exportRows(id,getState(id)),dispatchRows:id=>root.PMSVSamplingQuantities.exportRows(id,getState(id).vetDate,getState(id)),melamineRows:(id,date)=>broad.reportRows(id,date,id?getState(id):{}),beanCountRows:()=>lab.countRows(getState(lab.bean)),briefLines,registerRows,sourceSummaryRows,pendingSourceRows,currentSource,sulphiteRows:id=>plan.sulphiteRows(id,getState(id)),ingredientRouteRows:id=>plan.ingredientRouteRows(id,getState(id).vetDate,getState(id)),veterinaryDate:id=>getState(id).vetDate,productPlan:id=>plan.exportRows(id,getState(id).vetDate,false,getState(id)),sampleReviewRows:id=>plan.sampleReviewRows(id,getState(id).vetDate,getState(id)),ingredientRows:id=>plan.ingredientRows(id,getState(id).vetDate,getState(id)),coffeeRows:id=>plan.coffeeRows(id,getState(id).vetDate,getState(id)),powderRows:id=>plan.powderRows(id,getState(id).vetDate,getState(id)),sugarRows:id=>plan.sugarRows(id,getState(id).vetDate,getState(id)),compare,resultText,enabledCriteria,hasFocusedCalculator:id=>focused.has(id)});
 })(globalThis);
