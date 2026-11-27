@@ -15,15 +15,17 @@ function measure(key,values,extra={}){
 }
 for(const d of [date,'2026-12-01']){
   const rows=p.microFormRows(null,d,recorded,'spice').slice(1);
-  assert.equal(rows.length,526);assert.equal(new Set(rows.map(r=>r[0])).size,43);
+  assert.equal(rows.length,525);assert.equal(new Set(rows.map(r=>r[0])).size,43);
   assert(!JSON.stringify(rows).includes('QA165'));
   assert(rows.every(r=>r[14].includes('Gazette_Notification_Spices')&&r[14].includes('Chapter%202_9')));
   assert.equal(rows.filter(r=>r[6]==='Mapped table row').length,98);
   const sourceCheck=rows.filter(r=>r[6]==='Verify Gazette basis before use');
-  assert.equal(sourceCheck.length,1);assert.equal(sourceCheck[0][0],seasoning);
-  assert(sourceCheck[0].slice(10,14).every(x=>x===''));
+  assert.equal(sourceCheck.length,0);
   const official=rows.filter(r=>r[10]!==''&&r[4].includes('Wet')&&r[0]===seasoning);
   assert.equal(official.length,7);
+  const safety=official.filter(r=>r[3].includes('3B'));
+  assert.equal(safety.length,3);assert.match(safety.map(r=>r[5]).join(' '),/salmonella/i);
+  assert(!official.some(r=>/listeria/i.test(r[5])));
 }
 for(const name of ['poppy-khas-khas','aniseed-saunf','ajowan-bishops-seed','celery','tejpat','star-anise']){
   const rows=p.microFormRows(id(name),date).slice(1);
@@ -51,4 +53,4 @@ assert.match(s.outcome(seasoning,presence),/^Unsatisfactory/);
 assert.equal(p.microFormRows(seasoning,date,presence).filter(r=>r[9].includes('Private QA165 report')).length,1);
 assert.equal(p.microFormRows(oleoresin,'2010-01-01').length,1);
 assert.equal(ctx.PMSVEggMicrobiology.products.size,5);
-console.log('43 spice products, supported form choices, seven Gazette criteria, source discrepancy, report boundaries and private evidence verified.');
+console.log('43 spice products, supported form choices, seven Gazette criteria, Table 3B scope, report boundaries and private evidence verified.');

@@ -654,9 +654,6 @@
           count++;
         }
       }
-      if(spiceProduct&&route.profile_key==='spice-05'){
-        push({article:'Appendix B · Table 3B, row 5',form,parameter:'Listeria monocytogenes · source confirmation',status:'Verify Gazette basis before use',notes:join([reason,'The April 2025 compendium page displays a Listeria entry for preserved spice paste. The October 2020 Gazette Table 3B lists three other food safety organisms. Verify the amending notification before interpreting a Listeria result for this category.']),source:links('chapter-20',[25])+' | '+spiceGazette+'#page=16'});
-      }
       if(criteria.safety_special_requirement){
         push({form,parameter:'Food safety special requirement',status:conditional?'Confirm product form':'Mapped table row',
           limit:criteria.safety_special_requirement,notes:join([reason,route.note,route.message]),source:links('chapter-20',tablePages(profile,'safety'))});count++;

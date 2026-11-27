@@ -8,7 +8,13 @@
   const appendix='https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20A(4).pdf';
   const colostrum='100-100-cow-or-buffalo-colostrum-and-colostrum-products';
   const mpc='01-01-3-milk-protein-concentrate',wpc='01-01-8-whey-protein-concentrate';
+  const chocolate='05-05-1-chocolate';
+  const chocolateChapter='https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf';
+  const chocolateAmendment='https://fssai.gov.in/upload/uploadfiles/files/Gazette_12_01_2023.pdf#page=18';
+  const fatDeclaration='CONTAINS COCOA BUTTER EQUIVALENT/VEGETABLE FAT IN ADDITION TO COCOA BUTTER';
+  const chocolateFields=['chocRecipe','chocFinished','chocDeduct','chocFat','chocSpec','chocEligibility'];
   const productRules=new Map([
+    [chocolate,['2.7.4','Chocolate under 2.7.4','Vegetable fat other than cocoa butter',chocolateChapter+'#page=6']],
     [mpc,['2.1.21(3)','Milk protein concentrate','Use the Appendix A provisions specified for milk powder. Check the named substance, conditions, group limits and reporting basis.',dairy+'#page=7']],
     [wpc,['2.1.22(3)','Whey protein concentrate','Use the dried whey table. Retain its exclusions and notes, including the infant-food exclusion for benzoyl peroxide.',dairy+'#page=8']],
     [colostrum,['2.1.23(3)','Cow or buffalo colostrum','Liquid colostrum prohibits food additives. In powder, only stabilizers, emulsifiers and antioxidants specified for milk powder may be used within the conditions and limits stated.',dairy+'#page=9']],
@@ -23,6 +29,7 @@
     ['472e','Emulsifier'],['474','Emulsifier'],['PHOSPHATES','Confirm permitted stabilizing or emulsifying function for the actual phosphate']
   ]);
   function entries(id,state={}){
+    if(id===chocolate)return chocolateRows();
     const rule=productRules.get(id);
     if(!rule)return [];
     const [clause,form,description,source]=rule;
@@ -51,11 +58,50 @@
     }
     return out;
   }
+  function chocolateRows(){
+    const provisions=[
+      ['(1)','Vegetable fat other than cocoa butter','5% maximum','Sum all such added fat in the recipe. Divide by finished product mass after subtracting other added edible foodstuffs under the clause. Record the basis for every deduction and use masses from the same recipe.',6],
+      ['(5)(b)','Cocoa butter equivalent eligibility','','Use a standardized vegetable fat or blend. Verify non-lauric fat rich in symmetrical POP, POSt and StOSt triglycerides, miscibility with cocoa butter in all proportions, compatible melting and crystallisation properties, melting rate and tempering. Verify refining or fractionation without enzymatic modification of triglycerides.',8],
+      ['(1), (4) and (6)','Minimum cocoa materials','','Maintain the cocoa-material minima for the declared chocolate type. Check the applicable composition requirements independently of the vegetable-fat calculation.',6],
+      ['(6)','Label declaration when vegetable fat is present','','For chocolate containing vegetable fat other than cocoa butter, declare in bold: '+fatDeclaration+'.',10]
+    ];
+    return provisions.map(([clause,parameter,published,notes,page],i)=>({
+      area,form:'Chocolate under 2.7.4',article:'FPSFA 2.7.4'+clause,parameter,published,notes,
+      source:chocolateChapter+'#page='+page+([1,3].includes(i)?' | '+chocolateAmendment:''),
+      status:'Product standard',ins:'',limit:i===0?'5':'',unit:i===0?'% of adjusted finished mass':''
+    }));
+  }
+  function chocolateReview(state={}){
+    const recipe=state.chocRecipe?.trim();
+    if(!recipe)return 'Enter the recipe or batch reference for the masses and deductions.';
+    const values=['chocFinished','chocDeduct','chocFat'].map(k=>root.PMSVCulinarySauces.decimal(String(state[k]??'').trim()));
+    if(values.some(v=>!v))return 'Enter all three masses in kg, including zero where applicable.';
+    const scale=values.reduce((a,v)=>a>v.scale?a:v.scale,1n);
+    const [finished,deduct,fat]=values.map(v=>v.n*(scale/v.scale));
+    const adjusted=finished-deduct;
+    if(adjusted<=0n)return 'Finished mass must be positive and greater than the deductions.';
+    if(fat>adjusted)return 'Check the mass balance. Added fat exceeds the adjusted finished mass.';
+    const formatMass=n=>root.PMSVCulinarySauces.decimalText(n,scale);
+    const value=100n*fat, maximum=5n*adjusted;
+    const above=value>maximum,equal=value===maximum;
+    const approx=(Number(value)/Number(adjusted)).toLocaleString('en-US',{maximumFractionDigits:6,useGrouping:false});
+    const pct=approx==='5'&&!equal?(above?'>5':'<5'):approx;
+    const result='Recipe '+recipe+' · '+formatMass(fat)+' kg / '+formatMass(adjusted)+' kg = '+pct+'%. '+(equal?'At':above?'Above':'Below')+' the 5% maximum.';
+    if(fat===0n)return result+' No added vegetable fat recorded.';
+    const spec=state.chocSpec?.trim();
+    const identity=state.chocEligibility==='fails'?'Material fails the cocoa butter equivalent criteria.':
+      state.chocEligibility==='meets'&&spec?'Reviewer confirmed all material criteria.':'Material eligibility requires evidence.';
+    return result+' '+identity+(spec?' Specification: '+spec+'.':'')+' Check the cocoa minima and bold label declaration.';
+  }
+  function individualResult(id,r,state){
+    if(id===chocolate&&r.published&&state?.chocRecipe?.trim())return chocolateReview(state);
+    return id&&state?.formLot&&r.ins&&r.ins===state.formIns?assay(id,state):'';
+  }
   function exportRows(id,state){
     const out=[['Catalogue ID','Product','Sample form','Provision','Substance or rule','INS','Published maximum or GMP','Status','Conditions and reporting basis','Sources','Individual lot comparison']];
     for(const key of id?[id]:productRules.keys()){
       const states=key===colostrum&&!id?[{compVariant:'Colostrum'},{compVariant:'Colostrum Powder'}]:[state];
-      for(const form of states)for(const r of entries(key,form))out.push([key,rules.products[key].name,r.form,r.article,r.parameter,r.ins,r.published,r.status,r.notes,r.source,id&&state?.formLot&&r.ins&&r.ins===state.formIns?assay(id,state):'']);
+      for(const form of states)for(const r of entries(key,form))out.push([key,rules.products[key].name,r.form,r.article,r.parameter,r.ins,r.published,r.status,r.notes,r.source,individualResult(id,r,state)]);
     }
     return out;
   }
@@ -86,9 +132,9 @@
   }
   function planRows(id,state){
     return entries(id,state).map(r=>{
-      const recorded=state?.formLot&&r.ins&&r.ins===state.formIns?assay(id,state):'';
+      const recorded=individualResult(id,r,state);
       return {...r,notes:[r.published?'Published entry: '+r.published+'.':'',r.notes,recorded].filter(Boolean).join(' ')};
     });
   }
-  root.PMSVFormulation=Object.freeze({area,productRules,colostrum,mpc,assayFields,assayApplies,assay,entries,exportRows,planRows});
+  root.PMSVFormulation=Object.freeze({area,productRules,colostrum,mpc,chocolate,chocolateFields,chocolateReview,assayFields,assayApplies,assay,entries,exportRows,planRows});
 })(globalThis);

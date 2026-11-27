@@ -7,7 +7,7 @@ const html=fs.readFileSync(new URL('index.html',dir),'utf8');
 for(const [,name] of html.matchAll(/<script src="((?:catalogue-|full-catalogue-|review-status-data|broad-contaminants)[a-z0-9-]*\.js)\?/g))vm.runInContext(fs.readFileSync(new URL(name,dir),'utf8'),ctx);
 ctx.PMSVCulinarySauces=createRequire(import.meta.url)('../fssai-helper/culinary-sauces.js');
 const g=ctx.PMSVFormulation,table=g.exportRows(),milk=g.entries(g.mpc),date='2026-11-27';
-assert.equal(g.productRules.size,8);assert.equal(table.length,54);
+assert.equal(g.productRules.size,9);assert.equal(table.length,58);
 assert(table.every(r=>r.length===table[0].length));assert(table.slice(1).every(r=>!r[10]));
 assert(!milk.some(r=>/nisin/i.test(r.parameter)));assert(milk.some(r=>r.ins==='320'&&r.published==='100 mg/kg'));
 assert.equal(g.entries(g.colostrum).length,1);
