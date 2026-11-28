@@ -14,7 +14,7 @@ const {scope,descriptions}=plan.incomingSamples;
 assert(ws.available);
 const queue=ws.pendingSourceRows();
 assert.deepEqual([...plan.openScope().keys()].sort(),Array.from(queue.slice(1),r=>r[0]).sort());
-assert(queue.slice(1).every(r=>r.length===queue[0].length && r.at(-1)===scope.get(r[0])[1]));
+assert(queue.slice(1).every(r=>r.length===queue[0].length && r[queue[0].indexOf('Evidence to obtain for the finished-product decision')]===scope.get(r[0])[1]));
 assert.equal(descriptions.size,rev.openProductReview.productPlans);
 const milk='04-04-1-coconut-milk-non-dairy',powder='04-04-1-coconut-milk-powder';
 for(const date of ['2026-11-25','2026-12-01']){

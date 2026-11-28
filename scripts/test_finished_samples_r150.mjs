@@ -21,7 +21,8 @@ for(const [date,count] of [['2026-11-26',235],['2026-12-01',313]]){
   assert(summary.every(r=>r.length===10&&r[2]===date&&r[3]&&r[4].startsWith('https://')&&r[7]));
   const water=summary.find(r=>r[0]===ctx.PMSVVendingWater.productId);
   assert.equal(water[5],date==='2026-11-26'?'CONDITIONAL_TOXIN_SOURCE_MATCH':'FIRST_EXACT_SOURCE_PENDING');
-  assert.equal(!!water[8],date==='2026-11-26');
+  assert(water[8].startsWith('https://'));
+  if(date==='2026-12-01')assert(water[8].includes('272840.pdf#page=5')&&water[7].includes('mace or nutmeg kernel'));
   assert.equal(summary.filter(r=>r[5]==='FIRST_EXACT_SOURCE_PENDING').length,date==='2026-11-26'?9:10);
   const [head,...rows]=g.rows(null,date);
   assert.equal(rows.length,count);
