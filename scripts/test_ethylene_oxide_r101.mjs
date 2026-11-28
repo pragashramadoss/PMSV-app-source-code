@@ -17,7 +17,7 @@ const state={spRole:'product',spArticle:'pepper',spProcess:'physical',spSample:'
   eoFreeKind:'quantified',eoFreeValue:'0.010',eoFreeUnit:'mg/kg',eoCeKind:'quantified',eoCeValue:'40',eoCeUnit:'µg/kg',eoCeBasis:'native'};
 const test=options=>E.analysis({...state,...options});
 const make=(changes={},id=pepper)=>{const s={...state,...changes};return E.review(Y.context(id,s),s);};
-assert.equal(registry.latestRound,167);assert.equal(registry.ethyleneOxideReview.marketedProducts,36);
+assert.equal(registry.latestRound,168);assert.equal(registry.ethyleneOxideReview.marketedProducts,36);
 assert.equal(registry.ethyleneOxideReview.method,'FSSAI.OM.EO.001.2024');
 assert(E.sources.calculation.endsWith('#page=8')&&E.sources.decision.endsWith('#page=8'));
 assert.equal(test({}).sum,'EO sum = 0.032');

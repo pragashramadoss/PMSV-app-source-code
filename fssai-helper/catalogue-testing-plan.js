@@ -888,6 +888,7 @@
     const dispatch=root.PMSVSamplingQuantities?.planEntry(id,vetDate,state);
     if(dispatch)add(dispatch);
     if(metalEdition(vetDate))for(const row of root.PMSVFormulation?.planRows(id,state)||[])add(row);
+    if(metalEdition(vetDate))for(const row of root.PMSVCocoaGrades?.planRows(id,state)||[])add(row);
     if(metalEdition(vetDate))for(const row of root.PMSVCacaoResidues?.planRows(id,state)||[])add(row);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
     if(sampleGuide)add(sampleGuide);
@@ -1038,6 +1039,7 @@
       const checked=gapEvidence(key,date);
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:[task,checked?.finding].filter(Boolean).join(' '),source:[links(doc,anchor?.p||route?.[1]||[]),checked?.sources].filter(Boolean).join(' | ')});
       for(const row of root.PMSVFormulation?.planRows(key)||[])add('Finished-product formulation',row.status,row);
+      for(const row of root.PMSVCocoaGrades?.planRows(key)||[])add(key===root.PMSVCocoaGrades.beans?'Whole bean lot':'Incoming bean lot',row.status,row);
       for(const row of root.PMSVCacaoResidues?.planRows(key)||[])add(key===root.PMSVCacaoResidues.beans?'Whole bean lot':'Incoming bean lot',row.status,row);
       const dispatch=root.PMSVSamplingQuantities?.decision(key,date);
       if(dispatch)add('Regulatory sample dispatch',dispatch.status,{article:'Laboratory and Sample Analysis 2.3.1'+(dispatch.key?', item '+dispatch.key:''),parameter:'Quantity sent to the Food Analyst',form:dispatch.food,limit:dispatch.quantity,unit:dispatch.unit,notes:dispatch.notes,source:dispatch.source});
@@ -1068,6 +1070,17 @@
         }
       } else {
         for(const decision of P.panel(key)){
+          if(decision.kind==='same'){
+            const row=metalRow(key,decision,date);
+            const limits=decision.keys.map(k=>root.PMSVMetalPanelData.rows[k][1]);
+            if(limits.length&&limits.every(v=>v===limits[0])&&row.limit===P.limit(decision.keys[0])){
+              let scope='';
+              if(decision.name==='Tin')scope=' Confirm the non-beverage food as supplied. Check beverage and infant-food articles separately when relevant.';
+              if(key==='coffee-chicory-mixture'&&decision.name==='Copper')scope=' Use the dry coffee–chicory blend as supplied.';
+              add('Finished food','Common CTR maximum; exact article open',{...row,limit:limits[0],unit:'ppm',notes:row.notes+scope});
+            }
+            continue;
+          }
           if(!['residual','all'].includes(decision.kind))continue;
           const row=metalRow(key,decision,date), code=decision.keys[0];
           if(decision.keys.length===1&&['Pb71','Cu11','As32','Cd8','Hg6','Me0'].includes(code)){
