@@ -16,7 +16,7 @@ const base={sku:'Example',art:'A107',pack:'retail',dateArticle:'candy',dateRef:'
 const model=(patch={})=>S.model({...base,...patch});
 const row=(key,patch={},id=candy)=>S.analyse(model(patch),id).rows.find(r=>r.key===key);
 assert(W.available);
-assert.equal(context.PMSV_REVIEW_REGISTER.latestRound,168);
+assert.equal(context.PMSV_REVIEW_REGISTER.latestRound,169);
 for(const group of ['wine','produce','alcohol','vinegar','candy','salt','sugar','gum'])
   assert.equal(D.expiryScope(model({dateArticle:group,dateAbv:'10'})).kind,'exempt');
 assert.equal(D.expiryScope(model({dateArticle:'alcohol',dateAbv:'9.999999999999999999'})).kind,'alcoholRequired');

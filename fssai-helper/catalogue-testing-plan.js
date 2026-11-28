@@ -888,6 +888,7 @@
     const dispatch=root.PMSVSamplingQuantities?.planEntry(id,vetDate,state);
     if(dispatch)add(dispatch);
     if(metalEdition(vetDate))for(const row of root.PMSVFormulation?.planRows(id,state)||[])add(row);
+    if(metalEdition(vetDate))for(const row of root.PMSVEggResidueReports?.additionalRows(id,state)||[])add(row);
     if(metalEdition(vetDate))for(const row of root.PMSVCocoaGrades?.planRows(id,state)||[])add(row);
     if(metalEdition(vetDate))for(const row of root.PMSVCacaoResidues?.planRows(id,state)||[])add(row);
     const sampleGuide=metalEdition(vetDate)&&additionalSampleRow(id);
@@ -905,7 +906,7 @@
     for(const row of root.PMSVAdditivesSolvents.rows(id,state))add({...row,area:areas[0]});
     for(const row of routeNotes.get(id)||[])add({...row,area:areas[0]});
     for(const row of scopedReferences(id,vetDate)){
-      add({...row,area:scopedArea,limit:'',unit:'',notes:row.notes+' Published reference: '+row.value+(row.unit?' '+row.unit:'')+'.'});
+      add({...row,area:scopedArea,limit:'',unit:'',notes:row.notes+' Published reference: '+row.value+(row.unit?' '+row.unit:'')+'.'+(root.PMSVEggResidueReports?.savedExportNote(id,row.parameter,state)||'')});
     }
     if(id===routeIds.enzyme)for(const row of lysozymeReferences){
       add({...row,area:areas[0],status:'Separate classification example',limit:'',unit:'',
@@ -1010,7 +1011,7 @@
     ['coffee-chicory-mixture',['The copper row names dried or roasted chicory and coffee beans. The ochratoxin A row names coffee. Record ground or instant blend and distinguish results for its two inputs.',[7,15]]],
     ['04-04-1-coconut-milk-powder',['The vegetable oil row names coconut oil. Trace the expressed coconut milk and any carrier to the powder and obtain an entry covering the marketed powder.',[6,7]]],
     ['06-06-2-arrowroot',['The metal entries for root and tuber vegetables use a vegetable sample. Record the source species and the extraction step before assessing the separated starch.',[5,12]]],
-    ['10-10-2-egg-powder',['The pesticide table includes egg samples. Identify shell-free egg, dried whole egg, yolk or white and obtain a documented legal and analytical basis for the powder.',[33]]],
+    ['10-10-2-egg-powder',['The pesticide table includes egg samples. Identify shell-free egg, dried whole egg, yolk or white and obtain a documented legal and analytical basis for the powder. The production EMRLs cover incoming eggs. The HCH export entries cover a finished export consignment.',[33]]],
     [routeIds.enzyme,['FoSCoS category 99.2 excludes preparations already covered by the processing-aid or nutraceutical regulations. Match the name, source, activity and actual use before assigning the preparation specification.',[]]],
     ['100-100-cow-or-buffalo-colostrum-and-colostrum-products',['The aflatoxin M1 rows name liquid milk, skimmed milk powder and whole milk powder. Confirm the distinct colostrum or colostrum-powder identity before using a finished-product limit.',[14]]],
     ['100-100-royal-jelly',['The antibiotic performance limits concern honey production. Record the royal jelly lot, product type and a provision naming the applicable sample.',[40,41]]],
@@ -1020,6 +1021,7 @@
     const entry=sourceReview.get(id);
     if(!entry||!openScope(date).has(id))return null;
     const urls=entry[1].map(page=>ctrCompendium+'#page='+page);
+    if(id===eggExportId&&root.PMSVEggResidueReports)for(const group of root.PMSVEggResidueReports.groups)urls.push(...group.source.split(' | '));
     if(id===routeIds.enzyme)urls.push('https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf#page=9','https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=40');
     if(id==='purified-vending-water')urls.push(decemberGazette+'#page=5');
     return {finding:entry[0],sources:urls.join(' | ')};
@@ -1039,6 +1041,9 @@
       const checked=gapEvidence(key,date);
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:[task,checked?.finding].filter(Boolean).join(' '),source:[links(doc,anchor?.p||route?.[1]||[]),checked?.sources].filter(Boolean).join(' | ')});
       for(const row of root.PMSVFormulation?.planRows(key)||[])add('Finished-product formulation',row.status,row);
+      for(const row of root.PMSVEggResidueReports?.additionalRows(key)||[]){
+        add(row.role,row.status,{...row,limit:row.referenceValue,unit:row.referenceUnit});
+      }
       for(const row of root.PMSVCocoaGrades?.planRows(key)||[])add(key===root.PMSVCocoaGrades.beans?'Whole bean lot':'Incoming bean lot',row.status,row);
       for(const row of root.PMSVCacaoResidues?.planRows(key)||[])add(key===root.PMSVCacaoResidues.beans?'Whole bean lot':'Incoming bean lot',row.status,row);
       const dispatch=root.PMSVSamplingQuantities?.decision(key,date);
