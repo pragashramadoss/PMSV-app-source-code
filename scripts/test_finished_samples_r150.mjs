@@ -14,7 +14,7 @@ const plan=ctx.PMSVTestingPlan,ws=ctx.PMSVCatalogueWorksheets;
 assert(ws.available);
 assert.equal(g.profiles.size,reg.productProfiles);
 assert.equal(Array.from(g.profiles.values()).flatMap(p=>p.methods).length,reg.methodReferences);
-for(const [date,count] of [['2026-11-26',235],['2026-12-01',313]]){
+for(const [date,count] of [['2026-11-26',237],['2026-12-01',315]]){
   const summary=ws.sourceSummaryRows(date).slice(1);
   assert.equal(summary.length,533);
   assert.equal(new Set(summary.map(r=>r[0])).size,533);
@@ -44,7 +44,7 @@ for(const [date,count] of [['2026-11-26',235],['2026-12-01',313]]){
   assert(!g.isControlSource(controls[0][14]+'&other=1'));
   for(const id of new Set(rows.map(r=>r[0]))){
     const exported=plan.exportRows(id,date).slice(1).filter(r=>r[2]===g.referenceArea);
-    const refs=rows.filter(r=>r[0]===id&&['Analytical reference','Codex prevention guidance','Laboratory recognition guidance','Dry-basis calculation'].includes(r[4]));
+    const refs=rows.filter(r=>r[0]===id&&['Analytical reference','Codex prevention guidance','Laboratory recognition guidance','Dry-basis calculation','FSSAI laboratory parameter for the blend'].includes(r[4]));
     assert.equal(exported.length,refs.length);
     assert(exported.every(r=>r[7]===''&&r[8]===''&&refs.some(v=>v[3]===r[4]&&v[5]===r[5]&&v[6]===r[3]&&v[14]===r[14]&&r[9].includes(v[15]))));
   }

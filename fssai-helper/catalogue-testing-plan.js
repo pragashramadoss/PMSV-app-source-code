@@ -888,6 +888,8 @@
     const dispatch=root.PMSVSamplingQuantities?.planEntry(id,vetDate,state);
     if(dispatch)add(dispatch);
     if(metalEdition(vetDate))for(const row of root.PMSVFormulation?.planRows(id,state)||[])add(row);
+    const milkArtwork=root.PMSVMilkLogo?.row(id,vetDate,state);
+    if(milkArtwork)add(milkArtwork);
     if(metalEdition(vetDate))for(const row of root.PMSVEggResidueReports?.additionalRows(id,state)||[])add(row);
     if(metalEdition(vetDate))for(const row of root.PMSVCocoaGrades?.planRows(id,state)||[])add(row);
     if(metalEdition(vetDate))for(const row of root.PMSVCacaoResidues?.planRows(id,state)||[])add(row);
@@ -1008,7 +1010,7 @@
   const sourceReview=new Map([
     ['04-04-2-cocoa-beans',['The lead and copper entries name cocoa powder. The Codex SB 0715 pesticide table covers whole cacao beans as an international commodity.',[3,7]]],
     ['05-05-1-cocoa-mass-or-cocoa-chocolate-liquor-and-cocoa-cake',['The powder entries specify a powder reporting basis. Identify the sampled liquor or pressed cake and obtain a provision covering that form. A bean contract applies to the incoming lot.',[3,7]]],
-    ['coffee-chicory-mixture',['The copper row names dried or roasted chicory and coffee beans. The ochratoxin A row names coffee. Record ground or instant blend and distinguish results for its two inputs.',[7,15]]],
+    ['coffee-chicory-mixture',['The copper row names dried or roasted chicory and coffee beans. The ochratoxin A row names coffee. Record ground or instant blend and distinguish results for its two inputs. The FSSAI laboratory order lists ochratoxin for both regular finished blends and provides no blend maximum.',[7,15]]],
     ['04-04-1-coconut-milk-powder',['The vegetable oil row names coconut oil. Trace the expressed coconut milk and any carrier to the powder and obtain an entry covering the marketed powder.',[6,7]]],
     ['06-06-2-arrowroot',['The metal entries for root and tuber vegetables use a vegetable sample. Record the source species and the extraction step before assessing the separated starch.',[5,12]]],
     ['10-10-2-egg-powder',['The pesticide table includes egg samples. Identify shell-free egg, dried whole egg, yolk or white and obtain a documented legal and analytical basis for the powder. The production EMRLs cover incoming eggs. The HCH export entries cover a finished export consignment.',[33]]],
@@ -1021,6 +1023,7 @@
     const entry=sourceReview.get(id);
     if(!entry||!openScope(date).has(id))return null;
     const urls=entry[1].map(page=>ctrCompendium+'#page='+page);
+    if(id==='coffee-chicory-mixture')for(const r of root.PMSVLabGuide?.blendTestRows(id)||[])urls.push(r.source);
     if(id===eggExportId&&root.PMSVEggResidueReports)for(const group of root.PMSVEggResidueReports.groups)urls.push(...group.source.split(' | '));
     if(id===routeIds.enzyme)urls.push('https://fcstraining.fssai.gov.in/assets/docs/Compiled%20FPC_FoSCoS.pdf#page=9','https://fssai.gov.in/docs/food-law/regulations/compendium/food-products-standards/Appendix%20C(2).pdf#page=40');
     if(id==='purified-vending-water')urls.push(decemberGazette+'#page=5');
@@ -1041,6 +1044,9 @@
       const checked=gapEvidence(key,date);
       add('Finished product','Product-specific CTR source pending',{article:record.standard.split('#')[1]||'Catalogue classification',parameter:'Evidence needed',form:sample,notes:[task,checked?.finding].filter(Boolean).join(' '),source:[links(doc,anchor?.p||route?.[1]||[]),checked?.sources].filter(Boolean).join(' | ')});
       for(const row of root.PMSVFormulation?.planRows(key)||[])add('Finished-product formulation',row.status,row);
+      const milkArtwork=root.PMSVMilkLogo?.row(key,date);
+      if(milkArtwork)add('Pre-packaged artwork',milkArtwork.status,milkArtwork);
+      for(const row of root.PMSVLabGuide?.blendTestRows(key)||[])add('Finished blend laboratory sample',row.status,row);
       for(const row of root.PMSVEggResidueReports?.additionalRows(key)||[]){
         add(row.role,row.status,{...row,limit:row.referenceValue,unit:row.referenceUnit});
       }

@@ -152,6 +152,14 @@
     const position=rule.minimum?(within?'at or above':'below'):(within?'at or below':'above');
     return rule.parameter+' is '+percent+'% on dry basis (display rounded), '+position+' the '+rule.limit+'% '+(rule.minimum?'minimum':'maximum')+'. '+(water||'Moisture was not entered.');
   }
+  const coffeeParameterOrder='https://fssai.gov.in/upload/advisories/2018/08/5b7fa9ef0a9e3Order_Lab_Parameters_18_04-2016.pdf';
+  function blendTestRows(id,state){
+    if(id!==coffee)return [];
+    return [['regular_roasted_ground','Roasted and ground coffee–chicory mixture','2.10.4.1',588],['instant','Instant coffee–chicory mixture','2.10.4.2',590]]
+      .filter(([key])=>!state?.coffeeForm||state.coffeeForm===key)
+      .map(([,form,article,page])=>({area:referenceArea,form,article,parameter:'Ochratoxin',status:'FSSAI laboratory parameter for the blend',limit:'',unit:'',locator:'PDF p. '+page,
+        source:coffeeParameterOrder+'#page='+page,notes:'The 2016 order lists ochratoxin for this finished blend without a numerical maximum or a specific ochratoxin designation. Confirm analyte and legal matrix before using the CTR ochratoxin A value for coffee.'}));
+  }
   function referenceEntries(id,state){
     const entries=[];
     function add(form,parameter,article,status,source,locator,notes){
@@ -181,7 +189,7 @@
     for(const [form,parameter,article,locator,url,notes] of controls.get(id)||[]){
       add(form,parameter,article,'Codex prevention guidance',url,locator,notes);
     }
-    return entries;
+    return entries.concat(blendTestRows(id,state));
   }
   const headers=['Catalogue ID','Product','Assessment date','Sample or form','Reference type','Parameter','Article or method','Reference criterion','Unit','n','c','m','M','Scope and reporting instructions','Official source','Manual page or section'];
   function rows(id,date=root.PMSVVeterinary.reviewDate){
@@ -238,5 +246,5 @@
     return [['Sample reference','Beans examined','Defect','Beans affected','Observed % by count (rounded)','Maximum % by count','Comparison using exact counts','Official source','Commercial quality sampling guidance','Quality sampling sources'],
       ...countResults(state).map(r=>[state.beanSample||'',state.beanTotal||'',r.parameter,r.count,r.percent,r.max,r.status,r.source,beanSampling.note,beanSampling.guide+' | '+beanSampling.standard])];
   }
-  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,dairy,dryBasis,basisFields,basisLabels,basisResult,isIgGSource,isControlSource,referenceArea,referenceEntries,recognition,recognitionAnalytes,isRecognitionSource,bean,beanSampling,beanFields,countResults,countRows});
+  root.PMSVLabGuide=Object.freeze({profiles,rows,controls,dairy,dryBasis,basisFields,basisLabels,basisResult,isIgGSource,isControlSource,referenceArea,referenceEntries,blendTestRows,recognition,recognitionAnalytes,isRecognitionSource,bean,beanSampling,beanFields,countResults,countRows});
 })(globalThis);

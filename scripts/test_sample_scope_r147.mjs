@@ -32,7 +32,7 @@ for(const date of ['2026-11-26','2026-12-01']){
     assert(ref.every(r=>!r.limit&&!r.unit&&r.notes.includes('Published reference:')));
   }
   const open=plan.openProductRows(null,date).slice(1);
-  assert.equal(open.length,date<'2026-12-01'?238:256);
+  assert.equal(open.length,date<'2026-12-01'?242:260);
   assert.equal(open.filter(r=>r[6]==='Melamine').length,date<'2026-12-01'?9:10);
   assert.equal(plan.scopeReferenceExport('coffee',date).length,1);
 }
