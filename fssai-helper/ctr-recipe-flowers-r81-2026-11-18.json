@@ -1,0 +1,106 @@
+{
+  "round": 81,
+  "reviewedOn": "2026-11-18",
+  "report": "ctr-recipe-flowers-r81-2026-11-18.md",
+  "sources": {
+    "recipe": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Order%20dated%2025-07-2025%20enclosing%20Ayurveda%20Aahara.pdf",
+      "sha256": "498d6f579357e7bb8e8d7b9f7741db5863f6eea8d29ffd559ff9add7d32d7edc",
+      "pages": [96, 97, 98]
+    },
+    "codex": {
+      "url": "https://codex.fao.org/restapi/searchstandard/CXA_004e.pdf?lang=en&id=39",
+      "sha256": "5d23f32aeaef4ecc4238a0508303c0c71ea6d593a1c5a1594a97d202eb552f01",
+      "edition": "CXA 4-1989, amended 2025",
+      "pages": [33, 36, 105, 109, 110, 124, 218]
+    },
+    "kew": {
+      "url": "https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A670953-1"
+    },
+    "gazette": {
+      "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/5f3d09f97b78aGazette_Notification_Limit_Metal_19_08_2020.pdf",
+      "sha256": "5d376f55999049e7272b84294b3b5e5bfc228c3ef772754bfbd328045212c3dd",
+      "pages": [20, 24]
+    },
+    "compendium": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "sha256": "8300ea34f1e88680ae4bbef52e0ec49331dbbfd1d5d6aa2612852bcb8779b26d",
+      "pages": [3, 8]
+    },
+    "ayurveda": {
+      "url": "https://www.fssai.gov.in/docs/food-law/notice-comment/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf",
+      "sha256": "1ae8cfc632fad0a775316a84999a48adb6cf4b47d05bd4faa75f5190c511f699",
+      "pages": [16, 22]
+    },
+    "pesticides": {
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_MRL_Pesticides_03_01_2019.pdf",
+      "sha256": "4e46563bc34cc1f4da630a48266aec723cdd666d448803bd965c5aa20c86fc20",
+      "pages": [38]
+    }
+  },
+  "ingredient": {"recipe": "14.6", "serial": 9, "name": "Jati"},
+  "gazetteRowKeys": [{"metal": "Lead", "coreIndex": 60}, {"metal": "Arsenic", "coreIndex": 25}],
+  "oilAdditive": {"schedule": "C", "serial": 28, "material": "Kewda/Kewra (oil from Ketaki)", "maximum": 0.5, "unit": "%", "pdfPage": 22},
+  "recipes": [
+    {
+      "number": "14.6",
+      "productId": "102-102-1-14-6-sugandhit-ksheera-aroma-infused-milk",
+      "tablePage": 96,
+      "methodPage": 97,
+      "sourceReviewResult": "Four named flowers are linked to the published table and preparation stages. Confirmed naturally dried culinary Jati has candidate lead and arsenic references. Only the lead row specifies a dry-matter basis. The Codex kewra flower has a different botanical identity from the printed Ketaki.",
+      "sourceReviewNextAction": "Check the supplier’s botanical name, plant part, supplied form and the preparation in which it is used. The four-stage method and its relationship to the published title still need authoritative clarification.",
+      "flowers": [
+        {
+          "key": "ketaki", "serial": 2, "name": "Ketaki", "species": "Pandanus tectorius Soland.",
+          "stage": "The ingredient table lists Ketaki. The method gives no specific stage for it.",
+          "scope": "Codex HS 3379 names Pandanus fascicularis flowers. Kew treats that name as a synonym of Pandanus odorifer. A supply label reading “kewra” alone leaves the recipe species unresolved.",
+          "references": [["codex", 124, "Codex HS 3379"], ["kew", null, "Kew botanical record"]]
+        },
+        {
+          "key": "jati", "serial": 9, "name": "Jati", "species": "Jasminum officinale L.",
+          "stage": "The method names Jati in the first milk preparation, Ksheerapaka.",
+          "scope": "Codex lists this species as jasmine in herb subgroup 027A. The group includes naturally dried plant parts used to flavour food. The jasmine entry leaves the part unspecified. The FSSAI recipe supplies the flower identity and leaves its drying status open.",
+          "references": [["codex", 109, "Codex HH 3231"], ["codex", 105, "Codex herb group 027"]]
+        },
+        {
+          "key": "dadima", "serial": 10, "name": "Dadima", "species": "Punica granatum L.",
+          "stage": "The method names Dadima flowers in the third preparation, Ghatika.",
+          "scope": "Codex FI 0355 identifies pomegranate fruit. The FSSAI Metiram row for pomegranate supplies no flower-specific limit. Check the part on the supplier and laboratory records.",
+          "references": [["codex", 33, "Codex fruit FI 0355"], ["pesticides", 38, "FSSAI pomegranate residue row"]]
+        },
+        {
+          "key": "punnaga", "serial": 11, "name": "Punnaga", "species": "Calophyllum inophyllum L.",
+          "stage": "The method names Punnaga flowers in both Lehya and Sharkara, the second and fourth preparations.",
+          "scope": "The printed part is the flower. Seed, kernel and oil specifications concern other materials. The raw-flower contaminant article still needs identification.",
+          "references": [["recipe", 97, "FSSAI preparation stages"]]
+        }
+      ]
+    },
+    {
+      "number": "14.7",
+      "productId": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "tablePage": 98,
+      "methodPage": 98,
+      "sourceReviewResult": "The printed footnote gives Ketaki and Jati as examples for the aromatic-flower infusion. The supplied species remains open.",
+      "sourceReviewNextAction": "Identify each flower actually supplied and the form used in the infusion. Keep the source recipe and finished milk assessment separate from the four named flower entries in recipe 14.6.",
+      "flowers": [
+        {
+          "key": "aromatic", "serial": 2, "name": "Sugandhita pushpa", "species": null,
+          "examples": ["Ketaki (Pandanus tectorius)", "Jati (Jasminum officinale)"],
+          "stage": "The flowers infuse in water and are removed before the buffalo milk is added.",
+          "scope": "The printed footnote gives examples and ends with “etc.” Identify the species and part actually supplied. Removing the flowers leaves the extent of transfer into the infusion unknown.",
+          "references": [["recipe", 98, "FSSAI flower footnote and method"]]
+        }
+      ]
+    }
+  ],
+  "boundaries": {
+    "actualIngredientApplicability": "OPEN",
+    "recipeAlignment": "OPEN",
+    "productArticleDecision": "OPEN",
+    "autoApplyLimits": false,
+    "flowerSubstitutionApproved": false,
+    "pesticideDefaultAssigned": false,
+    "batchRelease": false
+  }
+}

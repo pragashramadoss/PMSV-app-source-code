@@ -327,20 +327,56 @@
         {
           "parameter": "Moisture",
           "operator": "<=",
+          "unit": "%",
+          "analytical_basis": "as-sold mass",
+          "when": {},
+          "automatic_comparison_allowed": true,
           "value": 12.5,
-          "unit": "%"
+          "id": "2.4.9:composition:1",
+          "source_pdf_pages": [
+            32,
+            33
+          ],
+          "source_clause": "2.4.9",
+          "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+          "current_law_verified": false,
+          "product_approved": false
         },
         {
           "parameter": "Total ash excluding added common salt",
           "operator": "<=",
+          "unit": "%",
+          "analytical_basis": "dry mass",
+          "when": {},
+          "automatic_comparison_allowed": true,
           "value": 0.5,
-          "unit": "% on dry basis"
+          "id": "2.4.9:composition:2",
+          "source_pdf_pages": [
+            32,
+            33
+          ],
+          "source_clause": "2.4.9",
+          "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+          "current_law_verified": false,
+          "product_approved": false
         },
         {
-          "parameter": "Acid insoluble ash",
+          "parameter": "Ash insoluble in dilute HCl",
           "operator": "<=",
+          "unit": "%",
+          "analytical_basis": "dry mass",
+          "when": {},
+          "automatic_comparison_allowed": true,
           "value": 0.1,
-          "unit": "% on dry basis"
+          "id": "2.4.9:composition:3",
+          "source_pdf_pages": [
+            32,
+            33
+          ],
+          "source_clause": "2.4.9",
+          "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+          "current_law_verified": false,
+          "product_approved": false
         }
       ],
       "quality_criteria": [
@@ -357,16 +393,31 @@
           "source_expected": {
             "parameter": "Moisture",
             "operator": "<=",
+            "unit": "%",
+            "analytical_basis": "as-sold mass",
+            "when": {},
+            "automatic_comparison_allowed": true,
             "value": 12.5,
-            "unit": "%"
-          }
+            "id": "2.4.9:composition:1",
+            "source_pdf_pages": [
+              32,
+              33
+            ],
+            "source_clause": "2.4.9",
+            "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+            "current_law_verified": false,
+            "product_approved": false
+          },
+          "analytical_basis": "as-sold mass",
+          "when": {},
+          "automatic_comparison_allowed": true
         },
         {
           "subtype": "Custard powder",
           "parameter": "Total ash excluding added common salt",
           "operator": "<=",
           "value": 0.5,
-          "unit": "% on dry basis",
+          "unit": "%",
           "source_path": [
             "composition",
             1
@@ -374,26 +425,56 @@
           "source_expected": {
             "parameter": "Total ash excluding added common salt",
             "operator": "<=",
+            "unit": "%",
+            "analytical_basis": "dry mass",
+            "when": {},
+            "automatic_comparison_allowed": true,
             "value": 0.5,
-            "unit": "% on dry basis"
-          }
+            "id": "2.4.9:composition:2",
+            "source_pdf_pages": [
+              32,
+              33
+            ],
+            "source_clause": "2.4.9",
+            "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+            "current_law_verified": false,
+            "product_approved": false
+          },
+          "analytical_basis": "dry mass",
+          "when": {},
+          "automatic_comparison_allowed": true
         },
         {
           "subtype": "Custard powder",
-          "parameter": "Acid insoluble ash",
+          "parameter": "Ash insoluble in dilute HCl",
           "operator": "<=",
           "value": 0.1,
-          "unit": "% on dry basis",
+          "unit": "%",
           "source_path": [
             "composition",
             2
           ],
           "source_expected": {
-            "parameter": "Acid insoluble ash",
+            "parameter": "Ash insoluble in dilute HCl",
             "operator": "<=",
+            "unit": "%",
+            "analytical_basis": "dry mass",
+            "when": {},
+            "automatic_comparison_allowed": true,
             "value": 0.1,
-            "unit": "% on dry basis"
-          }
+            "id": "2.4.9:composition:3",
+            "source_pdf_pages": [
+              32,
+              33
+            ],
+            "source_clause": "2.4.9",
+            "source_content_status": "SOURCE_EDITION_ROW_RECONCILED",
+            "current_law_verified": false,
+            "product_approved": false
+          },
+          "analytical_basis": "dry mass",
+          "when": {},
+          "automatic_comparison_allowed": true
         }
       ],
       "source_scope": "FSSR_product_specific_quality_only_NOT_CTR",
@@ -426,7 +507,8 @@
               "parameter": "Moisture",
               "operator": "<=",
               "value": 1.5,
-              "unit": "% by weight"
+              "unit": "% by weight",
+              "method_note": "105±1°C for 3 h"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
@@ -445,13 +527,18 @@
               "operator": "range",
               "min": 100,
               "max": 300,
-              "unit": "10^-6 mho/cm²"
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "legacy_unit_unverified": "10^-6 mho/cm²",
+              "source_role": "distinguishing characteristic in NOTE",
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+              "automatic_comparison_allowed": false
             },
             {
               "parameter": "Calcium oxide",
               "operator": "<=",
               "value": 100,
-              "unit": "mg/100 g"
+              "unit": "mg/100 g",
+              "source_role": "distinguishing characteristic in NOTE"
             }
           ]
         },
@@ -468,7 +555,8 @@
               "parameter": "Moisture",
               "operator": "<=",
               "value": 1.5,
-              "unit": "% by weight"
+              "unit": "% by weight",
+              "method_note": "105±1°C for 3 h"
             },
             {
               "parameter": "Ash insoluble in dilute HCl",
@@ -486,13 +574,18 @@
               "parameter": "Conductivity in 5% solution at 30°C",
               "operator": "<=",
               "value": 100,
-              "unit": "10^-6 mho/cm²"
+              "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+              "legacy_unit_unverified": "10^-6 mho/cm²",
+              "source_role": "distinguishing characteristic in NOTE",
+              "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+              "automatic_comparison_allowed": false
             },
             {
               "parameter": "Calcium oxide",
               "operator": "<=",
               "value": 50,
-              "unit": "mg/100 g"
+              "unit": "mg/100 g",
+              "source_role": "distinguishing characteristic in NOTE"
             }
           ]
         }
@@ -533,7 +626,8 @@
             "parameter": "Moisture",
             "operator": "<=",
             "value": 1.5,
-            "unit": "% by weight"
+            "unit": "% by weight",
+            "method_note": "105±1°C for 3 h"
           }
         },
         {
@@ -582,7 +676,7 @@
             100,
             300
           ],
-          "unit": "10^-6 mho/cm²",
+          "unit": "printed 106 mho/cm²; exponent normalization unresolved",
           "source_path": [
             "variants",
             0,
@@ -594,8 +688,14 @@
             "operator": "range",
             "min": 100,
             "max": 300,
-            "unit": "10^-6 mho/cm²"
-          }
+            "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+            "legacy_unit_unverified": "10^-6 mho/cm²",
+            "source_role": "distinguishing characteristic in NOTE",
+            "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+            "automatic_comparison_allowed": false
+          },
+          "automatic_comparison_allowed": false,
+          "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION"
         },
         {
           "subtype": "Khandsari Sugar (Sulphur Sugar)",
@@ -613,7 +713,8 @@
             "parameter": "Calcium oxide",
             "operator": "<=",
             "value": 100,
-            "unit": "mg/100 g"
+            "unit": "mg/100 g",
+            "source_role": "distinguishing characteristic in NOTE"
           }
         },
         {
@@ -651,7 +752,8 @@
             "parameter": "Moisture",
             "operator": "<=",
             "value": 1.5,
-            "unit": "% by weight"
+            "unit": "% by weight",
+            "method_note": "105±1°C for 3 h"
           }
         },
         {
@@ -697,7 +799,7 @@
           "parameter": "Conductivity in 5% solution at 30°C",
           "operator": "<=",
           "value": 100,
-          "unit": "10^-6 mho/cm²",
+          "unit": "printed 106 mho/cm²; exponent normalization unresolved",
           "source_path": [
             "variants",
             1,
@@ -708,8 +810,14 @@
             "parameter": "Conductivity in 5% solution at 30°C",
             "operator": "<=",
             "value": 100,
-            "unit": "10^-6 mho/cm²"
-          }
+            "unit": "printed 106 mho/cm²; exponent normalization unresolved",
+            "legacy_unit_unverified": "10^-6 mho/cm²",
+            "source_role": "distinguishing characteristic in NOTE",
+            "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION",
+            "automatic_comparison_allowed": false
+          },
+          "automatic_comparison_allowed": false,
+          "interpretation_status": "SOURCE_UNIT_REQUIRES_CLARIFICATION"
         },
         {
           "subtype": "Khandsari Sugar (Desi)",
@@ -727,7 +835,8 @@
             "parameter": "Calcium oxide",
             "operator": "<=",
             "value": 50,
-            "unit": "mg/100 g"
+            "unit": "mg/100 g",
+            "source_role": "distinguishing characteristic in NOTE"
           }
         }
       ],

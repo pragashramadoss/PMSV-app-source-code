@@ -1,0 +1,410 @@
+{
+  "review_id": "PMSV_R61_2026_11_05",
+  "reviewed_on": "2026-11-05",
+  "branch": "audit/all-533-2026-11-02",
+  "scope": "Three original P2 FPC 12.2 seasoning/asafoetida/spice-oleoresin records. FSSR identity and 2026 CTR source-scope check, not legal SKU confirmation.",
+  "catalogue_original_unique_IDs": 533,
+  "original_R50_source_screened_cases": 137,
+  "original_CTR_finished_product_article_applicability_holds_open": 137,
+  "r60_prior_uniquely_focused_cases": 41,
+  "r61_new_unique_focused_cases": 3,
+  "r61_cumulative_unique_focused_cases_selected_rounds": 44,
+  "r61_original_cases_outside_selected_focused_rounds": 93,
+  "r61_exact_product_CTR_article_closures": 0,
+  "r61_full_legal_product_approvals": 0,
+  "r61_commercial_lot_releases": 0,
+  "source_documents": [
+    {
+      "kind": "FSSAI FPSFA Chapter 2.9 version 3",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_9_Salt_Spices_Condiments_and_related_products.pdf",
+      "edition": "Version 3 (07.05.2025)",
+      "reviewed_pdf_pages_one_based": [
+        34,
+        35,
+        39,
+        40,
+        41
+      ],
+      "all_selected_pages_visually_checked": true,
+      "compendium_not_original_Gazette": true,
+      "complete_original_2026_Gazette_reconciliation": false
+    },
+    {
+      "kind": "FSSAI CTR Version IX",
+      "url": "https://fssai.gov.in/upload/uploadfiles/files/Comp_Contaminants_Regulations_03_02_2026_IX.pdf",
+      "edition": "03.02.2026",
+      "reviewed_pdf_pages_one_based": [
+        3,
+        14
+      ],
+      "all_selected_pages_visually_checked": true,
+      "complete_all_current_2026_amendments_checked": false
+    },
+    {
+      "kind": "FSSAI current FoSCoS product directory",
+      "url": "https://fcstraining.fssai.gov.in/standard-product",
+      "matched_names_and_FPC": true,
+      "listing_not_legal_finished_food_compliance": true
+    }
+  ],
+  "R61_catalogue_records": [
+    {
+      "catalogue_id": "12-12-2-asafoetida-hing-or-hingra",
+      "original_catalogue_name": "Asafoetida (Hing or Hingra)",
+      "original_FPC": "12.2.1",
+      "original_FSSR": "2.9.29",
+      "original_R50_priority": "P2",
+      "FSSR_source_clause_confirmed": true,
+      "standard_family": "HING_HINGRA_COMPOUNDED_DISTINCT",
+      "official_pdf_pages_one_based": [
+        34,
+        35
+      ],
+      "source_parameters": {
+        "profiles": [
+          {
+            "name": "Hing",
+            "total_ash_max_pct": 15,
+            "acid_insoluble_ash_max_pct": 2.5,
+            "alcoholic_extract_min_pct": 12,
+            "starch_max_pct": 1
+          },
+          {
+            "name": "Hingra",
+            "total_ash_max_pct": 20,
+            "acid_insoluble_ash_max_pct": 8,
+            "alcoholic_extract_min_pct": 50,
+            "starch_max_pct": 1
+          },
+          {
+            "name": "Compounded asafoetida / Bandhani Hing",
+            "total_ash_max_pct": 10,
+            "acid_insoluble_ash_max_pct": 1.5,
+            "alcoholic_extract_min_pct": 5,
+            "starch_max_pct": null
+          }
+        ],
+        "prohibited": [
+          "colophony resin",
+          "galbanum resin",
+          "ammoniacum resin",
+          "other foreign resins",
+          "coal tar dyes or mineral pigment in compounded product"
+        ],
+        "guards": [
+          "Hing versus Hingra versus Bandhani Hing must be selected from actual supplier/recipe identity; never choose a more favourable ash or alcoholic-extract value",
+          "For compounded product, no starch-number limit is printed in the specific compounded prohibitions; do not invent one from the neat gum categories",
+          "Ferula rhizome/root oleogumresin is not an ordinary powdered culinary spice or a liquid spice oleoresin without separate evidence"
+        ]
+      },
+      "actual_manufacturer_SKU_ingredient_species_and_processing_confirmed": false,
+      "subtype_selected_from_actual_specification": false,
+      "actual_sample_lab_method_and_qualified_LOQ_verified": false,
+      "complete_current_original_notifications_and_amendments_reconciled": false,
+      "current_correct_finished_product_CTR_article_adjudicated": false,
+      "full_current_analytical_panel_and_results_reviewed": false,
+      "microbiology_additives_allergens_claims_and_pack_legally_checked": false,
+      "source_values_auto_applied": false,
+      "finished_product_legal_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "status": "OFFICIAL_FSSR_SOURCE_IDENTITY_AND_SCOPE_REVIEWED__SKU_EVIDENCE_HOLD"
+    },
+    {
+      "catalogue_id": "12-12-2-seasoning",
+      "original_catalogue_name": "Seasoning",
+      "original_FPC": "12.2.2",
+      "original_FSSR": "2.9.31",
+      "original_R50_priority": "P2",
+      "FSSR_source_clause_confirmed": true,
+      "standard_family": "SEASONING_DRY_OR_PASTE",
+      "official_pdf_pages_one_based": [
+        39,
+        40
+      ],
+      "source_parameters": {
+        "limits": [
+          {
+            "parameter": "Moisture",
+            "comparison": "<=",
+            "value": 10,
+            "unit": "percent by weight",
+            "applies_to": "seasonings other than specified paste-type seasoning",
+            "exception": "Does not apply to pastes such as tomato, ginger, garlic, chilli",
+            "auto_apply": false
+          },
+          {
+            "parameter": "Acid insoluble ash in dilute HCl",
+            "comparison": "<=",
+            "value": 2,
+            "unit": "percent on dry basis",
+            "applies_to": "seasoning source standard",
+            "exception": null,
+            "auto_apply": false
+          }
+        ],
+        "guards": [
+          "Only the starred moisture requirement has a paste-type exception; do not silently exempt acid-insoluble ash",
+          "Seasoning may be an individual product or a sachet packed with another food; verify the seasoning and host product separately",
+          "A blend with dairy, soy, hydrolysed protein, marine ingredients, nuts, herbs or spice powders needs actual additive, allergen, contaminant and Appendix B microbiological route assessments"
+        ]
+      },
+      "actual_manufacturer_SKU_ingredient_species_and_processing_confirmed": false,
+      "subtype_selected_from_actual_specification": false,
+      "actual_sample_lab_method_and_qualified_LOQ_verified": false,
+      "complete_current_original_notifications_and_amendments_reconciled": false,
+      "current_correct_finished_product_CTR_article_adjudicated": false,
+      "full_current_analytical_panel_and_results_reviewed": false,
+      "microbiology_additives_allergens_claims_and_pack_legally_checked": false,
+      "source_values_auto_applied": false,
+      "finished_product_legal_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "status": "OFFICIAL_FSSR_SOURCE_IDENTITY_AND_SCOPE_REVIEWED__SKU_EVIDENCE_HOLD"
+    },
+    {
+      "catalogue_id": "12-12-2-spice-oleoresins",
+      "original_catalogue_name": "SPICE OLEORESINS",
+      "original_FPC": "12.2.1",
+      "original_FSSR": "2.9.32",
+      "original_R50_priority": "P2",
+      "FSSR_source_clause_confirmed": true,
+      "standard_family": "EXTRACTED_SPICE_OLEORESIN",
+      "official_pdf_pages_one_based": [
+        40,
+        41
+      ],
+      "source_parameters": {
+        "solvent_residue_limits": [
+          {
+            "solvent": "Acetone",
+            "printed_residual_limit": 30,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Ethyl acetate",
+            "printed_residual_limit": 50,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "n-Hexane",
+            "printed_residual_limit": 25,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Isopropyl alcohol",
+            "printed_residual_limit": 30,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Methyl alcohol",
+            "printed_residual_limit": 50,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Carbon dioxide",
+            "printed_residual_limit": "GMP",
+            "unit": "GMP (no fixed ppm printed)",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Water",
+            "printed_residual_limit": "GMP",
+            "unit": "GMP (no fixed ppm printed)",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Diethyl ether",
+            "printed_residual_limit": 2,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Ethyl alcohol",
+            "printed_residual_limit": "GMP",
+            "unit": "GMP (no fixed ppm printed)",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Butan-1-ol",
+            "printed_residual_limit": 2,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Butan-2-ol",
+            "printed_residual_limit": 2,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Propan-1-ol",
+            "printed_residual_limit": 1,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          },
+          {
+            "solvent": "Methyl tert-butyl ether",
+            "printed_residual_limit": 2,
+            "unit": "ppm",
+            "actual_used_in_SKU_confirmed": false,
+            "method_LOQ_or_GMP_assessed": false,
+            "auto_apply": false
+          }
+        ],
+        "botanical_voc_reference_examples": [
+          {
+            "spice": "Ajowan",
+            "botanical": "Trachyspermum ammi",
+            "volatile_oil_content_min_ml_100g": 1.5
+          },
+          {
+            "spice": "Allspice",
+            "botanical": "Pimenta dioica",
+            "volatile_oil_content_min_ml_100g": 20
+          },
+          {
+            "spice": "Chilli/Capsicum",
+            "botanical": "Capsicum species",
+            "volatile_oil_content_min_ml_100g": null,
+            "source_printed": "dash / no numerical VOC minimum in listed cell"
+          }
+        ],
+        "guards": [
+          "Source residue list is solvent-specific, including GMP vs numeric ppm; no one universal residual-solvent figure",
+          "Botanical-specific VOC minimum varies by selected spice species; chilli has dash, not zero or automatic pass",
+          "Extraction solvent residual limits are not pesticide residue MRLs and may not be borrowed for a formulated seasoning or raw dried spice",
+          "Actual extraction method, solvent history, approved carrier, botanical identity and test lab method/scope needed"
+        ]
+      },
+      "actual_manufacturer_SKU_ingredient_species_and_processing_confirmed": false,
+      "subtype_selected_from_actual_specification": false,
+      "actual_sample_lab_method_and_qualified_LOQ_verified": false,
+      "complete_current_original_notifications_and_amendments_reconciled": false,
+      "current_correct_finished_product_CTR_article_adjudicated": false,
+      "full_current_analytical_panel_and_results_reviewed": false,
+      "microbiology_additives_allergens_claims_and_pack_legally_checked": false,
+      "source_values_auto_applied": false,
+      "finished_product_legal_PASS": false,
+      "commercial_batch_release_authorized": false,
+      "status": "OFFICIAL_FSSR_SOURCE_IDENTITY_AND_SCOPE_REVIEWED__SKU_EVIDENCE_HOLD"
+    }
+  ],
+  "selected_CTR_source_rows": [
+    {
+      "analyte": "Lead",
+      "printed_food_article": "Dehydrated onions, dried herbs and spices, curry powder and mix masalas, flavourings, ...",
+      "limit": 10,
+      "unit": "mg/kg",
+      "qualifier": "dry matter basis",
+      "pdf_page_one_based": 3,
+      "source_role": "SCOPE_CONDITION_ONLY",
+      "official_pdf_page_image_checked": true,
+      "actual_R61_SKU_article_matched": false,
+      "current_Gazette_reconciled": false,
+      "numeric_rule_auto_applied": false,
+      "full_legal_PASS": false
+    },
+    {
+      "analyte": "Total Aflatoxins",
+      "printed_food_article": "Spices/Spice Mix",
+      "limit": 30,
+      "unit": "µg/kg",
+      "qualifier": "named spice/spice mix article",
+      "pdf_page_one_based": 14,
+      "source_role": "RAW_SPICE_CLASS_CANDIDATE_ONLY",
+      "official_pdf_page_image_checked": true,
+      "actual_R61_SKU_article_matched": false,
+      "current_Gazette_reconciled": false,
+      "numeric_rule_auto_applied": false,
+      "full_legal_PASS": false
+    },
+    {
+      "analyte": "Aflatoxin B1",
+      "printed_food_article": "Spices/Spice Mix",
+      "limit": 15,
+      "unit": "µg/kg",
+      "qualifier": "named spice/spice mix article",
+      "pdf_page_one_based": 14,
+      "source_role": "RAW_SPICE_CLASS_CANDIDATE_ONLY",
+      "official_pdf_page_image_checked": true,
+      "actual_R61_SKU_article_matched": false,
+      "current_Gazette_reconciled": false,
+      "numeric_rule_auto_applied": false,
+      "full_legal_PASS": false
+    },
+    {
+      "analyte": "Total Aflatoxins",
+      "printed_food_article": "Food product containing any of the above mentioned food articles",
+      "limit": 20,
+      "unit": "µg/kg",
+      "qualifier": "mixed food source article requiring legal matrix decision",
+      "pdf_page_one_based": 14,
+      "source_role": "COMPOSITE_CANDIDATE_ONLY",
+      "official_pdf_page_image_checked": true,
+      "actual_R61_SKU_article_matched": false,
+      "current_Gazette_reconciled": false,
+      "numeric_rule_auto_applied": false,
+      "full_legal_PASS": false
+    },
+    {
+      "analyte": "Aflatoxin B1",
+      "printed_food_article": "Food product containing any of the above mentioned food articles",
+      "limit": 10,
+      "unit": "µg/kg",
+      "qualifier": "mixed food source article requiring legal matrix decision",
+      "pdf_page_one_based": 14,
+      "source_role": "COMPOSITE_CANDIDATE_ONLY",
+      "official_pdf_page_image_checked": true,
+      "actual_R61_SKU_article_matched": false,
+      "current_Gazette_reconciled": false,
+      "numeric_rule_auto_applied": false,
+      "full_legal_PASS": false
+    }
+  ],
+  "source_guardrails": [
+    "Choose Hing/Hingra/compounded form by actual materials and licensing identity; their extract and ash limits are NOT interchangeable.",
+    "Paste seasoning's asterisk exempts only the 10% moisture rule for paste-type products; the 2% acid-insoluble ash test remains separately assessed.",
+    "Spice oleoresin solvent residues in ppm/GMP are not pesticide residues and are not spice-powder dry-weight toxicant limits.",
+    "Volatile oil content minimum depends on each named botanical. An official dash is an absent numeric criterion, not zero.",
+    "CTR dry spice lead 10 mg/kg on dry-matter basis cannot be blindly assigned to oleogumresin, mixed seasoning or solvent-extracted oleoresin.",
+    "CTR spices aflatoxins 30/15 µg/kg and food-containing-composite rows 20/10 µg/kg are distinct named source articles; correct finished SKU law and processing need adjudication.",
+    "FSSR Chapter 2.9 general microbiological Appendix B notes and seasoning-specific microbiology are not a complete actual SKU sampling plan.",
+    "The 1 Dec 2026 contaminant amendment is future relative to 5 Nov 2026 and cannot be applied early.",
+    "A source-only evidence audit never authorizes product legal PASS or batch release."
+  ],
+  "full_current_Gazette_amendments_and_laboratory_matrix_methods_reviewed": false,
+  "source_product_master_modified": false,
+  "original_R29_R50_registers_modified": false,
+  "operative_numeric_CTR_rules_modified": false,
+  "live_PMSV_helper_modified": false,
+  "draft_PR_2_stays_unmerged": true,
+  "separate_Ayurveda_ingredient_source_candidate_gaps": 14
+}

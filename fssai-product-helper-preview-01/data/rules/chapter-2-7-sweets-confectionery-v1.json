@@ -89,7 +89,11 @@
           "operator": "<=",
           "value": 50,
           "unit": "% of total sugars",
-          "condition": "When used"
+          "condition": "When used",
+          "when": {
+            "isomaltulose_used": true
+          },
+          "qualifier": "Maximum is based on total sugars, not total food mass; stability condition in the source also applies."
         }
       ],
       "composition": [
@@ -97,39 +101,79 @@
           "parameter": "Sulphated ash on salt-free basis",
           "operator": "<=",
           "value": 2.5,
-          "unit": "% by weight"
+          "unit": "% by weight",
+          "when": {
+            "spice_centre_filling": false
+          },
+          "analytical_basis": "salt-free mass"
         },
         {
           "parameter": "Sulphated ash with spices used as centre filling",
           "operator": "<=",
           "value": 3,
-          "unit": "% by weight"
+          "unit": "% by weight",
+          "when": {
+            "spice_centre_filling": true
+          },
+          "analytical_basis": "salt-free mass"
         },
         {
           "parameter": "Ash insoluble in dilute HCl",
           "operator": "<=",
           "value": 0.2,
-          "unit": "% by weight"
+          "unit": "% by weight",
+          "when": {
+            "spice_centre_filling": false
+          },
+          "analytical_basis": "by weight"
         },
         {
           "parameter": "Ash insoluble in dilute HCl with spices used as centre filling",
           "operator": "<=",
           "value": 0.4,
-          "unit": "% by weight"
+          "unit": "% by weight",
+          "when": {
+            "spice_centre_filling": true
+          },
+          "analytical_basis": "by weight"
         }
       ],
       "variants": [
         {
           "name": "Milk Toffee",
           "protein_min_pct_dry_basis": 3,
-          "fat_min_pct_dry_basis": 4
+          "fat_min_pct_dry_basis": 4,
+          "protein_conversion_factor": 6.25
         },
         {
           "name": "Butter Toffee",
           "fat_min_pct_dry_basis": 4
         }
       ],
-      "additives": "Appendix A"
+      "additives": "Appendix A",
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            1,
+            2
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.2",
@@ -157,7 +201,11 @@
           "operator": "<=",
           "value": 50,
           "unit": "% of total sugars",
-          "condition": "When used"
+          "condition": "When used",
+          "when": {
+            "isomaltulose_used": true
+          },
+          "qualifier": "Maximum is based on total sugars, not total food mass; stability condition in the source also applies."
         }
       ],
       "composition": [
@@ -166,7 +214,10 @@
           "operator": ">=",
           "value": 85,
           "unit": "% by weight",
-          "exception": "Not applicable when only permitted artificial sweetener is used as sweetener."
+          "exception": "Not applicable when only permitted artificial sweetener is used as sweetener.",
+          "when": {
+            "only_permitted_artificial_sweeteners": false
+          }
         },
         {
           "parameter": "Sulphated ash on salt-free basis",
@@ -181,7 +232,30 @@
           "unit": "% by weight"
         }
       ],
-      "additives": "Appendix A"
+      "additives": "Appendix A",
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            3,
+            4
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.3",
@@ -224,7 +298,11 @@
           "operator": "<=",
           "value": 50,
           "unit": "% of total sugars",
-          "condition": "When used"
+          "condition": "When used",
+          "when": {
+            "isomaltulose_used": true
+          },
+          "qualifier": "Maximum is based on total sugars, not total food mass; stability condition in the source also applies."
         }
       ],
       "variants": [
@@ -260,14 +338,20 @@
               "operator": ">=",
               "value": 4.5,
               "unit": "% by weight",
-              "exception": "Not applicable if only artificial sweetener is used."
+              "exception": "Not applicable if only artificial sweetener is used.",
+              "when": {
+                "only_permitted_artificial_sweeteners": false
+              }
             },
             {
               "parameter": "Sucrose",
               "operator": "<=",
               "value": 70,
               "unit": "% by weight",
-              "exception": "Not applicable if only artificial sweetener is used."
+              "exception": "Not applicable if only artificial sweetener is used.",
+              "when": {
+                "only_permitted_artificial_sweeteners": false
+              }
             }
           ]
         },
@@ -303,19 +387,48 @@
               "operator": ">=",
               "value": 5.5,
               "unit": "% by weight",
-              "exception": "Not applicable if only artificial sweetener is used."
+              "exception": "Not applicable if only artificial sweetener is used.",
+              "when": {
+                "only_permitted_artificial_sweeteners": false
+              }
             },
             {
               "parameter": "Sucrose",
               "operator": "<=",
               "value": 60,
               "unit": "% by weight",
-              "exception": "Not applicable if only artificial sweetener is used."
+              "exception": "Not applicable if only artificial sweetener is used.",
+              "when": {
+                "only_permitted_artificial_sweeteners": false
+              }
             }
           ]
         }
       ],
-      "additives": "Appendix A"
+      "additives": "Appendix A",
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            4,
+            5
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.4",
@@ -326,14 +439,19 @@
           "parameter": "Vegetable fats other than cocoa butter / cocoa-butter equivalents",
           "operator": "<=",
           "value": 5,
-          "unit": "% of finished product after deduction of other added edible foodstuffs"
+          "unit": "% of finished product after deduction of other added edible foodstuffs",
+          "analytical_basis": "finished-product mass after deduction of other added edible foodstuffs"
         },
         {
           "parameter": "Isomaltulose",
           "operator": "<=",
           "value": 50,
           "unit": "% of total sugars",
-          "condition": "When used"
+          "condition": "When used",
+          "when": {
+            "isomaltulose_used": true
+          },
+          "qualifier": "Maximum is based on total sugars, not total food mass; stability condition in the source also applies."
         }
       ],
       "chocolate_types": [
@@ -343,7 +461,8 @@
           "milk_fat_min_pct_dry": 2,
           "cocoa_solids_min_pct_moisture_fat_free": 2.5,
           "milk_solids_min_pct_moisture_fat_free": 10.5,
-          "acid_insoluble_ash_max_pct": 0.2
+          "acid_insoluble_ash_max_pct": 0.2,
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "Milk Covering Chocolate",
@@ -351,7 +470,8 @@
           "milk_fat_min_pct_dry": 2,
           "cocoa_solids_min_pct_moisture_fat_free": 2.5,
           "milk_solids_min_pct_moisture_fat_free": 10.5,
-          "acid_insoluble_ash_max_pct": 0.2
+          "acid_insoluble_ash_max_pct": 0.2,
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "Plain Chocolate",
@@ -362,20 +482,23 @@
             "total_cocoa_solids_min_pct_dry": 35,
             "cocoa_butter_min_pct_dry": 18,
             "fat_free_cocoa_solids_min_pct_dry": 14
-          }
+          },
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "Plain Covering Chocolate",
           "total_fat_min_pct_dry": 25,
           "cocoa_solids_min_pct_moisture_fat_free": 12,
-          "acid_insoluble_ash_max_pct": 0.2
+          "acid_insoluble_ash_max_pct": 0.2,
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "White Chocolate",
           "total_fat_min_pct_dry": 25,
           "milk_fat_min_pct_dry": 2,
           "milk_solids_min_pct_moisture_fat_free": 10.5,
-          "acid_insoluble_ash_max_pct": 0.2
+          "acid_insoluble_ash_max_pct": 0.2,
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "Blended Chocolate",
@@ -385,7 +508,8 @@
             1,
             9
           ],
-          "acid_insoluble_ash_max_pct": 0.2
+          "acid_insoluble_ash_max_pct": 0.2,
+          "acid_insoluble_ash_basis": "moisture-, fat- and sugar-free"
         },
         {
           "name": "Filled Chocolate",
@@ -423,7 +547,36 @@
       "label_rules": [
         "Where vegetable fat/cocoa-butter equivalent is used in addition to cocoa butter, the prescribed bold declaration must be displayed."
       ],
-      "additives": "Appendix A"
+      "additives": "Appendix A",
+      "interpretation_notes": [
+        "Cocoa minima must not be reduced by the vegetable-fat allowance. Dark, filled, composite, praline and couverture conditions are not universal limits for all chocolate types.",
+        "Filled chocolate excludes flour confectionery, pastry and biscuits. The outer coating must meet its applicable chocolate standard; the filling must meet its applicable standard."
+      ],
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.5",
@@ -446,7 +599,8 @@
               "parameter": "Stabilisers and/or emulsifiers",
               "operator": "<=",
               "value": 0.5,
-              "unit": "% by weight"
+              "unit": "% by weight",
+              "aggregation": "combined stabilisers and emulsifiers"
             }
           ],
           "prohibited_or_absent": [
@@ -486,9 +640,35 @@
           "operator": "<=",
           "value": 50,
           "unit": "% of total sugars",
-          "condition": "When used"
+          "condition": "When used",
+          "when": {
+            "isomaltulose_used": true
+          },
+          "qualifier": "Maximum is based on total sugars, not total food mass; stability condition in the source also applies."
         }
-      ]
+      ],
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            10
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.6",
@@ -506,60 +686,98 @@
         {
           "cocoa_powder_content_min_pct": 25,
           "cocoa_butter_level": ">=20% m/m",
-          "designation": "Sweetened Cocoa / Sweetened Cocoa Powder / Drinking Chocolate"
+          "designation": "Sweetened Cocoa / Sweetened Cocoa Powder / Drinking Chocolate",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         },
         {
           "cocoa_powder_content_min_pct": 25,
           "cocoa_butter_level": ">=10% and <20% m/m",
-          "designation": "Sweetened Cocoa, Fat-reduced / Sweetened Cocoa Powder, Fat-reduced / Fat-Reduced Drinking Chocolate"
+          "designation": "Sweetened Cocoa, Fat-reduced / Sweetened Cocoa Powder, Fat-reduced / Fat-Reduced Drinking Chocolate",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         },
         {
           "cocoa_powder_content_min_pct": 25,
           "cocoa_butter_level": "<10% m/m",
-          "designation": "Sweetened Cocoa, Highly Fat-reduced / Sweetened Cocoa Powder, Highly Fat-reduced / Highly Fat-Reduced Drinking Chocolate"
+          "designation": "Sweetened Cocoa, Highly Fat-reduced / Sweetened Cocoa Powder, Highly Fat-reduced / Highly Fat-Reduced Drinking Chocolate",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         },
         {
           "cocoa_powder_content_min_pct": 20,
-          "cocoa_powder_content_max_exclusive_pct": 25,
           "cocoa_butter_level": ">=20% m/m",
-          "designation": "Sweetened Cocoa Mix / Sweetened Mixture with Cocoa"
+          "designation": "Sweetened Cocoa Mix / Sweetened Mixture with Cocoa",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter",
+          "scope_note": "Source row states a minimum 20%; no upper 25% is transcribed. Do not auto-select an exclusive designation from these overlapping minimum rows."
         },
         {
           "cocoa_powder_content_min_pct": 20,
-          "cocoa_powder_content_max_exclusive_pct": 25,
           "cocoa_butter_level": ">=10% and <20% m/m",
-          "designation": "Sweetened Cocoa Mix, Fat-reduced / Sweetened Mixture with Cocoa, Fat-reduced"
+          "designation": "Sweetened Cocoa Mix, Fat-reduced / Sweetened Mixture with Cocoa, Fat-reduced",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter",
+          "scope_note": "Source row states a minimum 20%; no upper 25% is transcribed. Do not auto-select an exclusive designation from these overlapping minimum rows."
         },
         {
           "cocoa_powder_content_min_pct": 20,
-          "cocoa_powder_content_max_exclusive_pct": 25,
           "cocoa_butter_level": "<10% m/m",
-          "designation": "Sweetened Cocoa Mix, Highly Fat-reduced / Sweetened Mixture with Cocoa, Highly Fat-reduced"
+          "designation": "Sweetened Cocoa Mix, Highly Fat-reduced / Sweetened Mixture with Cocoa, Highly Fat-reduced",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter",
+          "scope_note": "Source row states a minimum 20%; no upper 25% is transcribed. Do not auto-select an exclusive designation from these overlapping minimum rows."
         },
         {
           "cocoa_powder_content_max_exclusive_pct": 20,
           "cocoa_butter_level": ">=20% m/m",
-          "designation": "Sweetened Cocoa-flavoured Mix"
+          "designation": "Sweetened Cocoa-flavoured Mix",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         },
         {
           "cocoa_powder_content_max_exclusive_pct": 20,
           "cocoa_butter_level": ">=10% and <20% m/m",
-          "designation": "Sweetened Cocoa-flavoured Mix, Fat-reduced"
+          "designation": "Sweetened Cocoa-flavoured Mix, Fat-reduced",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         },
         {
           "cocoa_powder_content_max_exclusive_pct": 20,
           "cocoa_butter_level": "<10% m/m",
-          "designation": "Sweetened Cocoa-flavoured Mix, Highly Fat-reduced"
+          "designation": "Sweetened Cocoa-flavoured Mix, Highly Fat-reduced",
+          "cocoa_butter_analytical_basis": "cocoa powder, dry matter"
         }
       ],
       "chocolate_powder_rule": {
-        "cocoa_powder_min_pct_wet_basis": 32,
-        "cocoa_powder_min_pct_dry_matter_basis": 29
+        "cocoa_powder_min_pct_dry_matter_basis": 29,
+        "cocoa_powder_min_pct_w_w": 32,
+        "source_wording": "not less than 32% w/w cocoa powder (29% w/w on dry matter basis)",
+        "interpretation_status": "SOURCE_WORDING_REQUIRES_CLARIFICATION",
+        "automatic_comparison_allowed": false
       },
       "optional_ingredients": [
         "spices",
         "salt/sodium chloride"
-      ]
+      ],
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "REVIEWED_WITH_SOURCE_QUESTIONS",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            10,
+            11,
+            12
+          ]
+        },
+        "source_questions": [
+          "Chocolate-powder clause gives 32% w/w and parenthetical 29% w/w on dry matter. Preserve both; the text does not call 32% a wet-basis value. Do not compute a conversion or an automatic comparison until their relationship is resolved."
+        ],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.7",
@@ -571,7 +789,9 @@
           "moisture_max_pct": 7,
           "cocoa_butter_min_pct_dry": 20,
           "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
-          "alkalinity_total_ash_as_k2o_max_pct": 12
+          "alkalinity_total_ash_as_k2o_max_pct": 12,
+          "crude_fibre_max_pct_moisture_fat_free": 7,
+          "alkalinity_total_ash_as_k2o_basis": "moisture- and fat-free"
         },
         {
           "name": "Fat Reduced Cocoa Powder (Medium Fat)",
@@ -581,14 +801,18 @@
             20
           ],
           "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
-          "alkalinity_total_ash_as_k2o_max_pct": 12
+          "alkalinity_total_ash_as_k2o_max_pct": 12,
+          "crude_fibre_max_pct_moisture_fat_free": 7,
+          "alkalinity_total_ash_as_k2o_basis": "moisture- and fat-free"
         },
         {
           "name": "Highly Fat Reduced Cocoa Powder (Low Fat)",
           "moisture_max_pct": 7,
           "cocoa_butter_max_pct_dry": 10,
           "acid_insoluble_ash_max_pct_moisture_fat_free": 1,
-          "alkalinity_total_ash_as_k2o_max_pct": 12
+          "alkalinity_total_ash_as_k2o_max_pct": 12,
+          "crude_fibre_max_pct_moisture_fat_free": 7,
+          "alkalinity_total_ash_as_k2o_basis": "moisture- and fat-free"
         }
       ],
       "prohibited_or_absent": [
@@ -598,7 +822,33 @@
         "Mould growth",
         "Insect infestation",
         "Dirt, filth, deleterious substances and adulterants"
-      ]
+      ],
+      "interpretation_notes": [
+        "The 10% and 20% table boundaries are inclusive as printed; overlapping numeric ranges do not establish a unique declared cocoa-powder type. Do not inherit strict bounds from clause 2.7.6."
+      ],
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            12,
+            13
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     },
     {
       "key": "2.7.8",
@@ -632,7 +882,36 @@
         "Added colouring matter",
         "Added flavour",
         "Added fats other than cocoa butter"
-      ]
+      ],
+      "source_content_review": {
+        "review_date": "2026-11-02",
+        "scope": "Numeric composition, listed formulation boundaries, variant exceptions and named test references in this source edition.",
+        "status": "SOURCE_EDITION_NUMERIC_RECONCILED",
+        "source": {
+          "url": "https://fssai.gov.in/upload/uploadfiles/files/Chapter%202_7%20%28Sweets%20and%20Confectionary%29.pdf",
+          "sha256": "7448a5506e3680cd81b0d34581a2c8cc610b128e5f91501e6b408a54bf34ef25",
+          "edition": "Version 1 (01.09.2023)",
+          "pdf_pages": [
+            13,
+            14
+          ]
+        },
+        "source_questions": [],
+        "current_law_complete": false,
+        "commercial_release_authorized": false,
+        "remaining_scope": [
+          "Original-notification and current-amendment reconciliation",
+          "Complete additives and processing-aid permissions",
+          "Applicable microbiology and contaminants/residues",
+          "Complete analytical methods, packaging, labelling and claims"
+        ]
+      }
     }
-  ]
+  ],
+  "semantic_review_batch": {
+    "id": "2026-11-02-CH27-CH28",
+    "date": "2026-11-02",
+    "scope": "Named-source-edition content only; no blanket current-law verification",
+    "standards_reviewed": 8
+  }
 }

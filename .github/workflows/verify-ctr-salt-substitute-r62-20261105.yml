@@ -1,0 +1,30 @@
+name: PMSV R62 salt substitute 2017 original Gazette source checks
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-salt-substitute-original-gazette-r62-2026-11-05.json'
+      - 'fssai-helper/ctr-salt-substitute-source-gate-r62-20261105.mjs'
+      - 'scripts/test_ctr_salt_substitute_r62_20261105.mjs'
+      - '.github/workflows/verify-ctr-salt-substitute-r62-20261105.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-salt-substitute-original-gazette-r62-2026-11-05.json'
+      - 'fssai-helper/ctr-salt-substitute-source-gate-r62-20261105.mjs'
+      - 'scripts/test_ctr_salt_substitute_r62_20261105.mjs'
+  workflow_dispatch:
+jobs:
+  verify-source-and-no-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate original 2017 source, Mg basis, finished food distinction and 137 holds
+        run: node scripts/test_ctr_salt_substitute_r62_20261105.mjs

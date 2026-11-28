@@ -1,0 +1,50 @@
+name: Capture dairy R5 primary sources
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/capture-dairy-r5-20261102.yml']
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture sources and current dairy rule
+        run: |
+          python3 - <<'PY'
+          import pathlib,urllib.request,urllib.parse,concurrent.futures,json,hashlib,datetime,shutil
+          out=pathlib.Path('dairy-r5-capture');out.mkdir()
+          urls=[
+           'https://www.fssai.gov.in/upload/uploadfiles/files/Chapter%202_1_Dairy_products_and_analogues.pdf',
+           'https://www.fssai.gov.in/upload/uploadfiles/files/2_%20Chapter%202_1%20(Dairy%20products%20and%20analogues).pdf',
+           'https://www.fssai.gov.in/food-law/regulations/compendium/food-products-standards',
+           'https://www.fssai.gov.in/food-law/regulations/amendments/food-products-standards',
+           'https://www.fssai.gov.in/food-law/notifications?notification=ordinary-notification',
+           'https://www.fssai.gov.in/upload/uploadfiles/files/Appendix%20B(1).pdf'
+          ]
+          def fetch(u):
+           d={'requested_url':u,'captured_at':datetime.datetime.now(datetime.timezone.utc).isoformat()};ident=hashlib.sha256(u.encode()).hexdigest()[:16]
+           try:
+            req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'})
+            with urllib.request.urlopen(req,timeout=45) as r:
+             data=r.read(15000001);resolved=r.geturl();host=urllib.parse.urlsplit(resolved).hostname or ''
+             if host!='fssai.gov.in' and not host.endswith('.fssai.gov.in'):raise ValueError('non-FSSAI redirect')
+            if len(data)>15000000:raise ValueError('size bound')
+            pdf=data.startswith(b'%PDF-');name=ident+('.pdf' if pdf else '.html');(out/name).write_bytes(data)
+            d.update(status='CAPTURED_PDF' if pdf else 'CAPTURED_HTML',file=name,resolved_url=resolved,sha256=hashlib.sha256(data).hexdigest(),bytes=len(data))
+           except Exception as e:d.update(status='FAILED',error=str(e))
+           return d
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:rows=list(pool.map(fetch,urls))
+          (out/'manifest.json').write_text(json.dumps(rows,indent=2))
+          for name in ['chapter-2-1-dairy-v1.json','appendix-b-v2-core.json']:
+           shutil.copyfile('fssai-product-helper-preview-01/data/rules/'+name,out/name)
+          print(json.dumps(rows,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dairy-r5-primary-sources
+          path: dairy-r5-capture/
+          retention-days: 3
+          if-no-files-found: error

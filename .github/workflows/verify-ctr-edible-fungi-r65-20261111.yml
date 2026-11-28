@@ -1,0 +1,30 @@
+name: PMSV R65 ten edible fungi styles FSSR source evidence and non-release gate
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-edible-fungi-ten-styles-r65-2026-11-11.json'
+      - 'fssai-helper/ctr-edible-fungi-source-gate-r65-20261111.mjs'
+      - 'scripts/test_ctr_edible_fungi_r65_20261111.mjs'
+      - '.github/workflows/verify-ctr-edible-fungi-r65-20261111.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-edible-fungi-ten-styles-r65-2026-11-11.json'
+      - 'fssai-helper/ctr-edible-fungi-source-gate-r65-20261111.mjs'
+      - 'scripts/test_ctr_edible_fungi_r65_20261111.mjs'
+  workflow_dispatch:
+jobs:
+  verify-source-style-holds:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate 10 distinct fungi source styles and preserve 137 product legal holds
+        run: node scripts/test_ctr_edible_fungi_r65_20261111.mjs

@@ -1,0 +1,30 @@
+name: PMSV R61 spices seasoning oleoresins source verification
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ctr-asafoetida-seasoning-oleoresins-r61-2026-11-05.json'
+      - 'fssai-helper/ctr-spice-seasoning-source-gate-r61-20261105.mjs'
+      - 'scripts/test_ctr_spice_seasoning_r61_20261105.mjs'
+      - '.github/workflows/verify-ctr-spice-seasoning-r61-20261105.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ctr-asafoetida-seasoning-oleoresins-r61-2026-11-05.json'
+      - 'fssai-helper/ctr-spice-seasoning-source-gate-r61-20261105.mjs'
+      - 'scripts/test_ctr_spice_seasoning_r61_20261105.mjs'
+  workflow_dispatch:
+jobs:
+  source-scope-and-no-product-pass:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify 3 FSSR clauses, subtype/solvent guards and 137 unresolved CTR articles
+        run: node scripts/test_ctr_spice_seasoning_r61_20261105.mjs

@@ -1,0 +1,23 @@
+name: R31 verify CTR named article scope for 26 FSSR cases
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-named-article-r31-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 8 source-table candidates, 26 product guards and 137 unchanged legal holds
+        run: python3 scripts/verify_ctr_named_article_scope_r31_20261104.py
+      - name: Ensure old catalogue, CTR numerical rule files and audit reports remain unchanged
+        shell: bash
+        run: |
+          test -s fssai-helper/ctr-26-named-article-scope-r31-2026-11-04.json
+          test -s fssai-helper/ctr-26-named-article-scope-r31-2026-11-04.md
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json
+          test -z "$(git status --porcelain)"

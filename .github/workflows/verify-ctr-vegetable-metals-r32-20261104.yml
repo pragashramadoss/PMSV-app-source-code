@@ -1,0 +1,51 @@
+name: R32 verify frozen vegetable metal source rows
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-vegetable-metals-r32-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce candidate register and identity scope checks
+        run: python3 scripts/build_ctr_vegetable_metals_r32_20261104.py
+      - name: Independently assert source limits, 137 evidence holds and zero approvals
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('fssai-helper/ctr-26-vegetables-metal-layer-r32-2026-11-04.json').read_text())
+          actual={(x['analyte'],x['source_food_article_exact'],x['source_limit_ppm'],x['source_pdf_page_one_based']) for x in r['additional_rows']}
+          expected={('Chromium','Vegetables',1.0,13),
+                    ('Nickel','Vegetables',1.0,13),
+                    ('Antimony','Vegetables',1.0,13),
+                    ('Lead','Other vegetables',2.5,5),
+                    ('Cadmium','Other vegetables',1.5,12)}
+          assert actual==expected
+          assert r['original_legal_article_applicability_open']==137
+          assert r['product_full_legal_approvals']==0
+          assert r['full_current_CTR_panels_verified']==0
+          assert r['production_engine_changed'] is False
+          assert r['operative_numeric_CTR_rules_changed'] is False
+          assert len(r['records'])==26
+          assert all(not a['limit_auto_apply'] and not a['fully_legally_verified'] for a in r['additional_rows'])
+          assert all(x['r32_article_applicability']=='EVIDENCE_HOLD' for x in r['records'])
+          assert len([x for x in r['records'] if x['r32_new_candidate_rows']])==1
+          print('R32 independent evidence/no-PASS checks PASS')
+          PY
+      - name: Commit source-audit records only
+        shell: bash
+        run: |
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/ctr-26-vegetables-metal-layer-r32-2026-11-04.json fssai-helper/ctr-26-vegetables-metal-layer-r32-2026-11-04.md
+          git diff --cached --check
+          git commit -m 'R32: audit five extra frozen-vegetable metal source rows; no legal PASS'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "round": 74,
+  "reviewedOn": "2026-11-17",
+  "scope": "Water source and documentation routing for one vending identity and four recipe-water instances. No numerical water rules or legal approvals are added.",
+  "sources": {
+    "vending2019": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Gazette_Notification_Drinking_Water_05_02_2019.pdf",
+      "sha256": "0b3391b2626d8e28c88e3e353c390814647873f3c64177f7a9593c33140b998e",
+      "bytes": 350306,
+      "retrievedOn": "2026-11-17",
+      "pdfPages": [
+        4
+      ],
+      "role": "Original final notification; incorporation and scope"
+    },
+    "vendingDraft2025": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/Notification%20dt%2004_06_2025-Cheese%20powder%20draft.pdf",
+      "sha256": "f830e3d8e37b73524d9afd1662c87849115ec6b3855fd9294e23b3cbda6118b9",
+      "bytes": 2128706,
+      "retrievedOn": "2026-11-17",
+      "pdfPages": [
+        8,
+        10,
+        11,
+        12
+      ],
+      "role": "Draft only; no final replacement established by this review"
+    },
+    "licensingFAQ2022": {
+      "url": "https://www.fssai.gov.in/upload/uploadfiles/files/FAQs_Licensing_Registration_26_07_2022.pdf",
+      "sha256": "c6293322bd2ab45b4a02a9d85d70491b711827bace0baf667f74a9b406cd5181",
+      "bytes": 584409,
+      "retrievedOn": "2026-11-17",
+      "pdfPages": [
+        18
+      ],
+      "role": "Official administrative FAQ; not a complete current-law reconciliation"
+    },
+    "bisMetadata": {
+      "url": "https://standards.bis.gov.in/website/standard-details?encryptedId=eyJpdiI6IlhsVzR2UDd6SS9nZWU0VnpjY0NVV0E9PSIsInZhbHVlIjoiL1kwemJVeXZnVWExaElxeWtPeExqdz09IiwibWFjIjoiOGI2NDM3MmQzYjViM2NmZjdkODI3ZjczMGRkZTc5Y2RjNDA3ODA4NWM2MzZjYmNhYmMzNTZmYmU1YmVhNDU4MiIsInRhZyI6IiJ9",
+      "publicMetadataEndpoint": "https://standardsadmin.bis.gov.in/review-service/getWebsiteStandardDetails",
+      "sha256": "8e557f68eb8925404c84740e18ef0c72eb7e0243610fd471c3af094c4090ec1d",
+      "bytes": 2043,
+      "retrievedOn": "2026-11-17",
+      "role": "Public standard metadata only; full normative text and amendments not reconciled"
+    }
+  },
+  "bisStandard": {
+    "number": "IS 10500:2012",
+    "revision": 2,
+    "reaffirmedOn": "2023-08-01",
+    "amendmentCount": 4,
+    "amendmentYears": [
+      2015,
+      2018,
+      2020,
+      2021
+    ],
+    "metadataVerified": true,
+    "completeNormativeTextVerified": false
+  },
+  "draftReplacement": {
+    "sourceId": "vendingDraft2025",
+    "status": "DRAFT_SOURCE_ONLY",
+    "finalReplacementEstablished": false,
+    "autoApply": false
+  },
+  "counts": {
+    "vendingIdentities": 1,
+    "ingredientWaterInstances": 4,
+    "waterGapsClosed": 0,
+    "remainingAyurvedaIngredientGaps": 14,
+    "numericRulesAdded": 0
+  },
+  "records": [
+    {
+      "id": "purified-vending-water",
+      "use": "vending",
+      "sourceReviewResult": "The original 2019 FPSFA 2.10.9 notification incorporates IS 10500 and excludes packaged drinking water, natural mineral water and installations for captive consumption. BIS metadata identifies IS 10500:2012, reaffirmed August 2023, with four amendments. The June 2025 replacement tables retrieved here are draft text; they are not activated.",
+      "sourceReviewNextAction": "Reconcile the complete IS 10500 normative text and all four amendments, and establish any final FSSAI replacement and commencement before assigning water limits. Ingredient-water FAQ documentation concessions do not establish vending-water compliance."
+    },
+    {
+      "id": "102-102-1-12-1-lajadi-kashaya-parched-rice-tea",
+      "use": "ingredient",
+      "recipeNumber": "12.1",
+      "ingredientSerial": 1,
+      "ingredientName": "Jala",
+      "ratio": "16 parts",
+      "recipeTitleMethodHold": false,
+      "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+    },
+    {
+      "id": "102-102-1-13-1-krishara-khichdi",
+      "use": "ingredient",
+      "recipeNumber": "13.1",
+      "ingredientSerial": 1,
+      "ingredientName": "Jala",
+      "ratio": "3 parts",
+      "recipeTitleMethodHold": false,
+      "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+    },
+    {
+      "id": "102-102-1-14-7-ksheerapaka-mystic-milk-quartet",
+      "use": "ingredient",
+      "recipeNumber": "14.7",
+      "ingredientSerial": 3,
+      "ingredientName": "Jala",
+      "ratio": "Q.S.",
+      "recipeTitleMethodHold": true,
+      "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+    },
+    {
+      "id": "102-102-1-15-1-kulmasha-barley-savory-discs",
+      "use": "ingredient",
+      "recipeNumber": "15.1",
+      "ingredientSerial": 2,
+      "ingredientName": "Ushna Jala",
+      "ratio": "Q.S.",
+      "recipeTitleMethodHold": false,
+      "sourceReviewResult": "The recipe water now has an official ingredient-water documentation anchor: FoSCoS FAQs 121–123, page 18. Supplier type changes the required evidence; municipal bill concessions do not prove potability or resolve ingredient CTR applicability.",
+      "sourceReviewNextAction": "Identify the actual water supply and point of use, retain the appropriate bill or water report, and reconcile IS 10500 and its amendments. Do not inherit packaged or mineral-water numerical limits or transfer ingredient-water results to the finished recipe."
+    }
+  ],
+  "fullCurrentLawComplete": false,
+  "legalProductApproval": false,
+  "batchRelease": false,
+  "autoApplyLimits": false
+}

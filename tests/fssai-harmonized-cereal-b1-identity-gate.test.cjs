@@ -26,8 +26,8 @@ const run=p=>Array.from(ctx.productBaselineContaminantRules(p)).filter(r=>
 test("Chapter 2.4 identity definitions guarantee cereal ingredients for both narrowly mapped products",()=>{
  const oat=chapter.standards.find(x=>x.key==="2.4.12");
  assert.equal(oat.name,"Oat Products");
- assert.ok(oat.variants.some(x=>x.name==="Rolled/Flaked Oats"));
- assert.ok(oat.variants.some(x=>x.name==="Products containing oats"));
+ assert.ok(oat.composition.some(x=>x.when?.oat_product_type==="rolled_flaked"));
+ assert.ok(oat.composition.some(x=>x.when?.oat_product_type==="containing_oats"));
  const atta=chapter.standards.find(x=>x.key==="2.4.37");
  assert.equal(atta.name,"Multigrain Flour (Atta)");
  assert.ok(atta.formulation_rules.some(x=>x.parameter==="Whole wheat flour"&&x.min===50&&x.max===90));

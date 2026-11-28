@@ -1,0 +1,21 @@
+name: Snapshot R15 contaminant targets
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/snapshot-r15-contaminants.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r15-contaminant-targets
+          retention-days: 3
+          path: |
+            fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+            fssai-product-helper-preview-01/data/rules/contaminants-2026-deferred-amendment-v1.json
+            fssai-product-helper-preview-01/data/product-master-v1.json
+            fssai-helper/PMSV_FSSAI_All_533_Product_Source_Register.csv

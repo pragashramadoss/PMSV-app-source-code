@@ -39,9 +39,9 @@ test('official millet standard explicitly names Ragi and has full grain limits',
  assert.ok(millet,'2.4.6(23) missing');
  assert.match(millet.definition,/Finger Millet \(Ragi or Mandua\)/);
  assert.match(millet.source_url,/fssai.gov.in/);
- assert.ok(millet.general_limits.length>=8);
- const pick=param=>millet.general_limits.find(r=>r.parameter===param);
- assert.equal(pick('Moisture — whole or dehulled millets').value,13);
+ assert.ok(millet.composition.length>=8);
+ const pick=param=>millet.composition.find(r=>r.parameter===param);
+ assert.equal(pick('Moisture').value,13);
  assert.equal(pick('Uric acid').value,100);
  assert.equal(pick('Weevilled grains').value,4);
 });
@@ -58,10 +58,10 @@ test('Ragi, Finger Millet and Mandua route to grain; their flour variants route 
   assert.equal(h.direct(word),'06-06-2-ragi-flour',word);
  }
 });
-test('millet grain FSSR applies both general grain rule and exact 2.4.6(23), but no flour',()=>{
+test('millet grain FSSR uses exact 2.4.6(23), but no flour',()=>{
  const h=runner();
  h.product('06-06-1-millets');
- assert.deepEqual(h.clauses(),['2.4.6','2.4.6(23)']);
+ assert.deepEqual(h.clauses(),['2.4.6(23)']);
  h.product('06-06-2-ragi-flour');
  assert.deepEqual(h.clauses(),['2.4.34']);
 });

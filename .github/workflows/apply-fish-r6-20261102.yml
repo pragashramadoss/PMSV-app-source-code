@@ -1,0 +1,31 @@
+name: Apply fish R6 core source corrections
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-fish-r6-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply source-preimage-checked corrections
+        run: python3 scripts/apply-fish-r6-20261102.py
+      - name: Commit core data on audit branch only
+        run: |
+          test "$GITHUB_REF" = refs/heads/audit/all-533-2026-11-02
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/product-master-v1.json fssai-product-helper-preview-01/data/rules/chapter-2-6-fish-v1.json fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json
+          git diff --cached --check
+          git commit -m 'Correct fish source scope: formaldehyde, smoked and clam routes, subtype and source-question controls'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fish-r6-core-applied
+          path: fish-r6-applied/
+          retention-days: 3
+          if-no-files-found: error

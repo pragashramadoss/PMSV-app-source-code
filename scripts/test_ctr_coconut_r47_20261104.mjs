@@ -1,0 +1,66 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import {reviewCoconutSourceStyle,COCONUT_SOURCE_STYLES,ORIGINAL_COCONUT_IDS} from "../fssai-helper/ctr-coconut-identity-allergen-gate-r47-20261104.mjs";
+const read=x=>JSON.parse(fs.readFileSync(new URL("../"+x,import.meta.url),"utf8"));
+const old=read("fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json");
+const r46=read("fssai-helper/ctr-fruit-cheese-murabba-frozen-vegetables-r46-2026-11-04.json");
+const r47=read("fssai-helper/ctr-coconut-milk-cream-powder-r47-2026-11-04.json");
+assert.equal(old.records.length,137);
+assert.equal(r46.review_counts.product_CTR_article_holds_after_R46,137);
+assert.equal(r47.counts.R47_catalogue_records,3);
+assert.equal(r47.products.length,3);
+assert.equal(new Set(r47.products.map(x=>x.catalogue_id)).size,3);
+assert.deepEqual(new Set(r47.products.map(x=>x.catalogue_id)),new Set(ORIGINAL_COCONUT_IDS));
+assert.equal(r47.products.reduce((n,x)=>n+x.available_styles.length,0),5);
+for(const p of r47.products){
+ const prev=old.records.find(x=>x.catalog_id===p.catalogue_id);
+ assert(prev);
+ assert.equal(p.fssr,prev.fssr);
+ assert.equal(p.product_name,prev.product_name);
+ assert.deepEqual(p.available_styles,COCONUT_SOURCE_STYLES[p.catalogue_id]);
+ assert.equal(p.legal_product_PASS,false);
+ assert.equal(p.numeric_CTR_autofill,false);
+ assert.equal(p.commercial_release_authorised,false);
+}
+const sourceComplete={actualSKUFormulaAndIngredientSupplierDocumentsVerified:true,
+ currentFSSRAndOriginalGazetteReviewed:true,analyticalMethodAndFullLabEvidenceReviewed:true,
+ currentLegalCTRProductArticleAndPanelReviewed:true,fullActualArtworkClaimsAndAllergenLabellingReviewed:true,
+ sodiumCaseinatePresent:false,claimsMilkFree:false,claimsVegan:false};
+const milkID="04-04-1-coconut-milk-non-dairy",creamID="04-04-1-coconut-cream-non-dairy",powderID="04-04-1-coconut-milk-powder";
+const M={...sourceComplete,actualStyle:"LIGHT_COCONUT_MILK",moisturePercent:90,totalSolidsPercent:10,solidsNotFatPercent:2,fatWeightPercent:6,pH:6.0,hermeticallySealed:true,hermeticFillPercent:90};
+const C={...sourceComplete,actualStyle:"COCONUT_CREAM",moisturePercent:70,totalSolidsPercent:30,solidsNotFatPercent:6,fatWeightPercent:23,pH:6.0};
+const P={...sourceComplete,actualStyle:"COCONUT_MILK_POWDER",moisturePercent:2.5,fatDryBasisPercent:60,FFAExtractedFatLauricAcidPercent:0.2,bulkDensityGml:0.30,noAddedColourOrFlavourVerified:true};
+const check=(id,e,status)=>{const result=reviewCoconutSourceStyle(id,e);assert.equal(result.status,status,JSON.stringify(result));assert.equal(result.fullProductLegalPass,false);assert.equal(result.commercialBatchRelease,false);};
+check(milkID,M,"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(milkID,{...M,actualStyle:"COCONUT_MILK",moisturePercent:85,totalSolidsPercent:15,solidsNotFatPercent:3,fatWeightPercent:11},"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(milkID,{...M,totalSolidsPercent:12.7},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(milkID,{...M,hermeticFillPercent:89.99},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(creamID,C,"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(creamID,{...C,actualStyle:"COCONUT_CREAM_CONCENTRATE",moisturePercent:62,totalSolidsPercent:38,solidsNotFatPercent:9,fatWeightPercent:29},"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(creamID,{...C,totalSolidsPercent:37.4},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(creamID,{...C,actualStyle:"COCONUT_CREAM_CONCENTRATE",totalSolidsPercent:37.3},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,P,"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(powderID,{...P,bulkDensityGml:0.45},"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(powderID,{...P,bulkDensityGml:0.4501},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,{...P,moisturePercent:2.51},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,{...P,FFAExtractedFatLauricAcidPercent:0.201},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,{...P,fatDryBasisPercent:59.9},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,{...P,claimsMilkFree:true,sodiumCaseinatePresent:true,milkAllergenLabelVerified:true},"MILK_DERIVED_CASEINATE_CLAIM_CONTRADICTION");
+check(milkID,{...M,sodiumCaseinatePresent:true,claimsVegan:true,milkAllergenLabelVerified:true},"MILK_DERIVED_CASEINATE_CLAIM_CONTRADICTION");
+check(creamID,{...C,sodiumCaseinatePresent:true,milkAllergenLabelVerified:false},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(creamID,{...C,sodiumCaseinatePresent:true,milkAllergenLabelVerified:true},"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(powderID,{...P,claimsVegan:true},"COCONUT_SOURCE_STYLE_EVIDENCE_HOLD");
+check(powderID,{...P,claimsVegan:true,veganLogoEndorsementVerified:true,animalOriginFreeIncludingProcessingAidsVerified:true},"COCONUT_SOURCE_STYLE_REVIEW_READY");
+check(milkID,{...M,actualStyle:"COCONUT_CREAM"},"ACTUAL_PRODUCT_STYLE_UNCONFIRMED");
+const x=r47.counts;
+assert.equal(x.catalogue_total,533);
+assert.equal(x.original_product_CTR_applicability_cases,137);
+assert.equal(x.remaining_finished_CTR_article_holds,137);
+assert.equal(x.new_finished_CTR_article_adjudications,0);
+assert.equal(x.whole_products_legally_approved,0);
+assert.equal(x.Ayurveda_raw_source_gaps_unchanged,14);
+assert.equal(x.Ayurveda_prior_raw_CTR_source_links_unchanged,94);
+assert.equal(r47.numeric_CTR_live_rules_modified,false);
+assert.equal(r47.live_PMSV_helper_modified,false);
+assert.equal(r47.PR_2_draft_unmerged,true);
+console.log(JSON.stringify({status:"PASS",sourceProducts:3,styles:5,caseinateClaimContradictionsBlocked:true,originalCTRArticleHolds:137,actualLegalPASS:0}));

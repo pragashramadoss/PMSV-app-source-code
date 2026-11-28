@@ -1,0 +1,25 @@
+name: PMSV R53 check Ayurveda 14.6-14.7 source alignment holds
+on:
+  push:
+    branches:
+      - audit/all-533-2026-11-02
+    paths:
+      - 'fssai-helper/ayurveda-recipe-authority-clarification-r53-2026-11-04.json'
+      - 'scripts/test_ayurveda_146_147_r53_20261104.py'
+      - '.github/workflows/verify-ayurveda-146-147-r53-20261104.yml'
+  pull_request:
+    branches:
+      - gh-pages
+    paths:
+      - 'fssai-helper/ayurveda-recipe-authority-clarification-r53-2026-11-04.json'
+      - 'scripts/test_ayurveda_146_147_r53_20261104.py'
+  workflow_dispatch:
+jobs:
+  source-crosscheck:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate botanical examples, explicit recipe holds and no-pass invariants
+        run: python scripts/test_ayurveda_146_147_r53_20261104.py

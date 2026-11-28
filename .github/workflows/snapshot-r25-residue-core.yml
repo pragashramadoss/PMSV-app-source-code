@@ -1,0 +1,33 @@
+name: Snapshot R25 residue source preimage
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/snapshot-r25-residue-core.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check current residue source and snapshot
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          p=Path("fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json")
+          data=json.loads(p.read_text())
+          print("sha256",hashlib.sha256(p.read_bytes()).hexdigest())
+          assert len(data["residue_mrls"]["pesticides"])==213
+          assert len(data["antibiotic_and_pharmacological_substances"]["veterinary_tolerance_limits"]["rows"])==49
+          assert data["residue_mrls"]["next_serial"]==214
+          assert "r24_residue_regulatory_guards_2026_11_03" in data
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r25-residue-source-preimage
+          retention-days: 2
+          path: fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          if-no-files-found: error

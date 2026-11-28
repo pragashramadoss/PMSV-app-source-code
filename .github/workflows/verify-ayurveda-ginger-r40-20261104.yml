@@ -1,0 +1,23 @@
+name: PMSV R40 dried ginger source-scope and 14-hold checks
+on:
+  push:
+    branches: [audit/all-533-2026-11-02]
+    paths:
+      - 'fssai-helper/ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json'
+      - 'scripts/test_ayurveda_ginger_r40_20261104.py'
+      - '.github/workflows/verify-ayurveda-ginger-r40-20261104.yml'
+  pull_request:
+    branches: [gh-pages]
+    paths:
+      - 'fssai-helper/ayurveda-ginger-source-and-14-holds-r40-2026-11-04.json'
+      - 'scripts/test_ayurveda_ginger_r40_20261104.py'
+  workflow_dispatch:
+jobs:
+  verify-source-guards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify 16 to 14 ingredient source gaps and zero legal PASS
+        run: python scripts/test_ayurveda_ginger_r40_20261104.py

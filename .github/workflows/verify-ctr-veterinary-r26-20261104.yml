@@ -1,0 +1,37 @@
+name: R26 verify veterinary volume units and source ambiguity holds
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-veterinary-r26-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run original R25 pesticide and veterinary regression cases
+        run: node scripts/test_ctr_residue_source_r25_20261104.mjs
+      - name: Run R26 cattle milk matrix and disputed source regression cases
+        run: node scripts/test_ctr_veterinary_matrix_r26_20261104.mjs
+      - name: Verify 533 catalogue identities and original source qualifier rows
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json').read_text())
+          m=json.loads(Path('fssai-product-helper-preview-01/data/product-master-v1.json').read_text())
+          v=c['antibiotic_and_pharmacological_substances']['veterinary_tolerance_limits']['rows']
+          p=c['residue_mrls']['pesticides']
+          assert len(m['catalog_products'])==len({x['id'] for x in m['catalog_products']})==533
+          assert len(p)==213 and sum(len(x['rows']) for x in p)==1098
+          assert len(v)==49 and sum(len(x['rows']) for x in v)==358
+          milk=[(x['serial'],y['article'],y['limit'],y['unit']) for x in v for y in x['rows'] if y['unit']=='mg/l']
+          assert milk==[(8,'Cattle — Milk','0.1','mg/l'),(21,'Cattle — Milk','0.2','mg/l'),(35,'Cattle — Milk','0.2','mg/l')]
+          locked=[(x['serial'],y['article']) for x in v for y in x['rows'] if y.get('locked_source_alignment')]
+          assert locked==[(5,'Muscle'),(7,'Muscle')]
+          assert c['r25_pesticide_source_symbol_conflict_gates_2026_11_04']['full_product_approvals']==0
+          print('R26 PASS: 533 catalogue, 213 pesticide, 49 veterinary, 3 mg/L, 2 locked source rows')
+          PY

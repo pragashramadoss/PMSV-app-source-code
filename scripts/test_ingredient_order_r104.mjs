@@ -1,0 +1,77 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const dir=new URL('../fssai-helper/',import.meta.url);
+const html=fs.readFileSync(new URL('index.html',dir),'utf8');
+const scripts=[...html.matchAll(/<script src="([a-z0-9-]+)\.js\?[^"]+"/g)].map(m=>m[1])
+  .filter(s=>/^(catalogue-|full-catalogue-|review-status-data$|broad-contaminants$)/.test(s))
+  .map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
+const db=new Map();
+const storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
+function open(store=storage){
+  const c=vm.createContext({localStorage:store});c.window=c;
+  for(const s of scripts)vm.runInContext(s,c);
+  return {O:c.PMSVIngredientOrder,Q:c.PMSVIngredientPercentage,W:c.PMSVCatalogueWorksheets,R:c.PMSV_REVIEW_REGISTER};
+}
+const {O,Q,W,R}=open(),id='05-05-2-sugar-boiled-confectionery-hard-candy';
+const row=(name,amount,unit,alias='',source='')=>({name,amount,unit,alias,source});
+const a=row('Additive A','300','g','A'),b=row('Additive B','0.20','kg','B');
+const base={sku:'Example A',art:'Outer v1',pack:'outer',recipe:'Q104 v1',scope:'group',listName:'Emulsifiers',coverage:'selected',presentation:'named',rows:[a,b],printed:'B\nA'};
+const m=(patch={})=>O.model({...base,...patch}),check=(p={})=>O.analyse(m(p));
+assert(W.available);assert.equal(R.latestRound,170);assert.equal(R.ingredientOrderReview.products,533);assert.equal(Object.keys(O.scopes).length,6);
+assert(check().issues[0].includes('quantity of A is higher'));assert.equal(check().expected,'A → B');
+assert.equal(check({printed:'A\nB'}).status,'Selected entries match the recorded order');
+const tie=check({rows:[row('Additive A','200000','mg','A'),b]});assert(tie.expected.includes('A = B'));assert(tie.notes.some(n=>n.includes('same rank')));
+assert.equal(check({rows:[row('Additive A','0.2000000000000000000000001','kg','A'),b]}).status,'Artwork differences to review');
+assert.equal(check({rows:[row('Additive A','250','mL','A'),row('Additive B','.2','L','B')]}).expected,'A → B');
+for(const invalid of ['0','-2','1e1','1,5','≈1','', '0'.repeat(50)+'1']){
+  assert(check({rows:[{...a,amount:invalid},b]}).rd.some(v=>v.includes('positive quantity')));
+}
+assert(!check({rows:[{...a,unit:'ww'},b]}).expected);assert(check({rows:[{...a,unit:'L'},b]}).rd.some(s=>s.includes('common basis')));
+assert(check({scope:'compound',sourceRef:'Supplier S',rows:[row('A','1','L'),row('B','2','L')]}).rd.some(s=>s.includes('by mass')));
+assert.equal(check({sourceRef:'Supplier S',scope:'compound',rows:[row('A','.6','kg'),row('B','400','g')],coverage:'full',printed:'A\nB'}).status,'Transcribed list matches the recorded order');
+assert(!check({scope:'flat',printed:'A\nB'}).expected);
+const flat={scope:'flat',listName:'',coverage:'full',sourceRef:'Breakdown S',rows:[row('A','2','kg','','direct'),row('A','2000','g','','fruit base'),row('B','3.5','kg','','direct')],printed:'A\nB'};
+assert.equal(check(flat).expected,'A → B');assert.equal(check(flat).status,'Transcribed list matches the recorded order');
+assert(check({...flat,rows:[flat.rows[0],{...flat.rows[1],source:'Direct'},flat.rows[2]]}).todo.some(s=>s.includes('double counting')));
+assert(check({...flat,rows:[flat.rows[0],{...flat.rows[1],name:'Other',alias:'A'},flat.rows[2]]}).todo.some(s=>s.includes('unique printed')));
+assert(check({rows:[{...a,alias:'B'},b]}).todo.some(s=>s.includes('mapping')));
+assert(check({rows:[{...a,alias:'A'}, {...a,alias:'B'}]}).todo.some(s=>s.includes('mapping')));
+assert(check({rows:[a,a,b]}).todo.some(s=>s.includes('recipe repeats')));
+assert(check({printed:'A\n A \nB'}).todo.some(s=>s.includes('repeats')));
+assert(check({printed:'A\nX',coverage:'full'}).issues.length===2);
+assert.equal(check({printed:'Other\nA\nB'}).status,'Selected entries match the recorded order');
+assert(check({printed:'Other\nA\nB'}).notes.some(s=>s.includes('outside')));
+assert(check({printed:'A\nB',presentation:'noClass'}).issues.some(s=>s.includes('functional class')));
+assert(check({printed:'A\nB',presentation:'noIdentity'}).issues.some(s=>s.includes('INS')));
+assert.equal(check({printed:'A\nB',presentation:'unchecked'}).status,'Evidence or transcription needed');
+assert.equal(check({rows:[a],printed:'A'}).status,'Evidence or transcription needed');
+assert(check({scope:'prepared',sourceRef:''}).rd.some(s=>s.includes('preparation directions')));
+assert.equal(check({scope:'prepared',sourceRef:'Directions 1',printed:'A\nB',coverage:'full'}).status,'Transcribed list matches the recorded order');
+assert(check({scope:'final',rows:[row('A','70','ww'),row('B','30.00000000001','ww')]}).rd.some(s=>s.includes('exceeds 100')));
+assert.equal(check({scope:'final',rows:[row('A','70','vv'),row('B','30','vv')],printed:'A\nB'}).status,'Selected entries match the recorded order');
+assert(check({pack:'inner',printed:''}).todo.some(s=>s.includes('Transcribe')));assert.equal(check({pack:'nonretail'}).status,'Non-retail review');
+const relief={scope:'relief',listName:'Fruit preparation',sourceRef:'Supplier S',share:'4.99999999999999999',function:'yes'};
+assert.equal(check(relief).status,'Below-5% scope recorded');assert(check(relief).notes.some(n=>n.includes('each functional additive')));
+assert.equal(check({...relief,share:'5.0000'}).status,'Threshold outside the proviso');
+assert(check({...relief,function:'unknown'}).rd.some(s=>s.includes('technological function')));
+assert(check({...relief,share:'0'}).rd.length);assert(!check({recipe:''}).expected);assert(!check({printed:''}).rd.length);
+const missing=m({rows:[{...a,amount:''},b]});
+const saved=Q.save(id,missing);assert(saved.key);assert(!Q.save(id,m({listName:''})).key);
+assert.equal(Q.requestRows().length,2);assert(Q.requestRows()[1][2].includes('Additive A'));
+assert(!Q.requestRows()[1][2].includes('Printed'));
+const percent=Q.model({sku:base.sku,art:base.art,pack:base.pack,target:'ingredient-order',recipe:base.recipe,nature:'unknown'});assert(Q.save(id,percent).key);
+assert.equal(Q.requestRows().length,2);assert(Q.requestRows()[1][2].includes('corresponding flavour'));
+assert.equal(Q.exportRows(id).length,2);assert.equal(O.exportRows(id).length,2);
+const tab=open();const edited=tab.Q.save(id,m(),saved);assert(edited.key);assert(!Q.save(id,missing,saved).key);
+assert(!Q.requestRows()[1][2].includes('Additive A'));assert(O.exportRows(id)[1].includes('A → B'));
+assert(Q.save(id,m({...flat}),null).key);
+const full=W.registerRows(true),product=full.find(r=>r[0]===id);
+assert.equal(product[126],1);assert.equal(product[132],2);assert(product[133].includes('Breakdown S'));assert(W.briefLines(id).join('\n').includes('Saved ingredient-order checks (2)'));
+assert.equal(full[0].length,156);const blank=W.registerRows(false);assert.equal(blank.length,534);
+assert(blank.slice(1).every(r=>r.length===156&&r[130].includes('#page=30')&&r[131]===''&&r[132]===0&&r[133]===''));
+const blocked=open({get length(){throw Error();},setItem(){throw Error();}});
+assert(blocked.Q.save(id,missing).message.includes('session'));assert.equal(blocked.O.exportRows(id).length,2);
+const savedRecord=tab.Q.savedByProduct().get(id).find(r=>r.m.type==='order'&&r.m.scope==='group');
+assert(tab.Q.remove(id,savedRecord).includes('Removed'));assert.equal(O.exportRows(id).length,2);
+console.log('All six order routes, mapped names, precision, ties, duplicates, missing evidence, cross-tab edits, 533-row register and shared R&D requests verified.');

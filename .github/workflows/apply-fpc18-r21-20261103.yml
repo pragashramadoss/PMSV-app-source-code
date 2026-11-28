@@ -1,0 +1,32 @@
+name: Apply R21 FPC18 CTR source-direction scope correction
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-fpc18-r21-20261103.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply exact preimage/output SHA-256 guarded category direction
+        run: python3 scripts/apply_ctr_fpc18_r21_20261103.py
+      - name: Commit audit data only
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/contaminants-v9-core.json
+          git diff --cached --check
+          git commit -m 'Reconcile FPC18 Foods not specified CTR direction in audit metadata'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - uses: actions/upload-artifact@v4
+        with:
+          name: contaminants-r21-fpc18-audit-20261103
+          path: r21-fpc18-audit-core/
+          retention-days: 3
+          if-no-files-found: error

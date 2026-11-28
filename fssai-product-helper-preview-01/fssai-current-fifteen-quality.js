@@ -1,7 +1,7 @@
 "use strict";
 /* Source-only FSSR quality dossiers for 15 currently first-CTR-article-pending products. */
 var pmsvQ15Data=null;
-const pmsvQ15Hash="36caa7dee07035e5";
+const pmsvQ15Hash="b1b0eafb902d45fa";
 function pmsvQ15Valid(){
  if(typeof pmsv493Valid!=="function"||!pmsv493Valid()||
     typeof pmsvReviewSnapshotDigest!=="function")return false;

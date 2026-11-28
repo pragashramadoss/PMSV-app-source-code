@@ -1,0 +1,32 @@
+name: R36 build Ayurveda CTR ingredient source crosswalk
+# Retry after fixing source-row report field names.
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/build-ayurveda-ctr-crosswalk-r36-20261104.yml']
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build source-linked 46-ingredient review and 22 CTR article references
+        run: python3 scripts/build_ayurveda_ctr_crosswalk_r36_20261104.py
+      - name: Independently verify preservation, source limits and no-PASS invariants
+        run: python3 scripts/verify_ayurveda_ctr_crosswalk_r36_20261104.py
+      - name: Commit only R36 offline audit results, protect production
+        shell: bash
+        run: |
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ayurveda-category-a-recipe-evidence-r35-2026-11-04.json
+          test -s fssai-helper/ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.json
+          test -s fssai-helper/ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-helper/ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.json fssai-helper/ayurveda-ingredient-ctr-crosswalk-r36-2026-11-04.md
+          git diff --cached --check
+          git commit -m 'R36: crosslink 46 Ayurveda ingredient entries with 22 CTR references; no legal PASS'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02

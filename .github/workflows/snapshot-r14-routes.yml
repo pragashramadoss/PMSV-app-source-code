@@ -1,0 +1,19 @@
+name: Snapshot R14 route file
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/snapshot-r14-routes.yml']
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r14-route-preimage
+          retention-days: 3
+          path: |
+            fssai-product-helper-preview-01/data/rules/special-regulatory-routes-v1.json
+            fssai-product-helper-preview-01/data/product-master-v1.json

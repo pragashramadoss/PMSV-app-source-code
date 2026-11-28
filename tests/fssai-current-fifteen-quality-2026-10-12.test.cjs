@@ -27,7 +27,7 @@ test("All 76 official FSSR source values trace to exact standard and subtype pat
 test("Separate cocoa cake/mass cocoa butter and 9 cocoa dry naming conditions",()=>{
  assert.ok(get("2.7.8").quality_rows.some(x=>x.parameter.replace(/_/g," ").includes("cocoa butter")&&x.variant.includes("Mass")));
  assert.equal(get("2.7.6").conditional_subtypes.nine_conditional_descriptions.length,9);
- assert.equal(get("2.7.6").quality_rows.find(x=>x.parameter.includes("wet basis")).value,32);
+ assert.equal(get("2.7.6").quality_rows.find(x=>x.parameter.includes("w/w")).value,32);
 });
 test("2024 liquid vs powder colouring, chestnut uric-operator uncertainty and arrowroot non-inheritance",()=>{
  assert.deepEqual(get("2.3.65").quality_rows.filter(x=>x.parameter==="Total solids").map(x=>x.value),[45,90]);

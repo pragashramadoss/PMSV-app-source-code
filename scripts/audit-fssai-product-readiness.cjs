@@ -677,7 +677,7 @@ assert.equal(rawPulsesIndex?.fssr,exactRawPulses.existing_catalogue_fssr);
 const rawPulsesStandard=read("rules/chapter-2-4-cereals-v1.json").standards.find(x=>x.key===exactRawPulses.specific_source_clause);
 assert.ok(rawPulsesStandard);
 assert.equal(rawPulsesStandard.status,"source_exact_specific_clause_linked_parent_fssr");
-assert.deepEqual(rawPulsesStandard.general_limits.map(x=>x.value),[3,0.5]);
+assert.deepEqual(rawPulsesStandard.composition.map(x=>x.value),[3,0.5]);
 assert.ok(official(rawPulsesStandard.official_source_url));
 for(const item of exactRawPulses.rules){
  const g=contaminants.crop_contaminants[item.crop_contaminant_key];
@@ -859,7 +859,7 @@ for(const x of maizeWheatById.values()){
  assert.equal(chapter.record.key,p.fssr);
  assert.ok(chapter.sourceUrls.includes(maizeWheat.official_standard_url));
  if(p.fssr==="2.4.7")assert.match(chapter.record.definition,/Zea mays L\./);
- if(p.fssr==="2.4.22")assert.ok(chapter.record.variants.some(x=>/wheat gluten/i.test(x.name)));
+ if(p.fssr==="2.4.22")assert.deepEqual([...new Set(chapter.record.composition.map(x=>x.when?.wheat_protein_type))].sort(),["devitalized","solubilized","vital"]);
 }
 const b1Source=contaminants.crop_contaminants.aflatoxin_b1;
 assert.equal(b1Source.unit,"µg/kg");
@@ -1477,9 +1477,8 @@ function contaminantEvidenceForProduct(p){
    const st=chapterRecord(p).record;
    if(st.key!==p.fssr)return null;
    const guaranteedCereal=p.id==='06-06-3-oat-products'
-     ? st.name==='Oat Products' && st.variants?.length===2
-       &&st.variants.some(x=>x.name==='Rolled/Flaked Oats')
-       &&st.variants.some(x=>x.name==='Products containing oats')
+     ? st.name==='Oat Products' && ['rolled_flaked','containing_oats'].every(type=>
+       st.composition?.some(x=>x.when?.oat_product_type===type && x.source_clause==='2.4.12'))
      : st.name==='Multigrain Flour (Atta)' && st.formulation_rules?.some(x=>
        x.parameter==='Whole wheat flour'&&Number(x.min)===50&&Number(x.max)===90);
    if(!guaranteedCereal)return null;
@@ -1630,7 +1629,7 @@ function contaminantEvidenceForProduct(p){
      ||source.other_contaminants_verified!==false
      ||!official(source.official_source_url)||!sourceUrls.includes(source.official_source_url)
      ||source.exact_variants?.length!==2
-     ||!(record.variants||[]).some(v=>v.name===source.exact_variants.find(x=>x.catalog_id===p.id)?.standard_variant)
+     ||!(record.composition||[]).some(v=>v.when?.fermented_soy_type===(p.fssr==='2.4.39(1)'?'fermented_curd':'named_cultures') && v.source_clause==='2.4.39')
      ||!source.exact_variants.some(v=>v.catalog_id===p.id&&v.catalogue_name===p.name&&v.catalogue_fssr===p.fssr))return null;
    const group=contaminants.crop_contaminants?.aflatoxin_b1;
    const articles=['Oilseeds, ready to eat','Food product containing any of the above mentioned food articles'];
@@ -2068,21 +2067,27 @@ for (const [group, source] of Object.entries(appendixB.product_mappings)) {
   for(const type of ["exact","conditional","no_direct_table_mapping"]) {
     for (const mapping of (buckets[type] || [])) {
       assert.ok(mapping.catalog_id && indexById.has(mapping.catalog_id),"Appendix B references absent product: "+mapping.catalog_id);
-      assert.ok(!appendixBRoutes.has(mapping.catalog_id),"Duplicate Appendix B mapping: "+mapping.catalog_id);
+      const previousRoute=appendixBRoutes.get(mapping.catalog_id);
+      if(previousRoute)assert.ok(previousRoute.type==="conditional" && type==="conditional","Conflicting automatic Appendix B mapping: "+mapping.catalog_id);
       const p=indexById.get(mapping.catalog_id);
       const expected = type==="exact" ? "mapped_appendix_b_v2" :
         type==="conditional" ? "conditional_appendix_b_variant_required" : null;
-      if(expected)assert.equal(p.microbiology_status,expected,"Appendix B status/index mismatch: "+p.id);
+      if(expected){
+        const status=({conditional_source_scope_review_r6:"conditional_appendix_b_variant_required",mapped_appendix_b_v2_r13:"mapped_appendix_b_v2"})[p.microbiology_status]||p.microbiology_status;
+        assert.equal(status,expected,"Appendix B status/index mismatch: "+p.id);
+      }
       else assert.ok((p.microbiology_status||"").startsWith("appendix_b_no_direct"),"Appendix B no-direct status/index mismatch: "+p.id);
       const profileKeys = type==="exact" ? [mapping.profile_key] :
-        type==="conditional" ? (mapping.options || []).map(option=>option.profile_key) : [];
+        type==="conditional" ? (mapping.options || mapping.candidates || []).map(option=>option.profile_key) : [];
       if(type==="exact")assert.equal(p.microbiology_profile_key,mapping.profile_key,"Appendix B profile/index mismatch: "+p.id);
       if(type==="conditional")assert.ok(profileKeys.length>0,"Conditional Appendix B route missing options: "+p.id);
       for (const key of profileKeys)if(key)assert.ok(profiles.has(key),"Appendix B mapping lacks real official Table profile: "+p.id+" ["+key+"]");
-      if(type==="conditional")for(const option of mapping.options || []) {
-        if(!option.profile_key)assert.ok(option.condition && (option.message || option.reason),"Fail-closed Appendix B variant must explain why no profile applies: "+p.id);
+      if(type==="conditional")for(const option of mapping.options || mapping.candidates || []) {
+        if(!option.profile_key)assert.ok((option.condition || option.when) && (option.message || option.reason || option.requires_source_scope_review===true),"Fail-closed Appendix B variant must explain why no profile applies: "+p.id);
       }
-      appendixBRoutes.set(p.id,{table:group,type,profile_keys:profileKeys});
+      appendixBRoutes.set(p.id,previousRoute
+        ? {table:[previousRoute.table,group].flat(),type,profile_keys:[...new Set([...previousRoute.profile_keys,...profileKeys])],competing_source_categories_require_review:true}
+        : {table:group,type,profile_keys:profileKeys});
     }
   }
 }

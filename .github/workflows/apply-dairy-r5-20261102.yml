@@ -1,0 +1,44 @@
+name: Apply dairy R5 reviewed source corrections
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/apply-dairy-r5-20261102.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reproduce reviewed modules with preimage and output checks
+        run: python3 scripts/apply-dairy-r5-20261102.py
+      - name: Commit only reviewed dairy and Appendix B modules
+        run: |
+          test "${GITHUB_REF}" = 'refs/heads/audit/all-533-2026-11-02'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fssai-product-helper-preview-01/data/rules/chapter-2-1-dairy-v1.json fssai-product-helper-preview-01/data/rules/appendix-b-v2-core.json
+          git diff --cached --check
+          git commit -m 'Reconcile dairy V3 composition and four explicit microbiology cross-references'
+          git push origin HEAD:refs/heads/audit/all-533-2026-11-02
+      - name: Retain original amendment bytes where retrievable
+        run: |
+          python3 - <<'PY'
+          import urllib.request,pathlib,json,hashlib
+          out=pathlib.Path('dairy-r5-applied');u='https://www.fssai.gov.in/upload/notifications/2024/10/671b28f9586dfGAZETTE%20NOTIFICATION%20DATED%2021.10.2024.pdf';record={'requested_url':u}
+          try:
+              with urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=35) as r:
+                  data=r.read(20000001);record['resolved_url']=r.geturl()
+              assert data.startswith(b'%PDF-') and len(data)<=20000000
+              (out/'Gazette_21Oct2024.pdf').write_bytes(data);record.update(status='CAPTURED_PDF',sha256=hashlib.sha256(data).hexdigest(),bytes=len(data))
+          except Exception as e:record.update(status='NOT_CAPTURED',error=str(e))
+          (out/'amendment-capture.json').write_text(json.dumps(record,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dairy-r5-reviewed-applied
+          path: dairy-r5-applied/
+          retention-days: 3
+          if-no-files-found: error

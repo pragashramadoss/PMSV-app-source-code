@@ -13,7 +13,7 @@ test("FSSAI 2.3.20 exact-name standard routes same in 533 index and full product
  assert.equal(m.regulation_chapter,"2.3");assert.equal(m.standard_name,"Fruit/Vegetable, Cereal Flakes");
  assert.equal(index.products.find(x=>x.id==="06-06-3-breakfast-cereal").fssr,"2.4.35");
  assert.ok(ch24.standards.some(x=>x.key==="2.4.35"&&x.name==="Breakfast Cereal"));
- assert.equal(index.generated_from_blob.length,40);assert.notEqual(index.generated_from_blob,"2432fec2880d74df91b413df27b811625e108f4a");
+ assert.equal(index.generated_from_sha256.length,64);assert.equal(index.generated_from_sha256,require("node:crypto").createHash("sha256").update(fs.readFileSync(path.join(base,"product-master-v1.json"))).digest("hex"));
 });
 test("Three Chapter 2.3.20 numeric FSSR quality limits; no contaminant or microbiology PASS",()=>{
  assert.ok(q);assert.equal(q.source_pdf_page_one_based,28);assert.match(q.source_url,/fssai\.gov\.in/);

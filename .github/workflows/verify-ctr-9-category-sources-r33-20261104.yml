@@ -1,0 +1,25 @@
+name: R33 test exact ingredient-specific CTR source safeguards
+on:
+  push:
+    branches: ['audit/all-533-2026-11-02']
+    paths: ['.github/workflows/verify-ctr-9-category-sources-r33-20261104.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/audit/all-533-2026-11-02'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate exact nine official source example rows, 9 categories, 137 legal holds and no approval
+        run: python3 scripts/verify_ctr_9_category_sources_r33_20261104.py
+      - name: Verify untouched production numerical modules and protected R27-R32 audits
+        shell: bash
+        run: |
+          test -s fssai-helper/ctr-9-broad-categories-source-guards-r33-2026-11-04.json
+          test -s fssai-helper/ctr-9-broad-categories-source-guards-r33-2026-11-04.md
+          git diff --exit-code -- fssai-product-helper-preview-01/data/
+          git diff --exit-code -- fssai-helper/ctr-137-source-screening-closure-r29-2026-11-04.json
+          git diff --exit-code -- fssai-helper/ctr-26-vegetables-metal-layer-r32-2026-11-04.json
+          test -z "$(git status --porcelain)"

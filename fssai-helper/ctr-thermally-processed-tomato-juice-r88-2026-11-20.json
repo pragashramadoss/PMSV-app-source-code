@@ -1,0 +1,24 @@
+{
+  "round": 88,
+  "reviewedOn": "2026-11-20",
+  "report": "ctr-thermally-processed-tomato-juice-r88-2026-11-20.md",
+  "id": "tomato-juice",
+  "label": "Thermally processed tomato juice",
+  "clause": "2.3.8",
+  "aliases": ["tomato juice", "heat-treated tomato juice"],
+  "criteria": [
+    {"key":"solids","label":"Total soluble solids","minimum":5.0,"basis":"Salt-excluded, % by weight","otherBasis":"Uncorrected °Brix or another basis","row":3},
+    {"key":"salt","label":"Sodium chloride","maximum":3.0,"basis":"NaCl, % by weight","otherBasis":"Sodium alone or another basis","row":4},
+    {"key":"titratable","label":"Total titratable acidity","maximum":10.0,"basis":"As citric acid, % by weight","otherBasis":"Another acid, unit or basis","row":5},
+    {"key":"volatile","label":"Volatile acidity","maximum":0.4,"basis":"As acetic acid, % by weight","otherBasis":"Total acidity or another basis","row":6},
+    {"key":"ph","label":"pH","maximum":4.5,"unit":"pH","basis":"Measured pH","otherBasis":"Acidity percentage or another basis","row":7},
+    {"key":"sugar","label":"Sugar content","maximum":42.0,"basis":"As invert sugar, % by weight","otherBasis":"Added sugar, °Brix or another basis","row":8},
+    {"key":"impurities","label":"Mineral impurities","maximum":0.1,"basis":"% of dry weight less common salt","otherBasis":"As-sold, total ash or another basis","paragraph":2}
+  ],
+  "can": {
+    "vacuum":{"row":1,"requirement":"Negative"},
+    "headspace":{"key":"headspace","label":"Can headspace","maximum":7,"unit":"mm","basis":"Measured in millimetres","otherBasis":"Another or unconfirmed unit","row":2}
+  },
+  "fill":{"minimumPercent":90,"waterTemperatureC":27,"glassDeductionMl":20,"volumeUnit":"mL"},
+  "amendment":{"url":"https://fssai.gov.in/docs/food-law/regulations/amendments/food-products-standards/Gazette_Notification_Fruits_Vegetables_28_11_2017.pdf","page":10,"fillPage":11,"date":"2017-11-17","published":"2017-11-21","complyBy":"2018-07-01","sha256":"a70e28574d44f6e105b83da6c2f52442eac1db3b66f1805b862458c8e82911a9"}
+}

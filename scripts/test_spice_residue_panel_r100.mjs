@@ -1,0 +1,76 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const dir=new URL('../fssai-helper/',import.meta.url);
+const modules=['full-catalogue-533','review-status-data','catalogue-source-evidence','catalogue-rule-data','catalogue-metal-scope-data','catalogue-metal-scope','broad-contaminants','catalogue-crop-scope-data','catalogue-recipe-samples','catalogue-crop-scope','catalogue-metal-panel-data','catalogue-metal-panel','catalogue-veterinary','catalogue-pesticides','catalogue-ethylene-oxide','catalogue-residue-panel','catalogue-batch-site','catalogue-lot-dates','catalogue-date-marking','catalogue-small-pack','catalogue-ingredient-order','catalogue-ingredient-percentage','catalogue-variant-composition','catalogue-testing-source-rows','catalogue-vending-water','catalogue-ayurveda-plan','catalogue-cocoa-mixtures','catalogue-powder-standards','catalogue-coffee','catalogue-sulphites','catalogue-additives-solvents','catalogue-egg-microbiology','catalogue-testing-plan','catalogue-worksheets'];
+const codes=modules.map(n=>fs.readFileSync(new URL(n+'.js',dir),'utf8'));
+const db=new Map(),storage={get length(){return db.size;},key:i=>[...db.keys()][i],getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)};
+function open(store=storage) {
+  const events={};
+  const x=vm.createContext({localStorage:store,addEventListener:(k,v)=>{(events[k]??=[]).push(v);}});
+  x.window=x;codes.forEach(code=>vm.runInContext(code,x));return {x,Y:x.PMSVResiduePanel,W:x.PMSVCatalogueWorksheets,events};
+}
+const {x,Y,W,events}=open(),r=x.PMSV_REVIEW_REGISTER.spicePanelReview;
+assert(W.available);assert.equal(x.PMSV_REVIEW_REGISTER.latestRound,170);
+assert.equal(r.marketedProducts,36);assert.equal(r.sampleChoices,36);assert.equal(r.codedChoices,32);
+const baseline=W.registerRows();assert.equal(baseline.length,534);assert.equal(baseline[0].length,156);assert.equal(new Set(baseline[0]).size,156);
+assert(baseline.slice(1).every(row=>row[15]==='No'&&row[112]===0&&row[113]===''));
+const pepper='12-12-2-black-white-and-green-bwg-peppers',coriander='12-12-2-coriander-dhania',chocolate='05-05-1-chocolate';
+const mint='12-12-2-dried-mint',curry='12-12-2-curry-powder',candy='05-05-2-sugar-boiled-confectionery-hard-candy';
+assert(Y.marketed(pepper));assert(!Y.marketed(curry));assert(!Y.marketed('04-04-1-vanilla-powder'));assert(Y.marketed('04-04-1-cut-vanilla'));
+const data={spRole:'product',spArticle:'coriander',spProcess:'physical',spSample:'Spice lot A',spAnalyte:'3',spIndia:'none',spIndiaRef:'Test record of Gazette and directions',spDate:'2026-11-21',
+  spReg:'registered',spRegRef:'Registration reference for test',spCodex:'none',spCodexRef:'Test search covering exact article, subgroup and group',spReport:'COA A',spKind:'quantified',spValue:'0.1',spUnit:'mg/kg',spBasis:'yes'};
+const spice=(changes={},id=coriander)=>Y.decide(id,{...data,...changes});
+const cmp=(changes={},id=coriander)=>Y.spiceComparison(id,{...data,...changes});
+assert.equal(spice().kind,'codexAbsent');assert.equal(spice().limit,'0.1');assert.equal(cmp().kind,'within');
+assert.equal(cmp({spValue:'0.10000000000000001'}).kind,'above');assert.equal(cmp({spValue:'0.10001',spKind:'less'}).kind,'inconclusive');
+for(const ch of [{spRole:'ingredientx'},{spArticle:'cinnamon'},{spProcess:'other'},{spReg:'unknown'},{spReg:'restricted'},
+  {spIndia:'named'},{spIndia:'unknown'},{spIndiaRef:'  '},{spDate:'2026-02-30'},{spDate:'2021-01-01'},
+  {spRegRef:''},{spCodex:'unknown'},{spCodexRef:''},{spCodex:'adopted',spLimit:'-1',spMark:'numeric'},{spCodex:'adopted',spLimit:'1',spMark:''}])assert.equal(spice(ch).kind,'pending',JSON.stringify(ch));
+assert.equal(spice({spReg:'unregistered',spCodex:'adopted',spLimit:'20',spCodexRef:''}).limit,'0.1');
+assert.equal(spice({spReg:'unregistered',spRegRef:''}).kind,'pending');
+assert.equal(spice({spCodex:'adopted',spLimit:'0.15',spMark:'numeric'}).kind,'codex');
+assert.equal(cmp({spCodex:'adopted',spLimit:'0.15',spMark:'numeric',spValue:'0.150000000000001'}).kind,'above');
+assert.equal(cmp({spCodex:'adopted',spLimit:'0.15',spMark:'star',spValue:'0.15',spLoq:'0.2'}).kind,'hold');
+assert.equal(cmp({spCodex:'adopted',spLimit:'0.15',spMark:'star',spValue:'0.15',spLoq:'0.15'}).kind,'within');
+for(const ch of [{spValue:'ND'},{spBasis:''},{spUnit:'µg/kg'},{spSample:' '},{spReport:''}])assert.equal(cmp(ch).kind,'hold');
+assert.equal(spice({spAnalyte:'other',spOther:'Test-only unnamed analyte'}).kind,'pending');
+assert.equal(spice({spAnalyte:'other',spOther:'Test-only unnamed analyte',spOtherFood:'yes',spOtherRef:'Other-food reference'}).kind,'codexAbsent');
+for(const name of ['EtO','2-Chloroethanol','oxirane','Aldrin','Metalaxyl-M','Mancozeb','   '])
+  assert.equal(spice({spAnalyte:'other',spOther:name,spReg:'unregistered'}).kind,'pending',name);
+for(const serial of ['4','7','64'])assert.equal(spice({spAnalyte:serial,spReg:'unregistered'}).kind,'pending');
+assert.equal(spice({spRole:'product'},chocolate).kind,'pending');assert.equal(spice({spRole:'ingredient'},chocolate).kind,'codexAbsent');
+const named={...data,spArticle:'pepper',spAnalyte:'120',spValue:'0.50',spReg:'unregistered'};
+const direct=Y.decide(pepper,named);assert.equal(direct.kind,'domestic');assert.equal(direct.limit,'0.5');assert(direct.url.endsWith('#page=43'));
+assert.equal(Y.spiceComparison(pepper,named).kind,'within');assert.equal(Y.spiceComparison(pepper,{...named,spValue:'0.5000000001'}).kind,'above');
+assert.equal(Y.decide(pepper,{...named,spArticle:'whitePepper'}).kind==='domestic',false);
+const mintSerial=String(x.PMSV_REVIEW_REGISTER.pesticideReview.groups.find(g=>g.rows.some(r=>r[0]==='Mentha')).serial);
+assert.equal(spice({spArticle:'mint',spAnalyte:mintSerial},mint).kind,'pending');
+const ingredient={...data,spRole:'ingredient',spReg:'registered',spCodex:'adopted',spMark:'numeric',spLimit:'0.2'};
+assert(Y.save(chocolate,ingredient,'spice').includes('Saved'));
+assert(Y.save(chocolate,ingredient,'spice').includes('already saved'));assert.equal(Y.records(chocolate).length,1);
+assert(Y.save(chocolate,{...ingredient,spValue:'0.21'},'spice').includes('Updated'));assert.equal(Y.records(chocolate)[0][1].outcome,'above');
+assert(Y.save(chocolate,{...ingredient,spValue:'ND'},'spice').includes('decimal'));assert.equal(Y.records(chocolate).length,1);
+assert(Y.save(chocolate,{...ingredient,spAnalyte:'120'},'spice').includes('Saved'));assert.equal(Y.records(chocolate).length,2);
+const second=open();assert.equal(second.Y.records(chocolate).length,2);
+const separateReport={...ingredient,spReport:'COA B'};assert(second.Y.save(chocolate,separateReport,'spice').includes('Saved'));
+const changed=second.Y.records(chocolate).find(([,r])=>r.report==='COA B')[0];events.storage.forEach(fn=>fn({key:changed,newValue:db.get(changed)}));assert.equal(Y.records(chocolate).length,3);
+const caseLot={...ingredient,spSample:'Spice lot a'};Y.save(chocolate,caseLot,'spice');assert.equal(Y.records(chocolate).length,4);
+const sample={pestRole:'ingredient',pestMatrix:'cane',pestProcess:'raw',pestSample:'Cane lot 1',pestRow:'1-0',pestReport:'COA A',pestKind:'less',pestValue:'0.06',pestUnit:'mg/kg',pestBasis:'yes'};
+Y.save(candy,sample,'gazette');assert.equal(Y.records(candy)[0][1].outcome,'inconclusive');
+Y.save(pepper,named,'spice');assert.equal(Y.records(pepper)[0][1].reference.includes('1(a)'),true);
+const same={pestRole:'product',pestMatrix:'pepper',pestProcess:named.spProcess,pestSample:named.spSample,pestRow:'120-2',pestReport:named.spReport,pestValue:'0.6',pestKind:'quantified',pestUnit:'mg/kg',pestBasis:'yes'};
+Y.save(pepper,same,'gazette');assert.equal(Y.records(pepper).length,1);
+assert.equal(Y.exportRows(chocolate).length,5);assert.equal(Y.exportRows(chocolate)[0].length,19);
+assert(W.briefLines(chocolate).some(t=>t.includes('Saved pesticide results (4)')));
+assert.equal(W.registerRows(true).find(row=>row[0]===chocolate)[112],4);assert.equal(W.registerRows(false).find(row=>row[0]===chocolate)[112],0);
+assert(W.registerRows(true).find(row=>row[0]===chocolate)[113].includes('reviewer-entered adopted Codex'));
+assert(!W.briefLines(candy).some(t=>t.includes('Spice lot A')));
+Y.remove(chocolate,changed);assert.equal(Y.records(chocolate).length,3);assert.equal(open().Y.records(chocolate).length,3);
+db.set('pmsv-fssai-pesticide-panel-r100:bad','{broken');assert.equal(open().Y.records(candy).length,1);
+const legacyKey='pmsv-fssai-worksheet-r93:'+candy;
+db.set(legacyKey,JSON.stringify({...sample,reference:'Pre-R100 sample'}));
+const restored=open();const oldRow=restored.W.registerRows(true).find(row=>row[0]===candy);
+assert.equal(oldRow[19],'Pre-R100 sample');assert(oldRow[103].includes('Cane lot 1')&&oldRow[105].includes('COA A'));assert.equal(oldRow[112],1);
+const failed=open({length:0,setItem(){throw new Error('Storage full');}});assert(failed.Y.save(candy,sample,'gazette').includes('this session'));assert.equal(failed.Y.exportRows(candy).length,2);
+console.log('36 marketed spice worksheets, named Indian precedence, documented Codex and fallback routes, independent per-sample results, exact decimals, storage recovery and both export modes verified.');
